@@ -1,0 +1,59 @@
+# Name of the modification loader type to load, for regular FML `@Mod` mods
+# it should be `javafml`
+modLoader="javafml" #mandatory
+# Version range to match for said modification loader, for regular FML `@Mod`
+# it will be the forge version
+loaderVersion="[36,)" #mandatory
+# License for modification
+license="All rights reserved"
+# URL to modification issue tracker
+#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+# List of modifications
+
+[[mods]] #mandatory
+# Mod ID of the modification
+modId="emptymod" #mandatory
+# Version number of the modification
+version="0.1" #mandatory
+ # Display name for the modification
+displayName="Empty Mod" #mandatory
+# URL to query for updates for this modification
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
+# URL for the "homepage" for this modification, displayed in the 
+# modification UI
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+# File name (in the root of the modification JAR) containing a logo for display
+logoFile="emptymod.png" #optional
+# Text field displayed in the modification UI
+credits="Thanks for this example mod goes to Java" #optional
+# Text field displayed in the modification UI
+authors="ImeSense, acidicMercury8, OldSerpskiStalker" #optional
+# Multiline description text for the modification (#mandatory)
+description='''
+Description placeholder
+'''
+
+# Dependency
+[[dependencies.emptymod]] #optional
+    # Mod ID of dependency
+    modId="forge" #mandatory
+    # Does this dependency have to exist - if not, ordering below
+    # must be specified
+    mandatory=true #mandatory
+    # Version range of the dependency
+    versionRange="[36,)" #mandatory
+    # Ordering relationship for the dependency -
+    # `BEFORE` or `AFTER` required if the relationship is not mandatory
+    ordering="NONE"
+    # Side this dependency is applied on - `BOTH`, `CLIENT` or `SERVER`
+    side="BOTH"
+
+# Another dependency
+[[dependencies.emptymod]]
+    modId="minecraft"
+    mandatory=true
+    # Version range declares a minimum of the current Minecraft version up to
+    # but not including the next major version
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
