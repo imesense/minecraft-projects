@@ -1,0 +1,30 @@
+# Global ignoring of different binaries and another temporary files
+
+# Eclipse cache and settings
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# IntelliJ Idea cache and settings
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# Gradle cache and settings
+build
+.gradle
+
+# Other cache
+eclipse
+run
+
+# Minecraft Forge MDK files
+forge*changelog.txt
+
+# macOS Cache
+.DS_Store

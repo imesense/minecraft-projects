@@ -1,0 +1,28 @@
+# Global attributes for forcing line endings normalization of specific files
+
+* text=auto
+
+# Configs
+.gitattributes text eol=lf encoding=utf-8
+.gitignore     text eol=lf encoding=utf-8
+*.properties   text eol=lf encoding=utf-8
+*.toml         text eol=lf encoding=utf-8
+
+# Scripts
+build.gradle     eol=crlf encoding=utf-8
+gradlew text     eol=lf   encoding=utf-8
+gradlew.bat text eol=crlf encoding=utf-8
+
+# Sources
+*.java text eol=lf encoding=utf-8
+
+# Resources
+*.info   text eol=lf encoding=utf-8
+*.mcmeta text eol=lf encoding=utf-8
+
+# Generated files
+src/generated/**/.cache/cache text eol=lf
+src/generated/**/*.json       text eol=lf
+
+# Binaries
+*.jar binary
