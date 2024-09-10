@@ -20,10 +20,12 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
+// File metadata
 version = '0.1'
 group = 'org.imesense.emptymod.modid'
 archivesBaseName = 'emptymod'
 
+// Java version
 sourceCompatibility =
 targetCompatibility =
 compileJava.sourceCompatibility =
@@ -32,25 +34,34 @@ compileJava.targetCompatibility =
 
 minecraft
 {
+    // Mappings settings of Minecraft
     mappings channel: 'snapshot', version: '20171003-1.12'
 
+    // Uncomment this to disable `Srg` named sources JAR by default
     //makeObfSourceJar = false
 
     //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
+    // Default run configurations
     runs
     {
         client
         {
             workingDirectory project.file('run')
 
+            // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
         }
 
         server
         {
+            // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
         }
     }
@@ -58,19 +69,17 @@ minecraft
 
 dependencies
 {
+    // Specify the version of Minecraft to use
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2859'
 
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24'
-
+    // Optional dependencies that exist at compile-time but might not at runtime
     //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 
+    // Dependencies to get remapped to current MCP mappings
     //deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 }
 
+// Get properties into the manifest for reading by the runtime
 jar
 {
     manifest
@@ -87,8 +96,10 @@ jar
     }
 }
 
+// Preferred method to reobfuscate JAR file
 jar.finalizedBy('reobfJar')
 
+// Delay the obfuscation
 //publish.dependsOn('reobfJar')
 
 publishing
@@ -110,6 +121,7 @@ publishing
     }
 }
 
+// Enable packaging of metadata and resources
 sourceSets
 {
     main
