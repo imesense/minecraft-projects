@@ -1,0 +1,13 @@
+**/.git
+**/.gradle
+**/.vscode
+**/bin
+**/build
+**/run
+**/.dockerignore
+**/Dockerfile*
+**/*.dockerfile
+**/*.sh
+**/*.bat
+**/*.ps1
+**/*.md
