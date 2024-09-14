@@ -6,7 +6,7 @@ on:
       - '**'
     paths:
       - '.github/workflows/build-template-1.12.2.yml'
-      - 'forge-1.12.2-14.23.5.2859-mdk/**'
+      - 'forge-1.12.2/**'
       - '!*.md'
       - '!LICENSE*'
 
@@ -15,14 +15,14 @@ on:
       - '**'
     paths:
       - '.github/workflows/build-template-1.12.2.yml'
-      - 'forge-1.12.2-14.23.5.2859-mdk/**'
+      - 'forge-1.12.2/**'
       - '!*.md'
       - '!LICENSE*'
 
 defaults:
   run:
     shell: bash
-    working-directory: 'forge-1.12.2-14.23.5.2859-mdk'
+    working-directory: 'forge-1.12.2/'
 
 jobs:
   build-modification:
@@ -54,4 +54,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: emptymod-${{ github.sha }}
-          path: forge-1.12.2-14.23.5.2859-mdk/build/libs/
+          path: forge-1.12.2/build/libs/
