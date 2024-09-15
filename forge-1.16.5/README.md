@@ -5,6 +5,9 @@
     <a href="./LICENSE">
       <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
     </a>
+    <a href="https://github.com/imesense/minecraft-projects/actions/workflows/build-template-1.16.5.yml">
+      <img src="https://github.com/imesense/minecraft-projects/actions/workflows/build-template-1.16.5.yml/badge.svg" alt="Build template (1.16.5)" />
+    </a>
   </p>
 </div>
 
