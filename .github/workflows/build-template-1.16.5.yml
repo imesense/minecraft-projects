@@ -1,0 +1,57 @@
+name: 'Build template (1.16.5)'
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/build-template-1.16.5.yml'
+      - 'forge-1.16.5/**'
+      - '!*.md'
+      - '!LICENSE*'
+
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/build-template-1.16.5.yml'
+      - 'forge-1.16.5/**'
+      - '!*.md'
+      - '!LICENSE*'
+
+defaults:
+  run:
+    shell: bash
+    working-directory: 'forge-1.16.5/'
+
+jobs:
+  build-modification:
+    name: 'Build modification'
+
+    strategy:
+      matrix:
+        system:
+          - ubuntu-latest
+
+    runs-on: ${{ matrix.system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Build modification
+        run: ./gradlew build
+
+      - name: Upload modification
+        uses: actions/upload-artifact@v4
+        with:
+          name: emptymod-${{ github.sha }}
+          path: forge-1.16.5/build/libs/
