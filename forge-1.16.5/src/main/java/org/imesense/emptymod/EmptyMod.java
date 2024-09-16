@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-
 import net.minecraft.client.Minecraft;
+
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,9 +18,14 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import org.imesense.emptymod.proxy.ClientProxy;
+import org.imesense.emptymod.proxy.IProxy;
+import org.imesense.emptymod.proxy.ServerProxy;
 
 /**
  * Main class of modification
@@ -32,6 +37,11 @@ public class EmptyMod
      * Instance of this class
      */
     public static EmptyMod Instance;
+
+    /**
+     *
+     */
+    public static IProxy Proxy;
 
     /**
      * Directly reference log4j logger
@@ -50,6 +60,15 @@ public class EmptyMod
     {
         // Initialize instance
         Instance = this;
+
+        if (FMLEnvironment.dist.isClient())
+        {
+            Proxy = new ClientProxy();
+        }
+        else
+        {
+            Proxy = new ServerProxy();
+        }
 
         // Register `setup` method for modloading
         FMLJavaModLoadingContext
@@ -83,6 +102,8 @@ public class EmptyMod
      */
     private void setup(final FMLCommonSetupEvent event)
     {
+        Proxy.init();
+
         LOGGER.info("HELLO FROM PREINIT");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
