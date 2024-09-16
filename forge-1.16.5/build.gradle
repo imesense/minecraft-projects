@@ -114,7 +114,7 @@ sourceSets.main.resources
 dependencies
 {
     // Specify the version of Minecraft to use
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.42'
 
     // Optional dependencies that exist at compile-time but might not at runtime
     //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
