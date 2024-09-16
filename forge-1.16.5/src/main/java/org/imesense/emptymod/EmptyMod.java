@@ -1,10 +1,12 @@
 package org.imesense.emptymod;
 
+import java.lang.ref.WeakReference;
 import java.util.stream.Collectors;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,15 +29,28 @@ import org.apache.logging.log4j.Logger;
 public class EmptyMod
 {
     /**
+     * Instance of this class
+     */
+    public static EmptyMod Instance;
+
+    /**
      * Directly reference log4j logger
      */
     private static final Logger LOGGER = LogManager.getLogger();
+
+    /**
+     * Weak reference to Minecraft instance to prevent memory leak
+     */
+    private WeakReference<Minecraft> minecraftWeakRef;
 
     /**
      * Constructs main class object
      */
     public EmptyMod()
     {
+        // Initialize instance
+        Instance = this;
+
         // Register `setup` method for modloading
         FMLJavaModLoadingContext
             .get()
@@ -79,7 +94,17 @@ public class EmptyMod
      */
     private void doClientStuff(final FMLClientSetupEvent event)
     {
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+        // Use weak reference to prevent memory leak
+        minecraftWeakRef = new WeakReference<>(event.getMinecraftSupplier().get());
+        Minecraft mcInstance = minecraftWeakRef.get();
+        if (mcInstance != null)
+        {
+            LOGGER.info("Got game settings {}", mcInstance.options);
+        }
+        else
+        {
+            LOGGER.warn("Minecraft instance is no longer available (garbage collected)");
+        }
     }
 
     /**
