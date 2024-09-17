@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.gameplay.worldgenerator.NetherRackGenerator;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigManager;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
 /**
  * Client sided proxy
@@ -66,9 +67,9 @@ public final class ClientProxy implements IProxy
     @Override
     public void postInit(FMLPostInitializationEvent event)
     {
-        ConfigLogFile.save();
-        ConfigGameDebugger.save();
-        ConfigOreGeneratorFile.save();
+        CodeGenericUtils.checkObjectNotNull(ConfigLogFile, "ConfigLogFile").save();
+        CodeGenericUtils.checkObjectNotNull(ConfigGameDebugger, "ConfigGameDebugger").save();
+        CodeGenericUtils.checkObjectNotNull(ConfigOreGeneratorFile, "ConfigOreGeneratorFile").save();
     }
 
     /**
