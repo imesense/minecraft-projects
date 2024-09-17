@@ -7,8 +7,8 @@ on:
     paths:
       - '.github/workflows/build-template-1.16.5.yml'
       - 'forge-1.16.5/**'
-      - '!*.md'
-      - '!LICENSE*'
+      - '!**/*.md'
+      - '!**/LICENSE*'
 
   pull_request:
     branches:
@@ -16,8 +16,8 @@ on:
     paths:
       - '.github/workflows/build-template-1.16.5.yml'
       - 'forge-1.16.5/**'
-      - '!*.md'
-      - '!LICENSE*'
+      - '!**/*.md'
+      - '!**/LICENSE*'
 
 defaults:
   run:
