@@ -54,4 +54,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dynamicspawncontrol-${{ github.sha }}
-          path: forge-1.12.2/build/libs/
+          path: dynamicspawncontrol-1.12.2/build/libs/
