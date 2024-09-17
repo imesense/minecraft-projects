@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.configs.IConfig;
 import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -47,6 +49,16 @@ public class DynamicSpawnControl
      *
      */
     public static final String NAME_DIRECTORY = "DynamicsSpawnControl";
+
+    /**
+     *
+     */
+    public static final String CONFIG_FILE_EXTENSION = ".cfg";
+
+    /**
+     *
+     */
+    public static final String SCRIPT_FILE_EXTENSION = ".json";
 
     /**
      * Main class instance
@@ -103,6 +115,8 @@ public class DynamicSpawnControl
 
         Log.createLogFile(globalDirectory.getPath() + File.separator + NAME_DIRECTORY);
         Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
+
+        MinecraftForge.EVENT_BUS.register(new OnUpdateTorchLogic("OnUpdateTorchLogic"));
 
         Proxy.preInit(event);
     }

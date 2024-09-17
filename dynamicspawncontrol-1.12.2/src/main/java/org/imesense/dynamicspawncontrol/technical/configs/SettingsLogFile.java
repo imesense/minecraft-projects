@@ -18,7 +18,7 @@ public final class SettingsLogFile implements IConfig
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
         ClientProxy.ConfigLogFile = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
-                File.separator + DynamicSpawnControl.NAME_DIRECTORY + File.separator + "configs", "log.ltx"));
+                File.separator + DynamicSpawnControl.NAME_DIRECTORY + File.separator + "configs", "log" + DynamicSpawnControl.CONFIG_FILE_EXTENSION));
 
         read();
     }
