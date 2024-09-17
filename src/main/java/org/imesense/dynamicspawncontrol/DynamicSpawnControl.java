@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.gameplay.EventGameplayManager;
 import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.configs.IConfig;
 import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
@@ -99,6 +100,7 @@ public class DynamicSpawnControl
      */
     public DynamicSpawnControl()
     {
+        /* */
         Instance = this;
     }
 
@@ -110,13 +112,18 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void preInit(FMLPreInitializationEvent event)
     {
+        /* */
         checkDebugger = new CheckDebugger();
+
+        /* */
         globalDirectory = event.getModConfigurationDirectory();
 
+        /* */
         Log.createLogFile(globalDirectory.getPath() + File.separator + NAME_DIRECTORY);
         Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
 
-        MinecraftForge.EVENT_BUS.register(new OnUpdateTorchLogic("OnUpdateTorchLogic"));
+        /* */
+        EventGameplayManager.registerClasses();
 
         Proxy.preInit(event);
     }
