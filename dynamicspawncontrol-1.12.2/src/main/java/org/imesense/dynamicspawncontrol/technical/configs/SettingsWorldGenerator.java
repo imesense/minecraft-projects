@@ -30,6 +30,15 @@ public final class SettingsWorldGenerator implements IConfig
 
     /**
      *
+     * @param nameClass
+     */
+    public SettingsWorldGenerator(final String nameClass)
+    {
+
+    }
+
+    /**
+     *
      * @param event
      * @param nameClass
      */
