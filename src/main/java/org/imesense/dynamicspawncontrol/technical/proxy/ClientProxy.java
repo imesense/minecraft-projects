@@ -7,15 +7,19 @@ import com.google.common.util.concurrent.ListenableFuture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigManager;
 
 /**
  * Client sided proxy
  */
 public class ClientProxy implements IProxy
 {
+    public static Configuration ConfigLogFile;
+
     /**
      * Preinitialize modification
      * 
@@ -24,6 +28,7 @@ public class ClientProxy implements IProxy
     @Override
     public void preInit(FMLPreInitializationEvent event)
     {
+        ConfigManager.init(event);
     }
 
     /**
@@ -44,6 +49,7 @@ public class ClientProxy implements IProxy
     @Override
     public void postInit(FMLPostInitializationEvent event)
     {
+        ConfigLogFile.save();
     }
 
     /**

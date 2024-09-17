@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.technical.configs.IConfig;
+import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 
@@ -42,6 +44,11 @@ public class DynamicSpawnControl
     public static final String VERSION = "1.12.2-14.23.5.2860";
 
     /**
+     *
+     */
+    public static final String NAME_DIRECTORY = "DynamicsSpawnControl";
+
+    /**
      * Main class instance
      */
     @Mod.Instance
@@ -50,7 +57,7 @@ public class DynamicSpawnControl
     /**
      *
      */
-    private static CheckDebugger checkDebugger;
+    static CheckDebugger checkDebugger;
 
     /**
      *
@@ -94,7 +101,7 @@ public class DynamicSpawnControl
         checkDebugger = new CheckDebugger();
         globalDirectory = event.getModConfigurationDirectory();
 
-        Log.createLogFile(globalDirectory.getPath() + File.separator + "DynamicsSpawnControl");
+        Log.createLogFile(globalDirectory.getPath() + File.separator + NAME_DIRECTORY);
         Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
 
         Proxy.preInit(event);
@@ -150,5 +157,6 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
+        Log.closeExecutor();
     }
 }
