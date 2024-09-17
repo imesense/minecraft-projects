@@ -83,6 +83,7 @@ public class DynamicSpawnControl
      */
     public static File getGlobalPathToConfigs()
     {
+        //
         return globalDirectory;
     }
 
@@ -100,7 +101,7 @@ public class DynamicSpawnControl
      */
     public DynamicSpawnControl()
     {
-        /* */
+        //
         Instance = this;
     }
 
@@ -112,19 +113,20 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void preInit(FMLPreInitializationEvent event)
     {
-        /* */
+        //
         checkDebugger = new CheckDebugger();
 
-        /* */
+        //
         globalDirectory = event.getModConfigurationDirectory();
 
-        /* */
+        //
         Log.createLogFile(globalDirectory.getPath() + File.separator + NAME_DIRECTORY);
         Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
 
-        /* */
+        //
         EventGameplayManager.registerClasses();
 
+        //
         Proxy.preInit(event);
     }
 
@@ -136,6 +138,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void init(FMLInitializationEvent event)
     {
+        //
         Proxy.init(event);
     }
 
@@ -147,6 +150,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void postInit(FMLPostInitializationEvent event)
     {
+        //
         Proxy.postInit(event);
     }
 
@@ -178,6 +182,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
+        //
         Log.closeExecutor();
     }
 }

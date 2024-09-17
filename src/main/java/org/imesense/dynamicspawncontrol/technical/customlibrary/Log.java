@@ -11,14 +11,30 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ *
+ */
 public final class Log
 {
+    /**
+     *
+     */
     private static File logFile;
 
+    /**
+     *
+     */
     public static final String[] TypeLog = { "[INFO]: ", "[WARN]: ", "[ERROR]: " };
 
+    /**
+     *
+     */
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 
+    /**
+     *
+     * @param path
+     */
     public static void createLogFile(String path)
     {
         try
@@ -61,6 +77,11 @@ public final class Log
         }
     }
 
+    /**
+     *
+     * @param file
+     * @param maxLines
+     */
     private static void cleanFile(File file, int maxLines)
     {
         try
@@ -112,6 +133,11 @@ public final class Log
         }
     }
 
+    /**
+     *
+     * @param typeInfo
+     * @param data
+     */
     public static void writeDataToLogFile(@Nonnull String typeInfo, String data)
     {
         if (logFile != null)
@@ -140,6 +166,9 @@ public final class Log
         }
     }
 
+    /**
+     *
+     */
     public static void closeExecutor()
     {
         executor.shutdown();

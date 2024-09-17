@@ -8,10 +8,21 @@ import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
 
 import java.io.File;
 
+/**
+ *
+ */
 public final class SettingsLogFile implements IConfig
 {
+    /**
+     *
+     */
     public static int LogMaxLines = 32767;
 
+    /**
+     *
+     * @param event
+     * @param nameClass
+     */
     @Override
     public void init(FMLPreInitializationEvent event, String nameClass)
     {
@@ -23,6 +34,10 @@ public final class SettingsLogFile implements IConfig
         read();
     }
 
+    /**
+     *
+     * @param configuration
+     */
     @Override
     public void readProperties(Configuration configuration)
     {
@@ -32,6 +47,9 @@ public final class SettingsLogFile implements IConfig
                                 "The parameter is responsible for the maximum number of lines in the log");
     }
 
+    /**
+     *
+     */
     @Override
     public void read()
     {
