@@ -20,6 +20,14 @@ public final class SettingsLogFile implements IConfig
 
     /**
      *
+     */
+    public SettingsLogFile(final String nameClass)
+    {
+
+    }
+
+    /**
+     *
      * @param event
      * @param nameClass
      */

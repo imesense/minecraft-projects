@@ -20,7 +20,7 @@ public final class EventGameplayManager
     /**
      *
      */
-    public EventGameplayManager()
+    public EventGameplayManager(final String nameClass)
     {
 
     }

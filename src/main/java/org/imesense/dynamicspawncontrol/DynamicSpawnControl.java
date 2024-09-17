@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
 import org.imesense.dynamicspawncontrol.gameplay.EventGameplayManager;
+import org.imesense.dynamicspawncontrol.gameplay.RegisterCommandsManager;
 import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.configs.IConfig;
 import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
@@ -172,6 +173,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverLoad(FMLServerStartingEvent event)
     {
+        RegisterCommandsManager.registerCommands(event);
     }
 
     /**
