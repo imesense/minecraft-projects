@@ -11,7 +11,7 @@ import java.io.File;
 /**
  *
  */
-public class SettingsGameDebugger implements IConfig
+public final class SettingsGameDebugger implements IConfig
 {
     /**
      *
