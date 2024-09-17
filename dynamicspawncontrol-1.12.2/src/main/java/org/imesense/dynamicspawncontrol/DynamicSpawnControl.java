@@ -10,7 +10,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
+import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
+
+import java.io.File;
 
 /**
  * Main class of modification
@@ -44,11 +48,30 @@ public class DynamicSpawnControl
     public static DynamicSpawnControl Instance;
 
     /**
+     *
+     */
+    private static CheckDebugger checkDebugger;
+
+    /**
+     *
+     */
+    private static File globalDirectory = null;
+
+    /**
+     *
+     * @return
+     */
+    public static File getGlobalPathToConfigs()
+    {
+        return globalDirectory;
+    }
+
+    /**
      * Sided proxy settings
      */
     @SidedProxy(
-        clientSide = "org.imesense.dynamicspawncontrol.proxy.ClientProxy",
-        serverSide = "org.imesense.dynamicspawncontrol.proxy.ServerProxy"
+        clientSide = "org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy",
+        serverSide = "org.imesense.dynamicspawncontrol.technical.proxy.ServerProxy"
     )
     public static IProxy Proxy;
 
@@ -68,6 +91,12 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void preInit(FMLPreInitializationEvent event)
     {
+        checkDebugger = new CheckDebugger();
+        globalDirectory = event.getModConfigurationDirectory();
+
+        Log.createLogFile(globalDirectory.getPath() + File.separator + "DynamicsSpawnControl");
+        Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
+
         Proxy.preInit(event);
     }
 
