@@ -1,0 +1,54 @@
+name: 'Build modification'
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'build.gradle'
+
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'src/**'
+      - 'build.gradle'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-modification:
+    name: 'Build modification'
+
+    strategy:
+      matrix:
+        system:
+          - ubuntu-latest
+
+    runs-on: ${{ matrix.system }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK 8
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+
+      - name: Build modification
+        run: ./gradlew build
+
+      - name: Upload modification
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.repository.name }}-${{ github.sha }}
+          path: ${{ github.workspace }}/build/libs/

@@ -1,0 +1,19 @@
+[
+    {
+        "modid": "dynamicspawncontrol",
+        "name": "Empty Mod",
+        "description": "Description placeholder",
+        "version": "0.1",
+        "url": "",
+        "updateUrl": "",
+        "authorList": [
+            "ImeSense",
+            "acidicMercury8",
+            "OldSerpskiStalker"
+        ],
+        "credits": "ImeSense and contributors",
+        "logoFile": "",
+        "screenshots": [],
+        "dependencies": []
+    }
+]
