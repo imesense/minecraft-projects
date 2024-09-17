@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.proxy;
+package org.imesense.dynamicspawncontrol.technical.proxy;
 
 import java.util.concurrent.Callable;
 
@@ -11,44 +11,61 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * Sided proxy
+ * Server sided proxy
  */
-public interface IProxy
+public class ServerProxy implements IProxy
 {
     /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
      */
-    void preInit(FMLPreInitializationEvent event);
+    @Override
+    public void preInit(FMLPreInitializationEvent event)
+    {
+    }
 
     /**
      * Initialize modification
      * 
      * @param event Initialization event
      */
-    void init(FMLInitializationEvent event);
+    @Override
+    public void init(FMLInitializationEvent event)
+    {
+    }
 
     /**
      * Postinitialize modification
      * 
      * @param event Postinitialization event
      */
-    void postInit(FMLPostInitializationEvent event);
+    @Override
+    public void postInit(FMLPostInitializationEvent event)
+    {
+    }
 
     /**
      * Get client world instance
      * 
      * @return Current world instance
      */
-    World getClientWorld();
+    @Override
+    public World getClientWorld()
+    {
+        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+    }
 
     /**
      * Get client player instance
      * 
      * @return Current player instance
      */
-    EntityPlayer getClientPlayer();
+    @Override
+    public EntityPlayer getClientPlayer()
+    {
+        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+    }
 
     /**
      * Add task to schedule for execution on client
@@ -57,7 +74,11 @@ public interface IProxy
      * @param callableToSchedule Task to complete
      * @return Task result
      */
-    <T> ListenableFuture<T> addScheduledTaskClient(Callable<T> callableToSchedule);
+    @Override
+    public <T> ListenableFuture<T> addScheduledTaskClient(Callable<T> callableToSchedule)
+    {
+        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+    }
 
     /**
      * Add task to schedule for execution on client
@@ -65,5 +86,9 @@ public interface IProxy
      * @param runnableToSchedule Task to complete
      * @return Task result
      */
-    ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule);
+    @Override
+    public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule)
+    {
+        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+    }
 }

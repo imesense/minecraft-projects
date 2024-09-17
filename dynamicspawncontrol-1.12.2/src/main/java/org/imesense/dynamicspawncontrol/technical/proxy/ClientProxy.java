@@ -1,9 +1,10 @@
-package org.imesense.dynamicspawncontrol.proxy;
+package org.imesense.dynamicspawncontrol.technical.proxy;
 
 import java.util.concurrent.Callable;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -11,9 +12,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * Server sided proxy
+ * Client sided proxy
  */
-public class ServerProxy implements IProxy
+public class ClientProxy implements IProxy
 {
     /**
      * Preinitialize modification
@@ -53,7 +54,7 @@ public class ServerProxy implements IProxy
     @Override
     public World getClientWorld()
     {
-        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+        return Minecraft.getMinecraft().world;
     }
 
     /**
@@ -64,7 +65,7 @@ public class ServerProxy implements IProxy
     @Override
     public EntityPlayer getClientPlayer()
     {
-        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+        return Minecraft.getMinecraft().player;
     }
 
     /**
@@ -75,9 +76,9 @@ public class ServerProxy implements IProxy
      * @return Task result
      */
     @Override
-    public <T> ListenableFuture<T> addScheduledTaskClient(Callable<T> callableToSchedule)
+    public synchronized <T> ListenableFuture<T> addScheduledTaskClient(Callable<T> callableToSchedule)
     {
-        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+        return Minecraft.getMinecraft().addScheduledTask(callableToSchedule);
     }
 
     /**
@@ -87,8 +88,8 @@ public class ServerProxy implements IProxy
      * @return Task result
      */
     @Override
-    public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule)
+    public synchronized ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule)
     {
-        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
+        return Minecraft.getMinecraft().addScheduledTask(runnableToSchedule);
     }
 }

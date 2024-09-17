@@ -1,7 +1,5 @@
 package org.imesense.dynamicspawncontrol;
 
-import net.minecraft.init.Blocks;
-
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -12,19 +10,17 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
-import org.apache.logging.log4j.Logger;
-
-import org.imesense.dynamicspawncontrol.proxy.IProxy;
+import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 
 /**
  * Main class of modification
  */
 @Mod(
-    modid = EmptyMod.MODID,
-    name = EmptyMod.NAME,
-    version = EmptyMod.VERSION
+    modid = DynamicSpawnControl.MODID,
+    name = DynamicSpawnControl.NAME,
+    version = DynamicSpawnControl.VERSION
 )
-public class EmptyMod
+public class DynamicSpawnControl
 {
     /**
      * Modification ID
@@ -34,7 +30,7 @@ public class EmptyMod
     /**
      * Modification name
      */
-    public static final String NAME = "Empty Mod";
+    public static final String NAME = "Dynamic Spawn Control";
 
     /**
      * Minecraft version
@@ -42,15 +38,10 @@ public class EmptyMod
     public static final String VERSION = "1.12.2-14.23.5.2860";
 
     /**
-     * Logger object
-     */
-    private static Logger logger;
-
-    /**
      * Main class instance
      */
     @Mod.Instance
-    public static EmptyMod Instance;
+    public static DynamicSpawnControl Instance;
 
     /**
      * Sided proxy settings
@@ -62,6 +53,14 @@ public class EmptyMod
     public static IProxy Proxy;
 
     /**
+     * Constructor
+     */
+    public DynamicSpawnControl()
+    {
+        Instance = this;
+    }
+
+    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
@@ -69,8 +68,6 @@ public class EmptyMod
     @EventHandler
     public synchronized void preInit(FMLPreInitializationEvent event)
     {
-        logger = event.getModLog();
-
         Proxy.preInit(event);
     }
 
@@ -83,8 +80,6 @@ public class EmptyMod
     public synchronized void init(FMLInitializationEvent event)
     {
         Proxy.init(event);
-
-        logger.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
     /**
