@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.configs;
 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,15 @@ public class ConfigManager
      */
     static
     {
-        settingList.add(new SettingsLogFile());
+        settingList.add(new SettingsLogFile("SettingsLogFile"));
+    }
+
+    /**
+     *
+     */
+    public ConfigManager(final String nameClass)
+    {
+        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
     }
 
     /**

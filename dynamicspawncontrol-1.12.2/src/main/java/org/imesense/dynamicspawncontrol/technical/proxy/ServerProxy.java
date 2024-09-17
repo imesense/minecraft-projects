@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 /**
  * Server sided proxy
  */
-public class ServerProxy implements IProxy
+public final class ServerProxy implements IProxy
 {
     /**
      * Preinitialize modification

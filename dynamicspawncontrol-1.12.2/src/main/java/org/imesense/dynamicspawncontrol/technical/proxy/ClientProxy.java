@@ -16,8 +16,11 @@ import org.imesense.dynamicspawncontrol.technical.configs.ConfigManager;
 /**
  * Client sided proxy
  */
-public class ClientProxy implements IProxy
+public final class ClientProxy implements IProxy
 {
+    /**
+     *
+     */
     public static Configuration ConfigLogFile;
 
     /**

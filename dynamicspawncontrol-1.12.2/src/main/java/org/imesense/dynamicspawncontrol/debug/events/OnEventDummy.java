@@ -8,7 +8,7 @@ public final class OnEventDummy
     /**
      *
      */
-    public OnEventDummy()
+    public OnEventDummy(final String nameClass)
     {
 
     }
