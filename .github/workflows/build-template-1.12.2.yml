@@ -1,4 +1,4 @@
-name: 'Build template (1.12.2)'
+name: 'Build Forge template (1.12.2)'
 
 on:
   push:
