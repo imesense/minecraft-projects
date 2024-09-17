@@ -11,6 +11,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.imesense.dynamicspawncontrol.gameplay.worldgenerator.NetherRackGenerator;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigManager;
 
 /**
@@ -29,6 +31,11 @@ public final class ClientProxy implements IProxy
     public static Configuration ConfigGameDebugger;
 
     /**
+     *
+     */
+    public static Configuration ConfigOreGeneratorFile;
+
+    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
@@ -37,6 +44,8 @@ public final class ClientProxy implements IProxy
     public void preInit(FMLPreInitializationEvent event)
     {
         ConfigManager.init(event);
+
+        GameRegistry.registerWorldGenerator(new NetherRackGenerator("NetherRackGenerator"), 3);
     }
 
     /**
@@ -59,6 +68,7 @@ public final class ClientProxy implements IProxy
     {
         ConfigLogFile.save();
         ConfigGameDebugger.save();
+        ConfigOreGeneratorFile.save();
     }
 
     /**
