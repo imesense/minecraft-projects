@@ -22,6 +22,7 @@ public class ConfigManager
     static
     {
         settingList.add(new SettingsLogFile("SettingsLogFile"));
+        settingList.add(new SettingsGameDebugger("SettingsGameDebugger"));
     }
 
     /**
