@@ -17,13 +17,24 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
+/**
+ *
+ */
 public final class OnUpdateTorchLogic
 {
+    /**
+     *
+     * @param nameClass
+     */
     public OnUpdateTorchLogic(final String nameClass)
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
     }
 
+    /**
+     *
+     * @param event
+     */
     @SubscribeEvent
     public synchronized void onHit(LivingHurtEvent event)
     {
@@ -63,6 +74,10 @@ public final class OnUpdateTorchLogic
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @SubscribeEvent
     public synchronized void onBreak(BlockEvent.BreakEvent event)
     {

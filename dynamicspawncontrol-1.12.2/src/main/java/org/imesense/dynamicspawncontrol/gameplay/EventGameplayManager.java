@@ -4,18 +4,30 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
+/**
+ *
+ */
 public final class EventGameplayManager
 {
+    /**
+     *
+     */
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnUpdateTorchLogic.class
     };
 
+    /**
+     *
+     */
     public EventGameplayManager()
     {
 
     }
 
+    /**
+     *
+     */
     public static void registerClasses()
     {
         for (Class<?> eventClass : EVENT_CLASSES)
