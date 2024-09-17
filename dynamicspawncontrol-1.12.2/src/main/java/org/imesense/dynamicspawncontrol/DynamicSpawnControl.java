@@ -26,41 +26,79 @@ import java.io.File;
  * Main class of modification
  */
 @Mod(
-    modid = DynamicSpawnControl.MODID,
-    name = DynamicSpawnControl.NAME,
-    version = DynamicSpawnControl.VERSION
+    modid = DynamicSpawnControl.STRUCT_INFO_MOD.MOD_ID,
+    name = DynamicSpawnControl.STRUCT_INFO_MOD.NAME,
+    version = DynamicSpawnControl.STRUCT_INFO_MOD.VERSION
 )
 public class DynamicSpawnControl
 {
     /**
-     * Modification ID
+     *
      */
-    public static final String MODID = "dynamicspawncontrol";
+    public static final class STRUCT_INFO_MOD
+    {
+        /**
+         * Modification ID
+         */
+        public static final String MOD_ID = "dynamicspawncontrol";
 
-    /**
-     * Modification name
-     */
-    public static final String NAME = "Dynamic Spawn Control";
+        /**
+         * Modification name
+         */
+        public static final String NAME = "Dynamic Spawn Control";
 
-    /**
-     * Minecraft version
-     */
-    public static final String VERSION = "1.12.2-14.23.5.2860";
+        /**
+         * Minecraft version
+         */
+        public static final String VERSION = "1.12.2-14.23.5.2860";
+    }
 
     /**
      *
      */
-    public static final String NAME_DIRECTORY = "DynamicsSpawnControl";
+    public static final class STRUCT_FILES_DIRS
+    {
+        /**
+         *
+         */
+        public static final String NAME_DIRECTORY = "DynamicsSpawnControl";
+
+        /**
+         *
+         */
+        public static final String NAME_DIR_CONFIGS = "configs";
+
+        /**
+         *
+         */
+        public static final String NAME_DIR_SCRIPTS = "scripts";
+
+        /**
+         *
+         */
+        public static final String NAME_DIR_LOGS = "logs";
+    }
 
     /**
      *
      */
-    public static final String CONFIG_FILE_EXTENSION = ".cfg";
+    public static final class STRUCT_FILES_EXTENSION
+    {
+        /**
+         *
+         */
+        public static final String CONFIG_FILE_EXTENSION = ".cfg";
 
-    /**
-     *
-     */
-    public static final String SCRIPT_FILE_EXTENSION = ".json";
+        /**
+         *
+         */
+        public static final String SCRIPT_FILE_EXTENSION = ".json";
+
+        /**
+         *
+         */
+        public static final String LOG_FILE_EXTENSION = ".txt";
+    }
 
     /**
      * Main class instance
@@ -121,7 +159,7 @@ public class DynamicSpawnControl
         globalDirectory = event.getModConfigurationDirectory();
 
         //
-        Log.createLogFile(globalDirectory.getPath() + File.separator + NAME_DIRECTORY);
+        Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY);
         Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
 
         //
