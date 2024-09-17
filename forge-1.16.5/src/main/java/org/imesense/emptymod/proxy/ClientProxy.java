@@ -11,8 +11,6 @@ public class ClientProxy implements IProxy
 {
     /**
      * Initialize modification
-     * 
-     * @param event Initialization event
      */
     @Override
     public void init()

@@ -10,8 +10,6 @@ public class ServerProxy implements IProxy
 {
     /**
      * Initialize modification
-     * 
-     * @param event Initialization event
      */
     @Override
     public void init()

@@ -49,11 +49,6 @@ public class EmptyMod
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * Weak reference to Minecraft instance to prevent memory leak
-     */
-    private WeakReference<Minecraft> minecraftWeakRef;
-
-    /**
      * Constructs main class object
      */
     public EmptyMod()
@@ -115,17 +110,8 @@ public class EmptyMod
      */
     private void doClientStuff(final FMLClientSetupEvent event)
     {
-        // Use weak reference to prevent memory leak
-        minecraftWeakRef = new WeakReference<>(event.getMinecraftSupplier().get());
-        Minecraft mcInstance = minecraftWeakRef.get();
-        if (mcInstance != null)
-        {
-            LOGGER.info("Got game settings {}", mcInstance.options);
-        }
-        else
-        {
-            LOGGER.warn("Minecraft instance is no longer available (garbage collected)");
-        }
+        Minecraft mcInstance = event.getMinecraftSupplier().get();
+        LOGGER.info("Got game settings {}", mcInstance.options);
     }
 
     /**
