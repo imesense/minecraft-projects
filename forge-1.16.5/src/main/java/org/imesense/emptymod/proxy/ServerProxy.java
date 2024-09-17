@@ -24,7 +24,7 @@ public class ServerProxy implements IProxy
     @Override
     public World getClientWorld()
     {
-        return null;
+        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
     }
 
     /**
@@ -35,6 +35,6 @@ public class ServerProxy implements IProxy
     @Override
     public PlayerEntity getClientPlayer()
     {
-        return null;
+        throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
     }
 }
