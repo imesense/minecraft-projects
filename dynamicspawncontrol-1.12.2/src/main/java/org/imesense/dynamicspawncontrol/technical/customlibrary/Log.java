@@ -1,5 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
+import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
+
 import javax.annotation.Nonnull;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public final class Log
 
             writer.write("***********************************************");
             writer.write("\n** Log file created: " + currentDate);
-            writer.write("\n** DynamicSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
+            writer.write("\n** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
             writer.write("\n***********************************************");
 
             writer.close();
@@ -123,7 +125,7 @@ public final class Log
                     writer.write("\n" + typeInfo + data);
                     writer.close();
 
-                    cleanFile(logFile, 2000/*INFConfigLog._logMaxLines*/);
+                    cleanFile(logFile, SettingsLogFile.LogMaxLines);
                     System.out.println("The data has been successfully written to the log file: " + logFile.getAbsolutePath());
                 }
                 catch (IOException e)
