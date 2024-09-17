@@ -32,14 +32,14 @@ public final class SettingsLogFile implements IConfig
      * @param nameClass
      */
     @Override
-    public void init(FMLPreInitializationEvent event, String nameClass)
+    public void init(FMLPreInitializationEvent event, final String nameClass)
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
         ClientProxy.ConfigLogFile = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
                 File.separator + DynamicSpawnControl.NAME_DIRECTORY + File.separator + "configs", "log" + DynamicSpawnControl.CONFIG_FILE_EXTENSION));
 
-        read();
+        this.read();
     }
 
     /**
@@ -67,7 +67,7 @@ public final class SettingsLogFile implements IConfig
         {
             configuration.load();
 
-            readProperties(configuration);
+            this.readProperties(configuration);
         }
         finally
         {

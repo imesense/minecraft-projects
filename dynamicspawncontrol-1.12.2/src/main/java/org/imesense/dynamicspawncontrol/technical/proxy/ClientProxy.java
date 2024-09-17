@@ -24,6 +24,11 @@ public final class ClientProxy implements IProxy
     public static Configuration ConfigLogFile;
 
     /**
+     *
+     */
+    public static Configuration ConfigGameDebugger;
+
+    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
@@ -53,6 +58,7 @@ public final class ClientProxy implements IProxy
     public void postInit(FMLPostInitializationEvent event)
     {
         ConfigLogFile.save();
+        ConfigGameDebugger.save();
     }
 
     /**
