@@ -24,6 +24,7 @@ public class ConfigManager
         settingList.add(new SettingsLogFile("SettingsLogFile"));
         settingList.add(new SettingsGameDebugger("SettingsGameDebugger"));
         settingList.add(new SettingsWorldGenerator("SettingsWorldGenerator"));
+        settingList.add(new SettingsRenderNight("SettingsRenderNight"));
     }
 
     /**
