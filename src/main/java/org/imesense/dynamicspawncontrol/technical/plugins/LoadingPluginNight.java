@@ -77,7 +77,7 @@ public final class LoadingPluginNight implements IFMLLoadingPlugin
     {
         RUNTIME_DEOBF = (Boolean) data.get("runtimeDeobfuscationEnabled");
         FILE_LOCATION = (File) data.get("coremodLocation");
-        
+
         if (FILE_LOCATION == null)
         {
             FILE_LOCATION = new File(
