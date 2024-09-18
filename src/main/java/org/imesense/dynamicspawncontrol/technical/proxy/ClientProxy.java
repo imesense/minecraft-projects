@@ -37,6 +37,11 @@ public final class ClientProxy implements IProxy
     public static Configuration ConfigOreGeneratorFile;
 
     /**
+     *
+     */
+    public static Configuration ConfigNights;
+
+    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
@@ -70,6 +75,7 @@ public final class ClientProxy implements IProxy
         CodeGenericUtils.checkObjectNotNull(ConfigLogFile, "ConfigLogFile").save();
         CodeGenericUtils.checkObjectNotNull(ConfigGameDebugger, "ConfigGameDebugger").save();
         CodeGenericUtils.checkObjectNotNull(ConfigOreGeneratorFile, "ConfigOreGeneratorFile").save();
+        CodeGenericUtils.checkObjectNotNull(ConfigNights, "ConfigNights").save();
     }
 
     /**
