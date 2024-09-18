@@ -18,7 +18,9 @@ import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.configs.IConfig;
 import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
+import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 import java.io.File;
 
@@ -118,6 +120,11 @@ public class DynamicSpawnControl
 
     /**
      *
+     */
+    static CacheStorage cacheStorage = null;
+
+    /**
+     *
      * @return
      */
     public static File getGlobalPathToConfigs()
@@ -161,6 +168,9 @@ public class DynamicSpawnControl
         //
         Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY);
         Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
+
+        //
+        cacheStorage = new CacheStorage("CacheStorage");
 
         //
         EventGameplayManager.registerClasses();
@@ -222,7 +232,8 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
-        //
+        Structures.StructuresCache.clean();
+
         Log.closeExecutor();
     }
 }
