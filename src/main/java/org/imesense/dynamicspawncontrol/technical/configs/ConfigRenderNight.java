@@ -11,7 +11,7 @@ import java.io.File;
 /**
  *
  */
-public class SettingsRenderNight implements IConfig
+public class ConfigRenderNight implements IConfig
 {
     /**
      *
@@ -77,7 +77,7 @@ public class SettingsRenderNight implements IConfig
      *
      * @param nameClass
      */
-    public SettingsRenderNight(final String nameClass)
+    public ConfigRenderNight(final String nameClass)
     {
 
     }

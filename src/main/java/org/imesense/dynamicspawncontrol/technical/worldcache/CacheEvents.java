@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 
 import java.util.HashSet;
 
@@ -52,7 +52,7 @@ public class CacheEvents
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public synchronized void onRenderOverlay(RenderGameOverlayEvent.Post event)
     {
-        if (!SettingsGameDebugger.DebugMonitorCache)
+        if (!ConfigGameDebugger.DebugMonitorCache)
         {
             return;
         }

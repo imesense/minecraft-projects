@@ -11,7 +11,7 @@ import java.io.File;
 /**
  *
  */
-public final class SettingsGameDebugger implements IConfig
+public final class ConfigGameDebugger implements IConfig
 {
     /**
      *
@@ -72,7 +72,7 @@ public final class SettingsGameDebugger implements IConfig
      *
      * @param nameClass
      */
-    public SettingsGameDebugger(final String nameClass)
+    public ConfigGameDebugger(final String nameClass)
     {
 
     }

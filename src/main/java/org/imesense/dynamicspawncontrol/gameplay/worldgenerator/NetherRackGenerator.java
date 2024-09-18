@@ -8,7 +8,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsWorldGenerator;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldGenerator;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.Objects;
@@ -84,9 +84,9 @@ public final class NetherRackGenerator implements IWorldGenerator
             {
                 run(
                         classGenerateBlockNetherRack, world, random, chunkX, chunkZ,
-                        SettingsWorldGenerator.BlockNetherrackChanceSpawn,
-                        SettingsWorldGenerator.GetBlockNetherrackMinHeight,
-                        SettingsWorldGenerator.GetBlockNetherrackMaxHeight
+                        ConfigWorldGenerator.BlockNetherrackChanceSpawn,
+                        ConfigWorldGenerator.GetBlockNetherrackMinHeight,
+                        ConfigWorldGenerator.GetBlockNetherrackMaxHeight
                 );
                 break;
             }

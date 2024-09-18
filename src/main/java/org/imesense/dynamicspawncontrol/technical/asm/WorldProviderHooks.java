@@ -4,7 +4,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldProviderEnd;
 import net.minecraft.world.WorldProviderHell;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsRenderNight;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigRenderNight;
 
 /**
  *
@@ -20,12 +20,12 @@ public final class WorldProviderHooks
      */
     public static Vec3d onGetFogColor(WorldProvider provider, float angle, float partialTicks)
     {
-        if (!SettingsRenderNight.DarknessEndFog && provider instanceof WorldProviderEnd)
+        if (!ConfigRenderNight.DarknessEndFog && provider instanceof WorldProviderEnd)
         {
             return null;
         }
 
-        if (!SettingsRenderNight.DarknessNetherFog && provider instanceof WorldProviderHell)
+        if (!ConfigRenderNight.DarknessNetherFog && provider instanceof WorldProviderHell)
         {
             return null;
         }

@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
 import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsWorldTime;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldTime;
 
 /**
  *
@@ -40,7 +40,7 @@ public final class TimeHandlerClient implements ITimeHandler
     @Override
     public void tick(World world)
     {
-        if (!SettingsWorldTime.SyncToSystemTime)
+        if (!ConfigWorldTime.SyncToSystemTime)
         {
             ++this.debugLogDelay;
 
@@ -54,7 +54,7 @@ public final class TimeHandlerClient implements ITimeHandler
 
             WorldTime.setWorldTime(world, this.customTime, this.multiplier);
 
-            if (SettingsWorldTime.TimeControlDebug && this.debugLogDelay % 20 == 0)
+            if (ConfigWorldTime.TimeControlDebug && this.debugLogDelay % 20 == 0)
             {
                 long worldTime = world.getWorldTime();
 

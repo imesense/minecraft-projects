@@ -11,7 +11,7 @@ import java.io.File;
 /**
  *
  */
-public final class SettingsLogFile implements IConfig
+public final class ConfigLogFile implements IConfig
 {
     /**
      *
@@ -21,7 +21,7 @@ public final class SettingsLogFile implements IConfig
     /**
      *
      */
-    public SettingsLogFile(final String nameClass)
+    public ConfigLogFile(final String nameClass)
     {
 
     }

@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.gameplay.gameworld;
 
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsWorldTime;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldTime;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.math.BigDecimal;
@@ -24,12 +24,12 @@ public class WorldTime
     /**
      *
      */
-    private static final double day_multiplier = multiplier(SettingsWorldTime.DayLengthMinutes);
+    private static final double day_multiplier = multiplier(ConfigWorldTime.DayLengthMinutes);
 
     /**
      *
      */
-    private static final double night_multiplier = multiplier(SettingsWorldTime.NightLengthMinutes);
+    private static final double night_multiplier = multiplier(ConfigWorldTime.NightLengthMinutes);
 
     /**
      *

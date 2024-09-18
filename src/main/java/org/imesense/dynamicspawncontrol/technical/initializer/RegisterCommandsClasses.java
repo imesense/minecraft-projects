@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.gameplay;
+package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraft.command.ICommand;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -9,7 +9,7 @@ import org.imesense.dynamicspawncontrol.gameplay.commands.*;
 /**
  *
  */
-public class RegisterCommandsManager
+public class RegisterCommandsClasses
 {
     /**
      *
@@ -34,7 +34,7 @@ public class RegisterCommandsManager
      *
      * @param nameClass
      */
-    public RegisterCommandsManager(final String nameClass)
+    public RegisterCommandsClasses(final String nameClass)
     {
 
     }

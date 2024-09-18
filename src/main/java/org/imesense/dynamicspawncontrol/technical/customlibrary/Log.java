@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigLogFile;
 
 import javax.annotation.Nonnull;
 import java.io.*;
@@ -152,7 +152,7 @@ public final class Log
                     writer.write("\n" + typeInfo + data);
                     writer.close();
 
-                    cleanFile(logFile, SettingsLogFile.LogMaxLines);
+                    cleanFile(logFile, ConfigLogFile.LogMaxLines);
                     System.out.println("The data has been successfully written to the log file: " + logFile.getAbsolutePath());
                 }
                 catch (IOException e)

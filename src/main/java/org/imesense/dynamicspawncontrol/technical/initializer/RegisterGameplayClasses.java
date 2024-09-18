@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.gameplay;
+package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
@@ -7,7 +7,7 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 /**
  *
  */
-public final class EventGameplayManager
+public final class RegisterGameplayClasses
 {
     /**
      *
@@ -20,7 +20,7 @@ public final class EventGameplayManager
     /**
      *
      */
-    public EventGameplayManager(final String nameClass)
+    public RegisterGameplayClasses(final String nameClass)
     {
 
     }
