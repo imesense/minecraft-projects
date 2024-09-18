@@ -18,7 +18,9 @@ import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.configs.IConfig;
 import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
+import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheConfig;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheEvents;
@@ -182,6 +184,9 @@ public class DynamicSpawnControl
         Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
 
         //
+        MessageHandler.init();
+
+        //
         cacheStorage = new CacheStorage("CacheStorage");
 
         //
@@ -202,6 +207,7 @@ public class DynamicSpawnControl
         Proxy.init(event);
 
         MinecraftForge.EVENT_BUS.register(new CacheEvents());
+        MinecraftForge.EVENT_BUS.register(OnUpdateTimeWorld.ClassInstance);
     }
 
     /**
