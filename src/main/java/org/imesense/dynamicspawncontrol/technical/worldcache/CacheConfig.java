@@ -58,9 +58,11 @@ public class CacheConfig
         classInstance = this;
 
         File file = (initialization)
-                ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator + "InfinityForceSpawnConfigs" +
-                File.separator + "cache", AuxFunctions.NameSingleScript.SCRIPT_CACHE_MOBS.getKeyword())
-                : new File("config/InfinityForceSpawnConfigs/cache/" +
+                ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
+                DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY +
+                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CACHE,
+                AuxFunctions.NameSingleScript.SCRIPT_CACHE_MOBS.getKeyword())
+                : new File("config/DynamicsSpawnControl/cache/" +
                 AuxFunctions.NameSingleScript.SCRIPT_CACHE_MOBS.getKeyword());
 
         if (!file.exists())

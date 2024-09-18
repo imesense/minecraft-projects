@@ -20,6 +20,8 @@ import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
+import org.imesense.dynamicspawncontrol.technical.worldcache.CacheConfig;
+import org.imesense.dynamicspawncontrol.technical.worldcache.CacheEvents;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 import java.io.File;
@@ -79,6 +81,11 @@ public class DynamicSpawnControl
          *
          */
         public static final String NAME_DIR_LOGS = "logs";
+
+        /**
+         *
+         */
+        public static final String NAME_DIR_CACHE = "cache";
     }
 
     /**
@@ -117,6 +124,11 @@ public class DynamicSpawnControl
      *
      */
     private static File globalDirectory = null;
+
+    /**
+     *
+     */
+    static CacheConfig cacheConfig = null;
 
     /**
      *
@@ -187,8 +199,9 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void init(FMLInitializationEvent event)
     {
-        //
         Proxy.init(event);
+
+        MinecraftForge.EVENT_BUS.register(new CacheEvents());
     }
 
     /**
@@ -211,6 +224,8 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void onLoadComplete(FMLLoadCompleteEvent event)
     {
+        cacheConfig = new CacheConfig("onLoadComplete -> CacheConfig");
+        cacheConfig.loadConfig(true);
     }
 
     /**
