@@ -4,6 +4,8 @@ import net.minecraft.command.ICommand;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
+import org.imesense.dynamicspawncontrol.gameplay.commands.*;
+
 /**
  *
  */
@@ -14,7 +16,18 @@ public class RegisterCommandsManager
      */
     private static final Class<?>[] COMMAND_CLASSES =
     {
-
+        cmdAdminDumpBlock.class,
+        cmdAdminDumpEntity.class,
+        cmdAdminDumpItem.class,
+        cmdAdminGameMode.class,
+        cmdAdminGetWorldMoonPhase.class,
+        cmdAdminLaunchFireball.class,
+        cmdAdminScanEntities.class,
+        cmdAdminSwitchVanish.class,
+        cmdServerJsonScriptsReload.class,
+        cmdServerMobsKiller.class,
+        cmdServerReloadCache.class,
+        cmdServerSingleScriptsReload.class
     };
 
     /**
