@@ -48,4 +48,20 @@ public class AuxFunctions
             return this._keyword;
         }
     }
+
+    /**
+     *
+     */
+    public static final class UNICODE
+    {
+        /**
+         *
+         */
+        public static char WHITE_SPACE = ' ';
+
+        /**
+         *
+         */
+        public static char SECTION = '\u00A7';
+    }
 }

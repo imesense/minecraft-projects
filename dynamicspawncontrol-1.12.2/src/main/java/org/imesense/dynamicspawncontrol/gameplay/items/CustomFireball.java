@@ -18,6 +18,11 @@ public final class CustomFireball extends EntityFireball
     /**
      *
      */
+    private double explosionStrength = 1.0;
+
+    /**
+     *
+     */
     private interface FireSpawnAction
     {
         /**
@@ -68,6 +73,15 @@ public final class CustomFireball extends EntityFireball
 
     /**
      *
+     * @param strength
+     */
+    public void setExplosionStrength(double strength)
+    {
+        this.explosionStrength = strength;
+    }
+
+    /**
+     *
      * @param result
      */
     @Override
@@ -75,7 +89,7 @@ public final class CustomFireball extends EntityFireball
     {
         if (!this.world.isRemote)
         {
-            this.world.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, 7.0f, true);
+            this.world.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float)this.explosionStrength, true);
 
             FireSpawnAction fireSpawnAction = (world, explosionPos, radius) ->
             {
