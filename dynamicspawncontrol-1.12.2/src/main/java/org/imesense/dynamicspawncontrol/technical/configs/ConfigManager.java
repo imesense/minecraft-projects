@@ -9,24 +9,19 @@ import java.util.List;
 /**
  *
  */
-public class ConfigManager
+public final class ConfigManager
 {
     /**
      *
      */
-    private static final List<IConfig> settingList = new ArrayList<>();
-
-    /**
-     *
-     */
-    static
+    private static final Class<?>[] CONFIG_CLASSES =
     {
-        settingList.add(new SettingsLogFile("SettingsLogFile"));
-        settingList.add(new SettingsGameDebugger("SettingsGameDebugger"));
-        settingList.add(new SettingsWorldGenerator("SettingsWorldGenerator"));
-        settingList.add(new SettingsRenderNight("SettingsRenderNight"));
-        settingList.add(new SettingsWorldTime("SettingsWorldTime"));
-    }
+        SettingsLogFile.class,
+        SettingsGameDebugger.class,
+        SettingsWorldGenerator.class,
+        SettingsRenderNight.class,
+        SettingsWorldTime.class
+    };
 
     /**
      *
@@ -42,9 +37,17 @@ public class ConfigManager
      */
     public static void init(FMLPreInitializationEvent event)
     {
-        for (IConfig config : settingList)
+        for (Class<?> configClass : CONFIG_CLASSES)
         {
-            config.init(event, config.getClass().getSimpleName());
+            try
+            {
+                Object configInstance = configClass.getConstructor(String.class).newInstance(configClass.getSimpleName());
+                ((IConfig)configInstance).init(event, configClass.getSimpleName());
+            }
+            catch (Exception exception)
+            {
+                Log.writeDataToLogFile(Log.TypeLog[2], "Exception in class: " + configClass.getName() + " - " + exception.getMessage());
+            }
         }
     }
 }
