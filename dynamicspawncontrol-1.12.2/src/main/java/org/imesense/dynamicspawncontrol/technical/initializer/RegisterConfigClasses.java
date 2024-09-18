@@ -1,32 +1,30 @@
-package org.imesense.dynamicspawncontrol.technical.configs;
+package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.*;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  */
-public final class ConfigManager
+public final class RegisterConfigClasses
 {
     /**
      *
      */
     private static final Class<?>[] CONFIG_CLASSES =
     {
-        SettingsLogFile.class,
-        SettingsGameDebugger.class,
-        SettingsWorldGenerator.class,
-        SettingsRenderNight.class,
-        SettingsWorldTime.class
+        ConfigLogFile.class,
+        ConfigGameDebugger.class,
+        ConfigWorldGenerator.class,
+        ConfigRenderNight.class,
+        ConfigWorldTime.class
     };
 
     /**
      *
      */
-    public ConfigManager(final String nameClass)
+    public RegisterConfigClasses(final String nameClass)
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
     }

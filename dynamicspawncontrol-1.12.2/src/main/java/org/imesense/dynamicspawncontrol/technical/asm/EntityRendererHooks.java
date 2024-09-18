@@ -8,7 +8,7 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsRenderNight;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigRenderNight;
 
 import java.lang.reflect.Field;
 
@@ -121,12 +121,12 @@ public final class EntityRendererHooks
     {
         DimensionType dimType = dimension.getDimensionType();
 
-        if (dimType == DimensionType.THE_END && !SettingsRenderNight.DarknessEnd)
+        if (dimType == DimensionType.THE_END && !ConfigRenderNight.DarknessEnd)
         {
             return true;
         }
 
-        return blacklistContains(dimension, dimType) ^ SettingsRenderNight.InvertBlacklist;
+        return blacklistContains(dimension, dimType) ^ ConfigRenderNight.InvertBlacklist;
     }
 
     /**
@@ -139,7 +139,7 @@ public final class EntityRendererHooks
     {
         String dimName = dimensionType.getName();
 
-        for (String blacklistName : SettingsRenderNight.BlacklistByName)
+        for (String blacklistName : ConfigRenderNight.BlacklistByName)
         {
             if (!blacklistName.equals(dimName))
             {
@@ -151,7 +151,7 @@ public final class EntityRendererHooks
 
         int dimID = dimension.getDimension();
 
-        for (int blacklistID : SettingsRenderNight.BlacklistByID)
+        for (int blacklistID : ConfigRenderNight.BlacklistByID)
         {
             if (dimID != blacklistID)
             {
@@ -174,23 +174,23 @@ public final class EntityRendererHooks
     {
         if (dimensionType == DimensionType.OVERWORLD)
         {
-            return SettingsRenderNight.DarknessOverWorld;
+            return ConfigRenderNight.DarknessOverWorld;
         }
         else if (dimensionType == DimensionType.NETHER)
         {
-            return SettingsRenderNight.DarknessNether;
+            return ConfigRenderNight.DarknessNether;
         }
         else if (dimensionType == DimensionType.THE_END)
         {
-            return SettingsRenderNight.DarknessEnd;
+            return ConfigRenderNight.DarknessEnd;
         }
         else if (dimension.hasSkyLight())
         {
-            return SettingsRenderNight.DarknessDefault;
+            return ConfigRenderNight.DarknessDefault;
         }
         else
         {
-            return SettingsRenderNight.DarknessSkyLess;
+            return ConfigRenderNight.DarknessSkyLess;
         }
     }
 
@@ -224,9 +224,9 @@ public final class EntityRendererHooks
 
         final double moon;
 
-        if (!SettingsRenderNight.IgnoreMoonLight)
+        if (!ConfigRenderNight.IgnoreMoonLight)
         {
-            double[] phaseFactors = SettingsRenderNight.MoonPhaseFactors;
+            double[] phaseFactors = ConfigRenderNight.MoonPhaseFactors;
             int moonPhase = dim.getMoonPhase(world.getWorldTime());
 
             if (moonPhase < phaseFactors.length)

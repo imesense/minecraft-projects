@@ -12,11 +12,8 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
-import org.imesense.dynamicspawncontrol.gameplay.EventGameplayManager;
-import org.imesense.dynamicspawncontrol.gameplay.RegisterCommandsManager;
-import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
-import org.imesense.dynamicspawncontrol.technical.configs.IConfig;
-import org.imesense.dynamicspawncontrol.technical.configs.SettingsLogFile;
+import org.imesense.dynamicspawncontrol.technical.initializer.RegisterGameplayClasses;
+import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCommandsClasses;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
@@ -190,7 +187,7 @@ public class DynamicSpawnControl
         cacheStorage = new CacheStorage("CacheStorage");
 
         //
-        EventGameplayManager.registerClasses();
+        RegisterGameplayClasses.registerClasses();
 
         //
         Proxy.preInit(event);
@@ -242,7 +239,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverLoad(FMLServerStartingEvent event)
     {
-        RegisterCommandsManager.registerCommands(event);
+        RegisterCommandsClasses.registerCommands(event);
     }
 
     /**

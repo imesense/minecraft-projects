@@ -11,7 +11,7 @@ import java.io.File;
 /**
  *
  */
-public final class SettingsWorldGenerator implements IConfig
+public final class ConfigWorldGenerator implements IConfig
 {
     /**
      *
@@ -32,7 +32,7 @@ public final class SettingsWorldGenerator implements IConfig
      *
      * @param nameClass
      */
-    public SettingsWorldGenerator(final String nameClass)
+    public ConfigWorldGenerator(final String nameClass)
     {
 
     }

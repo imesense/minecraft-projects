@@ -11,7 +11,7 @@ import java.io.File;
 /**
  *
  */
-public final class SettingsWorldTime implements IConfig
+public final class ConfigWorldTime implements IConfig
 {
     /**
      *
@@ -42,7 +42,7 @@ public final class SettingsWorldTime implements IConfig
      *
      * @param nameClass
      */
-    public SettingsWorldTime(final String nameClass)
+    public ConfigWorldTime(final String nameClass)
     {
 
     }

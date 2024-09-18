@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.gameplay.worldgenerator.NetherRackGenerator;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigManager;
+import org.imesense.dynamicspawncontrol.technical.initializer.RegisterConfigClasses;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
 /**
@@ -54,7 +54,7 @@ public final class ClientProxy implements IProxy
     @Override
     public void preInit(FMLPreInitializationEvent event)
     {
-        ConfigManager.init(event);
+        RegisterConfigClasses.init(event);
 
         GameRegistry.registerWorldGenerator(new NetherRackGenerator("NetherRackGenerator"), 3);
     }
