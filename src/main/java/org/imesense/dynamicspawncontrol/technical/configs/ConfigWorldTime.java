@@ -57,10 +57,7 @@ public final class ConfigWorldTime implements IConfig
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
-        ClientProxy.ConfigWorldTime = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS, "world_time" +
-                DynamicSpawnControl.STRUCT_FILES_EXTENSION.CONFIG_FILE_EXTENSION));
+        ClientProxy.ConfigWorldTime = this.createConfiguration("world_time");
 
         this.read();
     }

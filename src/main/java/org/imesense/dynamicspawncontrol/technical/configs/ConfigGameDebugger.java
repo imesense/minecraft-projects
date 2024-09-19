@@ -87,10 +87,7 @@ public final class ConfigGameDebugger implements IConfig
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
-        ClientProxy.ConfigGameDebugger = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS,
-                "game_debugger" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.CONFIG_FILE_EXTENSION));
+        ClientProxy.ConfigGameDebugger = this.createConfiguration("game_debugger");
 
         this.read();
     }

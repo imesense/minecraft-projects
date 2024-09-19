@@ -62,10 +62,7 @@ public final class ConfigZombieDropItem implements IConfig
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
-        ClientProxy.ConfigZombieDropItem = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator +
-                DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS, "zombie_drop" +
-                DynamicSpawnControl.STRUCT_FILES_EXTENSION.CONFIG_FILE_EXTENSION));
+        ClientProxy.ConfigZombieDropItem = this.createConfiguration("zombie_drop");
 
         this.read();
     }

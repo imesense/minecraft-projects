@@ -32,10 +32,7 @@ public final class ConfigPlayer implements IConfig
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
-        ClientProxy.ConfigPlayer = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator +
-                DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS, "player" +
-                DynamicSpawnControl.STRUCT_FILES_EXTENSION.CONFIG_FILE_EXTENSION));
+        ClientProxy.ConfigPlayer = this.createConfiguration("player");
 
         this.read();
     }

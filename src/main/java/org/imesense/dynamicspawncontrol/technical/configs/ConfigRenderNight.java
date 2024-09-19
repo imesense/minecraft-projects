@@ -92,9 +92,7 @@ public class ConfigRenderNight implements IConfig
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
-        ClientProxy.ConfigNights = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator +
-                DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS, "nights" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.CONFIG_FILE_EXTENSION));
+        ClientProxy.ConfigNights = this.createConfiguration("nights");
 
         this.read();
     }
