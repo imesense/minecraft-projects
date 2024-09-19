@@ -47,6 +47,16 @@ public final class ClientProxy implements IProxy
     public static Configuration ConfigWorldTime;
 
     /**
+     *
+     */
+    public static Configuration ConfigPlayer;
+
+    /**
+     *
+     */
+    public static Configuration ConfigZombieDropItem;
+
+    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
@@ -82,6 +92,8 @@ public final class ClientProxy implements IProxy
         CodeGenericUtils.checkObjectNotNull(ConfigOreGeneratorFile, "ConfigOreGeneratorFile").save();
         CodeGenericUtils.checkObjectNotNull(ConfigNights, "ConfigNights").save();
         CodeGenericUtils.checkObjectNotNull(ConfigWorldTime, "ConfigWorldTime").save();
+        CodeGenericUtils.checkObjectNotNull(ConfigPlayer, "ConfigPlayer").save();
+        CodeGenericUtils.checkObjectNotNull(ConfigZombieDropItem, "ConfigZombieDropItem").save();
     }
 
     /**

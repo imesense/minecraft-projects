@@ -18,7 +18,9 @@ public final class RegisterConfigClasses
         ConfigGameDebugger.class,
         ConfigWorldGenerator.class,
         ConfigRenderNight.class,
-        ConfigWorldTime.class
+        ConfigWorldTime.class,
+        ConfigPlayer.class,
+        ConfigZombieDropItem.class
     };
 
     /**
