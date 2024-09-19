@@ -104,65 +104,101 @@ public class ConfigRenderNight implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        DarknessOverWorld =
-                configuration.getBoolean
-                        ("Darkness OverWorld", "nights", DarknessOverWorld,
-                                "Darker illumination of the light from the blocks. (Over World)");
+        DarknessOverWorld = this.getConfigValueB(
+                configuration,
+                "Darkness OverWorld",
+                "nights",
+                DarknessOverWorld,
+                "Darker illumination of the light from the blocks. (Over World)"
+        );
 
-        DarknessNether =
-                configuration.getBoolean
-                        ("Darkness Nether", "nights", DarknessNether,
-                                "Darker illumination of the light from the blocks. (Nether)");
+        DarknessNether = this.getConfigValueB(
+                configuration,
+                "Darkness Nether",
+                "nights",
+                DarknessNether,
+                "Darker illumination of the light from the blocks. (Nether)"
+        );
 
-        DarknessEnd =
-                configuration.getBoolean
-                        ("Darkness End", "nights", DarknessEnd,
-                                "Darker illumination of the light from the blocks. (End)");
+        DarknessEnd = this.getConfigValueB(
+                configuration,
+                "Darkness End",
+                "nights",
+                DarknessEnd,
+                "Darker illumination of the light from the blocks. (End)"
+        );
 
-        DarknessDefault =
-                configuration.getBoolean
-                        ("Darkness Default", "nights", DarknessDefault,
-                                "Darker skies (Default)");
+        DarknessDefault = this.getConfigValueB(
+                configuration,
+                "Darkness Default",
+                "nights",
+                DarknessDefault,
+                "Darker skies (Default)"
+        );
 
-        DarknessSkyLess =
-                configuration.getBoolean
-                        ("Darkness Sky Less", "nights", DarknessSkyLess,
-                                "Darker sky less (Default)");
+        DarknessSkyLess = this.getConfigValueB(
+                configuration,
+                "Darkness Sky Less",
+                "nights",
+                DarknessSkyLess,
+                "Darker sky less (Default)"
+        );
 
-        DarknessNetherFog =
-                configuration.getBoolean
-                        ("Darkness Nether Fog", "nights", DarknessNetherFog,
-                                "The darkness of the fog in the lower world");
+        DarknessNetherFog = this.getConfigValueB(
+                configuration,
+                "Darkness Nether Fog",
+                "nights",
+                DarknessNetherFog,
+                "The darkness of the fog in the lower world"
+        );
 
-        DarknessEndFog =
-                configuration.getBoolean
-                        ("Darkness End Fog", "nights", DarknessEndFog,
-                                "Dark fog in the ender world");
+        DarknessEndFog = this.getConfigValueB(
+                configuration,
+                "Darkness End Fog",
+                "nights",
+                DarknessEndFog,
+                "Dark fog in the ender world"
+        );
 
-        IgnoreMoonLight =
-                configuration.getBoolean
-                        ("Ignore Moon Light", "nights", IgnoreMoonLight,
-                                "Ignoring the phases of the moon. It's always dark");
+        IgnoreMoonLight = this.getConfigValueB(
+                configuration,
+                "Ignore Moon Light",
+                "nights",
+                IgnoreMoonLight,
+                "Ignoring the phases of the moon. It's always dark"
+        );
 
-        InvertBlacklist =
-                configuration.getBoolean
-                        ("Invert Black list", "nights", InvertBlacklist,
-                                "Inverting the list, ignoring the worlds where darkness should be disabled");
+        InvertBlacklist = this.getConfigValueB(
+                configuration,
+                "Invert Black list",
+                "nights",
+                InvertBlacklist,
+                "Inverting the list, ignoring the worlds where darkness should be disabled"
+        );
 
-        BlacklistByID =
-                configuration.get
-                        ("nights", "Black List By ID", BlacklistByID,
-                                "A leaf representing ignoring worlds where darkness should not be present").getIntList();
+        BlacklistByID = this.getIntListConfigValue(
+                configuration,
+                "Black List By ID",
+                "nights",
+                BlacklistByID,
+                "A leaf representing ignoring worlds where darkness should not be present"
+        );
 
-        MoonPhaseFactors =
-                configuration.get
-                        ("nights", "Moon Phase Factors", MoonPhaseFactors,
-                                "The illumination factor of the night from the phases of the moons").getDoubleList();
+        MoonPhaseFactors = this.getDoubleListConfigValue(
+                configuration,
+                "Moon Phase Factors",
+                "nights",
+                MoonPhaseFactors,
+                "The illumination factor of the night from the phases of the moons"
+        );
 
-        BlacklistByName =
-                configuration.get
-                        ("nights", "Black list By Name", BlacklistByName,
-                                "A leaf representing ignoring worlds where darkness should not be present").getStringList();
+        BlacklistByName = this.getStringListConfigValue(
+                configuration,
+                "Black list By Name",
+                "nights",
+                BlacklistByName,
+                "A leaf representing ignoring worlds where darkness should not be present"
+        );
     }
 
     /**

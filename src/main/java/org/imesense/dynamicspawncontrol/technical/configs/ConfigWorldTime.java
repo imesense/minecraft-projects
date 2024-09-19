@@ -69,25 +69,51 @@ public final class ConfigWorldTime implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        TimeControlDebug =
-                configuration.getBoolean("TimeControlDebug", "game_time", TimeControlDebug,
-                        "Debugging information about the current time");
+        TimeControlDebug = this.getConfigValueB(
+                configuration,
+                "TimeControlDebug",
+                "game_time",
+                TimeControlDebug,
+                "Debugging information about the current time"
+        );
 
-        SyncToSystemTime =
-                configuration.getBoolean("SyncToSystemTime", "game_time", SyncToSystemTime,
-                        "Synchronize in-world time with system time");
+        SyncToSystemTime = this.getConfigValueB(
+                configuration,
+                "SyncToSystemTime",
+                "game_time",
+                SyncToSystemTime,
+                "Synchronize in-world time with system time"
+        );
 
-        SyncToSystemTimeRate =
-                configuration.getInt("SyncToSystemTimeRate", "game_time", SyncToSystemTimeRate, 1, 864000,
-                        "Sync time every n ticks");
+        SyncToSystemTimeRate = this.getConfigValueI(
+                configuration,
+                "SyncToSystemTimeRate",
+                "game_time",
+                SyncToSystemTimeRate,
+                1,
+                864000,
+                "Sync time every n ticks"
+        );
 
-        DayLengthMinutes =
-                configuration.getInt("DayLengthMinutes", "game_time", DayLengthMinutes, 0, 12000,
-                        "How long daytime lasts");
+        DayLengthMinutes = this.getConfigValueI(
+                configuration,
+                "DayLengthMinutes",
+                "game_time",
+                DayLengthMinutes,
+                0,
+                12000,
+                "How long daytime lasts"
+        );
 
-        NightLengthMinutes =
-                configuration.getInt("NightLengthMinutes", "game_time", NightLengthMinutes, 0, 12000,
-                        "How long nighttime lasts");
+        NightLengthMinutes = this.getConfigValueI(
+                configuration,
+                "NightLengthMinutes",
+                "game_time",
+                NightLengthMinutes,
+                0,
+                12000,
+                "How long nighttime lasts"
+        );
     }
 
     /**

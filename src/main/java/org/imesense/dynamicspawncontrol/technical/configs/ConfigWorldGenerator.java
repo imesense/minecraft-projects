@@ -59,17 +59,35 @@ public final class ConfigWorldGenerator implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        BlockNetherrackChanceSpawn =
-                configuration.getInt("Ore Netherrack Chance Spawn", "ore_generator_over_world", BlockNetherrackChanceSpawn, 1, 100,
-                        "The chance of 'netherrack' appearing");
+        BlockNetherrackChanceSpawn = this.getConfigValueI(
+                configuration,
+                "Ore Netherrack Chance Spawn",
+                "ore_generator_over_world",
+                BlockNetherrackChanceSpawn,
+                1,
+                100,
+                "The chance of 'netherrack' appearing"
+        );
 
-        GetBlockNetherrackMinHeight =
-                configuration.getInt("Ore Netherrack Min Height", "ore_generator_over_world", GetBlockNetherrackMinHeight, 2, 10,
-                        "The minimal height of 'netherrack' appearing");
+        GetBlockNetherrackMinHeight = this.getConfigValueI(
+                configuration,
+                "Ore Netherrack Min Height",
+                "ore_generator_over_world",
+                GetBlockNetherrackMinHeight,
+                2,
+                10,
+                "The minimal height of 'netherrack' appearing"
+        );
 
-        GetBlockNetherrackMaxHeight =
-                configuration.getInt("Ore Netherrack Max Height", "ore_generator_over_world", GetBlockNetherrackMaxHeight, 10, 20,
-                        "The maximal height of 'netherrack' appearing");
+        GetBlockNetherrackMaxHeight = this.getConfigValueI(
+                configuration,
+                "Ore Netherrack Max Height",
+                "ore_generator_over_world",
+                GetBlockNetherrackMaxHeight,
+                10,
+                20,
+                "The maximal height of 'netherrack' appearing"
+        );
     }
 
     /**

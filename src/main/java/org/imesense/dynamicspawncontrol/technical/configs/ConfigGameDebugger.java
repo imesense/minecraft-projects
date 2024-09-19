@@ -99,60 +99,93 @@ public final class ConfigGameDebugger implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        DebugMonitorCache =
-                configuration.getBoolean
-                        ("Debug info cache", "monitor_debug", DebugMonitorCache,
-                                "Translates the cache parameters to the screen in static text");
+        DebugMonitorCache = this.getConfigValueB(
+                configuration,
+                "Debug info cache",
+                "monitor_debug",
+                DebugMonitorCache,
+                "Translates the cache parameters to the screen in static text"
+        );
 
-        DebugGenericPlayerTick =
-                configuration.getBoolean
-                        ("Debug EventEffects", "generic_maps_debug", DebugGenericPlayerTick,
-                                "Debugging the 'EventEffects.json'");
+        DebugGenericPlayerTick = this.getConfigValueB(
+                configuration,
+                "Debug EventEffects",
+                "generic_maps_debug",
+                DebugGenericPlayerTick,
+                "Debugging the 'EventEffects.json'"
+        );
 
-        DebugGenericLivingDrops =
-                configuration.getBoolean
-                        ("Debug DropAllItems", "generic_maps_debug", DebugGenericLivingDrops,
-                                "Debugging the 'DropAllItems.json'");
+        DebugGenericLivingDrops = this.getConfigValueB(
+                configuration,
+                "Debug DropAllItems",
+                "generic_maps_debug",
+                DebugGenericLivingDrops,
+                "Debugging the 'DropAllItems.json'"
+        );
 
-        DebugGenericSummonAidEvent =
-                configuration.getBoolean
-                        ("Debug ZombieSummonAid", "generic_maps_debug", DebugGenericSummonAidEvent,
-                                "Debugging the 'ZombieSummonAid.json'");
+        DebugGenericSummonAidEvent = this.getConfigValueB(
+                configuration,
+                "Debug ZombieSummonAid",
+                "generic_maps_debug",
+                DebugGenericSummonAidEvent,
+                "Debugging the 'ZombieSummonAid.json'"
+        );
 
-        DebugGenericLeftClickEvent =
-                configuration.getBoolean
-                        ("Debug EventLeftMouseClick", "generic_maps_debug", DebugGenericLeftClickEvent,
-                                "Debugging the 'EventLeftMouseClick.json'");
+        DebugGenericLeftClickEvent = this.getConfigValueB(
+                configuration,
+                "Debug EventLeftMouseClick",
+                "generic_maps_debug",
+                DebugGenericLeftClickEvent,
+                "Debugging the 'EventLeftMouseClick.json'"
+        );
 
-        DebugGenericPotentialSpawns =
-                configuration.getBoolean
-                        ("Debug MainOverrideSpawn", "generic_maps_debug", DebugGenericPotentialSpawns,
-                                "Debugging the 'MainOverrideSpawn.json'");
+        DebugGenericPotentialSpawns = this.getConfigValueB(
+                configuration,
+                "Debug MainOverrideSpawn",
+                "generic_maps_debug",
+                DebugGenericPotentialSpawns,
+                "Debugging the 'MainOverrideSpawn.json'"
+        );
 
-        DebugGenericRightClickEvent =
-                configuration.getBoolean
-                        ("Debug EventRightMouseClick", "generic_maps_debug", DebugGenericRightClickEvent,
-                                "Debugging the 'EventRightMouseClick.json'");
+        DebugGenericRightClickEvent = this.getConfigValueB(
+                configuration,
+                "Debug EventRightMouseClick",
+                "generic_maps_debug",
+                DebugGenericRightClickEvent,
+                "Debugging the 'EventRightMouseClick.json'"
+        );
 
-        DebugGenericBlockBreakEvent =
-                configuration.getBoolean
-                        ("Debug EventBlockBreak", "generic_maps_debug", DebugGenericBlockBreakEvent,
-                                "Debugging the 'EventBlockBreak.json'");
+        DebugGenericBlockBreakEvent = this.getConfigValueB(
+                configuration,
+                "Debug EventBlockBreak",
+                "generic_maps_debug",
+                DebugGenericBlockBreakEvent,
+                "Debugging the 'EventBlockBreak.json'"
+        );
 
-        DebugGenericBlockPlaceEvent =
-                configuration.getBoolean
-                        ("Debug EventBlockPlace", "generic_maps_debug", DebugGenericBlockPlaceEvent,
-                                "Debugging the 'EventBlockPlace.json'");
+        DebugGenericBlockPlaceEvent = this.getConfigValueB(
+                configuration,
+                "Debug EventBlockPlace",
+                "generic_maps_debug",
+                DebugGenericBlockPlaceEvent,
+                "Debugging the 'EventBlockPlace.json'"
+        );
 
-        DebugGenericEntitySpawnEvent =
-                configuration.getBoolean
-                        ("Debug SpawnConditions", "generic_maps_debug", DebugGenericEntitySpawnEvent,
-                                "Debugging the 'SpawnConditions.json'");
+        DebugGenericEntitySpawnEvent = this.getConfigValueB(
+                configuration,
+                "Debug SpawnConditions",
+                "generic_maps_debug",
+                DebugGenericEntitySpawnEvent,
+                "Debugging the 'SpawnConditions.json'"
+        );
 
-        DebugGenericLivingExperienceDrop =
-                configuration.getBoolean
-                        ("Debug DropAllExperience", "generic_maps_debug", DebugGenericLivingExperienceDrop,
-                                "Debugging the 'DropAllExperience.json'");
+        DebugGenericLivingExperienceDrop = this.getConfigValueB(
+                configuration,
+                "Debug DropAllExperience",
+                "generic_maps_debug",
+                DebugGenericLivingExperienceDrop,
+                "Debugging the 'DropAllExperience.json'"
+        );
     }
 
     /**
