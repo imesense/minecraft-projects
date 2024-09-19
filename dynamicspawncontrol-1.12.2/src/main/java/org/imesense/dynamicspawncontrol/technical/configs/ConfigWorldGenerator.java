@@ -47,10 +47,7 @@ public final class ConfigWorldGenerator implements IConfig
     {
         Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
 
-        ClientProxy.ConfigOreGeneratorFile = new Configuration(new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS,
-                "ore_generator" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.CONFIG_FILE_EXTENSION));
+        ClientProxy.ConfigOreGeneratorFile = this.createConfiguration("ore_generator");
 
         this.read();
     }

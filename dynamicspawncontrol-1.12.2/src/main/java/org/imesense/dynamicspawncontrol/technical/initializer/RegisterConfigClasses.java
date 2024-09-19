@@ -43,6 +43,8 @@ public final class RegisterConfigClasses
             {
                 Object configInstance = configClass.getConstructor(String.class).newInstance(configClass.getSimpleName());
                 ((IConfig)configInstance).init(event, configClass.getSimpleName());
+
+                Log.writeDataToLogFile(Log.TypeLog[0], String.format("configInstance (%s)", configInstance));
             }
             catch (Exception exception)
             {
