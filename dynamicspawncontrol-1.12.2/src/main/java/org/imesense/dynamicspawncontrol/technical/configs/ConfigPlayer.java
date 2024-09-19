@@ -27,6 +27,11 @@ public final class ConfigPlayer implements IConfig
 
     }
 
+    /**
+     *
+     * @param event
+     * @param nameClass
+     */
     @Override
     public void init(FMLPreInitializationEvent event, final String nameClass)
     {
@@ -44,9 +49,14 @@ public final class ConfigPlayer implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        ProtectRespawnPlayerRadius =
-                configuration.getInt("Protect radius respawn", "respawn_player", ProtectRespawnPlayerRadius, 0, 65,
-                        "Removing living entities when the player respawns.");
+        ProtectRespawnPlayerRadius = this.getConfigValueI(
+                configuration,
+                "Protect radius respawn",
+                "respawn_player",
+                ProtectRespawnPlayerRadius,
+                0, 65,
+                "Removing living entities when the player respawns."
+        );
     }
 
     /**

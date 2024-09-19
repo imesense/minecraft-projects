@@ -48,10 +48,14 @@ public final class ConfigLogFile implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        LogMaxLines =
-                configuration.getInt
-                        ("Log maximum lines", "log_file_settings", LogMaxLines, 5, 32767,
-                                "The parameter is responsible for the maximum number of lines in the log");
+        LogMaxLines = this.getConfigValueI(
+                configuration,
+                "Log maximum lines",
+                "log_file_settings",
+                LogMaxLines,
+                5, 32767,
+                "The parameter is responsible for the maximum number of lines in the log"
+        );
     }
 
     /**
