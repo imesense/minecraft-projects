@@ -22,6 +22,15 @@ public class ConfigDebugSingleEvents implements IConfig
 
     /**
      *
+     * @param nameClass
+     */
+    public ConfigDebugSingleEvents(final String nameClass)
+    {
+
+    }
+
+    /**
+     *
      * @param event
      * @param nameClass
      */
