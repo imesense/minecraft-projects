@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.customlibrary;
 /**
  *
  */
-public enum TextEnumColors
+public enum EnumTextColors
 {
     /**
      *
@@ -61,7 +61,7 @@ public enum TextEnumColors
      *
      * @param code
      */
-    TextEnumColors(String code)
+    EnumTextColors(String code)
     {
         this.code = code;
     }
