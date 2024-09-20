@@ -1,45 +1,113 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
+import com.google.gson.JsonElement;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+
+/**
+ *
+ */
 public final class GenericExperience extends ListActionsSingleEvent<SignalDataGetter>
 {
-    private final int _xp;
+    /**
+     *
+     */
+    private final int XP;
 
-    private final float _multiXp;
+    /**
+     *
+     */
+    private final float MULTI_XP;
 
-    private final float _addingXp;
+    /**
+     *
+     */
+    private final float ADDING_XP;
 
-    private final Event.Result _result;
+    /**
+     *
+     */
+    private final Event.Result RESULT;
 
-    private static int _countCreatedMaps = 0;
+    /**
+     *
+     */
+    private static int countCreatedMaps = 0;
 
-    private final ListActionsBinary _ruleEvaluator;
+    /**
+     *
+     */
+    private final ListActionsBinary RULE_EVALUATOR;
 
-    public Event.Result getResult() { return _result; }
+    /**
+     *
+     * @return
+     */
+    public Event.Result getResult() { return this.RESULT; }
 
+    /**
+     *
+     */
     /* TODO: удалить этот код в будущем */
-    private static final EventResults _abstractResult = new EventResults();
+    private static final ResultEvents RESULT_EVENTS = new ResultEvents();
 
+    /**
+     *
+     */
     private static final AttributeMapFactory<Object> FACTORY = new AttributeMapFactory<>();
 
-    public boolean match(LivingExperienceDropEvent event) { return _ruleEvaluator.match(event, EVENT_QUERY); }
+    /**
+     *
+     * @param event
+     * @return
+     */
+    public boolean match(LivingExperienceDropEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
 
+    /**
+     *
+     * @param map
+     * @param nameClass
+     * @param xp
+     * @param multiXp
+     * @param addingXp
+     */
     private GenericExperience(AttributeMap<?> map, String nameClass, int xp, float multiXp, float addingXp)
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log._typeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, _countCreatedMaps++));
+        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
-        this._ruleEvaluator = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
         this.addActions(map);
 
-        this._result = _abstractResult.getResult(map);
+        this.RESULT = RESULT_EVENTS.getResult(map);
 
-        this._xp = xp;
-        this._multiXp = multiXp;
-        this._addingXp = addingXp;
+        this.XP = xp;
+        this.MULTI_XP = multiXp;
+        this.ADDING_XP = addingXp;
     }
 
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static GenericExperience parse(JsonElement element)
     {
         if (element == null)
@@ -50,25 +118,25 @@ public final class GenericExperience extends ListActionsSingleEvent<SignalDataGe
         {
             AttributeMap<?> map = FACTORY.parse(element);
 
-            int localSetXp = AuxFunctions.getValueFromJson(
+            int localSetXp = JsonServices.getValueFromJson(
                     element.getAsJsonObject(),
-                    AuxFunctions.KeyWords.ACTION_SET_XP.getKeyword(),
+                    SingleKeyWords.DROP_ALL_EXPERIENCE.SET_XP,
                     0,
                     (_element, defaultValue) ->
                             _element.getAsJsonPrimitive().isNumber() ? _element.getAsInt() : defaultValue
             );
 
-            float localMultiXp = AuxFunctions.getValueFromJson(
+            float localMultiXp = JsonServices.getValueFromJson(
                     element.getAsJsonObject(),
-                    AuxFunctions.KeyWords.ACTION_MULTI_XP.getKeyword(),
+                    SingleKeyWords.DROP_ALL_EXPERIENCE.MULTI_XP,
                     0.f,
                     (_element, defaultValue) ->
                             _element.getAsJsonPrimitive().isNumber() ? _element.getAsFloat() : defaultValue
             );
 
-            float localAddXp = AuxFunctions.getValueFromJson(
+            float localAddXp = JsonServices.getValueFromJson(
                     element.getAsJsonObject(),
-                    AuxFunctions.KeyWords.ACTION_ADD_XP.getKeyword(),
+                    SingleKeyWords.DROP_ALL_EXPERIENCE.ADD_XP,
                     0.f,
                     (_element, defaultValue) ->
                             _element.getAsJsonPrimitive().isNumber() ? _element.getAsFloat() : defaultValue
@@ -78,56 +146,104 @@ public final class GenericExperience extends ListActionsSingleEvent<SignalDataGe
         }
     }
 
+    /**
+     *
+     */
     private static final SignalDataAccessor<LivingExperienceDropEvent> EVENT_QUERY = new SignalDataAccessor<LivingExperienceDropEvent>()
     {
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public World getWorld(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return LivingExperienceDropEvent.getEntity().getEntityWorld();
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public BlockPos getPos(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return LivingExperienceDropEvent.getEntity().getPosition();
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public BlockPos getValidBlockPos(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return LivingExperienceDropEvent.getEntity().getPosition().down();
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public int getY(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return LivingExperienceDropEvent.getEntity().getPosition().getY();
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public Entity getEntity(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return LivingExperienceDropEvent.getEntity();
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public DamageSource getSource(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return null;
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public Entity getAttacker(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return LivingExperienceDropEvent.getAttackingPlayer();
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public EntityPlayer getPlayer(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
             return LivingExperienceDropEvent.getAttackingPlayer();
         }
 
+        /**
+         *
+         * @param LivingExperienceDropEvent
+         * @return
+         */
         @Override
         public ItemStack getItem(LivingExperienceDropEvent LivingExperienceDropEvent)
         {
@@ -135,7 +251,9 @@ public final class GenericExperience extends ListActionsSingleEvent<SignalDataGe
         }
     };
 
-
+    /**
+     *
+     */
     static
     {
         FACTORY
@@ -197,13 +315,18 @@ public final class GenericExperience extends ListActionsSingleEvent<SignalDataGe
         ;
     }
 
+    /**
+     *
+     * @param xpIn
+     * @return
+     */
     public int modifyXp(int xpIn)
     {
-        if (this._xp != 0)
+        if (this.XP != 0)
         {
-            xpIn = this._xp;
+            xpIn = this.XP;
         }
 
-        return (int) (xpIn * this._multiXp + this._addingXp);
+        return (int) (xpIn * this.MULTI_XP + this.ADDING_XP);
     }
 }

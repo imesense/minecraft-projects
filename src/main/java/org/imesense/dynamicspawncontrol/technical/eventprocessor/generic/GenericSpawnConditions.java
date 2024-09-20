@@ -1,26 +1,76 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
+import com.google.gson.JsonElement;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+
+import java.util.function.Consumer;
+
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.SpawnCondition.*;
+
+/**
+ *
+ */
 public final class GenericSpawnConditions extends ListActionsSingleEvent<SignalDataGetter>
 {
-    private static int _countCreatedMaps = 0;
+    /**
+     *
+     */
+    private static int countCreatedMaps = 0;
 
-    private final ListActionsBinary _ruleEvaluator;
+    /**
+     *
+     */
+    private final ListActionsBinary RULE_EVALUATOR;
 
+    /**
+     *
+     */
     private static final AttributeMapFactory<Object> FACTORY = new AttributeMapFactory<>();
 
-    public boolean match(LivingSpawnEvent.CheckSpawn event) { return _ruleEvaluator.match(event, EVENT_QUERY); }
+    /**
+     *
+     * @param event
+     * @return
+     */
+    public boolean match(LivingSpawnEvent.CheckSpawn event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
 
+    /**
+     *
+     * @param map
+     * @param nameClass
+     */
     private GenericSpawnConditions(AttributeMap<?> map, String nameClass)
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log._typeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, _countCreatedMaps++));
+        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
-        this._ruleEvaluator = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
         this.addActions(map);
     }
 
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static GenericSpawnConditions parse(JsonElement element)
     {
         if (element == null)
@@ -35,56 +85,104 @@ public final class GenericSpawnConditions extends ListActionsSingleEvent<SignalD
         }
     }
 
+    /**
+     *
+     */
     private static final SignalDataAccessor<LivingSpawnEvent.CheckSpawn> EVENT_QUERY = new SignalDataAccessor<LivingSpawnEvent.CheckSpawn>()
     {
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public World getWorld(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return CheckSpawn.getWorld();
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public BlockPos getPos(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return new BlockPos(CheckSpawn.getX(), CheckSpawn.getY(), CheckSpawn.getZ());
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public BlockPos getValidBlockPos(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return new BlockPos(CheckSpawn.getX(), CheckSpawn.getY() - 1, CheckSpawn.getZ());
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public int getY(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return (int) CheckSpawn.getY();
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public Entity getEntity(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return CheckSpawn.getEntity();
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public DamageSource getSource(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return null;
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public Entity getAttacker(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return null;
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public EntityPlayer getPlayer(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
             return getClosestPlayer(CheckSpawn.getWorld(), new BlockPos(CheckSpawn.getX(), CheckSpawn.getY(), CheckSpawn.getZ()));
         }
 
+        /**
+         *
+         * @param CheckSpawn
+         * @return
+         */
         @Override
         public ItemStack getItem(LivingSpawnEvent.CheckSpawn CheckSpawn)
         {
@@ -92,11 +190,20 @@ public final class GenericSpawnConditions extends ListActionsSingleEvent<SignalD
         }
     };
 
+    /**
+     *
+     * @param world
+     * @param blockPos
+     * @return
+     */
     private static EntityPlayer getClosestPlayer(World world, BlockPos blockPos)
     {
         return world.getClosestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100, false);
     }
 
+    /**
+     *
+     */
     static
     {
         FACTORY
@@ -172,34 +279,61 @@ public final class GenericSpawnConditions extends ListActionsSingleEvent<SignalD
         ;
     }
 
+    /**
+     *
+     * @param event
+     */
     public void action(LivingSpawnEvent.CheckSpawn event)
     {
+        /**
+         *
+         */
         SignalDataGetter eventBase = new SignalDataGetter()
         {
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityLivingBase getEntityLiving()
             {
                 return event.getEntityLiving();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityPlayer getPlayer()
             {
                 return null;
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public World getWorld()
             {
                 return event.getWorld();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public Entity getEntity()
             {
                 return event.getEntity();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public BlockPos getPosition()
             {
@@ -207,7 +341,10 @@ public final class GenericSpawnConditions extends ListActionsSingleEvent<SignalD
             }
         };
 
-        for (Consumer<SignalDataGetter> action : _actions)
+        /**
+         *
+         */
+        for (Consumer<SignalDataGetter> action : actions)
         {
             action.accept(eventBase);
         }

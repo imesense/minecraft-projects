@@ -1,36 +1,111 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
+import com.google.common.base.Predicate;
+import com.google.gson.JsonElement;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
+
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.DroopLoot.*;
+
+/**
+ *
+ */
 public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGetter>
 {
-    private boolean _removeAll = false;
+    /**
+     *
+     */
+    private boolean removeAll = false;
 
-    private static int _countCreatedMaps = 0;
+    /**
+     *
+     */
+    private static int countCreatedMaps = 0;
 
-    private final ListActionsBinary _ruleEvaluator;
+    /**
+     *
+     */
+    private final ListActionsBinary RULE_EVALUATOR;
 
-    private static final Random _random = new Random();
+    /**
+     *
+     */
+    private static final Random RANDOM = new Random();
 
-    public boolean isRemoveAll() { return _removeAll; }
+    /**
+     *
+     * @return
+     */
+    public boolean isRemoveAll() { return this.removeAll; }
 
-    private final List<Predicate<ItemStack>> _toRemoveItems = new ArrayList<>();
+    /**
+     *
+     */
+    private final List<Predicate<ItemStack>> TO_REMOVE_ITEMS = new ArrayList<>();
 
-    public List<Predicate<ItemStack>> getToRemoveItems() { return _toRemoveItems; }
+    /**
+     *
+     * @return
+     */
+    public List<Predicate<ItemStack>> getToRemoveItems() { return this.TO_REMOVE_ITEMS; }
 
+    /**
+     *
+     */
     private static final AttributeMapFactory<Object> FACTORY = new AttributeMapFactory<>();
 
-    private final List<Pair<ItemStack, Function<Integer, Integer>>> _toAddItems = new ArrayList<>();
+    /**
+     *
+     */
+    private final List<Pair<ItemStack, Function<Integer, Integer>>> TO_ADD_ITEMS = new ArrayList<>();
 
-    public List<Pair<ItemStack, Function<Integer, Integer>>> getToAddItems() { return _toAddItems; }
+    /**
+     *
+     * @return
+     */
+    public List<Pair<ItemStack, Function<Integer, Integer>>> getToAddItems() { return this.TO_ADD_ITEMS; }
 
-    public boolean match(LivingDropsEvent event) { return _ruleEvaluator.match(event, EVENT_QUERY); }
+    /**
+     *
+     * @param event
+     * @return
+     */
+    public boolean match(LivingDropsEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
 
-    private GenericDropLoot(AttributeMap<?> map, String nameClass)
+    /**
+     *
+     * @param map
+     * @param nameClass
+     */
+    private GenericDropLoot(AttributeMap<?> map, final String nameClass)
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log._typeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, _countCreatedMaps++));
+        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
-        this._ruleEvaluator = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
         this.addActions(map);
 
@@ -39,17 +114,22 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
             this.addItem(map);
         }
 
-        if (map.has(KeyWordsGeneral.DroopLoot.ACTION_REMOVE))
+        if (map.has(MultipleKeyWords.DroopLoot.ACTION_REMOVE))
         {
             this.removeItem(map);
         }
 
-        if (map.has(KeyWordsGeneral.DroopLoot.ACTION_REMOVE_ALL))
+        if (map.has(MultipleKeyWords.DroopLoot.ACTION_REMOVE_ALL))
         {
-            this._removeAll = (Boolean) map.get(KeyWordsGeneral.DroopLoot.ACTION_REMOVE_ALL);
+            this.removeAll = (Boolean) map.get(MultipleKeyWords.DroopLoot.ACTION_REMOVE_ALL);
         }
     }
 
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static GenericDropLoot parse(JsonElement element)
     {
         if (element == null)
@@ -64,50 +144,93 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
         }
     }
 
+    /**
+     *
+     */
     private static final SignalDataAccessor<LivingDropsEvent> EVENT_QUERY = new SignalDataAccessor<LivingDropsEvent>()
     {
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public World getWorld(LivingDropsEvent LivingDropsEvent)
         {
             return LivingDropsEvent.getEntity().getEntityWorld();
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public BlockPos getPos(LivingDropsEvent LivingDropsEvent)
         {
             return LivingDropsEvent.getEntity().getPosition();
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public BlockPos getValidBlockPos(LivingDropsEvent LivingDropsEvent)
         {
             return LivingDropsEvent.getEntity().getPosition().down();
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public int getY(LivingDropsEvent LivingDropsEvent)
         {
             return LivingDropsEvent.getEntity().getPosition().getY();
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public Entity getEntity(LivingDropsEvent LivingDropsEvent)
         {
             return LivingDropsEvent.getEntity();
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public DamageSource getSource(LivingDropsEvent LivingDropsEvent)
         {
             return LivingDropsEvent.getSource();
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public Entity getAttacker(LivingDropsEvent LivingDropsEvent)
         {
             return LivingDropsEvent.getSource().getTrueSource();
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public EntityPlayer getPlayer(LivingDropsEvent LivingDropsEvent)
         {
@@ -115,6 +238,11 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
             return entity instanceof EntityPlayer ? (EntityPlayer) entity : null;
         }
 
+        /**
+         *
+         * @param LivingDropsEvent
+         * @return
+         */
         @Override
         public ItemStack getItem(LivingDropsEvent LivingDropsEvent)
         {
@@ -122,6 +250,9 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
         }
     };
 
+    /**
+     *
+     */
     static
     {
         FACTORY
@@ -192,6 +323,11 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
         ;
     }
 
+    /**
+     *
+     * @param itemCount
+     * @return
+     */
     private static Function<Integer, Integer> getCountFunction(@Nullable String itemCount)
     {
         if (itemCount == null)
@@ -216,7 +352,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                 }
                 catch (NumberFormatException e)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[2], "Bad amount specified in loot rule: " + splitMinMax[0]);
+                    Log.writeDataToLogFile(Log.TypeLog[2], "Bad amount specified in loot rule: " + splitMinMax[0]);
                     min[i] = max[i] = 1;
                 }
             }
@@ -229,13 +365,13 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                 }
                 catch (NumberFormatException e)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[2], "Bad amounts specified in loot rule: " + splitMinMax[0]);
+                    Log.writeDataToLogFile(Log.TypeLog[2], "Bad amounts specified in loot rule: " + splitMinMax[0]);
                     min[i] = max[i] = 1;
                 }
             }
             else
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Bad amount range specified in loot rule: " + splitMinMax[0]);
+                Log.writeDataToLogFile(Log.TypeLog[2], "Bad amount range specified in loot rule: " + splitMinMax[0]);
                 min[i] = max[i] = 1;
             }
         }
@@ -248,7 +384,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
             }
             else
             {
-                return looting -> _random.nextInt(max[0] - min[0] + 1) + min[0];
+                return looting -> RANDOM.nextInt(max[0] - min[0] + 1) + min[0];
             }
         }
         else
@@ -257,20 +393,27 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
             {
                 if (looting >= min.length)
                 {
-                    return _random.nextInt(max[min.length - 1] - min[min.length - 1] + 1) + min[min.length - 1];
+                    return RANDOM.nextInt(max[min.length - 1] - min[min.length - 1] + 1) + min[min.length - 1];
                 }
                 else if (looting >= 0)
                 {
-                    return _random.nextInt(max[looting] - min[looting] + 1) + min[looting];
+                    return RANDOM.nextInt(max[looting] - min[looting] + 1) + min[looting];
                 }
                 else
                 {
-                    return _random.nextInt(max[0] - min[0] + 1) + min[0];
+                    return RANDOM.nextInt(max[0] - min[0] + 1) + min[0];
                 }
             };
         }
     }
 
+    /**
+     *
+     * @param itemNames
+     * @param nbtJson
+     * @param itemCount
+     * @return
+     */
     private static List<Pair<ItemStack, Function<Integer, Integer>>> getItems(List<String> itemNames, @Nullable String nbtJson,
                                                                               @Nullable String itemCount)
     {
@@ -284,7 +427,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
 
             if (stack.isEmpty())
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Unknown item '" + name + "'!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
             }
             else
             {
@@ -296,7 +439,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                     }
                     catch (NBTException e)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Bad nbt for '" + name + "'!");
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Bad nbt for '" + name + "'!");
                     }
                 }
 
@@ -307,17 +450,24 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
         return items;
     }
 
+    /**
+     *
+     * @param map
+     */
     private void addItem(AttributeMap<?> map)
     {
-        Object nbt = map.get(KeyWordsGeneral.DroopLoot.ACTION_ITEM_NBT);
-        Object itemCount = map.get(KeyWordsGeneral.DroopLoot.ACTION_ITEM_COUNT);
+        Object nbt = map.get(MultipleKeyWords.DroopLoot.ACTION_ITEM_NBT);
+        Object itemCount = map.get(MultipleKeyWords.DroopLoot.ACTION_ITEM_COUNT);
 
-        // Добавление предметов в список _toAddItems
-        this._toAddItems.addAll(getItems(map.getList(ACTION_ITEM), (String)nbt, (String)itemCount));
+        this.TO_ADD_ITEMS.addAll(getItems(map.getList(ACTION_ITEM), (String)nbt, (String)itemCount));
     }
 
+    /**
+     *
+     * @param map
+     */
     private void removeItem(AttributeMap<?> map)
     {
-        this._toRemoveItems.addAll(AuxFunctions.getItems((JsonElement)map.getList(KeyWordsGeneral.DroopLoot.ACTION_REMOVE)));
+        this.TO_REMOVE_ITEMS.addAll(AuxFunctions.getItems((JsonElement)map.getList(MultipleKeyWords.DroopLoot.ACTION_REMOVE)));
     }
 }
