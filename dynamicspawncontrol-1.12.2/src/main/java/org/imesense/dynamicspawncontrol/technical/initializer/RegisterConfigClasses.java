@@ -20,7 +20,8 @@ public final class RegisterConfigClasses
         ConfigRenderNight.class,
         ConfigWorldTime.class,
         ConfigPlayer.class,
-        ConfigZombieDropItem.class
+        ConfigZombieDropItem.class,
+        ConfigDebugSingleEvents.class
     };
 
     /**
