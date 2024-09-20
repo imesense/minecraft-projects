@@ -29,13 +29,10 @@ public final class ConfigLogFile implements IConfig
     /**
      *
      * @param event
-     * @param nameClass
      */
     @Override
-    public void init(FMLPreInitializationEvent event, final String nameClass)
+    public void init(FMLPreInitializationEvent event)
     {
-        Log.writeDataToLogFile(0, nameClass);
-
         ClientProxy.ConfigLogFile = this.createConfiguration("log");
 
         this.read();

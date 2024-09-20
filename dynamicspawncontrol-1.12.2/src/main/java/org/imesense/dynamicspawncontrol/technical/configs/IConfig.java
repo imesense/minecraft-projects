@@ -14,9 +14,8 @@ public interface IConfig
     /**
      *
      * @param event
-     * @param nameClass
      */
-    void init(FMLPreInitializationEvent event, final String nameClass);
+    void init(FMLPreInitializationEvent event);
 
     /**
      *
@@ -70,6 +69,20 @@ public interface IConfig
     default boolean getConfigValueB(Configuration config, String name, String category, Boolean defaultValue, String comment)
     {
         return config.getBoolean(name, category, defaultValue, comment);
+    }
+
+    /**
+     *
+     * @param config
+     * @param name
+     * @param category
+     * @param defaultValue
+     * @param comment
+     * @return
+     */
+    default String getConfigValueS(Configuration config, String name, String category, String defaultValue, String comment)
+    {
+        return config.getString(name, category, defaultValue, comment);
     }
 
     /**

@@ -15,6 +15,7 @@ public final class RegisterConfigClasses
      */
     private static final Class<?>[] CONFIG_CLASSES =
     {
+        ConfigWindowTitle.class,
         ConfigLogFile.class,
         ConfigGameDebugger.class,
         ConfigWorldGenerator.class,
@@ -43,17 +44,17 @@ public final class RegisterConfigClasses
         {
             try
             {
-                Log.writeDataToLogFile(0, "Start reading class: " + configClass.getName());
+                Log.writeDataToLogFile(0, "Reading class: " + configClass.getName());
 
                 if (!CodeGenericUtils.hasConstructorWithParameter(configClass, String.class))
                 {
-                    Log.writeDataToLogFile(0, "Class " + configClass.getName() + " does not have a constructor with a String parameter.");
+                    Log.writeDataToLogFile(2, "Class " + configClass.getName() + " does not have a constructor with a String parameter.");
                     throw new RuntimeException();
                 }
 
                 Object configInstance = configClass.getConstructor(String.class).newInstance(configClass.getSimpleName());
 
-                ((IConfig)configInstance).init(event, configClass.getSimpleName());
+                ((IConfig)configInstance).init(event);
             }
             catch (Exception exception)
             {

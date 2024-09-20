@@ -11,7 +11,7 @@ import java.io.File;
 /**
  *
  */
-public class ConfigRenderNight implements IConfig
+public final class ConfigRenderNight implements IConfig
 {
     /**
      *
@@ -85,13 +85,10 @@ public class ConfigRenderNight implements IConfig
     /**
      *
      * @param event
-     * @param nameClass
      */
     @Override
-    public void init(FMLPreInitializationEvent event, final String nameClass)
+    public void init(FMLPreInitializationEvent event)
     {
-        Log.writeDataToLogFile(0, nameClass);
-
         ClientProxy.ConfigNights = this.createConfiguration("nights");
 
         this.read();

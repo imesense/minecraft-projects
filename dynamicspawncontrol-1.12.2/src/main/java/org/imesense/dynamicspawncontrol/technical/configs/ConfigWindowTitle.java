@@ -6,23 +6,18 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
 
-import java.io.File;
-
 /**
  *
  */
-public final class ConfigPlayer implements IConfig
+public final class ConfigWindowTitle implements IConfig
 {
     /**
      *
      */
-    public static int ProtectRespawnPlayerRadius = 25;
+    public static String WindowTitle =
+            String.format("Minecraft: %s + %s", DynamicSpawnControl.STRUCT_INFO_MOD.VERSION, DynamicSpawnControl.STRUCT_INFO_MOD.NAME);
 
-    /**
-     *
-     * @param nameClass
-     */
-    public ConfigPlayer(final String nameClass)
+    public ConfigWindowTitle(final String nameClass)
     {
 
     }
@@ -34,7 +29,7 @@ public final class ConfigPlayer implements IConfig
     @Override
     public void init(FMLPreInitializationEvent event)
     {
-        ClientProxy.ConfigPlayer = this.createConfiguration("player");
+        ClientProxy.ConfigWindowTitle = this.createConfiguration("name_window");
 
         this.read();
     }
@@ -46,14 +41,11 @@ public final class ConfigPlayer implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        ProtectRespawnPlayerRadius = this.getConfigValueI(
+        WindowTitle = this.getConfigValueS(
                 configuration,
-                "Protect radius respawn",
-                "respawn_player",
-                ProtectRespawnPlayerRadius,
-                0, 65,
-                "Removing living entities when the player respawns."
-        );
+                "Window title",
+                "window", WindowTitle,
+                "The title of the Minecraft window");
     }
 
     /**
@@ -62,7 +54,7 @@ public final class ConfigPlayer implements IConfig
     @Override
     public void read()
     {
-        Configuration configuration = ClientProxy.ConfigPlayer;
+        Configuration configuration = ClientProxy.ConfigWindowTitle;
 
         try
         {

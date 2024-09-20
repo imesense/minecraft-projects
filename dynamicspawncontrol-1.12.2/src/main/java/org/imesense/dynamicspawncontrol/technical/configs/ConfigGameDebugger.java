@@ -80,13 +80,10 @@ public final class ConfigGameDebugger implements IConfig
     /**
      *
      * @param event
-     * @param nameClass
      */
     @Override
-    public void init(FMLPreInitializationEvent event, final String nameClass)
+    public void init(FMLPreInitializationEvent event)
     {
-        Log.writeDataToLogFile(0, nameClass);
-
         ClientProxy.ConfigGameDebugger = this.createConfiguration("game_debugger");
 
         this.read();

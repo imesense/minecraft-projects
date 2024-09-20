@@ -50,13 +50,10 @@ public final class ConfigWorldTime implements IConfig
     /**
      *
      * @param event
-     * @param nameClass
      */
     @Override
-    public void init(FMLPreInitializationEvent event, final String nameClass)
+    public void init(FMLPreInitializationEvent event)
     {
-        Log.writeDataToLogFile(0, nameClass);
-
         ClientProxy.ConfigWorldTime = this.createConfiguration("world_time");
 
         this.read();
