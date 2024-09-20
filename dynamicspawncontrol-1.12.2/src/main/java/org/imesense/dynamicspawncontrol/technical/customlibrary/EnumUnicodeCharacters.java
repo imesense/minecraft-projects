@@ -71,9 +71,8 @@ public enum EnumUnicodeCharacters
     }
 
     /**
-     * Возвращает описание символа.
      *
-     * @return Описание символа.
+     * @return
      */
     public String getDescription()
     {
