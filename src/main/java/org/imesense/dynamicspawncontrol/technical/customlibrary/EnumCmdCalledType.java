@@ -38,7 +38,7 @@ public enum EnumCmdCalledType
     /**
      *
      */
-    private final String description;
+    private final String DESCRIPTION;
 
     /**
      *
@@ -46,7 +46,7 @@ public enum EnumCmdCalledType
      */
     EnumCmdCalledType(String description)
     {
-        this.description = description;
+        this.DESCRIPTION = description;
     }
 
     /**
@@ -55,6 +55,6 @@ public enum EnumCmdCalledType
      */
     public String getDescription()
     {
-        return this.description;
+        return this.DESCRIPTION;
     }
 }

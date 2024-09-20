@@ -103,7 +103,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
         this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
@@ -352,7 +352,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                 }
                 catch (NumberFormatException e)
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[2], "Bad amount specified in loot rule: " + splitMinMax[0]);
+                    Log.writeDataToLogFile(2, "Bad amount specified in loot rule: " + splitMinMax[0]);
                     min[i] = max[i] = 1;
                 }
             }
@@ -365,13 +365,13 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                 }
                 catch (NumberFormatException e)
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[2], "Bad amounts specified in loot rule: " + splitMinMax[0]);
+                    Log.writeDataToLogFile(2, "Bad amounts specified in loot rule: " + splitMinMax[0]);
                     min[i] = max[i] = 1;
                 }
             }
             else
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Bad amount range specified in loot rule: " + splitMinMax[0]);
+                Log.writeDataToLogFile(2, "Bad amount range specified in loot rule: " + splitMinMax[0]);
                 min[i] = max[i] = 1;
             }
         }
@@ -427,7 +427,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
 
             if (stack.isEmpty())
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
+                Log.writeDataToLogFile(2, "Unknown item '" + name + "'!");
             }
             else
             {
@@ -439,7 +439,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                     }
                     catch (NBTException e)
                     {
-                        Log.writeDataToLogFile(Log.TypeLog[2], "Bad nbt for '" + name + "'!");
+                        Log.writeDataToLogFile(2, "Bad nbt for '" + name + "'!");
                     }
                 }
 

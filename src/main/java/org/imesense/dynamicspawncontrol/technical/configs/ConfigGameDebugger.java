@@ -85,7 +85,7 @@ public final class ConfigGameDebugger implements IConfig
     @Override
     public void init(FMLPreInitializationEvent event, final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
 
         ClientProxy.ConfigGameDebugger = this.createConfiguration("game_debugger");
 

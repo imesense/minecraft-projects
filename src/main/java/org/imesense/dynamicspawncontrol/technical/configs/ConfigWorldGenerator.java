@@ -16,17 +16,17 @@ public final class ConfigWorldGenerator implements IConfig
     /**
      *
      */
-    public static int BlockNetherrackChanceSpawn = 20;
+    public static int BlockNetherRackChanceSpawn = 20;
 
     /**
      *
      */
-    public static int GetBlockNetherrackMinHeight = 5;
+    public static int GetBlockNetherRackMinHeight = 5;
 
     /**
      *
      */
-    public static int GetBlockNetherrackMaxHeight = 20;
+    public static int GetBlockNetherRackMaxHeight = 20;
 
     /**
      *
@@ -45,7 +45,7 @@ public final class ConfigWorldGenerator implements IConfig
     @Override
     public void init(FMLPreInitializationEvent event, final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
 
         ClientProxy.ConfigOreGeneratorFile = this.createConfiguration("ore_generator");
 
@@ -59,31 +59,31 @@ public final class ConfigWorldGenerator implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        BlockNetherrackChanceSpawn = this.getConfigValueI(
+        BlockNetherRackChanceSpawn = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Chance Spawn",
                 "ore_generator_over_world",
-                BlockNetherrackChanceSpawn,
+                BlockNetherRackChanceSpawn,
                 1,
                 100,
                 "The chance of 'netherrack' appearing"
         );
 
-        GetBlockNetherrackMinHeight = this.getConfigValueI(
+        GetBlockNetherRackMinHeight = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Min Height",
                 "ore_generator_over_world",
-                GetBlockNetherrackMinHeight,
+                GetBlockNetherRackMinHeight,
                 2,
                 10,
                 "The minimal height of 'netherrack' appearing"
         );
 
-        GetBlockNetherrackMaxHeight = this.getConfigValueI(
+        GetBlockNetherRackMaxHeight = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Max Height",
                 "ore_generator_over_world",
-                GetBlockNetherrackMaxHeight,
+                GetBlockNetherRackMaxHeight,
                 10,
                 20,
                 "The maximal height of 'netherrack' appearing"
@@ -101,6 +101,7 @@ public final class ConfigWorldGenerator implements IConfig
         try
         {
             configuration.load();
+
             this.readProperties(configuration);
         }
         finally

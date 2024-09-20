@@ -22,12 +22,12 @@ public final class Sender implements ICommandSender
     /**
      *
      */
-    private final World world;
+    private final World WORLD;
 
     /**
      *
      */
-    private final EntityPlayer player;
+    private final EntityPlayer PLAYER;
 
     /**
      *
@@ -36,8 +36,8 @@ public final class Sender implements ICommandSender
      */
     public Sender(World world, EntityPlayer player)
     {
-        this.world = world;
-        this.player = player;
+        this.WORLD = world;
+        this.PLAYER = player;
     }
 
     /**
@@ -114,7 +114,7 @@ public final class Sender implements ICommandSender
     @Override
     public World getEntityWorld()
     {
-        return this.world;
+        return this.WORLD;
     }
 
     /**
@@ -125,7 +125,7 @@ public final class Sender implements ICommandSender
     @Override
     public Entity getCommandSenderEntity()
     {
-        return this.player;
+        return this.PLAYER;
     }
 
     /**
@@ -156,6 +156,6 @@ public final class Sender implements ICommandSender
     @Override
     public MinecraftServer getServer()
     {
-        return this.world.getMinecraftServer();
+        return this.WORLD.getMinecraftServer();
     }
 }

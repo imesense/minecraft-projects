@@ -103,7 +103,7 @@ public final class ItemStackBuilder
             }
             catch (NBTException e)
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Error parsing NBT in '" + name + "'!");
+                Log.writeDataToLogFile(2, "Error parsing NBT in '" + name + "'!");
                 return ItemStack.EMPTY;
             }
 
@@ -134,7 +134,7 @@ public final class ItemStackBuilder
 
         if (item == null)
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
+            Log.writeDataToLogFile(2, "Unknown item '" + name + "'!");
             return null;
         }
 
@@ -161,7 +161,7 @@ public final class ItemStackBuilder
             }
             catch (NBTException e)
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Error parsing json '" + nbt + "'!");
+                Log.writeDataToLogFile(2, "Error parsing json '" + nbt + "'!");
                 return ItemStack.EMPTY;
             }
 
@@ -196,7 +196,7 @@ public final class ItemStackBuilder
             }
             catch (NumberFormatException e)
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
+                Log.writeDataToLogFile(2, "Unknown item '" + name + "'!");
                 return ItemStack.EMPTY;
             }
 

@@ -178,7 +178,7 @@ public class DynamicSpawnControl
 
         //
         Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY);
-        Log.writeDataToLogFile(Log.TypeLog[0], "Check debugger -> " + checkDebugger.IsRunDebugger);
+        Log.writeDataToLogFile(0, "Check debugger -> " + checkDebugger.IsRunDebugger);
 
         //
         MessageHandler.init();
@@ -204,7 +204,7 @@ public class DynamicSpawnControl
         Proxy.init(event);
 
         MinecraftForge.EVENT_BUS.register(new CacheEvents());
-        MinecraftForge.EVENT_BUS.register(OnUpdateTimeWorld.ClassInstance);
+        MinecraftForge.EVENT_BUS.register(OnUpdateTimeWorld.INSTANCE);
     }
 
     /**
@@ -250,7 +250,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
-        Structures.StructuresCache.clean();
+        Structures.STRUCTURES_CACHE.clean();
 
         Log.closeExecutor();
     }

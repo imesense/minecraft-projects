@@ -41,7 +41,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     /**
      *
      */
-    public final List<BiFunction<Event, SignalDataAccessor, Boolean>> _arrayList = new ArrayList<>();
+    public final List<BiFunction<Event, SignalDataAccessor, Boolean>> ARRAY_LIST = new ArrayList<>();
 
     /**
      *
@@ -50,7 +50,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public ListActionsBinary(AttributeMap<?> map, String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
         this.CreateListActions(map);
     }
 
@@ -62,7 +62,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public boolean match(Event event, SignalDataAccessor<T> query)
     {
-        for (BiFunction<Event, SignalDataAccessor, Boolean> rule : _arrayList)
+        for (BiFunction<Event, SignalDataAccessor, Boolean> rule : this.ARRAY_LIST)
         {
             if (!rule.apply(event, query))
             {
@@ -320,12 +320,12 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)seeSky)
         {
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
                     query.getWorld(event).canBlockSeeSky(query.getPos(event)));
         }
         else
         {
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
                     !query.getWorld(event).canBlockSeeSky(query.getPos(event)));
         }
     }
@@ -340,7 +340,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)canSpawn)
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
             {
                 Entity entity = query.getEntity(event);
 
@@ -356,7 +356,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
         }
         else
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
             {
                 Entity entity = query.getEntity(event);
 
@@ -382,7 +382,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)notCollidingCheck)
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
             {
                 Entity entity = query.getEntity(event);
 
@@ -398,7 +398,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
         }
         else
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
             {
                 Entity entity = query.getEntity(event);
 
@@ -424,7 +424,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)spawner)
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
             {
                 if (event instanceof LivingSpawnEvent.CheckSpawn)
                 {
@@ -439,7 +439,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
         }
         else
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
             {
                 if (event instanceof LivingSpawnEvent.CheckSpawn)
                 {
@@ -466,7 +466,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
         {
             String biomesName = biomes.get(0);
 
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
             {
                 Biome biome = query.getWorld(event).getBiome(query.getPos(event));
                 return biomesName.equals(biome.getBiomeName());
@@ -476,7 +476,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
         {
             Set<String> biomesName = new HashSet<>(biomes);
 
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
             {
                 Biome biome = query.getWorld(event).getBiome(query.getPos(event));
                 return biomesName.contains(biome.getBiomeName());
@@ -498,7 +498,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
             BiomeDictionary.Type type = BiomeDictionary.Type.getType(biomesType);
 
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
             {
                 Biome biome = query.getWorld(event).getBiome(query.getPos(event));
                 return BiomeDictionary.getTypes(biome).contains(type);
@@ -513,7 +513,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
                 types.add(BiomeDictionary.Type.getType(s));
             }
 
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
             {
                 Biome biome = query.getWorld(event).getBiome(query.getPos(event));
                 return BiomeDictionary.getTypes(biome).stream().anyMatch(s -> types.contains(s));
@@ -538,22 +538,22 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
             if (raining)
             {
-                _arrayList.add((event, query) ->
+                this.ARRAY_LIST.add((event, query) ->
                         query.getWorld(event).isRaining());
             }
             else if (thunder)
             {
-                _arrayList.add((event, query) ->
+                this.ARRAY_LIST.add((event, query) ->
                         query.getWorld(event).isThundering());
             }
             else
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown weather '" + weather + "'! Use 'rain' or 'thunder'");
+                Log.writeDataToLogFile(2, "Unknown weather '" + weather + "'! Use 'rain' or 'thunder'");
             }
         }
         else
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Weather is not a string object!");
+            Log.writeDataToLogFile(2, "Weather is not a string object!");
         }
     }
 
@@ -565,8 +565,8 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object structure = map.get(STRUCTURE);
 
-        _arrayList.add((event,query) ->
-                Structures.StructuresCache.isInStructure(query.getWorld(event), (String) structure, query.getPos(event)));
+        this.ARRAY_LIST.add((event,query) ->
+                Structures.STRUCTURES_CACHE.isInStructure(query.getWorld(event), (String) structure, query.getPos(event)));
     }
 
     /**
@@ -581,14 +581,14 @@ public class ListActionsBinary<T extends SignalDataGetter>
         {
             Integer dim = dimensions.get(0);
 
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
                     query.getWorld(event).provider.getDimension() == dim);
         }
         else
         {
             Set<Integer> dims = new HashSet<>(dimensions);
 
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
                     dims.contains(query.getWorld(event).provider.getDimension()));
         }
     }
@@ -601,7 +601,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(HELMET));
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             EntityPlayer player = query.getPlayer(event);
 
@@ -626,7 +626,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(CHEST_PLATE));
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             EntityPlayer player = query.getPlayer(event);
 
@@ -651,7 +651,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(LEGGINGS));
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             EntityPlayer player = query.getPlayer(event);
 
@@ -676,7 +676,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(BOOTS));
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             EntityPlayer player = query.getPlayer(event);
 
@@ -701,7 +701,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object minTime = map.get(MIN_TIME);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             long time = query.getWorld(event).getWorldTime();
             return (time % 24000) >= (Integer) minTime;
@@ -716,7 +716,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object maxTime = map.get(MAX_TIME);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             long time = query.getWorld(event).getWorldTime();
             return (time % 24000) <= (Integer) maxTime;
@@ -731,7 +731,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object minLight = map.get(MIN_LIGHT);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
         {
             BlockPos pos = query.getPos(event);
             return query.getWorld(event).getLight(pos, true) >= (Integer) minLight;
@@ -746,7 +746,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object maxLight = map.get(MAX_LIGHT);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
         {
             BlockPos pos = query.getPos(event);
             return query.getWorld(event).getLight(pos, true) <= (Integer) maxLight;
@@ -761,7 +761,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object minHeight = map.get(MIN_HEIGHT);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
                 query.getY(event) >= (Integer) minHeight);
     }
 
@@ -773,7 +773,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object maxHeight = map.get(MAX_HEIGHT);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
                 query.getY(event) <= (Integer) maxHeight);
     }
 
@@ -785,7 +785,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object minDifficulty = map.get(MIN_DIFFICULTY);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
                 query.getWorld(event).getDifficultyForLocation(query.getPos(event)).getAdditionalDifficulty() >= (Float) minDifficulty);
     }
 
@@ -812,12 +812,12 @@ public class ListActionsBinary<T extends SignalDataGetter>
         {
             EnumDifficulty finalDiff = enumDifficulty;
 
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
                     query.getWorld(event).getDifficulty() == finalDiff);
         }
         else
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Unknown difficulty '" + difficulty + "'! Use one of 'easy', 'normal', 'hard',  or 'peaceful'");
+            Log.writeDataToLogFile(2, "Unknown difficulty '" + difficulty + "'! Use one of 'easy', 'normal', 'hard',  or 'peaceful'");
             throw new RuntimeException();
         }
     }
@@ -830,7 +830,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object maxDifficulty = map.get(MAX_DIFFICULTY);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
                 query.getWorld(event).getDifficultyForLocation(query.getPos(event)).getAdditionalDifficulty() <= (Float) maxDifficulty);
     }
 
@@ -842,7 +842,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object degree = map.get(MIN_SPAWN_DIST);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
         {
             BlockPos pos = query.getPos(event);
             double sqDist = pos.distanceSq(query.getWorld(event).getSpawnPoint());
@@ -859,7 +859,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object degree = map.get(MAX_SPAWN_DIST);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             BlockPos pos = query.getPos(event);
             double sqDist = pos.distanceSq(query.getWorld(event).getSpawnPoint());
@@ -895,7 +895,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
             if (blockMatcher != null)
             {
-                _arrayList.add((event, query) ->
+                this.ARRAY_LIST.add((event, query) ->
                 {
                     BlockPos pos = posFunction.apply(event, query);
 
@@ -919,7 +919,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
                 blockMatchers.add(blockMatcher);
             }
 
-            _arrayList.add((event,query) ->
+            this.ARRAY_LIST.add((event,query) ->
             {
                 BlockPos pos = posFunction.apply(event, query);
 
@@ -949,7 +949,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object moon = _map.get(GET_MOON_PHASE);
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
                 query.getWorld(event).getMoonPhase() == (Integer)moon);
     }
 
@@ -970,12 +970,12 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
             if (typeClass != null)
             {
-                _arrayList.add((event, query) ->
+                this.ARRAY_LIST.add((event, query) ->
                         typeClass.equals(query.getEntity(event).getClass()));
             }
             else
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown mob '" + name + "'!");
+                Log.writeDataToLogFile(2, "Unknown mob '" + name + "'!");
                 throw new RuntimeException();
             }
         }
@@ -995,14 +995,14 @@ public class ListActionsBinary<T extends SignalDataGetter>
                 }
                 else
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[2], "Unknown mob '" + name + "'!");
+                    Log.writeDataToLogFile(2, "Unknown mob '" + name + "'!");
                     throw new RuntimeException();
                 }
             }
 
             if (!classes.isEmpty())
             {
-                _arrayList.add((event, query) ->
+                this.ARRAY_LIST.add((event, query) ->
                         classes.contains(query.getEntity(event).getClass()));
             }
         }
@@ -1018,13 +1018,13 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)animalsObj)
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
                     (query.getEntity(event) instanceof IAnimals
                             && !(query.getEntity(event) instanceof IMob)));
         }
         else
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
                     !(query.getEntity(event) instanceof IAnimals
                             && !(query.getEntity(event) instanceof IMob)));
         }
@@ -1040,12 +1040,12 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)monstersObj)
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
                     query.getEntity(event) instanceof IMob);
         }
         else
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
                     !(query.getEntity(event) instanceof IMob));
         }
     }
@@ -1060,7 +1060,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)asPlayer)
         {
-            _arrayList.add((event, query) ->
+            this.ARRAY_LIST.add((event, query) ->
                     query.getAttacker(event) instanceof EntityPlayer);
         }
         //else
@@ -1079,11 +1079,13 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)asPlayer)
         {
-            _arrayList.add((event, query) -> query.getAttacker(event) == null ? false : AuxFunctions.isFakePlayer(query.getAttacker(event)));
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getAttacker(event) == null ? false : AuxFunctions.isFakePlayer(query.getAttacker(event)));
         }
         else
         {
-            _arrayList.add((event, query) -> query.getAttacker(event) == null ? true : !AuxFunctions.isFakePlayer(query.getAttacker(event)));
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getAttacker(event) == null ? true : !AuxFunctions.isFakePlayer(query.getAttacker(event)));
         }
     }
 
@@ -1097,11 +1099,13 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)asPlayer)
         {
-            _arrayList.add((event, query) -> query.getAttacker(event) == null ? false : AuxFunctions.isRealPlayer(query.getAttacker(event)));
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getAttacker(event) == null ? false : AuxFunctions.isRealPlayer(query.getAttacker(event)));
         }
         else
         {
-            _arrayList.add((event, query) -> query.getAttacker(event) == null ? true : !AuxFunctions.isRealPlayer(query.getAttacker(event)));
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getAttacker(event) == null ? true : !AuxFunctions.isRealPlayer(query.getAttacker(event)));
         }
     }
 
@@ -1114,7 +1118,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(key));
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
         {
             EntityPlayer player = query.getPlayer(event);
 
@@ -1146,7 +1150,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(OFF_HAND_ITEM));
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
         {
             EntityPlayer player = query.getPlayer(event);
 
@@ -1180,11 +1184,13 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)explosion)
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? false : query.getSource(event).isExplosion());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? false : query.getSource(event).isExplosion());
         }
         else
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? true : !query.getSource(event).isExplosion());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? true : !query.getSource(event).isExplosion());
         }
     }
 
@@ -1198,11 +1204,13 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)projectile)
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? false : query.getSource(event).isProjectile());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? false : query.getSource(event).isProjectile());
         }
         else
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? true : !query.getSource(event).isProjectile());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? true : !query.getSource(event).isProjectile());
         }
     }
 
@@ -1216,11 +1224,13 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)fire)
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? false : query.getSource(event).isFireDamage());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? false : query.getSource(event).isFireDamage());
         }
         else
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? true : !query.getSource(event).isFireDamage());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? true : !query.getSource(event).isFireDamage());
         }
     }
 
@@ -1234,11 +1244,13 @@ public class ListActionsBinary<T extends SignalDataGetter>
 
         if ((Boolean)magic)
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? false : query.getSource(event).isMagicDamage());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? false : query.getSource(event).isMagicDamage());
         }
         else
         {
-            _arrayList.add((event, query) -> query.getSource(event) == null ? true : !query.getSource(event).isMagicDamage());
+            this.ARRAY_LIST.add((event, query) ->
+                    query.getSource(event) == null ? true : !query.getSource(event).isMagicDamage());
         }
     }
 
@@ -1251,7 +1263,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
         List<String> sources = map.getList(SOURCE);
         Set<String> sourceSet = new HashSet<>(sources);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
         {
             if (query.getSource(event) == null)
             {
@@ -1270,7 +1282,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(BOTH_HANDS_ITEM));
 
-        _arrayList.add((event,query) ->
+        this.ARRAY_LIST.add((event,query) ->
         {
             EntityPlayer player = query.getPlayer(event);
 
@@ -1315,7 +1327,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object _random = map.get(RANDOM_KEY_0);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
     }
 
@@ -1327,7 +1339,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object _random = map.get(RANDOM_KEY_1);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
     }
 
@@ -1339,7 +1351,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object _random = map.get(RANDOM_KEY_2);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
     }
 
@@ -1351,7 +1363,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object _random = map.get(RANDOM_KEY_3);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
     }
 
@@ -1363,7 +1375,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         Object _random = map.get(RANDOM_KEY_4);
 
-        _arrayList.add((event, query) ->
+        this.ARRAY_LIST.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
     }
 }

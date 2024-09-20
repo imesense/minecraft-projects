@@ -18,7 +18,7 @@ public class WorldTime
      */
     public WorldTime(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**

@@ -44,12 +44,12 @@ public final class TimeHandlerServer implements ITimeHandler
     /**
      *
      */
-    private static final Logger log = LogManager.getLogger(TimeHandlerServer.class.getSimpleName());
+    private static final Logger LOG = LogManager.getLogger(TimeHandlerServer.class.getSimpleName());
 
     /**
      *
      */
-    private static final Method wakeAllPlayers = ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
+    private static final Method WAKE_ALL_PLAYERS = ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
 
     /**
      *
@@ -90,12 +90,12 @@ public final class TimeHandlerServer implements ITimeHandler
                     this.reset(updatedWorldTime);
                     this._wasDaytime = true;
 
-                    wakeAllPlayers.invoke(world);
+                    this.WAKE_ALL_PLAYERS.invoke(world);
                 }
             }
             catch (InvocationTargetException | IllegalAccessException var)
             {
-                log.error("Unable to wake players!", var);
+                LOG.error("Unable to wake players!", var);
             }
 
             ++this.customTime;
@@ -110,8 +110,8 @@ public final class TimeHandlerServer implements ITimeHandler
                 {
                     updatedWorldTime = world.getWorldTime();
 
-                    log.info(WorldTime.progressString(updatedWorldTime, ""));
-                    log.info(String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s",
+                    LOG.info(WorldTime.progressString(updatedWorldTime, ""));
+                    LOG.info(String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s",
                             worldTime, updatedWorldTime, this.customTime - 1L, this.customTime, WorldTime.day(updatedWorldTime), this.multiplier));
                 }
             }
@@ -162,7 +162,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
             if (ConfigWorldTime.TimeControlDebug)
             {
-                log.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
+                LOG.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
             }
         }
     }

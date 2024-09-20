@@ -82,31 +82,31 @@ public class CacheEvents
 
         Cache.updateCache(worldServer);
 
-        if (Cache.CachedValidChunks.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
+        if (Cache.CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
         {
             if (entity instanceof IAnimals)
             {
                 if (entity instanceof EntityAnimal)
                 {
-                    Cache.CachedAnimals.add((EntityAnimal) entity);
+                    Cache.CACHED_ANIMALS.add((EntityAnimal) entity);
                 }
                 else if (entity instanceof EntityMob)
                 {
-                    Cache.CachedHostileEntities.add((IAnimals) entity);
+                    Cache.CACHED_HOSTILES.add((IAnimals) entity);
                 }
             }
 
             if (entity instanceof EntityLivingBase)
             {
-                Cache.CachedAllEntities.add((EntityLivingBase) entity);
+                Cache.CACHED_ALL.add((EntityLivingBase) entity);
                 String entityName = entity.getName();
-                Cache.EntitiesByName.computeIfAbsent(entityName, k -> new HashSet<>()).add((EntityLivingBase) entity);
+                Cache.ENTITIES_BY_NAME.computeIfAbsent(entityName, k -> new HashSet<>()).add((EntityLivingBase) entity);
 
                 ResourceLocation entityKey = EntityList.getKey(entity);
 
                 if (entityKey != null)
                 {
-                    Cache.EntitiesByResourceLocation.computeIfAbsent(entityKey, k -> new HashSet<>()).add((EntityLivingBase) entity);
+                    Cache.ENTITIES_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k -> new HashSet<>()).add((EntityLivingBase) entity);
                 }
             }
         }

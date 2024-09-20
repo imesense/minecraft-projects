@@ -137,6 +137,7 @@ public class AuxFunctions
     public static boolean isMatchingOreDict(int oreId, Block block)
     {
         ItemStack stack = new ItemStack(block);
+
         int[] oreIDs = stack.isEmpty() ? new int[0] : OreDictionary.getOreIDs(stack);
 
         return isMatchingOreId(oreIDs, oreId);
@@ -272,7 +273,7 @@ public class AuxFunctions
         }
         else
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Item description is not valid!");
+            Log.writeDataToLogFile(2, "Item description is not valid!");
         }
 
         return items;
@@ -315,7 +316,7 @@ public class AuxFunctions
             }
             else
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Item description '" + json + "' is not valid!");
+                Log.writeDataToLogFile(2, "Item description '" + json + "' is not valid!");
             }
         }
 
@@ -346,11 +347,11 @@ public class AuxFunctions
             {
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));
 
-                Log.writeDataToLogFile(Log.TypeLog[0], "Block " + blockName);
+                Log.writeDataToLogFile(0, "Block " + blockName);
 
                 if (block == null)
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[2], "Block '" + blockName + "' is not valid!");
+                    Log.writeDataToLogFile(2, "Block '" + blockName + "' is not valid!");
                     return null;
                 }
 
@@ -375,7 +376,7 @@ public class AuxFunctions
 
                 if (block == null)
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[2], "Block '" + blockName + "' is not valid!");
+                    Log.writeDataToLogFile(2, "Block '" + blockName + "' is not valid!");
                     return null;
                 }
 
@@ -463,7 +464,7 @@ public class AuxFunctions
         }
         else
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Block description '" + json + "' is not valid!");
+            Log.writeDataToLogFile(2, "Block description '" + json + "' is not valid!");
         }
 
         return null;
@@ -536,7 +537,7 @@ public class AuxFunctions
         }
         catch (NumberFormatException _error)
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Bad expression '" + expression + "'!");
+            Log.writeDataToLogFile(2, "Bad expression '" + expression + "'!");
             return null;
         }
     }
@@ -563,7 +564,7 @@ public class AuxFunctions
         }
         else
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Bad expression!");
+            Log.writeDataToLogFile(2, "Bad expression!");
             throw new RuntimeException();
         }
     }
@@ -579,7 +580,6 @@ public class AuxFunctions
 
         if (!stack.isEmpty())
         {
-            // Stack matching
             if (name.contains("/") && name.contains("@"))
             {
                 return s -> ItemStack.areItemsEqual(s, stack) && ItemStack.areItemStackTagsEqual(s, stack);
@@ -619,7 +619,7 @@ public class AuxFunctions
 
         if (item == null)
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
+            Log.writeDataToLogFile(2, "Unknown item '" + name + "'!");
             return null;
         }
 
@@ -661,7 +661,6 @@ public class AuxFunctions
 
         if (jsonObject.has("mod"))
         {
-            //String mod = _jsonObject.get("mod").getAsString();
             Predicate<ItemStack> finalTest = test;
             test = s -> finalTest.test(s) && "mod".equals(s.getItem().getRegistryName().getResourceDomain());
         }
@@ -896,7 +895,7 @@ public class AuxFunctions
 
                 if (pair.getValue().isEmpty())
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
+                    Log.writeDataToLogFile(2, "Unknown item '" + name + "'!");
                 }
                 else
                 {
@@ -915,7 +914,7 @@ public class AuxFunctions
             }
             else
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Item description '" + json + "' is not valid!");
+                Log.writeDataToLogFile(2, "Item description '" + json + "' is not valid!");
             }
         }
 

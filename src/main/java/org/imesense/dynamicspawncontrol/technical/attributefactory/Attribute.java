@@ -9,12 +9,12 @@ public final class Attribute<T>
     /**
      *
      */
-    private final boolean multiKey;
+    private final boolean MULTI_KEY;
 
     /**
      *
      */
-    private final AttributeKey<T> key;
+    private final AttributeKey<T> KEY;
 
     /**
      *
@@ -23,8 +23,8 @@ public final class Attribute<T>
      */
     public Attribute(AttributeKey<T> key, boolean multiKey)
     {
-        this.key = key;
-        this.multiKey = multiKey;
+        this.KEY = key;
+        this.MULTI_KEY = multiKey;
     }
 
     /**
@@ -57,7 +57,7 @@ public final class Attribute<T>
      */
     public AttributeKey<T> getKey()
     {
-        return this.key;
+        return this.KEY;
     }
 
     /**
@@ -66,6 +66,6 @@ public final class Attribute<T>
      */
     public boolean isMulti()
     {
-        return this.multiKey;
+        return this.MULTI_KEY;
     }
 }

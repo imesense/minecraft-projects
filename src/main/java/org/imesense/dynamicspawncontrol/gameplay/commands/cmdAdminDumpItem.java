@@ -30,7 +30,7 @@ public final class cmdAdminDumpItem extends CommandBase
      */
     public cmdAdminDumpItem(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**
@@ -71,7 +71,7 @@ public final class cmdAdminDumpItem extends CommandBase
             ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
             Item item = heldItem.getItem();
             sender.sendMessage(new TextComponentString(TextFormatting.GOLD + Objects.requireNonNull(item.getRegistryName()).toString()));
-            Log.writeDataToLogFile(Log.TypeLog[0], Objects.requireNonNull(item.getRegistryName()).toString());
+            Log.writeDataToLogFile(0, Objects.requireNonNull(item.getRegistryName()).toString());
             NBTTagCompound nbt = heldItem.getTagCompound();
             if (nbt != null)
             {
@@ -100,35 +100,35 @@ public final class cmdAdminDumpItem extends CommandBase
             {
                 case Constants.NBT.TAG_INT:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Int) " + key + " = " + nbt.getInteger(key)));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(Int) " + key + " = " + nbt.getInteger(key));
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Int) " + key + " = " + nbt.getInteger(key));
                     break;
                 case Constants.NBT.TAG_LONG:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Long) " + key + " = " + nbt.getLong(key)));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(Long) " + key + " = " + nbt.getLong(key));
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Long) " + key + " = " + nbt.getLong(key));
                     break;
                 case Constants.NBT.TAG_DOUBLE:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Double) " + key + " = " + nbt.getDouble(key)));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(Double) " + key + " = " + nbt.getDouble(key));
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Double) " + key + " = " + nbt.getDouble(key));
                     break;
                 case Constants.NBT.TAG_FLOAT:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Float) " + key + " = " + nbt.getFloat(key)));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(Float) " + key + " = " + nbt.getFloat(key));
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Float) " + key + " = " + nbt.getFloat(key));
                     break;
                 case Constants.NBT.TAG_STRING:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(String) " + key + " = " + nbt.getString(key)));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(String) " + key + " = " + nbt.getString(key));
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(String) " + key + " = " + nbt.getString(key));
                     break;
                 case Constants.NBT.TAG_BYTE:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Byte) " + key + " = " + nbt.getByte(key)));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(Byte) " + key + " = " + nbt.getByte(key));
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Byte) " + key + " = " + nbt.getByte(key));
                     break;
                 case Constants.NBT.TAG_SHORT:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Short) " + key + " = " + nbt.getShort(key)));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(Short) " + key + " = " + nbt.getShort(key));
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Short) " + key + " = " + nbt.getShort(key));
                     break;
                 case Constants.NBT.TAG_LIST:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(List) " + key));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(List) " + key);
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(List) " + key);
                     NBTBase b = nbt.getTag(key);
 
                     if (((NBTTagList)b).getTagType() == Constants.NBT.TAG_COMPOUND)
@@ -138,7 +138,7 @@ public final class cmdAdminDumpItem extends CommandBase
                         for (NBTBase bs : list)
                         {
                             sender.sendMessage(new TextComponentString(TextFormatting.YELLOW + StringUtils.repeat(' ', indent+2) + "Index " + idx));
-                            Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent+2) + "Index " + idx);
+                            Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent+2) + "Index " + idx);
                             idx++;
                             dumpNBT(sender, indent + 4, (NBTTagCompound) bs);
                         }
@@ -146,12 +146,12 @@ public final class cmdAdminDumpItem extends CommandBase
                     break;
                 case Constants.NBT.TAG_COMPOUND:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(NBT) " + key));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(NBT) " + key);
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(NBT) " + key);
                     dumpNBT(sender, indent + 2, nbt.getCompoundTag(key));
                     break;
                 default:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(?) " + key));
-                    Log.writeDataToLogFile(Log.TypeLog[0], StringUtils.repeat(' ', indent) + "(?) " + key);
+                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(?) " + key);
                     break;
             }
         }

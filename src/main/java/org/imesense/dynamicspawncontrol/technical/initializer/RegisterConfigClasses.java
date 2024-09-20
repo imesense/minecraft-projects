@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.*;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -26,10 +27,10 @@ public final class RegisterConfigClasses
 
     /**
      *
+     * @param nameClass
      */
     public RegisterConfigClasses(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
     }
 
     /**
@@ -42,40 +43,23 @@ public final class RegisterConfigClasses
         {
             try
             {
-                Log.writeDataToLogFile(Log.TypeLog[0], "---------------------------------------------");
-                Log.writeDataToLogFile(Log.TypeLog[0], "Start reading class: " + configClass.getName());
+                Log.writeDataToLogFile(0, "Start reading class: " + configClass.getName());
 
-                if (!hasConstructorWithParameter(configClass, String.class))
+                if (!CodeGenericUtils.hasConstructorWithParameter(configClass, String.class))
                 {
-                    throw new NoSuchMethodException("Class " + configClass.getName() + " does not have a constructor with a String parameter.");
+                    Log.writeDataToLogFile(0, "Class " + configClass.getName() + " does not have a constructor with a String parameter.");
+                    throw new RuntimeException();
                 }
 
                 Object configInstance = configClass.getConstructor(String.class).newInstance(configClass.getSimpleName());
 
                 ((IConfig)configInstance).init(event, configClass.getSimpleName());
-
-                Log.writeDataToLogFile(Log.TypeLog[0], String.format("Config instance created: %s", configInstance));
-
-                Log.writeDataToLogFile(Log.TypeLog[0], "End reading class: " + configClass.getName());
-                Log.writeDataToLogFile(Log.TypeLog[0], "---------------------------------------------");
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Exception in class: " + configClass.getName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception in class: " + configClass.getName() + " - " + exception.getMessage());
+                throw new RuntimeException(exception);
             }
-        }
-    }
-
-    private static boolean hasConstructorWithParameter(Class<?> clazz, Class<?>... parameterTypes)
-    {
-        try
-        {
-            clazz.getConstructor(parameterTypes);
-            return true;
-        }
-        catch (NoSuchMethodException e)
-        {
-            return false;
         }
     }
 }

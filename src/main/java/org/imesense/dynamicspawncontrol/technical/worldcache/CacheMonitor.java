@@ -15,7 +15,7 @@ public class CacheMonitor
     /**
      *
      */
-    protected static int x = 10, y = 10;
+    protected static final int X = 10, Y = 10;
 
     /**
      *
@@ -28,14 +28,14 @@ public class CacheMonitor
      */
     public static void renderDebugInfo(ScaledResolution resolution)
     {
-        FontRenderer fontRenderer = GetMinecraft.fontRenderer;
+        final FontRenderer FONT_RENDER = GetMinecraft.fontRenderer;
 
-        String animalMessage = TextFormatting.GREEN + "Animals: " + getAnimalCount();
-        String hostileMessage = TextFormatting.RED + "Hostile Entities: " + getHostileEntityCount();
-        String totalMessage = TextFormatting.YELLOW + "Total Entities: " + getTotalEntityCount();
+        final String ANIMALS = TextFormatting.GREEN + "Animals: " + getAnimalCount();
+        final String HOSTILE = TextFormatting.RED + "Hostile Entities: " + getHostileEntityCount();
+        final String TOTAL = TextFormatting.YELLOW + "Total Entities: " + getTotalEntityCount();
 
-        fontRenderer.drawString(animalMessage, x, y, 0xFFFFFF);
-        fontRenderer.drawString(hostileMessage, x, y + 10, 0xFFFFFF);
-        fontRenderer.drawString(totalMessage, x, y + 20, 0xFFFFFF);
+        FONT_RENDER.drawString(ANIMALS, X, Y, 0xFFFFFF);
+        FONT_RENDER.drawString(HOSTILE, X, Y + 10, 0xFFFFFF);
+        FONT_RENDER.drawString(TOTAL, X, Y + 20, 0xFFFFFF);
     }
 }

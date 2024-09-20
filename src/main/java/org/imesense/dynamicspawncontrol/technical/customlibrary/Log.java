@@ -25,18 +25,25 @@ public final class Log
     /**
      *
      */
-    public static final String[] TypeLog = { "[INFO]: ", "[WARN]: ", "[ERROR]: " };
+    public static final int LEVEL_INFO = 0;
+    public static final int LEVEL_WARN = 1;
+    public static final int LEVEL_ERROR = 2;
 
     /**
      *
      */
-    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static final String[] LEVEL_PREFIXES = { "[INFO]: ", "[WARN]: ", "[ERROR]: " };
+
+    /**
+     *
+     */
+    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
     /**
      *
      * @param path
      */
-    public static void createLogFile(String path)
+    public static void createLogFile(final String path)
     {
         try
         {
@@ -136,20 +143,27 @@ public final class Log
 
     /**
      *
-     * @param typeInfo
+     * @param levelInfo
      * @param data
      */
-    public static void writeDataToLogFile(@Nonnull String typeInfo, String data)
+    public static void writeDataToLogFile(final int levelInfo, String data)
     {
         if (logFile != null)
         {
-            executor.submit(() ->
+            final int[] logLevel = { levelInfo };
+
+            EXECUTOR.submit(() ->
             {
                 try
                 {
+                    if (logLevel[0] < 0 || logLevel[0] >= LEVEL_PREFIXES.length)
+                    {
+                        logLevel[0] = LEVEL_INFO;
+                    }
+
                     FileWriter writer = new FileWriter(logFile, true);
 
-                    writer.write("\n" + typeInfo + data);
+                    writer.write("\n" + LEVEL_PREFIXES[logLevel[0]] + data);
                     writer.close();
 
                     cleanFile(logFile, ConfigLogFile.LogMaxLines);
@@ -160,8 +174,7 @@ public final class Log
                     System.err.println("Error writing data to a file: " + e.getMessage());
                 }
             });
-        }
-        else
+        } else
         {
             System.err.println("The log file has not been created. First, create a log file.");
         }
@@ -172,6 +185,6 @@ public final class Log
      */
     public static void closeExecutor()
     {
-        executor.shutdown();
+        EXECUTOR.shutdown();
     }
 }

@@ -19,7 +19,7 @@ public final class OnLivingExperienceDrop
      */
     public OnLivingExperienceDrop(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**

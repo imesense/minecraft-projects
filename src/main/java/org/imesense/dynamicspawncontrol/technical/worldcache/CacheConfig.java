@@ -25,7 +25,7 @@ public class CacheConfig
      */
     public CacheConfig(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**
@@ -73,30 +73,30 @@ public class CacheConfig
                 File parentDir = file.getParentFile();
                 if (!parentDir.exists() && !parentDir.mkdirs())
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[0], "Failed to create directories for script file: " + parentDir.getAbsolutePath());
+                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + parentDir.getAbsolutePath());
                     throw new RuntimeException("Failed to create directories for script file: " + parentDir.getAbsolutePath());
                 }
 
                 if (file.createNewFile())
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[0], "Created new script file: " + file.getAbsolutePath());
+                    Log.writeDataToLogFile(0, "Created new script file: " + file.getAbsolutePath());
                     try (FileWriter writer = new FileWriter(file))
                     {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         JsonArray emptyJsonArray = new JsonArray();
                         gson.toJson(emptyJsonArray, writer);
-                        Log.writeDataToLogFile(Log.TypeLog[0], "Initialized new script file with empty JSON array: " + file.getAbsolutePath());
+                        Log.writeDataToLogFile(0, "Initialized new script file with empty JSON array: " + file.getAbsolutePath());
                     }
                 }
                 else
                 {
-                    Log.writeDataToLogFile(Log.TypeLog[0], "Failed to create new script file: " + file.getAbsolutePath());
+                    Log.writeDataToLogFile(0, "Failed to create new script file: " + file.getAbsolutePath());
                     throw new RuntimeException();
                 }
             }
             catch (IOException e)
             {
-                Log.writeDataToLogFile(Log.TypeLog[0], "Error creating new script file: " + e.getMessage());
+                Log.writeDataToLogFile(0, "Error creating new script file: " + e.getMessage());
                 throw new RuntimeException(e);
             }
         }
@@ -121,28 +121,28 @@ public class CacheConfig
                     String path = parts.length > 1 ? parts[1] : parts[0];
                     ResourceLocation entityResourceLocation = new ResourceLocation(domain, path);
 
-                    Log.writeDataToLogFile(Log.TypeLog[0], "Entity Loaded: " + entityResourceLocation + " Max Count: " + maxCount);
+                    Log.writeDataToLogFile(0, "Entity Loaded: " + entityResourceLocation + " Max Count: " + maxCount);
 
                     entitiesList.add(new CacheStorage.EntityData(entityResourceLocation, maxCount));
                 }
 
                 CacheStorage.getInstance().EntityCacheMobs = entitiesList;
-                Log.writeDataToLogFile(Log.TypeLog[0], "Loaded script with data: " + entitiesList);
+                Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
             }
             else
             {
-                Log.writeDataToLogFile(Log.TypeLog[0], "Script does not contain key 'data'.");
+                Log.writeDataToLogFile(0, "Script does not contain key 'data'.");
                 throw new RuntimeException();
             }
         }
         catch (JsonSyntaxException exception)
         {
-            Log.writeDataToLogFile(Log.TypeLog[0], "JSON syntax error in configuration file: " + exception.getMessage());
+            Log.writeDataToLogFile(0, "JSON syntax error in configuration file: " + exception.getMessage());
             throw new RuntimeException(exception);
         }
         catch (IOException exception)
         {
-            Log.writeDataToLogFile(Log.TypeLog[0], "Error loading script file: " + exception.getMessage());
+            Log.writeDataToLogFile(0, "Error loading script file: " + exception.getMessage());
             throw new RuntimeException(exception);
         }
     }

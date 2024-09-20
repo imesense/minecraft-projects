@@ -10,17 +10,17 @@ public class StructureEntry
     /**
      *
      */
-    private final int dimension;
+    private final int DIMENSION;
 
     /**
      *
      */
-    private final long chunkPos;
+    private final long CHUNK_POS;
 
     /**
      *
      */
-    private final String structure;
+    private final String STRUCTURE;
 
     /**
      *
@@ -30,9 +30,9 @@ public class StructureEntry
      */
     public StructureEntry(@Nonnull String structure, int dimension, long chunkPos)
     {
-        this.structure = structure;
-        this.dimension = dimension;
-        this.chunkPos = chunkPos;
+        this.STRUCTURE = structure;
+        this.DIMENSION = dimension;
+        this.CHUNK_POS = chunkPos;
     }
 
     /**
@@ -42,7 +42,7 @@ public class StructureEntry
     @Nonnull
     public String getStructure()
     {
-        return structure;
+        return this.STRUCTURE;
     }
 
     /**
@@ -51,7 +51,7 @@ public class StructureEntry
      */
     public int getDimension()
     {
-        return dimension;
+        return this.DIMENSION;
     }
 
     /**
@@ -60,7 +60,7 @@ public class StructureEntry
      */
     public long getChunkPos()
     {
-        return chunkPos;
+        return this.CHUNK_POS;
     }
 
     /**
@@ -83,17 +83,17 @@ public class StructureEntry
 
         StructureEntry that = (StructureEntry) object;
 
-        if (this.dimension != that.dimension)
+        if (this.DIMENSION != that.DIMENSION)
         {
             return false;
         }
 
-        if (this.chunkPos != that.chunkPos)
+        if (this.CHUNK_POS != that.CHUNK_POS)
         {
             return false;
         }
 
-        return this.structure.equals(that.structure);
+        return this.STRUCTURE.equals(that.STRUCTURE);
     }
 
     /**
@@ -103,10 +103,10 @@ public class StructureEntry
     @Override
     public int hashCode()
     {
-        int result = this.structure.hashCode();
+        int result = this.STRUCTURE.hashCode();
 
-        result = 31 * result + this.dimension;
-        result = 31 * result + (int) (this.chunkPos ^ (this.chunkPos >>> 32));
+        result = 31 * result + this.DIMENSION;
+        result = 31 * result + (int) (this.CHUNK_POS ^ (this.CHUNK_POS >>> 32));
 
         return result;
     }

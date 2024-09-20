@@ -6,10 +6,12 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import org.imesense.dynamicspawncontrol.gameplay.commands.*;
 
+import static org.imesense.dynamicspawncontrol.debug.CodeGenericUtils.hasConstructorWithParameter;
+
 /**
  *
  */
-public class RegisterCommandsClasses
+public final class RegisterCommandsClasses
 {
     /**
      *
@@ -36,7 +38,6 @@ public class RegisterCommandsClasses
      */
     public RegisterCommandsClasses(final String nameClass)
     {
-
     }
 
     /**
@@ -54,7 +55,8 @@ public class RegisterCommandsClasses
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Exception in class: " + cmdClass.getName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception in class: " + cmdClass.getName() + " - " + exception.getMessage());
+                throw new RuntimeException(exception);
             }
         }
     }

@@ -55,7 +55,7 @@ public final class ConfigWorldTime implements IConfig
     @Override
     public void init(FMLPreInitializationEvent event, final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
 
         ClientProxy.ConfigWorldTime = this.createConfiguration("world_time");
 
@@ -127,6 +127,7 @@ public final class ConfigWorldTime implements IConfig
         try
         {
             configuration.load();
+
             this.readProperties(configuration);
         }
         finally

@@ -224,7 +224,7 @@ public final class JsonServices
      */
     public static <T> T getValueFromJson(JsonObject jsonObject, String key, T defaultValue, BiFunction<JsonElement, T, T> extractor)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], "Read jsonObject: " + jsonObject);
+        Log.writeDataToLogFile(0, "Read jsonObject: " + jsonObject);
 
         if (jsonObject.has(key))
         {
