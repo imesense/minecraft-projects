@@ -4,6 +4,7 @@ import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunctions;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumSingleScripts;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.io.File;
@@ -61,9 +62,9 @@ public class CacheConfig
                 ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
                 DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY +
                 File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CACHE,
-                AuxFunctions.NameSingleScript.SCRIPT_CACHE_MOBS.getKeyword())
+                EnumSingleScripts.SCRIPT_CACHE_MOBS.getKeyword())
                 : new File("config/DynamicsSpawnControl/cache/" +
-                AuxFunctions.NameSingleScript.SCRIPT_CACHE_MOBS.getKeyword());
+                EnumSingleScripts.SCRIPT_CACHE_MOBS.getKeyword());
 
         if (!file.exists())
         {

@@ -4,10 +4,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunctions;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.CmdCalledType;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.TextEnumColors;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
 
 import javax.annotation.Nonnull;
 
@@ -53,10 +50,10 @@ public final class cmdServerSingleScriptsReload extends CommandBase
             this.getUsage(sender);
 
             sender.sendMessage(new TextComponentString(
-                    AuxFunctions.UNICODE.SECTION +
-                            TextEnumColors.RED.getCode() +
-                            CmdCalledType.CMD.getDescription() +
-                            AuxFunctions.UNICODE.WHITE_SPACE +
+                    EnumUnicodeCharacters.SECTION.getCharacter() +
+                            EnumTextColors.RED.getCode() +
+                            EnumCmdCalledType.CMD.getDescription() +
+                            EnumUnicodeCharacters.WHITE_SPACE.getCharacter() +
                             "The command does not accept arguments"));
         }
         else
@@ -65,10 +62,10 @@ public final class cmdServerSingleScriptsReload extends CommandBase
             //ParserSingleZombieSummonAID.getClassInstance().reloadConfig();
 
             sender.sendMessage(new TextComponentString(
-                    AuxFunctions.UNICODE.SECTION +
-                            TextEnumColors.GREEN.getCode() +
-                            CmdCalledType.CMD.getDescription() +
-                            AuxFunctions.UNICODE.WHITE_SPACE +
+                    EnumUnicodeCharacters.SECTION.getCharacter() +
+                            EnumTextColors.GREEN.getCode() +
+                            EnumCmdCalledType.CMD.getDescription() +
+                            EnumUnicodeCharacters.WHITE_SPACE.getCharacter() +
                             "Configurations have been reloaded"));
         }
     }

@@ -5,10 +5,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldProvider;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunctions;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.CmdCalledType;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.TextEnumColors;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
 
 import javax.annotation.Nonnull;
 
@@ -62,10 +59,10 @@ public final class cmdAdminGetWorldMoonPhase extends CommandBase
         int moonPhase = worldProvider.getMoonPhase(sender.getEntityWorld().getWorldTime());
 
         sender.sendMessage(new TextComponentString(
-                AuxFunctions.UNICODE.SECTION +
-                        TextEnumColors.AQUA.getCode() +
-                        CmdCalledType.CMD.getDescription() +
-                        AuxFunctions.UNICODE.WHITE_SPACE +
+                   EnumUnicodeCharacters.SECTION.getCharacter() +
+                        EnumTextColors.AQUA.getCode() +
+                        EnumCmdCalledType.CMD.getDescription() +
+                        EnumUnicodeCharacters.WHITE_SPACE.getCharacter() +
                         "-> The current phase of the moon: " +
                         moonPhase));
     }
