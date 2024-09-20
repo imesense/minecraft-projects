@@ -8,7 +8,7 @@ import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
 /**
  *
  */
-public class ConfigDebugSingleEvents implements IConfig
+public final class ConfigDebugSingleEvents implements IConfig
 {
     /**
      *
@@ -32,13 +32,10 @@ public class ConfigDebugSingleEvents implements IConfig
     /**
      *
      * @param event
-     * @param nameClass
      */
     @Override
-    public void init(FMLPreInitializationEvent event, final String nameClass)
+    public void init(FMLPreInitializationEvent event)
     {
-        Log.writeDataToLogFile(0, nameClass);
-
         ClientProxy.ConfigDebugSingleEvents = this.createConfiguration("debug_actions_single_events");
 
         this.read();

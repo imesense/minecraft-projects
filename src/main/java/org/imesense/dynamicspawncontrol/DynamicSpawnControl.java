@@ -12,11 +12,13 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterGameplayClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCommandsClasses;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
+import org.imesense.dynamicspawncontrol.technical.initializer.RegisterTechnicalClasses;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheConfig;
@@ -178,13 +180,19 @@ public class DynamicSpawnControl
 
         //
         Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY);
-        Log.writeDataToLogFile(0, "Check debugger -> " + checkDebugger.IsRunDebugger);
+        Log.writeDataToLogFile(1, "Debugger is running: " + (checkDebugger.IsRunDebugger ? "true" : "false"));
 
         //
         MessageHandler.init();
 
         //
         cacheStorage = new CacheStorage("CacheStorage");
+
+        //
+        RegisterTechnicalClasses.registerClasses();
+
+        //
+        OnWindowTitle.replace();
 
         //
         RegisterGameplayClasses.registerClasses();
@@ -227,7 +235,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void onLoadComplete(FMLLoadCompleteEvent event)
     {
-        cacheConfig = new CacheConfig("onLoadComplete -> CacheConfig");
+        cacheConfig = new CacheConfig("CacheConfig");
         cacheConfig.loadConfig(true);
     }
 
