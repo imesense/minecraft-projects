@@ -50,6 +50,8 @@ public final class RegisterCommandsClasses
         {
             try
             {
+                Log.writeDataToLogFile(0, "Reading class: " + cmdClass.getName());
+
                 Object commandInstance = cmdClass.getConstructor(String.class).newInstance(cmdClass.getSimpleName());
                 event.registerServerCommand((ICommand)commandInstance);
             }

@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -21,7 +22,8 @@ import java.util.List;
 /**
  *
  */
-public class OnPlayerEvents
+@Mod.EventBusSubscriber
+public final class OnPlayerEvents
 {
     /**
      *
@@ -34,7 +36,7 @@ public class OnPlayerEvents
      */
     public OnPlayerEvents(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

@@ -49,9 +49,9 @@ public final class OnUpdateTimeWorld
      *
      * @param nameClass
      */
-    private OnUpdateTimeWorld(String nameClass)
+    private OnUpdateTimeWorld(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

@@ -20,7 +20,7 @@ public final class cmdAdminGetWorldMoonPhase extends CommandBase
      */
     public cmdAdminGetWorldMoonPhase(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

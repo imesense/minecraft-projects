@@ -25,7 +25,7 @@ public final class cmdAdminScanEntities extends CommandBase
      */
     public cmdAdminScanEntities(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

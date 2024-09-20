@@ -23,7 +23,7 @@ public final class cmdAdminSwitchVanish extends CommandBase
      */
     public cmdAdminSwitchVanish(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

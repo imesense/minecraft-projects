@@ -22,7 +22,7 @@ public final class cmdAdminLaunchFireball extends CommandBase
      */
     public cmdAdminLaunchFireball(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

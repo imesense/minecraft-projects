@@ -19,7 +19,7 @@ public final class cmdServerJsonScriptsReload extends CommandBase
      */
     public cmdServerJsonScriptsReload(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

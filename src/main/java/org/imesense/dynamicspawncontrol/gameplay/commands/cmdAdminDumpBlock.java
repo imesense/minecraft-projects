@@ -30,7 +30,7 @@ public final class cmdAdminDumpBlock extends CommandBase
      */
     public cmdAdminDumpBlock(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

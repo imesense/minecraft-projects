@@ -20,7 +20,7 @@ public class CodeGenericUtils
     {
         if (object == null)
         {
-            Log.writeDataToLogFile(2, "Object<T> return null: " + message);
+            Log.writeDataToLogFile(2, "Object return null: " + message);
             throw new NullPointerException(message);
         }
 

@@ -30,7 +30,7 @@ public class CacheStorage
      */
     public CacheStorage(final String nameClass)
     {
-        Log.writeDataToLogFile(0, String.format("Create object [%s]", nameClass));
+        Log.writeDataToLogFile(0, String.format("Initializing a class: %s", nameClass));
 
         instance = this;
     }

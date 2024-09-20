@@ -38,6 +38,8 @@ public final class RegisterGameplayClasses
         {
             try
             {
+                Log.writeDataToLogFile(0, "Reading class: " + eventClass.getName());
+
                 Object eventInstance = eventClass.getConstructor(String.class).newInstance(eventClass.getSimpleName());
                 MinecraftForge.EVENT_BUS.register(eventInstance);
             }

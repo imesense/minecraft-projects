@@ -28,7 +28,7 @@ public final class cmdServerMobsKiller extends CommandBase
      */
     public cmdServerMobsKiller(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

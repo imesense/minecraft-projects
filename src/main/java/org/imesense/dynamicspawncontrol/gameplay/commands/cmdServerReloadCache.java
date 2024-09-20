@@ -20,7 +20,7 @@ public final class cmdServerReloadCache extends CommandBase
      */
     public cmdServerReloadCache(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**
