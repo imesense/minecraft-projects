@@ -1,34 +1,89 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
+import com.google.gson.JsonElement;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsStaticFactoryBlocks;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+
+import java.util.function.Consumer;
+
+/**
+ *
+ */
 public final class GenericBlockPlaceActions extends ListActionsSingleEvent<SignalDataGetter>
 {
-    private final Event.Result _result;
+    /**
+     *
+     */
+    private final Event.Result RESULT;
 
-    private static int _countCreatedMaps = 0;
+    /**
+     *
+     */
+    private static int countCreatedMaps = 0;
 
-    private final ListActionsBinary _ruleEvaluator;
+    /**
+     *
+     */
+    private final ListActionsBinary RULE_EVALUATOR;
 
-    public Event.Result getResult() { return _result; }
+    /**
+     *
+     * @return
+     */
+    public Event.Result getResult() { return this.RESULT; }
 
+    /**
+     *
+     */
     /* TODO: удалить в будущем */
-    private static final EventResults _abstractResult = new EventResults();
+    private static final ResultEvents RESULT_EVENTS = new ResultEvents();
 
+    /**
+     *
+     * @param event
+     * @return
+     */
     @Deprecated
-    public boolean match(BlockEvent.PlaceEvent event) { return _ruleEvaluator.match(event, EVENT_QUERY); }
+    public boolean match(BlockEvent.PlaceEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
 
-    private GenericBlockPlaceActions(AttributeMap<?> map, String nameClass)
+    /**
+     *
+     * @param map
+     * @param nameClass
+     */
+    private GenericBlockPlaceActions(AttributeMap<?> map, final String nameClass)
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log._typeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, _countCreatedMaps++));
+        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
-        this._ruleEvaluator = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
         this.addActions(map);
 
-        this._result = _abstractResult.getResult(map);
+        this.RESULT = RESULT_EVENTS.getResult(map);
     }
 
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static GenericBlockPlaceActions parse(JsonElement element)
     {
         if (element == null)
@@ -43,57 +98,105 @@ public final class GenericBlockPlaceActions extends ListActionsSingleEvent<Signa
         }
     }
 
+    /**
+     *
+     */
     @Deprecated
     private static final SignalDataAccessor<BlockEvent.PlaceEvent> EVENT_QUERY = new SignalDataAccessor<BlockEvent.PlaceEvent>()
     {
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public int getY(BlockEvent.PlaceEvent data)
         {
             return data.getPos().getY();
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public World getWorld(BlockEvent.PlaceEvent data)
         {
             return data.getWorld();
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public BlockPos getPos(BlockEvent.PlaceEvent data)
         {
             return data.getPos();
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public Entity getEntity(BlockEvent.PlaceEvent data)
         {
             return data.getPlayer();
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public ItemStack getItem(BlockEvent.PlaceEvent data)
         {
             return data.getItemInHand();
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public Entity getAttacker(BlockEvent.PlaceEvent data)
         {
             return null;
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public EntityPlayer getPlayer(BlockEvent.PlaceEvent data)
         {
             return data.getPlayer();
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public DamageSource getSource(BlockEvent.PlaceEvent data)
         {
             return null;
         }
 
+        /**
+         *
+         * @param data
+         * @return
+         */
         @Override
         public BlockPos getValidBlockPos(BlockEvent.PlaceEvent data)
         {
@@ -101,35 +204,62 @@ public final class GenericBlockPlaceActions extends ListActionsSingleEvent<Signa
         }
     };
 
+    /**
+     *
+     * @param event
+     */
     @Deprecated
     public void action(BlockEvent.PlaceEvent event)
     {
+        /**
+         *
+         */
         SignalDataGetter eventBase = new SignalDataGetter()
         {
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityLivingBase getEntityLiving()
             {
                 return event.getPlayer();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityPlayer getPlayer()
             {
                 return event.getPlayer();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public World getWorld()
             {
                 return event.getWorld();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public Entity getEntity()
             {
                 return null;
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public BlockPos getPosition()
             {
@@ -137,7 +267,10 @@ public final class GenericBlockPlaceActions extends ListActionsSingleEvent<Signa
             }
         };
 
-        for (Consumer<SignalDataGetter> action : _actions)
+        /**
+         *
+         */
+        for (Consumer<SignalDataGetter> action : actions)
         {
             action.accept(eventBase);
         }

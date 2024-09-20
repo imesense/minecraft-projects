@@ -1,32 +1,88 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
+import com.google.gson.JsonElement;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsStaticFactoryMouse;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+
+import java.util.function.Consumer;
+
+/**
+ *
+ */
 public final class GenericLeftClickActions extends ListActionsSingleEvent<SignalDataGetter>
 {
-    private final Event.Result _result;
+    /**
+     *
+     */
+    private final Event.Result RESULT;
 
-    private static int _countCreatedMaps = 0;
+    /**
+     *
+     */
+    private static int countCreatedMaps = 0;
 
-    private final ListActionsBinary _ruleEvaluator;
+    /**
+     *
+     */
+    private final ListActionsBinary RULE_EVALUATOR;
 
-    public Event.Result getResult() { return _result; }
+    /**
+     *
+     * @return
+     */
+    public Event.Result getResult() { return this.RESULT; }
 
+    /**
+     *
+     */
     /* TODO: удалить в будущем */
-    private static final EventResults _abstractResult = new EventResults();
+    private static final ResultEvents RESULT_EVENTS = new ResultEvents();
 
-    public boolean match(PlayerInteractEvent.LeftClickBlock event) { return _ruleEvaluator.match(event, EVENT_QUERY); }
+    /**
+     *
+     * @param event
+     * @return
+     */
+    public boolean match(PlayerInteractEvent.LeftClickBlock event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
 
+    /**
+     *
+     * @param map
+     * @param nameClass
+     */
     private GenericLeftClickActions(AttributeMap<?> map, String nameClass)
     {
         super(nameClass);
-        Log.writeDataToLogFile(Log._typeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, _countCreatedMaps++));
 
-        this._ruleEvaluator = new ListActionsBinary<>(map, nameClass);
+        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
         this.addActions(map);
 
-        this._result = _abstractResult.getResult(map);
+        this.RESULT = RESULT_EVENTS.getResult(map);
     }
 
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static GenericLeftClickActions parse(JsonElement element)
     {
         if (element == null)
@@ -41,56 +97,104 @@ public final class GenericLeftClickActions extends ListActionsSingleEvent<Signal
         }
     }
 
+    /**
+     *
+     */
     private static final SignalDataAccessor<PlayerInteractEvent.LeftClickBlock> EVENT_QUERY = new SignalDataAccessor<PlayerInteractEvent.LeftClickBlock>()
     {
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public World getWorld(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return LeftClickBlock.getWorld();
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public BlockPos getPos(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return LeftClickBlock.getPos();
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public BlockPos getValidBlockPos(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return LeftClickBlock.getPos();
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public int getY(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return LeftClickBlock.getPos().getY();
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public Entity getEntity(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return LeftClickBlock.getEntityPlayer();
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public DamageSource getSource(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return null;
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public Entity getAttacker(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return null;
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public EntityPlayer getPlayer(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
             return LeftClickBlock.getEntityPlayer();
         }
 
+        /**
+         *
+         * @param LeftClickBlock
+         * @return
+         */
         @Override
         public ItemStack getItem(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
         {
@@ -98,34 +202,61 @@ public final class GenericLeftClickActions extends ListActionsSingleEvent<Signal
         }
     };
 
+    /**
+     *
+     * @param event
+     */
     public void action(PlayerInteractEvent.LeftClickBlock event)
     {
+        /**
+         *
+         */
         SignalDataGetter eventBase = new SignalDataGetter()
         {
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityLivingBase getEntityLiving()
             {
                 return event.getEntityPlayer();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityPlayer getPlayer()
             {
                 return event.getEntityPlayer();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public World getWorld()
             {
                 return event.getWorld();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public Entity getEntity()
             {
                 return event.getEntity();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public BlockPos getPosition()
             {
@@ -133,7 +264,10 @@ public final class GenericLeftClickActions extends ListActionsSingleEvent<Signal
             }
         };
 
-        for (Consumer<SignalDataGetter> action : _actions)
+        /**
+         *
+         */
+        for (Consumer<SignalDataGetter> action : actions)
         {
             action.accept(eventBase);
         }

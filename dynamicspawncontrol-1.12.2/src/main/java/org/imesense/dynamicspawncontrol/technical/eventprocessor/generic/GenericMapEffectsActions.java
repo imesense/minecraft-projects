@@ -1,32 +1,91 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
+import com.google.gson.JsonElement;
+import com.google.gson.annotations.Since;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.SingleKeyWords;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+
+import java.util.function.Consumer;
+
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+
+/**
+ *
+ */
 public final class GenericMapEffectsActions extends ListActionsSingleEvent<SignalDataGetter>
 {
-    private final int _timeout;
+    /**
+     *
+     */
+    private final int TIMEOUT;
 
-    private static int _countCreatedMaps = 0;
+    /**
+     *
+     */
+    private static int countCreatedMaps = 0;
 
-    public int getTimeout() { return _timeout; }
+    /**
+     *
+     * @return
+     */
+    public int getTimeout() { return this.TIMEOUT; }
 
-    private final ListActionsBinary _ruleEvaluator;
+    /**
+     *
+     */
+    private final ListActionsBinary RULE_EVALUATOR;
 
+    /**
+     *
+     */
     private static final AttributeMapFactory<Object> FACTORY = new AttributeMapFactory<>();
 
-    public boolean match(TickEvent.PlayerTickEvent event) { return _ruleEvaluator.match(event, EVENT_QUERY); }
+    /**
+     *
+     * @param event
+     * @return
+     */
+    public boolean match(TickEvent.PlayerTickEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
 
+    /**
+     *
+     * @param map
+     * @param timeout
+     * @param nameClass
+     */
     private GenericMapEffectsActions(AttributeMap<?> map, int timeout, String nameClass)
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log._typeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, _countCreatedMaps++));
+        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
-        this._ruleEvaluator = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
         this.addActions(map);
 
-        this._timeout = timeout > 0 ? timeout : 1;
+        this.TIMEOUT = timeout > 0 ? timeout : 1;
     }
 
+    /**
+     *
+     * @param element
+     * @return
+     */
     public static GenericMapEffectsActions parse(JsonElement element)
     {
         if (element == null)
@@ -37,63 +96,111 @@ public final class GenericMapEffectsActions extends ListActionsSingleEvent<Signa
         {
             AttributeMap<?> map = FACTORY.parse(element);
 
-            int localTimeOut = element.getAsJsonObject().has(AuxFunctions.KeyWords.ACTION_TIMEOUT.getKeyword())
-                    ? element.getAsJsonObject().get(AuxFunctions.KeyWords.ACTION_TIMEOUT.getKeyword()).getAsInt() : 20;
+            int localTimeOut = element.getAsJsonObject().has(SingleKeyWords.EVENT_EFFECTS.KEYWORD_TIMEOUT)
+                    ? element.getAsJsonObject().get(SingleKeyWords.EVENT_EFFECTS.KEYWORD_TIMEOUT).getAsInt() : 20;
 
             return new GenericMapEffectsActions(map, localTimeOut, "GenericMapEffectsActions");
         }
     }
 
+    /**
+     *
+     */
     private static final SignalDataAccessor<TickEvent.PlayerTickEvent> EVENT_QUERY = new SignalDataAccessor<TickEvent.PlayerTickEvent>()
     {
+        /**
+         *
+         * @param PlayerTickEvent
+         * @return
+         */
         @Override
         public World getWorld(TickEvent.PlayerTickEvent PlayerTickEvent)
         {
             return PlayerTickEvent.player.getEntityWorld();
         }
 
+        /**
+         *
+         * @param PlayerTickEvent
+         * @return
+         */
         @Override
         public BlockPos getPos(TickEvent.PlayerTickEvent PlayerTickEvent)
         {
             return PlayerTickEvent.player.getPosition();
         }
 
+        /**
+         *
+         * @param PlayerTickEvent
+         * @return
+         */
         @Override
         public BlockPos getValidBlockPos(TickEvent.PlayerTickEvent PlayerTickEvent)
         {
             return PlayerTickEvent.player.getPosition().down();
         }
 
+        /**
+         *
+         * @param PlayerTickEvent
+         * @return
+         */
         @Override
         public int getY(TickEvent.PlayerTickEvent PlayerTickEvent)
         {
             return PlayerTickEvent.player.getPosition().getY();
         }
 
+        /**
+         *
+         * @param PlayerTickEvent
+         * @return
+         */
         @Override
         public Entity getEntity(TickEvent.PlayerTickEvent PlayerTickEvent)
         {
             return PlayerTickEvent.player;
         }
 
+        /**
+         *
+         * @param _PlayerTickEvent
+         * @return
+         */
         @Override
         public DamageSource getSource(TickEvent.PlayerTickEvent _PlayerTickEvent)
         {
             return null;
         }
 
+        /**
+         *
+         * @param _PlayerTickEvent
+         * @return
+         */
         @Override
         public Entity getAttacker(TickEvent.PlayerTickEvent _PlayerTickEvent)
         {
             return null;
         }
 
+        /**
+         *
+         * @param PlayerTickEvent
+         * @return
+         */
         @Override
         public EntityPlayer getPlayer(TickEvent.PlayerTickEvent PlayerTickEvent)
         {
             return PlayerTickEvent.player;
         }
 
+        /**
+         *
+         * @param _PlayerTickEvent
+         * @return
+         */
         @Override
         public ItemStack getItem(TickEvent.PlayerTickEvent _PlayerTickEvent)
         {
@@ -101,6 +208,9 @@ public final class GenericMapEffectsActions extends ListActionsSingleEvent<Signa
         }
     };
 
+    /**
+     *
+     */
     static
     {
         FACTORY
@@ -164,34 +274,61 @@ public final class GenericMapEffectsActions extends ListActionsSingleEvent<Signa
         ;
     }
 
+    /**
+     *
+     * @param event
+     */
     public void action(TickEvent.PlayerTickEvent event)
     {
+        /**
+         *
+         */
         SignalDataGetter eventBase = new SignalDataGetter()
         {
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityLivingBase getEntityLiving()
             {
                 return event.player;
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public EntityPlayer getPlayer()
             {
                 return event.player;
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public World getWorld()
             {
                 return event.player.getEntityWorld();
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public Entity getEntity()
             {
                 return null;
             }
 
+            /**
+             *
+             * @return
+             */
             @Override
             public BlockPos getPosition()
             {
@@ -199,7 +336,10 @@ public final class GenericMapEffectsActions extends ListActionsSingleEvent<Signa
             }
         };
 
-        for (Consumer<SignalDataGetter> action : _actions)
+        /**
+         *
+         */
+        for (Consumer<SignalDataGetter> action : actions)
         {
             action.accept(eventBase);
         }
