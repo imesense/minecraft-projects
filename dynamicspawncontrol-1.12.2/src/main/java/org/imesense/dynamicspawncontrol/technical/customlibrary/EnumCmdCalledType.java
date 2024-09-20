@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.customlibrary;
 /**
  *
  */
-public enum CmdCalledType
+public enum EnumCmdCalledType
 {
     /**
      *
@@ -44,7 +44,7 @@ public enum CmdCalledType
      *
      * @param description
      */
-    CmdCalledType(String description)
+    EnumCmdCalledType(String description)
     {
         this.description = description;
     }
