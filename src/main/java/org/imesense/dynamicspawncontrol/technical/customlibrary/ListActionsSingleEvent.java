@@ -1,5 +1,51 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigDebugSingleEvents;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
+
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.MobsTaskManager.*;
+
 /**
  *
  * @param <T>
@@ -9,7 +55,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
     /**
      *
      */
-    protected final List<Consumer<T>> _actions = new ArrayList<>();
+    protected final List<Consumer<T>> actions = new ArrayList<>();
 
     /**
      *
@@ -17,7 +63,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     public ListActionsSingleEvent(String nameClass)
     {
-        Log.writeDataToLogFile(Log._typeLog[0], String.format("Call .super[%s]", nameClass));
+        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Call .super[%s]", nameClass));
     }
 
     /**
@@ -29,22 +75,22 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             if (map.has(ENEMIES_TO) && map.has(TO_THEM))
             {
-                this.addEnemy(map, INFConfigDebugSingleEvents._debugActionAddEnemyToLog);
+                this.addEnemy(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
             }
 
             if (map.has(ENEMIES_TO) && map.has(ENEMY_ID))
             {
-                this.addEnemyId(map, INFConfigDebugSingleEvents._debugActionAddEnemyToLog);
+                this.addEnemyId(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
             }
 
             if (map.has(PANIC_TO) && map.has(PANIC_ID))
             {
-                this.addPanicToId(map, INFConfigDebugSingleEvents._debugActionPanicToIdLog);
+                this.addPanicToId(map, ConfigDebugSingleEvents.DebugActionPanicToIdLog);
             }
 
             if (map.has(ENEMY_ID) && map.has(THEM_ID))
             {
-                this.addEnemyToIdThemToId(map, INFConfigDebugSingleEvents._debugActionAddEnemyToLog);
+                this.addEnemyToIdThemToId(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
             }
         }
 
@@ -171,8 +217,8 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     private void addEnemy(AttributeMap<?> map, boolean localDebug)
     {
-        List<String> enemiesTo = map.getList(KeyWordsGeneral.MobsTaskManager.ENEMIES_TO);
-        List<String> toThem = map.getList(KeyWordsGeneral.MobsTaskManager.TO_THEM);
+        List<String> enemiesTo = map.getList(ENEMIES_TO);
+        List<String> toThem = map.getList(TO_THEM);
 
         if (enemiesTo.size() == 1 && toThem.size() == 1)
         {
@@ -181,7 +227,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (localDebug)
             {
-                Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1: %s, %s", enemiesTo_s, toThem_s));
+                Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1: %s, %s", enemiesTo_s, toThem_s));
             }
 
             String enemiesTo_s_id = GenericOverrideSpawn.fixEntityId(enemiesTo_s);
@@ -189,7 +235,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (localDebug)
             {
-                Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 2: %s, %s", enemiesTo_s_id, toThem_s_id));
+                Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 2: %s, %s", enemiesTo_s_id, toThem_s_id));
             }
 
             EntityEntry e_enemiesTo_forgeRegEntity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(enemiesTo_s_id));
@@ -197,7 +243,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (localDebug)
             {
-                Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 3: %s, %s", e_enemiesTo_forgeRegEntity, e_toThem_forgeRegEntity));
+                Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 3: %s, %s", e_enemiesTo_forgeRegEntity, e_toThem_forgeRegEntity));
             }
 
             Class<? extends Entity> typeClassEnemiesTo = e_enemiesTo_forgeRegEntity == null ? null : e_enemiesTo_forgeRegEntity.getEntityClass();
@@ -205,22 +251,22 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (localDebug)
             {
-                Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 4: %s, %s", typeClassEnemiesTo, typeClassToThem));
+                Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 4: %s, %s", typeClassEnemiesTo, typeClassToThem));
             }
 
             if (typeClassEnemiesTo != null && localDebug)
             {
-                Log.writeDataToLogFile(Log._typeLog[0], "Added entity: " + typeClassEnemiesTo.getName());
+                Log.writeDataToLogFile(Log.TypeLog[0], "Added entity: " + typeClassEnemiesTo.getName());
             }
 
             if (typeClassToThem != null && localDebug)
             {
-                Log.writeDataToLogFile(Log._typeLog[0], "Added entity: " + typeClassToThem.getName());
+                Log.writeDataToLogFile(Log.TypeLog[0], "Added entity: " + typeClassToThem.getName());
             }
 
             if (typeClassEnemiesTo != null && typeClassToThem != null)
             {
-                _actions.add(event ->
+                actions.add(event ->
                 {
                     EntityLiving entity = (EntityLiving) event.getEntityLiving();
 
@@ -230,7 +276,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + typeClassEnemiesTo.getName() + " targeting " + typeClassToThem.getName());
+                            Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + typeClassEnemiesTo.getName() + " targeting " + typeClassToThem.getName());
                         }
                     }
                     else if (typeClassToThem.isInstance(entity))
@@ -239,14 +285,14 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + typeClassToThem.getName() + " targeting " + typeClassEnemiesTo.getName());
+                            Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + typeClassToThem.getName() + " targeting " + typeClassEnemiesTo.getName());
                         }
                     }
                     else
                     {
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], "Entity type mismatch, cannot add attack target task.");
+                            Log.writeDataToLogFile(Log.TypeLog[0], "Entity type mismatch, cannot add attack target task.");
                         }
                     }
                 });
@@ -255,7 +301,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             {
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "Failed to add attack target task: Entity class not found for one or both entities.");
+                    Log.writeDataToLogFile(Log.TypeLog[0], "Failed to add attack target task: Entity class not found for one or both entities.");
                 }
             }
         }
@@ -270,21 +316,21 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.1: %s", enemiesTo_s_id));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.1: %s", enemiesTo_s_id));
                 }
 
                 EntityEntry e_enemiesTo_forgeRegEntity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(enemiesTo_s_id));
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 2.1: %s", e_enemiesTo_forgeRegEntity));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 2.1: %s", e_enemiesTo_forgeRegEntity));
                 }
 
                 Class<? extends Entity> typeClassEnemiesTo = e_enemiesTo_forgeRegEntity == null ? null : e_enemiesTo_forgeRegEntity.getEntityClass();
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 3.1: %s", typeClassEnemiesTo));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 3.1: %s", typeClassEnemiesTo));
                 }
 
                 if (typeClassEnemiesTo != null)
@@ -295,7 +341,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 {
                     if (localDebug)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Unknown mob '" + enemiesTo + "'!");
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Unknown mob '" + enemiesTo + "'!");
                     }
                 }
             }
@@ -306,21 +352,21 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.2: %s", toThem_s_id));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.2: %s", toThem_s_id));
                 }
 
                 EntityEntry e_toThem_forgeRegEntity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(toThem_s_id));
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 2.2: %s", e_toThem_forgeRegEntity));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 2.2: %s", e_toThem_forgeRegEntity));
                 }
 
                 Class<? extends Entity> typeClassToThem = e_toThem_forgeRegEntity == null ? null : e_toThem_forgeRegEntity.getEntityClass();
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 3.2: %s", typeClassToThem));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 3.2: %s", typeClassToThem));
                 }
 
                 if (typeClassToThem != null)
@@ -331,14 +377,14 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 {
                     if (localDebug)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Unknown mob '" + toThem + "'!");
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Unknown mob '" + toThem + "'!");
                     }
                 }
             }
 
             if (!classesEnemiesTo.isEmpty() && !classesToThem.isEmpty())
             {
-                _actions.add(event ->
+                actions.add(event ->
                 {
                     EntityLiving entity = (EntityLiving) event.getEntityLiving();
                     Class<? extends EntityLiving> entityClass = entity.getClass();
@@ -351,7 +397,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
                             }
                         }
                     }
@@ -363,7 +409,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
                             }
                         }
                     }
@@ -371,7 +417,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                     {
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], "Entity type mismatch, cannot add attack target task.");
+                            Log.writeDataToLogFile(Log.TypeLog[0], "Entity type mismatch, cannot add attack target task.");
                         }
                     }
                 });
@@ -380,7 +426,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             {
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "Failed to add attack target task: No valid entity classes found.");
+                    Log.writeDataToLogFile(Log.TypeLog[0], "Failed to add attack target task: No valid entity classes found.");
                 }
             }
         }
@@ -393,8 +439,8 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     private void addEnemyId(AttributeMap<?> map, boolean localDebug)
     {
-        List<String> enemiesTo = map.getList(KeyWordsGeneral.MobsTaskManager.ENEMIES_TO);
-        List<String> enemyIdPrefixes = map.getList(KeyWordsGeneral.MobsTaskManager.ENEMY_ID);
+        List<String> enemiesTo = map.getList(ENEMIES_TO);
+        List<String> enemyIdPrefixes = map.getList(ENEMY_ID);
 
         Set<Class<? extends EntityLiving>> classesEnemiesTo = new HashSet<>();
         Set<Class<? extends EntityLiving>> classesEnemyId = new HashSet<>();
@@ -408,21 +454,21 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.1: %s", enemiesTo_s_id));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.1: %s", enemiesTo_s_id));
                 }
 
                 EntityEntry e_enemiesTo_forgeRegEntity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(enemiesTo_s_id));
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 2.1: %s", e_enemiesTo_forgeRegEntity));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 2.1: %s", e_enemiesTo_forgeRegEntity));
                 }
 
                 Class<? extends Entity> typeClassEnemiesTo = e_enemiesTo_forgeRegEntity == null ? null : e_enemiesTo_forgeRegEntity.getEntityClass();
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 3.1: %s", typeClassEnemiesTo));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 3.1: %s", typeClassEnemiesTo));
                 }
 
                 if (typeClassEnemiesTo != null && EntityLiving.class.isAssignableFrom(typeClassEnemiesTo))
@@ -433,7 +479,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 {
                     if (localDebug)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Unknown or incompatible mob '" + enemiesTo + "'!");
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Unknown or incompatible mob '" + enemiesTo + "'!");
                     }
                 }
             }
@@ -449,7 +495,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.2: %s", entityEntry.getRegistryName().toString()));
+                            Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.2: %s", entityEntry.getRegistryName().toString()));
                         }
 
                         if (typeClassEnemyId != null && EntityLiving.class.isAssignableFrom(typeClassEnemyId))
@@ -460,7 +506,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                         {
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[2], "Unknown or incompatible mob with prefix '" + enemyIdPrefix + "'!");
+                                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown or incompatible mob with prefix '" + enemyIdPrefix + "'!");
                             }
                         }
                     }
@@ -469,7 +515,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (!classesEnemiesTo.isEmpty() && !classesEnemyId.isEmpty())
             {
-                _actions.add(event ->
+                actions.add(event ->
                 {
                     try
                     {
@@ -478,7 +524,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], "Event entity: " + entityClass.getName());
+                            Log.writeDataToLogFile(Log.TypeLog[0], "Event entity: " + entityClass.getName());
                         }
 
                         if (classesEnemiesTo.contains(entityClass))
@@ -487,14 +533,14 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             {
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
 
                                 entity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) entity, targetClass, true));
 
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
                             }
                         }
@@ -504,14 +550,14 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             {
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
 
                                 entity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) entity, targetClass, true));
 
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
                             }
                         }
@@ -519,13 +565,14 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                         {
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[0], "Entity type mismatch, cannot add attack target task.");
+                                Log.writeDataToLogFile(Log.TypeLog[0], "Entity type mismatch, cannot add attack target task.");
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Error in event action: " + e.getMessage());
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Error in event action: " + e.getMessage());
+
                         if (localDebug)
                         {
                             e.printStackTrace();
@@ -537,13 +584,13 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             {
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "Failed to add attack target task: No valid entity classes found.");
+                    Log.writeDataToLogFile(Log.TypeLog[0], "Failed to add attack target task: No valid entity classes found.");
                 }
             }
         }
         catch (Exception e)
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Error in addEnemyId method: " + e.getMessage());
+            Log.writeDataToLogFile(Log.TypeLog[2], "Error in addEnemyId method: " + e.getMessage());
 
             if (localDebug)
             {
@@ -559,8 +606,8 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     private void addPanicToId(AttributeMap<?> map, boolean localDebug)
     {
-        List<String> panicTo = map.getList(KeyWordsGeneral.MobsTaskManager.PANIC_TO);
-        List<String> panicIdPrefixes = map.getList(KeyWordsGeneral.MobsTaskManager.PANIC_ID);
+        List<String> panicTo = map.getList(PANIC_TO);
+        List<String> panicIdPrefixes = map.getList(PANIC_ID);
 
         Set<Class<? extends EntityLiving>> classesPanicTo = new HashSet<>();
         Set<Class<? extends EntityLiving>> classesPanicId = new HashSet<>();
@@ -574,21 +621,21 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.1: %s", panicTo_s_id));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.1: %s", panicTo_s_id));
                 }
 
                 EntityEntry e_panicTo_forgeRegEntity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(panicTo_s_id));
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 2.1: %s", e_panicTo_forgeRegEntity));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 2.1: %s", e_panicTo_forgeRegEntity));
                 }
 
                 Class<? extends Entity> typeClassPanicTo = e_panicTo_forgeRegEntity == null ? null : e_panicTo_forgeRegEntity.getEntityClass();
 
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 3.1: %s", typeClassPanicTo));
+                    Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 3.1: %s", typeClassPanicTo));
                 }
 
                 if (typeClassPanicTo != null && EntityLiving.class.isAssignableFrom(typeClassPanicTo))
@@ -599,7 +646,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 {
                     if (localDebug)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Unknown or incompatible mob '" + panicTo + "'!");
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Unknown or incompatible mob '" + panicTo + "'!");
                     }
                 }
             }
@@ -615,7 +662,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.2: %s", entityEntry.getRegistryName().toString()));
+                            Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.2: %s", entityEntry.getRegistryName().toString()));
                         }
 
                         if (typeClassPanicId != null && EntityLiving.class.isAssignableFrom(typeClassPanicId))
@@ -626,7 +673,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                         {
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[2], "Unknown or incompatible mob with prefix '" + fPanicIdPrefix + "'!");
+                                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown or incompatible mob with prefix '" + fPanicIdPrefix + "'!");
                             }
                         }
                     }
@@ -635,7 +682,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (!classesPanicTo.isEmpty() && !classesPanicId.isEmpty())
             {
-                _actions.add(event ->
+                actions.add(event ->
                 {
                     try
                     {
@@ -644,7 +691,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], "Event entity: " + entityClass.getName());
+                            Log.writeDataToLogFile(Log.TypeLog[0], "Event entity: " + entityClass.getName());
                         }
 
                         if (classesPanicTo.contains(entityClass))
@@ -653,21 +700,21 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             {
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Adding panic task for: " + entityClass.getName() + " avoiding " + panicClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Adding panic task for: " + entityClass.getName() + " avoiding " + panicClass.getName());
                                 }
 
                                 entity.tasks.addTask(1, new EntityAIAvoidEntity<>((EntityCreature) entity, panicClass, 16.0F, 1.5D, 2.0D));
 
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Added panic task for entity: " + entityClass.getName() + " avoiding " + panicClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Added panic task for entity: " + entityClass.getName() + " avoiding " + panicClass.getName());
                                 }
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Error in event action: " + e.getMessage());
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Error in event action: " + e.getMessage());
                         if (localDebug)
                         {
                             e.printStackTrace();
@@ -679,13 +726,13 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             {
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "Failed to add panic task: No valid entity classes found.");
+                    Log.writeDataToLogFile(Log.TypeLog[0], "Failed to add panic task: No valid entity classes found.");
                 }
             }
         }
         catch (Exception e)
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Error in addPanicToId method: " + e.getMessage());
+            Log.writeDataToLogFile(Log.TypeLog[2], "Error in addPanicToId method: " + e.getMessage());
 
             if (localDebug)
             {
@@ -701,8 +748,8 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     private void addEnemyToIdThemToId(AttributeMap<?> map, boolean localDebug)
     {
-        List<String> listEnemyId = map.getList(KeyWordsGeneral.MobsTaskManager.ENEMY_ID);
-        List<String> listThemId = map.getList(KeyWordsGeneral.MobsTaskManager.THEM_ID);
+        List<String> listEnemyId = map.getList(ENEMY_ID);
+        List<String> listThemId = map.getList(THEM_ID);
 
         Set<Class<? extends EntityLiving>> classesEnemyId = new HashSet<>();
         Set<Class<? extends EntityLiving>> classesThemId = new HashSet<>();
@@ -720,7 +767,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.1: %s", entityEntry.getRegistryName().toString()));
+                            Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.1: %s", entityEntry.getRegistryName().toString()));
                         }
 
                         if (typeClassEnemyId != null && EntityLiving.class.isAssignableFrom(typeClassEnemyId))
@@ -731,7 +778,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                         {
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[2], "Unknown or incompatible mob with prefix '" + enemyIdPrefix + "'!");
+                                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown or incompatible mob with prefix '" + enemyIdPrefix + "'!");
                             }
                         }
                     }
@@ -749,7 +796,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], String.format("Step 1.2: %s", entityEntry.getRegistryName().toString()));
+                            Log.writeDataToLogFile(Log.TypeLog[0], String.format("Step 1.2: %s", entityEntry.getRegistryName().toString()));
                         }
 
                         if (typeClassThemId != null && EntityLiving.class.isAssignableFrom(typeClassThemId))
@@ -760,7 +807,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                         {
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[2], "Unknown or incompatible mob with prefix '" + themIdPrefix + "'!");
+                                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown or incompatible mob with prefix '" + themIdPrefix + "'!");
                             }
                         }
                     }
@@ -769,7 +816,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (!classesEnemyId.isEmpty() && !classesThemId.isEmpty())
             {
-                _actions.add(event ->
+                actions.add(event ->
                 {
                     try
                     {
@@ -778,7 +825,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
                         if (localDebug)
                         {
-                            Log.writeDataToLogFile(Log._typeLog[0], "Event entity: " + entityClass.getName());
+                            Log.writeDataToLogFile(Log.TypeLog[0], "Event entity: " + entityClass.getName());
                         }
 
                         if (classesEnemyId.contains(entityClass))
@@ -786,13 +833,13 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             for (Class<? extends EntityLiving> targetClass : classesThemId)
                             {
                                 if (localDebug) {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
 
                                 entity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) entity, targetClass, true));
 
                                 if (localDebug) {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
                             }
                         }
@@ -802,14 +849,14 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             {
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Adding attack task for: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
 
                                 entity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) entity, targetClass, true));
 
                                 if (localDebug)
                                 {
-                                    Log.writeDataToLogFile(Log._typeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
+                                    Log.writeDataToLogFile(Log.TypeLog[0], "Added attack target task for entity: " + entityClass.getName() + " targeting " + targetClass.getName());
                                 }
                             }
                         }
@@ -817,13 +864,13 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                         {
                             if (localDebug)
                             {
-                                Log.writeDataToLogFile(Log._typeLog[0], "Entity type mismatch, cannot add attack target task.");
+                                Log.writeDataToLogFile(Log.TypeLog[0], "Entity type mismatch, cannot add attack target task.");
                             }
                         }
                     }
                     catch (Exception e)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[2], "Error in event action: " + e.getMessage());
+                        Log.writeDataToLogFile(Log.TypeLog[2], "Error in event action: " + e.getMessage());
                         if (localDebug)
                         {
                             e.printStackTrace();
@@ -835,13 +882,13 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             {
                 if (localDebug)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "Failed to add attack target task: No valid entity classes found.");
+                    Log.writeDataToLogFile(Log.TypeLog[0], "Failed to add attack target task: No valid entity classes found.");
                 }
             }
         }
         catch (Exception e)
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Error in addEnemyToIdThemToId method: " + e.getMessage());
+            Log.writeDataToLogFile(Log.TypeLog[2], "Error in addEnemyToIdThemToId method: " + e.getMessage());
 
             if (localDebug)
             {
@@ -856,9 +903,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     private void addDoMessageAction(AttributeMap<?> map)
     {
-        Object message = map.get(KeyWordsGeneral.CommonKeyWorlds.ACTION_MESSAGE);
+        Object message = map.get(ACTION_MESSAGE);
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             EntityPlayer player = event.getPlayer();
 
@@ -880,11 +927,11 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     public void addAngryAction(AttributeMap<?> map)
     {
-        Object actionAngry = map.get(KeyWordsGeneral.CommonKeyWorlds.ACTION_ANGRY);
+        Object actionAngry = map.get(ACTION_ANGRY);
 
         if ((Boolean)actionAngry)
         {
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -917,7 +964,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     private void addHeldItem(AttributeMap<?> map)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunctions.getItemsWeighted(map.getList(KeyWordsGeneral.CommonKeyWorlds.ACTION_HELD_ITEM));
+        List<Pair<Float, ItemStack>> items = AuxFunctions.getItemsWeighted(map.getList(ACTION_HELD_ITEM));
 
         if (items.isEmpty())
         {
@@ -928,7 +975,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             ItemStack item = items.get(0).getRight();
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -953,7 +1000,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             float total = AuxFunctions.getTotal(items);
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -997,7 +1044,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             ItemStack item = items.get(0).getRight();
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -1011,7 +1058,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             float total = AuxFunctions.getTotal(items);
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -1041,11 +1088,11 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             }
             catch (NBTException e)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Bad NBT for mob!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Bad NBT for mob!");
                 return;
             }
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase entityLiving = event.getEntityLiving();
                 entityLiving.readEntityFromNBT(tagCompound);
@@ -1062,7 +1109,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         Object multiple = map.has(ACTION_HEALTH_MULTIPLY) ? map.get(ACTION_HEALTH_MULTIPLY) : 1.f;
         Object added = map.has(ACTION_HEALTH_ADD) ? map.get(ACTION_HEALTH_ADD) : 0.f;
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -1090,7 +1137,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         Object multiple = map.has(ACTION_SPEED_MULTIPLY) ? map.get(ACTION_SPEED_MULTIPLY) : 1.f;
         Object added = map.has(ACTION_SPEED_ADD) ? map.get(ACTION_SPEED_ADD) : 0.f;
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -1117,7 +1164,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         Object multiple = map.has(ACTION_DAMAGE_MULTIPLY) ? map.get(ACTION_DAMAGE_MULTIPLY) : 1.f;
         Object added = map.has(ACTION_DAMAGE_ADD) ? map.get(ACTION_DAMAGE_ADD) : 0.f;
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             EntityLivingBase entityLiving = event.getEntityLiving();
 
@@ -1145,7 +1192,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
         if (customName != null)
         {
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase entityLiving = event.getEntityLiving();
                 entityLiving.setCustomNameTag((String)customName);
@@ -1169,7 +1216,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (split.length < 3 || split.length > 4)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Bad potion specifier '" + actionPotion + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Bad potion specifier '" + actionPotion + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
                 continue;
             }
 
@@ -1177,7 +1224,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (potion == null)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Can't find potion '" + actionPotion + "'!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Can't find potion '" + actionPotion + "'!");
                 continue;
             }
 
@@ -1197,7 +1244,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             }
             catch (NumberFormatException e)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Bad duration, amplifier or chance integer for '" + actionPotion + "'!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Bad duration, amplifier or chance integer for '" + actionPotion + "'!");
                 continue;
             }
 
@@ -1206,7 +1253,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
         if (!effects.isEmpty())
         {
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase living = event.getEntityLiving();
 
@@ -1214,9 +1261,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 {
                     for (AuxFunctions.PotionEffectWithChance effectWithChance : effects)
                     {
-                        if (Math.random() <= effectWithChance._chance)
+                        if (Math.random() <= effectWithChance.Chance)
                         {
-                            PotionEffect effect = effectWithChance._effect;
+                            PotionEffect effect = effectWithChance.Effect;
                             PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
                             living.addPotionEffect(newEffect);
                         }
@@ -1243,7 +1290,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             ItemStack item = items.get(0).getRight();
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityPlayer player = event.getPlayer();
 
@@ -1260,7 +1307,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             float total = AuxFunctions.getTotal(items);
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityPlayer player = event.getPlayer();
 
@@ -1294,7 +1341,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             ItemStack item = items.get(0).getRight();
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 BlockPos pos = event.getPosition();
                 EntityItem entityItem = new EntityItem(event.getWorld(), pos.getX(), pos.getY(), pos.getZ(), item.copy());
@@ -1305,7 +1352,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             float total = AuxFunctions.getTotal(items);
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 BlockPos pos = event.getPosition();
                 ItemStack item = AuxFunctions.getRandomItem(items, total);
@@ -1323,7 +1370,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
     {
         Object command = map.get(ACTION_COMMAND);
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             EntityPlayer player = event.getPlayer();
             MinecraftServer server = event.getWorld().getMinecraftServer();
@@ -1342,7 +1389,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
     {
         Object fireAction = map.get(ACTION_FIRE);
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             EntityLivingBase living = event.getEntityLiving();
 
@@ -1383,7 +1430,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         boolean finalFlaming = flaming;
         boolean finalSmoking = smoking;
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             BlockPos pos = event.getPosition();
 
@@ -1404,7 +1451,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
         if ((Boolean)clear)
         {
-            _actions.add(event ->
+            actions.add(event ->
             {
                 EntityLivingBase living = event.getEntityLiving();
 
@@ -1424,17 +1471,17 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
     {
         String damage = (String) map.get(ACTION_DAMAGE);
         String[] split = StringUtils.split(damage, "=");
-        DamageSource source = AuxFunctions._damageMap.get(split[0]);
+        DamageSource source = AuxFunctions.DamageMap.get(split[0]);
 
         if (source == null)
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Can't find damage source '" + split[0] + "'!");
+            Log.writeDataToLogFile(Log.TypeLog[2], "Can't find damage source '" + split[0] + "'!");
             return;
         }
 
         float amount = split.length > 1 ? Float.parseFloat(split[1]) : 1.0f;
 
-        _actions.add(event ->
+        actions.add(event ->
         {
             EntityLivingBase living = event.getEntityLiving();
 
@@ -1474,13 +1521,13 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (block == null)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Block '" + blockName + "' is not valid!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Block '" + blockName + "' is not valid!");
                 return;
             }
 
             IBlockState state = block.getDefaultState();
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 BlockPos pos = posFunction.apply(event);
 
@@ -1496,7 +1543,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (!obj.has("block"))
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Block is not valid!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Block is not valid!");
                 return;
             }
 
@@ -1505,7 +1552,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             if (block == null)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Block '" + blockName + "' is not valid!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Block '" + blockName + "' is not valid!");
                 return;
             }
 
@@ -1533,7 +1580,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
             IBlockState finalState = state;
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 BlockPos pos = posFunction.apply(event);
 
@@ -1573,11 +1620,11 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         }
         else
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Item description '" + json + "' is not valid!");
+            Log.writeDataToLogFile(Log.TypeLog[2], "Item description '" + json + "' is not valid!");
             return;
         }
 
-        _actions.add(event -> event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, stack.copy()));
+        actions.add(event -> event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, stack.copy()));
     }
 
     /**
@@ -1612,7 +1659,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
         if (finalSet >= 0)
         {
-            _actions.add(event ->
+            actions.add(event ->
             {
                 ItemStack item = event.getPlayer().getHeldItemMainhand();
                 item.setCount(finalSet);
@@ -1623,7 +1670,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
         {
             int finalAdd = add;
 
-            _actions.add(event ->
+            actions.add(event ->
             {
                 ItemStack item = event.getPlayer().getHeldItemMainhand();
 

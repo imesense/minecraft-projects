@@ -1,12 +1,23 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
+import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
+
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+
 /**
  *
  */
 public class ListActionsStaticFactoryBlocks
 {
+    /**
+     *
+     */
     public static final AttributeMapFactory<Object> FACTORY = new AttributeMapFactory<>();
 
+    /**
+     *
+     */
     static
     {
         FACTORY

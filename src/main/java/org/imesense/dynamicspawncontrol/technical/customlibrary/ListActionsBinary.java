@@ -1,5 +1,37 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
+import com.google.common.base.Predicate;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
+import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
+
+import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.SpawnCondition.*;
+
 /**
  *
  * @param <T>
@@ -18,7 +50,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public ListActionsBinary(AttributeMap<?> map, String nameClass)
     {
-        Log.writeDataToLogFile(Log._typeLog[0], nameClass);
+        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
         this.CreateListActions(map);
     }
 
@@ -47,232 +79,232 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public void CreateListActions(AttributeMap<?> map)
     {
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.SEE_SKY))
+        if (map.has(SEE_SKY))
         {
             this.addSeeSkyCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.SpawnCondition.CAN_SPAWN_HERE))
+        if (map.has(CAN_SPAWN_HERE))
         {
             this.addCanSpawnHereCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.SpawnCondition.NOT_COLLIDING))
+        if (map.has(NOT_COLLIDING))
         {
             this.addNotCollidingCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.SpawnCondition.SPAWNER))
+        if (map.has(SPAWNER))
         {
             this.addSpawnerCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.WEATHER))
+        if (map.has(WEATHER))
         {
             this.addWeatherCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.BIOMES))
+        if (map.has(BIOMES))
         {
             addBiomesCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.BIOMES_TYPE))
+        if (map.has(BIOMES_TYPE))
         {
             this.addBiomesTypesCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.STRUCTURE))
+        if (map.has(STRUCTURE))
         {
             this.addStructureCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.DIMENSION))
+        if (map.has(DIMENSION))
         {
             this.addDimensionCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.HELMET))
+        if (map.has(HELMET))
         {
             this.addHelmetCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.CHEST_PLATE))
+        if (map.has(CHEST_PLATE))
         {
             this.addChestPlateCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.LEGGINGS))
+        if (map.has(LEGGINGS))
         {
             this.addLeggingsCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.BOOTS))
+        if (map.has(BOOTS))
         {
             this.addBootsCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MIN_TIME))
+        if (map.has(MIN_TIME))
         {
             this.addMinTimeCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MAX_TIME))
+        if (map.has(MAX_TIME))
         {
             this.addMaxTimeCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MIN_LIGHT))
+        if (map.has(MIN_LIGHT))
         {
             this.addMinLightCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MAX_LIGHT))
+        if (map.has(MAX_LIGHT))
         {
             this.addMaxLightCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MIN_HEIGHT))
+        if (map.has(MIN_HEIGHT))
         {
             this.addMinHeightCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MAX_HEIGHT))
+        if (map.has(MAX_HEIGHT))
         {
             this.addMaxHeightCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.DIFFICULTY))
+        if (map.has(DIFFICULTY))
         {
             this.addDifficultyCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MIN_DIFFICULTY))
+        if (map.has(MIN_DIFFICULTY))
         {
             this.addMinAdditionalDifficultyCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MAX_DIFFICULTY))
+        if (map.has(MAX_DIFFICULTY))
         {
             this.addMaxAdditionalDifficultyCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MIN_SPAWN_DIST))
+        if (map.has(MIN_SPAWN_DIST))
         {
             this.addMinSpawnDistCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MAX_SPAWN_DIST))
+        if (map.has(MAX_SPAWN_DIST))
         {
             this.addMaxSpawnDistCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.BLOCK))
+        if (map.has(BLOCK))
         {
             this.addBlocksCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.GET_MOON_PHASE))
+        if (map.has(GET_MOON_PHASE))
         {
             this.addCheckMoonPhase(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MOB))
+        if (map.has(MOB))
         {
             this.addMobsCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.ANIMALS))
+        if (map.has(ANIMALS))
         {
             this.addInterfaceAnimalsCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MONSTERS))
+        if (map.has(MONSTERS))
         {
             this.addInterfaceMonstersCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.PLAYER))
+        if (map.has(PLAYER))
         {
             this.addPlayerCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.FAKE_PLAYER))
+        if (map.has(FAKE_PLAYER))
         {
             this.addFakePlayerCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.REAL_PLAYER))
+        if (map.has(REAL_PLAYER))
         {
             this.addRealPlayerCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.HELD_ITEM))
+        if (map.has(HELD_ITEM))
         {
-            this.addHeldItemCheck(map, KeyWordsGeneral.CommonKeyWorlds.HELD_ITEM);
+            this.addHeldItemCheck(map, HELD_ITEM);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.PLAYER_HELD_ITEM))
+        if (map.has(PLAYER_HELD_ITEM))
         {
-            this.addHeldItemCheck(map, KeyWordsGeneral.CommonKeyWorlds.PLAYER_HELD_ITEM);
+            this.addHeldItemCheck(map, PLAYER_HELD_ITEM);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.OFF_HAND_ITEM))
+        if (map.has(OFF_HAND_ITEM))
         {
             this.addOffHandItemCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.BOTH_HANDS_ITEM))
+        if (map.has(BOTH_HANDS_ITEM))
         {
             this.addBothHandsItemCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.EXPLOSION))
+        if (map.has(EXPLOSION))
         {
             this.addExplosionCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.PROJECTILE))
+        if (map.has(PROJECTILE))
         {
             this.addProjectileCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.FIRE))
+        if (map.has(FIRE))
         {
             this.addFireCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.MAGIC))
+        if (map.has(MAGIC))
         {
             this.addMagicCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.SOURCE))
+        if (map.has(SOURCE))
         {
             this.addSourceCheck(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_0))
+        if (map.has(RANDOM_KEY_0))
         {
             this.addRandomCheck_0(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_1))
+        if (map.has(RANDOM_KEY_1))
         {
             this.addRandomCheck_1(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_2))
+        if (map.has(RANDOM_KEY_2))
         {
             this.addRandomCheck_2(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_3))
+        if (map.has(RANDOM_KEY_3))
         {
             this.addRandomCheck_3(map);
         }
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_4))
+        if (map.has(RANDOM_KEY_4))
         {
             this.addRandomCheck_4(map);
         }
@@ -284,7 +316,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addSeeSkyCheck(AttributeMap<?> map)
     {
-        Object seeSky = map.get(KeyWordsGeneral.CommonKeyWorlds.SEE_SKY);
+        Object seeSky = map.get(SEE_SKY);
 
         if ((Boolean)seeSky)
         {
@@ -304,7 +336,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addCanSpawnHereCheck(AttributeMap<?> map)
     {
-        Object canSpawn = map.get(KeyWordsGeneral.SpawnCondition.CAN_SPAWN_HERE);
+        Object canSpawn = map.get(CAN_SPAWN_HERE);
 
         if ((Boolean)canSpawn)
         {
@@ -346,7 +378,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addNotCollidingCheck(AttributeMap<?> map)
     {
-        Object notCollidingCheck = map.get(KeyWordsGeneral.SpawnCondition.NOT_COLLIDING);
+        Object notCollidingCheck = map.get(NOT_COLLIDING);
 
         if ((Boolean)notCollidingCheck)
         {
@@ -388,7 +420,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addSpawnerCheck(AttributeMap<?> map)
     {
-        Object spawner = map.get(KeyWordsGeneral.SpawnCondition.SPAWNER);
+        Object spawner = map.get(SPAWNER);
 
         if ((Boolean)spawner)
         {
@@ -428,7 +460,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addBiomesCheck(AttributeMap<?> map)
     {
-        List<String> biomes = map.getList(KeyWordsGeneral.CommonKeyWorlds.BIOMES);
+        List<String> biomes = map.getList(BIOMES);
 
         if (biomes.size() == 1)
         {
@@ -458,7 +490,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addBiomesTypesCheck(AttributeMap<?> map)
     {
-        List<String> biomesTypes = map.getList(KeyWordsGeneral.CommonKeyWorlds.BIOMES_TYPE);
+        List<String> biomesTypes = map.getList(BIOMES_TYPE);
 
         if (biomesTypes.size() == 1)
         {
@@ -495,7 +527,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addWeatherCheck(AttributeMap<?> map)
     {
-        Object weatherObject = map.get(KeyWordsGeneral.CommonKeyWorlds.WEATHER);
+        Object weatherObject = map.get(WEATHER);
 
         if (weatherObject instanceof String)
         {
@@ -516,12 +548,12 @@ public class ListActionsBinary<T extends SignalDataGetter>
             }
             else
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Unknown weather '" + weather + "'! Use 'rain' or 'thunder'");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown weather '" + weather + "'! Use 'rain' or 'thunder'");
             }
         }
         else
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Weather is not a string object!");
+            Log.writeDataToLogFile(Log.TypeLog[2], "Weather is not a string object!");
         }
     }
 
@@ -531,10 +563,10 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addStructureCheck(AttributeMap<?> map)
     {
-        Object structure = map.get(KeyWordsGeneral.CommonKeyWorlds.STRUCTURE);
+        Object structure = map.get(STRUCTURE);
 
         _arrayList.add((event,query) ->
-                Structures._structuresCache.isInStructure(query.getWorld(event), (String) structure, query.getPos(event)));
+                Structures.StructuresCache.isInStructure(query.getWorld(event), (String) structure, query.getPos(event)));
     }
 
     /**
@@ -543,7 +575,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addDimensionCheck(AttributeMap<?> map)
     {
-        List<Integer> dimensions = map.getListI(KeyWordsGeneral.CommonKeyWorlds.DIMENSION);
+        List<Integer> dimensions = map.getListI(DIMENSION);
 
         if (dimensions.size() == 1)
         {
@@ -567,7 +599,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public void addHelmetCheck(AttributeMap<?> map)
     {
-        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(KeyWordsGeneral.CommonKeyWorlds.HELMET));
+        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(HELMET));
 
         _arrayList.add((event, query) ->
         {
@@ -592,7 +624,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public void addChestPlateCheck(AttributeMap<?> map)
     {
-        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(KeyWordsGeneral.CommonKeyWorlds.CHEST_PLATE));
+        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(CHEST_PLATE));
 
         _arrayList.add((event, query) ->
         {
@@ -617,7 +649,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public void addLeggingsCheck(AttributeMap<?> map)
     {
-        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(KeyWordsGeneral.CommonKeyWorlds.LEGGINGS));
+        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(LEGGINGS));
 
         _arrayList.add((event, query) ->
         {
@@ -642,7 +674,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public void addBootsCheck(AttributeMap<?> map)
     {
-        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(KeyWordsGeneral.CommonKeyWorlds.BOOTS));
+        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(BOOTS));
 
         _arrayList.add((event, query) ->
         {
@@ -667,7 +699,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMinTimeCheck(AttributeMap<?> map)
     {
-        Object minTime = map.get(KeyWordsGeneral.CommonKeyWorlds.MIN_TIME);
+        Object minTime = map.get(MIN_TIME);
 
         _arrayList.add((event, query) ->
         {
@@ -682,7 +714,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMaxTimeCheck(AttributeMap<?> map)
     {
-        Object maxTime = map.get(KeyWordsGeneral.CommonKeyWorlds.MAX_TIME);
+        Object maxTime = map.get(MAX_TIME);
 
         _arrayList.add((event, query) ->
         {
@@ -697,7 +729,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMinLightCheck(AttributeMap<?> map)
     {
-        Object minLight = map.get(KeyWordsGeneral.CommonKeyWorlds.MIN_LIGHT);
+        Object minLight = map.get(MIN_LIGHT);
 
         _arrayList.add((event,query) ->
         {
@@ -712,7 +744,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMaxLightCheck(AttributeMap<?> map)
     {
-        Object maxLight = map.get(KeyWordsGeneral.CommonKeyWorlds.MAX_LIGHT);
+        Object maxLight = map.get(MAX_LIGHT);
 
         _arrayList.add((event,query) ->
         {
@@ -727,7 +759,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMinHeightCheck(AttributeMap<?> map)
     {
-        Object minHeight = map.get(KeyWordsGeneral.CommonKeyWorlds.MIN_HEIGHT);
+        Object minHeight = map.get(MIN_HEIGHT);
 
         _arrayList.add((event,query) ->
                 query.getY(event) >= (Integer) minHeight);
@@ -739,7 +771,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMaxHeightCheck(AttributeMap<?> map)
     {
-        Object maxHeight = map.get(KeyWordsGeneral.CommonKeyWorlds.MAX_HEIGHT);
+        Object maxHeight = map.get(MAX_HEIGHT);
 
         _arrayList.add((event,query) ->
                 query.getY(event) <= (Integer) maxHeight);
@@ -751,7 +783,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMinAdditionalDifficultyCheck(AttributeMap<?> map)
     {
-        Object minDifficulty = map.get(KeyWordsGeneral.CommonKeyWorlds.MIN_DIFFICULTY);
+        Object minDifficulty = map.get(MIN_DIFFICULTY);
 
         _arrayList.add((event,query) ->
                 query.getWorld(event).getDifficultyForLocation(query.getPos(event)).getAdditionalDifficulty() >= (Float) minDifficulty);
@@ -765,7 +797,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         EnumDifficulty enumDifficulty = null;
 
-        Object difficulty = map.get(KeyWordsGeneral.CommonKeyWorlds.DIFFICULTY);
+        Object difficulty = map.get(DIFFICULTY);
 
         for (EnumDifficulty _difficulty : EnumDifficulty.values())
         {
@@ -785,7 +817,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
         }
         else
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Unknown difficulty '" + difficulty + "'! Use one of 'easy', 'normal', 'hard',  or 'peaceful'");
+            Log.writeDataToLogFile(Log.TypeLog[2], "Unknown difficulty '" + difficulty + "'! Use one of 'easy', 'normal', 'hard',  or 'peaceful'");
             throw new RuntimeException();
         }
     }
@@ -796,7 +828,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMaxAdditionalDifficultyCheck(AttributeMap<?> map)
     {
-        Object maxDifficulty = map.get(KeyWordsGeneral.CommonKeyWorlds.MAX_DIFFICULTY);
+        Object maxDifficulty = map.get(MAX_DIFFICULTY);
 
         _arrayList.add((event,query) ->
                 query.getWorld(event).getDifficultyForLocation(query.getPos(event)).getAdditionalDifficulty() <= (Float) maxDifficulty);
@@ -808,7 +840,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMinSpawnDistCheck(AttributeMap<?> map)
     {
-        Object degree = map.get(KeyWordsGeneral.CommonKeyWorlds.MIN_SPAWN_DIST);
+        Object degree = map.get(MIN_SPAWN_DIST);
 
         _arrayList.add((event,query) ->
         {
@@ -825,7 +857,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMaxSpawnDistCheck(AttributeMap<?> map)
     {
-        Object degree = map.get(KeyWordsGeneral.CommonKeyWorlds.MAX_SPAWN_DIST);
+        Object degree = map.get(MAX_SPAWN_DIST);
 
         _arrayList.add((event, query) ->
         {
@@ -844,9 +876,9 @@ public class ListActionsBinary<T extends SignalDataGetter>
     {
         BiFunction<Event, SignalDataAccessor, BlockPos> posFunction;
 
-        if (map.has(KeyWordsGeneral.CommonKeyWorlds.BLOCK_OFFSET))
+        if (map.has(BLOCK_OFFSET))
         {
-            posFunction = AuxFunctions.parseOffset((String)map.get(KeyWordsGeneral.CommonKeyWorlds.BLOCK_OFFSET));
+            posFunction = AuxFunctions.parseOffset((String)map.get(BLOCK_OFFSET));
         }
         else
         {
@@ -854,7 +886,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
                     query.getPos(event);
         }
 
-        List<String> blocks = map.getList(KeyWordsGeneral.CommonKeyWorlds.BLOCK);
+        List<String> blocks = map.getList(BLOCK);
 
         if (blocks.size() == 1)
         {
@@ -915,7 +947,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addCheckMoonPhase(AttributeMap<?> _map)
     {
-        Object moon = _map.get(KeyWordsGeneral.CommonKeyWorlds.GET_MOON_PHASE);
+        Object moon = _map.get(GET_MOON_PHASE);
 
         _arrayList.add((event,query) ->
                 query.getWorld(event).getMoonPhase() == (Integer)moon);
@@ -927,7 +959,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMobsCheck(AttributeMap<?> map)
     {
-        List<String> listMobs = map.getList(KeyWordsGeneral.CommonKeyWorlds.MOB);
+        List<String> listMobs = map.getList(MOB);
 
         if (listMobs.size() == 1)
         {
@@ -943,7 +975,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
             }
             else
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Unknown mob '" + name + "'!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown mob '" + name + "'!");
                 throw new RuntimeException();
             }
         }
@@ -963,7 +995,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
                 }
                 else
                 {
-                    Log.writeDataToLogFile(Log._typeLog[2], "Unknown mob '" + name + "'!");
+                    Log.writeDataToLogFile(Log.TypeLog[2], "Unknown mob '" + name + "'!");
                     throw new RuntimeException();
                 }
             }
@@ -982,7 +1014,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addInterfaceAnimalsCheck(AttributeMap<?> map)
     {
-        Object animalsObj = map.get(KeyWordsGeneral.CommonKeyWorlds.ANIMALS);
+        Object animalsObj = map.get(ANIMALS);
 
         if ((Boolean)animalsObj)
         {
@@ -1004,7 +1036,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addInterfaceMonstersCheck(AttributeMap<?> map)
     {
-        Object monstersObj = map.get(KeyWordsGeneral.CommonKeyWorlds.MONSTERS);
+        Object monstersObj = map.get(MONSTERS);
 
         if ((Boolean)monstersObj)
         {
@@ -1024,7 +1056,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addPlayerCheck(AttributeMap<?> map)
     {
-        Object asPlayer = map.get(KeyWordsGeneral.CommonKeyWorlds.PLAYER);
+        Object asPlayer = map.get(PLAYER);
 
         if ((Boolean)asPlayer)
         {
@@ -1043,7 +1075,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addFakePlayerCheck(AttributeMap<?> _map)
     {
-        Object asPlayer = _map.get(KeyWordsGeneral.CommonKeyWorlds.FAKE_PLAYER);
+        Object asPlayer = _map.get(FAKE_PLAYER);
 
         if ((Boolean)asPlayer)
         {
@@ -1061,7 +1093,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addRealPlayerCheck(AttributeMap<?> map)
     {
-        Object asPlayer = map.get(KeyWordsGeneral.CommonKeyWorlds.REAL_PLAYER);
+        Object asPlayer = map.get(REAL_PLAYER);
 
         if ((Boolean)asPlayer)
         {
@@ -1112,7 +1144,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public void addOffHandItemCheck(AttributeMap<?> map)
     {
-        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(KeyWordsGeneral.CommonKeyWorlds.OFF_HAND_ITEM));
+        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(OFF_HAND_ITEM));
 
         _arrayList.add((event,query) ->
         {
@@ -1144,7 +1176,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addExplosionCheck(AttributeMap<?> map)
     {
-        Object explosion = map.get(KeyWordsGeneral.CommonKeyWorlds.EXPLOSION);
+        Object explosion = map.get(EXPLOSION);
 
         if ((Boolean)explosion)
         {
@@ -1162,7 +1194,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addProjectileCheck(AttributeMap<?> map)
     {
-        Object projectile = map.get(KeyWordsGeneral.CommonKeyWorlds.PROJECTILE);
+        Object projectile = map.get(PROJECTILE);
 
         if ((Boolean)projectile)
         {
@@ -1180,7 +1212,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addFireCheck(AttributeMap<?> map)
     {
-        Object fire = map.get(KeyWordsGeneral.CommonKeyWorlds.FIRE);
+        Object fire = map.get(FIRE);
 
         if ((Boolean)fire)
         {
@@ -1198,7 +1230,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addMagicCheck(AttributeMap<?> map)
     {
-        Object magic = map.get(KeyWordsGeneral.CommonKeyWorlds.MAGIC);
+        Object magic = map.get(MAGIC);
 
         if ((Boolean)magic)
         {
@@ -1216,7 +1248,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addSourceCheck(AttributeMap<?> map)
     {
-        List<String> sources = map.getList(KeyWordsGeneral.CommonKeyWorlds.SOURCE);
+        List<String> sources = map.getList(SOURCE);
         Set<String> sourceSet = new HashSet<>(sources);
 
         _arrayList.add((event, query) ->
@@ -1236,7 +1268,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     public void addBothHandsItemCheck(AttributeMap<?> map)
     {
-        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(KeyWordsGeneral.CommonKeyWorlds.BOTH_HANDS_ITEM));
+        List<Predicate<ItemStack>> items = AuxFunctions.getItems(map.getList(BOTH_HANDS_ITEM));
 
         _arrayList.add((event,query) ->
         {
@@ -1281,7 +1313,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addRandomCheck_0(AttributeMap<?> map)
     {
-        Object _random = map.get(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_0);
+        Object _random = map.get(RANDOM_KEY_0);
 
         _arrayList.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
@@ -1293,7 +1325,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addRandomCheck_1(AttributeMap<?> map)
     {
-        Object _random = map.get(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_1);
+        Object _random = map.get(RANDOM_KEY_1);
 
         _arrayList.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
@@ -1305,7 +1337,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addRandomCheck_2(AttributeMap<?> map)
     {
-        Object _random = map.get(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_2);
+        Object _random = map.get(RANDOM_KEY_2);
 
         _arrayList.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
@@ -1317,7 +1349,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addRandomCheck_3(AttributeMap<?> map)
     {
-        Object _random = map.get(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_3);
+        Object _random = map.get(RANDOM_KEY_3);
 
         _arrayList.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
@@ -1329,7 +1361,7 @@ public class ListActionsBinary<T extends SignalDataGetter>
      */
     private void addRandomCheck_4(AttributeMap<?> map)
     {
-        Object _random = map.get(KeyWordsGeneral.CommonKeyWorlds.RANDOM_KEY_4);
+        Object _random = map.get(RANDOM_KEY_4);
 
         _arrayList.add((event, query) ->
                 new Random().nextFloat() < (Float)_random);
