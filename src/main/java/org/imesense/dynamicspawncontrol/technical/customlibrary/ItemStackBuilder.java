@@ -1,9 +1,23 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
+import com.google.gson.JsonObject;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  *
  */
-public class ItemStackBuilder
+public final class ItemStackBuilder
 {
     /**
      *
@@ -89,7 +103,7 @@ public class ItemStackBuilder
             }
             catch (NBTException e)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Error parsing NBT in '" + name + "'!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Error parsing NBT in '" + name + "'!");
                 return ItemStack.EMPTY;
             }
 
@@ -120,7 +134,7 @@ public class ItemStackBuilder
 
         if (item == null)
         {
-            Log.writeDataToLogFile(Log._typeLog[2], "Unknown item '" + name + "'!");
+            Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
             return null;
         }
 
@@ -147,7 +161,7 @@ public class ItemStackBuilder
             }
             catch (NBTException e)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Error parsing json '" + nbt + "'!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Error parsing json '" + nbt + "'!");
                 return ItemStack.EMPTY;
             }
 
@@ -182,7 +196,7 @@ public class ItemStackBuilder
             }
             catch (NumberFormatException e)
             {
-                Log.writeDataToLogFile(Log._typeLog[2], "Unknown item '" + name + "'!");
+                Log.writeDataToLogFile(Log.TypeLog[2], "Unknown item '" + name + "'!");
                 return ItemStack.EMPTY;
             }
 
