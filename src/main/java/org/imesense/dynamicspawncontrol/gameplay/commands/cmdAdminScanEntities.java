@@ -8,10 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunctions;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.CmdCalledType;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.TextEnumColors;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -99,10 +96,10 @@ public final class cmdAdminScanEntities extends CommandBase
         }
 
         sender.sendMessage(new TextComponentString(
-                AuxFunctions.UNICODE.SECTION +
-                        TextEnumColors.GREEN.getCode() +
-                        CmdCalledType.CMD.getDescription() +
-                        AuxFunctions.UNICODE.WHITE_SPACE +
+                   EnumUnicodeCharacters.SECTION.getCharacter() +
+                        EnumTextColors.GREEN.getCode() +
+                        EnumCmdCalledType.CMD.getDescription() +
+                        EnumUnicodeCharacters.WHITE_SPACE.getCharacter() +
                         "The scan is completed"));
 
         Log.writeDataToLogFile(Log.TypeLog[0], "------------ END SCAN ENTITY LIST ------------");
