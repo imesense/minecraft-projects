@@ -55,7 +55,7 @@ public enum EnumTextColors
      */
     YELLOW("e");
 
-    private final String code;
+    private final String CODE;
 
     /**
      *
@@ -63,7 +63,7 @@ public enum EnumTextColors
      */
     EnumTextColors(String code)
     {
-        this.code = code;
+        this.CODE = code;
     }
 
     /**
@@ -72,6 +72,6 @@ public enum EnumTextColors
      */
     public String getCode()
     {
-        return this.code;
+        return this.CODE;
     }
 }

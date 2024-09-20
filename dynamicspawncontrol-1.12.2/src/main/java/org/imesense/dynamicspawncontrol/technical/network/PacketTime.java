@@ -75,7 +75,7 @@ public final class PacketTime implements IMessage
         {
             Minecraft.getMinecraft().addScheduledTask(() ->
             {
-                OnUpdateTimeWorld.ClassInstance.clientUpdate(message.customTime, message.multiplier);
+                OnUpdateTimeWorld.INSTANCE.clientUpdate(message.customTime, message.multiplier);
             });
 
             return null;

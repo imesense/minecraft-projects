@@ -30,7 +30,7 @@ public final class cmdAdminDumpBlock extends CommandBase
      */
     public cmdAdminDumpBlock(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**
@@ -77,15 +77,15 @@ public final class cmdAdminDumpBlock extends CommandBase
                 int blockId = Block.getIdFromBlock(state.getBlock());
 
                 sender.sendMessage(new TextComponentString(TextFormatting.GOLD + "Block ID: " + blockId));
-                Log.writeDataToLogFile(Log.TypeLog[0], "Block ID: " + blockId);
+                Log.writeDataToLogFile(0, "Block ID: " + blockId);
                 sender.sendMessage(new TextComponentString(TextFormatting.GOLD + Objects.requireNonNull(state.getBlock().getRegistryName()).toString()));
-                Log.writeDataToLogFile(Log.TypeLog[0], Objects.requireNonNull(state.getBlock().getRegistryName()).toString());
+                Log.writeDataToLogFile(0, Objects.requireNonNull(state.getBlock().getRegistryName()).toString());
 
                 for (IProperty<?> key : state.getPropertyKeys())
                 {
                     String value = state.getValue(key).toString();
                     sender.sendMessage(new TextComponentString("State: " + key.getName() + " = " + value));
-                    Log.writeDataToLogFile(Log.TypeLog[0], "State: " + key.getName() + " = " + value);
+                    Log.writeDataToLogFile(0, "State: " + key.getName() + " = " + value);
                 }
 
                 TileEntity tileEntity = player.getEntityWorld().getTileEntity(blockPos);
@@ -94,7 +94,7 @@ public final class cmdAdminDumpBlock extends CommandBase
                 {
                     NBTTagCompound nbt = tileEntity.writeToNBT(new NBTTagCompound());
                     sender.sendMessage(new TextComponentString("NBT Tags: " + nbt));
-                    Log.writeDataToLogFile(Log.TypeLog[0], "NBT Tags: " + nbt);
+                    Log.writeDataToLogFile(0, "NBT Tags: " + nbt);
                 }
             }
         }

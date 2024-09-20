@@ -69,7 +69,7 @@ public final class GenericBlockBreakActions extends ListActionsSingleEvent<Signa
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
         this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
@@ -267,7 +267,7 @@ public final class GenericBlockBreakActions extends ListActionsSingleEvent<Signa
         /**
          *
          */
-        for (Consumer<SignalDataGetter> action : actions)
+        for (Consumer<SignalDataGetter> action : this.ACTIONS)
         {
             action.accept(eventBase);
         }

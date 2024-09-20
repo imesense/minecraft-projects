@@ -25,7 +25,7 @@ public final class cmdAdminScanEntities extends CommandBase
      */
     public cmdAdminScanEntities(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**
@@ -65,18 +65,18 @@ public final class cmdAdminScanEntities extends CommandBase
         AtomicInteger iterator = new AtomicInteger();
         List<Entity> entities = world.loadedEntityList;
 
-        Log.writeDataToLogFile(Log.TypeLog[0], "------------ START SCAN ENTITY LIST ------------");
+        Log.writeDataToLogFile(0, "------------ START SCAN ENTITY LIST ------------");
 
         for (Entity entity : entities)
         {
             if (entity != null)
             {
-                Log.writeDataToLogFile(Log.TypeLog[0], "-----------------------------------------------------------");
+                Log.writeDataToLogFile(0, "-----------------------------------------------------------");
 
                 @Nonnull String entityType;
-                Log.writeDataToLogFile(Log.TypeLog[0], "Iteration: " + iterator.getAndIncrement());
-                Log.writeDataToLogFile(Log.TypeLog[0], entity.toString());
-                Log.writeDataToLogFile(Log.TypeLog[0], "Entity ID: " + entity.getEntityId());
+                Log.writeDataToLogFile(0, "Iteration: " + iterator.getAndIncrement());
+                Log.writeDataToLogFile(0, entity.toString());
+                Log.writeDataToLogFile(0, "Entity ID: " + entity.getEntityId());
 
                 ResourceLocation entityKey = EntityList.getKey(entity);
 
@@ -89,9 +89,9 @@ public final class cmdAdminScanEntities extends CommandBase
                     entityType = entityKey != null ? entityKey.toString() : "Unknown";
                 }
 
-                Log.writeDataToLogFile(Log.TypeLog[0], "Entity: " + entityType);
+                Log.writeDataToLogFile(0, "Entity: " + entityType);
 
-                Log.writeDataToLogFile(Log.TypeLog[0], "-----------------------------------------------------------");
+                Log.writeDataToLogFile(0, "-----------------------------------------------------------");
             }
         }
 
@@ -102,6 +102,6 @@ public final class cmdAdminScanEntities extends CommandBase
                         EnumUnicodeCharacters.WHITE_SPACE.getCharacter() +
                         "The scan is completed"));
 
-        Log.writeDataToLogFile(Log.TypeLog[0], "------------ END SCAN ENTITY LIST ------------");
+        Log.writeDataToLogFile(0, "------------ END SCAN ENTITY LIST ------------");
     }
 }

@@ -13,7 +13,7 @@ public class CacheStorage
     /**
      *
      */
-    private static CacheStorage instanceClass;
+    private static CacheStorage instance;
 
     /**
      *
@@ -21,7 +21,7 @@ public class CacheStorage
      */
     public static CacheStorage getInstance()
     {
-        return instanceClass;
+        return instance;
     }
 
     /**
@@ -30,9 +30,9 @@ public class CacheStorage
      */
     public CacheStorage(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Create object [%s]", nameClass));
+        Log.writeDataToLogFile(0, String.format("Create object [%s]", nameClass));
 
-        instanceClass = this;
+        instance = this;
     }
 
     /**
@@ -46,7 +46,7 @@ public class CacheStorage
      */
     public List<EntityData> getEntityCacheMobs()
     {
-        return EntityCacheMobs;
+        return this.EntityCacheMobs;
     }
 
     /**
@@ -72,23 +72,23 @@ public class CacheStorage
      */
     public static class EntityData
     {
-        private final int maxCount;
-        private final ResourceLocation entity;
+        private final int MAX_COUNT;
+        private final ResourceLocation ENTITY;
 
         public EntityData(ResourceLocation entity, int maxCount)
         {
-            this.entity = entity;
-            this.maxCount = maxCount;
+            this.ENTITY = entity;
+            this.MAX_COUNT = maxCount;
         }
 
         public ResourceLocation getEntity()
         {
-            return entity;
+            return this.ENTITY;
         }
 
         public int getMaxCount()
         {
-            return maxCount;
+            return this.MAX_COUNT;
         }
     }
 }

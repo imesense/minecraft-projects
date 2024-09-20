@@ -24,7 +24,7 @@ public final class cmdAdminDumpEntity extends CommandBase
      */
     public cmdAdminDumpEntity(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**
@@ -73,7 +73,7 @@ public final class cmdAdminDumpEntity extends CommandBase
                 entityInfo += "Class: " + target.getClass().getSimpleName();
 
                 sender.sendMessage(new TextComponentString(entityInfo));
-                Log.writeDataToLogFile(Log.TypeLog[0], entityInfo);
+                Log.writeDataToLogFile(0, entityInfo);
             }
             else
             {

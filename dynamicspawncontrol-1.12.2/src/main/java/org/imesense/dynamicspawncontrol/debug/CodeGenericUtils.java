@@ -20,7 +20,7 @@ public class CodeGenericUtils
     {
         if (object == null)
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Object<T> return null: " + message);
+            Log.writeDataToLogFile(2, "Object<T> return null: " + message);
             throw new NullPointerException(message);
         }
 
@@ -43,7 +43,7 @@ public class CodeGenericUtils
 
         if (value == null)
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Parameter '" + logParameterName + "' missing or return null");
+            Log.writeDataToLogFile(2, "Parameter '" + logParameterName + "' missing or return null");
             throw new RuntimeException();
         }
 
@@ -55,16 +55,36 @@ public class CodeGenericUtils
         }
         catch (ClassCastException e)
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "Parameter '" + logParameterName + "' has an invalid type");
+            Log.writeDataToLogFile(2, "Parameter '" + logParameterName + "' has an invalid type");
             throw new RuntimeException();
         }
 
         if (numericValue.doubleValue() < min.doubleValue() || numericValue.doubleValue() > max.doubleValue())
         {
-            Log.writeDataToLogFile(Log.TypeLog[2], "An error was detected in the parameter '" + logParameterName + "': range [" + min + " .. " + max + "]");
+            Log.writeDataToLogFile(2, "An error was detected in the parameter '" + logParameterName + "': range [" + min + " .. " + max + "]");
             throw new RuntimeException();
         }
 
         return numericValue;
+    }
+
+    /**
+     *
+     * @param clazz
+     * @param parameterTypes
+     * @return
+     * @param <T>
+     */
+    public static <T> boolean hasConstructorWithParameter(Class<T> clazz, Class<?>... parameterTypes)
+    {
+        try
+        {
+            clazz.getConstructor(parameterTypes);
+            return true;
+        }
+        catch (NoSuchMethodException e)
+        {
+            return false;
+        }
     }
 }

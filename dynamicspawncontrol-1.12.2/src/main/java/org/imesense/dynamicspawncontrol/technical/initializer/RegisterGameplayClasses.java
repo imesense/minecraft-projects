@@ -21,10 +21,10 @@ public final class RegisterGameplayClasses
 
     /**
      *
+     * @param nameClass
      */
     public RegisterGameplayClasses(final String nameClass)
     {
-
     }
 
     /**
@@ -41,7 +41,8 @@ public final class RegisterGameplayClasses
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Exception in class: " + eventClass.getName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception in class: " + eventClass.getName() + " - " + exception.getMessage());
+                throw new RuntimeException(exception);
             }
         }
     }

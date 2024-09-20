@@ -28,7 +28,7 @@ public class EnumGameProperties
         /**
          *
          */
-        private final String value;
+        private final String VALUE;
 
         /**
          *
@@ -36,7 +36,7 @@ public class EnumGameProperties
          */
         Coordinates(String value)
         {
-            this.value = value;
+            this.VALUE = value;
         }
 
         /**
@@ -45,7 +45,7 @@ public class EnumGameProperties
          */
         public String getValue()
         {
-            return value;
+            return this.VALUE;
         }
     }
 
@@ -72,7 +72,7 @@ public class EnumGameProperties
         /**
          *
          */
-        private final String value;
+        private final String VALUE;
 
         /**
          *
@@ -80,7 +80,7 @@ public class EnumGameProperties
          */
          BlockProperties(String value)
          {
-            this.value = value;
+            this.VALUE = value;
          }
 
          /**
@@ -89,7 +89,7 @@ public class EnumGameProperties
          */
         public String getValue()
         {
-            return this.value;
+            return this.VALUE;
         }
     }
 }

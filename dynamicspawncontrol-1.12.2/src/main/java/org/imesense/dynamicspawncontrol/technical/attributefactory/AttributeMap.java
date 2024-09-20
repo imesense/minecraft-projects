@@ -12,7 +12,7 @@ public final class AttributeMap<T>
     /**
      *
      */
-    private final HashMap<AttributeKey<?>, Object> values = new HashMap<>();
+    private final HashMap<AttributeKey<?>, Object> VALUES = new HashMap<>();
 
     /**
      *
@@ -21,7 +21,7 @@ public final class AttributeMap<T>
      */
     public boolean has(@Nonnull AttributeKey<?> key)
     {
-        return this.values.containsKey(key);
+        return this.VALUES.containsKey(key);
     }
 
     /**
@@ -31,7 +31,7 @@ public final class AttributeMap<T>
      */
     public void set(@Nonnull AttributeKey<T> key, T value)
     {
-        values.put(key, value);
+        this.VALUES.put(key, value);
     }
 
     /**
@@ -43,7 +43,7 @@ public final class AttributeMap<T>
     {
         if (value != null)
         {
-            this.values.put(key, value);
+            this.VALUES.put(key, value);
         }
     }
 
@@ -55,7 +55,7 @@ public final class AttributeMap<T>
     @SuppressWarnings("unchecked")
     public T get(@Nonnull AttributeKey<?> key)
     {
-        return (T) this.values.get(key);
+        return (T) this.VALUES.get(key);
     }
 
     /**
@@ -66,7 +66,7 @@ public final class AttributeMap<T>
     @SuppressWarnings("unchecked")
     public Optional<T> getOptional(@Nonnull AttributeKey<T> key)
     {
-        return Optional.ofNullable((T) this.values.get(key));
+        return Optional.ofNullable((T) this.VALUES.get(key));
     }
 
     /**
@@ -77,12 +77,12 @@ public final class AttributeMap<T>
     @SuppressWarnings("unchecked")
     public void addList(@Nonnull AttributeKey<?> key, T value)
     {
-        if (!this.values.containsKey(key))
+        if (!this.VALUES.containsKey(key))
         {
-            this.values.put(key, new ArrayList<>());
+            this.VALUES.put(key, new ArrayList<>());
         }
 
-        List<T> list = (List<T>) this.values.get(key);
+        List<T> list = (List<T>) this.VALUES.get(key);
         list.add(value);
     }
 
@@ -99,12 +99,12 @@ public final class AttributeMap<T>
             return;
         }
 
-        if (!this.values.containsKey(key))
+        if (!this.VALUES.containsKey(key))
         {
-            this.values.put(key, new ArrayList<>());
+            this.VALUES.put(key, new ArrayList<>());
         }
 
-        List<T> list = (List<T>) this.values.get(key);
+        List<T> list = (List<T>) this.VALUES.get(key);
         list.add(value);
     }
 
@@ -116,12 +116,12 @@ public final class AttributeMap<T>
     @SuppressWarnings("unchecked")
     public List<String> getList(@Nonnull AttributeKey<?> key)
     {
-        if (!this.values.containsKey(key))
+        if (!this.VALUES.containsKey(key))
         {
             return Collections.emptyList();
         }
 
-        return (List<String>) this.values.get(key);
+        return (List<String>) this.VALUES.get(key);
     }
 
     /**
@@ -132,12 +132,12 @@ public final class AttributeMap<T>
     @SuppressWarnings("unchecked")
     public List<Integer> getListI(@Nonnull AttributeKey<?> key)
     {
-        if (!this.values.containsKey(key))
+        if (!this.VALUES.containsKey(key))
         {
             return Collections.emptyList();
         }
 
-        return (List<Integer>) this.values.get(key);
+        return (List<Integer>) this.VALUES.get(key);
     }
 
     /**
@@ -148,11 +148,11 @@ public final class AttributeMap<T>
     @SuppressWarnings("unchecked")
     public List<AttributeMap<String>> getListA(@Nonnull AttributeKey<?> key)
     {
-        if (!this.values.containsKey(key))
+        if (!this.VALUES.containsKey(key))
         {
             return Collections.emptyList();
         }
 
-        return (List<AttributeMap<String>>) this.values.get(key);
+        return (List<AttributeMap<String>>) this.VALUES.get(key);
     }
 }

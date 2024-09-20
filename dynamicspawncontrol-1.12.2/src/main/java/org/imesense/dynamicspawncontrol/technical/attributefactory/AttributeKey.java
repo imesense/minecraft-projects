@@ -11,12 +11,12 @@ public final class AttributeKey<T>
     /**
      *
      */
-    private final String name;
+    private final String NAME;
 
     /**
      *
      */
-    private final AttributeType<T> type;
+    private final AttributeType<T> TYPE;
 
     /**
      *
@@ -26,8 +26,8 @@ public final class AttributeKey<T>
     public AttributeKey(@Nonnull AttributeType<T> type,
                         @Nonnull String name)
     {
-        this.type = type;
-        this.name = name;
+        this.TYPE = type;
+        this.NAME = name;
     }
 
     /**
@@ -51,7 +51,7 @@ public final class AttributeKey<T>
     @Nonnull
     public AttributeType<T> getType()
     {
-        return this.type;
+        return this.TYPE;
     }
 
     /**
@@ -61,7 +61,7 @@ public final class AttributeKey<T>
     @Nonnull
     public String getName()
     {
-        return this.name;
+        return this.NAME;
     }
 
     /**
@@ -71,6 +71,6 @@ public final class AttributeKey<T>
     @Override
     public String toString()
     {
-        return "Key(" + this.name + ')';
+        return "Key(" + this.NAME + ')';
     }
 }

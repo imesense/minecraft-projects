@@ -27,7 +27,7 @@ public final class OnDropZombieItems
      */
     public OnDropZombieItems(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**

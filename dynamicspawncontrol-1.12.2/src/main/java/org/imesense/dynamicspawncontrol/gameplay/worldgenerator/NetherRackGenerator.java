@@ -24,7 +24,7 @@ public final class NetherRackGenerator implements IWorldGenerator
     /**
      *
      */
-    private final WorldGenerator classGenerateBlockNetherRack;
+    private final WorldGenerator CLASS_NETHER_RACK_GENERATOR;
 
     /**
      *
@@ -32,9 +32,9 @@ public final class NetherRackGenerator implements IWorldGenerator
      */
     public NetherRackGenerator(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
 
-        classGenerateBlockNetherRack = new WorldGenMinable(
+        CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 9);
     }
 
@@ -83,10 +83,10 @@ public final class NetherRackGenerator implements IWorldGenerator
             case 0:
             {
                 run(
-                        classGenerateBlockNetherRack, world, random, chunkX, chunkZ,
-                        ConfigWorldGenerator.BlockNetherrackChanceSpawn,
-                        ConfigWorldGenerator.GetBlockNetherrackMinHeight,
-                        ConfigWorldGenerator.GetBlockNetherrackMaxHeight
+                        CLASS_NETHER_RACK_GENERATOR, world, random, chunkX, chunkZ,
+                        ConfigWorldGenerator.BlockNetherRackChanceSpawn,
+                        ConfigWorldGenerator.GetBlockNetherRackMinHeight,
+                        ConfigWorldGenerator.GetBlockNetherRackMaxHeight
                 );
                 break;
             }

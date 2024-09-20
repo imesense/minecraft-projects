@@ -37,7 +37,7 @@ public class ConfigDebugSingleEvents implements IConfig
     @Override
     public void init(FMLPreInitializationEvent event, final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
 
         ClientProxy.ConfigDebugSingleEvents = this.createConfiguration("debug_actions_single_events");
 

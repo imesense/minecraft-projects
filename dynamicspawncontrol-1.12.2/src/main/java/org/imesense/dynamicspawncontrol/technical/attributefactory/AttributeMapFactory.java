@@ -16,7 +16,7 @@ public final class AttributeMapFactory<T>
     /**
      *
      */
-    private final ArrayList<Attribute<T>> attributes = new ArrayList<>();
+    private final ArrayList<Attribute<T>> ATTRIBUTES = new ArrayList<>();
 
     /**
      *
@@ -25,7 +25,7 @@ public final class AttributeMapFactory<T>
      */
     public AttributeMapFactory<T> attribute(@Nonnull Attribute<T> attribute)
     {
-        this.attributes.add(attribute);
+        this.ATTRIBUTES.add(attribute);
         return this;
     }
 
@@ -41,7 +41,7 @@ public final class AttributeMapFactory<T>
         AttributeMap<T> map = new AttributeMap<>();
         JsonObject jsonObject = element.getAsJsonObject();
 
-        for (Attribute<T> attribute : attributes)
+        for (Attribute<T> attribute : this.ATTRIBUTES)
         {
             AttributeKey<T> key = attribute.getKey();
             AttributeType<T> type = key.getType();

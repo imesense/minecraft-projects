@@ -20,7 +20,7 @@ public enum EnumSingleScripts
     /**
      *
      */
-    private final String keyword;
+    private final String KEYWORD;
 
     /**
      *
@@ -28,7 +28,7 @@ public enum EnumSingleScripts
      */
     EnumSingleScripts(String keyword)
     {
-        this.keyword = keyword;
+        this.KEYWORD = keyword;
     }
 
     /**
@@ -37,6 +37,6 @@ public enum EnumSingleScripts
      */
     public String getKeyword()
     {
-        return this.keyword;
+        return this.KEYWORD;
     }
 }

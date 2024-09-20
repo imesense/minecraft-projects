@@ -20,19 +20,19 @@ public class Structures
     /**
      *
      */
-    public static final Structures StructuresCache = new Structures();
+    public static final Structures STRUCTURES_CACHE = new Structures();
 
     /**
      *
      */
-    private final Map<StructureEntry, Boolean> structuresCacheHashMap = new HashMap<>();
+    private final Map<StructureEntry, Boolean> STRUCTURE_HASH = new HashMap<>();
 
     /**
      *
      */
     public void clean()
     {
-        structuresCacheHashMap.clear();
+        STRUCTURE_HASH.clear();
     }
 
     /**
@@ -49,9 +49,9 @@ public class Structures
         long longChunkPos = ChunkPos.asLong(objectChunkPos.x, objectChunkPos.z);
         StructureEntry entry = new StructureEntry(structure, dimension, longChunkPos);
 
-        if (structuresCacheHashMap.containsKey(entry))
+        if (STRUCTURE_HASH.containsKey(entry))
         {
-            return structuresCacheHashMap.get(entry);
+            return STRUCTURE_HASH.get(entry);
         }
 
         MapGenStructureData data = (MapGenStructureData) world.getPerWorldStorage().getOrLoadData(MapGenStructureData.class, structure);
@@ -65,16 +65,16 @@ public class Structures
 
         for (Long _long : longs)
         {
-            structuresCacheHashMap.put(new StructureEntry(structure, dimension, _long), true);
+            STRUCTURE_HASH.put(new StructureEntry(structure, dimension, _long), true);
         }
 
-        if (structuresCacheHashMap.containsKey(entry))
+        if (STRUCTURE_HASH.containsKey(entry))
         {
             return true;
         }
         else
         {
-            structuresCacheHashMap.put(entry, false);
+            STRUCTURE_HASH.put(entry, false);
             return false;
         }
     }

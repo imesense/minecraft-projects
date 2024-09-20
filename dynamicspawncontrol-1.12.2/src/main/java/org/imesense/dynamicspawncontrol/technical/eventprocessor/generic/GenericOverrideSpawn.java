@@ -131,7 +131,7 @@ public final class GenericOverrideSpawn extends ListActionsSingleEvent<SignalDat
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
         this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 
@@ -143,7 +143,7 @@ public final class GenericOverrideSpawn extends ListActionsSingleEvent<SignalDat
 
             if (typeClass == null)
             {
-                Log.writeDataToLogFile(Log.TypeLog[2], "Cannot find mob '" + mobMap.get(MOB_NAME) + "'");
+                Log.writeDataToLogFile(2, "Cannot find mob '" + mobMap.get(MOB_NAME) + "'");
                 throw new RuntimeException();
             }
 
@@ -156,7 +156,7 @@ public final class GenericOverrideSpawn extends ListActionsSingleEvent<SignalDat
 
             Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) typeClass, weight, groupCountMin, groupCountMax);
 
-            Log.writeDataToLogFile(Log.TypeLog[0], String.format(
+            Log.writeDataToLogFile(0, String.format(
                     "Entity [%s:%s] has been added to the spawn list. " +
                             "Data -> SpawnChance [%f], " +
                             "Frequency [%d], " +
@@ -319,7 +319,7 @@ public final class GenericOverrideSpawn extends ListActionsSingleEvent<SignalDat
 
             if (!jsonObject.has(SingleKeyWords.MAIN_OVERRIDE_SPAWN.OVERRIDE_STRUCT))
             {
-                Log.writeDataToLogFile(Log.TypeLog[0], "Not found 'struct' for rule [ { ... } ]");
+                Log.writeDataToLogFile(0, "Not found 'struct' for rule [ { ... } ]");
                 throw new RuntimeException();
             }
 

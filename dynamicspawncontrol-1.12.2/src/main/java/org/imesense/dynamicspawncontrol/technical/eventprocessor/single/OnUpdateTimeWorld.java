@@ -33,17 +33,17 @@ public final class OnUpdateTimeWorld
     /**
      *
      */
-    private static final ITimeHandler serverTime = new TimeHandlerServer();
+    private static final ITimeHandler SERVER_TIME = new TimeHandlerServer();
 
     /**
      *
      */
-    private static final ITimeHandler clientTime = new TimeHandlerClient();
+    private static final ITimeHandler CLIENT_TIME = new TimeHandlerClient();
 
     /**
      *
      */
-    public static OnUpdateTimeWorld ClassInstance = new OnUpdateTimeWorld("OnUpdateTimeWorld");
+    public static final OnUpdateTimeWorld INSTANCE = new OnUpdateTimeWorld("OnUpdateTimeWorld");
 
     /**
      *
@@ -51,7 +51,7 @@ public final class OnUpdateTimeWorld
      */
     private OnUpdateTimeWorld(String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**
@@ -104,7 +104,7 @@ public final class OnUpdateTimeWorld
                 event.player.world.provider.getDimension() == 0 &&
                 event.player.world.getGameRules().getBoolean("doDaylightCycle_tc"))
         {
-            clientTime.tick(event.player.world);
+            CLIENT_TIME.tick(event.player.world);
         }
     }
 
@@ -118,7 +118,7 @@ public final class OnUpdateTimeWorld
         if (event.world.provider.getDimension() == 0 && event.phase == TickEvent.Phase.START
                 && event.world.getGameRules().getBoolean("doDaylightCycle_tc"))
         {
-            serverTime.tick(event.world);
+            SERVER_TIME.tick(event.world);
         }
     }
 
@@ -225,7 +225,7 @@ public final class OnUpdateTimeWorld
      */
     public void clientUpdate(long customTime, double multiplier)
     {
-        clientTime.update(customTime, multiplier);
+        CLIENT_TIME.update(customTime, multiplier);
     }
 
     /**
@@ -234,6 +234,6 @@ public final class OnUpdateTimeWorld
      */
     private void serverUpdate(long worldTime)
     {
-        serverTime.update(WorldTime.customTime(worldTime), WorldTime.multiplier(worldTime));
+        SERVER_TIME.update(WorldTime.customTime(worldTime), WorldTime.multiplier(worldTime));
     }
 }

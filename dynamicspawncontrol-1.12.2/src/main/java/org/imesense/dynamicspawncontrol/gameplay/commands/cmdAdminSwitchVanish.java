@@ -23,7 +23,7 @@ public final class cmdAdminSwitchVanish extends CommandBase
      */
     public cmdAdminSwitchVanish(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**
@@ -74,11 +74,11 @@ public final class cmdAdminSwitchVanish extends CommandBase
 
         if (args[0].equalsIgnoreCase("1"))
         {
-            apply(player);
+            this.apply(player);
         }
         else if (args[0].equalsIgnoreCase("0"))
         {
-            remove(player);
+            this.remove(player);
         }
     }
 

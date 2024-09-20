@@ -19,7 +19,7 @@ public final class OnMobsTaskManager
      */
     public OnMobsTaskManager(final String nameClass)
     {
-        Log.writeDataToLogFile(Log.TypeLog[0], nameClass);
+        Log.writeDataToLogFile(0, nameClass);
     }
 
     /**

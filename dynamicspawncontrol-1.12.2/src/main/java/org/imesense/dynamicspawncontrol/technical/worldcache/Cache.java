@@ -41,37 +41,37 @@ public class Cache
     /**
      *
      */
-    public static final Set<ChunkPos> CachedValidChunks = new HashSet<>();
+    public static final Set<ChunkPos> CACHE_VALID_CHUNKS = new HashSet<>();
 
     /**
      *
      */
-    public static final Set<EntityAnimal> CachedAnimals = new HashSet<>();
+    public static final Set<EntityAnimal> CACHED_ANIMALS = new HashSet<>();
 
     /**
      *
      */
-    public static final Set<IAnimals> CachedHostileEntities = new HashSet<>();
+    public static final Set<IAnimals> CACHED_HOSTILES = new HashSet<>();
 
     /**
      *
      */
-    public static final Set<EntityLivingBase> CachedAllEntities = new HashSet<>();
+    public static final Set<EntityLivingBase> CACHED_ALL = new HashSet<>();
 
     /**
      *
      */
-    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
     /**
      *
      */
-    public static final ConcurrentMap<String, Set<EntityLivingBase>> EntitiesByName = new ConcurrentHashMap<>();
+    public static final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_BY_NAME = new ConcurrentHashMap<>();
 
     /**
      *
      */
-    public static final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> EntitiesByResourceLocation = new ConcurrentHashMap<>();
+    public static final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
 
     /**
      *
@@ -79,7 +79,7 @@ public class Cache
      */
     public static void updateCacheAsync(@Nonnull World world)
     {
-        executor.submit(() -> updateCache(world));
+        EXECUTOR.submit(() -> updateCache(world));
     }
 
     /**
@@ -88,19 +88,19 @@ public class Cache
      */
     public static void updateCache(@Nonnull World world)
     {
-        CachedAnimals.clear();
-        CachedHostileEntities.clear();
-        CachedAllEntities.clear();
-        EntitiesByName.clear();
-        EntitiesByResourceLocation.clear();
-        CachedValidChunks.clear();
+        CACHED_ANIMALS.clear();
+        CACHED_HOSTILES.clear();
+        CACHED_ALL.clear();
+        ENTITIES_BY_NAME.clear();
+        ENTITIES_BY_RESOURCE_LOCATION.clear();
+        CACHE_VALID_CHUNKS.clear();
 
         if (world instanceof WorldServer)
         {
             WorldServer worldServer = (WorldServer) world;
             Set<ChunkPos> validChunks = totalValidChunksSpawn(worldServer);
 
-            CachedValidChunks.addAll(validChunks);
+            CACHE_VALID_CHUNKS.addAll(validChunks);
         }
 
         for (Entity entity : world.loadedEntityList)
@@ -109,30 +109,30 @@ public class Cache
             {
                 EntityLivingBase livingEntity = (EntityLivingBase) entity;
 
-                if (CachedValidChunks.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
+                if (CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
                 {
                     if (entity instanceof IAnimals)
                     {
                         if (entity instanceof EntityAnimal)
                         {
-                            CachedAnimals.add((EntityAnimal) entity);
+                            CACHED_ANIMALS.add((EntityAnimal) entity);
                         }
                         else if (entity instanceof EntityMob)
                         {
-                            CachedHostileEntities.add((IAnimals) entity);
+                            CACHED_HOSTILES.add((IAnimals) entity);
                         }
                     }
 
-                    CachedAllEntities.add(livingEntity);
+                    CACHED_ALL.add(livingEntity);
 
                     String entityName = entity.getName();
-                    EntitiesByName.computeIfAbsent(entityName, k -> new HashSet<>()).add(livingEntity);
+                    ENTITIES_BY_NAME.computeIfAbsent(entityName, k -> new HashSet<>()).add(livingEntity);
 
                     ResourceLocation entityKey = EntityList.getKey(entity);
 
                     if (entityKey != null)
                     {
-                        EntitiesByResourceLocation.computeIfAbsent(entityKey, k -> new HashSet<>()).add(livingEntity);
+                        ENTITIES_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k -> new HashSet<>()).add(livingEntity);
                     }
                 }
             }
@@ -188,7 +188,7 @@ public class Cache
      */
     public static int getAnimalCount()
     {
-        return CachedAnimals.size();
+        return CACHED_ANIMALS.size();
     }
 
     /**
@@ -197,7 +197,7 @@ public class Cache
      */
     public static int getTotalEntityCount()
     {
-        return CachedAllEntities.size();
+        return CACHED_ALL.size();
     }
 
     /**
@@ -206,7 +206,7 @@ public class Cache
      */
     public static int getHostileEntityCount()
     {
-        return CachedHostileEntities.size();
+        return CACHED_HOSTILES.size();
     }
 
     /**
@@ -217,6 +217,6 @@ public class Cache
     @Nonnull
     public static Set<EntityLivingBase> getEntitiesByResourceLocation(@Nonnull ResourceLocation resourceLocation)
     {
-        return EntitiesByResourceLocation.getOrDefault(resourceLocation, Collections.emptySet());
+        return ENTITIES_BY_RESOURCE_LOCATION.getOrDefault(resourceLocation, Collections.emptySet());
     }
 }

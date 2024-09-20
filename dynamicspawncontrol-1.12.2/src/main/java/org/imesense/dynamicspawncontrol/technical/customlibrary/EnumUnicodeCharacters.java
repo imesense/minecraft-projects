@@ -43,12 +43,12 @@ public enum EnumUnicodeCharacters
     /**
      *
      */
-    private final char character;
+    private final char CHARACTER;
 
     /**
      *
      */
-    private final String description;
+    private final String DESCRIPTION;
 
     /**
      *
@@ -57,8 +57,8 @@ public enum EnumUnicodeCharacters
      */
     EnumUnicodeCharacters(char character, String description)
     {
-        this.character = character;
-        this.description = description;
+        this.CHARACTER = character;
+        this.DESCRIPTION = description;
     }
 
     /**
@@ -67,7 +67,7 @@ public enum EnumUnicodeCharacters
      */
     public char getCharacter()
     {
-        return character;
+        return this.CHARACTER;
     }
 
     /**
@@ -76,7 +76,7 @@ public enum EnumUnicodeCharacters
      */
     public String getDescription()
     {
-        return description;
+        return this.DESCRIPTION;
     }
 
     /**
@@ -88,7 +88,7 @@ public enum EnumUnicodeCharacters
     {
         for (EnumUnicodeCharacters unicodeCharacter : values())
         {
-            if (unicodeCharacter.character == character)
+            if (unicodeCharacter.CHARACTER == character)
             {
                 return unicodeCharacter;
             }
@@ -104,6 +104,6 @@ public enum EnumUnicodeCharacters
     @Override
     public String toString()
     {
-        return String.format("%s ('%c')", this.description, this.character);
+        return String.format("%s ('%c')", this.DESCRIPTION, this.CHARACTER);
     }
 }

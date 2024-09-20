@@ -90,7 +90,7 @@ public final class GenericExperience extends ListActionsSingleEvent<SignalDataGe
     {
         super(nameClass);
 
-        Log.writeDataToLogFile(Log.TypeLog[0], String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
 
         this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
 

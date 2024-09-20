@@ -95,6 +95,7 @@ public final class RayTrace
         double posX = player.posX;
         double posY = player.posY - 0.1;
         double posZ = player.posZ;
+
         return new BlockPos(posX, posY, posZ);
     }
 }
