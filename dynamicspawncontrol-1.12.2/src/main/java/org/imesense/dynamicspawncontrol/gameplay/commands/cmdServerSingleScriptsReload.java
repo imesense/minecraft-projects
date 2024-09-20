@@ -19,7 +19,7 @@ public final class cmdServerSingleScriptsReload extends CommandBase
      */
     public cmdServerSingleScriptsReload(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     @Nonnull

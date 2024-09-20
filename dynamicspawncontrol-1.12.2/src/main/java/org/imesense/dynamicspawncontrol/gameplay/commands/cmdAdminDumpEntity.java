@@ -24,7 +24,7 @@ public final class cmdAdminDumpEntity extends CommandBase
      */
     public cmdAdminDumpEntity(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

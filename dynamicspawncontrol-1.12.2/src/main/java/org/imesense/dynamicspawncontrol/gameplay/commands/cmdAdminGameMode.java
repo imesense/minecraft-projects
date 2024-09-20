@@ -21,7 +21,7 @@ public final class cmdAdminGameMode extends CommandBase
      */
     public cmdAdminGameMode(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

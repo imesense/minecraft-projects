@@ -28,7 +28,7 @@ public final class OnUpdateTorchLogic
      */
     public OnUpdateTorchLogic(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+
     }
 
     /**

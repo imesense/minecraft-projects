@@ -25,7 +25,7 @@ public class CacheConfig
      */
     public CacheConfig(final String nameClass)
     {
-        Log.writeDataToLogFile(0, nameClass);
+        Log.writeDataToLogFile(0, String.format("Initializing a class: %s", nameClass));
     }
 
     /**
