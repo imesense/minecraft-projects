@@ -6,7 +6,10 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericRightClickActions;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 /**
  *
@@ -34,18 +37,17 @@ public final class OnRightClickEvent
             return;
         }
 
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericRightClickActions rule : ParserJsonScripts._genericRightClickActions)
+        for (GenericRightClickActions rule : ParserJsonScripts.GENERIC_RIGHT_CLICK_ACTIONS_LIST)
         {
             if (rule.match(event))
             {
                 Event.Result result = rule.getResult();
 
-                if (INFConfigDebug._debugGenericRightClickEvent)
+                if (ConfigGameDebugger.DebugGenericRightClickEvent)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "ConfigsParser._GenericRightClickActions. ID Rule: " + i + ": " + result
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericRightClickActions. ID Rule: " + i + ": " + result
                             + " entity: " + event.getEntityPlayer().getName()
                             + " y: " + event.getPos().getY()
                             + " biomes: " + event.getWorld().getBiome(event.getPos()).getBiomeName());
@@ -65,7 +67,6 @@ public final class OnRightClickEvent
 
             i.getAndIncrement();
         }
-         */
     }
 }
 

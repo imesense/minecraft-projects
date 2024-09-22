@@ -6,7 +6,10 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockPlaceActions;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 /**
  *
@@ -35,18 +38,17 @@ public final class OnBlockPlaceEvent
             return;
         }
 
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericBlockPlaceActions rule : ParserJsonScripts._genericBlockPlaceActions)
+        for (GenericBlockPlaceActions rule : ParserJsonScripts.GENERIC_BLOCK_PLACE_ACTIONS_LIST)
         {
             if (rule.match(event))
             {
                 Event.Result result = rule.getResult();
 
-                if (INFConfigDebug._debugGenericBlockPlaceEvent)
+                if (ConfigGameDebugger.DebugGenericBlockPlaceEvent)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "ConfigsParser._GenericBlockPlaceActions. ID Rule "
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockPlaceActions. ID Rule "
                             + i + ": "
                             + result + " entity: "
                             + event.getPlayer().getName()
@@ -65,7 +67,6 @@ public final class OnBlockPlaceEvent
 
             i.getAndIncrement();
         }
-         */
     }
 }
 

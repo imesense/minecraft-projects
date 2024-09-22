@@ -6,7 +6,10 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericExperience;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 /**
  *
@@ -29,10 +32,9 @@ public final class OnLivingExperienceDrop
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public synchronized void onUpdateLivingExperienceDrop_0(LivingExperienceDropEvent event)
     {
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericExperience rule : ParserJsonScripts._genericExperience)
+        for (GenericExperience rule : ParserJsonScripts.GENERIC_EXPERIENCE_LIST)
         {
             if (rule.match(event))
             {
@@ -43,9 +45,9 @@ public final class OnLivingExperienceDrop
                     int modifyXp = rule.modifyXp(event.getDroppedExperience());
                     event.setDroppedExperience(modifyXp);
 
-                    if (INFConfigDebug._debugGenericLivingExperienceDrop)
+                    if (ConfigGameDebugger.DebugGenericLivingExperienceDrop)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[0], "ConfigsParser._GenericExperience. ID Rule: " + i + ": "
+                        Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + i + ": "
                                 + result
                                 + " entity: " + event.getEntity().getName()
                                 + " y: " + event.getEntity().getPosition().getY() + " new xp: " + modifyXp);
@@ -61,7 +63,6 @@ public final class OnLivingExperienceDrop
 
             i.getAndIncrement();
         }
-         */
     }
 }
 

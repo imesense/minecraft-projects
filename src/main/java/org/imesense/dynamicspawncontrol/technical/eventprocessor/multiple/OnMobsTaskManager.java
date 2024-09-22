@@ -7,6 +7,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMobsTaskManager;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 /**
  *
@@ -34,10 +36,9 @@ public final class OnMobsTaskManager
             return;
         }
 
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericMobsTaskManager rule : ParserJsonScripts._genericMobsTaskManagerActions)
+        for (GenericMobsTaskManager rule : ParserJsonScripts.GENERIC_MOBS_TASK_MANAGER_LIST)
         {
             if (rule.match(event))
             {
@@ -46,6 +47,5 @@ public final class OnMobsTaskManager
 
             i.getAndIncrement();
         }
-         */
     }
 }
