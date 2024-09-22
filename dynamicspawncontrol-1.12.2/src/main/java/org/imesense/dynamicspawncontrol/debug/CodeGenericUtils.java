@@ -1,8 +1,13 @@
 package org.imesense.dynamicspawncontrol.debug;
 
+import com.google.gson.JsonElement;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+
+import java.util.List;
+import java.util.function.Function;
 
 /**
  *
@@ -85,6 +90,25 @@ public class CodeGenericUtils
         catch (NoSuchMethodException e)
         {
             return false;
+        }
+    }
+
+    /**
+     *
+     * @param fileName
+     * @param parser
+     * @param list
+     * @param listType
+     * @param <T>
+     */
+    public static <T> void readAndLogRules(final String path, final String fileName, Function<JsonElement, T> parser, List<T> list, final String listType)
+    {
+        ParserJsonScripts.readRules(path, fileName, parser, list, listType);
+
+        if (!list.isEmpty())
+        {
+            Log.writeDataToLogFile(0,
+                    String.format("Parsing '%s' list size = %d", list, list.size()));
         }
     }
 }
