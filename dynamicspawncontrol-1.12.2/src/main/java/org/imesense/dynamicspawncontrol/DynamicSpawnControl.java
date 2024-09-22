@@ -20,7 +20,11 @@ import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnUpdate
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterTechnicalClasses;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
+import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
+import org.imesense.dynamicspawncontrol.technical.parsers.IBetaParsers;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleScriptCheckSpawn;
+import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleZombieSummonAID;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheConfig;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheEvents;
@@ -67,7 +71,7 @@ public class DynamicSpawnControl
         /**
          *
          */
-        public static final String NAME_DIRECTORY = "DynamicsSpawnControl";
+        public static final String NAME_DIRECTORY = "DynamicSpawnControl";
 
         /**
          *
@@ -78,6 +82,11 @@ public class DynamicSpawnControl
          *
          */
         public static final String NAME_DIR_SCRIPTS = "scripts";
+
+        /**
+         *
+         */
+        public static final String NAME_DIR_SINGLE_SCRIPTS = "single_scripts";
 
         /**
          *
@@ -166,6 +175,17 @@ public class DynamicSpawnControl
     }
 
     /**
+     *
+     */
+    public GeneralStorageData _parsersData = null;
+
+    /**
+     *
+     */
+    static ParserSingleZombieSummonAID _configHandler1; // rework later
+    static ParserSingleScriptCheckSpawn _configHandler; // rework later
+
+    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
@@ -185,6 +205,9 @@ public class DynamicSpawnControl
 
         //
         MessageHandler.init();
+
+        //
+        _parsersData = new GeneralStorageData("GeneralStorageData");
 
         //
         cacheStorage = new CacheStorage("CacheStorage");
@@ -243,6 +266,12 @@ public class DynamicSpawnControl
 
         cacheConfig = new CacheConfig("CacheConfig");
         cacheConfig.loadConfig(true);
+
+        _configHandler = new ParserSingleScriptCheckSpawn("onLoadComplete -> ParserSingleScriptCheckSpawn");
+        _configHandler.loadConfig(true);
+
+        _configHandler1 = new ParserSingleZombieSummonAID("onLoadComplete -> ParserSingleZombieSummonAID");
+        _configHandler1.loadConfig(true);
     }
 
     /**
