@@ -54,21 +54,21 @@ public final class OnDropZombieItems
 
     /**
      *
-     * @param _zombie
-     * @param _drops
-     * @param _originalItem
+     * @param zombie
+     * @param drops
+     * @param originalItem
      * @param damageFactor
      */
-    private void addDamagedItemToDrops(EntityZombie _zombie, List<EntityItem> _drops, ItemStack _originalItem, double damageFactor)
+    private void addDamagedItemToDrops(EntityZombie zombie, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
     {
-        if (_originalItem.getItem() != Items.AIR)
+        if (originalItem.getItem() != Items.AIR)
         {
             if (new Random().nextDouble() < ConfigZombieDropItem.BreakItem)
             {
                 return;
             }
 
-            ItemStack damagedItem = _originalItem.copy();
+            ItemStack damagedItem = originalItem.copy();
             int maxDamage = damagedItem.getMaxDamage();
 
             if (maxDamage > 0)
@@ -82,7 +82,7 @@ public final class OnDropZombieItems
                 damagedItem.setItemDamage(randomDamage);
             }
 
-            for (EntityItem item : _drops)
+            for (EntityItem item : drops)
             {
                 ItemStack stack = item.getItem();
 
@@ -92,7 +92,7 @@ public final class OnDropZombieItems
                 }
             }
 
-            _drops.add(new EntityItem(_zombie.world, _zombie.posX, _zombie.posY, _zombie.posZ, damagedItem));
+            drops.add(new EntityItem(zombie.world, zombie.posX, zombie.posY, zombie.posZ, damagedItem));
         }
     }
 }

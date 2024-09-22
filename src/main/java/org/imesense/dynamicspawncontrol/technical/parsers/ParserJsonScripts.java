@@ -121,16 +121,35 @@ public final class ParserJsonScripts
      */
     private static void readAllRules()
     {
-        CodeGenericUtils.readAndLogRules(path, "DropAllItems.json", GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
-        CodeGenericUtils.readAndLogRules(path, "DropAllExperience.json", GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
-        CodeGenericUtils.readAndLogRules(path, "MainOverrideSpawn.json", GenericOverrideSpawn::parse, GENERIC_OVERRIDE_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
-        CodeGenericUtils.readAndLogRules(path, "SpawnConditions.json", GenericSpawnConditions::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
-        CodeGenericUtils.readAndLogRules(path, "MobsTaskManager.json", GenericMobsTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
-        CodeGenericUtils.readAndLogRules(path, "EventEffects.json", GenericMapEffectsActions::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
-        CodeGenericUtils.readAndLogRules(path, "EventBlockPlace.json", GenericBlockPlaceActions::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
-        CodeGenericUtils.readAndLogRules(path, "EventBlockBreak.json", GenericBlockBreakActions::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
-        CodeGenericUtils.readAndLogRules(path, "EventLeftMouseClick.json", GenericLeftClickActions::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
-        CodeGenericUtils.readAndLogRules(path, "EventRightMouseClick.json", GenericRightClickActions::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
+        CodeGenericUtils.readAndLogRules(path, "DropAllItems" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
+
+        CodeGenericUtils.readAndLogRules(path, "DropAllExperience" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
+
+        CodeGenericUtils.readAndLogRules(path, "MainOverrideSpawn" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericOverrideSpawn::parse, GENERIC_OVERRIDE_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
+
+        CodeGenericUtils.readAndLogRules(path, "SpawnConditions" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericSpawnConditions::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
+
+        CodeGenericUtils.readAndLogRules(path, "MobsTaskManager" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericMobsTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
+
+        CodeGenericUtils.readAndLogRules(path, "EventEffects" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericMapEffectsActions::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
+
+        CodeGenericUtils.readAndLogRules(path, "EventBlockPlace" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericBlockPlaceActions::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
+
+        CodeGenericUtils.readAndLogRules(path, "EventBlockBreak" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericBlockBreakActions::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
+
+        CodeGenericUtils.readAndLogRules(path, "EventLeftMouseClick" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericLeftClickActions::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
+
+        CodeGenericUtils.readAndLogRules(path, "EventRightMouseClick" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericRightClickActions::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
     }
 
     /**
@@ -142,7 +161,7 @@ public final class ParserJsonScripts
      * @param getTypeScript
      * @param <T>
      */
-    public static <T> void readRules(String path, String filename, Function<JsonElement, T> parser, List<T> rules, String getTypeScript)
+    public static <T> void readRules(final String path, final String filename, Function<JsonElement, T> parser, List<T> rules, final String getTypeScript)
     {
         JsonElement element = getRootElement(path, filename, getTypeScript);
 
@@ -182,7 +201,7 @@ public final class ParserJsonScripts
      * @param getTypeScript
      * @return
      */
-    private static JsonElement getRootElement(String path, String filename, String getTypeScript)
+    private static JsonElement getRootElement(final String path, final String filename, final String getTypeScript)
     {
         File file;
 
