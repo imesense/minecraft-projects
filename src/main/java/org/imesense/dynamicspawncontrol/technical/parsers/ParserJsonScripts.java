@@ -3,10 +3,12 @@ package org.imesense.dynamicspawncontrol.technical.parsers;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.*;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -119,105 +121,16 @@ public final class ParserJsonScripts
      */
     private static void readAllRules()
     {
-        {
-            readRules(path, "DropAllItems.json", GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
-
-            if (!GENERIC_DROP_LOOT_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_DROP_LOOT_LIST, GENERIC_DROP_LOOT_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "DropAllExperience.json", GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
-
-            if (!GENERIC_EXPERIENCE_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_EXPERIENCE_LIST, GENERIC_EXPERIENCE_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "MainOverrideSpawn.json", GenericOverrideSpawn::parse, GENERIC_OVERRIDE_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
-
-            if (!GENERIC_OVERRIDE_SPAWN_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_OVERRIDE_SPAWN_LIST, GENERIC_OVERRIDE_SPAWN_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "SpawnConditions.json", GenericSpawnConditions::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
-
-            if (!GENERIC_SPAWN_CONDITIONS_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_SPAWN_CONDITIONS_LIST, GENERIC_SPAWN_CONDITIONS_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "MobsTaskManager.json", GenericMobsTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
-
-            if (!GENERIC_MOBS_TASK_MANAGER_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_MOBS_TASK_MANAGER_LIST, GENERIC_MOBS_TASK_MANAGER_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "EventEffects.json", GenericMapEffectsActions::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
-
-            if (!GENERIC_MAP_EFFECTS_ACTIONS_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_MAP_EFFECTS_ACTIONS_LIST, GENERIC_MAP_EFFECTS_ACTIONS_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "EventBlockPlace.json", GenericBlockPlaceActions::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
-
-            if (!GENERIC_BLOCK_PLACE_ACTIONS_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_BLOCK_PLACE_ACTIONS_LIST, GENERIC_BLOCK_PLACE_ACTIONS_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "EventBlockBreak.json", GenericBlockBreakActions::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
-
-            if (!GENERIC_BLOCK_BREAK_ACTIONS_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_BLOCK_BREAK_ACTIONS_LIST, GENERIC_BLOCK_BREAK_ACTIONS_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "EventLeftMouseClick.json", GenericLeftClickActions::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
-
-            if (!GENERIC_LEFT_CLICK_ACTIONS_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_LEFT_CLICK_ACTIONS_LIST, GENERIC_LEFT_CLICK_ACTIONS_LIST.size()));
-            }
-        }
-
-        {
-            readRules(path, "EventRightMouseClick.json", GenericRightClickActions::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
-
-            if (!GENERIC_RIGHT_CLICK_ACTIONS_LIST.isEmpty())
-            {
-                Log.writeDataToLogFile(0,
-                        String.format("Parsing '%s' list size = %d", GENERIC_RIGHT_CLICK_ACTIONS_LIST, GENERIC_RIGHT_CLICK_ACTIONS_LIST.size()));
-            }
-        }
+        CodeGenericUtils.readAndLogRules(path, "DropAllItems.json", GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
+        CodeGenericUtils.readAndLogRules(path, "DropAllExperience.json", GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
+        CodeGenericUtils.readAndLogRules(path, "MainOverrideSpawn.json", GenericOverrideSpawn::parse, GENERIC_OVERRIDE_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
+        CodeGenericUtils.readAndLogRules(path, "SpawnConditions.json", GenericSpawnConditions::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
+        CodeGenericUtils.readAndLogRules(path, "MobsTaskManager.json", GenericMobsTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
+        CodeGenericUtils.readAndLogRules(path, "EventEffects.json", GenericMapEffectsActions::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
+        CodeGenericUtils.readAndLogRules(path, "EventBlockPlace.json", GenericBlockPlaceActions::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
+        CodeGenericUtils.readAndLogRules(path, "EventBlockBreak.json", GenericBlockBreakActions::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
+        CodeGenericUtils.readAndLogRules(path, "EventLeftMouseClick.json", GenericLeftClickActions::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
+        CodeGenericUtils.readAndLogRules(path, "EventRightMouseClick.json", GenericRightClickActions::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
     }
 
     /**
@@ -225,11 +138,11 @@ public final class ParserJsonScripts
      * @param path
      * @param filename
      * @param parser
-     * @param _rules
+     * @param rules
      * @param getTypeScript
      * @param <T>
      */
-    private static <T> void readRules(String path, String filename, Function<JsonElement, T> parser, List<T> _rules, String getTypeScript)
+    public static <T> void readRules(String path, String filename, Function<JsonElement, T> parser, List<T> rules, String getTypeScript)
     {
         JsonElement element = getRootElement(path, filename, getTypeScript);
 
@@ -246,7 +159,7 @@ public final class ParserJsonScripts
 
             if (rule != null)
             {
-                _rules.add(rule);
+                rules.add(rule);
             }
             else
             {
