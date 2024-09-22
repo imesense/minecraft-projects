@@ -20,6 +20,7 @@ import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnUpdate
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterTechnicalClasses;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheConfig;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheEvents;
@@ -189,6 +190,9 @@ public class DynamicSpawnControl
         cacheStorage = new CacheStorage("CacheStorage");
 
         //
+        ParserJsonScripts.setRulePath(event.getModConfigurationDirectory());
+
+        //
         RegisterTechnicalClasses.registerClasses();
 
         //
@@ -235,6 +239,8 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void onLoadComplete(FMLLoadCompleteEvent event)
     {
+        ParserJsonScripts.readRules();
+
         cacheConfig = new CacheConfig("CacheConfig");
         cacheConfig.loadConfig(true);
     }

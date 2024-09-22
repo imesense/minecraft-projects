@@ -5,6 +5,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 import javax.annotation.Nonnull;
 
@@ -67,7 +68,7 @@ public final class cmdServerJsonScriptsReload extends CommandBase
         }
         else
         {
-            //ParserJsonScripts.reloadRules();
+            ParserJsonScripts.reloadRules();
 
             sender.sendMessage(new TextComponentString(
                        EnumUnicodeCharacters.SECTION.getCharacter() +

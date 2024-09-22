@@ -6,7 +6,10 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockBreakActions;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 /**
  *
@@ -34,18 +37,17 @@ public final class OnBlockBreakEvent
             return;
         }
 
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericBlockBreakActions rule : ParserJsonScripts._genericBlockBreakActions)
+        for (GenericBlockBreakActions rule : ParserJsonScripts.GENERIC_BLOCK_BREAK_ACTIONS_LIST)
         {
             if (rule.match(event))
             {
                 Event.Result result = rule.getResult();
 
-                if (INFConfigDebug._debugGenericBlockBreakEvent)
+                if (ConfigGameDebugger.DebugGenericBlockBreakEvent)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "ConfigsParser._GenericBlockBreakActions. ID Rule "
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockBreakActions. ID Rule "
                             + i + ": "
                             + result + " entity: "
                             + event.getPlayer().getName()
@@ -64,7 +66,6 @@ public final class OnBlockBreakEvent
 
             i.getAndIncrement();
         }
-         */
     }
 }
 

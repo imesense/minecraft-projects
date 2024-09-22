@@ -12,7 +12,10 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericDropLoot;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 /**
  *
@@ -35,10 +38,9 @@ public final class OnLivingDrops
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public synchronized void onUpdateLivingDrops_0(LivingDropsEvent event)
     {
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericDropLoot rule : ParserJsonScripts._genericDropLoot)
+        for (GenericDropLoot rule : ParserJsonScripts.GENERIC_DROP_LOOT_LIST)
         {
             if (rule.match(event))
             {
@@ -70,9 +72,9 @@ public final class OnLivingDrops
 
                     BlockPos pos = event.getEntity().getPosition();
 
-                    if (INFConfigDebug._debugGenericLivingDrops)
+                    if (ConfigGameDebugger.DebugGenericLivingDrops)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[0], "ConfigsParser._GenericDropLoot. ID Rule: " + i
+                        Log.writeDataToLogFile(0, "ConfigsParser._GenericDropLoot. ID Rule: " + i
                                 + " entity: " + event.getEntity().getName() + " new drop @item: " + item);
                     }
 
@@ -96,6 +98,5 @@ public final class OnLivingDrops
 
             i.getAndIncrement();
         }
-         */
     }
 }

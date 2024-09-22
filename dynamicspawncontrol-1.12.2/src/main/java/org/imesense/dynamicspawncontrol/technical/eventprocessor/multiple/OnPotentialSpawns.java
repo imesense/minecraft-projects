@@ -9,7 +9,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
+import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 /**
  *
@@ -37,10 +42,9 @@ public final class OnPotentialSpawns
             return;
         }
 
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericOverrideSpawn rule : ParserJsonScripts._genericOverrideSpawn)
+        for (GenericOverrideSpawn rule : ParserJsonScripts.GENERIC_OVERRIDE_SPAWN_LIST)
         {
             if (rule.match(event))
             {
@@ -60,11 +64,13 @@ public final class OnPotentialSpawns
                 for (Biome.SpawnListEntry entry : spawnEntries)
                 {
                     ResourceLocation entityKey = EntityList.getKey(entry.entityClass);
-                    INFCacheStorage.EntityData entityData = INFCacheStorage.getInstance().getEntityDataByResourceLocation(entityKey);
+                    CacheStorage.EntityData entityData = CacheStorage.getInstance().getEntityDataByResourceLocation(entityKey);
 
                     if (entityData != null)
                     {
-                        int currentCount = INFCache.getEntitiesByResourceLocation(entityKey).size();
+                        assert entityKey != null;
+
+                        int currentCount = Cache.getEntitiesByResourceLocation(entityKey).size();
                         int maxCount = entityData.getMaxCount();
 
                         if (currentCount >= maxCount)
@@ -83,16 +89,15 @@ public final class OnPotentialSpawns
                         event.getList().add(entry);
                     }
 
-                    if (INFConfigDebug._debugGenericPotentialSpawns)
+                    if (ConfigGameDebugger.DebugGenericPotentialSpawns)
                     {
-                        Log.writeDataToLogFile(Log._typeLog[0], "ConfigsParser._GenericOverrideSpawn. List: " + event.getList());
+                        Log.writeDataToLogFile(0, "ConfigsParser._GenericOverrideSpawn. List: " + event.getList());
                     }
                 }
             }
 
             i.getAndIncrement();
         }
-         */
     }
 }
 

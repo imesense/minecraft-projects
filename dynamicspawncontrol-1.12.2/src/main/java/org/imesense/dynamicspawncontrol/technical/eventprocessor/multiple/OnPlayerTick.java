@@ -7,7 +7,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMapEffectsActions;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
 
 /**
  *
@@ -47,16 +50,15 @@ public final class OnPlayerTick
         int tickCounter = tickCounters.get(id) + 1;
         tickCounters.put(id, tickCounter);
 
-        /*
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericMapEffectsActions rule : ParserJsonScripts._genericMapEffectsActions)
+        for (GenericMapEffectsActions rule : ParserJsonScripts.GENERIC_MAP_EFFECTS_ACTIONS_LIST)
         {
             if (tickCounter % rule.getTimeout() == 0 && rule.match(event))
             {
-                if (INFConfigDebug._debugGenericPlayerTick)
+                if (ConfigGameDebugger.DebugGenericPlayerTick)
                 {
-                    Log.writeDataToLogFile(Log._typeLog[0], "ConfigsParser._GenericMapEffectsActions. ID Rule: " + i
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericMapEffectsActions. ID Rule: " + i
                             + " entity: " + event.player.getName()
                             + " y: " + event.player.getPosition().getY());
                 }
@@ -68,7 +70,6 @@ public final class OnPlayerTick
 
             i.getAndIncrement();
         }
-         */
     }
 }
 
