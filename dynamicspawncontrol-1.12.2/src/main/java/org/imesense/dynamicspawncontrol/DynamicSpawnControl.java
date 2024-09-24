@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol;
 
+import jdk.nashorn.internal.runtime.StoredScript;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -24,6 +25,7 @@ import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserManager;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
+import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 import java.io.File;
@@ -270,8 +272,7 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
+        Cache.cleanCache();
         Structures.STRUCTURES_CACHE.clean();
-
-        Log.closeExecutor();
     }
 }
