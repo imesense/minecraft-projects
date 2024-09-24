@@ -10,6 +10,9 @@ import org.imesense.dynamicspawncontrol.gameplay.commands.*;
 
 /**
  *
+ * OldSerpskiStalker:
+ * Console commands are loaded every time you enter the world.
+ * A constructor with protection is not required!
  */
 public final class RegisterCommandsClasses
 {

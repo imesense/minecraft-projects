@@ -30,21 +30,8 @@ public final class cmdAdminDumpBlock extends CommandBase
     /**
      *
      */
-    private static boolean instanceExists = false;
-
-    /**
-     *
-     */
     public cmdAdminDumpBlock()
     {
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
-
         CodeGenericUtils.printInitClassToLog(cmdAdminDumpBlock.class);
     }
 

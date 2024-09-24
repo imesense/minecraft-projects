@@ -26,21 +26,8 @@ public final class cmdServerMobsKiller extends CommandBase
     /**
      *
      */
-    private static boolean instanceExists = false;
-
-    /**
-     *
-     */
     public cmdServerMobsKiller()
     {
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
-
         CodeGenericUtils.printInitClassToLog(cmdServerMobsKiller.class);
     }
 

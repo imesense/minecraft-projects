@@ -88,12 +88,7 @@ public final class Cache
      */
     public static void updateCache(@Nonnull World world)
     {
-        CACHED_ANIMALS.clear();
-        CACHED_HOSTILES.clear();
-        CACHED_ALL.clear();
-        ENTITIES_BY_NAME.clear();
-        ENTITIES_BY_RESOURCE_LOCATION.clear();
-        CACHE_VALID_CHUNKS.clear();
+        cleanCache();
 
         if (world instanceof WorldServer)
         {
@@ -218,5 +213,18 @@ public final class Cache
     public static Set<EntityLivingBase> getEntitiesByResourceLocation(@Nonnull ResourceLocation resourceLocation)
     {
         return ENTITIES_BY_RESOURCE_LOCATION.getOrDefault(resourceLocation, Collections.emptySet());
+    }
+
+    /**
+     *
+     */
+    public static void cleanCache()
+    {
+        CACHED_ANIMALS.clear();
+        CACHED_HOSTILES.clear();
+        CACHED_ALL.clear();
+        ENTITIES_BY_NAME.clear();
+        ENTITIES_BY_RESOURCE_LOCATION.clear();
+        CACHE_VALID_CHUNKS.clear();
     }
 }

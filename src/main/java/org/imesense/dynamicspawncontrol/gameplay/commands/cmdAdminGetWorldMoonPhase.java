@@ -18,21 +18,8 @@ public final class cmdAdminGetWorldMoonPhase extends CommandBase
     /**
      *
      */
-    private static boolean instanceExists = false;
-
-    /**
-     *
-     */
     public cmdAdminGetWorldMoonPhase()
     {
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
-
         CodeGenericUtils.printInitClassToLog(cmdAdminGetWorldMoonPhase.class);
     }
 

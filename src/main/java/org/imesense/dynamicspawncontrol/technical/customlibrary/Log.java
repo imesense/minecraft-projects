@@ -25,13 +25,6 @@ public final class Log
     /**
      *
      */
-    public static final int LEVEL_INFO = 0;
-    public static final int LEVEL_WARN = 1;
-    public static final int LEVEL_ERROR = 2;
-
-    /**
-     *
-     */
     private static final String[] LEVEL_PREFIXES = { "[INFO]: ", "[WARN]: ", "[ERROR]: " };
 
     /**
@@ -76,8 +69,6 @@ public final class Log
             writer.write("\n*******************************************************************");
 
             writer.close();
-
-            System.out.println("The file was successfully created: " + logFile.getAbsolutePath());
         }
         catch (IOException exception)
         {
@@ -127,8 +118,6 @@ public final class Log
                 }
 
                 writer.close();
-
-                System.out.println("The file was successfully updated.");
             }
             else
             {
@@ -158,7 +147,7 @@ public final class Log
                 {
                     if (logLevel[0] < 0 || logLevel[0] >= LEVEL_PREFIXES.length)
                     {
-                        logLevel[0] = LEVEL_INFO;
+                        logLevel[0] = 0;
                     }
 
                     FileWriter writer = new FileWriter(logFile, true);
@@ -167,24 +156,16 @@ public final class Log
                     writer.close();
 
                     cleanFile(logFile, ConfigLogFile.LogMaxLines);
-                    System.out.println("The data has been successfully written to the log file: " + logFile.getAbsolutePath());
                 }
                 catch (IOException exception)
                 {
                     System.err.println("Error writing data to a file: " + exception.getMessage());
                 }
             });
-        } else
+        }
+        else
         {
             System.err.println("The log file has not been created. First, create a log file.");
         }
-    }
-
-    /**
-     *
-     */
-    public static void closeExecutor()
-    {
-        EXECUTOR.shutdown();
     }
 }

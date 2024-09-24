@@ -28,21 +28,8 @@ public final class cmdAdminDumpItem extends CommandBase
     /**
      *
      */
-    private static boolean instanceExists = false;
-
-    /**
-     *
-     */
     public cmdAdminDumpItem()
     {
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
-
         CodeGenericUtils.printInitClassToLog(cmdAdminDumpItem.class);
     }
 
