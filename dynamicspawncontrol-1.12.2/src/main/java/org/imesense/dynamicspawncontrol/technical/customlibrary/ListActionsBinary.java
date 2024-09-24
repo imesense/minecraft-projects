@@ -36,7 +36,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
  *
  * @param <T>
  */
-public class ListActionsBinary<T extends SignalDataGetter>
+public final class ListActionsBinary<T extends SignalDataGetter>
 {
     /**
      *

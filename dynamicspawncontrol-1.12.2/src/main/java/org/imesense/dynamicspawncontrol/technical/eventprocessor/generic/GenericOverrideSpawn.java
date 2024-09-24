@@ -35,7 +35,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
 /**
  *
  */
-public final class GenericOverrideSpawn extends ListActionsSingleEvent<SignalDataGetter>
+public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGetter>
 {
     /**
      *

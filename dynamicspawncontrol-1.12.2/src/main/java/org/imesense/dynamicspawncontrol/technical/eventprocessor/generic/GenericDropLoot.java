@@ -32,7 +32,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
 /**
  *
  */
-public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGetter>
+public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
 {
     /**
      *
