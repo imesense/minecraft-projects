@@ -9,7 +9,6 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldGenerator;
 
 import java.util.Objects;
@@ -20,7 +19,7 @@ import java.util.Random;
  * OldSerpskiStalker:
  * <a href="https://forum.mcmodding.ru/threads/1-12-2-generacija.21375/">...</a>
  */
-public final class NetherRackGenerator implements IWorldGenerator
+public final class BlockNetherRack implements IWorldGenerator
 {
     /**
      *
@@ -30,12 +29,12 @@ public final class NetherRackGenerator implements IWorldGenerator
     /**
      *
      */
-    public NetherRackGenerator()
+    public BlockNetherRack()
     {
-        CodeGenericUtils.printInitClassToLog(NetherRackGenerator.class);
+        CodeGenericUtils.printInitClassToLog(BlockNetherRack.class);
 
         CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 9);
+                Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 5);
     }
 
     /**
