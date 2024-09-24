@@ -3,7 +3,6 @@ package org.imesense.dynamicspawncontrol.technical.configs;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.gameplay.worldgenerator.NetherRackGenerator;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
 

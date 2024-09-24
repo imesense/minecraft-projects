@@ -16,23 +16,25 @@ import java.util.Random;
 
 /**
  *
+ * OldSerpskiStalker:
+ * <a href="https://forum.mcmodding.ru/threads/1-12-2-generacija.21375/">...</a>
  */
-public final class MossyCobblestone implements IWorldGenerator
+public final class BlockMonsterEgg implements IWorldGenerator
 {
     /**
      *
      */
-    private final WorldGenerator CLASS_MOSSY_COBBLESTONE_GENERATOR;
+    private final WorldGenerator CLASS_MONSTER_EGG_GENERATOR;
 
     /**
      *
      */
-    public MossyCobblestone()
+    public BlockMonsterEgg()
     {
-        CodeGenericUtils.printInitClassToLog(MossyCobblestone.class);
+        CodeGenericUtils.printInitClassToLog(BlockMonsterEgg.class);
 
-        CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 9);
+        CLASS_MONSTER_EGG_GENERATOR = new WorldGenMinable(
+                Objects.requireNonNull(Block.getBlockFromName("monster_egg")).getDefaultState(), 5);
     }
 
     /**
@@ -80,10 +82,10 @@ public final class MossyCobblestone implements IWorldGenerator
             case 0:
             {
                 run(
-                        CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
-                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.BlockMossyCobblestoneChanceSpawn,
-                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMinHeight,
-                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMaxHeight
+                        CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
+                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.BlockNetherRackChanceSpawn,
+                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.GetBlockNetherRackMinHeight,
+                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.GetBlockNetherRackMaxHeight
                 );
                 break;
             }

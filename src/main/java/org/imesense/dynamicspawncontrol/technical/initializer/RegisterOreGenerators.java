@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol.technical.initializer;
 
-import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -18,8 +17,9 @@ public final class RegisterOreGenerators
      */
     private static final Class<?>[] ORE_GENERATOR_CLASSES =
     {
-        NetherRackGenerator.class,
-        MossyCobblestone.class
+        BlockNetherRack.class,
+        BlockMossyCobblestone.class,
+        BlockMonsterEgg.class
     };
 
     /**

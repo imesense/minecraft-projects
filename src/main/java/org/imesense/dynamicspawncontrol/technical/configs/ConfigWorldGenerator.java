@@ -64,6 +64,27 @@ public final class ConfigWorldGenerator implements IConfig
     /**
      *
      */
+    public static final class settingsGenerationBlockMonsterEgg
+    {
+        /**
+         *
+         */
+        public static int BlockMonsterEggChanceSpawn = 10;
+
+        /**
+         *
+         */
+        public static int GetBlockMonsterEggMinHeight = 7;
+
+        /**
+         *
+         */
+        public static int GetBlockMonsterEggMaxHeight = 40;
+    }
+
+    /**
+     *
+     */
     public ConfigWorldGenerator()
     {
         if (instanceExists)
@@ -96,10 +117,12 @@ public final class ConfigWorldGenerator implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
+        //-' ***************************************************************************************************
+
         settingsGenerationBlockNetherRack.BlockNetherRackChanceSpawn = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Chance Spawn",
-                "ore_generator_over_world",
+                "config_netherrack",
                 settingsGenerationBlockNetherRack.BlockNetherRackChanceSpawn,
                 1,
                 100,
@@ -109,7 +132,7 @@ public final class ConfigWorldGenerator implements IConfig
         settingsGenerationBlockNetherRack.GetBlockNetherRackMinHeight = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Min Height",
-                "ore_generator_over_world",
+                "config_netherrack",
                 settingsGenerationBlockNetherRack.GetBlockNetherRackMinHeight,
                 2,
                 10,
@@ -119,17 +142,19 @@ public final class ConfigWorldGenerator implements IConfig
         settingsGenerationBlockNetherRack.GetBlockNetherRackMaxHeight = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Max Height",
-                "ore_generator_over_world",
+                "config_netherrack",
                 settingsGenerationBlockNetherRack.GetBlockNetherRackMaxHeight,
                 10,
                 20,
                 "The maximal height of 'netherrack' appearing"
         );
 
+        //-' ***************************************************************************************************
+
         settingsGenerationBlockMossyCobblestone.BlockMossyCobblestoneChanceSpawn = this.getConfigValueI(
                 configuration,
                 "Ore Mossy Cobblestone Chance Spawn",
-                "ore_generator_over_world",
+                "config_mossy_cobblestone",
                 settingsGenerationBlockMossyCobblestone.BlockMossyCobblestoneChanceSpawn,
                 1,
                 100,
@@ -139,7 +164,7 @@ public final class ConfigWorldGenerator implements IConfig
         settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMinHeight = this.getConfigValueI(
                 configuration,
                 "Ore Mossy Cobblestone Min Height",
-                "ore_generator_over_world",
+                "config_mossy_cobblestone",
                 settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMinHeight,
                 5,
                 25,
@@ -149,11 +174,43 @@ public final class ConfigWorldGenerator implements IConfig
         settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMaxHeight = this.getConfigValueI(
                 configuration,
                 "Ore Mossy Cobblestone Max Height",
-                "ore_generator_over_world",
+                "config_mossy_cobblestone",
                 settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMaxHeight,
                 25,
                 65,
                 "The maximal height of 'mossy_cobblestone' appearing"
+        );
+
+        //-' ***************************************************************************************************
+
+        settingsGenerationBlockMonsterEgg.BlockMonsterEggChanceSpawn = this.getConfigValueI(
+                configuration,
+                "Ore Monster Egg Chance Spawn",
+                "config_monster_egg",
+                settingsGenerationBlockMonsterEgg.BlockMonsterEggChanceSpawn,
+                1,
+                100,
+                "The chance of 'monster_egg' appearing"
+        );
+
+        settingsGenerationBlockMonsterEgg.GetBlockMonsterEggMinHeight = this.getConfigValueI(
+                configuration,
+                "Ore Monster Egg Min Height",
+                "config_monster_egg",
+                settingsGenerationBlockMonsterEgg.GetBlockMonsterEggMinHeight,
+                5,
+                25,
+                "The minimal height of 'monster_egg' appearing"
+        );
+
+        settingsGenerationBlockMonsterEgg.GetBlockMonsterEggMaxHeight = this.getConfigValueI(
+                configuration,
+                "Ore Monster Egg Max Height",
+                "config_monster_egg",
+                settingsGenerationBlockMonsterEgg.GetBlockMonsterEggMaxHeight,
+                25,
+                65,
+                "The maximal height of 'monster_egg' appearing"
         );
     }
 
