@@ -9,7 +9,6 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldGenerator;
 
 import java.util.Objects;
@@ -17,25 +16,23 @@ import java.util.Random;
 
 /**
  *
- * OldSerpskiStalker:
- * <a href="https://forum.mcmodding.ru/threads/1-12-2-generacija.21375/">...</a>
  */
-public final class NetherRackGenerator implements IWorldGenerator
+public final class MossyCobblestone implements IWorldGenerator
 {
     /**
      *
      */
-    private final WorldGenerator CLASS_NETHER_RACK_GENERATOR;
+    private final WorldGenerator CLASS_MOSSY_COBBLESTONE_GENERATOR;
 
     /**
      *
      */
-    public NetherRackGenerator()
+    public MossyCobblestone()
     {
-        CodeGenericUtils.printInitClassToLog(NetherRackGenerator.class);
+        CodeGenericUtils.printInitClassToLog(MossyCobblestone.class);
 
-        CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 9);
+        CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
+                Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 9);
     }
 
     /**
@@ -83,10 +80,10 @@ public final class NetherRackGenerator implements IWorldGenerator
             case 0:
             {
                 run(
-                        CLASS_NETHER_RACK_GENERATOR, world, random, chunkX, chunkZ,
-                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.BlockNetherRackChanceSpawn,
-                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.GetBlockNetherRackMinHeight,
-                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.GetBlockNetherRackMaxHeight
+                        CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
+                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.BlockMossyCobblestoneChanceSpawn,
+                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMinHeight,
+                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMaxHeight
                 );
                 break;
             }

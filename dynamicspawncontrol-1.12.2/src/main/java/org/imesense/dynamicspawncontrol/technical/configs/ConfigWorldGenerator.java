@@ -22,17 +22,44 @@ public final class ConfigWorldGenerator implements IConfig
     /**
      *
      */
-    public static int BlockNetherRackChanceSpawn = 20;
+    public static final class settingsGenerationBlockNetherRack
+    {
+        /**
+         *
+         */
+        public static int BlockNetherRackChanceSpawn = 20;
+
+        /**
+         *
+         */
+        public static int GetBlockNetherRackMinHeight = 5;
+
+        /**
+         *
+         */
+        public static int GetBlockNetherRackMaxHeight = 20;
+    }
 
     /**
      *
      */
-    public static int GetBlockNetherRackMinHeight = 5;
+    public static final class settingsGenerationBlockMossyCobblestone
+    {
+        /**
+         *
+         */
+        public static int BlockMossyCobblestoneChanceSpawn = 35;
 
-    /**
-     *
-     */
-    public static int GetBlockNetherRackMaxHeight = 20;
+        /**
+         *
+         */
+        public static int GetBlockMossyCobblestoneMinHeight = 10;
+
+        /**
+         *
+         */
+        public static int GetBlockMossyCobblestoneMaxHeight = 45;
+    }
 
     /**
      *
@@ -69,34 +96,64 @@ public final class ConfigWorldGenerator implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        BlockNetherRackChanceSpawn = this.getConfigValueI(
+        settingsGenerationBlockNetherRack.BlockNetherRackChanceSpawn = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Chance Spawn",
                 "ore_generator_over_world",
-                BlockNetherRackChanceSpawn,
+                settingsGenerationBlockNetherRack.BlockNetherRackChanceSpawn,
                 1,
                 100,
                 "The chance of 'netherrack' appearing"
         );
 
-        GetBlockNetherRackMinHeight = this.getConfigValueI(
+        settingsGenerationBlockNetherRack.GetBlockNetherRackMinHeight = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Min Height",
                 "ore_generator_over_world",
-                GetBlockNetherRackMinHeight,
+                settingsGenerationBlockNetherRack.GetBlockNetherRackMinHeight,
                 2,
                 10,
                 "The minimal height of 'netherrack' appearing"
         );
 
-        GetBlockNetherRackMaxHeight = this.getConfigValueI(
+        settingsGenerationBlockNetherRack.GetBlockNetherRackMaxHeight = this.getConfigValueI(
                 configuration,
                 "Ore Netherrack Max Height",
                 "ore_generator_over_world",
-                GetBlockNetherRackMaxHeight,
+                settingsGenerationBlockNetherRack.GetBlockNetherRackMaxHeight,
                 10,
                 20,
                 "The maximal height of 'netherrack' appearing"
+        );
+
+        settingsGenerationBlockMossyCobblestone.BlockMossyCobblestoneChanceSpawn = this.getConfigValueI(
+                configuration,
+                "Ore Mossy Cobblestone Chance Spawn",
+                "ore_generator_over_world",
+                settingsGenerationBlockMossyCobblestone.BlockMossyCobblestoneChanceSpawn,
+                1,
+                100,
+                "The chance of 'mossy_cobblestone' appearing"
+        );
+
+        settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMinHeight = this.getConfigValueI(
+                configuration,
+                "Ore Mossy Cobblestone Min Height",
+                "ore_generator_over_world",
+                settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMinHeight,
+                5,
+                25,
+                "The minimal height of 'mossy_cobblestone' appearing"
+        );
+
+        settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMaxHeight = this.getConfigValueI(
+                configuration,
+                "Ore Mossy Cobblestone Max Height",
+                "ore_generator_over_world",
+                settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMaxHeight,
+                25,
+                65,
+                "The maximal height of 'mossy_cobblestone' appearing"
         );
     }
 
