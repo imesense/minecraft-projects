@@ -5,6 +5,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldProvider;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
 
 import javax.annotation.Nonnull;
@@ -16,11 +17,23 @@ public final class cmdAdminGetWorldMoonPhase extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdAdminGetWorldMoonPhase(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdAdminGetWorldMoonPhase()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdAdminGetWorldMoonPhase.class);
     }
 
     /**

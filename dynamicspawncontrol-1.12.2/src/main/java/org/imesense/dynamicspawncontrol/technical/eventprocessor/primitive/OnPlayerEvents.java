@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.single;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.IMob;
@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigPlayer;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -28,15 +29,27 @@ public final class OnPlayerEvents
     /**
      *
      */
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
     private static final ArrayList<String> PLAYER_LIST = new ArrayList<>();
 
     /**
      *
-     * @param nameClass
      */
-    public OnPlayerEvents(final String nameClass)
+    public OnPlayerEvents()
     {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
 
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnPlayerEvents.class);
     }
 
     /**
@@ -102,15 +115,6 @@ public final class OnPlayerEvents
 
     /**
      *
-     * @return
-     */
-    public static boolean isNotSingle()
-    {
-        return PLAYER_LIST.size() > 1;
-    }
-
-    /**
-     *
      * @param event
      */
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -146,5 +150,14 @@ public final class OnPlayerEvents
                 entity.setDead();
             }
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public static boolean isNotSingle()
+    {
+        return PLAYER_LIST.size() > 1;
     }
 }

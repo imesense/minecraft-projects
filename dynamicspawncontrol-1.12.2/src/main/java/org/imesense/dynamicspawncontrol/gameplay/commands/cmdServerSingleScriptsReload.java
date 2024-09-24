@@ -4,7 +4,13 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
+import org.imesense.dynamicspawncontrol.technical.parsers.IBetaParsers;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserManager;
+import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleScriptCheckSpawn;
+import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleScriptSettingsCache;
+import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleZombieSummonAID;
 
 import javax.annotation.Nonnull;
 
@@ -15,11 +21,23 @@ public final class cmdServerSingleScriptsReload extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdServerSingleScriptsReload(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdServerSingleScriptsReload()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdServerSingleScriptsReload.class);
     }
 
     @Nonnull
@@ -58,8 +76,7 @@ public final class cmdServerSingleScriptsReload extends CommandBase
         }
         else
         {
-            //ParserSingleScriptCheckSpawn.getClassInstance().reloadConfig();
-            //ParserSingleZombieSummonAID.getClassInstance().reloadConfig();
+            ParserManager.reloadAllConfigs();
 
             sender.sendMessage(new TextComponentString(
                     EnumUnicodeCharacters.SECTION.getCharacter() +

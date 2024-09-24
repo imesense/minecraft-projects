@@ -14,8 +14,8 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
 
@@ -81,18 +81,17 @@ public final class GenericExperience extends ListActionsSingleEvent<SignalDataGe
     /**
      *
      * @param map
-     * @param nameClass
      * @param xp
      * @param multiXp
      * @param addingXp
      */
-    private GenericExperience(AttributeMap<?> map, String nameClass, int xp, float multiXp, float addingXp)
+    private GenericExperience(AttributeMap<?> map, int xp, float multiXp, float addingXp)
     {
-        super(nameClass);
+        super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericExperience.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
         this.addActions(map);
 
@@ -142,7 +141,7 @@ public final class GenericExperience extends ListActionsSingleEvent<SignalDataGe
                             _element.getAsJsonPrimitive().isNumber() ? _element.getAsFloat() : defaultValue
             );
 
-            return new GenericExperience(map, "GenericExperience", localSetXp, localMultiXp, localAddXp);
+            return new GenericExperience(map, localSetXp, localMultiXp, localAddXp);
         }
     }
 

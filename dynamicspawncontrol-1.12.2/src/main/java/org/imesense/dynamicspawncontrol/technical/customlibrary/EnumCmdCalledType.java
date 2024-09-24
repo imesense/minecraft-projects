@@ -44,7 +44,7 @@ public enum EnumCmdCalledType
      *
      * @param description
      */
-    EnumCmdCalledType(String description)
+    EnumCmdCalledType(final String description)
     {
         this.DESCRIPTION = description;
     }

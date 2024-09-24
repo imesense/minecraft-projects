@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.multiple;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -7,27 +7,40 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 /**
  *
  */
+@Mod.EventBusSubscriber
 public final class OnPotentialSpawns
 {
     /**
      *
-     * @param nameClass
      */
-    public OnPotentialSpawns(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnPotentialSpawns()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        CodeGenericUtils.printInitClassToLog(OnPotentialSpawns.class);
     }
 
     /**
@@ -44,7 +57,7 @@ public final class OnPotentialSpawns
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericOverrideSpawn rule : ParserJsonScripts.GENERIC_OVERRIDE_SPAWN_LIST)
+        for (GenericOverrideSpawn rule : ParserGenericJsonScripts.GENERIC_OVERRIDE_SPAWN_LIST)
         {
             if (rule.match(event))
             {

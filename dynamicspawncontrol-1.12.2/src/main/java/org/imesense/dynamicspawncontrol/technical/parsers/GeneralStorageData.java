@@ -1,13 +1,14 @@
 package org.imesense.dynamicspawncontrol.technical.parsers;
 
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleZombieSummonAID;
 
 import java.util.List;
 
 /**
  *
  */
-public class GeneralStorageData
+public final class GeneralStorageData
 {
     /**
      *
@@ -28,38 +29,77 @@ public class GeneralStorageData
         return instance;
     }
 
-    public GeneralStorageData(String nameClass)
+    /**
+     *
+     */
+    public GeneralStorageData()
     {
-        Log.writeDataToLogFile(0, String.format("Create object [%s]", nameClass));
         instance = this;
+
+        CodeGenericUtils.printInitClassToLog(GeneralStorageData.class);
     }
 
-    public List<String> _entitiesProhibitedOutdoors;
+    /**
+     *
+     */
+    public List<String> EntitiesProhibitedOutdoors;
 
+    /**
+     *
+     * @return
+     */
     public List<String> getEntitiesProhibitedOutdoors()
     {
-        return _entitiesProhibitedOutdoors;
+        return this.EntitiesProhibitedOutdoors;
     }
 
-    public List<EquipmentConfig> _equipmentConfigs;
-
-    public List<EquipmentConfig> getEquipmentConfigs()
+    /**
+     *
+     */
+    public static class Equipment
     {
-        return _equipmentConfigs;
+        /**
+         *
+         */
+        public int Priority;
+
+        /**
+         *
+         */
+        public List<String> HeldItems;
+
+        /**
+         *
+         */
+        public List<String> Helmets;
+
+        /**
+         *
+         */
+        public List<String> ChestPlates;
+
+        /**
+         *
+         */
+        public List<String> Leggings;
+
+        /**
+         *
+         */
+        public List<String> Boots;
     }
 
-    public static class EquipmentConfig
+    /**
+     *
+     */
+    public List<Equipment> EquipmentConfigs;
+
+    /**
+     *
+     * @return
+     */
+    public List<Equipment> getEquipmentConfigs()
     {
-        public int _priority;
-
-        public List<String> _heldItems;
-
-        public List<String> _helmets;
-
-        public List<String> _chestPlates;
-
-        public List<String> _leggings;
-
-        public List<String> _boots;
+        return this.EquipmentConfigs;
     }
 }

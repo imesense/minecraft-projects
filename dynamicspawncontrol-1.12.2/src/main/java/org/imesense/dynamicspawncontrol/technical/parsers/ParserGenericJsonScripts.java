@@ -8,7 +8,6 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.*;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,7 +16,7 @@ import java.util.function.Function;
 /**
  *
  */
-public final class ParserJsonScripts
+public final class ParserGenericJsonScripts
 {
     /**
      *
@@ -121,33 +120,43 @@ public final class ParserJsonScripts
      */
     private static void readAllRules()
     {
+        //
         CodeGenericUtils.readAndLogRules(path, "DropAllItems" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "DropAllExperience" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "MainOverrideSpawn" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericOverrideSpawn::parse, GENERIC_OVERRIDE_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "SpawnConditions" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericSpawnConditions::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "MobsTaskManager" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericMobsTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "EventEffects" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericMapEffectsActions::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "EventBlockPlace" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericBlockPlaceActions::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "EventBlockBreak" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericBlockBreakActions::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "EventLeftMouseClick" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericLeftClickActions::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
 
+        //
         CodeGenericUtils.readAndLogRules(path, "EventRightMouseClick" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericRightClickActions::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
     }
@@ -239,7 +248,7 @@ public final class ParserJsonScripts
         {
             inputstream = new FileInputStream(file);
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
             Log.writeDataToLogFile(2, "Error reading " + filename + "!");
             return null;
@@ -251,7 +260,7 @@ public final class ParserJsonScripts
         {
             br = new BufferedReader(new InputStreamReader(inputstream, "UTF-8"));
         }
-        catch (UnsupportedEncodingException e)
+        catch (UnsupportedEncodingException exception)
         {
             Log.writeDataToLogFile(2, "Error reading " + filename + "!");
             return null;
@@ -274,7 +283,7 @@ public final class ParserJsonScripts
         {
             writer = new PrintWriter(file);
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
             Log.writeDataToLogFile(2, "Error writing " + file.getName() + "!");
             return;

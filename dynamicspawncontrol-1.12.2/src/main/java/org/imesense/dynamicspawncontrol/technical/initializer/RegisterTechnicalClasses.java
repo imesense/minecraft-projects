@@ -1,13 +1,14 @@
 package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraftforge.common.MinecraftForge;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.debug.events.OnEventDummy;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.multiple.*;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnPlayerEvents;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnSingleJsonCheckSpawn;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnSingleZombieSummonAID;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnWindowTitle;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnPlayerEvents;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple.*;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.script.single.*;
+import org.imesense.dynamicspawncontrol.technical.worldcache.CacheEvents;
 
 /**
  *
@@ -19,6 +20,7 @@ public final class RegisterTechnicalClasses
      */
     private static final Class<?>[] EVENT_CLASSES =
     {
+        CacheEvents.class,
         OnEventDummy.class,
         OnWindowTitle.class,
         OnBlockBreakEvent.class,
@@ -37,10 +39,10 @@ public final class RegisterTechnicalClasses
 
     /**
      *
-     * @param nameClass
      */
-    public RegisterTechnicalClasses(final String nameClass)
+    public RegisterTechnicalClasses()
     {
+        CodeGenericUtils.printInitClassToLog(RegisterTechnicalClasses.class);
     }
 
     /**
@@ -52,9 +54,7 @@ public final class RegisterTechnicalClasses
         {
             try
             {
-                Log.writeDataToLogFile(0, "Reading class: " + eventClass.getName());
-
-                Object eventInstance = eventClass.getConstructor(String.class).newInstance(eventClass.getSimpleName());
+                Object eventInstance = eventClass.getConstructor().newInstance();
                 MinecraftForge.EVENT_BUS.register(eventInstance);
             }
             catch (Exception exception)

@@ -2,6 +2,8 @@ package org.imesense.dynamicspawncontrol.technical.configs;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.gameplay.worldgenerator.NetherRackGenerator;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
 
@@ -10,6 +12,11 @@ import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
  */
 public final class ConfigDebugSingleEvents implements IConfig
 {
+    /**
+     *
+     */
+    private static boolean instanceExists = false;
+
     /**
      *
      */
@@ -22,11 +29,18 @@ public final class ConfigDebugSingleEvents implements IConfig
 
     /**
      *
-     * @param nameClass
      */
-    public ConfigDebugSingleEvents(final String nameClass)
+    public ConfigDebugSingleEvents()
     {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
 
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(ConfigDebugSingleEvents.class);
     }
 
     /**

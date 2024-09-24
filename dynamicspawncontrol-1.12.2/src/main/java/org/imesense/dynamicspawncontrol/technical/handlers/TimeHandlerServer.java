@@ -39,7 +39,7 @@ public final class TimeHandlerServer implements ITimeHandler
     /**
      *
      */
-    private boolean _wasDaytime = true;
+    private boolean wasDaytime = true;
 
     /**
      *
@@ -70,10 +70,10 @@ public final class TimeHandlerServer implements ITimeHandler
             long worldTime = world.getWorldTime();
             boolean isDaytime = WorldTime.isDaytime(worldTime);
 
-            if (isDaytime != this._wasDaytime)
+            if (isDaytime != this.wasDaytime)
             {
                 this.reset(worldTime);
-                this._wasDaytime = isDaytime;
+                this.wasDaytime = isDaytime;
             }
 
             long updatedWorldTime;
@@ -88,14 +88,14 @@ public final class TimeHandlerServer implements ITimeHandler
                     world.provider.setWorldTime(updatedWorldTime);
 
                     this.reset(updatedWorldTime);
-                    this._wasDaytime = true;
+                    this.wasDaytime = true;
 
                     this.WAKE_ALL_PLAYERS.invoke(world);
                 }
             }
-            catch (InvocationTargetException | IllegalAccessException var)
+            catch (InvocationTargetException | IllegalAccessException exception)
             {
-                LOG.error("Unable to wake players!", var);
+                LOG.error("Unable to wake players!", exception);
             }
 
             ++this.customTime;
@@ -104,7 +104,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
             if (world.getMinecraftServer().getTickCounter() % 20 == 0)
             {
-                MessageHandler.INSTANCE.sendToAll(new PacketTime(this.customTime, this.multiplier));
+                MessageHandler.instance.sendToAll(new PacketTime(this.customTime, this.multiplier));
 
                 if (ConfigWorldTime.TimeControlDebug)
                 {
@@ -135,7 +135,7 @@ public final class TimeHandlerServer implements ITimeHandler
     @Override
     public void update(long customTime, double multiplier)
     {
-        MessageHandler.INSTANCE.sendToAll(new PacketTime(customTime, multiplier));
+        MessageHandler.instance.sendToAll(new PacketTime(customTime, multiplier));
 
         this.customTime = customTime;
         this.multiplier = multiplier;

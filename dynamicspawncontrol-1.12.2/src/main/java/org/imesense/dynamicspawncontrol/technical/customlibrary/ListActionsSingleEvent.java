@@ -36,7 +36,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigDebugSingleEvents;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
 
 import java.util.*;
@@ -59,11 +59,10 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
     /**
      *
-     * @param nameClass
      */
-    public ListActionsSingleEvent(String nameClass)
+    public ListActionsSingleEvent()
     {
-        Log.writeDataToLogFile(0, String.format("Call .super[%s]", nameClass));
+
     }
 
     /**
@@ -72,26 +71,24 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
      */
     protected void addActions(AttributeMap<?> map)
     {
+        if (map.has(ENEMIES_TO) && map.has(TO_THEM))
         {
-            if (map.has(ENEMIES_TO) && map.has(TO_THEM))
-            {
-                this.addEnemy(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
-            }
+            this.addEnemy(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
+        }
 
-            if (map.has(ENEMIES_TO) && map.has(ENEMY_ID))
-            {
-                this.addEnemyId(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
-            }
+        if (map.has(ENEMIES_TO) && map.has(ENEMY_ID))
+        {
+            this.addEnemyId(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
+        }
 
-            if (map.has(PANIC_TO) && map.has(PANIC_ID))
-            {
-                this.addPanicToId(map, ConfigDebugSingleEvents.DebugActionPanicToIdLog);
-            }
+        if (map.has(PANIC_TO) && map.has(PANIC_ID))
+        {
+            this.addPanicToId(map, ConfigDebugSingleEvents.DebugActionPanicToIdLog);
+        }
 
-            if (map.has(ENEMY_ID) && map.has(THEM_ID))
-            {
-                this.addEnemyToIdThemToId(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
-            }
+        if (map.has(ENEMY_ID) && map.has(THEM_ID))
+        {
+            this.addEnemyToIdThemToId(map, ConfigDebugSingleEvents.DebugActionAddEnemyToLog);
         }
 
         if (map.has(ACTION_MESSAGE))
@@ -569,14 +566,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             }
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception exception)
                     {
-                        Log.writeDataToLogFile(2, "Error in event action: " + e.getMessage());
-
-                        if (localDebug)
-                        {
-                            e.printStackTrace();
-                        }
+                        Log.writeDataToLogFile(2, "Error in event action: " + exception.getMessage());
                     }
                 });
             }
@@ -588,14 +580,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Error in addEnemyId method: " + e.getMessage());
-
-            if (localDebug)
-            {
-                e.printStackTrace();
-            }
+            Log.writeDataToLogFile(2, "Error in addEnemyId method: " + exception.getMessage());
         }
     }
 
@@ -712,13 +699,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             }
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception exception)
                     {
-                        Log.writeDataToLogFile(2, "Error in event action: " + e.getMessage());
-                        if (localDebug)
-                        {
-                            e.printStackTrace();
-                        }
+                        Log.writeDataToLogFile(2, "Error in event action: " + exception.getMessage());
                     }
                 });
             }
@@ -730,14 +713,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Error in addPanicToId method: " + e.getMessage());
-
-            if (localDebug)
-            {
-                e.printStackTrace();
-            }
+            Log.writeDataToLogFile(2, "Error in addPanicToId method: " + exception.getMessage());
         }
     }
 
@@ -868,13 +846,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                             }
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception exception)
                     {
-                        Log.writeDataToLogFile(2, "Error in event action: " + e.getMessage());
-                        if (localDebug)
-                        {
-                            e.printStackTrace();
-                        }
+                        Log.writeDataToLogFile(2, "Error in event action: " + exception.getMessage());
                     }
                 });
             }
@@ -886,14 +860,9 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Error in addEnemyToIdThemToId method: " + e.getMessage());
-
-            if (localDebug)
-            {
-                e.printStackTrace();
-            }
+            Log.writeDataToLogFile(2, "Error in addEnemyToIdThemToId method: " + exception.getMessage());
         }
     }
 
@@ -1086,7 +1055,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             {
                 tagCompound = JsonToNBT.getTagFromJson(mobNbt);
             }
-            catch (NBTException e)
+            catch (NBTException exception)
             {
                 Log.writeDataToLogFile(2, "Bad NBT for mob!");
                 return;
@@ -1242,7 +1211,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                     chance = Double.parseDouble(split[3]);
                 }
             }
-            catch (NumberFormatException e)
+            catch (NumberFormatException exception)
             {
                 Log.writeDataToLogFile(2, "Bad duration, amplifier or chance integer for '" + actionPotion + "'!");
                 continue;
@@ -1421,7 +1390,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
             flaming = "1".equalsIgnoreCase(split[1]) || "true".equals(split[1].toLowerCase()) || "yes".equals(split[1].toLowerCase());
             smoking = "1".equalsIgnoreCase(split[2]) || "true".equals(split[2].toLowerCase()) || "yes".equals(split[2].toLowerCase());
         }
-        catch (Exception ignore)
+        catch (Exception exception)
         {
 
         }

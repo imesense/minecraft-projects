@@ -10,12 +10,12 @@ import static org.imesense.dynamicspawncontrol.technical.worldcache.Cache.*;
 /**
  *
  */
-public class CacheMonitor
+public final class CacheMonitor
 {
     /**
      *
      */
-    protected static final int X = 10, Y = 10;
+    private static final int X = 10, Y = 10;
 
     /**
      *

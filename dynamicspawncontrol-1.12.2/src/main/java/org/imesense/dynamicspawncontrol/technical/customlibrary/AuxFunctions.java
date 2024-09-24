@@ -38,16 +38,13 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.tuple.Pair;
 import org.codehaus.plexus.util.StringUtils;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
-import java.util.function.Supplier;
 
 /**
  *
@@ -535,7 +532,7 @@ public class AuxFunctions
 
             return i -> i == amount;
         }
-        catch (NumberFormatException _error)
+        catch (NumberFormatException exception)
         {
             Log.writeDataToLogFile(2, "Bad expression '" + expression + "'!");
             return null;

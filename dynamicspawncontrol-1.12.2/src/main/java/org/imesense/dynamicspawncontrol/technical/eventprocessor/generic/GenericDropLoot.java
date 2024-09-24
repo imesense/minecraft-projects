@@ -17,8 +17,8 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -97,15 +97,14 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
     /**
      *
      * @param map
-     * @param nameClass
      */
-    private GenericDropLoot(AttributeMap<?> map, final String nameClass)
+    private GenericDropLoot(AttributeMap<?> map)
     {
-        super(nameClass);
+        super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericDropLoot.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
         this.addActions(map);
 
@@ -140,7 +139,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
         {
             AttributeMap<?> map = FACTORY.parse(element);
 
-            return new GenericDropLoot(map, "GenericDropLoot");
+            return new GenericDropLoot(map);
         }
     }
 
@@ -350,7 +349,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                 {
                     min[i] = max[i] = Integer.parseInt(splitMinMax[0]);
                 }
-                catch (NumberFormatException e)
+                catch (NumberFormatException exception)
                 {
                     Log.writeDataToLogFile(2, "Bad amount specified in loot rule: " + splitMinMax[0]);
                     min[i] = max[i] = 1;
@@ -363,7 +362,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                     min[i] = Integer.parseInt(splitMinMax[0]);
                     max[i] = Integer.parseInt(splitMinMax[1]);
                 }
-                catch (NumberFormatException e)
+                catch (NumberFormatException exception)
                 {
                     Log.writeDataToLogFile(2, "Bad amounts specified in loot rule: " + splitMinMax[0]);
                     min[i] = max[i] = 1;
@@ -437,7 +436,7 @@ public final class GenericDropLoot extends ListActionsSingleEvent<SignalDataGett
                     {
                         stack.setTagCompound(JsonToNBT.getTagFromJson(nbtJson));
                     }
-                    catch (NBTException e)
+                    catch (NBTException exception)
                     {
                         Log.writeDataToLogFile(2, "Bad nbt for '" + name + "'!");
                     }

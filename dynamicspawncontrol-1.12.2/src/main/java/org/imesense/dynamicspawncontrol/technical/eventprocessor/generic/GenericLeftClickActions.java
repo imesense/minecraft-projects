@@ -16,8 +16,8 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingl
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsStaticFactoryMouse;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import java.util.function.Consumer;
 
@@ -63,15 +63,14 @@ public final class GenericLeftClickActions extends ListActionsSingleEvent<Signal
     /**
      *
      * @param map
-     * @param nameClass
      */
-    private GenericLeftClickActions(AttributeMap<?> map, String nameClass)
+    private GenericLeftClickActions(AttributeMap<?> map)
     {
-        super(nameClass);
+        super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericLeftClickActions.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
         this.addActions(map);
 
@@ -93,7 +92,7 @@ public final class GenericLeftClickActions extends ListActionsSingleEvent<Signal
         {
             AttributeMap<Object> map = ListActionsStaticFactoryMouse.FACTORY.parse(element);
 
-            return new GenericLeftClickActions(map, "GenericLeftClickActions");
+            return new GenericLeftClickActions(map);
         }
     }
 

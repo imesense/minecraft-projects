@@ -1,5 +1,9 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
+/**
+ *
+ * TODO: rework later
+ */
 public enum EnumSingleScripts
 {
     /**
@@ -26,7 +30,7 @@ public enum EnumSingleScripts
      *
      * @param keyword
      */
-    EnumSingleScripts(String keyword)
+    EnumSingleScripts(final String keyword)
     {
         this.KEYWORD = keyword;
     }

@@ -6,6 +6,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.GameType;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumTextColors;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumUnicodeCharacters;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import javax.annotation.Nonnull;
@@ -17,11 +20,23 @@ public final class cmdAdminGameMode extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdAdminGameMode(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdAdminGameMode()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdAdminGameMode.class);
     }
 
     /**
@@ -68,8 +83,14 @@ public final class cmdAdminGameMode extends CommandBase
         {
             mode = Integer.parseInt(args[0]);
         }
-        catch (NumberFormatException e)
+        catch (NumberFormatException exception)
         {
+            Log.writeDataToLogFile(2, String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
+
+            sender.sendMessage(new TextComponentString(EnumUnicodeCharacters.SECTION.getCharacter() +
+                    EnumTextColors.RED.getCode() +
+                    "Invalid game mode: " + args[0]));
+
             return;
         }
 

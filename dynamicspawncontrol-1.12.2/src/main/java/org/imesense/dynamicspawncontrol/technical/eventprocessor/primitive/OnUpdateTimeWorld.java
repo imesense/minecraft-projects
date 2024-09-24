@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.single;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -15,9 +15,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldTime;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.handlers.ITimeHandler;
 import org.imesense.dynamicspawncontrol.technical.handlers.TimeHandlerClient;
 import org.imesense.dynamicspawncontrol.technical.handlers.TimeHandlerServer;
@@ -43,15 +43,14 @@ public final class OnUpdateTimeWorld
     /**
      *
      */
-    public static final OnUpdateTimeWorld INSTANCE = new OnUpdateTimeWorld("OnUpdateTimeWorld");
+    public static final OnUpdateTimeWorld INSTANCE = new OnUpdateTimeWorld();
 
     /**
      *
-     * @param nameClass
      */
-    private OnUpdateTimeWorld(final String nameClass)
+    private OnUpdateTimeWorld()
     {
-
+        CodeGenericUtils.printInitClassToLog(OnUpdateTimeWorld.class);
     }
 
     /**
@@ -88,7 +87,7 @@ public final class OnUpdateTimeWorld
     {
         if (event.player instanceof EntityPlayerMP)
         {
-            MessageHandler.INSTANCE.sendTo(new PacketGameRule(event.player.world.getGameRules().getBoolean("doDaylightCycle_tc")),
+            MessageHandler.instance.sendTo(new PacketGameRule(event.player.world.getGameRules().getBoolean("doDaylightCycle_tc")),
                     (EntityPlayerMP)event.player);
         }
     }
@@ -142,7 +141,7 @@ public final class OnUpdateTimeWorld
 
                     if (event.getParameters().length >= 2)
                     {
-                        MessageHandler.INSTANCE.sendToAll(new PacketGameRule(CommandBase.parseBoolean(event.getParameters()[1])));
+                        MessageHandler.instance.sendToAll(new PacketGameRule(CommandBase.parseBoolean(event.getParameters()[1])));
                     }
 
                     event.setCanceled(true);
@@ -212,9 +211,9 @@ public final class OnUpdateTimeWorld
                 }
             }
         }
-        catch (CommandException var8)
+        catch (CommandException exception)
         {
-            event.setException(var8);
+            event.setException(exception);
         }
     }
 

@@ -61,7 +61,7 @@ public enum EnumTextColors
      *
      * @param code
      */
-    EnumTextColors(String code)
+    EnumTextColors(final String code)
     {
         this.CODE = code;
     }

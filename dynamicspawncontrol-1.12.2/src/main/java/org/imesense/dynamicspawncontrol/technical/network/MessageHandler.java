@@ -12,15 +12,15 @@ public final class MessageHandler
     /**
      *
      */
-    public static final SimpleNetworkWrapper INSTANCE;
+    public static SimpleNetworkWrapper instance;
 
     /**
      *
      */
     public static void init()
     {
-        INSTANCE.registerMessage(PacketTime.Handler.class, PacketTime.class, 0, Side.CLIENT);
-        INSTANCE.registerMessage(PacketGameRule.Handler.class, PacketGameRule.class, 1, Side.CLIENT);
+        instance.registerMessage(PacketTime.Handler.class, PacketTime.class, 0, Side.CLIENT);
+        instance.registerMessage(PacketGameRule.Handler.class, PacketGameRule.class, 1, Side.CLIENT);
     }
 
     /**
@@ -28,6 +28,6 @@ public final class MessageHandler
      */
     static
     {
-        INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("timecontrol_a");
+        instance = NetworkRegistry.INSTANCE.newSimpleChannel("timecontrol_a");
     }
 }

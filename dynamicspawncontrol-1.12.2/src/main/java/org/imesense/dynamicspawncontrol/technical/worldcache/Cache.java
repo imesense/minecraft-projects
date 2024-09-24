@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
 /**
  *
  */
-public class Cache
+public final class Cache
 {
     /**
      *
