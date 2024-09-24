@@ -22,7 +22,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
 /**
  *
  */
-public final class GenericExperience extends ListActionsSingleEvent<SignalDataGetter>
+public final class GenericExperience extends ListActionsConsumer<SignalDataGetter>
 {
     /**
      *

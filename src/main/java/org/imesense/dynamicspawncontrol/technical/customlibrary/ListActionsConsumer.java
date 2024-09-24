@@ -50,7 +50,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
  *
  * @param <T>
  */
-public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
+public abstract class ListActionsConsumer<T extends SignalDataGetter>
 {
     /**
      *
@@ -60,7 +60,7 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
     /**
      *
      */
-    public ListActionsSingleEvent()
+    public ListActionsConsumer()
     {
 
     }
@@ -444,7 +444,6 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
         try
         {
-            // Extract enemy classes from _enemiesTo
             for (String fEnemiesTo : enemiesTo)
             {
                 String enemiesTo_s_id = GenericOverrideSpawn.fixEntityId(fEnemiesTo);
@@ -481,7 +480,6 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 }
             }
 
-            // Extract enemy classes from _enemyId that start with the given prefix
             for (String enemyIdPrefix : enemyIdPrefixes)
             {
                 for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
@@ -601,7 +599,6 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
         try
         {
-            // Extract panic classes from _PanicTo
             for (String fPanicTo : panicTo)
             {
                 String panicTo_s_id = GenericOverrideSpawn.fixEntityId(fPanicTo);
@@ -638,7 +635,6 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 }
             }
 
-            // Extract panic classes from _panicId that start with the given prefix
             for (String fPanicIdPrefix : panicIdPrefixes)
             {
                 for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
@@ -734,7 +730,6 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
 
         try
         {
-            // Extract enemy classes from _listEnemyId that start with the given prefix
             for (String enemyIdPrefix : listEnemyId)
             {
                 for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
@@ -763,7 +758,6 @@ public abstract class ListActionsSingleEvent<T extends SignalDataGetter>
                 }
             }
 
-            // Extract them classes from _listThemId that start with the given prefix
             for (String themIdPrefix : listThemId)
             {
                 for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)

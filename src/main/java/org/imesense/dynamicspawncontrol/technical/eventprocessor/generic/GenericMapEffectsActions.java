@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsConsumer;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.SingleKeyWords;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
@@ -26,7 +26,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
 /**
  *
  */
-public final class GenericMapEffectsActions extends ListActionsSingleEvent<SignalDataGetter>
+public final class GenericMapEffectsActions extends ListActionsConsumer<SignalDataGetter>
 {
     /**
      *

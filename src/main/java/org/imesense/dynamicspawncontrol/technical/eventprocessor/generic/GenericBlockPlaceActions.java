@@ -12,7 +12,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsConsumer;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsStaticFactoryBlocks;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 /**
  *
  */
-public final class GenericBlockPlaceActions extends ListActionsSingleEvent<SignalDataGetter>
+public final class GenericBlockPlaceActions extends ListActionsConsumer<SignalDataGetter>
 {
     /**
      *

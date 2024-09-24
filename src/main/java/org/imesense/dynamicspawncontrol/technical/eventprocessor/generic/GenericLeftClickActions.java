@@ -12,7 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsConsumer;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsStaticFactoryMouse;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 /**
  *
  */
-public final class GenericLeftClickActions extends ListActionsSingleEvent<SignalDataGetter>
+public final class GenericLeftClickActions extends ListActionsConsumer<SignalDataGetter>
 {
     /**
      *

@@ -8,7 +8,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
 /**
  *
  */
-public class ListActionsStaticFactoryMouse
+public final class ListActionsStaticFactoryMouse
 {
     /**
      *

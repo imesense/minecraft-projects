@@ -8,7 +8,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
 /**
  *
  */
-public class ListActionsStaticFactoryBlocks
+public final class ListActionsStaticFactoryBlocks
 {
     /**
      *
