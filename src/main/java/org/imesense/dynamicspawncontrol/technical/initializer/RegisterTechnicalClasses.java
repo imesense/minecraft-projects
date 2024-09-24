@@ -29,7 +29,7 @@ public final class RegisterTechnicalClasses
         OnLeftClickEvent.class,
         OnLivingDrops.class,
         OnLivingExperienceDrop.class,
-        OnMobsTaskManager.class,
+        OnMobTaskManager.class,
         OnPlayerEvents.class,
         OnPotentialSpawns.class,
         OnRightClickEvent.class,

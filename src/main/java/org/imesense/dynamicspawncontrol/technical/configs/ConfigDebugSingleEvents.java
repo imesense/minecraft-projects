@@ -20,16 +20,6 @@ public final class ConfigDebugSingleEvents implements IConfig
     /**
      *
      */
-    public static boolean DebugActionAddEnemyToLog = false;
-
-    /**
-     *
-     */
-    public static boolean DebugActionPanicToIdLog = false;
-
-    /**
-     *
-     */
     public ConfigDebugSingleEvents()
     {
         if (instanceExists)
@@ -58,19 +48,7 @@ public final class ConfigDebugSingleEvents implements IConfig
     @Override
     public void readProperties(Configuration configuration)
     {
-        DebugActionAddEnemyToLog = this.getConfigValueB(
-                configuration,
-                "Debug Action 'AddEnemy'",
-                "actions_single_events",
-                DebugActionAddEnemyToLog,
-                "Tracks the logical action of 'addEnemy'");
 
-        DebugActionPanicToIdLog = this.getConfigValueB(
-                configuration,
-                "Debug Action 'AddPanicToId'",
-                "actions_single_events",
-                DebugActionPanicToIdLog,
-                "Tracks the logical action of 'addPanicToId'");
     }
 
     /**

@@ -183,10 +183,10 @@ public final class MultipleKeyWords
 
     /*
      * *********************************************************************************************************************
-     * Индивидуальные ключевые слова (MobsTaskManager.json)
+     * Индивидуальные ключевые слова (MobTaskManager.json)
      * *********************************************************************************************************************
      */
-    public static class MobsTaskManager
+    public static class MobTaskManager
     {
         public static final AttributeKey<String> ENEMIES_TO = AttributeKey.create(AttributeType.STRING, "enemies_to");
         public static final AttributeKey<String> ENEMY_ID = AttributeKey.create(AttributeType.STRING, "enemy_id");

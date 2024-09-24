@@ -51,7 +51,7 @@ public final class ParserGenericJsonScripts
     /**
      *
      */
-    public final static List<GenericMobsTaskManager> GENERIC_MOBS_TASK_MANAGER_LIST = new ArrayList<>();
+    public final static List<GenericMobTaskManager> GENERIC_MOBS_TASK_MANAGER_LIST = new ArrayList<>();
 
     /**
      *
@@ -137,8 +137,8 @@ public final class ParserGenericJsonScripts
                 GenericSpawnConditions::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
-        CodeGenericUtils.readAndLogRules(path, "MobsTaskManager" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericMobsTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
+        CodeGenericUtils.readAndLogRules(path, "MobTaskManager" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericMobTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
         CodeGenericUtils.readAndLogRules(path, "EventEffects" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,

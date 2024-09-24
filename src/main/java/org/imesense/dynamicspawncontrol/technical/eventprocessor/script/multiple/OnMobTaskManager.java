@@ -9,14 +9,14 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMobsTaskManager;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMobTaskManager;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 /**
  *
  */
 @Mod.EventBusSubscriber
-public final class OnMobsTaskManager
+public final class OnMobTaskManager
 {
     /**
      *
@@ -26,7 +26,7 @@ public final class OnMobsTaskManager
     /**
      *
      */
-    public OnMobsTaskManager()
+    public OnMobTaskManager()
     {
         if (instanceExists)
         {
@@ -36,7 +36,7 @@ public final class OnMobsTaskManager
 
         instanceExists = true;
 
-        CodeGenericUtils.printInitClassToLog(OnMobsTaskManager.class);
+        CodeGenericUtils.printInitClassToLog(OnMobTaskManager.class);
     }
 
     /**
@@ -53,7 +53,7 @@ public final class OnMobsTaskManager
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericMobsTaskManager rule : ParserGenericJsonScripts.GENERIC_MOBS_TASK_MANAGER_LIST)
+        for (GenericMobTaskManager rule : ParserGenericJsonScripts.GENERIC_MOBS_TASK_MANAGER_LIST)
         {
             if (rule.match(event))
             {
