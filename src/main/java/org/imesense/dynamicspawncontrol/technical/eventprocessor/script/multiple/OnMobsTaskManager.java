@@ -1,27 +1,42 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.multiple;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMobsTaskManager;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 /**
  *
  */
+@Mod.EventBusSubscriber
 public final class OnMobsTaskManager
 {
     /**
      *
-     * @param nameClass
      */
-    public OnMobsTaskManager(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnMobsTaskManager()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnMobsTaskManager.class);
     }
 
     /**
@@ -38,7 +53,7 @@ public final class OnMobsTaskManager
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericMobsTaskManager rule : ParserJsonScripts.GENERIC_MOBS_TASK_MANAGER_LIST)
+        for (GenericMobsTaskManager rule : ParserGenericJsonScripts.GENERIC_MOBS_TASK_MANAGER_LIST)
         {
             if (rule.match(event))
             {

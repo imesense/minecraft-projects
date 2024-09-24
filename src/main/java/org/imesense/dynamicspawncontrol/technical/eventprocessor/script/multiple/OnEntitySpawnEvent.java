@@ -1,28 +1,43 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.multiple;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericSpawnConditions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 /**
  *
  */
+@Mod.EventBusSubscriber
 public final class OnEntitySpawnEvent
 {
     /**
      *
-     * @param nameClass
      */
-    public OnEntitySpawnEvent(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnEntitySpawnEvent()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnEntitySpawnEvent.class);
     }
 
     /**
@@ -39,7 +54,7 @@ public final class OnEntitySpawnEvent
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericSpawnConditions rule : ParserJsonScripts.GENERIC_SPAWN_CONDITIONS_LIST)
+        for (GenericSpawnConditions rule : ParserGenericJsonScripts.GENERIC_SPAWN_CONDITIONS_LIST)
         {
             if (rule.match(event))
             {

@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class StructureEntry
+public final class StructureEntry
 {
     /**
      *

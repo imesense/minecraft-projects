@@ -2,11 +2,11 @@ package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraft.command.ICommand;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.technical.configs.ConfigZombieDropItem;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import org.imesense.dynamicspawncontrol.gameplay.commands.*;
-
-import static org.imesense.dynamicspawncontrol.debug.CodeGenericUtils.hasConstructorWithParameter;
 
 /**
  *
@@ -28,16 +28,15 @@ public final class RegisterCommandsClasses
         cmdAdminSwitchVanish.class,
         cmdServerJsonScriptsReload.class,
         cmdServerMobsKiller.class,
-        cmdServerReloadCache.class,
         cmdServerSingleScriptsReload.class
     };
 
     /**
      *
-     * @param nameClass
      */
-    public RegisterCommandsClasses(final String nameClass)
+    public RegisterCommandsClasses()
     {
+        CodeGenericUtils.printInitClassToLog(RegisterCommandsClasses.class);
     }
 
     /**
@@ -50,9 +49,7 @@ public final class RegisterCommandsClasses
         {
             try
             {
-                Log.writeDataToLogFile(0, "Reading class: " + cmdClass.getName());
-
-                Object commandInstance = cmdClass.getConstructor(String.class).newInstance(cmdClass.getSimpleName());
+                Object commandInstance = cmdClass.getConstructor().newInstance();
                 event.registerServerCommand((ICommand)commandInstance);
             }
             catch (Exception exception)

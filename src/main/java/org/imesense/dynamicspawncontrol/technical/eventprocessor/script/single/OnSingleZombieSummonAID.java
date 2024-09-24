@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.single;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.single;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
 
@@ -24,21 +25,56 @@ import java.util.*;
 @Mod.EventBusSubscriber
 public final class OnSingleZombieSummonAID
 {
-    private final Set<UUID> _spawnedZombies = new HashSet<>();
+    /**
+     *
+     */
+    private static boolean instanceExists = false;
 
-    private final Set<UUID> _processedZombies = new HashSet<>();
+    /**
+     *
+     */
+    private final Set<UUID> spawnedZombies = new HashSet<>();
 
-    public OnSingleZombieSummonAID(final String nameClass)
+    /**
+     *
+     */
+    private final Set<UUID> processedZombies = new HashSet<>();
+
+    /**
+     *
+     */
+    public OnSingleZombieSummonAID()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnSingleZombieSummonAID.class);
     }
 
+    /**
+     *
+     * @param world
+     * @param pos
+     * @return
+     */
     public boolean isPositionValid(World world, BlockPos pos)
     {
         IBlockState state = world.getBlockState(pos);
         return state.getBlock().isAir(state, world, pos) && world.getBlockState(pos.down()).getBlock().isFullBlock(state);
     }
 
+    /**
+     *
+     * @param world
+     * @param originalPos
+     * @param maxAttempts
+     * @return
+     */
     public BlockPos findValidSpawnPosition(World world, BlockPos originalPos, int maxAttempts)
     {
         Random random = new Random();
@@ -55,6 +91,14 @@ public final class OnSingleZombieSummonAID
         return originalPos;
     }
 
+    /**
+     *
+     * @param world
+     * @param pos
+     * @param width
+     * @param height
+     * @return
+     */
     public boolean hasSufficientSpace(World world, BlockPos pos, int width, int height)
     {
         for (int x = -width / 2; x <= width / 2; x++)
@@ -76,6 +120,10 @@ public final class OnSingleZombieSummonAID
         return true;
     }
 
+    /**
+     *
+     * @param event
+     */
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onZombieAttack_0(LivingAttackEvent event)
     {
@@ -101,12 +149,12 @@ public final class OnSingleZombieSummonAID
                 return;
             }
 
-            if (_spawnedZombies.contains(event.getEntity().getUniqueID()))
+            if (spawnedZombies.contains(event.getEntity().getUniqueID()))
             {
                 return;
             }
 
-            if (_processedZombies.contains(event.getEntity().getUniqueID()))
+            if (processedZombies.contains(event.getEntity().getUniqueID()))
             {
                 return;
             }
@@ -127,31 +175,38 @@ public final class OnSingleZombieSummonAID
 
                 if (parser != null)
                 {
-                    List<GeneralStorageData.EquipmentConfig> configs = parser.getEquipmentConfigs();
+                    List<GeneralStorageData.Equipment> configs = parser.getEquipmentConfigs();
 
                     if (configs != null && !configs.isEmpty())
                     {
-                        GeneralStorageData.EquipmentConfig selectedConfig = getConfigByPriority(configs, random);
+                        GeneralStorageData.Equipment selectedConfig = getConfigByPriority(configs, random);
 
-                        equipZombie(newZombie, selectedConfig._heldItems, EntityEquipmentSlot.MAINHAND, random);
-                        equipZombie(newZombie, selectedConfig._helmets, EntityEquipmentSlot.HEAD, random);
-                        equipZombie(newZombie, selectedConfig._chestPlates, EntityEquipmentSlot.CHEST, random);
-                        equipZombie(newZombie, selectedConfig._leggings, EntityEquipmentSlot.LEGS, random);
-                        equipZombie(newZombie, selectedConfig._boots, EntityEquipmentSlot.FEET, random);
+                        equipZombie(newZombie, selectedConfig.HeldItems, EntityEquipmentSlot.MAINHAND, random);
+                        equipZombie(newZombie, selectedConfig.Helmets, EntityEquipmentSlot.HEAD, random);
+                        equipZombie(newZombie, selectedConfig.ChestPlates, EntityEquipmentSlot.CHEST, random);
+                        equipZombie(newZombie, selectedConfig.Leggings, EntityEquipmentSlot.LEGS, random);
+                        equipZombie(newZombie, selectedConfig.Boots, EntityEquipmentSlot.FEET, random);
                     }
                 }
 
-                _processedZombies.add(event.getEntity().getUniqueID());
+                processedZombies.add(event.getEntity().getUniqueID());
 
                 world.spawnEntity(newZombie);
 
-                _spawnedZombies.add(newZombie.getUniqueID());
+                spawnedZombies.add(newZombie.getUniqueID());
 
                 newZombie.setAttackTarget(attacker);
             }
         }
     }
 
+    /**
+     *
+     * @param zombie
+     * @param items
+     * @param slot
+     * @param random
+     */
     private void equipZombie(EntityZombie zombie, List<String> items, EntityEquipmentSlot slot, Random random)
     {
         if (items != null && !items.isEmpty())
@@ -171,16 +226,22 @@ public final class OnSingleZombieSummonAID
         }
     }
 
-    private GeneralStorageData.EquipmentConfig getConfigByPriority(List<GeneralStorageData.EquipmentConfig> configs, Random random)
+    /**
+     *
+     * @param configs
+     * @param random
+     * @return
+     */
+    private GeneralStorageData.Equipment getConfigByPriority(List<GeneralStorageData.Equipment> configs, Random random)
     {
-        int totalPriority = configs.stream().mapToInt(config -> config._priority).sum();
+        int totalPriority = configs.stream().mapToInt(config -> config.Priority).sum();
         int randomValue = random.nextInt(totalPriority);
 
         int cumulativePriority = 0;
 
-        for (GeneralStorageData.EquipmentConfig config : configs)
+        for (GeneralStorageData.Equipment config : configs)
         {
-            cumulativePriority += config._priority;
+            cumulativePriority += config.Priority;
 
             if (randomValue < cumulativePriority)
             {

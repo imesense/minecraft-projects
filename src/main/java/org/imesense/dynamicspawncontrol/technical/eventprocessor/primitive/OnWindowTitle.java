@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.single;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.lwjgl.opengl.Display;
@@ -21,11 +22,23 @@ public final class OnWindowTitle
 {
     /**
      *
-     * @param nameClass
      */
-    public OnWindowTitle(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public OnWindowTitle()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnWindowTitle.class);
     }
 
     /**

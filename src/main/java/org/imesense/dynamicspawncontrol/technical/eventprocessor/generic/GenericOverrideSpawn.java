@@ -22,8 +22,8 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,15 +125,14 @@ public final class GenericOverrideSpawn extends ListActionsSingleEvent<SignalDat
     /**
      *
      * @param map
-     * @param nameClass
      */
-    private GenericOverrideSpawn(AttributeMap<?> map, String nameClass)
+    private GenericOverrideSpawn(AttributeMap<?> map)
     {
-        super(nameClass);
+        super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericOverrideSpawn.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
         for (AttributeMap<?> mobMap : map.getListA(MOB_STRUCT))
         {
@@ -336,7 +335,7 @@ public final class GenericOverrideSpawn extends ListActionsSingleEvent<SignalDat
                 }
             }
 
-            return new GenericOverrideSpawn(map, "GenericOverrideSpawn");
+            return new GenericOverrideSpawn(map);
         }
     }
 

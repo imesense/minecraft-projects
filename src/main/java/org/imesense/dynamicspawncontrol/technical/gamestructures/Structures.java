@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  *
  */
-public class Structures
+public final class Structures
 {
     /**
      *

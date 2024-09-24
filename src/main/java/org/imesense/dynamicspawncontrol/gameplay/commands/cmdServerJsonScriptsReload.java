@@ -4,8 +4,9 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 import javax.annotation.Nonnull;
 
@@ -16,11 +17,23 @@ public final class cmdServerJsonScriptsReload extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdServerJsonScriptsReload(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdServerJsonScriptsReload()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdServerJsonScriptsReload.class);
     }
 
     /**
@@ -68,7 +81,7 @@ public final class cmdServerJsonScriptsReload extends CommandBase
         }
         else
         {
-            ParserJsonScripts.reloadRules();
+            ParserGenericJsonScripts.reloadRules();
 
             sender.sendMessage(new TextComponentString(
                        EnumUnicodeCharacters.SECTION.getCharacter() +

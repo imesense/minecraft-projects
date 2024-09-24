@@ -1,7 +1,5 @@
 package org.imesense.dynamicspawncontrol.debug;
 
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-
 /**
  *
  */
@@ -14,11 +12,10 @@ public final class Timer
 
     /**
      *
-     * @param nameClass
      */
-    public Timer(final String nameClass)
+    public Timer()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        CodeGenericUtils.printInitClassToLog(Timer.class);
     }
 
     /**

@@ -70,18 +70,18 @@ public final class Log
 
             FileWriter writer = new FileWriter(logFile);
 
-            writer.write("***********************************************");
+            writer.write("*********************************************************************");
             writer.write("\n** Log file created: " + currentDate);
             writer.write("\n** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
-            writer.write("\n***********************************************");
+            writer.write("\n*******************************************************************");
 
             writer.close();
 
             System.out.println("The file was successfully created: " + logFile.getAbsolutePath());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            System.err.println("Error creating the file: " + e.getMessage());
+            System.err.println("Error creating the file: " + exception.getMessage());
         }
     }
 
@@ -135,9 +135,9 @@ public final class Log
                 System.out.println("No update needed. The file has not reached the maximum number of lines.");
             }
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            System.err.println("Error updating the file: " + e.getMessage());
+            System.err.println("Error updating the file: " + exception.getMessage());
         }
     }
 
@@ -169,9 +169,9 @@ public final class Log
                     cleanFile(logFile, ConfigLogFile.LogMaxLines);
                     System.out.println("The data has been successfully written to the log file: " + logFile.getAbsolutePath());
                 }
-                catch (IOException e)
+                catch (IOException exception)
                 {
-                    System.err.println("Error writing data to a file: " + e.getMessage());
+                    System.err.println("Error writing data to a file: " + exception.getMessage());
                 }
             });
         } else

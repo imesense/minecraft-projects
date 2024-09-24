@@ -15,8 +15,8 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapF
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import java.util.function.Consumer;
 
@@ -53,15 +53,14 @@ public final class GenericSpawnConditions extends ListActionsSingleEvent<SignalD
     /**
      *
      * @param map
-     * @param nameClass
      */
-    private GenericSpawnConditions(AttributeMap<?> map, String nameClass)
+    private GenericSpawnConditions(AttributeMap<?> map)
     {
-        super(nameClass);
+        super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericSpawnConditions.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
         this.addActions(map);
     }
@@ -81,7 +80,7 @@ public final class GenericSpawnConditions extends ListActionsSingleEvent<SignalD
         {
             AttributeMap<?> map = FACTORY.parse(element);
 
-            return new GenericSpawnConditions(map, "GenericSpawnConditions");
+            return new GenericSpawnConditions(map);
         }
     }
 

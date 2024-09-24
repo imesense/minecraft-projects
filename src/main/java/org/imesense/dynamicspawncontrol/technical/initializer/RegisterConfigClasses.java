@@ -28,10 +28,10 @@ public final class RegisterConfigClasses
 
     /**
      *
-     * @param nameClass
      */
-    public RegisterConfigClasses(final String nameClass)
+    public RegisterConfigClasses()
     {
+        CodeGenericUtils.printInitClassToLog(RegisterConfigClasses.class);
     }
 
     /**
@@ -44,16 +44,13 @@ public final class RegisterConfigClasses
         {
             try
             {
-                Log.writeDataToLogFile(0, "Reading class: " + configClass.getName());
-
-                if (!CodeGenericUtils.hasConstructorWithParameter(configClass, String.class))
+                if (!CodeGenericUtils.hasDefaultConstructor(configClass))
                 {
-                    Log.writeDataToLogFile(2, "Class " + configClass.getName() + " does not have a constructor with a String parameter.");
-                    throw new RuntimeException();
+                    Log.writeDataToLogFile(2, "Class " + configClass.getName() + " does not have a default constructor.");
+                    throw new RuntimeException("Default constructor not found in class: " + configClass.getName());
                 }
 
-                Object configInstance = configClass.getConstructor(String.class).newInstance(configClass.getSimpleName());
-
+                Object configInstance = configClass.getConstructor().newInstance();
                 ((IConfig)configInstance).init(event);
             }
             catch (Exception exception)

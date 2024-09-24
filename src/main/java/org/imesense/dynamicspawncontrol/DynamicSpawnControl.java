@@ -12,22 +12,18 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnWindowTitle;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterGameplayClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCommandsClasses;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterTechnicalClasses;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
-import org.imesense.dynamicspawncontrol.technical.parsers.IBetaParsers;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
-import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleScriptCheckSpawn;
-import org.imesense.dynamicspawncontrol.technical.parsers.beta.ParserSingleZombieSummonAID;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserManager;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
-import org.imesense.dynamicspawncontrol.technical.worldcache.CacheConfig;
-import org.imesense.dynamicspawncontrol.technical.worldcache.CacheEvents;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 import java.io.File;
@@ -139,11 +135,6 @@ public class DynamicSpawnControl
     /**
      *
      */
-    static CacheConfig cacheConfig = null;
-
-    /**
-     *
-     */
     static CacheStorage cacheStorage = null;
 
     /**
@@ -177,13 +168,7 @@ public class DynamicSpawnControl
     /**
      *
      */
-    public GeneralStorageData _parsersData = null;
-
-    /**
-     *
-     */
-    static ParserSingleZombieSummonAID _configHandler1; // rework later
-    static ParserSingleScriptCheckSpawn _configHandler; // rework later
+    public GeneralStorageData generalStorageData = null;
 
     /**
      * Preinitialize modification
@@ -207,13 +192,13 @@ public class DynamicSpawnControl
         MessageHandler.init();
 
         //
-        _parsersData = new GeneralStorageData("GeneralStorageData");
+        generalStorageData = new GeneralStorageData();
 
         //
-        cacheStorage = new CacheStorage("CacheStorage");
+        cacheStorage = new CacheStorage();
 
         //
-        ParserJsonScripts.setRulePath(event.getModConfigurationDirectory());
+        ParserGenericJsonScripts.setRulePath(event.getModConfigurationDirectory());
 
         //
         RegisterTechnicalClasses.registerClasses();
@@ -238,7 +223,6 @@ public class DynamicSpawnControl
     {
         Proxy.init(event);
 
-        MinecraftForge.EVENT_BUS.register(new CacheEvents());
         MinecraftForge.EVENT_BUS.register(OnUpdateTimeWorld.INSTANCE);
     }
 
@@ -262,16 +246,9 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void onLoadComplete(FMLLoadCompleteEvent event)
     {
-        ParserJsonScripts.readRules();
+        ParserGenericJsonScripts.readRules();
 
-        cacheConfig = new CacheConfig("CacheConfig");
-        cacheConfig.loadConfig(true);
-
-        _configHandler = new ParserSingleScriptCheckSpawn("onLoadComplete -> ParserSingleScriptCheckSpawn");
-        _configHandler.loadConfig(true);
-
-        _configHandler1 = new ParserSingleZombieSummonAID("onLoadComplete -> ParserSingleZombieSummonAID");
-        _configHandler1.loadConfig(true);
+        ParserManager.init();
     }
 
     /**

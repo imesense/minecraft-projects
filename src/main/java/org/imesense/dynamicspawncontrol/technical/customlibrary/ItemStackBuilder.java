@@ -42,7 +42,7 @@ public final class ItemStackBuilder
             {
                 v = Float.parseFloat(f);
             }
-            catch (NumberFormatException e)
+            catch (NumberFormatException exception)
             {
                 v = 1.0f;
             }
@@ -101,7 +101,7 @@ public final class ItemStackBuilder
             {
                 nbt = JsonToNBT.getTagFromJson(split[1]);
             }
-            catch (NBTException e)
+            catch (NBTException exception)
             {
                 Log.writeDataToLogFile(2, "Error parsing NBT in '" + name + "'!");
                 return ItemStack.EMPTY;
@@ -159,7 +159,7 @@ public final class ItemStackBuilder
             {
                 tag = JsonToNBT.getTagFromJson(nbt);
             }
-            catch (NBTException e)
+            catch (NBTException exception)
             {
                 Log.writeDataToLogFile(2, "Error parsing json '" + nbt + "'!");
                 return ItemStack.EMPTY;
@@ -194,7 +194,7 @@ public final class ItemStackBuilder
             {
                 meta = Integer.parseInt(split[1]);
             }
-            catch (NumberFormatException e)
+            catch (NumberFormatException exception)
             {
                 Log.writeDataToLogFile(2, "Unknown item '" + name + "'!");
                 return ItemStack.EMPTY;

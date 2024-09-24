@@ -16,8 +16,8 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingl
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsStaticFactoryBlocks;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import java.util.function.Consumer;
 
@@ -64,15 +64,14 @@ public final class GenericBlockPlaceActions extends ListActionsSingleEvent<Signa
     /**
      *
      * @param map
-     * @param nameClass
      */
-    private GenericBlockPlaceActions(AttributeMap<?> map, final String nameClass)
+    private GenericBlockPlaceActions(AttributeMap<?> map)
     {
-        super(nameClass);
+        super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericBlockPlaceActions.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
         this.addActions(map);
 
@@ -94,7 +93,7 @@ public final class GenericBlockPlaceActions extends ListActionsSingleEvent<Signa
         {
             AttributeMap<Object> map = ListActionsStaticFactoryBlocks.FACTORY.parse(element);
 
-            return new GenericBlockPlaceActions(map, "GenericBlockPlaceActions");
+            return new GenericBlockPlaceActions(map);
         }
     }
 

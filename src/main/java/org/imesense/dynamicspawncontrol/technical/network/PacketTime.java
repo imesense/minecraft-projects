@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnUpdateTimeWorld;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 
 /**
  *
@@ -27,6 +27,7 @@ public final class PacketTime implements IMessage
      */
     public PacketTime()
     {
+
     }
 
     /**

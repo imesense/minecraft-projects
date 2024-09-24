@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 import java.util.List;
 import java.util.function.Function;
@@ -12,7 +12,7 @@ import java.util.function.Function;
 /**
  *
  */
-public class CodeGenericUtils
+public final class CodeGenericUtils
 {
     /**
      *
@@ -25,7 +25,7 @@ public class CodeGenericUtils
     {
         if (object == null)
         {
-            Log.writeDataToLogFile(2, "Object return null: " + message);
+            Log.writeDataToLogFile(2, "Object or class return null: " + message);
             throw new NullPointerException(message);
         }
 
@@ -58,10 +58,10 @@ public class CodeGenericUtils
         {
             numericValue = (T) value;
         }
-        catch (ClassCastException e)
+        catch (ClassCastException exception)
         {
             Log.writeDataToLogFile(2, "Parameter '" + logParameterName + "' has an invalid type");
-            throw new RuntimeException();
+            throw new RuntimeException(exception);
         }
 
         if (numericValue.doubleValue() < min.doubleValue() || numericValue.doubleValue() > max.doubleValue())
@@ -76,18 +76,16 @@ public class CodeGenericUtils
     /**
      *
      * @param clazz
-     * @param parameterTypes
      * @return
-     * @param <T>
      */
-    public static <T> boolean hasConstructorWithParameter(Class<T> clazz, Class<?>... parameterTypes)
+    public static boolean hasDefaultConstructor(Class<?> clazz)
     {
         try
         {
-            clazz.getConstructor(parameterTypes);
+            clazz.getConstructor();
             return true;
         }
-        catch (NoSuchMethodException e)
+        catch (NoSuchMethodException exception)
         {
             return false;
         }
@@ -103,12 +101,22 @@ public class CodeGenericUtils
      */
     public static <T> void readAndLogRules(final String path, final String fileName, Function<JsonElement, T> parser, List<T> list, final String listType)
     {
-        ParserJsonScripts.readRules(path, fileName, parser, list, listType);
+        ParserGenericJsonScripts.readRules(path, fileName, parser, list, listType);
 
         if (!list.isEmpty())
         {
             Log.writeDataToLogFile(0,
                     String.format("Parsing '%s' list size = %d", list, list.size()));
         }
+    }
+
+    /**
+     *
+     * @param getClass
+     * @param <T>
+     */
+    public static <T> void printInitClassToLog(final Class<T> getClass)
+    {
+        Log.writeDataToLogFile(0, String.format("Initializing a class: {%s}", getClass.getName()));
     }
 }

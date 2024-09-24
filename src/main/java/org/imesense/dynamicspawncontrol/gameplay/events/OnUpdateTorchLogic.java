@@ -14,21 +14,37 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.gameplay.commands.cmdServerSingleScriptsReload;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 /**
  *
  */
+@Mod.EventBusSubscriber
 public final class OnUpdateTorchLogic
 {
     /**
      *
-     * @param nameClass
      */
-    public OnUpdateTorchLogic(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public OnUpdateTorchLogic()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnUpdateTorchLogic.class);
     }
 
     /**

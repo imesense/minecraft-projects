@@ -1,28 +1,43 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.multiple;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericRightClickActions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 /**
  *
  */
+@Mod.EventBusSubscriber
 public final class OnRightClickEvent
 {
     /**
      *
-     * @param nameClass
      */
-    public OnRightClickEvent(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnRightClickEvent()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnRightClickEvent.class);
     }
 
     /**
@@ -39,7 +54,7 @@ public final class OnRightClickEvent
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericRightClickActions rule : ParserJsonScripts.GENERIC_RIGHT_CLICK_ACTIONS_LIST)
+        for (GenericRightClickActions rule : ParserGenericJsonScripts.GENERIC_RIGHT_CLICK_ACTIONS_LIST)
         {
             if (rule.match(event))
             {

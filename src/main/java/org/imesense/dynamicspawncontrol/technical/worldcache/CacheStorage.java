@@ -1,14 +1,15 @@
 package org.imesense.dynamicspawncontrol.technical.worldcache;
 
 import net.minecraft.util.ResourceLocation;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserManager;
 
 import java.util.List;
 
 /**
  *
  */
-public class CacheStorage
+public final class CacheStorage
 {
     /**
      *
@@ -26,13 +27,12 @@ public class CacheStorage
 
     /**
      *
-     * @param nameClass
      */
-    public CacheStorage(final String nameClass)
+    public CacheStorage()
     {
-        Log.writeDataToLogFile(0, String.format("Initializing a class: %s", nameClass));
-
         instance = this;
+
+        CodeGenericUtils.printInitClassToLog(CacheStorage.class);
     }
 
     /**

@@ -13,8 +13,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.events.OnEventDummy;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.RayTrace;
+import scala.io.StdIn;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
@@ -26,11 +29,23 @@ public final class cmdAdminDumpBlock extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdAdminDumpBlock(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdAdminDumpBlock()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdAdminDumpBlock.class);
     }
 
     /**

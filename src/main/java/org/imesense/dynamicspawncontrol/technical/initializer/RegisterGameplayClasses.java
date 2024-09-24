@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraftforge.common.MinecraftForge;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnDropZombieItems;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.single.OnPlayerEvents;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnDropZombieItems;
 
 /**
  *
@@ -17,16 +17,15 @@ public final class RegisterGameplayClasses
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnUpdateTorchLogic.class,
-        OnDropZombieItems.class,
-        OnPlayerEvents.class
+        OnDropZombieItems.class
     };
 
     /**
      *
-     * @param nameClass
      */
-    public RegisterGameplayClasses(final String nameClass)
+    public RegisterGameplayClasses()
     {
+        CodeGenericUtils.printInitClassToLog(RegisterGameplayClasses.class);
     }
 
     /**
@@ -38,9 +37,7 @@ public final class RegisterGameplayClasses
         {
             try
             {
-                Log.writeDataToLogFile(0, "Reading class: " + eventClass.getName());
-
-                Object eventInstance = eventClass.getConstructor(String.class).newInstance(eventClass.getSimpleName());
+                Object eventInstance = eventClass.getConstructor().newInstance();
                 MinecraftForge.EVENT_BUS.register(eventInstance);
             }
             catch (Exception exception)

@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.configs;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
 
@@ -13,6 +14,11 @@ import java.io.File;
  */
 public final class ConfigWorldGenerator implements IConfig
 {
+    /**
+     *
+     */
+    private static boolean instanceExists = false;
+
     /**
      *
      */
@@ -30,11 +36,18 @@ public final class ConfigWorldGenerator implements IConfig
 
     /**
      *
-     * @param nameClass
      */
-    public ConfigWorldGenerator(final String nameClass)
+    public ConfigWorldGenerator()
     {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
 
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(ConfigWorldGenerator.class);
     }
 
     /**

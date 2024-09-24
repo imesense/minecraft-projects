@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.gameplay.gameworld;
 
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldTime;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -10,15 +12,14 @@ import java.util.Collections;
 /**
  *
  */
-public class WorldTime
+public final class WorldTime
 {
     /**
      *
-     * @param nameClass
      */
-    public WorldTime(final String nameClass)
+    public WorldTime()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        CodeGenericUtils.printInitClassToLog(WorldTime.class);
     }
 
     /**

@@ -1,36 +1,52 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.multiple;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockBreakActions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockPlaceActions;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 /**
  *
  */
-public final class OnBlockBreakEvent
+@Mod.EventBusSubscriber
+public final class OnBlockPlaceEvent
 {
     /**
      *
-     * @param nameClass
      */
-    public OnBlockBreakEvent(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnBlockPlaceEvent()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnBlockPlaceEvent.class);
     }
 
     /**
      *
      * @param event
      */
+    @Deprecated
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public synchronized void onUpdateBlockBreakEvent_0(BlockEvent.BreakEvent event)
+    public synchronized void onUpdateBlockPaceEvent_0(BlockEvent.PlaceEvent event)
     {
         if (event.getWorld().isRemote)
         {
@@ -39,15 +55,15 @@ public final class OnBlockBreakEvent
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericBlockBreakActions rule : ParserJsonScripts.GENERIC_BLOCK_BREAK_ACTIONS_LIST)
+        for (GenericBlockPlaceActions rule : ParserGenericJsonScripts.GENERIC_BLOCK_PLACE_ACTIONS_LIST)
         {
             if (rule.match(event))
             {
                 Event.Result result = rule.getResult();
 
-                if (ConfigGameDebugger.DebugGenericBlockBreakEvent)
+                if (ConfigGameDebugger.DebugGenericBlockPlaceEvent)
                 {
-                    Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockBreakActions. ID Rule "
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockPlaceActions. ID Rule "
                             + i + ": "
                             + result + " entity: "
                             + event.getPlayer().getName()

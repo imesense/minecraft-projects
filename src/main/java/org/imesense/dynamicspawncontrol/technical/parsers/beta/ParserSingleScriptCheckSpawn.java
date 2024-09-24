@@ -3,8 +3,10 @@ package org.imesense.dynamicspawncontrol.technical.parsers.beta;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumSingleScripts;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.network.PacketTime;
 import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.technical.parsers.IBetaParsers;
 
@@ -18,20 +20,19 @@ import java.util.List;
 /**
  *
  */
-public class ParserSingleScriptCheckSpawn implements IBetaParsers
+public final class ParserSingleScriptCheckSpawn implements IBetaParsers
 {
     /**
      *
      */
-    private static ParserSingleScriptCheckSpawn _classInstance;
+    private static ParserSingleScriptCheckSpawn instance;
 
     /**
      *
-     * @param nameClass
      */
-    public ParserSingleScriptCheckSpawn(String nameClass)
+    public ParserSingleScriptCheckSpawn()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        CodeGenericUtils.printInitClassToLog(ParserSingleScriptCheckSpawn.class);
     }
 
     /**
@@ -40,7 +41,7 @@ public class ParserSingleScriptCheckSpawn implements IBetaParsers
      */
     public static ParserSingleScriptCheckSpawn getClassInstance()
     {
-        return _classInstance;
+        return instance;
     }
 
     /**
@@ -57,14 +58,9 @@ public class ParserSingleScriptCheckSpawn implements IBetaParsers
      */
     public void loadConfig(boolean initialization)
     {
-        _classInstance = this;
+        instance = this;
 
-        File file = (initialization)
-                ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
-                DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
-                EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword())
-                : new File("config/DynamicSpawnControl/single_scripts/" +
+        File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
                 EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword());
 
         if (!file.exists())
@@ -100,10 +96,10 @@ public class ParserSingleScriptCheckSpawn implements IBetaParsers
                     throw new RuntimeException("Failed to create new script file: " + file.getAbsolutePath());
                 }
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                Log.writeDataToLogFile(0, "Error creating new script file: " + e.getMessage());
-                throw new RuntimeException("Error creating new script file", e);
+                Log.writeDataToLogFile(0, "Error creating new script file: " + exception.getMessage());
+                throw new RuntimeException("Error creating new script file", exception);
             }
         }
 
@@ -116,11 +112,11 @@ public class ParserSingleScriptCheckSpawn implements IBetaParsers
 
             if (entitiesObject != null)
             {
-                Type listType = new TypeToken<List<String>>() {}.getType();
-                GeneralStorageData.getInstance()._entitiesProhibitedOutdoors = gson.fromJson(entitiesObject.get("entities"), listType);
+                final Type listType = new TypeToken<List<String>>() {}.getType();
+                GeneralStorageData.getInstance().EntitiesProhibitedOutdoors = gson.fromJson(entitiesObject.get("entities"), listType);
 
                 Log.writeDataToLogFile(0, "Script: " +
-                        EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword() + " data blockedEntities: " + GeneralStorageData.getInstance()._entitiesProhibitedOutdoors);
+                        EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword() + " data blockedEntities: " + GeneralStorageData.getInstance().EntitiesProhibitedOutdoors);
             }
             else
             {

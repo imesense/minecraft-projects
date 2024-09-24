@@ -1,9 +1,10 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.multiple;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.item.ItemStack;
@@ -12,23 +13,37 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericDropLoot;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
 /**
  *
  */
+@Mod.EventBusSubscriber
 public final class OnLivingDrops
 {
     /**
      *
-     * @param nameClass
      */
-    public OnLivingDrops(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnLivingDrops()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnLivingDrops.class);
     }
 
     /**
@@ -40,7 +55,7 @@ public final class OnLivingDrops
     {
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericDropLoot rule : ParserJsonScripts.GENERIC_DROP_LOOT_LIST)
+        for (GenericDropLoot rule : ParserGenericJsonScripts.GENERIC_DROP_LOOT_LIST)
         {
             if (rule.match(event))
             {

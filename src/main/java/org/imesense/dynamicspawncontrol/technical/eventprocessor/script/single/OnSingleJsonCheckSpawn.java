@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.single;
+package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.single;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -7,21 +7,37 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
 
 import java.util.List;
 
+/**
+ *
+ */
 @Mod.EventBusSubscriber
 public final class OnSingleJsonCheckSpawn
 {
     /**
      *
-     * @param nameClass
      */
-    public OnSingleJsonCheckSpawn(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnSingleJsonCheckSpawn()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnSingleJsonCheckSpawn.class);
     }
 
     /**

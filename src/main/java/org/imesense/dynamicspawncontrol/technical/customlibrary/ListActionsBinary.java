@@ -20,8 +20,8 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 
@@ -46,11 +46,9 @@ public class ListActionsBinary<T extends SignalDataGetter>
     /**
      *
      * @param map
-     * @param nameClass
      */
-    public ListActionsBinary(AttributeMap<?> map, String nameClass)
+    public ListActionsBinary(AttributeMap<?> map)
     {
-        Log.writeDataToLogFile(0, nameClass);
         this.CreateListActions(map);
     }
 

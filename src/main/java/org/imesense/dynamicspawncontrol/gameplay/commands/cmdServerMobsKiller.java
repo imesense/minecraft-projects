@@ -11,6 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import javax.annotation.Nonnull;
@@ -24,11 +25,23 @@ public final class cmdServerMobsKiller extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdServerMobsKiller(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdServerMobsKiller()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdServerMobsKiller.class);
     }
 
     /**
@@ -89,7 +102,7 @@ public final class cmdServerMobsKiller extends CommandBase
                     {
                         entityId = Integer.parseInt(args[i]);
                     }
-                    catch (NumberFormatException e)
+                    catch (NumberFormatException exception)
                     {
                         sender.sendMessage(new TextComponentString(TextFormatting.RED + "Invalid entity ID: " + args[i]));
                         return;

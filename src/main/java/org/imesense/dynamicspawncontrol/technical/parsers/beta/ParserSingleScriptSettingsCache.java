@@ -1,11 +1,13 @@
-package org.imesense.dynamicspawncontrol.technical.worldcache;
+package org.imesense.dynamicspawncontrol.technical.parsers.beta;
 
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunctions;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumSingleScripts;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.parsers.IBetaParsers;
+import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,15 +19,14 @@ import java.util.List;
 /**
  *
  */
-public class CacheConfig
+public final class ParserSingleScriptSettingsCache implements IBetaParsers
 {
     /**
      *
-     * @param nameClass
      */
-    public CacheConfig(final String nameClass)
+    public ParserSingleScriptSettingsCache()
     {
-        Log.writeDataToLogFile(0, String.format("Initializing a class: %s", nameClass));
+        CodeGenericUtils.printInitClassToLog(ParserSingleScriptSettingsCache.class);
     }
 
     /**
@@ -39,15 +40,15 @@ public class CacheConfig
     /**
      *
      */
-    private static CacheConfig classInstance;
+    private static ParserSingleScriptSettingsCache instance;
 
     /**
      *
      * @return
      */
-    public static CacheConfig getClassInstance()
+    public static ParserSingleScriptSettingsCache getClassInstance()
     {
-        return classInstance;
+        return instance;
     }
 
     /**
@@ -56,14 +57,9 @@ public class CacheConfig
      */
     public void loadConfig(boolean initialization)
     {
-        classInstance = this;
+        instance = this;
 
-        File file = (initialization)
-                ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
-                DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY +
-                File.separator + DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CACHE,
-                EnumSingleScripts.SCRIPT_CACHE_MOBS.getKeyword())
-                : new File("config/DynamicsSpawnControl/cache/" +
+        File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CACHE,
                 EnumSingleScripts.SCRIPT_CACHE_MOBS.getKeyword());
 
         if (!file.exists())
@@ -94,10 +90,10 @@ public class CacheConfig
                     throw new RuntimeException();
                 }
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                Log.writeDataToLogFile(0, "Error creating new script file: " + e.getMessage());
-                throw new RuntimeException(e);
+                Log.writeDataToLogFile(0, "Error creating new script file: " + exception.getMessage());
+                throw new RuntimeException(exception);
             }
         }
 

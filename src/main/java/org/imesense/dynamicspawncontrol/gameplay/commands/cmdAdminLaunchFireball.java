@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.items.CustomFireball;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -18,11 +19,23 @@ public final class cmdAdminLaunchFireball extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdAdminLaunchFireball(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdAdminLaunchFireball()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdAdminLaunchFireball.class);
     }
 
     /**
@@ -78,7 +91,7 @@ public final class cmdAdminLaunchFireball extends CommandBase
             explosionStrength = Double.parseDouble(args[0]);
             speed = Double.parseDouble(args[1]);
         }
-        catch (NumberFormatException e)
+        catch (NumberFormatException exception)
         {
             sender.sendMessage(new TextComponentString("Incorrect arguments! Enter the numbers for the force of the explosion and the flight speed."));
             return;

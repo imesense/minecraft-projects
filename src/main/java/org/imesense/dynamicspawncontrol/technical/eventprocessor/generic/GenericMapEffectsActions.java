@@ -1,7 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
 import com.google.gson.JsonElement;
-import com.google.gson.annotations.Since;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,8 +16,8 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinar
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsSingleEvent;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.SingleKeyWords;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import java.util.function.Consumer;
 
@@ -66,15 +65,14 @@ public final class GenericMapEffectsActions extends ListActionsSingleEvent<Signa
      *
      * @param map
      * @param timeout
-     * @param nameClass
      */
-    private GenericMapEffectsActions(AttributeMap<?> map, int timeout, String nameClass)
+    private GenericMapEffectsActions(AttributeMap<?> map, int timeout)
     {
-        super(nameClass);
+        super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", nameClass, countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericMapEffectsActions.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map, nameClass);
+        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
         this.addActions(map);
 
@@ -99,7 +97,7 @@ public final class GenericMapEffectsActions extends ListActionsSingleEvent<Signa
             int localTimeOut = element.getAsJsonObject().has(SingleKeyWords.EVENT_EFFECTS.KEYWORD_TIMEOUT)
                     ? element.getAsJsonObject().get(SingleKeyWords.EVENT_EFFECTS.KEYWORD_TIMEOUT).getAsInt() : 20;
 
-            return new GenericMapEffectsActions(map, localTimeOut, "GenericMapEffectsActions");
+            return new GenericMapEffectsActions(map, localTimeOut);
         }
     }
 

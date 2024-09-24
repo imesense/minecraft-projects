@@ -76,7 +76,7 @@ public final class ClientProxy implements IProxy
     {
         RegisterConfigClasses.init(event);
 
-        GameRegistry.registerWorldGenerator(new NetherRackGenerator("NetherRackGenerator"), 3);
+        GameRegistry.registerWorldGenerator(new NetherRackGenerator(), 3);
     }
 
     /**

@@ -14,6 +14,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import javax.annotation.Nonnull;
@@ -26,11 +27,23 @@ public final class cmdAdminDumpItem extends CommandBase
 {
     /**
      *
-     * @param nameClass
      */
-    public cmdAdminDumpItem(final String nameClass)
-    {
+    private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    public cmdAdminDumpItem()
+    {
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(cmdAdminDumpItem.class);
     }
 
     /**

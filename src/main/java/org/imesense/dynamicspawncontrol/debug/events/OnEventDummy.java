@@ -1,17 +1,33 @@
 package org.imesense.dynamicspawncontrol.debug.events;
 
+import net.minecraftforge.fml.common.Mod;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 /**
  *
  */
+@Mod.EventBusSubscriber
 public final class OnEventDummy
 {
     /**
      *
      */
-    public OnEventDummy(final String nameClass)
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    public OnEventDummy()
     {
-        Log.writeDataToLogFile(0, nameClass);
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        CodeGenericUtils.printInitClassToLog(OnEventDummy.class);
     }
 }

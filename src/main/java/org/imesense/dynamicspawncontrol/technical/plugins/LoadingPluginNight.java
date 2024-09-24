@@ -11,6 +11,7 @@ import org.imesense.dynamicspawncontrol.technical.asm.WorldProviderTransformer;
 
 /**
  *
+ * OldSerpskiStalker:
  * -Dfml.coreMods.load=org.imesense.dynamicspawncontrol.technical.plugins.LoadingPluginNight
  */
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)

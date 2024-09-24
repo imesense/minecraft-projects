@@ -8,8 +8,9 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldGenerator;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.Objects;
 import java.util.Random;
@@ -28,11 +29,10 @@ public final class NetherRackGenerator implements IWorldGenerator
 
     /**
      *
-     * @param nameClass
      */
-    public NetherRackGenerator(final String nameClass)
+    public NetherRackGenerator()
     {
-        Log.writeDataToLogFile(0, String.format("Initializing a class: %s", nameClass));
+        CodeGenericUtils.printInitClassToLog(NetherRackGenerator.class);
 
         CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 9);
