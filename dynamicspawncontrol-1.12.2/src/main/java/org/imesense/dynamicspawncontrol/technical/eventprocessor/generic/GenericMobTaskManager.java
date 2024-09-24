@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsConsumer;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsConsumerMobTaskManager;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
@@ -21,12 +21,12 @@ import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDa
 import java.util.function.Consumer;
 
 import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.MobsTaskManager.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.MobTaskManager.*;
 
 /**
  *
  */
-public final class GenericMobsTaskManager extends ListActionsConsumer<SignalDataGetter>
+public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManager<SignalDataGetter>
 {
     /**
      *
@@ -54,11 +54,11 @@ public final class GenericMobsTaskManager extends ListActionsConsumer<SignalData
      *
      * @param map
      */
-    private GenericMobsTaskManager(AttributeMap<?> map)
+    private GenericMobTaskManager(AttributeMap<?> map)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericMobsTaskManager.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericMobTaskManager.class.getName(), countCreatedMaps++));
 
         this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
@@ -70,7 +70,7 @@ public final class GenericMobsTaskManager extends ListActionsConsumer<SignalData
      * @param element
      * @return
      */
-    public static GenericMobsTaskManager parse(JsonElement element)
+    public static GenericMobTaskManager parse(JsonElement element)
     {
         if (element == null)
         {
@@ -80,7 +80,7 @@ public final class GenericMobsTaskManager extends ListActionsConsumer<SignalData
         {
             AttributeMap<?> map = FACTORY.parse(element);
 
-            return new GenericMobsTaskManager(map);
+            return new GenericMobTaskManager(map);
         }
     }
 
