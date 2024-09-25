@@ -52,13 +52,19 @@ public final class CacheEvents
         {
             Cache.TickCounter++;
 
-            if (Cache.TickCounter >= Cache.UPDATE_INTERVAL)
+            if (Cache.TickCounter >= Cache.DynamicUpdateInterval)
             {
                 Cache.TickCounter = 0;
 
                 Cache.copyActualToBuffer();
-
                 Cache.updateCache(event.world);
+
+                // Если это первое обновление, то меняем интервал на 4800
+                if (Cache.isFirstUpdate)
+                {
+                    Cache.DynamicUpdateInterval = Cache.SUBSEQUENT_UPDATE_INTERVAL;
+                    Cache.isFirstUpdate = false;
+                }
             }
         }
     }
@@ -66,6 +72,15 @@ public final class CacheEvents
     @SubscribeEvent
     public synchronized void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent event)
     {
+        if (!Cache.isPrimaryPlayerLogged)
+        {
+            Cache.isPrimaryPlayerLogged = true;
+            Cache.DynamicUpdateInterval = Cache.FIRST_UPDATE_INTERVAL;
+            Cache.TickCounter = 0; // Сбрасываем счётчик при первом входе
+            Cache.isFirstUpdate = true;
+        }
+
+
         Cache.copyActualToBuffer();
     }
 
