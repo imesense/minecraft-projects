@@ -137,6 +137,11 @@ public class DynamicSpawnControl
     /**
      *
      */
+    static Cache cache = null;
+
+    /**
+     *
+     */
     static CacheStorage cacheStorage = null;
 
     /**
@@ -198,6 +203,9 @@ public class DynamicSpawnControl
 
         //
         cacheStorage = new CacheStorage();
+
+        //
+        cache = new Cache();
 
         //
         ParserGenericJsonScripts.setRulePath(event.getModConfigurationDirectory());
@@ -272,8 +280,9 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
-        Cache.cleanActualCache();
-        Cache.cleanBufferCache();
+        cache.cleanActualCache();
+        cache.cleanBufferCache();
+
         Structures.STRUCTURES_CACHE.clean();
     }
 }

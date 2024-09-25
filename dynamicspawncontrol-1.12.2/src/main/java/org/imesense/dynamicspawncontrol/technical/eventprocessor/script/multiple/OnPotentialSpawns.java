@@ -83,7 +83,7 @@ public final class OnPotentialSpawns
                     {
                         assert entityKey != null;
 
-                        int currentCount = Cache.getEntitiesByResourceLocation(entityKey).size();
+                        int currentCount = Cache.getInstance().getEntitiesByResourceLocation(entityKey).size();
                         int maxCount = entityData.getMaxCount();
 
                         if (currentCount >= maxCount)
