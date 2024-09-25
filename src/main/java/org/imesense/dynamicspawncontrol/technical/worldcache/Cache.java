@@ -17,85 +17,40 @@ import net.minecraft.world.WorldServer;
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-/**
- *
- */
 public final class Cache
 {
-    /**
-     *
-     */
     public static int TickCounter = 0;
-
-    /**
-     *
-     */
     public static final int UPDATE_INTERVAL = 1200;
-
-    /**
-     *
-     */
     public static final Set<ChunkPos> CACHE_VALID_CHUNKS = new HashSet<>();
+    public static final Set<EntityAnimal> CACHED_ACTUAL_ANIMALS = new HashSet<>();
+    public static final Set<EntityAnimal> CACHED_BUFFER_ANIMALS = new HashSet<>();
+    public static final Set<IAnimals> CACHED_ACTUAL_HOSTILES = new HashSet<>();
+    public static final Set<IAnimals> CACHED_BUFFER_HOSTILES = new HashSet<>();
+    public static final Set<EntityLivingBase> CACHED_ACTUAL_ALL = new HashSet<>();
+    public static final Set<EntityLivingBase> CACHED_BUFFER_ALL = new HashSet<>();
+    public static final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_ACTUAL_BY_NAME = new ConcurrentHashMap<>();
+    public static final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_BUFFER_BY_NAME = new ConcurrentHashMap<>();
+    public static final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_ACTUAL_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
+    public static final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_BUFFER_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
-    public static final Set<EntityAnimal> CACHED_ANIMALS = new HashSet<>();
-
-    /**
-     *
-     */
-    public static final Set<IAnimals> CACHED_HOSTILES = new HashSet<>();
-
-    /**
-     *
-     */
-    public static final Set<EntityLivingBase> CACHED_ALL = new HashSet<>();
-
-    /**
-     *
-     */
-    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
-
-    /**
-     *
-     */
-    public static final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_BY_NAME = new ConcurrentHashMap<>();
-
-    /**
-     *
-     */
-    public static final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
-
-    /**
-     *
-     * @param world
-     */
-    public static void updateCacheAsync(@Nonnull World world)
-    {
-        EXECUTOR.submit(() -> updateCache(world));
-    }
-
-    /**
-     *
-     * @param world
-     */
     public static void updateCache(@Nonnull World world)
     {
-        cleanCache();
+        cleanActualCache();
 
         if (world instanceof WorldServer)
         {
             WorldServer worldServer = (WorldServer) world;
-            Set<ChunkPos> validChunks = totalValidChunksSpawn(worldServer);
 
-            CACHE_VALID_CHUNKS.addAll(validChunks);
+            for (EntityPlayer player : world.playerEntities)
+            {
+                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, player);
+                CACHE_VALID_CHUNKS.addAll(validChunks);
+            }
         }
 
         for (Entity entity : world.loadedEntityList)
@@ -110,121 +65,139 @@ public final class Cache
                     {
                         if (entity instanceof EntityAnimal)
                         {
-                            CACHED_ANIMALS.add((EntityAnimal) entity);
+                            CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
                         }
                         else if (entity instanceof EntityMob)
                         {
-                            CACHED_HOSTILES.add((IAnimals) entity);
+                            CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
                         }
                     }
 
-                    CACHED_ALL.add(livingEntity);
+                    CACHED_ACTUAL_ALL.add(livingEntity);
 
                     String entityName = entity.getName();
-                    ENTITIES_BY_NAME.computeIfAbsent(entityName, k -> new HashSet<>()).add(livingEntity);
+
+                    ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
+                            new HashSet<>()).add(livingEntity);
 
                     ResourceLocation entityKey = EntityList.getKey(entity);
-
                     if (entityKey != null)
                     {
-                        ENTITIES_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k -> new HashSet<>()).add(livingEntity);
+                        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k ->
+                                new HashSet<>()).add(livingEntity);
                     }
                 }
             }
         }
     }
 
-    /**
-     *
-     * @param worldServer
-     * @return
-     */
-    private static Set<ChunkPos> totalValidChunksSpawn(@Nonnull WorldServer worldServer)
+    private static Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayer player)
     {
-        Set<ChunkPos> setPos = new HashSet<>();
+        Set<ChunkPos> validChunks = new HashSet<>();
 
-        for (EntityPlayer player : worldServer.playerEntities)
+        int viewDistance = Objects.requireNonNull(worldServer.getMinecraftServer()).getPlayerList().getViewDistance();
+        int playerChunkX = MathHelper.floor(player.posX) >> 4;
+        int playerChunkZ = MathHelper.floor(player.posZ) >> 4;
+
+        for (int x = playerChunkX - viewDistance; x <= playerChunkX + viewDistance; x++)
         {
-            if (!player.isSpectator())
+            for (int z = playerChunkZ - viewDistance; z <= playerChunkZ + viewDistance; z++)
             {
-                int x = MathHelper.floor(player.posX / 16.0f);
-                int z = MathHelper.floor(player.posZ / 16.0f);
+                ChunkPos chunkPos = new ChunkPos(x, z);
 
-                for (int dx = -8; dx <= 8; ++dx)
+                if (worldServer.getChunkProvider().isChunkGeneratedAt(x, z))
                 {
-                    for (int dz = -8; dz <= 8; ++dz)
-                    {
-                        boolean correct = (dx == -8 || dx == 8 || dz == -8 || dz == 8);
-                        ChunkPos pos = new ChunkPos(dx + x, dz + z);
-
-                        if (!setPos.contains(pos))
-                        {
-                            if (!correct && worldServer.getWorldBorder().contains(pos))
-                            {
-                                PlayerChunkMapEntry playerServer = worldServer.getPlayerChunkMap().getEntry(pos.x, pos.z);
-
-                                if (playerServer != null && playerServer.isSentToPlayers())
-                                {
-                                    setPos.add(pos);
-                                }
-                            }
-                        }
-                    }
+                    validChunks.add(chunkPos);
                 }
             }
         }
 
-        return setPos;
+        return validChunks;
     }
 
-    /**
-     *
-     * @return
-     */
-    public static int getAnimalCount()
+    public static int getActualAnimalCount()
     {
-        return CACHED_ANIMALS.size();
+        return CACHED_ACTUAL_ANIMALS.size();
     }
 
-    /**
-     *
-     * @return
-     */
-    public static int getTotalEntityCount()
+    public static int getActualTotalEntityCount()
     {
-        return CACHED_ALL.size();
+        return CACHED_ACTUAL_ALL.size();
     }
 
-    /**
-     *
-     * @return
-     */
-    public static int getHostileEntityCount()
+    public static int getActualHostileEntityCount()
     {
-        return CACHED_HOSTILES.size();
+        return CACHED_ACTUAL_HOSTILES.size();
     }
 
-    /**
-     *
-     * @param resourceLocation
-     * @return
-     */
+    public static int getBufferAnimalCount()
+    {
+        return CACHED_BUFFER_ANIMALS.size();
+    }
+
+    public static int getBufferTotalEntityCount()
+    {
+        return CACHED_BUFFER_ALL.size();
+    }
+
+    public static int getBufferHostileEntityCount()
+    {
+        return CACHED_BUFFER_HOSTILES.size();
+    }
+
+    public static int getValidChunkCount()
+    {
+        return CACHE_VALID_CHUNKS.size();
+    }
+
     @Nonnull
     public static Set<EntityLivingBase> getEntitiesByResourceLocation(@Nonnull ResourceLocation resourceLocation)
     {
-        return ENTITIES_BY_RESOURCE_LOCATION.getOrDefault(resourceLocation, Collections.emptySet());
+        return ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.getOrDefault(resourceLocation, Collections.emptySet());
     }
 
-    /**
-     *
-     */
-    public static void cleanCache()
+    public static void copyActualToBuffer()
     {
-        CACHED_ANIMALS.clear();
-        CACHED_HOSTILES.clear();
-        CACHED_ALL.clear();
-        ENTITIES_BY_NAME.clear();
-        ENTITIES_BY_RESOURCE_LOCATION.clear();
+        CACHED_BUFFER_ANIMALS.clear();
+
+        CACHED_BUFFER_ANIMALS.addAll(CACHED_ACTUAL_ANIMALS);
+
+        CACHED_BUFFER_HOSTILES.clear();
+
+        CACHED_BUFFER_HOSTILES.addAll(CACHED_ACTUAL_HOSTILES);
+
+        CACHED_BUFFER_ALL.clear();
+
+        CACHED_BUFFER_ALL.addAll(CACHED_ACTUAL_ALL);
+
+        ENTITIES_BUFFER_BY_NAME.clear();
+
+        ENTITIES_ACTUAL_BY_NAME.forEach((name, set) ->
+                ENTITIES_BUFFER_BY_NAME.put(name, new HashSet<>(set)));
+
+        ENTITIES_BUFFER_BY_RESOURCE_LOCATION.clear();
+
+        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.forEach((key, set) ->
+                ENTITIES_BUFFER_BY_RESOURCE_LOCATION.put(key, new HashSet<>(set)));
+    }
+
+    public static void cleanActualCache()
+    {
+        CACHED_ACTUAL_ANIMALS.clear();
+        CACHED_ACTUAL_HOSTILES.clear();
+        CACHED_ACTUAL_ALL.clear();
+        ENTITIES_ACTUAL_BY_NAME.clear();
+        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.clear();
+
         CACHE_VALID_CHUNKS.clear();
+    }
+
+    public static void cleanBufferCache()
+    {
+        CACHED_BUFFER_ANIMALS.clear();
+        CACHED_BUFFER_HOSTILES.clear();
+        CACHED_BUFFER_ALL.clear();
+        ENTITIES_BUFFER_BY_NAME.clear();
+        ENTITIES_BUFFER_BY_RESOURCE_LOCATION.clear();
     }
 }
