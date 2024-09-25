@@ -24,20 +24,11 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.HashSet;
 
-/**
- *
- */
 @Mod.EventBusSubscriber
 public final class CacheEvents
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public CacheEvents()
     {
         if (instanceExists)
@@ -51,30 +42,25 @@ public final class CacheEvents
         CodeGenericUtils.printInitClassToLog(CacheEvents.class);
     }
 
-    /**
-     *
-     * @param event
-     */
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public synchronized void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase == TickEvent.Phase.START)
+        if (event.phase == TickEvent.Phase.END)
         {
             Cache.TickCounter++;
 
             if (Cache.TickCounter >= Cache.UPDATE_INTERVAL)
             {
                 Cache.TickCounter = 0;
-                Cache.updateCacheAsync(event.world);
+
+                Cache.copyActualToBuffer();
+
+                Cache.updateCache(event.world);
             }
         }
     }
 
-    /**
-     *
-     * @param event
-     */
-    @SubscribeEvent(priority = EventPriority.NORMAL)
+    @SubscribeEvent(priority = EventPriority.LOW)
     public synchronized void onRenderOverlay(RenderGameOverlayEvent.Post event)
     {
         if (!ConfigGameDebugger.DebugMonitorCache)
@@ -88,11 +74,7 @@ public final class CacheEvents
         }
     }
 
-    /**
-     *
-     * @param event
-     */
-    @SubscribeEvent(priority = EventPriority.NORMAL)
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public synchronized void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
         World world = event.getWorld();
@@ -113,38 +95,39 @@ public final class CacheEvents
             {
                 if (entity instanceof EntityAnimal)
                 {
-                    Cache.CACHED_ANIMALS.add((EntityAnimal) entity);
+                    Cache.CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
                 }
                 else if (entity instanceof EntityMob)
                 {
-                    Cache.CACHED_HOSTILES.add((IAnimals) entity);
+                    Cache.CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
                 }
             }
 
             if (entity instanceof EntityLivingBase)
             {
-                Cache.CACHED_ALL.add((EntityLivingBase) entity);
                 String entityName = entity.getName();
-                Cache.ENTITIES_BY_NAME.computeIfAbsent(entityName, k -> new HashSet<>()).add((EntityLivingBase) entity);
+
+                Cache.CACHED_ACTUAL_ALL.add((EntityLivingBase) entity);
+
+                Cache.ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
+                        new HashSet<>()).add((EntityLivingBase) entity);
 
                 ResourceLocation entityKey = EntityList.getKey(entity);
 
                 if (entityKey != null)
                 {
-                    Cache.ENTITIES_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k -> new HashSet<>()).add((EntityLivingBase) entity);
+                    Cache.ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k ->
+                            new HashSet<>()).add((EntityLivingBase) entity);
                 }
             }
         }
     }
 
-    /**
-     *
-     * @param event
-     */
     @SubscribeEvent(priority = EventPriority.HIGH)
     public synchronized void updateEntitySpawnEvent(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();
+
         ResourceLocation entityKey = EntityList.getKey(entity);
 
         CacheStorage.EntityData entityData = CacheStorage.getInstance().getEntityDataByResourceLocation(entityKey);
@@ -153,8 +136,8 @@ public final class CacheEvents
         {
             assert entityKey != null;
 
-            int currentCount = Cache.getEntitiesByResourceLocation(entityKey).size();
             int maxCount = entityData.getMaxCount();
+            int currentCount = Cache.getEntitiesByResourceLocation(entityKey).size();
 
             if (currentCount > maxCount)
             {

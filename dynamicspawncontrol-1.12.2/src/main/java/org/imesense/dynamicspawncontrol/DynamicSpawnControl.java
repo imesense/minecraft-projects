@@ -272,7 +272,8 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
-        Cache.cleanCache();
+        Cache.cleanActualCache();
+        Cache.cleanBufferCache();
         Structures.STRUCTURES_CACHE.clean();
     }
 }
