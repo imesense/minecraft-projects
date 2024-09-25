@@ -25,7 +25,13 @@ import java.util.concurrent.ConcurrentMap;
 public final class Cache
 {
     public static int TickCounter = 0;
-    public static final int UPDATE_INTERVAL = 1200;
+    public static volatile int DynamicUpdateInterval = 1200; // Сначала 1200, затем 4800
+    public static final int FIRST_UPDATE_INTERVAL = 1200;    // Первое обновление
+    public static final int SUBSEQUENT_UPDATE_INTERVAL = 4800; // Последующие обновления
+
+    public static boolean isFirstUpdate = true; // Флаг для отслеживания первого обновления
+    public static boolean isPrimaryPlayerLogged = false; // Флаг для главного игрока
+
     public static final Set<ChunkPos> CACHE_VALID_CHUNKS = new HashSet<>();
     public static final Set<EntityAnimal> CACHED_ACTUAL_ANIMALS = new HashSet<>();
     public static final Set<EntityAnimal> CACHED_BUFFER_ANIMALS = new HashSet<>();
