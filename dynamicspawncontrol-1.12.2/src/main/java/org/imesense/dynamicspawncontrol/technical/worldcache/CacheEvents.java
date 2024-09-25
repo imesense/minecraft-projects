@@ -17,12 +17,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.HashSet;
+
+import static org.imesense.dynamicspawncontrol.technical.worldcache.Cache.*;
 
 @Mod.EventBusSubscriber
 public final class CacheEvents
@@ -43,7 +46,7 @@ public final class CacheEvents
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)
-    public synchronized void onWorldTick(TickEvent.WorldTickEvent event)
+    public synchronized void onWorldTick_0(TickEvent.WorldTickEvent event)
     {
         if (event.phase == TickEvent.Phase.END)
         {
@@ -60,8 +63,20 @@ public final class CacheEvents
         }
     }
 
+    @SubscribeEvent
+    public synchronized void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent event)
+    {
+        Cache.copyActualToBuffer();
+    }
+
+    @SubscribeEvent
+    public synchronized void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent event)
+    {
+        Cache.copyActualToBuffer();
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
-    public synchronized void onRenderOverlay(RenderGameOverlayEvent.Post event)
+    public synchronized void onRenderOverlay_3(RenderGameOverlayEvent.Post event)
     {
         if (!ConfigGameDebugger.DebugMonitorCache)
         {
@@ -75,7 +90,7 @@ public final class CacheEvents
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public synchronized void onEntityJoinWorld(EntityJoinWorldEvent event)
+    public synchronized void onEntityJoinWorld_4(EntityJoinWorldEvent event)
     {
         World world = event.getWorld();
         Entity entity = event.getEntity();
@@ -95,7 +110,7 @@ public final class CacheEvents
             {
                 if (entity instanceof EntityAnimal)
                 {
-                    Cache.CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
+                    CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
                 }
                 else if (entity instanceof EntityMob)
                 {
@@ -124,7 +139,7 @@ public final class CacheEvents
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public synchronized void updateEntitySpawnEvent(LivingSpawnEvent.CheckSpawn event)
+    public synchronized void updateEntitySpawnEvent_5(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();
 
