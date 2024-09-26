@@ -35,7 +35,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigDebugSingleEvents;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
 

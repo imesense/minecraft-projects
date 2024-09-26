@@ -58,11 +58,6 @@ public final class ClientProxy implements IProxy
     /**
      *
      */
-    public static Configuration ConfigDebugSingleEvents;
-
-    /**
-     *
-     */
     public static Configuration ConfigWindowTitle;
 
     /**
@@ -98,7 +93,6 @@ public final class ClientProxy implements IProxy
         CodeGenericUtils.checkObjectNotNull(ConfigLogFile, "ConfigLogFile").save();
         CodeGenericUtils.checkObjectNotNull(ConfigGameDebugger, "ConfigGameDebugger").save();
         CodeGenericUtils.checkObjectNotNull(ConfigWindowTitle, "ConfigWindowTitle").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigDebugSingleEvents, "ConfigDebugSingleEvents").save();
         CodeGenericUtils.checkObjectNotNull(ConfigOreGeneratorFile, "ConfigOreGeneratorFile").save();
         CodeGenericUtils.checkObjectNotNull(ConfigNights, "ConfigNights").save();
         CodeGenericUtils.checkObjectNotNull(ConfigWorldTime, "ConfigWorldTime").save();

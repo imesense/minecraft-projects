@@ -22,8 +22,7 @@ public final class RegisterConfigClasses
         ConfigRenderNight.class,
         ConfigWorldTime.class,
         ConfigPlayer.class,
-        ConfigZombieDropItem.class,
-        ConfigDebugSingleEvents.class
+        ConfigZombieDropItem.class
     };
 
     /**
@@ -50,7 +49,9 @@ public final class RegisterConfigClasses
                     throw new RuntimeException("Default constructor not found in class: " + configClass.getName());
                 }
 
-                Object configInstance = configClass.getConstructor().newInstance();
+                Object configInstance =
+                        configClass.getConstructor().newInstance();
+
                 ((IConfig)configInstance).init(event);
             }
             catch (Exception exception)

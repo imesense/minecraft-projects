@@ -37,7 +37,9 @@ public final class RegisterGameplayClasses
         {
             try
             {
-                Object eventInstance = eventClass.getConstructor().newInstance();
+                Object eventInstance =
+                        eventClass.getConstructor().newInstance();
+
                 MinecraftForge.EVENT_BUS.register(eventInstance);
             }
             catch (Exception exception)

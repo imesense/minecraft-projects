@@ -46,7 +46,9 @@ public final class RegisterOreGenerators
                     throw new RuntimeException("Default constructor not found in class: " + oreGeneratorClass.getName());
                 }
 
-                Object oreGeneratorInstance = oreGeneratorClass.getConstructor().newInstance();
+                Object oreGeneratorInstance =
+                        oreGeneratorClass.getConstructor().newInstance();
+
                 GameRegistry.registerWorldGenerator((IWorldGenerator) oreGeneratorInstance, 3);
             }
             catch (Exception exception)
