@@ -15,14 +15,14 @@ public final class RegisterConfigClasses
      */
     private static final Class<?>[] CONFIG_CLASSES =
     {
-        ConfigWindowTitle.class,
-        ConfigLogFile.class,
-        ConfigGameDebugger.class,
-        ConfigWorldGenerator.class,
-        ConfigRenderNight.class,
-        ConfigWorldTime.class,
-        ConfigPlayer.class,
-        ConfigZombieDropItem.class
+        //ConfigWindowTitle.class,
+        //ConfigLogFile.class,
+        //ConfigGameDebugger.class,
+        //ConfigWorldGenerator.class,
+        //ConfigRenderNight.class,
+        //ConfigWorldTime.class,
+        //ConfigPlayer.class,
+        //ConfigZombieDropItem.class
     };
 
     /**
