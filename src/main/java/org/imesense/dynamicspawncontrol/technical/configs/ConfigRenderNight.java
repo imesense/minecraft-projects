@@ -11,6 +11,8 @@ import java.io.File;
 
 /**
  *
+ * OldSerpskiStalker
+ * TODO: Legacy format.
  */
 public final class ConfigRenderNight implements IConfig
 {

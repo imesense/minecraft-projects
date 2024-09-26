@@ -9,6 +9,8 @@ import org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy;
 
 /**
  *
+ * OldSerpskiStalker
+ * TODO: Legacy format.
  */
 public final class ConfigWindowTitle implements IConfig
 {

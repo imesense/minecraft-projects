@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol;
 
-import jdk.nashorn.internal.runtime.StoredScript;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -13,8 +12,10 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.technical.configs.*;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
+import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCfgClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterGameplayClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCommandsClasses;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -29,6 +30,7 @@ import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Main class of modification
@@ -183,7 +185,7 @@ public class DynamicSpawnControl
      * @param event Preinitialization event
      */
     @EventHandler
-    public synchronized void preInit(FMLPreInitializationEvent event)
+    public synchronized void preInit(FMLPreInitializationEvent event) throws IOException
     {
         //
         checkDebugger = new CheckDebugger();
@@ -197,6 +199,9 @@ public class DynamicSpawnControl
 
         //
         MessageHandler.init();
+
+        //
+        RegisterCfgClasses.initializeConfigs();
 
         //
         generalStorageData = new GeneralStorageData();

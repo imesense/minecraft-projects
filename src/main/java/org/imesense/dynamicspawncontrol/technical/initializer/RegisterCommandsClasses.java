@@ -52,7 +52,9 @@ public final class RegisterCommandsClasses
         {
             try
             {
-                Object commandInstance = cmdClass.getConstructor().newInstance();
+                Object commandInstance =
+                        cmdClass.getConstructor().newInstance();
+
                 event.registerServerCommand((ICommand)commandInstance);
             }
             catch (Exception exception)
