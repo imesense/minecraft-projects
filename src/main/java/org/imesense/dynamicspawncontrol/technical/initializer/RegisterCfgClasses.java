@@ -65,7 +65,6 @@ public final class RegisterCfgClasses
                         configClass.getConstructor(String.class).newInstance(configFileName);
 
                 configClass.getField("instance").set(null, configInstance);
-
             }
             catch (Exception exception)
             {

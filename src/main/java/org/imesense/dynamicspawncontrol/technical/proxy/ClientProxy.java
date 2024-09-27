@@ -90,14 +90,14 @@ public final class ClientProxy implements IProxy
     @Override
     public void postInit(FMLPostInitializationEvent event)
     {
-        CodeGenericUtils.checkObjectNotNull(ConfigLogFile, "ConfigLogFile").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigGameDebugger, "ConfigGameDebugger").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigWindowTitle, "ConfigWindowTitle").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigOreGeneratorFile, "ConfigOreGeneratorFile").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigNights, "ConfigNights").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigWorldTime, "ConfigWorldTime").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigPlayer, "ConfigPlayer").save();
-        CodeGenericUtils.checkObjectNotNull(ConfigZombieDropItem, "ConfigZombieDropItem").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigLogFile, "ConfigLogFile").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigGameDebugger, "ConfigGameDebugger").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigWindowTitle, "ConfigWindowTitle").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigOreGeneratorFile, "ConfigOreGeneratorFile").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigNights, "ConfigNights").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigWorldTime, "ConfigWorldTime").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigPlayer, "ConfigPlayer").save();
+        //CodeGenericUtils.checkObjectNotNull(ConfigZombieDropItem, "ConfigZombieDropItem").save();
     }
 
     /**

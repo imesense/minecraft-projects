@@ -14,4 +14,20 @@ public final class CfgPlayer extends CustomConceptConfig
 
         CodeGenericUtils.printInitClassToLog(CfgPlayer.class);
     }
+
+    @Override
+    public void init() throws IOException
+    {
+
+    }
+
+    @Override
+    public void loadConfigFromFile() throws IOException {
+
+    }
+
+    @Override
+    public boolean getConfigValue(String key) {
+        return false;
+    }
 }

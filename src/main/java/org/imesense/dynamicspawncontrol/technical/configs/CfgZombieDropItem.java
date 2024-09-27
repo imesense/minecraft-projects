@@ -14,4 +14,20 @@ public final class CfgZombieDropItem extends CustomConceptConfig
 
         CodeGenericUtils.printInitClassToLog(CfgZombieDropItem.class);
     }
+
+    @Override
+    public void init() throws IOException
+    {
+
+    }
+
+    @Override
+    public void loadConfigFromFile() throws IOException {
+
+    }
+
+    @Override
+    public boolean getConfigValue(String key) {
+        return false;
+    }
 }
