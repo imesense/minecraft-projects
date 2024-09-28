@@ -24,15 +24,6 @@ public abstract class CustomConceptConfig
 
     public CustomConceptConfig(String nameConfigFile) throws IOException
     {
-        //this.nameConfig = this.constructPathToDirectory() + nameConfigFile;
-//
-        //JsonObject jsonObject = new JsonObject();
-//
-        //Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//
-        //try (FileWriter file = new FileWriter(this.nameConfig))
-        //{
-        //    gson.toJson(jsonObject, file);
-        //}
+        this.nameConfig = this.constructPathToDirectory() + nameConfigFile;
     }
 }
