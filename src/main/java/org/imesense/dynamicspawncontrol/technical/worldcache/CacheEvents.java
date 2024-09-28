@@ -95,15 +95,19 @@ public final class CacheEvents
     @SubscribeEvent(priority = EventPriority.LOW)
     public synchronized void onRenderOverlay_3(RenderGameOverlayEvent.Post event)
     {
+        if (!CfgGameDebugger.instance.getMonitor().getDebugMonitorOpt())
+        {
+
+        }
         //if (!ConfigGameDebugger.DebugMonitorCache)
         //{
         //    return;
         //}
 
-        if (!CfgGameDebugger.instance.isMonitorDebugEnabled())
-        {
-            return;
-        }
+        //if (!CfgGameDebugger.instance.isMonitorDebugEnabled())
+       // {
+        //    return;
+        //}
 
         if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
