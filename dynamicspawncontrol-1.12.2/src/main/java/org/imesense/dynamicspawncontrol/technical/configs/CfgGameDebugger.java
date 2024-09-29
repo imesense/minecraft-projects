@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.configs;
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.cfgGameDebugger.DataCategories;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations.DCSSingleConfig;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.io.*;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+@DCSSingleConfig(fileName = "game_debugger_config.json")
 public final class CfgGameDebugger extends CustomConceptConfig {
 
     public CfgGameDebugger(String nameConfigFile) {

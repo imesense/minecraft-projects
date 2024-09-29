@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -7,7 +7,11 @@ import java.lang.annotation.RetentionPolicy;
  *
  */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AnnotationDCSJson
+public @interface DCSSingleConfig
 {
+    /**
+     *
+     * @return
+     */
     String fileName();
 }
