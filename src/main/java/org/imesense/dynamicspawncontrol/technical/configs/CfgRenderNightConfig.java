@@ -6,8 +6,6 @@ import java.io.IOException;
 
 public final class CfgRenderNightConfig extends CustomConceptConfig
 {
-    public static CfgRenderNightConfig instance;
-
     public CfgRenderNightConfig(String nameConfigFile) throws IOException
     {
         super(nameConfigFile);

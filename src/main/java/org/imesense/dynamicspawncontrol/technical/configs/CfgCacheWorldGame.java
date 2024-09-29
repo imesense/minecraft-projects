@@ -6,9 +6,7 @@ import java.io.IOException;
 
 public final class CfgCacheWorldGame extends CustomConceptConfig
 {
-    public static CfgCacheWorldGame instance;
-
-    public CfgCacheWorldGame(String nameConfigFile) throws IOException
+    public CfgCacheWorldGame(String nameConfigFile)
     {
         super(nameConfigFile);
 

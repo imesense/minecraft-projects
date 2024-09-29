@@ -6,8 +6,6 @@ import java.io.IOException;
 
 public final class CfgWindowTitle extends CustomConceptConfig
 {
-    public static CfgWindowTitle instance;
-
     public CfgWindowTitle(String nameConfigFile) throws IOException
     {
         super(nameConfigFile);

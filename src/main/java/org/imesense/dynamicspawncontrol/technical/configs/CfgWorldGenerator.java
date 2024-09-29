@@ -6,8 +6,6 @@ import java.io.IOException;
 
 public final class CfgWorldGenerator extends CustomConceptConfig
 {
-    public static CfgWorldGenerator instance;
-
     public CfgWorldGenerator(String nameConfigFile) throws IOException
     {
         super(nameConfigFile);

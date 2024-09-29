@@ -6,8 +6,6 @@ import java.io.IOException;
 
 public final class CfgPlayer extends CustomConceptConfig
 {
-    public static CfgPlayer instance;
-
     public CfgPlayer(String nameConfigFile) throws IOException
     {
         super(nameConfigFile);
