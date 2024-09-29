@@ -1,9 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigLogFile;
+import org.imesense.dynamicspawncontrol.technical.config.ConfigLogFile;
 
-import javax.annotation.Nonnull;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public final class Log
      *
      * @param path
      */
-    public static void createLogFile(final String path)
+    public static void createLogFile(final String path, boolean isDebugMode)
     {
         try
         {
@@ -55,16 +54,22 @@ public final class Log
                 }
             }
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-            String currentDate = dateFormat.format(new Date());
+            if (isDebugMode)
+            {
+                logFile = new File(logsDirectory, "log_debug.txt");
+            }
+            else
+            {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+                String currentDate = dateFormat.format(new Date());
+                String fileName = logsDirectory + "/log_" + currentDate + DynamicSpawnControl.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+                logFile = new File(fileName);
+            }
 
-            String fileName = logsDirectory + "/log_" + currentDate + DynamicSpawnControl.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
-            logFile = new File(fileName);
-
-            FileWriter writer = new FileWriter(logFile);
+            FileWriter writer = new FileWriter(logFile, !isDebugMode);
 
             writer.write("*********************************************************************");
-            writer.write("\n** Log file created: " + currentDate);
+            writer.write("\n** Log file created: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             writer.write("\n** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
             writer.write("\n*******************************************************************");
 

@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
-import org.imesense.dynamicspawncontrol.technical.configs.*;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCfgClasses;
@@ -194,7 +193,7 @@ public class DynamicSpawnControl
         globalDirectory = event.getModConfigurationDirectory();
 
         //
-        Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY);
+        Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY, checkDebugger.IsRunDebugger);
         Log.writeDataToLogFile(1, "Debugger is running: " + (checkDebugger.IsRunDebugger ? "true" : "false"));
 
         //
