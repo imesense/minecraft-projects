@@ -2,11 +2,10 @@ package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.configs.*;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations.DCSSingleConfig;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
@@ -24,38 +23,30 @@ public final class RegisterCfgClasses {
             //CfgZombieDropItem.class
     };
 
-    // Массив имен файлов конфигурации
-    private static final String[] CONFIG_FILE_NAMES = {
-            //"darkness_config.json",
-            //"cache_world_game_config.json",
-            "game_debugger_config.json"//,
-            //"log_file_config.json",
-            //"player_config.json",
-            //"window_config.json",
-            //"ore_generator_config.json",
-            //"world_time_config.json",
-            //"zombie_drop_config.json"
-    };
-
     public RegisterCfgClasses() {
         CodeGenericUtils.printInitClassToLog(RegisterCfgClasses.class);
     }
 
     public static void initializeConfigs() {
-        for (int i = 0; i < CONFIG_CLASSES.length; i++) {
-            initializeConfig(CONFIG_CLASSES[i], CONFIG_FILE_NAMES[i]);
+        for (Class<?> configClass : CONFIG_CLASSES) {
+            initializeConfig(configClass);
         }
     }
 
-    private static <T> void initializeConfig(Class<T> configClass, String configFileName) {
+    private static <T> void initializeConfig(Class<T> configClass) {
         try {
-            Constructor<T> constructor = configClass.getConstructor(String.class);
-            T configInstance = constructor.newInstance(configFileName);
+            if (configClass.isAnnotationPresent(DCSSingleConfig.class)) {
+                DCSSingleConfig configAnnotation = configClass.getAnnotation(DCSSingleConfig.class);
+                String configFileName = configAnnotation.fileName();
 
-            Log.writeDataToLogFile(0, "Test: " + configInstance);
+                Constructor<T> constructor = configClass.getConstructor(String.class);
+                T configInstance = constructor.newInstance(configFileName);
 
-            Log.writeDataToLogFile(0, "configClass: " + configClass + " " + configInstance);
-
+                Log.writeDataToLogFile(0, "Initialized config: " + configFileName);
+                Log.writeDataToLogFile(0, "configClass: " + configClass + " " + configInstance);
+            } else {
+                Log.writeDataToLogFile(2, "No ConfigClass annotation found in: " + configClass.getName());
+            }
         } catch (NoSuchMethodException e) {
             Log.writeDataToLogFile(2, "Constructor with String parameter not found in class: " + configClass.getName() + " - " + e.getMessage());
         } catch (Exception e) {
