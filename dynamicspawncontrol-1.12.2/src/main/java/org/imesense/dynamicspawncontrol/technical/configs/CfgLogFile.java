@@ -6,8 +6,6 @@ import java.io.IOException;
 
 public final class CfgLogFile extends CustomConceptConfig
 {
-    public static CfgLogFile instance;
-
     public CfgLogFile(String nameConfigFile) throws IOException
     {
         super(nameConfigFile);
