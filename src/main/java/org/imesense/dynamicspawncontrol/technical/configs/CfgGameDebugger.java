@@ -11,42 +11,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@DCSSingleConfig(fileName = "game_debugger_config.json")
+@DCSSingleConfig(fileName = "cfg_game_debugger.json")
 public final class CfgGameDebugger extends CustomConceptConfig {
 
     public CfgGameDebugger(String nameConfigFile) {
         super(nameConfigFile);
 
-        Log.writeDataToLogFile(0, "nameConfigFile: " + nameConfigFile);
-
         DataCategories.DebugMonitor.instance = new DataCategories.DebugMonitor("monitor");
         DataCategories.DebugEvent.instance = new DataCategories.DebugEvent("event");
 
         if (Files.exists(Paths.get(this.nameConfig))) {
-            try {
                 loadFromFile();
-            } catch (FileNotFoundException e) {
-                Log.writeDataToLogFile(2, "File not found while loading: " + e.getMessage());
-            } catch (IOException e) {
-                Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
-            }
         } else {
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            try {
                 saveToFile();
-            } catch (IOException e) {
-                Log.writeDataToLogFile(2, "IO Exception while saving: " + e.getMessage());
-            }
         }
 
         CodeGenericUtils.printInitClassToLog(CfgGameDebugger.class);
     }
 
-    public void saveToFile() throws IOException {
+    public void saveToFile(){
         Path configPath = Paths.get(this.nameConfig).getParent();
         if (Files.notExists(configPath)) {
-            Log.writeDataToLogFile(0, "Creating directory: " + configPath);
-            Files.createDirectories(configPath);
+            try {
+                Files.createDirectories(configPath);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         JsonObject jsonObject = new JsonObject();
@@ -55,18 +46,7 @@ public final class CfgGameDebugger extends CustomConceptConfig {
         monitorObject.addProperty("debug_monitor_cache", DataCategories.DebugMonitor.instance.getDebugMonitorCache());
         jsonObject.add("monitor", monitorObject);
 
-        JsonObject eventObject = new JsonObject();
-
-        eventObject.addProperty("debug_on_block_break", DataCategories.DebugEvent.instance.getDebugOnBlockBreak());
-        eventObject.addProperty("debug_on_block_place", DataCategories.DebugEvent.instance.getDebugOnBlockPlace());
-        eventObject.addProperty("debug_on_entity_spawn", DataCategories.DebugEvent.instance.getDebugOnEntitySpawn());
-        eventObject.addProperty("debug_on_left_click", DataCategories.DebugEvent.instance.getDebugOnLeftClick());
-        eventObject.addProperty("debug_on_living_drops", DataCategories.DebugEvent.instance.getDebugOnLivingDrops());
-        eventObject.addProperty("debug_on_living_experience_drop", DataCategories.DebugEvent.instance.getDebugOnLivingExperienceDrop());
-        eventObject.addProperty("debug_on_task_manager", DataCategories.DebugEvent.instance.getDebugOnTaskManager());
-        eventObject.addProperty("debug_on_player_tick", DataCategories.DebugEvent.instance.getDebugOnPlayerTick());
-        eventObject.addProperty("debug_on_potential_spawn", DataCategories.DebugEvent.instance.getDebugOnPotentialSpawn());
-        eventObject.addProperty("debug_on_right_click", DataCategories.DebugEvent.instance.getDebugOnRightClick());
+        JsonObject eventObject = getJsonObject();
 
         jsonObject.add("event", eventObject);
 
@@ -79,7 +59,23 @@ public final class CfgGameDebugger extends CustomConceptConfig {
         }
     }
 
-    public void loadFromFile() throws IOException {
+    private static JsonObject getJsonObject() {
+        JsonObject eventObject = new JsonObject();
+
+        eventObject.addProperty("debug_on_block_break", DataCategories.DebugEvent.instance.getDebugOnBlockBreak());
+        eventObject.addProperty("debug_on_block_place", DataCategories.DebugEvent.instance.getDebugOnBlockPlace());
+        eventObject.addProperty("debug_on_entity_spawn", DataCategories.DebugEvent.instance.getDebugOnEntitySpawn());
+        eventObject.addProperty("debug_on_left_click", DataCategories.DebugEvent.instance.getDebugOnLeftClick());
+        eventObject.addProperty("debug_on_living_drops", DataCategories.DebugEvent.instance.getDebugOnLivingDrops());
+        eventObject.addProperty("debug_on_living_experience_drop", DataCategories.DebugEvent.instance.getDebugOnLivingExperienceDrop());
+        eventObject.addProperty("debug_on_task_manager", DataCategories.DebugEvent.instance.getDebugOnTaskManager());
+        eventObject.addProperty("debug_on_player_tick", DataCategories.DebugEvent.instance.getDebugOnPlayerTick());
+        eventObject.addProperty("debug_on_potential_spawn", DataCategories.DebugEvent.instance.getDebugOnPotentialSpawn());
+        eventObject.addProperty("debug_on_right_click", DataCategories.DebugEvent.instance.getDebugOnRightClick());
+        return eventObject;
+    }
+
+    public void loadFromFile() {
         try (FileReader reader = new FileReader(this.nameConfig)) {
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -105,10 +101,8 @@ public final class CfgGameDebugger extends CustomConceptConfig {
             }
         } catch (FileNotFoundException e) {
             Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
-            throw e;
         } catch (IOException e) {
             Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
-            throw e;
         }
     }
 }

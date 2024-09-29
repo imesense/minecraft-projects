@@ -25,10 +25,6 @@ public abstract class CustomConceptConfig
 
     public CustomConceptConfig(String nameConfigFile)
     {
-        Log.writeDataToLogFile(0, "nameConfigFile: " + nameConfigFile);
-
         this.nameConfig = this.constructPathToDirectory() + nameConfigFile;
-
-        Log.writeDataToLogFile(0, "this.nameConfig: " + this.nameConfig);
     }
 }
