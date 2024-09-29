@@ -12,15 +12,7 @@ import java.lang.reflect.Constructor;
  */
 public final class RegisterCfgClasses {
     private static final Class<?>[] CONFIG_CLASSES = {
-            //CfgRenderNightConfig.class,
-            //CfgCacheWorldGame.class,
-            CfgGameDebugger.class//,
-            //CfgLogFile.class,
-            //CfgPlayer.class,
-            //CfgWindowTitle.class,
-            //CfgWorldGenerator.class,
-            //CfgWorldTime.class,
-            //CfgZombieDropItem.class
+            CfgGameDebugger.class
     };
 
     public RegisterCfgClasses() {

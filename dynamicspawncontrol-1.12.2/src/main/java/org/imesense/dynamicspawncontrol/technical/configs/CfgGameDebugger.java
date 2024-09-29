@@ -80,13 +80,12 @@ public final class CfgGameDebugger extends CustomConceptConfig {
     }
 
     public void loadFromFile() throws IOException {
-        Log.writeDataToLogFile(0, "test");
         try (FileReader reader = new FileReader(this.nameConfig)) {
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("monitor")) {
-                JsonObject monitorObject = jsonObject.getAsJsonObject("monitor");
+            if (jsonObject.has("debug_monitor_cache")) {
+                JsonObject monitorObject = jsonObject.getAsJsonObject("debug_monitor_cache");
                 DataCategories.DebugMonitor.instance.setDebugMonitorCache(monitorObject.get("monitorDebug").getAsBoolean());
             }
 
