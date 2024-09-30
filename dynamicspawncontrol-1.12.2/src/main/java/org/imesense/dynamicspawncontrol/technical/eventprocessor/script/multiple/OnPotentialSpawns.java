@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
@@ -102,7 +102,7 @@ public final class OnPotentialSpawns
                         event.getList().add(entry);
                     }
 
-                    if (ConfigGameDebugger.DebugGenericPotentialSpawns)
+                    if (DataGameDebugger.DebugEvent.instance.getDebugOnPotentialSpawn())
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericOverrideSpawn. List: " + event.getList());
                     }

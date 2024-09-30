@@ -12,7 +12,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldTime;
+import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PacketTime;
 
@@ -58,9 +58,9 @@ public final class TimeHandlerServer implements ITimeHandler
     @Override
     public void tick(World world)
     {
-        if (ConfigWorldTime.SyncToSystemTime)
+        if (DataPluginWorldTime.worldTime.instance.getSyncToSystemTime())
         {
-            if (!world.isRemote && world.getMinecraftServer().getTickCounter() % ConfigWorldTime.SyncToSystemTimeRate == 0)
+            if (!world.isRemote && world.getMinecraftServer().getTickCounter() % DataPluginWorldTime.worldTime.instance.getSyncToSystemTimeRate() == 0)
             {
                 this.syncTimeWithSystem(world);
             }
@@ -106,7 +106,7 @@ public final class TimeHandlerServer implements ITimeHandler
             {
                 MessageHandler.instance.sendToAll(new PacketTime(this.customTime, this.multiplier));
 
-                if (ConfigWorldTime.TimeControlDebug)
+                if (DataPluginWorldTime.worldTime.instance.getTimeControlDebug())
                 {
                     updatedWorldTime = world.getWorldTime();
 
@@ -160,7 +160,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
             world.provider.setWorldTime(time);
 
-            if (ConfigWorldTime.TimeControlDebug)
+            if (DataPluginWorldTime.worldTime.instance.getTimeControlDebug())
             {
                 LOG.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
             }

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericSpawnConditions;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
@@ -58,7 +58,7 @@ public final class OnEntitySpawnEvent
         {
             if (rule.match(event))
             {
-                if (ConfigGameDebugger.DebugGenericEntitySpawnEvent)
+                if (DataGameDebugger.DebugEvent.instance.getDebugOnEntitySpawn())
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericSpawnConditions. ID Rule: " + i + ": "
                             + "entity: " + event.getEntity().getName()

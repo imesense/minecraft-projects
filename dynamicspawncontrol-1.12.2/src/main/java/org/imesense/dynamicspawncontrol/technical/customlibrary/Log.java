@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
-import org.imesense.dynamicspawncontrol.technical.config.ConfigLogFile;
+import org.imesense.dynamicspawncontrol.technical.config.logfile.DataLogFile;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -160,7 +160,7 @@ public final class Log
                     writer.write("\n" + LEVEL_PREFIXES[logLevel[0]] + data);
                     writer.close();
 
-                    cleanFile(logFile, ConfigLogFile.LogMaxLines);
+                    cleanFile(logFile, DataLogFile.logFile.instance.getLogMaxLines());
                 }
                 catch (IOException exception)
                 {

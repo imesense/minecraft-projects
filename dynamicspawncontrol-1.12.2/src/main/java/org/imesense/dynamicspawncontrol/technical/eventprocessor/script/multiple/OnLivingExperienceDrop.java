@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericExperience;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
@@ -60,7 +60,7 @@ public final class OnLivingExperienceDrop
                     int modifyXp = rule.modifyXp(event.getDroppedExperience());
                     event.setDroppedExperience(modifyXp);
 
-                    if (ConfigGameDebugger.DebugGenericLivingExperienceDrop)
+                    if (DataGameDebugger.DebugEvent.instance.getDebugOnLivingExperienceDrop())
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + i + ": "
                                 + result

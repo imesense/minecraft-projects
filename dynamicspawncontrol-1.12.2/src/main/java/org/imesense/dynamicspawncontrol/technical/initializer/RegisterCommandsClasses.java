@@ -3,7 +3,6 @@ package org.imesense.dynamicspawncontrol.technical.initializer;
 import net.minecraft.command.ICommand;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigZombieDropItem;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import org.imesense.dynamicspawncontrol.gameplay.commands.*;

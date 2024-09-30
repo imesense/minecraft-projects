@@ -20,11 +20,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.CfgGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.configs.cfgGameDebugger.DataCategories;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCfgClasses;
 
 import java.util.HashSet;
 
@@ -97,7 +94,7 @@ public final class CacheEvents
     @SubscribeEvent(priority = EventPriority.LOW)
     public synchronized void onRenderOverlay_3(RenderGameOverlayEvent.Post event)
     {
-        boolean debugOption = DataCategories.DebugMonitor.instance.getDebugMonitorCache();
+        boolean debugOption = DataGameDebugger.DebugMonitor.instance.getDebugMonitorCache();
 
         if (!debugOption)
         {

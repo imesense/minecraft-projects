@@ -14,7 +14,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericDropLoot;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
@@ -87,7 +87,7 @@ public final class OnLivingDrops
 
                     BlockPos pos = event.getEntity().getPosition();
 
-                    if (ConfigGameDebugger.DebugGenericLivingDrops)
+                    if (DataGameDebugger.DebugEvent.instance.getDebugOnLivingDrops())
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericDropLoot. ID Rule: " + i
                                 + " entity: " + event.getEntity().getName() + " new drop @item: " + item);

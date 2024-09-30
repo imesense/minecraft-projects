@@ -1,7 +1,15 @@
 package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.*;
+import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.CfgBlockWorldGenerator;
+import org.imesense.dynamicspawncontrol.technical.config.cachedameworld.CfgCacheWorldGame;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.CfgGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.CfgPluginWorldTime;
+import org.imesense.dynamicspawncontrol.technical.config.logfile.CfgLogFile;
+import org.imesense.dynamicspawncontrol.technical.config.player.CfgPlayer;
+import org.imesense.dynamicspawncontrol.technical.config.rendernight.CfgRenderNight;
+import org.imesense.dynamicspawncontrol.technical.config.windowtitle.CfgWindowTitle;
+import org.imesense.dynamicspawncontrol.technical.config.zombiedropitem.CfgZombieDropItem;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations.DCSSingleConfig;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -16,10 +24,10 @@ public final class RegisterCfgClasses {
         CfgGameDebugger.class,
         CfgLogFile.class,
         CfgPlayer.class,
-        CfgRenderNightConfig.class,
-        CfgWorldTime.class,
-        CfgWorldGenerator.class,
-        CfgWorldTime.class,
+        CfgRenderNight.class,
+        CfgWindowTitle.class,
+        CfgBlockWorldGenerator.class,
+        CfgPluginWorldTime.class,
         CfgZombieDropItem.class
     };
 
