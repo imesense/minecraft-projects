@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldTime;
+import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
 import org.imesense.dynamicspawncontrol.technical.handlers.ITimeHandler;
 import org.imesense.dynamicspawncontrol.technical.handlers.TimeHandlerClient;
 import org.imesense.dynamicspawncontrol.technical.handlers.TimeHandlerServer;
@@ -71,7 +71,7 @@ public final class OnUpdateTimeWorld
                 world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", "true");
             }
 
-            if (!world.isRemote && !ConfigWorldTime.SyncToSystemTime)
+            if (!world.isRemote && !DataPluginWorldTime.worldTime.instance.getSyncToSystemTime())
             {
                 this.serverUpdate(world.getWorldTime());
             }
@@ -197,7 +197,7 @@ public final class OnUpdateTimeWorld
                             }
                         }
 
-                        if (ConfigWorldTime.SyncToSystemTime)
+                        if (DataPluginWorldTime.worldTime.instance.getSyncToSystemTime())
                         {
                             event.getSender().sendMessage(new TextComponentString
                                     (TextFormatting.RED + "Disable system time synchronization to " + args[0] + " time!"));

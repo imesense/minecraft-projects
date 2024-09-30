@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigWindowTitle;
+import org.imesense.dynamicspawncontrol.technical.config.windowtitle.DataWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.lwjgl.opengl.Display;
 
@@ -45,7 +45,7 @@ public final class OnWindowTitle
      *
      */
     @Nonnull
-    private static final String TITLE = ConfigWindowTitle.WindowTitle;
+    private static final String TITLE = DataWindowTitle.windowTitle.instance.getWindowTitle();
 
     /**
      *

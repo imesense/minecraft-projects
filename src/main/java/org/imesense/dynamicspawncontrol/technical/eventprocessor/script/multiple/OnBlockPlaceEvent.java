@@ -8,7 +8,8 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
+
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockPlaceActions;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
@@ -61,7 +62,7 @@ public final class OnBlockPlaceEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (ConfigGameDebugger.DebugGenericBlockPlaceEvent)
+                if (DataGameDebugger.DebugEvent.instance.getDebugOnBlockPlace())
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockPlaceActions. ID Rule "
                             + i + ": "

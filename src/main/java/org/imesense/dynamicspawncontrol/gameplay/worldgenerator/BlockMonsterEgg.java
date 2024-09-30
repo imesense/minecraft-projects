@@ -9,7 +9,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldGenerator;
+import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.DataBlockWorldGenerator;
 
 import java.util.Objects;
 import java.util.Random;
@@ -83,9 +83,9 @@ public final class BlockMonsterEgg implements IWorldGenerator
             {
                 run(
                         CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
-                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.BlockNetherRackChanceSpawn,
-                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.GetBlockNetherRackMinHeight,
-                        ConfigWorldGenerator.settingsGenerationBlockNetherRack.GetBlockNetherRackMaxHeight
+                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getChanceSpawn(),
+                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMinHeight(),
+                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMaxHeight()
                 );
                 break;
             }

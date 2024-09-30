@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericRightClickActions;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
@@ -60,7 +60,7 @@ public final class OnRightClickEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (ConfigGameDebugger.DebugGenericRightClickEvent)
+                if (DataGameDebugger.DebugEvent.instance.getDebugOnRightClick())
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericRightClickActions. ID Rule: " + i + ": " + result
                             + " entity: " + event.getEntityPlayer().getName()

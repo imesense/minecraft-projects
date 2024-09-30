@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigGameDebugger;
+import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericLeftClickActions;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
@@ -60,7 +60,7 @@ public final class OnLeftClickEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (ConfigGameDebugger.DebugGenericLeftClickEvent)
+                if (DataGameDebugger.DebugEvent.instance.getDebugOnLeftClick())
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericLeftClickActions. ID Rule: " + i + ": "
                             + result

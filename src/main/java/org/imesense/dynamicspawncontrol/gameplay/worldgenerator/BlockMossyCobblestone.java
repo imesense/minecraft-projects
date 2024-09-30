@@ -9,7 +9,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigWorldGenerator;
+import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.DataBlockWorldGenerator;
 
 import java.util.Objects;
 import java.util.Random;
@@ -83,9 +83,9 @@ public final class BlockMossyCobblestone implements IWorldGenerator
             {
                 run(
                         CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
-                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.BlockMossyCobblestoneChanceSpawn,
-                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMinHeight,
-                        ConfigWorldGenerator.settingsGenerationBlockMossyCobblestone.GetBlockMossyCobblestoneMaxHeight
+                        DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getChanceSpawn(),
+                        DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getMinHeight(),
+                        DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getMaxHeight()
                 );
                 break;
             }

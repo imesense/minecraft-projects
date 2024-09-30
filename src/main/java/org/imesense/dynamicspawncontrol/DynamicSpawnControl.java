@@ -184,7 +184,7 @@ public class DynamicSpawnControl
      * @param event Preinitialization event
      */
     @EventHandler
-    public synchronized void preInit(FMLPreInitializationEvent event) throws IOException
+    public synchronized void preInit(FMLPreInitializationEvent event)
     {
         //
         checkDebugger = new CheckDebugger();

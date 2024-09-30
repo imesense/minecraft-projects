@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.configs.ConfigPlayer;
+import org.imesense.dynamicspawncontrol.technical.config.player.DataPlayer;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public final class OnPlayerEvents
         World world = player.world;
         BlockPos playerPos = player.getPosition();
 
-        int radius = ConfigPlayer.ProtectRespawnPlayerRadius;
+        int radius = DataPlayer.player.instance.getProtectRespawnPlayerRadius();
 
         AxisAlignedBB area = new AxisAlignedBB
                 (
