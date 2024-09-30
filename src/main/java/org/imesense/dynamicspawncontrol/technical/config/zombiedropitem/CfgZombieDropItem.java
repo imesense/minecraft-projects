@@ -28,6 +28,8 @@ public final class CfgZombieDropItem extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataZombieDropItem.zombieDrop.instance = new DataZombieDropItem.zombieDrop("zombie_drop");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -39,8 +41,6 @@ public final class CfgZombieDropItem extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgZombieDropItem.class);
     }
 
     /**

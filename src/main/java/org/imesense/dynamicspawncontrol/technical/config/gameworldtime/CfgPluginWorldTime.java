@@ -28,6 +28,8 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataPluginWorldTime.worldTime.instance = new DataPluginWorldTime.worldTime("game_world_time");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -39,8 +41,6 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgPluginWorldTime.class);
     }
 
     /**

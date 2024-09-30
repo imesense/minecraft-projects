@@ -41,6 +41,8 @@ public final class OnPlayerEvents
      */
     public OnPlayerEvents()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -48,8 +50,6 @@ public final class OnPlayerEvents
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnPlayerEvents.class);
     }
 
     /**

@@ -34,9 +34,9 @@ public final class GeneralStorageData
      */
     public GeneralStorageData()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         instance = this;
-
-        CodeGenericUtils.printInitClassToLog(GeneralStorageData.class);
     }
 
     /**

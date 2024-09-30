@@ -35,6 +35,8 @@ public final class OnLivingDrops
      */
     public OnLivingDrops()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -42,8 +44,6 @@ public final class OnLivingDrops
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnLivingDrops.class);
     }
 
     /**

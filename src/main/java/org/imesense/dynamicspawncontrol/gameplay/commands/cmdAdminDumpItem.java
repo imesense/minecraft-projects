@@ -30,7 +30,7 @@ public final class cmdAdminDumpItem extends CommandBase
      */
     public cmdAdminDumpItem()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminDumpItem.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

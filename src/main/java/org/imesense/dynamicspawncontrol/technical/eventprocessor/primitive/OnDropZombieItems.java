@@ -32,6 +32,8 @@ public final class OnDropZombieItems
      */
     public OnDropZombieItems()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -39,8 +41,6 @@ public final class OnDropZombieItems
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnDropZombieItems.class);
     }
 
     /**

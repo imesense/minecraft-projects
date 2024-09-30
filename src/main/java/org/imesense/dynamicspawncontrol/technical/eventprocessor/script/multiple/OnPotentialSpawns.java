@@ -34,13 +34,16 @@ public final class OnPotentialSpawns
      */
     public OnPotentialSpawns()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
+			
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
             throw new RuntimeException();
         }
-
-        CodeGenericUtils.printInitClassToLog(OnPotentialSpawns.class);
+		
+		instanceExists = true;
     }
 
     /**

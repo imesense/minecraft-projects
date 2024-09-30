@@ -28,6 +28,8 @@ public final class CfgRenderNight extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataRenderNight.renderNight.instance = new DataRenderNight.renderNight("render_night");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -39,8 +41,6 @@ public final class CfgRenderNight extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgRenderNight.class);
     }
 
     /**

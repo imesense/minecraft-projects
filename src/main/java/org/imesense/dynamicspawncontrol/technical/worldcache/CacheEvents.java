@@ -34,6 +34,8 @@ public final class CacheEvents
 
     public CacheEvents()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -43,8 +45,6 @@ public final class CacheEvents
         instanceExists = true;
 
         cacheMonitor = new CacheMonitor();
-
-        CodeGenericUtils.printInitClassToLog(CacheEvents.class);
     }
 
     @SubscribeEvent(priority = EventPriority.NORMAL)

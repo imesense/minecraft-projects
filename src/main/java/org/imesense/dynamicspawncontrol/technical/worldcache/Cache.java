@@ -55,6 +55,8 @@ public final class Cache
 
     public Cache()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -64,7 +66,6 @@ public final class Cache
         instanceExists = true;
 
         instance = this;
-        CodeGenericUtils.printInitClassToLog(Cache.class);
     }
 
     public void updateCache(@Nonnull World world)

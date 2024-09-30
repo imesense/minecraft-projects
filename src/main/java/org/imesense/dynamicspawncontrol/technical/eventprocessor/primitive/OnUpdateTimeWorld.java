@@ -50,7 +50,7 @@ public final class OnUpdateTimeWorld
      */
     private OnUpdateTimeWorld()
     {
-        CodeGenericUtils.printInitClassToLog(OnUpdateTimeWorld.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

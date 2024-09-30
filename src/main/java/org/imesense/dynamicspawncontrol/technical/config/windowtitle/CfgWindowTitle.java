@@ -28,6 +28,8 @@ public final class CfgWindowTitle extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataWindowTitle.windowTitle.instance = new DataWindowTitle.windowTitle("window_title");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -39,8 +41,6 @@ public final class CfgWindowTitle extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgWindowTitle.class);
     }
 
     /**

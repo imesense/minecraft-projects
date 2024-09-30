@@ -31,7 +31,7 @@ public final class BlockMonsterEgg implements IWorldGenerator
      */
     public BlockMonsterEgg()
     {
-        CodeGenericUtils.printInitClassToLog(BlockMonsterEgg.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
 
         CLASS_MONSTER_EGG_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("monster_egg")).getDefaultState(), 5);

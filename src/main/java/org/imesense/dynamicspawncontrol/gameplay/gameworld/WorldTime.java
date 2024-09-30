@@ -17,7 +17,7 @@ public final class WorldTime
      */
     public WorldTime()
     {
-        CodeGenericUtils.printInitClassToLog(WorldTime.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

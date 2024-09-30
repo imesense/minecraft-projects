@@ -23,7 +23,7 @@ public final class cmdAdminGameMode extends CommandBase
      */
     public cmdAdminGameMode()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminGameMode.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

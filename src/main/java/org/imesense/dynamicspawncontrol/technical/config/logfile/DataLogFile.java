@@ -35,9 +35,9 @@ public class DataLogFile
          */
         public logFile(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**

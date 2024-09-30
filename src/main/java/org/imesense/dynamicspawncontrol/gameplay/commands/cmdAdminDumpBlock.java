@@ -32,7 +32,7 @@ public final class cmdAdminDumpBlock extends CommandBase
      */
     public cmdAdminDumpBlock()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminDumpBlock.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

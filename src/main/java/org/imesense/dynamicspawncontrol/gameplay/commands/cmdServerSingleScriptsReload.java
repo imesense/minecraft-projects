@@ -24,7 +24,7 @@ public final class cmdServerSingleScriptsReload extends CommandBase
      */
     public cmdServerSingleScriptsReload()
     {
-        CodeGenericUtils.printInitClassToLog(cmdServerSingleScriptsReload.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     @Nonnull

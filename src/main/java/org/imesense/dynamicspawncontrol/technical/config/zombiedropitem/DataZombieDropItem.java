@@ -65,9 +65,9 @@ public class DataZombieDropItem
          */
         public zombieDrop(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**

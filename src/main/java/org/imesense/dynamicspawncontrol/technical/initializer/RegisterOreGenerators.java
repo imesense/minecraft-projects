@@ -27,7 +27,7 @@ public final class RegisterOreGenerators
      */
     public RegisterOreGenerators()
     {
-        CodeGenericUtils.printInitClassToLog(RegisterOreGenerators.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

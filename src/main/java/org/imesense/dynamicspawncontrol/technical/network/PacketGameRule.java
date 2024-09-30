@@ -24,7 +24,7 @@ public final class PacketGameRule implements IMessage
      */
     public PacketGameRule()
     {
-        CodeGenericUtils.printInitClassToLog(PacketGameRule.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

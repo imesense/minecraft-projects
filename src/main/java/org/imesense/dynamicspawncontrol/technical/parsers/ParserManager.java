@@ -23,7 +23,7 @@ public final class ParserManager
      */
     public ParserManager()
     {
-        CodeGenericUtils.printInitClassToLog(ParserManager.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

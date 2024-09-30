@@ -20,7 +20,7 @@ public final class cmdAdminGetWorldMoonPhase extends CommandBase
      */
     public cmdAdminGetWorldMoonPhase()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminGetWorldMoonPhase.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

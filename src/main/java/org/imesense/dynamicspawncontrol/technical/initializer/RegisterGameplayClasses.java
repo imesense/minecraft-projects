@@ -25,7 +25,7 @@ public final class RegisterGameplayClasses
      */
     public RegisterGameplayClasses()
     {
-        CodeGenericUtils.printInitClassToLog(RegisterGameplayClasses.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

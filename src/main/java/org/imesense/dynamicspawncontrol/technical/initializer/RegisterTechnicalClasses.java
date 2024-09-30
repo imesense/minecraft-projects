@@ -42,7 +42,7 @@ public final class RegisterTechnicalClasses
      */
     public RegisterTechnicalClasses()
     {
-        CodeGenericUtils.printInitClassToLog(RegisterTechnicalClasses.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

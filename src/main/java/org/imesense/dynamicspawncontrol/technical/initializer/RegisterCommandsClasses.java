@@ -38,7 +38,7 @@ public final class RegisterCommandsClasses
      */
     public RegisterCommandsClasses()
     {
-        CodeGenericUtils.printInitClassToLog(RegisterCommandsClasses.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

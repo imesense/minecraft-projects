@@ -23,7 +23,7 @@ public final class cmdAdminSwitchVanish extends CommandBase
      */
     public cmdAdminSwitchVanish()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminSwitchVanish.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**
