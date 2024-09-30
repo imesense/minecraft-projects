@@ -25,6 +25,8 @@ public final class CfgGameDebugger extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataGameDebugger.DebugMonitor.instance = new DataGameDebugger.DebugMonitor("monitor");
         DataGameDebugger.DebugEvent.instance = new DataGameDebugger.DebugEvent("event");
 
@@ -37,8 +39,6 @@ public final class CfgGameDebugger extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
                 saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgGameDebugger.class);
     }
 
     /**

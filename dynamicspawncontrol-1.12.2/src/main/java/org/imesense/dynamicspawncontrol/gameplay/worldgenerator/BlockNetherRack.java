@@ -31,7 +31,7 @@ public final class BlockNetherRack implements IWorldGenerator
      */
     public BlockNetherRack()
     {
-        CodeGenericUtils.printInitClassToLog(BlockNetherRack.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
 
         CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 5);

@@ -90,9 +90,9 @@ public class DataRenderNight
          */
         public renderNight(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**

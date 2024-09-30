@@ -28,6 +28,8 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataBlockWorldGenerator.InfoDataBlockNetherRack.instance =
                 new DataBlockWorldGenerator.InfoDataBlockNetherRack("settings_block_nether_rack");
 
@@ -46,8 +48,6 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgBlockWorldGenerator.class);
     }
 
     /**

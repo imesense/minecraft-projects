@@ -28,7 +28,7 @@ public final class cmdServerMobsKiller extends CommandBase
      */
     public cmdServerMobsKiller()
     {
-        CodeGenericUtils.printInitClassToLog(cmdServerMobsKiller.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

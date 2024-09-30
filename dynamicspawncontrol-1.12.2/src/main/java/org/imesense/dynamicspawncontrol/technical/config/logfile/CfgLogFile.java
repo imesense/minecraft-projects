@@ -29,6 +29,8 @@ public final class CfgLogFile extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataLogFile.logFile.instance = new DataLogFile.logFile("log_file");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -40,8 +42,6 @@ public final class CfgLogFile extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgLogFile.class);
     }
 
     /**

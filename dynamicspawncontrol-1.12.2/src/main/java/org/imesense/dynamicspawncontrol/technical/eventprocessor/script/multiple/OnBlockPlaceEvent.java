@@ -30,6 +30,8 @@ public final class OnBlockPlaceEvent
      */
     public OnBlockPlaceEvent()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -37,8 +39,6 @@ public final class OnBlockPlaceEvent
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnBlockPlaceEvent.class);
     }
 
     /**

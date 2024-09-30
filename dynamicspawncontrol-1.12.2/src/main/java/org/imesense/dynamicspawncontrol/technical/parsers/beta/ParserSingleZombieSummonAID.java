@@ -35,7 +35,7 @@ public final class ParserSingleZombieSummonAID implements IBetaParsers
      */
     public ParserSingleZombieSummonAID()
     {
-        CodeGenericUtils.printInitClassToLog(ParserSingleZombieSummonAID.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

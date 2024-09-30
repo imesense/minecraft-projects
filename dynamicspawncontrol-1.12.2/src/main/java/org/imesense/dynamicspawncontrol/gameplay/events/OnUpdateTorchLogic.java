@@ -36,6 +36,8 @@ public final class OnUpdateTorchLogic
      */
     public OnUpdateTorchLogic()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -43,8 +45,6 @@ public final class OnUpdateTorchLogic
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnUpdateTorchLogic.class);
     }
 
     /**

@@ -32,7 +32,7 @@ public final class ParserSingleScriptCheckSpawn implements IBetaParsers
      */
     public ParserSingleScriptCheckSpawn()
     {
-        CodeGenericUtils.printInitClassToLog(ParserSingleScriptCheckSpawn.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

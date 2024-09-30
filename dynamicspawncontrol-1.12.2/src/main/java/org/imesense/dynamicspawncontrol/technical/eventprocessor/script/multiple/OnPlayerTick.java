@@ -30,7 +30,7 @@ public final class OnPlayerTick
      */
     public OnPlayerTick()
     {
-        CodeGenericUtils.printInitClassToLog(OnPlayerTick.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

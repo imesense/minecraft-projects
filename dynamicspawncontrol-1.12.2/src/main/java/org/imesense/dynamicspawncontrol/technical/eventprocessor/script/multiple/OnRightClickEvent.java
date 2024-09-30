@@ -29,6 +29,8 @@ public final class OnRightClickEvent
      */
     public OnRightClickEvent()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -36,8 +38,6 @@ public final class OnRightClickEvent
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnRightClickEvent.class);
     }
 
     /**

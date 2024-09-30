@@ -22,7 +22,7 @@ public final class cmdAdminLaunchFireball extends CommandBase
      */
     public cmdAdminLaunchFireball()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminLaunchFireball.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

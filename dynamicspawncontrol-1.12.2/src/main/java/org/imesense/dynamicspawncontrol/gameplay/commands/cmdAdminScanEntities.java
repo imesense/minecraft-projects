@@ -25,7 +25,7 @@ public final class cmdAdminScanEntities extends CommandBase
      */
     public cmdAdminScanEntities()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminScanEntities.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

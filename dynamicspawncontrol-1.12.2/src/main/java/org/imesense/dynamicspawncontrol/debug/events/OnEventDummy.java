@@ -20,6 +20,8 @@ public final class OnEventDummy
      */
     public OnEventDummy()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -27,7 +29,5 @@ public final class OnEventDummy
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnEventDummy.class);
     }
 }

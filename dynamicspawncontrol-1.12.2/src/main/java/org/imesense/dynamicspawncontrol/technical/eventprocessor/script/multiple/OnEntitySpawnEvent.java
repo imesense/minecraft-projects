@@ -29,6 +29,8 @@ public final class OnEntitySpawnEvent
      */
     public OnEntitySpawnEvent()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -36,8 +38,6 @@ public final class OnEntitySpawnEvent
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnEntitySpawnEvent.class);
     }
 
     /**

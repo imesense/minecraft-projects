@@ -30,9 +30,9 @@ public final class CacheStorage
      */
     public CacheStorage()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         instance = this;
-
-        CodeGenericUtils.printInitClassToLog(CacheStorage.class);
     }
 
     /**

@@ -32,7 +32,7 @@ public final class RegisterCfgClasses {
     };
 
     public RegisterCfgClasses() {
-        CodeGenericUtils.printInitClassToLog(RegisterCfgClasses.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     public static void initializeConfigs() {

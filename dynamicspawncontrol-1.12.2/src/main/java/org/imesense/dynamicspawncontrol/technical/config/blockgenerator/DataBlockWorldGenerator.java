@@ -45,9 +45,9 @@ public class DataBlockWorldGenerator
          */
         public InfoDataBlockNetherRack(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**
@@ -141,9 +141,9 @@ public class DataBlockWorldGenerator
          */
         public InfoDataBlockMossyCobblestone(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**
@@ -237,9 +237,9 @@ public class DataBlockWorldGenerator
          */
         public InfoDataBlockBlockMonsterEgg(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**

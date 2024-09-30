@@ -24,7 +24,7 @@ public final class cmdAdminDumpEntity extends CommandBase
      */
     public cmdAdminDumpEntity()
     {
-        CodeGenericUtils.printInitClassToLog(cmdAdminDumpEntity.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

@@ -32,9 +32,9 @@ public class DataGameDebugger
          */
         public DebugMonitor(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**
@@ -127,9 +127,9 @@ public class DataGameDebugger
          */
         public DebugEvent(@Nonnull final String category)
         {
+			CodeGenericUtils.printInitClassToLog(this.getClass());
+			
             this.setCategory = category;
-
-            CodeGenericUtils.printInitClassToLog(this.getClass());
         }
 
         /**

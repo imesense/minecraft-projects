@@ -28,6 +28,8 @@ public final class CfgPlayer extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         DataPlayer.player.instance = new DataPlayer.player("player");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -39,8 +41,6 @@ public final class CfgPlayer extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgPlayer.class);
     }
 
     /**

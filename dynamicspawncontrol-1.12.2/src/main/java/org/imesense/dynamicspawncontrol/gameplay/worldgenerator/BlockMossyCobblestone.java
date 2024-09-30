@@ -31,7 +31,7 @@ public final class BlockMossyCobblestone implements IWorldGenerator
      */
     public BlockMossyCobblestone()
     {
-        CodeGenericUtils.printInitClassToLog(BlockMossyCobblestone.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
 
         CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 5);

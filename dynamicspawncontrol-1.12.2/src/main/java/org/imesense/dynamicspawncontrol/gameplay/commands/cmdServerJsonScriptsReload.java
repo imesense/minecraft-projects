@@ -20,7 +20,7 @@ public final class cmdServerJsonScriptsReload extends CommandBase
      */
     public cmdServerJsonScriptsReload()
     {
-        CodeGenericUtils.printInitClassToLog(cmdServerJsonScriptsReload.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

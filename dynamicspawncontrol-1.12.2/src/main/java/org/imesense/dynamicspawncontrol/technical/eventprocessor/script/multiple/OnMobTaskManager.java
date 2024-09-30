@@ -28,6 +28,8 @@ public final class OnMobTaskManager
      */
     public OnMobTaskManager()
     {
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+		
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
@@ -35,8 +37,6 @@ public final class OnMobTaskManager
         }
 
         instanceExists = true;
-
-        CodeGenericUtils.printInitClassToLog(OnMobTaskManager.class);
     }
 
     /**

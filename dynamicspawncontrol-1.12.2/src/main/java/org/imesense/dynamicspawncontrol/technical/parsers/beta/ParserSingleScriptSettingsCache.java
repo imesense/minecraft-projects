@@ -26,7 +26,7 @@ public final class ParserSingleScriptSettingsCache implements IBetaParsers
      */
     public ParserSingleScriptSettingsCache()
     {
-        CodeGenericUtils.printInitClassToLog(ParserSingleScriptSettingsCache.class);
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**

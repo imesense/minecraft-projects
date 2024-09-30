@@ -28,6 +28,8 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
     {
         super(nameConfigFile);
 
+		CodeGenericUtils.printInitClassToLog(this.getClass());
+
         if (Files.exists(Paths.get(this.nameConfig)))
         {
             loadFromFile();
@@ -37,8 +39,6 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
             saveToFile();
         }
-
-        CodeGenericUtils.printInitClassToLog(CfgCacheWorldGame.class);
     }
 
     /**
