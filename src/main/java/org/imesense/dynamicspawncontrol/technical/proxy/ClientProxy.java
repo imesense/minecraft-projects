@@ -7,12 +7,10 @@ import com.google.common.util.concurrent.ListenableFuture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterConfigClasses;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCfgClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterOreGenerators;
 
 /**
@@ -21,46 +19,6 @@ import org.imesense.dynamicspawncontrol.technical.initializer.RegisterOreGenerat
 public final class ClientProxy implements IProxy
 {
     /**
-     *
-     */
-    public static Configuration ConfigLogFile;
-
-    /**
-     *
-     */
-    public static Configuration ConfigGameDebugger;
-
-    /**
-     *
-     */
-    public static Configuration ConfigOreGeneratorFile;
-
-    /**
-     *
-     */
-    public static Configuration ConfigNights;
-
-    /**
-     *
-     */
-    public static Configuration ConfigWorldTime;
-
-    /**
-     *
-     */
-    public static Configuration ConfigPlayer;
-
-    /**
-     *
-     */
-    public static Configuration ConfigZombieDropItem;
-
-    /**
-     *
-     */
-    public static Configuration ConfigWindowTitle;
-
-    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
@@ -68,7 +26,6 @@ public final class ClientProxy implements IProxy
     @Override
     public void preInit(FMLPreInitializationEvent event)
     {
-        RegisterConfigClasses.init(event);
         RegisterOreGenerators.init(event);
     }
 
@@ -90,14 +47,7 @@ public final class ClientProxy implements IProxy
     @Override
     public void postInit(FMLPostInitializationEvent event)
     {
-        //CodeGenericUtils.checkObjectNotNull(ConfigLogFile, "ConfigLogFile").save();
-        //CodeGenericUtils.checkObjectNotNull(ConfigGameDebugger, "ConfigGameDebugger").save();
-        //CodeGenericUtils.checkObjectNotNull(ConfigWindowTitle, "ConfigWindowTitle").save();
-        //CodeGenericUtils.checkObjectNotNull(ConfigOreGeneratorFile, "ConfigOreGeneratorFile").save();
-        //CodeGenericUtils.checkObjectNotNull(ConfigNights, "ConfigNights").save();
-        //CodeGenericUtils.checkObjectNotNull(ConfigWorldTime, "ConfigWorldTime").save();
-        //CodeGenericUtils.checkObjectNotNull(ConfigPlayer, "ConfigPlayer").save();
-        //CodeGenericUtils.checkObjectNotNull(ConfigZombieDropItem, "ConfigZombieDropItem").save();
+
     }
 
     /**
