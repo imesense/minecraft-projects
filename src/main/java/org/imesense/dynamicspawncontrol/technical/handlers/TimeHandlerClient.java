@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 
 import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
 import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 /**
  *
@@ -30,11 +31,6 @@ public final class TimeHandlerClient implements ITimeHandler
 
     /**
      *
-     */
-    private static final Logger log = LogManager.getLogger(TimeHandlerClient.class.getSimpleName());
-
-    /**
-     *
      * @param world
      */
     @Override
@@ -46,7 +42,7 @@ public final class TimeHandlerClient implements ITimeHandler
 
             if (this.multiplier == 0.0D && this.debugLogDelay % 20 == 0)
             {
-                log.info("Waiting for server time packet...");
+                Log.writeDataToLogFile(0, "Waiting for server time packet...");
                 return;
             }
 
@@ -58,7 +54,7 @@ public final class TimeHandlerClient implements ITimeHandler
             {
                 long worldTime = world.getWorldTime();
 
-                log.info(String.format("Client time: %s | multiplier: %s | game_rules: %s, %s",
+                Log.writeDataToLogFile(0, String.format("Client time: %s | multiplier: %s | game_rules: %s, %s",
                         worldTime, this.multiplier, world.getGameRules().getBoolean("doDaylightCycle"),
                         world.getGameRules().getBoolean("doDaylightCycle_tc")));
             }

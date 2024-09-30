@@ -13,6 +13,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
 import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PacketTime;
 
@@ -24,12 +25,12 @@ public final class TimeHandlerServer implements ITimeHandler
     /**
      *
      */
-    private long customTime;
+    private long customTime = 0L;
 
     /**
      *
      */
-    private double multiplier;
+    private double multiplier = 0.0;
 
     /**
      *
@@ -44,12 +45,8 @@ public final class TimeHandlerServer implements ITimeHandler
     /**
      *
      */
-    private static final Logger LOG = LogManager.getLogger(TimeHandlerServer.class.getSimpleName());
-
-    /**
-     *
-     */
-    private static final Method WAKE_ALL_PLAYERS = ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
+    private static final Method WAKE_ALL_PLAYERS =
+            ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
 
     /**
      *
@@ -95,7 +92,8 @@ public final class TimeHandlerServer implements ITimeHandler
             }
             catch (InvocationTargetException | IllegalAccessException exception)
             {
-                LOG.error("Unable to wake players!", exception);
+                Log.writeDataToLogFile(2, "Unable to wake players!");
+                Log.writeDataToLogFile(2, "exception: " + exception);
             }
 
             ++this.customTime;
@@ -110,8 +108,9 @@ public final class TimeHandlerServer implements ITimeHandler
                 {
                     updatedWorldTime = world.getWorldTime();
 
-                    LOG.info(WorldTime.progressString(updatedWorldTime, ""));
-                    LOG.info(String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s",
+                    Log.writeDataToLogFile(0, WorldTime.progressString(updatedWorldTime, ""));
+
+                    Log.writeDataToLogFile(0, String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s",
                             worldTime, updatedWorldTime, this.customTime - 1L, this.customTime, WorldTime.day(updatedWorldTime), this.multiplier));
                 }
             }
@@ -162,7 +161,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
             if (DataPluginWorldTime.worldTime.instance.getTimeControlDebug())
             {
-                LOG.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
+                Log.writeDataToLogFile(0, String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
             }
         }
     }
