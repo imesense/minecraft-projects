@@ -171,7 +171,7 @@ public final class OnSingleZombieSummonAID
                 EntityZombie newZombie = new EntityZombie(world);
                 newZombie.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 
-                GeneralStorageData parser = GeneralStorageData.getInstance();
+                GeneralStorageData parser = GeneralStorageData.instance;
 
                 if (parser != null)
                 {

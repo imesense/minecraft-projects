@@ -14,16 +14,7 @@ public final class CacheStorage
     /**
      *
      */
-    private static CacheStorage instance;
-
-    /**
-     *
-     * @return
-     */
-    public static CacheStorage getInstance()
-    {
-        return instance;
-    }
+    public static CacheStorage instance;
 
     /**
      *

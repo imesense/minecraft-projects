@@ -13,7 +13,7 @@ public final class CheckDebugger
     /**
      *
      */
-    private static CheckDebugger instance = null;
+    public static CheckDebugger instance;
 
     /**
      *
@@ -22,15 +22,6 @@ public final class CheckDebugger
     {
         instance = this;
         IsRunDebugger = run();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static CheckDebugger getInstance()
-    {
-        return instance;
     }
 
     /**

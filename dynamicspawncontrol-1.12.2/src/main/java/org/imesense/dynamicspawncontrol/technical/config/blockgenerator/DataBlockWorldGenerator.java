@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataBlockWorldGenerator
+public final class DataBlockWorldGenerator
 {
     /**
      *

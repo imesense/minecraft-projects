@@ -47,11 +47,9 @@ public final class Cache
     public final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_ACTUAL_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
     public final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_BUFFER_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
 
-    private static Cache instance = null;
+    public static Cache instance;
 
     private static boolean instanceExists = false;
-
-    public static Cache getInstance() { return instance; }
 
     public Cache()
     {

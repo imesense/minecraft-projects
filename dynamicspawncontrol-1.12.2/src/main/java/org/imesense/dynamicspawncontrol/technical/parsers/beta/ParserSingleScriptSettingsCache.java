@@ -39,26 +39,10 @@ public final class ParserSingleScriptSettingsCache implements IBetaParsers
 
     /**
      *
-     */
-    private static ParserSingleScriptSettingsCache instance;
-
-    /**
-     *
-     * @return
-     */
-    public static ParserSingleScriptSettingsCache getClassInstance()
-    {
-        return instance;
-    }
-
-    /**
-     *
      * @param initialization
      */
     public void loadConfig(boolean initialization)
     {
-        instance = this;
-
         File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CACHE,
                 EnumSingleScripts.SCRIPT_CACHE_MOBS.getKeyword());
 
@@ -122,7 +106,7 @@ public final class ParserSingleScriptSettingsCache implements IBetaParsers
                     entitiesList.add(new CacheStorage.EntityData(entityResourceLocation, maxCount));
                 }
 
-                CacheStorage.getInstance().EntityCacheMobs = entitiesList;
+                CacheStorage.instance.EntityCacheMobs = entitiesList;
                 Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
             }
             else

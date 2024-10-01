@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataLogFile
+public final class DataLogFile
 {
     /**
      *

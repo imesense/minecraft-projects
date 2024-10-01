@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataZombieDropItem
+public final class DataZombieDropItem
 {
     /**
      *
@@ -76,7 +76,7 @@ public class DataZombieDropItem
          */
         public Float getBreakItem()
         {
-            return breakItem;
+            return this.breakItem;
         }
 
         /**
@@ -94,7 +94,7 @@ public class DataZombieDropItem
          */
         public Float getHandItemDamageFactor()
         {
-            return handItemDamageFactor;
+            return this.handItemDamageFactor;
         }
 
         /**
@@ -112,7 +112,7 @@ public class DataZombieDropItem
          */
         public Float getHeadDamageFactor()
         {
-            return headDamageFactor;
+            return this.headDamageFactor;
         }
 
         /**
@@ -130,7 +130,7 @@ public class DataZombieDropItem
          */
         public Float getChestDamageFactor()
         {
-            return chestDamageFactor;
+            return this.chestDamageFactor;
         }
 
         /**
@@ -148,7 +148,7 @@ public class DataZombieDropItem
          */
         public Float getLegsDamageFactor()
         {
-            return legsDamageFactor;
+            return this.legsDamageFactor;
         }
 
         /**
@@ -166,7 +166,7 @@ public class DataZombieDropItem
          */
         public Float getFeetDamageFactor()
         {
-            return feetDamageFactor;
+            return this.feetDamageFactor;
         }
 
         /**
@@ -184,7 +184,7 @@ public class DataZombieDropItem
          */
         public Float getDamageSpreadFactor()
         {
-            return damageSpreadFactor;
+            return this.damageSpreadFactor;
         }
 
         /**

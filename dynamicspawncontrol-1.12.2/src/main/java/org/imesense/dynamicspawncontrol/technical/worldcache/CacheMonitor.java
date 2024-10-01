@@ -19,16 +19,19 @@ public final class CacheMonitor
      */
     private final int X = 10, Y = 10;
 
-    private static CacheMonitor instance = null;
-
+    /**
+     *
+     */
     private static boolean instanceExists = false;
-    public static CacheMonitor getInstance() { return instance; }
 
     /**
      *
      */
     public final Minecraft GetMinecraft = Minecraft.getMinecraft();
 
+    /**
+     *
+     */
     public CacheMonitor()
     {
 		CodeGenericUtils.printInitClassToLog(this.getClass());
@@ -40,8 +43,6 @@ public final class CacheMonitor
         }
 
         instanceExists = true;
-
-        instance = this;
     }
 
     /**
@@ -52,11 +53,11 @@ public final class CacheMonitor
     {
         final FontRenderer FONT_RENDER = GetMinecraft.fontRenderer;
 
-        final String ACTUAL_ANIMALS = TextFormatting.GREEN + "Actual Animals: " + Cache.getInstance().getActualAnimalCount();
-        final String ACTUAL_HOSTILE = TextFormatting.RED + "Actual Hostile Entities: " + Cache.getInstance().getActualHostileEntityCount();
-        final String ACTUAL_TOTAL = TextFormatting.YELLOW + "Actual Total Entities: " + Cache.getInstance().getActualTotalEntityCount();
-        final String UPDATE_TICK = TextFormatting.WHITE + "Tick Counter: " + Cache.getInstance().TickCounter;
-        final String VALID_CHUNKS = TextFormatting.YELLOW + "Valid Chunks: " + Cache.getInstance().getValidChunkCount();
+        final String ACTUAL_ANIMALS = TextFormatting.GREEN + "Actual Animals: " + Cache.instance.getActualAnimalCount();
+        final String ACTUAL_HOSTILE = TextFormatting.RED + "Actual Hostile Entities: " + Cache.instance.getActualHostileEntityCount();
+        final String ACTUAL_TOTAL = TextFormatting.YELLOW + "Actual Total Entities: " + Cache.instance.getActualTotalEntityCount();
+        final String UPDATE_TICK = TextFormatting.WHITE + "Tick Counter: " + Cache.instance.TickCounter;
+        final String VALID_CHUNKS = TextFormatting.YELLOW + "Valid Chunks: " + Cache.instance.getValidChunkCount();
 
         final String SEPARATOR = TextFormatting.WHITE + "--------------------------------------------";
 
@@ -67,9 +68,9 @@ public final class CacheMonitor
         FONT_RENDER.drawString(VALID_CHUNKS, X, Y + 40, 0xFFFFFF);
         FONT_RENDER.drawString(SEPARATOR, X, Y + 50, 0xFFFFFF);
 
-        final String BUFFER_ANIMALS = TextFormatting.GREEN + "Buffer Animals: " + Cache.getInstance().getBufferAnimalCount();
-        final String BUFFER_HOSTILE = TextFormatting.RED + "Buffer Hostile Entities: " + Cache.getInstance().getBufferHostileEntityCount();
-        final String BUFFER_TOTAL = TextFormatting.YELLOW + "Buffer Total Entities: " + Cache.getInstance().getBufferTotalEntityCount();
+        final String BUFFER_ANIMALS = TextFormatting.GREEN + "Buffer Animals: " + Cache.instance.getBufferAnimalCount();
+        final String BUFFER_HOSTILE = TextFormatting.RED + "Buffer Hostile Entities: " + Cache.instance.getBufferHostileEntityCount();
+        final String BUFFER_TOTAL = TextFormatting.YELLOW + "Buffer Total Entities: " + Cache.instance.getBufferTotalEntityCount();
 
         FONT_RENDER.drawString(BUFFER_ANIMALS, X, Y + 60, 0xFFFFFF);
         FONT_RENDER.drawString(BUFFER_HOSTILE, X, Y + 70, 0xFFFFFF);

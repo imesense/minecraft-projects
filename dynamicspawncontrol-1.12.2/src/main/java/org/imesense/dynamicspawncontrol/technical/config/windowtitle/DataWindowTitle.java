@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataWindowTitle
+public final class DataWindowTitle
 {
     /**
      *

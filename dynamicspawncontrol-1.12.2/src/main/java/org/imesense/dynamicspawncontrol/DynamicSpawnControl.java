@@ -106,11 +106,6 @@ public class DynamicSpawnControl
         /**
          *
          */
-        public static final String CONFIG_FILE_EXTENSION = ".cfg";
-
-        /**
-         *
-         */
         public static final String SCRIPT_FILE_EXTENSION = ".json";
 
         /**
@@ -128,22 +123,7 @@ public class DynamicSpawnControl
     /**
      *
      */
-    static CheckDebugger checkDebugger;
-
-    /**
-     *
-     */
     private static File globalDirectory = null;
-
-    /**
-     *
-     */
-    static Cache cache = null;
-
-    /**
-     *
-     */
-    static CacheStorage cacheStorage = null;
 
     /**
      *
@@ -187,14 +167,14 @@ public class DynamicSpawnControl
     public synchronized void preInit(FMLPreInitializationEvent event)
     {
         //
-        checkDebugger = new CheckDebugger();
+        CheckDebugger.instance = new CheckDebugger();
 
         //
         globalDirectory = event.getModConfigurationDirectory();
 
         //
-        Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY, checkDebugger.IsRunDebugger);
-        Log.writeDataToLogFile(1, "Debugger is running: " + (checkDebugger.IsRunDebugger ? "true" : "false"));
+        Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY, CheckDebugger.instance.IsRunDebugger);
+        Log.writeDataToLogFile(1, "Debugger is running: " + (CheckDebugger.instance.IsRunDebugger ? "true" : "false"));
 
         //
         MessageHandler.init();
@@ -206,10 +186,10 @@ public class DynamicSpawnControl
         generalStorageData = new GeneralStorageData();
 
         //
-        cacheStorage = new CacheStorage();
+        CacheStorage.instance = new CacheStorage();
 
         //
-        cache = new Cache();
+        Cache.instance = new Cache();
 
         //
         ParserGenericJsonScripts.setRulePath(event.getModConfigurationDirectory());
@@ -284,8 +264,8 @@ public class DynamicSpawnControl
     @EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
-        cache.cleanActualCache();
-        cache.cleanBufferCache();
+        Cache.instance.cleanActualCache();
+        Cache.instance.cleanBufferCache();
 
         Structures.STRUCTURES_CACHE.clean();
     }

@@ -13,21 +13,7 @@ public final class GeneralStorageData
     /**
      *
      */
-    private static GeneralStorageData instance;
-
-    /**
-     *
-     * @return
-     */
-    public static GeneralStorageData getInstance()
-    {
-        if (instance == null)
-        {
-            throw new IllegalStateException("Instance not initialized. Call the constructor first.");
-        }
-
-        return instance;
-    }
+    public static GeneralStorageData instance;
 
     /**
      *

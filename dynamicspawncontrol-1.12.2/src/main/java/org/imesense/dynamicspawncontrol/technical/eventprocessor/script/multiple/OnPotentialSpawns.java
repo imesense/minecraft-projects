@@ -80,13 +80,13 @@ public final class OnPotentialSpawns
                 for (Biome.SpawnListEntry entry : spawnEntries)
                 {
                     ResourceLocation entityKey = EntityList.getKey(entry.entityClass);
-                    CacheStorage.EntityData entityData = CacheStorage.getInstance().getEntityDataByResourceLocation(entityKey);
+                    CacheStorage.EntityData entityData = CacheStorage.instance.getEntityDataByResourceLocation(entityKey);
 
                     if (entityData != null)
                     {
                         assert entityKey != null;
 
-                        int currentCount = Cache.getInstance().getEntitiesByResourceLocation(entityKey).size();
+                        int currentCount = Cache.instance.getEntitiesByResourceLocation(entityKey).size();
                         int maxCount = entityData.getMaxCount();
 
                         if (currentCount >= maxCount)
