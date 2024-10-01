@@ -150,100 +150,101 @@ public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
     {
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(LivingDropsEvent LivingDropsEvent)
+        public World getWorld(LivingDropsEvent data)
         {
-            return LivingDropsEvent.getEntity().getEntityWorld();
+            return data.getEntity().getEntityWorld();
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(LivingDropsEvent LivingDropsEvent)
+        public BlockPos getPos(LivingDropsEvent data)
         {
-            return LivingDropsEvent.getEntity().getPosition();
+            return data.getEntity().getPosition();
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(LivingDropsEvent LivingDropsEvent)
+        public BlockPos getValidBlockPos(LivingDropsEvent data)
         {
-            return LivingDropsEvent.getEntity().getPosition().down();
+            return data.getEntity().getPosition().down();
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public int getY(LivingDropsEvent LivingDropsEvent)
+        public int getY(LivingDropsEvent data)
         {
-            return LivingDropsEvent.getEntity().getPosition().getY();
+            return data.getEntity().getPosition().getY();
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(LivingDropsEvent LivingDropsEvent)
+        public Entity getEntity(LivingDropsEvent data)
         {
-            return LivingDropsEvent.getEntity();
+            return data.getEntity();
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public DamageSource getSource(LivingDropsEvent LivingDropsEvent)
+        public DamageSource getSource(LivingDropsEvent data)
         {
-            return LivingDropsEvent.getSource();
+            return data.getSource();
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public Entity getAttacker(LivingDropsEvent LivingDropsEvent)
+        public Entity getAttacker(LivingDropsEvent data)
         {
-            return LivingDropsEvent.getSource().getTrueSource();
+            return data.getSource().getTrueSource();
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(LivingDropsEvent LivingDropsEvent)
+        public EntityPlayer getPlayer(LivingDropsEvent data)
         {
-            Entity entity = LivingDropsEvent.getSource().getTrueSource();
+            Entity entity = data.getSource().getTrueSource();
+
             return entity instanceof EntityPlayer ? (EntityPlayer) entity : null;
         }
 
         /**
          *
-         * @param LivingDropsEvent
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(LivingDropsEvent LivingDropsEvent)
+        public ItemStack getItem(LivingDropsEvent data)
         {
             return ItemStack.EMPTY;
         }

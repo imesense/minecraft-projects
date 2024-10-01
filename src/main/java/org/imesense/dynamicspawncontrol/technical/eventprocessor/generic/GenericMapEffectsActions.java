@@ -108,99 +108,99 @@ public final class GenericMapEffectsActions extends ListActionsConsumer<SignalDa
     {
         /**
          *
-         * @param PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(TickEvent.PlayerTickEvent PlayerTickEvent)
+        public World getWorld(TickEvent.PlayerTickEvent data)
         {
-            return PlayerTickEvent.player.getEntityWorld();
+            return data.player.getEntityWorld();
         }
 
         /**
          *
-         * @param PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(TickEvent.PlayerTickEvent PlayerTickEvent)
+        public BlockPos getPos(TickEvent.PlayerTickEvent data)
         {
-            return PlayerTickEvent.player.getPosition();
+            return data.player.getPosition();
         }
 
         /**
          *
-         * @param PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(TickEvent.PlayerTickEvent PlayerTickEvent)
+        public BlockPos getValidBlockPos(TickEvent.PlayerTickEvent data)
         {
-            return PlayerTickEvent.player.getPosition().down();
+            return data.player.getPosition().down();
         }
 
         /**
          *
-         * @param PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public int getY(TickEvent.PlayerTickEvent PlayerTickEvent)
+        public int getY(TickEvent.PlayerTickEvent data)
         {
-            return PlayerTickEvent.player.getPosition().getY();
+            return data.player.getPosition().getY();
         }
 
         /**
          *
-         * @param PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(TickEvent.PlayerTickEvent PlayerTickEvent)
+        public Entity getEntity(TickEvent.PlayerTickEvent data)
         {
-            return PlayerTickEvent.player;
+            return data.player;
         }
 
         /**
          *
-         * @param _PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public DamageSource getSource(TickEvent.PlayerTickEvent _PlayerTickEvent)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param _PlayerTickEvent
-         * @return
-         */
-        @Override
-        public Entity getAttacker(TickEvent.PlayerTickEvent _PlayerTickEvent)
+        public DamageSource getSource(TickEvent.PlayerTickEvent data)
         {
             return null;
         }
 
         /**
          *
-         * @param PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(TickEvent.PlayerTickEvent PlayerTickEvent)
+        public Entity getAttacker(TickEvent.PlayerTickEvent data)
         {
-            return PlayerTickEvent.player;
+            return null;
         }
 
         /**
          *
-         * @param _PlayerTickEvent
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(TickEvent.PlayerTickEvent _PlayerTickEvent)
+        public EntityPlayer getPlayer(TickEvent.PlayerTickEvent data)
+        {
+            return data.player;
+        }
+
+        /**
+         *
+         * @param data
+         * @return
+         */
+        @Override
+        public ItemStack getItem(TickEvent.PlayerTickEvent data)
         {
             return ItemStack.EMPTY;
         }

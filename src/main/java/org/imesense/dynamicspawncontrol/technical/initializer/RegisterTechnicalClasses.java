@@ -31,7 +31,7 @@ public final class RegisterTechnicalClasses
         OnLivingExperienceDrop.class,
         OnMobTaskManager.class,
         OnPlayerEvents.class,
-        OnPotentialSpawns.class,
+        OnPotentialSpawn.class,
         OnRightClickEvent.class,
         OnSingleJsonCheckSpawn.class,
         OnSingleZombieSummonAID.class

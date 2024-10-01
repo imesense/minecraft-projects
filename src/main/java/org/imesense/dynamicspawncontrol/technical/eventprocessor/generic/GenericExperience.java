@@ -152,99 +152,99 @@ public final class GenericExperience extends ListActionsConsumer<SignalDataGette
     {
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public World getWorld(LivingExperienceDropEvent data)
         {
-            return LivingExperienceDropEvent.getEntity().getEntityWorld();
+            return data.getEntity().getEntityWorld();
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public BlockPos getPos(LivingExperienceDropEvent data)
         {
-            return LivingExperienceDropEvent.getEntity().getPosition();
+            return data.getEntity().getPosition();
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public BlockPos getValidBlockPos(LivingExperienceDropEvent data)
         {
-            return LivingExperienceDropEvent.getEntity().getPosition().down();
+            return data.getEntity().getPosition().down();
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public int getY(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public int getY(LivingExperienceDropEvent data)
         {
-            return LivingExperienceDropEvent.getEntity().getPosition().getY();
+            return data.getEntity().getPosition().getY();
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public Entity getEntity(LivingExperienceDropEvent data)
         {
-            return LivingExperienceDropEvent.getEntity();
+            return data.getEntity();
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public DamageSource getSource(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public DamageSource getSource(LivingExperienceDropEvent data)
         {
             return null;
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public Entity getAttacker(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public Entity getAttacker(LivingExperienceDropEvent data)
         {
-            return LivingExperienceDropEvent.getAttackingPlayer();
+            return data.getAttackingPlayer();
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public EntityPlayer getPlayer(LivingExperienceDropEvent data)
         {
-            return LivingExperienceDropEvent.getAttackingPlayer();
+            return data.getAttackingPlayer();
         }
 
         /**
          *
-         * @param LivingExperienceDropEvent
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(LivingExperienceDropEvent LivingExperienceDropEvent)
+        public ItemStack getItem(LivingExperienceDropEvent data)
         {
             return ItemStack.EMPTY;
         }

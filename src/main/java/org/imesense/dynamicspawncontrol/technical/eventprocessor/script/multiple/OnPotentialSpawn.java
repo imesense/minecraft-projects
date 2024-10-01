@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
@@ -22,7 +22,7 @@ import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
  *
  */
 @Mod.EventBusSubscriber
-public final class OnPotentialSpawns
+public final class OnPotentialSpawn
 {
     /**
      *
@@ -32,7 +32,7 @@ public final class OnPotentialSpawns
     /**
      *
      */
-    public OnPotentialSpawns()
+    public OnPotentialSpawn()
     {
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 		
@@ -60,7 +60,7 @@ public final class OnPotentialSpawns
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericOverrideSpawn rule : ParserGenericJsonScripts.GENERIC_OVERRIDE_SPAWN_LIST)
+        for (GenericPotentialSpawn rule : ParserGenericJsonScripts.GENERIC_POTENTIAL_SPAWN_LIST)
         {
             if (rule.match(event))
             {

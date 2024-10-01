@@ -91,99 +91,99 @@ public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManag
     {
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public World getWorld(EntityJoinWorldEvent data)
         {
-            return EntityJoinWorldEvent.getWorld();
+            return data.getWorld();
         }
 
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public BlockPos getPos(EntityJoinWorldEvent data)
         {
-            return EntityJoinWorldEvent.getEntity().getPosition();
+            return data.getEntity().getPosition();
         }
 
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public BlockPos getValidBlockPos(EntityJoinWorldEvent data)
         {
-            return EntityJoinWorldEvent.getEntity().getPosition().down();
+            return data.getEntity().getPosition().down();
         }
 
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public int getY(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public int getY(EntityJoinWorldEvent data)
         {
-            return EntityJoinWorldEvent.getEntity().getPosition().getY();
+            return data.getEntity().getPosition().getY();
         }
 
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public Entity getEntity(EntityJoinWorldEvent data)
         {
-            return EntityJoinWorldEvent.getEntity();
+            return data.getEntity();
         }
 
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public DamageSource getSource(EntityJoinWorldEvent EntityJoinWorldEvent)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param EntityJoinWorldEvent
-         * @return
-         */
-        @Override
-        public Entity getAttacker(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public DamageSource getSource(EntityJoinWorldEvent data)
         {
             return null;
         }
 
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public Entity getAttacker(EntityJoinWorldEvent data)
         {
-            return getClosestPlayer(EntityJoinWorldEvent.getWorld(), EntityJoinWorldEvent.getEntity().getPosition());
+            return null;
         }
 
         /**
          *
-         * @param EntityJoinWorldEvent
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(EntityJoinWorldEvent EntityJoinWorldEvent)
+        public EntityPlayer getPlayer(EntityJoinWorldEvent data)
+        {
+            return getClosestPlayer(data.getWorld(), data.getEntity().getPosition());
+        }
+
+        /**
+         *
+         * @param data
+         * @return
+         */
+        @Override
+        public ItemStack getItem(EntityJoinWorldEvent data)
         {
             return ItemStack.EMPTY;
         }

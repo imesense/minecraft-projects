@@ -103,101 +103,101 @@ public final class GenericRightClickActions extends ListActionsConsumer<SignalDa
     {
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public World getWorld(PlayerInteractEvent.RightClickBlock data)
         {
-            return RightClickBlock.getWorld();
+            return data.getWorld();
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public BlockPos getPos(PlayerInteractEvent.RightClickBlock data)
         {
-            return RightClickBlock.getPos();
+            return data.getPos();
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public BlockPos getValidBlockPos(PlayerInteractEvent.RightClickBlock data)
         {
-            return RightClickBlock.getPos();
+            return data.getPos();
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public int getY(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public int getY(PlayerInteractEvent.RightClickBlock data)
         {
-            return RightClickBlock.getPos().getY();
+            return data.getPos().getY();
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public Entity getEntity(PlayerInteractEvent.RightClickBlock data)
         {
-            return RightClickBlock.getEntityPlayer();
+            return data.getEntityPlayer();
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public DamageSource getSource(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public DamageSource getSource(PlayerInteractEvent.RightClickBlock data)
         {
             return null;
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public Entity getAttacker(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public Entity getAttacker(PlayerInteractEvent.RightClickBlock data)
         {
             return null;
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public EntityPlayer getPlayer(PlayerInteractEvent.RightClickBlock data)
         {
-            return RightClickBlock.getEntityPlayer();
+            return data.getEntityPlayer();
         }
 
         /**
          *
-         * @param RightClickBlock
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(PlayerInteractEvent.RightClickBlock RightClickBlock)
+        public ItemStack getItem(PlayerInteractEvent.RightClickBlock data)
         {
-            return RightClickBlock.getItemStack();
+            return data.getItemStack();
         }
     };
 
