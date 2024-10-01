@@ -27,12 +27,12 @@ public final class DataPluginWorldTime
         /**
          *
          */
-        private Integer dayLengthMinutes = 10;
+        private Integer dayLengthMinutes = 12;
 
         /**
          *
          */
-        private Integer nightLengthMinutes = 10;
+        private Integer nightLengthMinutes = 12;
 
         /**
          *
