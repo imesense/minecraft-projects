@@ -59,7 +59,7 @@ public final class OnSingleJsonCheckSpawn
 
             if (entityResource != null)
             {
-                List<String> blockedEntities = GeneralStorageData.getInstance().getEntitiesProhibitedOutdoors();
+                List<String> blockedEntities = GeneralStorageData.instance.getEntitiesProhibitedOutdoors();
 
                 if (blockedEntities != null && blockedEntities.contains(entityResource.toString()))
                 {

@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataPlayer
+public final class DataPlayer
 {
     /**
      *

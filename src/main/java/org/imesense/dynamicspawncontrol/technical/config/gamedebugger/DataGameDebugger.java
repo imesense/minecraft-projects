@@ -4,7 +4,10 @@ import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
 import javax.annotation.Nonnull;
 
-public class DataGameDebugger
+/**
+ *
+ */
+public final class DataGameDebugger
 {
     /**
      *

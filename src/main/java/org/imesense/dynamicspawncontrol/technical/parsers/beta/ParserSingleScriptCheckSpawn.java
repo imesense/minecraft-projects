@@ -25,23 +25,9 @@ public final class ParserSingleScriptCheckSpawn implements IBetaParsers
     /**
      *
      */
-    private static ParserSingleScriptCheckSpawn instance;
-
-    /**
-     *
-     */
     public ParserSingleScriptCheckSpawn()
     {
         CodeGenericUtils.printInitClassToLog(this.getClass());
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static ParserSingleScriptCheckSpawn getClassInstance()
-    {
-        return instance;
     }
 
     /**
@@ -58,8 +44,6 @@ public final class ParserSingleScriptCheckSpawn implements IBetaParsers
      */
     public void loadConfig(boolean initialization)
     {
-        instance = this;
-
         File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
                 EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword());
 
@@ -113,10 +97,11 @@ public final class ParserSingleScriptCheckSpawn implements IBetaParsers
             if (entitiesObject != null)
             {
                 final Type listType = new TypeToken<List<String>>() {}.getType();
-                GeneralStorageData.getInstance().EntitiesProhibitedOutdoors = gson.fromJson(entitiesObject.get("entities"), listType);
+                GeneralStorageData.instance.EntitiesProhibitedOutdoors = gson.fromJson(entitiesObject.get("entities"), listType);
 
                 Log.writeDataToLogFile(0, "Script: " +
-                        EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword() + " data blockedEntities: " + GeneralStorageData.getInstance().EntitiesProhibitedOutdoors);
+                        EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword() +
+                            " data blockedEntities: " + GeneralStorageData.instance.EntitiesProhibitedOutdoors);
             }
             else
             {

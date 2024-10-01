@@ -52,19 +52,19 @@ public final class CacheEvents
     {
         if (event.phase == TickEvent.Phase.END)
         {
-            Cache.getInstance().TickCounter++;
+            Cache.instance.TickCounter++;
 
-            if (Cache.getInstance().TickCounter >= Cache.getInstance().DynamicUpdateInterval)
+            if (Cache.instance.TickCounter >= Cache.instance.DynamicUpdateInterval)
             {
-                Cache.getInstance().TickCounter = 0;
+                Cache.instance.TickCounter = 0;
 
-                Cache.getInstance().copyActualToBuffer();
-                Cache.getInstance().updateCache(event.world);
+                Cache.instance.copyActualToBuffer();
+                Cache.instance.updateCache(event.world);
 
-                if (Cache.getInstance().isFirstUpdate)
+                if (Cache.instance.isFirstUpdate)
                 {
-                    Cache.getInstance().DynamicUpdateInterval = Cache.getInstance().SUBSEQUENT_UPDATE_INTERVAL;
-                    Cache.getInstance().isFirstUpdate = false;
+                    Cache.instance.DynamicUpdateInterval = Cache.instance.SUBSEQUENT_UPDATE_INTERVAL;
+                    Cache.instance.isFirstUpdate = false;
                 }
             }
         }
@@ -73,22 +73,22 @@ public final class CacheEvents
     @SubscribeEvent
     public synchronized void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (!Cache.getInstance().isPrimaryPlayerLogged)
+        if (!Cache.instance.isPrimaryPlayerLogged)
         {
-            Cache.getInstance().isPrimaryPlayerLogged = true;
-            Cache.getInstance().DynamicUpdateInterval = Cache.getInstance().FIRST_UPDATE_INTERVAL;
-            Cache.getInstance().TickCounter = 0;
-            Cache.getInstance().isFirstUpdate = true;
+            Cache.instance.isPrimaryPlayerLogged = true;
+            Cache.instance.DynamicUpdateInterval = Cache.instance.FIRST_UPDATE_INTERVAL;
+            Cache.instance.TickCounter = 0;
+            Cache.instance.isFirstUpdate = true;
         }
 
 
-        Cache.getInstance().copyActualToBuffer();
+        Cache.instance.copyActualToBuffer();
     }
 
     @SubscribeEvent
     public synchronized void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent event)
     {
-        Cache.getInstance().copyActualToBuffer();
+        Cache.instance.copyActualToBuffer();
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -130,19 +130,19 @@ public final class CacheEvents
 
         WorldServer worldServer = (WorldServer) world;
 
-        Cache.getInstance().updateCache(worldServer);
+        Cache.instance.updateCache(worldServer);
 
-        if (Cache.getInstance().CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
+        if (Cache.instance.CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
         {
             if (entity instanceof IAnimals)
             {
                 if (entity instanceof EntityAnimal)
                 {
-                    Cache.getInstance().CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
+                    Cache.instance.CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
                 }
                 else if (entity instanceof EntityMob)
                 {
-                    Cache.getInstance().CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
+                    Cache.instance.CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
                 }
             }
 
@@ -150,16 +150,16 @@ public final class CacheEvents
             {
                 String entityName = entity.getName();
 
-                Cache.getInstance().CACHED_ACTUAL_ALL.add((EntityLivingBase) entity);
+                Cache.instance.CACHED_ACTUAL_ALL.add((EntityLivingBase) entity);
 
-                Cache.getInstance().ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
+                Cache.instance.ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
                         new HashSet<>()).add((EntityLivingBase) entity);
 
                 ResourceLocation entityKey = EntityList.getKey(entity);
 
                 if (entityKey != null)
                 {
-                    Cache.getInstance().ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k ->
+                    Cache.instance.ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k ->
                             new HashSet<>()).add((EntityLivingBase) entity);
                 }
             }
@@ -173,14 +173,14 @@ public final class CacheEvents
 
         ResourceLocation entityKey = EntityList.getKey(entity);
 
-        CacheStorage.EntityData entityData = CacheStorage.getInstance().getEntityDataByResourceLocation(entityKey);
+        CacheStorage.EntityData entityData = CacheStorage.instance.getEntityDataByResourceLocation(entityKey);
 
         if (entityData != null)
         {
             assert entityKey != null;
 
             int maxCount = entityData.getMaxCount();
-            int currentCount = Cache.getInstance().getEntitiesByResourceLocation(entityKey).size();
+            int currentCount = Cache.instance.getEntitiesByResourceLocation(entityKey).size();
 
             if (currentCount > maxCount)
             {

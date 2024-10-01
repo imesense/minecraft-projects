@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataPluginWorldTime
+public final class DataPluginWorldTime
 {
     /**
      *
@@ -66,7 +66,7 @@ public class DataPluginWorldTime
          */
         public Integer getDayLengthMinutes()
         {
-            return dayLengthMinutes;
+            return this.dayLengthMinutes;
         }
 
         /**
@@ -75,7 +75,7 @@ public class DataPluginWorldTime
          */
         public Integer getNightLengthMinutes()
         {
-            return nightLengthMinutes;
+            return this.nightLengthMinutes;
         }
 
         /**
@@ -84,7 +84,7 @@ public class DataPluginWorldTime
          */
         public Integer getSyncToSystemTimeRate()
         {
-            return syncToSystemTimeRate;
+            return this.syncToSystemTimeRate;
         }
 
         /**
@@ -93,7 +93,7 @@ public class DataPluginWorldTime
          */
         public Boolean getTimeControlDebug()
         {
-            return timeControlDebug;
+            return this.timeControlDebug;
         }
 
         /**
@@ -102,7 +102,7 @@ public class DataPluginWorldTime
          */
         public Boolean getSyncToSystemTime()
         {
-            return syncToSystemTime;
+            return this.syncToSystemTime;
         }
 
         /**

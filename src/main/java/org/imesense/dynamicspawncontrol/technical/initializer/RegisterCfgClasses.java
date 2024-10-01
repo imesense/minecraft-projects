@@ -18,8 +18,13 @@ import java.lang.reflect.Constructor;
 /**
  *
  */
-public final class RegisterCfgClasses {
-    private static final Class<?>[] CONFIG_CLASSES = {
+public final class RegisterCfgClasses
+{
+    /**
+     *
+     */
+    private static final Class<?>[] CONFIG_CLASSES =
+    {
         CfgCacheWorldGame.class,
         CfgGameDebugger.class,
         CfgLogFile.class,
@@ -31,19 +36,36 @@ public final class RegisterCfgClasses {
         CfgZombieDropItem.class
     };
 
-    public RegisterCfgClasses() {
+    /**
+     *
+     */
+    public RegisterCfgClasses()
+    {
         CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
-    public static void initializeConfigs() {
-        for (Class<?> configClass : CONFIG_CLASSES) {
+    /**
+     *
+     */
+    public static void initializeConfigs()
+    {
+        for (Class<?> configClass : CONFIG_CLASSES)
+        {
             initializeConfig(configClass);
         }
     }
 
-    private static <T> void initializeConfig(Class<T> configClass) {
-        try {
-            if (configClass.isAnnotationPresent(DCSSingleConfig.class)) {
+    /**
+     *
+     * @param configClass
+     * @param <T>
+     */
+    private static <T> void initializeConfig(Class<T> configClass)
+    {
+        try
+        {
+            if (configClass.isAnnotationPresent(DCSSingleConfig.class))
+            {
                 DCSSingleConfig configAnnotation = configClass.getAnnotation(DCSSingleConfig.class);
                 String configFileName = configAnnotation.fileName();
 
@@ -52,12 +74,18 @@ public final class RegisterCfgClasses {
 
                 Log.writeDataToLogFile(0, "Initialized config: " + configFileName);
                 Log.writeDataToLogFile(0, "configClass: " + configClass + " " + configInstance);
-            } else {
+            }
+            else
+            {
                 Log.writeDataToLogFile(2, "No ConfigClass annotation found in: " + configClass.getName());
             }
-        } catch (NoSuchMethodException e) {
+        }
+        catch (NoSuchMethodException e)
+        {
             Log.writeDataToLogFile(2, "Constructor with String parameter not found in class: " + configClass.getName() + " - " + e.getMessage());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Log.writeDataToLogFile(2, "Exception in class: " + configClass.getName() + " - " + e.getMessage());
             throw new RuntimeException(e);
         }

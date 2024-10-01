@@ -28,23 +28,9 @@ public final class ParserSingleZombieSummonAID implements IBetaParsers
     /**
      *
      */
-    private static ParserSingleZombieSummonAID instance;
-
-    /**
-     *
-     */
     public ParserSingleZombieSummonAID()
     {
         CodeGenericUtils.printInitClassToLog(this.getClass());
-    }
-
-    /**
-     *
-     * @return
-     */
-    public static ParserSingleZombieSummonAID getClassInstance()
-    {
-        return instance;
     }
 
     /**
@@ -61,9 +47,7 @@ public final class ParserSingleZombieSummonAID implements IBetaParsers
      */
     public void loadConfig(boolean initialization)
     {
-        instance = this;
-
-        GeneralStorageData.getInstance().EquipmentConfigs = new ArrayList<>();
+        GeneralStorageData.instance.EquipmentConfigs = new ArrayList<>();
 
         File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
                 EnumSingleScripts.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword());
@@ -136,7 +120,7 @@ public final class ParserSingleZombieSummonAID implements IBetaParsers
                         config.Leggings = gson.fromJson(equipmentObject.get("armor_legs"), listType);
                         config.Boots = gson.fromJson(equipmentObject.get("armor_boots"), listType);
 
-                        GeneralStorageData.getInstance().EquipmentConfigs.add(config);
+                        GeneralStorageData.instance.EquipmentConfigs.add(config);
 
                         Log.writeDataToLogFile(0, "Script: " +
                                 EnumSingleScripts.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() + " data loaded.");

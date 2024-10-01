@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataRenderNight
+public final class DataRenderNight
 {
     /**
      *
@@ -101,7 +101,7 @@ public class DataRenderNight
          */
         public Boolean getDarknessOverWorld()
         {
-            return darknessOverWorld;
+            return this.darknessOverWorld;
         }
 
         /**
@@ -119,7 +119,7 @@ public class DataRenderNight
          */
         public Boolean getDarknessNether()
         {
-            return darknessNether;
+            return this.darknessNether;
         }
 
         /**
@@ -137,7 +137,7 @@ public class DataRenderNight
          */
         public Boolean getDarknessEnd()
         {
-            return darknessEnd;
+            return this.darknessEnd;
         }
 
         /**
@@ -155,7 +155,7 @@ public class DataRenderNight
          */
         public Boolean getDarknessDefault()
         {
-            return darknessDefault;
+            return this.darknessDefault;
         }
 
         /**
@@ -173,7 +173,7 @@ public class DataRenderNight
          */
         public Boolean getDarknessSkyLess()
         {
-            return darknessSkyLess;
+            return this.darknessSkyLess;
         }
 
         /**
@@ -191,7 +191,7 @@ public class DataRenderNight
          */
         public Boolean getDarknessNetherFog()
         {
-            return darknessNetherFog;
+            return this.darknessNetherFog;
         }
 
         /**
@@ -209,7 +209,7 @@ public class DataRenderNight
          */
         public Boolean getDarknessEndFog()
         {
-            return darknessEndFog;
+            return this.darknessEndFog;
         }
 
         /**
@@ -227,7 +227,7 @@ public class DataRenderNight
          */
         public Boolean getIgnoreMoonLight()
         {
-            return ignoreMoonLight;
+            return this.ignoreMoonLight;
         }
 
         /**
@@ -245,7 +245,7 @@ public class DataRenderNight
          */
         public Boolean getInvertBlacklist()
         {
-            return invertBlacklist;
+            return this.invertBlacklist;
         }
 
         /**
@@ -263,7 +263,7 @@ public class DataRenderNight
          */
         public Integer[] getBlacklistByID()
         {
-            return blacklistByID;
+            return this.blacklistByID;
         }
 
         /**
@@ -281,7 +281,7 @@ public class DataRenderNight
          */
         public Double[] getMoonPhaseFactors()
         {
-            return moonPhaseFactors;
+            return this.moonPhaseFactors;
         }
 
         /**
@@ -299,7 +299,7 @@ public class DataRenderNight
          */
         public String[] getBlacklistByName()
         {
-            return blacklistByName;
+            return this.blacklistByName;
         }
 
         /**
