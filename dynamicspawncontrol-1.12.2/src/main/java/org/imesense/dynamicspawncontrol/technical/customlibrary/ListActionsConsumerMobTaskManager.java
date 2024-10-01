@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import java.util.ArrayList;
@@ -108,8 +108,8 @@ public abstract class ListActionsConsumerMobTaskManager<T extends SignalDataGett
             String enemyToId = enemiesToList.get(0);
             String targetId = targetList.get(0);
 
-            String fixedEnemyToId = GenericOverrideSpawn.fixEntityId(enemyToId);
-            String fixedTargetId = GenericOverrideSpawn.fixEntityId(targetId);
+            String fixedEnemyToId = GenericPotentialSpawn.fixEntityId(enemyToId);
+            String fixedTargetId = GenericPotentialSpawn.fixEntityId(targetId);
 
             EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
             EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
@@ -141,7 +141,7 @@ public abstract class ListActionsConsumerMobTaskManager<T extends SignalDataGett
 
             for (String enemyToId : enemiesToList)
             {
-                String fixedEnemyToId = GenericOverrideSpawn.fixEntityId(enemyToId);
+                String fixedEnemyToId = GenericPotentialSpawn.fixEntityId(enemyToId);
 
                 EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
                 Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
@@ -154,7 +154,7 @@ public abstract class ListActionsConsumerMobTaskManager<T extends SignalDataGett
 
             for (String targetId : targetList)
             {
-                String fixedTargetId = GenericOverrideSpawn.fixEntityId(targetId);
+                String fixedTargetId = GenericPotentialSpawn.fixEntityId(targetId);
 
                 EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
                 Class<? extends Entity> targetEntityClass = targetEntityEntry == null ? null : targetEntityEntry.getEntityClass();
@@ -205,7 +205,7 @@ public abstract class ListActionsConsumerMobTaskManager<T extends SignalDataGett
 
         for (String enemyToId : enemiesToList)
         {
-            String fixedEnemyToId = GenericOverrideSpawn.fixEntityId(enemyToId);
+            String fixedEnemyToId = GenericPotentialSpawn.fixEntityId(enemyToId);
             EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
             Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
 
@@ -270,7 +270,7 @@ public abstract class ListActionsConsumerMobTaskManager<T extends SignalDataGett
 
         for (String panicToId : panicToList)
         {
-            String fixedPanicToId = GenericOverrideSpawn.fixEntityId(panicToId);
+            String fixedPanicToId = GenericPotentialSpawn.fixEntityId(panicToId);
 
             EntityEntry panicToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedPanicToId));
 

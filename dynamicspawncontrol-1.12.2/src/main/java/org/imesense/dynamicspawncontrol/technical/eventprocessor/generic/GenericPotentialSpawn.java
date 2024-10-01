@@ -35,7 +35,7 @@ import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleK
 /**
  *
  */
-public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGetter>
+public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataGetter>
 {
     /**
      *
@@ -126,11 +126,11 @@ public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGe
      *
      * @param map
      */
-    private GenericOverrideSpawn(AttributeMap<?> map)
+    private GenericPotentialSpawn(AttributeMap<?> map)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericOverrideSpawn.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericPotentialSpawn.class.getName(), countCreatedMaps++));
 
         this.RULE_EVALUATOR = new ListActionsBinary<>(map);
 
@@ -179,99 +179,99 @@ public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGe
     {
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(WorldEvent.PotentialSpawns PotentialSpawns)
+        public World getWorld(WorldEvent.PotentialSpawns data)
         {
-            return PotentialSpawns.getWorld();
+            return data.getWorld();
         }
 
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(WorldEvent.PotentialSpawns PotentialSpawns)
+        public BlockPos getPos(WorldEvent.PotentialSpawns data)
         {
-            return PotentialSpawns.getPos();
+            return data.getPos();
         }
 
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(WorldEvent.PotentialSpawns PotentialSpawns)
+        public BlockPos getValidBlockPos(WorldEvent.PotentialSpawns data)
         {
-            return PotentialSpawns.getPos().down();
+            return data.getPos().down();
         }
 
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public int getY(WorldEvent.PotentialSpawns PotentialSpawns)
+        public int getY(WorldEvent.PotentialSpawns data)
         {
-            return PotentialSpawns.getPos().getY();
+            return data.getPos().getY();
         }
 
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(WorldEvent.PotentialSpawns PotentialSpawns)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param PotentialSpawns
-         * @return
-         */
-        @Override
-        public DamageSource getSource(WorldEvent.PotentialSpawns PotentialSpawns)
+        public Entity getEntity(WorldEvent.PotentialSpawns data)
         {
             return null;
         }
 
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public Entity getAttacker(WorldEvent.PotentialSpawns PotentialSpawns)
+        public DamageSource getSource(WorldEvent.PotentialSpawns data)
         {
             return null;
         }
 
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(WorldEvent.PotentialSpawns PotentialSpawns)
+        public Entity getAttacker(WorldEvent.PotentialSpawns data)
         {
             return null;
         }
 
         /**
          *
-         * @param PotentialSpawns
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(WorldEvent.PotentialSpawns PotentialSpawns)
+        public EntityPlayer getPlayer(WorldEvent.PotentialSpawns data)
+        {
+            return null;
+        }
+
+        /**
+         *
+         * @param data
+         * @return
+         */
+        @Override
+        public ItemStack getItem(WorldEvent.PotentialSpawns data)
         {
             return ItemStack.EMPTY;
         }
@@ -306,7 +306,7 @@ public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGe
      * @param element
      * @return
      */
-    public static GenericOverrideSpawn parse(JsonElement element)
+    public static GenericPotentialSpawn parse(JsonElement element)
     {
         if (element == null)
         {
@@ -316,7 +316,7 @@ public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGe
         {
             JsonObject jsonObject = element.getAsJsonObject();
 
-            if (!jsonObject.has(SingleKeyWords.MAIN_OVERRIDE_SPAWN.OVERRIDE_STRUCT))
+            if (!jsonObject.has(SingleKeyWords.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT))
             {
                 Log.writeDataToLogFile(0, "Not found 'struct' for rule [ { ... } ]");
                 throw new RuntimeException();
@@ -324,7 +324,7 @@ public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGe
 
             AttributeMap<Object> map = FACTORY.parse(element);
 
-            JsonArray mobs = jsonObject.getAsJsonArray(SingleKeyWords.MAIN_OVERRIDE_SPAWN.OVERRIDE_STRUCT);
+            JsonArray mobs = jsonObject.getAsJsonArray(SingleKeyWords.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT);
 
             if (mobs != null)
             {
@@ -335,7 +335,7 @@ public final class GenericOverrideSpawn extends ListActionsConsumer<SignalDataGe
                 }
             }
 
-            return new GenericOverrideSpawn(map);
+            return new GenericPotentialSpawn(map);
         }
     }
 

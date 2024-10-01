@@ -17,9 +17,9 @@ public final class SingleKeyWords
     /**
      *
      */
-    public static final class MAIN_OVERRIDE_SPAWN
+    public static final class MAIN_POTENTIAL_SPAWN
     {
-        public static final String OVERRIDE_STRUCT = "struct";
+        public static final String MAIN_STRUCT = "struct";
     }
 
     /**

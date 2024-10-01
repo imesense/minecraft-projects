@@ -22,7 +22,7 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericOverrideSpawn;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 
 import java.util.*;
@@ -962,7 +962,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
         if (listMobs.size() == 1)
         {
             String name = listMobs.get(0);
-            String id = GenericOverrideSpawn.fixEntityId(name);
+            String id = GenericPotentialSpawn.fixEntityId(name);
             EntityEntry _forgeRegEntity0 = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
             Class<? extends Entity> typeClass = _forgeRegEntity0 == null ? null : _forgeRegEntity0.getEntityClass();
 
@@ -983,7 +983,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
             for (String name : listMobs)
             {
-                String id = GenericOverrideSpawn.fixEntityId(name);
+                String id = GenericPotentialSpawn.fixEntityId(name);
                 EntityEntry _forgeRegEntity1 = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
                 Class<? extends Entity> typeClass = _forgeRegEntity1 == null ? null : _forgeRegEntity1.getEntityClass();
 

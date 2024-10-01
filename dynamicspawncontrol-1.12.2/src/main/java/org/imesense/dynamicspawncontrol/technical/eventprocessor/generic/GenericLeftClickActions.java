@@ -103,101 +103,101 @@ public final class GenericLeftClickActions extends ListActionsConsumer<SignalDat
     {
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public World getWorld(PlayerInteractEvent.LeftClickBlock data)
         {
-            return LeftClickBlock.getWorld();
+            return data.getWorld();
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public BlockPos getPos(PlayerInteractEvent.LeftClickBlock data)
         {
-            return LeftClickBlock.getPos();
+            return data.getPos();
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public BlockPos getValidBlockPos(PlayerInteractEvent.LeftClickBlock data)
         {
-            return LeftClickBlock.getPos();
+            return data.getPos();
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public int getY(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public int getY(PlayerInteractEvent.LeftClickBlock data)
         {
-            return LeftClickBlock.getPos().getY();
+            return data.getPos().getY();
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public Entity getEntity(PlayerInteractEvent.LeftClickBlock data)
         {
-            return LeftClickBlock.getEntityPlayer();
+            return data.getEntityPlayer();
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public DamageSource getSource(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public DamageSource getSource(PlayerInteractEvent.LeftClickBlock data)
         {
             return null;
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public Entity getAttacker(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public Entity getAttacker(PlayerInteractEvent.LeftClickBlock data)
         {
             return null;
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public EntityPlayer getPlayer(PlayerInteractEvent.LeftClickBlock data)
         {
-            return LeftClickBlock.getEntityPlayer();
+            return data.getEntityPlayer();
         }
 
         /**
          *
-         * @param LeftClickBlock
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(PlayerInteractEvent.LeftClickBlock LeftClickBlock)
+        public ItemStack getItem(PlayerInteractEvent.LeftClickBlock data)
         {
-            return LeftClickBlock.getItemStack();
+            return data.getItemStack();
         }
     };
 

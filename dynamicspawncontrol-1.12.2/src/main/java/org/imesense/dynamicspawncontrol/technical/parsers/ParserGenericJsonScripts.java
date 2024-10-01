@@ -36,7 +36,7 @@ public final class ParserGenericJsonScripts
     /**
      *
      */
-    public final static List<GenericOverrideSpawn> GENERIC_OVERRIDE_SPAWN_LIST = new ArrayList<>();
+    public final static List<GenericPotentialSpawn> GENERIC_POTENTIAL_SPAWN_LIST = new ArrayList<>();
 
     /**
      *
@@ -85,7 +85,7 @@ public final class ParserGenericJsonScripts
     {
         GENERIC_DROP_LOOT_LIST.clear();
         GENERIC_EXPERIENCE_LIST.clear();
-        GENERIC_OVERRIDE_SPAWN_LIST.clear();
+        GENERIC_POTENTIAL_SPAWN_LIST.clear();
         GENERIC_SPAWN_CONDITIONS_LIST.clear();
         GENERIC_MOBS_TASK_MANAGER_LIST.clear();
 
@@ -129,8 +129,8 @@ public final class ParserGenericJsonScripts
                 GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
 
         //
-        CodeGenericUtils.readAndLogRules(path, "MainOverrideSpawn" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericOverrideSpawn::parse, GENERIC_OVERRIDE_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
+        CodeGenericUtils.readAndLogRules(path, "MainPotentialSpawn" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+                GenericPotentialSpawn::parse, GENERIC_POTENTIAL_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
         CodeGenericUtils.readAndLogRules(path, "SpawnConditions" + DynamicSpawnControl.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,

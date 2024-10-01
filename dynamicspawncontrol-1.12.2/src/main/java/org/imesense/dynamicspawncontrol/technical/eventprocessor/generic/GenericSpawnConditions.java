@@ -91,99 +91,99 @@ public final class GenericSpawnConditions extends ListActionsConsumer<SignalData
     {
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public World getWorld(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public World getWorld(LivingSpawnEvent.CheckSpawn data)
         {
-            return CheckSpawn.getWorld();
+            return data.getWorld();
         }
 
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getPos(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public BlockPos getPos(LivingSpawnEvent.CheckSpawn data)
         {
-            return new BlockPos(CheckSpawn.getX(), CheckSpawn.getY(), CheckSpawn.getZ());
+            return new BlockPos(data.getX(), data.getY(), data.getZ());
         }
 
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public BlockPos getValidBlockPos(LivingSpawnEvent.CheckSpawn data)
         {
-            return new BlockPos(CheckSpawn.getX(), CheckSpawn.getY() - 1, CheckSpawn.getZ());
+            return new BlockPos(data.getX(), data.getY() - 1, data.getZ());
         }
 
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public int getY(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public int getY(LivingSpawnEvent.CheckSpawn data)
         {
-            return (int) CheckSpawn.getY();
+            return (int) data.getY();
         }
 
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public Entity getEntity(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public Entity getEntity(LivingSpawnEvent.CheckSpawn data)
         {
-            return CheckSpawn.getEntity();
+            return data.getEntity();
         }
 
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public DamageSource getSource(LivingSpawnEvent.CheckSpawn CheckSpawn)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param CheckSpawn
-         * @return
-         */
-        @Override
-        public Entity getAttacker(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public DamageSource getSource(LivingSpawnEvent.CheckSpawn data)
         {
             return null;
         }
 
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public Entity getAttacker(LivingSpawnEvent.CheckSpawn data)
         {
-            return getClosestPlayer(CheckSpawn.getWorld(), new BlockPos(CheckSpawn.getX(), CheckSpawn.getY(), CheckSpawn.getZ()));
+            return null;
         }
 
         /**
          *
-         * @param CheckSpawn
+         * @param data
          * @return
          */
         @Override
-        public ItemStack getItem(LivingSpawnEvent.CheckSpawn CheckSpawn)
+        public EntityPlayer getPlayer(LivingSpawnEvent.CheckSpawn data)
+        {
+            return getClosestPlayer(data.getWorld(), new BlockPos(data.getX(), data.getY(), data.getZ()));
+        }
+
+        /**
+         *
+         * @param data
+         * @return
+         */
+        @Override
+        public ItemStack getItem(LivingSpawnEvent.CheckSpawn data)
         {
             return ItemStack.EMPTY;
         }
