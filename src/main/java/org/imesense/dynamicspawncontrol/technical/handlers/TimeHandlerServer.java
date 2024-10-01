@@ -50,6 +50,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
     /**
      *
+     * TODO: Time out of sync
      * @param world
      */
     @Override
@@ -87,7 +88,7 @@ public final class TimeHandlerServer implements ITimeHandler
                     this.reset(updatedWorldTime);
                     this.wasDaytime = true;
 
-                    this.WAKE_ALL_PLAYERS.invoke(world);
+                    WAKE_ALL_PLAYERS.invoke(world);
                 }
             }
             catch (InvocationTargetException | IllegalAccessException exception)
