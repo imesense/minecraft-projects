@@ -52,6 +52,56 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
 
     /**
      *
+     * @param jsonObject
+     * @param blockName
+     * @param block
+     */
+    public void saveBlockSettings(JsonObject jsonObject, String blockName, InfoDataBlock block)
+    {
+        JsonObject settings = new JsonObject();
+
+        settings.addProperty("chance_spawn", block.getChanceSpawn());
+        settings.addProperty("min_height", block.getMinHeight());
+        settings.addProperty("max_height", block.getMaxHeight());
+
+        jsonObject.add(blockName, settings);
+    }
+
+    /**
+     *
+     * @param jsonObject
+     * @param blockName
+     * @param block
+     */
+    public void loadBlockSettings(JsonObject jsonObject, String blockName, InfoDataBlock block)
+    {
+        if (jsonObject.has(blockName))
+        {
+            JsonObject settings = jsonObject.getAsJsonObject(blockName);
+
+            if (settings.has("chance_spawn"))
+            {
+                block.setChanceSpawn(settings.get("chance_spawn").getAsInt());
+            }
+
+            if (settings.has("min_height"))
+            {
+                block.setMinHeight(settings.get("min_height").getAsInt());
+            }
+
+            if (settings.has("max_height"))
+            {
+                block.setMaxHeight(settings.get("max_height").getAsInt());
+            }
+        }
+        else
+        {
+            Log.writeDataToLogFile(2, blockName + " is missing in the config file.");
+        }
+    }
+
+    /**
+     *
      */
     @Override
     public void saveToFile()
@@ -64,37 +114,17 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
             {
                 Files.createDirectories(configPath);
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                throw new RuntimeException(e);
+                throw new RuntimeException(exception);
             }
         }
 
         JsonObject jsonObject = new JsonObject();
 
-        JsonObject settingsNetherRack = new JsonObject();
-
-        settingsNetherRack.addProperty("chance_spawn", DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getChanceSpawn());
-        settingsNetherRack.addProperty("min_height", DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getMinHeight());
-        settingsNetherRack.addProperty("max_height", DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getMaxHeight());
-
-        jsonObject.add("settings_block_nether_rack", settingsNetherRack);
-
-        JsonObject settingsMossyCobblestone = new JsonObject();
-
-        settingsMossyCobblestone.addProperty("chance_spawn", DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getChanceSpawn());
-        settingsMossyCobblestone.addProperty("min_height", DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getMinHeight());
-        settingsMossyCobblestone.addProperty("max_height", DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getMaxHeight());
-
-        jsonObject.add("settings_block_mossy_cobblestone", settingsMossyCobblestone);
-
-        JsonObject settingsMonsterEgg = new JsonObject();
-
-        settingsMonsterEgg.addProperty("chance_spawn", DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getChanceSpawn());
-        settingsMonsterEgg.addProperty("min_height", DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMinHeight());
-        settingsMonsterEgg.addProperty("max_height", DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMaxHeight());
-
-        jsonObject.add("settings_block_monster_egg", settingsMonsterEgg);
+        saveBlockSettings(jsonObject, "settings_block_nether_rack", DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
+        saveBlockSettings(jsonObject, "settings_block_mossy_cobblestone", DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
+        saveBlockSettings(jsonObject, "settings_block_monster_egg", DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -102,9 +132,9 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
         {
             gson.toJson(jsonObject, file);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+            throw new RuntimeException("Error writing to file: " + exception.getMessage(), exception);
         }
     }
 
@@ -119,85 +149,18 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("settings_block_nether_rack"))
-            {
-                JsonObject settingsNetherRack = jsonObject.getAsJsonObject("settings_block_nether_rack");
+            loadBlockSettings(jsonObject, "settings_block_nether_rack", DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
+            loadBlockSettings(jsonObject, "settings_block_mossy_cobblestone", DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
+            loadBlockSettings(jsonObject, "settings_block_monster_egg", DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
 
-                if (settingsNetherRack.has("chance_spawn"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.setChanceSpawn(settingsNetherRack.get("chance_spawn").getAsInt());
-                }
-
-                if (settingsNetherRack.has("min_height"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.setMinHeight(settingsNetherRack.get("min_height").getAsInt());
-                }
-
-                if (settingsNetherRack.has("max_height"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.setMaxHeight(settingsNetherRack.get("max_height").getAsInt());
-                }
-            }
-            else
-            {
-                Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
-            }
-
-            if (jsonObject.has("settings_block_mossy_cobblestone"))
-            {
-                JsonObject settingsMossyCobblestone = jsonObject.getAsJsonObject("settings_block_mossy_cobblestone");
-                if (settingsMossyCobblestone.has("chance_spawn"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.setChanceSpawn(settingsMossyCobblestone.get("chance_spawn").getAsInt());
-                }
-
-                if (settingsMossyCobblestone.has("min_height"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.setMinHeight(settingsMossyCobblestone.get("min_height").getAsInt());
-                }
-
-                if (settingsMossyCobblestone.has("max_height"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.setMaxHeight(settingsMossyCobblestone.get("max_height").getAsInt());
-                }
-            }
-            else
-            {
-                Log.writeDataToLogFile(2, "settings_block_mossy_cobblestone is missing in the config file.");
-            }
-
-            if (jsonObject.has("settings_block_monster_egg"))
-            {
-                JsonObject settingsMonsterEgg = jsonObject.getAsJsonObject("settings_block_monster_egg");
-
-                if (settingsMonsterEgg.has("chance_spawn"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.setChanceSpawn(settingsMonsterEgg.get("chance_spawn").getAsInt());
-                }
-
-                if (settingsMonsterEgg.has("min_height"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.setMinHeight(settingsMonsterEgg.get("min_height").getAsInt());
-                }
-
-                if (settingsMonsterEgg.has("max_height"))
-                {
-                    DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.setMaxHeight(settingsMonsterEgg.get("max_height").getAsInt());
-                }
-            }
-            else
-            {
-                Log.writeDataToLogFile(2, "settings_block_monster_egg is missing in the config file.");
-            }
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
+            Log.writeDataToLogFile(2, "File not found: " + exception.getMessage());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
+            Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
-
 }
