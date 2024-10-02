@@ -62,7 +62,7 @@ public final class OnBlockPlaceEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.DebugEvent.instance.getDebugOnBlockPlace())
+                if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_block_place"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockPlaceActions. ID Rule "
                             + i + ": "

@@ -87,7 +87,7 @@ public final class OnLivingDrops
 
                     BlockPos pos = event.getEntity().getPosition();
 
-                    if (DataGameDebugger.DebugEvent.instance.getDebugOnLivingDrops())
+                    if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_living_drops"))
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericDropLoot. ID Rule: " + i
                                 + " entity: " + event.getEntity().getName() + " new drop @item: " + item);
