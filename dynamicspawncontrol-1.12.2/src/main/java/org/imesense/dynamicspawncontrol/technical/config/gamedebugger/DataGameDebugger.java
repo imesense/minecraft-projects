@@ -3,6 +3,8 @@ package org.imesense.dynamicspawncontrol.technical.config.gamedebugger;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -35,8 +37,7 @@ public final class DataGameDebugger
          */
         public DebugMonitor(@Nonnull final String category)
         {
-			CodeGenericUtils.printInitClassToLog(this.getClass());
-			
+            CodeGenericUtils.printInitClassToLog(this.getClass());
             this.setCategory = category;
         }
 
@@ -77,52 +78,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        private Boolean debugOnBlockBreak = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnBlockPlace = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnEntitySpawn = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnLeftClick = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnLivingDrops = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnLivingExperienceDrop = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnTaskManager = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnPlayerTick = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnPotentialSpawn = false;
-
-        /**
-         *
-         */
-        private Boolean debugOnRightClick = false;
+        private final Map<String, Boolean> debugSettings = new HashMap<>();
 
         /**
          *
@@ -130,189 +86,56 @@ public final class DataGameDebugger
          */
         public DebugEvent(@Nonnull final String category)
         {
-			CodeGenericUtils.printInitClassToLog(this.getClass());
-			
+            CodeGenericUtils.printInitClassToLog(this.getClass());
+
             this.setCategory = category;
+
+            debugSettings.put("debug_on_block_break", false);
+            debugSettings.put("debug_on_block_place", false);
+            debugSettings.put("debug_on_entity_spawn", false);
+            debugSettings.put("debug_on_left_click", false);
+            debugSettings.put("debug_on_living_drops", false);
+            debugSettings.put("debug_on_living_experience_drop", false);
+            debugSettings.put("debug_on_task_manager", false);
+            debugSettings.put("debug_on_player_tick", false);
+            debugSettings.put("debug_on_potential_spawn", false);
+            debugSettings.put("debug_on_right_click", false);
+        }
+
+        /**
+         *
+         * @param key
+         * @return
+         */
+        public Boolean getDebugSetting(String key)
+        {
+            return debugSettings.getOrDefault(key, false);
         }
 
         /**
          *
          * @return
          */
-        public Boolean getDebugOnBlockBreak()
+        public Map<String, Boolean> getDebugSettings()
         {
-            return this.debugOnBlockBreak;
+            return debugSettings;
         }
 
         /**
-         *
+         * 
+         * @param key
          * @param value
          */
-        public void setDebugOnBlockBreak(Boolean value)
+        public void setDebugSetting(String key, Boolean value)
         {
-            this.debugOnBlockBreak = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnBlockPlace()
-        {
-            return this.debugOnBlockPlace;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnBlockPlace(Boolean value)
-        {
-            this.debugOnBlockPlace = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnEntitySpawn()
-        {
-            return this.debugOnEntitySpawn;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnEntitySpawn(Boolean value)
-        {
-            this.debugOnEntitySpawn = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnLeftClick()
-        {
-            return this.debugOnLeftClick;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnLeftClick(Boolean value)
-        {
-            this.debugOnLeftClick = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnLivingDrops()
-        {
-            return this.debugOnLivingDrops;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnLivingDrops(Boolean value)
-        {
-            this.debugOnLivingDrops = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnLivingExperienceDrop()
-        {
-            return this.debugOnLivingExperienceDrop;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnLivingExperienceDrop(Boolean value)
-        {
-            this.debugOnLivingExperienceDrop = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnTaskManager()
-        {
-            return this.debugOnTaskManager;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnTaskManager(Boolean value)
-        {
-            this.debugOnTaskManager = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnPlayerTick()
-        {
-            return this.debugOnPlayerTick;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnPlayerTick(Boolean value)
-        {
-            this.debugOnPlayerTick = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnPotentialSpawn()
-        {
-            return this.debugOnPotentialSpawn;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnPotentialSpawn(Boolean value)
-        {
-            this.debugOnPotentialSpawn = value;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Boolean getDebugOnRightClick()
-        {
-            return this.debugOnRightClick;
-        }
-
-        /**
-         *
-         * @param value
-         */
-        public void setDebugOnRightClick(Boolean value)
-        {
-            this.debugOnRightClick = value;
+            if (debugSettings.containsKey(key))
+            {
+                debugSettings.put(key, value);
+            }
+            else
+            {
+                throw new IllegalArgumentException("Unknown debug setting: " + key);
+            }
         }
     }
 }

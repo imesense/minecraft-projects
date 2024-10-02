@@ -60,7 +60,7 @@ public final class OnLivingExperienceDrop
                     int modifyXp = rule.modifyXp(event.getDroppedExperience());
                     event.setDroppedExperience(modifyXp);
 
-                    if (DataGameDebugger.DebugEvent.instance.getDebugOnLivingExperienceDrop())
+                    if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_living_experience_drop"))
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + i + ": "
                                 + result

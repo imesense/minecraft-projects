@@ -58,7 +58,7 @@ public final class OnPlayerTick
         {
             if (tickCounter % rule.getTimeout() == 0 && rule.match(event))
             {
-                if (DataGameDebugger.DebugEvent.instance.getDebugOnPlayerTick())
+                if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_player_tick"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericMapEffectsActions. ID Rule: " + i
                             + " entity: " + event.player.getName()

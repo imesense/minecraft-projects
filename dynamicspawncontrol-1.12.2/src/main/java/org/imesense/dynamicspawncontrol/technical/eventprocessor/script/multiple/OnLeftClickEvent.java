@@ -60,7 +60,7 @@ public final class OnLeftClickEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.DebugEvent.instance.getDebugOnLeftClick())
+                if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_left_click"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericLeftClickActions. ID Rule: " + i + ": "
                             + result

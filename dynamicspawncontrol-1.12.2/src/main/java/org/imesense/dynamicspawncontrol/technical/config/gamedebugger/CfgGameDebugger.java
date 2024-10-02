@@ -10,6 +10,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 /**
  *
@@ -25,19 +26,19 @@ public final class CfgGameDebugger extends CfgClassAbstract
     {
         super(nameConfigFile);
 
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtils.printInitClassToLog(this.getClass());
 
         DataGameDebugger.DebugMonitor.instance = new DataGameDebugger.DebugMonitor("monitor");
         DataGameDebugger.DebugEvent.instance = new DataGameDebugger.DebugEvent("event");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-                loadFromFile();
+            loadFromFile();
         }
         else
         {
             Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-                saveToFile();
+            saveToFile();
         }
     }
 
@@ -47,20 +48,24 @@ public final class CfgGameDebugger extends CfgClassAbstract
      */
     private static JsonObject getJsonObject()
     {
+        JsonObject jsonObject = new JsonObject();
+
+        JsonObject monitorObject = new JsonObject();
+        monitorObject.addProperty("debug_monitor_cache", DataGameDebugger.DebugMonitor.instance.getDebugMonitorCache());
+        jsonObject.add("monitor", monitorObject);
+
         JsonObject eventObject = new JsonObject();
 
-        eventObject.addProperty("debug_on_block_break", DataGameDebugger.DebugEvent.instance.getDebugOnBlockBreak());
-        eventObject.addProperty("debug_on_block_place", DataGameDebugger.DebugEvent.instance.getDebugOnBlockPlace());
-        eventObject.addProperty("debug_on_entity_spawn", DataGameDebugger.DebugEvent.instance.getDebugOnEntitySpawn());
-        eventObject.addProperty("debug_on_left_click", DataGameDebugger.DebugEvent.instance.getDebugOnLeftClick());
-        eventObject.addProperty("debug_on_living_drops", DataGameDebugger.DebugEvent.instance.getDebugOnLivingDrops());
-        eventObject.addProperty("debug_on_living_experience_drop", DataGameDebugger.DebugEvent.instance.getDebugOnLivingExperienceDrop());
-        eventObject.addProperty("debug_on_task_manager", DataGameDebugger.DebugEvent.instance.getDebugOnTaskManager());
-        eventObject.addProperty("debug_on_player_tick", DataGameDebugger.DebugEvent.instance.getDebugOnPlayerTick());
-        eventObject.addProperty("debug_on_potential_spawn", DataGameDebugger.DebugEvent.instance.getDebugOnPotentialSpawn());
-        eventObject.addProperty("debug_on_right_click", DataGameDebugger.DebugEvent.instance.getDebugOnRightClick());
+        Map<String, Boolean> debugSettings = DataGameDebugger.DebugEvent.instance.getDebugSettings();
 
-        return eventObject;
+        for (Map.Entry<String, Boolean> entry : debugSettings.entrySet())
+        {
+            eventObject.addProperty(entry.getKey(), entry.getValue());
+        }
+
+        jsonObject.add("event", eventObject);
+
+        return jsonObject;
     }
 
     /**
@@ -77,21 +82,13 @@ public final class CfgGameDebugger extends CfgClassAbstract
             {
                 Files.createDirectories(configPath);
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                throw new RuntimeException(e);
+                throw new RuntimeException(exception);
             }
         }
 
-        JsonObject jsonObject = new JsonObject();
-        JsonObject monitorObject = new JsonObject();
-
-        monitorObject.addProperty("debug_monitor_cache", DataGameDebugger.DebugMonitor.instance.getDebugMonitorCache());
-        jsonObject.add("monitor", monitorObject);
-
-        JsonObject eventObject = getJsonObject();
-
-        jsonObject.add("event", eventObject);
+        JsonObject jsonObject = getJsonObject();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -116,35 +113,34 @@ public final class CfgGameDebugger extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("debug_monitor_cache"))
+            if (jsonObject.has("monitor"))
             {
-                JsonObject monitorObject = jsonObject.getAsJsonObject("debug_monitor_cache");
-                DataGameDebugger.DebugMonitor.instance.setDebugMonitorCache(monitorObject.get("monitorDebug").getAsBoolean());
+                JsonObject monitorObject = jsonObject.getAsJsonObject("monitor");
+                DataGameDebugger.DebugMonitor.instance.setDebugMonitorCache(monitorObject.get("debug_monitor_cache").getAsBoolean());
             }
 
             if (jsonObject.has("event"))
             {
                 JsonObject eventObject = jsonObject.getAsJsonObject("event");
-                DataGameDebugger.DebugEvent.instance.setDebugOnBlockBreak(eventObject.get("debug_on_block_break").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnBlockPlace(eventObject.get("debug_on_block_place").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnEntitySpawn(eventObject.get("debug_on_entity_spawn").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnLeftClick(eventObject.get("debug_on_left_click").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnLivingDrops(eventObject.get("debug_on_living_drops").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnLivingExperienceDrop(eventObject.get("debug_on_living_experience_drop").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnTaskManager(eventObject.get("debug_on_task_manager").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnPlayerTick(eventObject.get("debug_on_player_tick").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnPotentialSpawn(eventObject.get("debug_on_potential_spawn").getAsBoolean());
-                DataGameDebugger.DebugEvent.instance.setDebugOnRightClick(eventObject.get("debug_on_right_click").getAsBoolean());
 
+                Map<String, Boolean> debugSettings = DataGameDebugger.DebugEvent.instance.getDebugSettings();
+
+                for (Map.Entry<String, Boolean> entry : debugSettings.entrySet())
+                {
+                    if (eventObject.has(entry.getKey()))
+                    {
+                        debugSettings.put(entry.getKey(), eventObject.get(entry.getKey()).getAsBoolean());
+                    }
+                }
             }
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
+            Log.writeDataToLogFile(2, "File not found: " + exception.getMessage());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
+            Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
 }

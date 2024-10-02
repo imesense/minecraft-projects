@@ -101,16 +101,6 @@ public final class CacheEvents
             return;
         }
 
-        //if (!ConfigGameDebugger.DebugMonitorCache)
-        //{
-        //    return;
-        //}
-
-        //if (!CfgGameDebugger.instance.isMonitorDebugEnabled())
-       // {
-        //    return;
-        //}
-
         if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
             cacheMonitor.renderDebugInfo(event.getResolution());

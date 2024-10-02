@@ -58,7 +58,7 @@ public final class OnEntitySpawnEvent
         {
             if (rule.match(event))
             {
-                if (DataGameDebugger.DebugEvent.instance.getDebugOnEntitySpawn())
+                if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_entity_spawn"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericSpawnConditions. ID Rule: " + i + ": "
                             + "entity: " + event.getEntity().getName()
