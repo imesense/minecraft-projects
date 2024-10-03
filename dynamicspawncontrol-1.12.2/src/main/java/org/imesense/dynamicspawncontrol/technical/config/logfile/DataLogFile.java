@@ -12,7 +12,7 @@ public final class DataLogFile
     /**
      *
      */
-    public static final class logFile
+    public static final class ConfigDataLogFile
     {
         /**
          *
@@ -22,7 +22,7 @@ public final class DataLogFile
         /**
          *
          */
-        public static logFile instance;
+        public static ConfigDataLogFile instance;
 
         /**
          *
@@ -33,7 +33,7 @@ public final class DataLogFile
          *
          * @param category
          */
-        public logFile(@Nonnull final String category)
+        public ConfigDataLogFile(@Nonnull final String category)
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			

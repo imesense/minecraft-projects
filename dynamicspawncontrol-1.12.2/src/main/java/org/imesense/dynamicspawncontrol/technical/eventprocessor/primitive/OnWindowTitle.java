@@ -45,7 +45,7 @@ public final class OnWindowTitle
      *
      */
     @Nonnull
-    private static final String TITLE = DataWindowTitle.windowTitle.instance.getWindowTitle();
+    private static final String TITLE = DataWindowTitle.ConfigDataWindowTitle.instance.getWindowTitle();
 
     /**
      *

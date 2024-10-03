@@ -30,7 +30,7 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataPluginWorldTime.worldTime.instance = new DataPluginWorldTime.worldTime("game_world_time");
+        DataPluginWorldTime.ConfigDataWorldTime.instance = new DataPluginWorldTime.ConfigDataWorldTime("game_world_time");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -52,13 +52,13 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
 
         JsonObject settingsNetherRack = new JsonObject();
 
-        settingsNetherRack.addProperty("day_length_minutes", DataPluginWorldTime.worldTime.instance.getDayLengthMinutes());
-        settingsNetherRack.addProperty("night_length_minutes", DataPluginWorldTime.worldTime.instance.getNightLengthMinutes());
-        settingsNetherRack.addProperty("sync_to_system_time_rate", DataPluginWorldTime.worldTime.instance.getSyncToSystemTimeRate());
-        settingsNetherRack.addProperty("time_control_debug", DataPluginWorldTime.worldTime.instance.getTimeControlDebug());
-        settingsNetherRack.addProperty("sync_to_system_time", DataPluginWorldTime.worldTime.instance.getSyncToSystemTime());
+        settingsNetherRack.addProperty("day_length_minutes", DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
+        settingsNetherRack.addProperty("night_length_minutes", DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
+        settingsNetherRack.addProperty("sync_to_system_time_rate", DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTimeRate());
+        settingsNetherRack.addProperty("time_control_debug", DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug());
+        settingsNetherRack.addProperty("sync_to_system_time", DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime());
 
-        jsonObject.add(DataPluginWorldTime.worldTime.instance.getCategoryObject(), settingsNetherRack);
+        jsonObject.add(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject(), settingsNetherRack);
 
         return jsonObject;
     }
@@ -108,33 +108,33 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataPluginWorldTime.worldTime.instance.getCategoryObject()))
+            if (jsonObject.has(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataPluginWorldTime.worldTime.instance.getCategoryObject());
+                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject());
 
                 if (gameWorldTime.has("day_length_minutes"))
                 {
-                    DataPluginWorldTime.worldTime.instance.setDayLengthMinutes(gameWorldTime.get("day_length_minutes").getAsInt());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.setDayLengthMinutes(gameWorldTime.get("day_length_minutes").getAsInt());
                 }
 
                 if (gameWorldTime.has("night_length_minutes"))
                 {
-                    DataPluginWorldTime.worldTime.instance.setNightLengthMinutes(gameWorldTime.get("night_length_minutes").getAsInt());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.setNightLengthMinutes(gameWorldTime.get("night_length_minutes").getAsInt());
                 }
 
                 if (gameWorldTime.has("sync_to_system_time_rate"))
                 {
-                    DataPluginWorldTime.worldTime.instance.setSyncToSystemTimeRate(gameWorldTime.get("sync_to_system_time_rate").getAsInt());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.setSyncToSystemTimeRate(gameWorldTime.get("sync_to_system_time_rate").getAsInt());
                 }
 
                 if (gameWorldTime.has("time_control_debug"))
                 {
-                    DataPluginWorldTime.worldTime.instance.setTimeControlDebug(gameWorldTime.get("time_control_debug").getAsBoolean());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.setTimeControlDebug(gameWorldTime.get("time_control_debug").getAsBoolean());
                 }
 
                 if (gameWorldTime.has("sync_to_system_time"))
                 {
-                    DataPluginWorldTime.worldTime.instance.setSyncToSystemTime(gameWorldTime.get("sync_to_system_time").getAsBoolean());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.setSyncToSystemTime(gameWorldTime.get("sync_to_system_time").getAsBoolean());
                 }
             }
             else

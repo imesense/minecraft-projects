@@ -56,9 +56,9 @@ public final class TimeHandlerServer implements ITimeHandler
     @Override
     public void tick(World world)
     {
-        if (DataPluginWorldTime.worldTime.instance.getSyncToSystemTime())
+        if (DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
         {
-            if (!world.isRemote && world.getMinecraftServer().getTickCounter() % DataPluginWorldTime.worldTime.instance.getSyncToSystemTimeRate() == 0)
+            if (!world.isRemote && world.getMinecraftServer().getTickCounter() % DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTimeRate() == 0)
             {
                 this.syncTimeWithSystem(world);
             }
@@ -105,7 +105,7 @@ public final class TimeHandlerServer implements ITimeHandler
             {
                 MessageHandler.instance.sendToAll(new PacketTime(this.customTime, this.multiplier));
 
-                if (DataPluginWorldTime.worldTime.instance.getTimeControlDebug())
+                if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug())
                 {
                     updatedWorldTime = world.getWorldTime();
 
@@ -160,7 +160,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
             world.provider.setWorldTime(time);
 
-            if (DataPluginWorldTime.worldTime.instance.getTimeControlDebug())
+            if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug())
             {
                 Log.writeDataToLogFile(0, String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
             }

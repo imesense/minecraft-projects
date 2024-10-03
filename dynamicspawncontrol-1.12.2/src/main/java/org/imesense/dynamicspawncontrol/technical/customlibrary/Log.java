@@ -160,7 +160,7 @@ public final class Log
                     writer.write("\n" + LEVEL_PREFIXES[logLevel[0]] + data);
                     writer.close();
 
-                    cleanFile(logFile, DataLogFile.logFile.instance.getLogMaxLines());
+                    cleanFile(logFile, DataLogFile.ConfigDataLogFile.instance.getLogMaxLines());
                 }
                 catch (IOException exception)
                 {

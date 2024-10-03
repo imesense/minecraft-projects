@@ -61,7 +61,7 @@ public final class OnBlockBreakEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_block_break"))
+                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_block_break"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockBreakActions. ID Rule "
                             + i + ": "

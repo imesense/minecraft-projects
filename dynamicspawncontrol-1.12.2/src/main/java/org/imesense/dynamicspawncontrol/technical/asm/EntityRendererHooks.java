@@ -121,12 +121,12 @@ public final class EntityRendererHooks
     {
         DimensionType dimType = dimension.getDimensionType();
 
-        if (dimType == DimensionType.THE_END && !DataRenderNight.renderNight.instance.getDarknessEnd())
+        if (dimType == DimensionType.THE_END && !DataRenderNight.ConfigDataRenderNight.instance.getDarknessEnd())
         {
             return true;
         }
 
-        return blacklistContains(dimension, dimType) ^ DataRenderNight.renderNight.instance.getInvertBlacklist();
+        return blacklistContains(dimension, dimType) ^ DataRenderNight.ConfigDataRenderNight.instance.getInvertBlacklist();
     }
 
     /**
@@ -139,7 +139,7 @@ public final class EntityRendererHooks
     {
         String dimName = dimensionType.getName();
 
-        for (String blacklistName : DataRenderNight.renderNight.instance.getBlacklistByName())
+        for (String blacklistName : DataRenderNight.ConfigDataRenderNight.instance.getBlacklistByName())
         {
             if (!blacklistName.equals(dimName))
             {
@@ -151,7 +151,7 @@ public final class EntityRendererHooks
 
         int dimID = dimension.getDimension();
 
-        for (int blacklistID : DataRenderNight.renderNight.instance.getBlacklistByID())
+        for (int blacklistID : DataRenderNight.ConfigDataRenderNight.instance.getBlacklistByID())
         {
             if (dimID != blacklistID)
             {
@@ -174,23 +174,23 @@ public final class EntityRendererHooks
     {
         if (dimensionType == DimensionType.OVERWORLD)
         {
-            return DataRenderNight.renderNight.instance.getDarknessOverWorld();
+            return DataRenderNight.ConfigDataRenderNight.instance.getDarknessOverWorld();
         }
         else if (dimensionType == DimensionType.NETHER)
         {
-            return DataRenderNight.renderNight.instance.getDarknessNether();
+            return DataRenderNight.ConfigDataRenderNight.instance.getDarknessNether();
         }
         else if (dimensionType == DimensionType.THE_END)
         {
-            return DataRenderNight.renderNight.instance.getDarknessEnd();
+            return DataRenderNight.ConfigDataRenderNight.instance.getDarknessEnd();
         }
         else if (dimension.hasSkyLight())
         {
-            return DataRenderNight.renderNight.instance.getDarknessDefault();
+            return DataRenderNight.ConfigDataRenderNight.instance.getDarknessDefault();
         }
         else
         {
-            return DataRenderNight.renderNight.instance.getDarknessSkyLess();
+            return DataRenderNight.ConfigDataRenderNight.instance.getDarknessSkyLess();
         }
     }
 
@@ -224,9 +224,9 @@ public final class EntityRendererHooks
 
         final double moon;
 
-        if (!DataRenderNight.renderNight.instance.getIgnoreMoonLight())
+        if (!DataRenderNight.ConfigDataRenderNight.instance.getIgnoreMoonLight())
         {
-            Double[] phaseFactors = DataRenderNight.renderNight.instance.getMoonPhaseFactors();
+            Double[] phaseFactors = DataRenderNight.ConfigDataRenderNight.instance.getMoonPhaseFactors();
 
             int moonPhase = dim.getMoonPhase(world.getWorldTime());
 

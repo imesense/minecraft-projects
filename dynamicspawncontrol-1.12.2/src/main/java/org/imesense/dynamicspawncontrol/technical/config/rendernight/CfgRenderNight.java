@@ -30,7 +30,7 @@ public final class CfgRenderNight extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataRenderNight.renderNight.instance = new DataRenderNight.renderNight("render_night");
+        DataRenderNight.ConfigDataRenderNight.instance = new DataRenderNight.ConfigDataRenderNight("render_night");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,7 +65,7 @@ public final class CfgRenderNight extends CfgClassAbstract
         JsonObject jsonObject = new JsonObject();
         JsonObject monitorObject = getObject();
 
-        jsonObject.add(DataRenderNight.renderNight.instance.getCategoryObject(), monitorObject);
+        jsonObject.add(DataRenderNight.ConfigDataRenderNight.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -89,7 +89,7 @@ public final class CfgRenderNight extends CfgClassAbstract
 
         JsonArray moonPhaseFactorsArray = new JsonArray();
 
-        for (Double factor : DataRenderNight.renderNight.instance.getMoonPhaseFactors())
+        for (Double factor : DataRenderNight.ConfigDataRenderNight.instance.getMoonPhaseFactors())
         {
             moonPhaseFactorsArray.add(factor);
         }
@@ -98,7 +98,7 @@ public final class CfgRenderNight extends CfgClassAbstract
 
         JsonArray blacklistByIDArray = new JsonArray();
 
-        for (Integer id : DataRenderNight.renderNight.instance.getBlacklistByID())
+        for (Integer id : DataRenderNight.ConfigDataRenderNight.instance.getBlacklistByID())
         {
             blacklistByIDArray.add(id);
         }
@@ -107,7 +107,7 @@ public final class CfgRenderNight extends CfgClassAbstract
 
         JsonArray blacklistByNameArray = new JsonArray();
 
-        for (String name : DataRenderNight.renderNight.instance.getBlacklistByName())
+        for (String name : DataRenderNight.ConfigDataRenderNight.instance.getBlacklistByName())
         {
             blacklistByNameArray.add(name);
         }
@@ -125,14 +125,14 @@ public final class CfgRenderNight extends CfgClassAbstract
     {
         JsonObject monitorObject = new JsonObject();
 
-        monitorObject.addProperty("darknessOverWorld", DataRenderNight.renderNight.instance.getDarknessOverWorld());
-        monitorObject.addProperty("darknessNether", DataRenderNight.renderNight.instance.getDarknessNether());
-        monitorObject.addProperty("darknessEnd", DataRenderNight.renderNight.instance.getDarknessEnd());
-        monitorObject.addProperty("darknessDefault", DataRenderNight.renderNight.instance.getDarknessDefault());
-        monitorObject.addProperty("darknessSkyLess", DataRenderNight.renderNight.instance.getDarknessSkyLess());
-        monitorObject.addProperty("darknessNetherFog", DataRenderNight.renderNight.instance.getDarknessNetherFog());
-        monitorObject.addProperty("darknessEndFog", DataRenderNight.renderNight.instance.getDarknessEndFog());
-        monitorObject.addProperty("ignoreMoonLight", DataRenderNight.renderNight.instance.getIgnoreMoonLight());
+        monitorObject.addProperty("darknessOverWorld", DataRenderNight.ConfigDataRenderNight.instance.getDarknessOverWorld());
+        monitorObject.addProperty("darknessNether", DataRenderNight.ConfigDataRenderNight.instance.getDarknessNether());
+        monitorObject.addProperty("darknessEnd", DataRenderNight.ConfigDataRenderNight.instance.getDarknessEnd());
+        monitorObject.addProperty("darknessDefault", DataRenderNight.ConfigDataRenderNight.instance.getDarknessDefault());
+        monitorObject.addProperty("darknessSkyLess", DataRenderNight.ConfigDataRenderNight.instance.getDarknessSkyLess());
+        monitorObject.addProperty("darknessNetherFog", DataRenderNight.ConfigDataRenderNight.instance.getDarknessNetherFog());
+        monitorObject.addProperty("darknessEndFog", DataRenderNight.ConfigDataRenderNight.instance.getDarknessEndFog());
+        monitorObject.addProperty("ignoreMoonLight", DataRenderNight.ConfigDataRenderNight.instance.getIgnoreMoonLight());
         return monitorObject;
     }
 
@@ -147,48 +147,48 @@ public final class CfgRenderNight extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataRenderNight.renderNight.instance.getCategoryObject()))
+            if (jsonObject.has(DataRenderNight.ConfigDataRenderNight.instance.getCategoryObject()))
             {
-                JsonObject renderNightObject = jsonObject.getAsJsonObject(DataRenderNight.renderNight.instance.getCategoryObject());
+                JsonObject renderNightObject = jsonObject.getAsJsonObject(DataRenderNight.ConfigDataRenderNight.instance.getCategoryObject());
 
                 if (renderNightObject.has("darknessOverWorld"))
                 {
-                    DataRenderNight.renderNight.instance.setDarknessOverWorld(renderNightObject.get("darknessOverWorld").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setDarknessOverWorld(renderNightObject.get("darknessOverWorld").getAsBoolean());
                 }
 
                 if (renderNightObject.has("darknessNether"))
                 {
-                    DataRenderNight.renderNight.instance.setDarknessNether(renderNightObject.get("darknessNether").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setDarknessNether(renderNightObject.get("darknessNether").getAsBoolean());
                 }
 
                 if (renderNightObject.has("darknessEnd"))
                 {
-                    DataRenderNight.renderNight.instance.setDarknessEnd(renderNightObject.get("darknessEnd").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setDarknessEnd(renderNightObject.get("darknessEnd").getAsBoolean());
                 }
 
                 if (renderNightObject.has("darknessDefault"))
                 {
-                    DataRenderNight.renderNight.instance.setDarknessDefault(renderNightObject.get("darknessDefault").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setDarknessDefault(renderNightObject.get("darknessDefault").getAsBoolean());
                 }
 
                 if (renderNightObject.has("darknessSkyLess"))
                 {
-                    DataRenderNight.renderNight.instance.setDarknessSkyLess(renderNightObject.get("darknessSkyLess").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setDarknessSkyLess(renderNightObject.get("darknessSkyLess").getAsBoolean());
                 }
 
                 if (renderNightObject.has("darknessNetherFog"))
                 {
-                    DataRenderNight.renderNight.instance.setDarknessNetherFog(renderNightObject.get("darknessNetherFog").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setDarknessNetherFog(renderNightObject.get("darknessNetherFog").getAsBoolean());
                 }
 
                 if (renderNightObject.has("darknessEndFog"))
                 {
-                    DataRenderNight.renderNight.instance.setDarknessEndFog(renderNightObject.get("darknessEndFog").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setDarknessEndFog(renderNightObject.get("darknessEndFog").getAsBoolean());
                 }
 
                 if (renderNightObject.has("ignoreMoonLight"))
                 {
-                    DataRenderNight.renderNight.instance.setIgnoreMoonLight(renderNightObject.get("ignoreMoonLight").getAsBoolean());
+                    DataRenderNight.ConfigDataRenderNight.instance.setIgnoreMoonLight(renderNightObject.get("ignoreMoonLight").getAsBoolean());
                 }
 
                 if (renderNightObject.has("moonPhaseFactors"))
@@ -201,7 +201,7 @@ public final class CfgRenderNight extends CfgClassAbstract
                         moonPhaseFactors[i] = moonPhaseFactorsArray.get(i).getAsDouble();
                     }
 
-                    DataRenderNight.renderNight.instance.setMoonPhaseFactors(moonPhaseFactors);
+                    DataRenderNight.ConfigDataRenderNight.instance.setMoonPhaseFactors(moonPhaseFactors);
                 }
 
                 if (renderNightObject.has("blacklistByID"))
@@ -214,7 +214,7 @@ public final class CfgRenderNight extends CfgClassAbstract
                         blacklistByID[i] = blacklistByIDArray.get(i).getAsInt();
                     }
 
-                    DataRenderNight.renderNight.instance.setBlacklistByID(blacklistByID);
+                    DataRenderNight.ConfigDataRenderNight.instance.setBlacklistByID(blacklistByID);
                 }
 
                 if (renderNightObject.has("blacklistByName"))
@@ -227,7 +227,7 @@ public final class CfgRenderNight extends CfgClassAbstract
                         blacklistByName[i] = blacklistByNameArray.get(i).getAsString();
                     }
 
-                    DataRenderNight.renderNight.instance.setBlacklistByName(blacklistByName);
+                    DataRenderNight.ConfigDataRenderNight.instance.setBlacklistByName(blacklistByName);
                 }
             }
             else

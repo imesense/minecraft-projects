@@ -71,7 +71,7 @@ public final class PacketGameRule implements IMessage
             {
                 Minecraft.getMinecraft().world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", Boolean.toString(message.doDaylightCycle_tc));
 
-                if (DataPluginWorldTime.worldTime.instance.getTimeControlDebug())
+                if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug())
                 {
                     LogManager.getLogger().info("Network packet for game_rule doDaylightCycle_tc received, value: " + message.doDaylightCycle_tc);
                 }

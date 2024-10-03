@@ -71,7 +71,7 @@ public final class OnUpdateTimeWorld
                 world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", "true");
             }
 
-            if (!world.isRemote && !DataPluginWorldTime.worldTime.instance.getSyncToSystemTime())
+            if (!world.isRemote && !DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
             {
                 this.serverUpdate(world.getWorldTime());
             }
@@ -197,7 +197,7 @@ public final class OnUpdateTimeWorld
                             }
                         }
 
-                        if (DataPluginWorldTime.worldTime.instance.getSyncToSystemTime())
+                        if (DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
                         {
                             event.getSender().sendMessage(new TextComponentString
                                     (TextFormatting.RED + "Disable system time synchronization to " + args[0] + " time!"));

@@ -31,7 +31,7 @@ public final class CfgLogFile extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataLogFile.logFile.instance = new DataLogFile.logFile("log_file");
+        DataLogFile.ConfigDataLogFile.instance = new DataLogFile.ConfigDataLogFile("log_file");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -66,8 +66,8 @@ public final class CfgLogFile extends CfgClassAbstract
         JsonObject jsonObject = new JsonObject();
         JsonObject monitorObject = new JsonObject();
 
-        monitorObject.addProperty("max_lines", DataLogFile.logFile.instance.getLogMaxLines());
-        jsonObject.add(DataLogFile.logFile.instance.getCategoryObject(), monitorObject);
+        monitorObject.addProperty("max_lines", DataLogFile.ConfigDataLogFile.instance.getLogMaxLines());
+        jsonObject.add(DataLogFile.ConfigDataLogFile.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -92,15 +92,14 @@ public final class CfgLogFile extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataLogFile.logFile.instance.getCategoryObject()))
+            if (jsonObject.has(DataLogFile.ConfigDataLogFile.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataLogFile.logFile.instance.getCategoryObject());
+                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataLogFile.ConfigDataLogFile.instance.getCategoryObject());
 
                 if (gameWorldTime.has("max_lines"))
                 {
-                    DataLogFile.logFile.instance.setLogMaxLines(gameWorldTime.get("max_lines").getAsShort());
+                    DataLogFile.ConfigDataLogFile.instance.setLogMaxLines(gameWorldTime.get("max_lines").getAsShort());
                 }
-
             }
             else
             {

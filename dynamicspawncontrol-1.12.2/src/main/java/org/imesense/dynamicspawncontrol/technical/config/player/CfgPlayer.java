@@ -30,7 +30,7 @@ public final class CfgPlayer extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataPlayer.player.instance = new DataPlayer.player("player");
+        DataPlayer.ConfigDataPlayer.instance = new DataPlayer.ConfigDataPlayer("player");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,8 +65,8 @@ public final class CfgPlayer extends CfgClassAbstract
         JsonObject jsonObject = new JsonObject();
         JsonObject monitorObject = new JsonObject();
 
-        monitorObject.addProperty("protected_respawn_player_radius", DataPlayer.player.instance.getProtectRespawnPlayerRadius());
-        jsonObject.add(DataPlayer.player.instance.getCategoryObject(), monitorObject);
+        monitorObject.addProperty("protected_respawn_player_radius", DataPlayer.ConfigDataPlayer.instance.getProtectRespawnPlayerRadius());
+        jsonObject.add(DataPlayer.ConfigDataPlayer.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -91,13 +91,13 @@ public final class CfgPlayer extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataPlayer.player.instance.getCategoryObject()))
+            if (jsonObject.has(DataPlayer.ConfigDataPlayer.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataPlayer.player.instance.getCategoryObject());
+                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataPlayer.ConfigDataPlayer.instance.getCategoryObject());
 
                 if (gameWorldTime.has("protected_respawn_player_radius"))
                 {
-                    DataPlayer.player.instance.setProtectRespawnPlayerRadius(gameWorldTime.get("protected_respawn_player_radius").getAsShort());
+                    DataPlayer.ConfigDataPlayer.instance.setProtectRespawnPlayerRadius(gameWorldTime.get("protected_respawn_player_radius").getAsShort());
                 }
             }
             else

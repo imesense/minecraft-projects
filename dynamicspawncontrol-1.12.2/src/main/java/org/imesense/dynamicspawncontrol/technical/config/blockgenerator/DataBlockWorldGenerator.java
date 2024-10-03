@@ -10,7 +10,7 @@ public final class DataBlockWorldGenerator
     /**
      *
      */
-    public static final class InfoDataBlockNetherRack extends InfoDataBlock
+    public static final class InfoDataBlockNetherRack extends ConfigDataBlock
     {
         /**
          *
@@ -30,7 +30,7 @@ public final class DataBlockWorldGenerator
     /**
      *
      */
-    public static final class InfoDataBlockMossyCobblestone extends InfoDataBlock
+    public static final class InfoDataBlockMossyCobblestone extends ConfigDataBlock
     {
         /**
          *
@@ -50,7 +50,7 @@ public final class DataBlockWorldGenerator
     /**
      *
      */
-    public static final class InfoDataBlockBlockMonsterEgg extends InfoDataBlock
+    public static final class InfoDataBlockBlockMonsterEgg extends ConfigDataBlock
     {
         /**
          *

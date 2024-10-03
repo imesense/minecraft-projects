@@ -60,7 +60,7 @@ public final class OnRightClickEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_right_click"))
+                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_right_click"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericRightClickActions. ID Rule: " + i + ": " + result
                             + " entity: " + event.getEntityPlayer().getName()

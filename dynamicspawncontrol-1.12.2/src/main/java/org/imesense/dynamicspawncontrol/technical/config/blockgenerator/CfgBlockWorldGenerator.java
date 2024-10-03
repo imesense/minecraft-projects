@@ -55,7 +55,7 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
      * @param blockName
      * @param block
      */
-    public void saveBlockSettings(JsonObject jsonObject, String blockName, InfoDataBlock block)
+    public void saveBlockSettings(JsonObject jsonObject, String blockName, ConfigDataBlock block)
     {
         JsonObject settings = new JsonObject();
 
@@ -72,7 +72,7 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
      * @param blockName
      * @param block
      */
-    public void loadBlockSettings(JsonObject jsonObject, String blockName, InfoDataBlock block)
+    public void loadBlockSettings(JsonObject jsonObject, String blockName, ConfigDataBlock block)
     {
         if (jsonObject.has(blockName))
         {

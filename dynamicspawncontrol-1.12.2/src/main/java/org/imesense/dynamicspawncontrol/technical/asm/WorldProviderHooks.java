@@ -20,12 +20,12 @@ public final class WorldProviderHooks
      */
     public static Vec3d onGetFogColor(WorldProvider provider, float angle, float partialTicks)
     {
-        if (!DataRenderNight.renderNight.instance.getDarknessEndFog() && provider instanceof WorldProviderEnd)
+        if (!DataRenderNight.ConfigDataRenderNight.instance.getDarknessEndFog() && provider instanceof WorldProviderEnd)
         {
             return null;
         }
 
-        if (!DataRenderNight.renderNight.instance.getDarknessNetherFog() && provider instanceof WorldProviderHell)
+        if (!DataRenderNight.ConfigDataRenderNight.instance.getDarknessNetherFog() && provider instanceof WorldProviderHell)
         {
             return null;
         }
