@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
+import static net.minecraft.client.gui.Gui.drawRect;
+
 /**
  *
  */
@@ -59,7 +61,7 @@ public final class OnEventDummy
                 biomeText = biomeName + " - Difficulty: " + difficultyLevel;
 
                 // Вывести сообщение в чат
-                player.sendMessage(new TextComponentString(biomeText));
+                //player.sendMessage(new TextComponentString(biomeText));
             }
         }
     }
@@ -76,10 +78,22 @@ public final class OnEventDummy
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         long currentTime = System.currentTimeMillis();
-
-        // Отображаем текст только в течение 5 секунд после входа в биом
+        
         if (currentTime - lastBiomeChangeTime < 5000) {
-            event.getLeft().add(biomeText);
+            int boxWidth = 200;
+            int boxHeight = 50;
+
+            int xPos = 0;
+            int yPos = 0;
+
+            int backgroundColor = 0x80000000;
+
+            drawRect(xPos, yPos, xPos + boxWidth, yPos + boxHeight, backgroundColor);
+
+            int textXPos = xPos + 10;
+            int textYPos = yPos + 10;
+
+            mc.fontRenderer.drawString(biomeText, textXPos, textYPos, 0xFFFFFF);
         }
     }
 }
