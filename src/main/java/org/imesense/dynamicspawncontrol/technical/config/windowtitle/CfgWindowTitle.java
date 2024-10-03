@@ -30,7 +30,7 @@ public final class CfgWindowTitle extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataWindowTitle.windowTitle.instance = new DataWindowTitle.windowTitle("window_title");
+        DataWindowTitle.ConfigDataWindowTitle.instance = new DataWindowTitle.ConfigDataWindowTitle("window_title");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,9 +65,9 @@ public final class CfgWindowTitle extends CfgClassAbstract
         JsonObject jsonObject = new JsonObject();
         JsonObject monitorObject = new JsonObject();
 
-        monitorObject.addProperty("title", DataWindowTitle.windowTitle.instance.getWindowTitle());
+        monitorObject.addProperty("title", DataWindowTitle.ConfigDataWindowTitle.instance.getWindowTitle());
 
-        jsonObject.add(DataWindowTitle.windowTitle.instance.getCategoryObject(), monitorObject);
+        jsonObject.add(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -92,13 +92,13 @@ public final class CfgWindowTitle extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataWindowTitle.windowTitle.instance.getCategoryObject()))
+            if (jsonObject.has(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataWindowTitle.windowTitle.instance.getCategoryObject());
+                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject());
 
                 if (gameWorldTime.has("title"))
                 {
-                    DataWindowTitle.windowTitle.instance.setWindowTitle(gameWorldTime.get("title").getAsString());
+                    DataWindowTitle.ConfigDataWindowTitle.instance.setWindowTitle(gameWorldTime.get("title").getAsString());
                 }
 
             }

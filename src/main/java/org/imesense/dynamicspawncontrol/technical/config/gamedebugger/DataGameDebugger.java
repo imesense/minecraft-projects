@@ -14,7 +14,7 @@ public final class DataGameDebugger
     /**
      *
      */
-    public static final class DebugMonitor
+    public static final class ConfigDataMonitor
     {
         /**
          *
@@ -24,7 +24,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        public static DebugMonitor instance;
+        public static ConfigDataMonitor instance;
 
         /**
          *
@@ -35,7 +35,7 @@ public final class DataGameDebugger
          *
          * @param category
          */
-        public DebugMonitor(@Nonnull final String category)
+        public ConfigDataMonitor(@Nonnull final String category)
         {
             CodeGenericUtils.printInitClassToLog(this.getClass());
             this.category = category;
@@ -72,7 +72,7 @@ public final class DataGameDebugger
     /**
      *
      */
-    public static final class DebugEvent
+    public static final class ConfigDataEvent
     {
         /**
          *
@@ -82,7 +82,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        public static DebugEvent instance;
+        public static ConfigDataEvent instance;
 
         /**
          *
@@ -93,7 +93,7 @@ public final class DataGameDebugger
          *
          * @param category
          */
-        public DebugEvent(@Nonnull final String category)
+        public ConfigDataEvent(@Nonnull final String category)
         {
             CodeGenericUtils.printInitClassToLog(this.getClass());
 

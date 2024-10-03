@@ -12,7 +12,7 @@ public final class DataZombieDropItem
     /**
      *
      */
-    public static final class zombieDrop
+    public static final class ConfigDataZombieDrop
     {
         /**
          *
@@ -22,7 +22,7 @@ public final class DataZombieDropItem
         /**
          *
          */
-        public static zombieDrop instance;
+        public static ConfigDataZombieDrop instance;
 
         /**
          *
@@ -63,7 +63,7 @@ public final class DataZombieDropItem
          *
          * @param category
          */
-        public zombieDrop(@Nonnull final String category)
+        public ConfigDataZombieDrop(@Nonnull final String category)
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			

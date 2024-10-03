@@ -30,7 +30,7 @@ public final class CfgZombieDropItem extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataZombieDropItem.zombieDrop.instance = new DataZombieDropItem.zombieDrop("zombie_drop");
+        DataZombieDropItem.ConfigDataZombieDrop.instance = new DataZombieDropItem.ConfigDataZombieDrop("zombie_drop");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,15 +65,15 @@ public final class CfgZombieDropItem extends CfgClassAbstract
         JsonObject jsonObject = new JsonObject();
         JsonObject monitorObject = new JsonObject();
 
-        monitorObject.addProperty("break_item", DataZombieDropItem.zombieDrop.instance.getBreakItem());
-        monitorObject.addProperty("hand_item_damage_factor", DataZombieDropItem.zombieDrop.instance.getHandItemDamageFactor());
-        monitorObject.addProperty("head_damage_factor", DataZombieDropItem.zombieDrop.instance.getHeadDamageFactor());
-        monitorObject.addProperty("chest_damage_factor", DataZombieDropItem.zombieDrop.instance.getChestDamageFactor());
-        monitorObject.addProperty("legs_damage_factor", DataZombieDropItem.zombieDrop.instance.getLegsDamageFactor());
-        monitorObject.addProperty("feet_damage_factor", DataZombieDropItem.zombieDrop.instance.getFeetDamageFactor());
-        monitorObject.addProperty("damage_spread_factor", DataZombieDropItem.zombieDrop.instance.getDamageSpreadFactor());
+        monitorObject.addProperty("break_item", DataZombieDropItem.ConfigDataZombieDrop.instance.getBreakItem());
+        monitorObject.addProperty("hand_item_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getHandItemDamageFactor());
+        monitorObject.addProperty("head_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getHeadDamageFactor());
+        monitorObject.addProperty("chest_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getChestDamageFactor());
+        monitorObject.addProperty("legs_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getLegsDamageFactor());
+        monitorObject.addProperty("feet_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getFeetDamageFactor());
+        monitorObject.addProperty("damage_spread_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getDamageSpreadFactor());
 
-        jsonObject.add(DataZombieDropItem.zombieDrop.instance.getCategoryObject(), monitorObject);
+        jsonObject.add(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -98,43 +98,43 @@ public final class CfgZombieDropItem extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataZombieDropItem.zombieDrop.instance.getCategoryObject()))
+            if (jsonObject.has(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject()))
             {
-                JsonObject zombieDropObject = jsonObject.getAsJsonObject(DataZombieDropItem.zombieDrop.instance.getCategoryObject());
+                JsonObject zombieDropObject = jsonObject.getAsJsonObject(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject());
 
                 if (zombieDropObject.has("break_item"))
                 {
-                    DataZombieDropItem.zombieDrop.instance.setBreakItem(zombieDropObject.get("break_item").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.setBreakItem(zombieDropObject.get("break_item").getAsFloat());
                 }
 
                 if (zombieDropObject.has("hand_item_damage_factor"))
                 {
-                    DataZombieDropItem.zombieDrop.instance.setHandItemDamageFactor(zombieDropObject.get("hand_item_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.setHandItemDamageFactor(zombieDropObject.get("hand_item_damage_factor").getAsFloat());
                 }
 
                 if (zombieDropObject.has("head_damage_factor"))
                 {
-                    DataZombieDropItem.zombieDrop.instance.setHeadDamageFactor(zombieDropObject.get("head_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.setHeadDamageFactor(zombieDropObject.get("head_damage_factor").getAsFloat());
                 }
 
                 if (zombieDropObject.has("chest_damage_factor"))
                 {
-                    DataZombieDropItem.zombieDrop.instance.setChestDamageFactor(zombieDropObject.get("chest_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.setChestDamageFactor(zombieDropObject.get("chest_damage_factor").getAsFloat());
                 }
 
                 if (zombieDropObject.has("legs_damage_factor"))
                 {
-                    DataZombieDropItem.zombieDrop.instance.setLegsDamageFactor(zombieDropObject.get("legs_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.setLegsDamageFactor(zombieDropObject.get("legs_damage_factor").getAsFloat());
                 }
 
                 if (zombieDropObject.has("feet_damage_factor"))
                 {
-                    DataZombieDropItem.zombieDrop.instance.setFeetDamageFactor(zombieDropObject.get("feet_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.setFeetDamageFactor(zombieDropObject.get("feet_damage_factor").getAsFloat());
                 }
 
                 if (zombieDropObject.has("damage_spread_factor"))
                 {
-                    DataZombieDropItem.zombieDrop.instance.setDamageSpreadFactor(zombieDropObject.get("damage_spread_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.setDamageSpreadFactor(zombieDropObject.get("damage_spread_factor").getAsFloat());
                 }
             }
             else

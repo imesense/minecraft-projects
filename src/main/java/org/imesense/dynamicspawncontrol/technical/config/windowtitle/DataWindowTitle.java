@@ -13,7 +13,7 @@ public final class DataWindowTitle
     /**
      *
      */
-    public static final class windowTitle
+    public static final class ConfigDataWindowTitle
     {
         /**
          *
@@ -23,7 +23,7 @@ public final class DataWindowTitle
         /**
          *
          */
-        public static windowTitle instance;
+        public static ConfigDataWindowTitle instance;
 
         /**
          *
@@ -35,7 +35,7 @@ public final class DataWindowTitle
          *
          * @param category
          */
-        public windowTitle(@Nonnull final String category)
+        public ConfigDataWindowTitle(@Nonnull final String category)
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			

@@ -37,7 +37,7 @@ public final class TimeHandlerClient implements ITimeHandler
     @Override
     public void tick(World world)
     {
-        if (!DataPluginWorldTime.worldTime.instance.getSyncToSystemTime())
+        if (!DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
         {
             ++this.debugLogDelay;
 
@@ -51,7 +51,7 @@ public final class TimeHandlerClient implements ITimeHandler
 
             WorldTime.setWorldTime(world, this.customTime, this.multiplier);
 
-            if (DataPluginWorldTime.worldTime.instance.getTimeControlDebug() && this.debugLogDelay % 20 == 0)
+            if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug() && this.debugLogDelay % 20 == 0)
             {
                 long worldTime = world.getWorldTime();
 

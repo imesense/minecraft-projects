@@ -23,12 +23,12 @@ public final class WorldTime
     /**
      *
      */
-    private static final double day_multiplier = multiplier(DataPluginWorldTime.worldTime.instance.getDayLengthMinutes());
+    private static final double day_multiplier = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
 
     /**
      *
      */
-    private static final double night_multiplier = multiplier(DataPluginWorldTime.worldTime.instance.getNightLengthMinutes());
+    private static final double night_multiplier = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
 
     /**
      *

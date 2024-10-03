@@ -56,12 +56,20 @@ public final class OnDropZombieItems
 
             List<EntityItem> drops = event.getDrops();
 
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD), DataZombieDropItem.zombieDrop.instance.getHeadDamageFactor());
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST), DataZombieDropItem.zombieDrop.instance.getChestDamageFactor());
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS), DataZombieDropItem.zombieDrop.instance.getLegsDamageFactor());
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.FEET), DataZombieDropItem.zombieDrop.instance.getFeetDamageFactor());
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.getHeadDamageFactor());
 
-            addDamagedItemToDrops(zombie, drops, zombie.getHeldItemMainhand(), DataZombieDropItem.zombieDrop.instance.getHandItemDamageFactor());
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.getChestDamageFactor());
+
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.getLegsDamageFactor());
+
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.FEET),
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.getFeetDamageFactor());
+
+            addDamagedItemToDrops(zombie, drops, zombie.getHeldItemMainhand(),
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.getHandItemDamageFactor());
         }
     }
 
@@ -76,7 +84,7 @@ public final class OnDropZombieItems
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (new Random().nextDouble() < DataZombieDropItem.zombieDrop.instance.getBreakItem())
+            if (new Random().nextDouble() < DataZombieDropItem.ConfigDataZombieDrop.instance.getBreakItem())
             {
                 return;
             }
@@ -89,7 +97,7 @@ public final class OnDropZombieItems
                 Random rand = new Random();
                 int minDamage = (int)(maxDamage * damageFactor);
 
-                int damageSpread = (int)(maxDamage * DataZombieDropItem.zombieDrop.instance.getDamageSpreadFactor());
+                int damageSpread = (int)(maxDamage * DataZombieDropItem.ConfigDataZombieDrop.instance.getDamageSpreadFactor());
                 int randomDamage = minDamage + rand.nextInt(damageSpread);
 
                 damagedItem.setItemDamage(randomDamage);

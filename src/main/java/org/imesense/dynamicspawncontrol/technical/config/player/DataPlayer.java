@@ -12,7 +12,7 @@ public final class DataPlayer
     /**
      *
      */
-    public static final class player
+    public static final class ConfigDataPlayer
     {
         /**
          *
@@ -22,7 +22,7 @@ public final class DataPlayer
         /**
          *
          */
-        public static player instance;
+        public static ConfigDataPlayer instance;
 
         /**
          *
@@ -33,7 +33,7 @@ public final class DataPlayer
          *
          * @param category
          */
-        public player(@Nonnull final String category)
+        public ConfigDataPlayer(@Nonnull final String category)
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			

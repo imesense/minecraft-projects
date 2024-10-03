@@ -5,7 +5,7 @@ import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 /**
  *
  */
-public abstract class InfoDataBlock
+public abstract class ConfigDataBlock
 {
     /**
      *
@@ -34,7 +34,7 @@ public abstract class InfoDataBlock
      * @param minHeight
      * @param maxHeight
      */
-    public InfoDataBlock(String category, Integer chanceSpawn, Integer minHeight, Integer maxHeight)
+    public ConfigDataBlock(String category, Integer chanceSpawn, Integer minHeight, Integer maxHeight)
     {
         this.category = category;
         this.chanceSpawn = chanceSpawn;

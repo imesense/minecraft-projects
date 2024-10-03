@@ -12,7 +12,7 @@ public final class DataRenderNight
     /**
      *
      */
-    public static final class renderNight
+    public static final class ConfigDataRenderNight
     {
         /**
          *
@@ -22,7 +22,7 @@ public final class DataRenderNight
         /**
          *
          */
-        public static renderNight instance;
+        public static ConfigDataRenderNight instance;
 
         /**
          *
@@ -88,7 +88,7 @@ public final class DataRenderNight
          *
          * @param category
          */
-        public renderNight(@Nonnull final String category)
+        public ConfigDataRenderNight(@Nonnull final String category)
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			

@@ -94,9 +94,7 @@ public final class CacheEvents
     @SubscribeEvent(priority = EventPriority.LOW)
     public synchronized void onRenderOverlay_3(RenderGameOverlayEvent.Post event)
     {
-        boolean debugOption = DataGameDebugger.DebugMonitor.instance.getDebugMonitorCache();
-
-        if (!debugOption)
+        if (!DataGameDebugger.ConfigDataMonitor.instance.getDebugMonitorCache())
         {
             return;
         }

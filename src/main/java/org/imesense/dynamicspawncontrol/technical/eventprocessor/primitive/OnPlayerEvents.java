@@ -124,7 +124,7 @@ public final class OnPlayerEvents
         World world = player.world;
         BlockPos playerPos = player.getPosition();
 
-        int radius = DataPlayer.player.instance.getProtectRespawnPlayerRadius();
+        int radius = DataPlayer.ConfigDataPlayer.instance.getProtectRespawnPlayerRadius();
 
         AxisAlignedBB area = new AxisAlignedBB
                 (

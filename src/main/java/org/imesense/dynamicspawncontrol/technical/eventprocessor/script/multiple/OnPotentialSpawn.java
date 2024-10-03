@@ -105,7 +105,7 @@ public final class OnPotentialSpawn
                         event.getList().add(entry);
                     }
 
-                    if (DataGameDebugger.DebugEvent.instance.getDebugSetting("debug_on_potential_spawn"))
+                    if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_potential_spawn"))
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericOverrideSpawn. List: " + event.getList());
                     }

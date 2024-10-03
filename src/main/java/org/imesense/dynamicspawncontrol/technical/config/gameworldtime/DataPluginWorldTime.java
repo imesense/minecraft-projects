@@ -12,7 +12,7 @@ public final class DataPluginWorldTime
     /**
      *
      */
-    public static final class worldTime
+    public static final class ConfigDataWorldTime
     {
         /**
          *
@@ -22,7 +22,7 @@ public final class DataPluginWorldTime
         /**
          *
          */
-        public static worldTime instance;
+        public static ConfigDataWorldTime instance;
 
         /**
          *
@@ -53,7 +53,7 @@ public final class DataPluginWorldTime
          *
          * @param category
          */
-        public worldTime(@Nonnull final String category)
+        public ConfigDataWorldTime(@Nonnull final String category)
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			
