@@ -17,7 +17,7 @@ public final class DataPlayer
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -37,7 +37,7 @@ public final class DataPlayer
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			
-            this.setCategory = category;
+            this.category = category;
         }
 
         /**
@@ -56,6 +56,15 @@ public final class DataPlayer
         public void setProtectRespawnPlayerRadius(Short value)
         {
             this.protectRespawnPlayerRadius = value;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
         }
     }
 }

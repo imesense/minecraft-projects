@@ -18,7 +18,7 @@ public final class DataWindowTitle
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -39,7 +39,7 @@ public final class DataWindowTitle
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			
-            this.setCategory = category;
+            this.category = category;
         }
 
         /**
@@ -58,6 +58,15 @@ public final class DataWindowTitle
         public void setWindowTitle(String windowTitle)
         {
             this.windowTitle = windowTitle;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
         }
     }
 }

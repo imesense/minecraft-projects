@@ -35,12 +35,11 @@ public final class CfgLogFile extends CfgClassAbstract
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-            loadFromFile();
+            this.loadFromFile();
         }
         else
         {
-            Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            saveToFile();
+            this.saveToFile();
         }
     }
 
@@ -58,9 +57,9 @@ public final class CfgLogFile extends CfgClassAbstract
             {
                 Files.createDirectories(configPath);
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                throw new RuntimeException(e);
+                throw new RuntimeException(exception);
             }
         }
 
@@ -68,7 +67,7 @@ public final class CfgLogFile extends CfgClassAbstract
         JsonObject monitorObject = new JsonObject();
 
         monitorObject.addProperty("max_lines", DataLogFile.logFile.instance.getLogMaxLines());
-        jsonObject.add("log_file", monitorObject);
+        jsonObject.add(DataLogFile.logFile.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -76,9 +75,9 @@ public final class CfgLogFile extends CfgClassAbstract
         {
             gson.toJson(jsonObject, file);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+            throw new RuntimeException("Error writing to file: " + exception.getMessage(), exception);
         }
     }
 
@@ -93,9 +92,9 @@ public final class CfgLogFile extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("log_file"))
+            if (jsonObject.has(DataLogFile.logFile.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject("log_file");
+                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataLogFile.logFile.instance.getCategoryObject());
 
                 if (gameWorldTime.has("max_lines"))
                 {
@@ -108,13 +107,13 @@ public final class CfgLogFile extends CfgClassAbstract
                 Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
             }
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
+            Log.writeDataToLogFile(2, "File not found: " + exception.getMessage());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
+            Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
 }

@@ -10,7 +10,7 @@ public abstract class InfoDataBlock
     /**
      *
      */
-    final String setCategory;
+    private final String category;
 
     /**
      *
@@ -36,7 +36,7 @@ public abstract class InfoDataBlock
      */
     public InfoDataBlock(String category, Integer chanceSpawn, Integer minHeight, Integer maxHeight)
     {
-        this.setCategory = category;
+        this.category = category;
         this.chanceSpawn = chanceSpawn;
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
@@ -96,5 +96,14 @@ public abstract class InfoDataBlock
     public void setMaxHeight(Integer maxHeight)
     {
         this.maxHeight = maxHeight;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getCategoryObject()
+    {
+        return this.category;
     }
 }

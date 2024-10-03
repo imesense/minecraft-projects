@@ -17,7 +17,7 @@ public final class DataLogFile
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -37,7 +37,7 @@ public final class DataLogFile
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			
-            this.setCategory = category;
+            this.category = category;
         }
 
         /**
@@ -56,6 +56,15 @@ public final class DataLogFile
         public void setLogMaxLines(Short value)
         {
             this.logMaxLines = value;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
         }
     }
 }

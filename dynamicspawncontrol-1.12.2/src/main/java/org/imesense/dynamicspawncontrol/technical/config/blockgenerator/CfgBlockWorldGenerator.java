@@ -41,12 +41,11 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-            loadFromFile();
+            this.loadFromFile();
         }
         else
         {
-            Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            saveToFile();
+            this.saveToFile();
         }
     }
 
@@ -122,9 +121,14 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
 
         JsonObject jsonObject = new JsonObject();
 
-        saveBlockSettings(jsonObject, "settings_block_nether_rack", DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
-        saveBlockSettings(jsonObject, "settings_block_mossy_cobblestone", DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
-        saveBlockSettings(jsonObject, "settings_block_monster_egg", DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
+        saveBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+                DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
+
+        saveBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+                DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
+
+        saveBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+                DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -149,9 +153,14 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            loadBlockSettings(jsonObject, "settings_block_nether_rack", DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
-            loadBlockSettings(jsonObject, "settings_block_mossy_cobblestone", DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
-            loadBlockSettings(jsonObject, "settings_block_monster_egg", DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
+            loadBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+                    DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
+
+            loadBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+                    DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
+
+            loadBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+                    DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
 
         }
         catch (FileNotFoundException exception)

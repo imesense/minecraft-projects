@@ -34,12 +34,11 @@ public final class CfgWindowTitle extends CfgClassAbstract
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-            loadFromFile();
+            this.loadFromFile();
         }
         else
         {
-            Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            saveToFile();
+            this.saveToFile();
         }
     }
 
@@ -57,9 +56,9 @@ public final class CfgWindowTitle extends CfgClassAbstract
             {
                 Files.createDirectories(configPath);
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                throw new RuntimeException(e);
+                throw new RuntimeException(exception);
             }
         }
 
@@ -68,7 +67,7 @@ public final class CfgWindowTitle extends CfgClassAbstract
 
         monitorObject.addProperty("title", DataWindowTitle.windowTitle.instance.getWindowTitle());
 
-        jsonObject.add("window_title", monitorObject);
+        jsonObject.add(DataWindowTitle.windowTitle.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -76,9 +75,9 @@ public final class CfgWindowTitle extends CfgClassAbstract
         {
             gson.toJson(jsonObject, file);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+            throw new RuntimeException("Error writing to file: " + exception.getMessage(), exception);
         }
     }
 
@@ -93,9 +92,9 @@ public final class CfgWindowTitle extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("window_title"))
+            if (jsonObject.has(DataWindowTitle.windowTitle.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject("window_title");
+                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataWindowTitle.windowTitle.instance.getCategoryObject());
 
                 if (gameWorldTime.has("title"))
                 {
