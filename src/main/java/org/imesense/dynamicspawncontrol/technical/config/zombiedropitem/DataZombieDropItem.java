@@ -17,7 +17,7 @@ public final class DataZombieDropItem
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -67,7 +67,7 @@ public final class DataZombieDropItem
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			
-            this.setCategory = category;
+            this.category = category;
         }
 
         /**
@@ -194,6 +194,15 @@ public final class DataZombieDropItem
         public void setDamageSpreadFactor(Float damageSpreadFactor)
         {
             this.damageSpreadFactor = damageSpreadFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
         }
     }
 }

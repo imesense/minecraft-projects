@@ -32,12 +32,11 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-            loadFromFile();
+            this.loadFromFile();
         }
         else
         {
-            Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            saveToFile();
+            this.saveToFile();
         }
     }
 
@@ -55,9 +54,9 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
             {
                 Files.createDirectories(configPath);
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                throw new RuntimeException(e);
+                throw new RuntimeException(exception);
             }
         }
 
@@ -69,9 +68,9 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
         {
             gson.toJson(jsonObject, file);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+            throw new RuntimeException("Error writing to file: " + exception.getMessage(), exception);
         }
     }
 
@@ -86,13 +85,13 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
+            Log.writeDataToLogFile(2, "File not found: " + exception.getMessage());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
+            Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
 }

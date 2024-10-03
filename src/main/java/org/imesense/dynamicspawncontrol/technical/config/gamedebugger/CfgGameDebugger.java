@@ -33,12 +33,11 @@ public final class CfgGameDebugger extends CfgClassAbstract
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-            loadFromFile();
+            this.loadFromFile();
         }
         else
         {
-            Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            saveToFile();
+            this.saveToFile();
         }
     }
 
@@ -52,7 +51,7 @@ public final class CfgGameDebugger extends CfgClassAbstract
 
         JsonObject monitorObject = new JsonObject();
         monitorObject.addProperty("debug_monitor_cache", DataGameDebugger.DebugMonitor.instance.getDebugMonitorCache());
-        jsonObject.add("monitor", monitorObject);
+        jsonObject.add(DataGameDebugger.DebugMonitor.instance.getCategoryObject(), monitorObject);
 
         JsonObject eventObject = new JsonObject();
 
@@ -63,7 +62,7 @@ public final class CfgGameDebugger extends CfgClassAbstract
             eventObject.addProperty(entry.getKey(), entry.getValue());
         }
 
-        jsonObject.add("event", eventObject);
+        jsonObject.add(DataGameDebugger.DebugEvent.instance.getCategoryObject(), eventObject);
 
         return jsonObject;
     }
@@ -96,9 +95,9 @@ public final class CfgGameDebugger extends CfgClassAbstract
         {
             gson.toJson(jsonObject, file);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+            throw new RuntimeException("Error writing to file: " + exception.getMessage(), exception);
         }
     }
 
@@ -113,15 +112,15 @@ public final class CfgGameDebugger extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("monitor"))
+            if (jsonObject.has(DataGameDebugger.DebugMonitor.instance.getCategoryObject()))
             {
-                JsonObject monitorObject = jsonObject.getAsJsonObject("monitor");
+                JsonObject monitorObject = jsonObject.getAsJsonObject(DataGameDebugger.DebugMonitor.instance.getCategoryObject());
                 DataGameDebugger.DebugMonitor.instance.setDebugMonitorCache(monitorObject.get("debug_monitor_cache").getAsBoolean());
             }
 
-            if (jsonObject.has("event"))
+            if (jsonObject.has(DataGameDebugger.DebugEvent.instance.getCategoryObject()))
             {
-                JsonObject eventObject = jsonObject.getAsJsonObject("event");
+                JsonObject eventObject = jsonObject.getAsJsonObject(DataGameDebugger.DebugEvent.instance.getCategoryObject());
 
                 Map<String, Boolean> debugSettings = DataGameDebugger.DebugEvent.instance.getDebugSettings();
 

@@ -17,7 +17,7 @@ public final class DataPluginWorldTime
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -57,7 +57,7 @@ public final class DataPluginWorldTime
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			
-            this.setCategory = category;
+            this.category = category;
         }
 
         /**
@@ -148,6 +148,15 @@ public final class DataPluginWorldTime
         public void setSyncToSystemTime(Boolean syncToSystemTime)
         {
             this.syncToSystemTime = syncToSystemTime;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
         }
     }
 }

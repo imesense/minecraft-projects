@@ -34,12 +34,11 @@ public final class CfgZombieDropItem extends CfgClassAbstract
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-            loadFromFile();
+            this.loadFromFile();
         }
         else
         {
-            Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            saveToFile();
+            this.saveToFile();
         }
     }
 
@@ -57,9 +56,9 @@ public final class CfgZombieDropItem extends CfgClassAbstract
             {
                 Files.createDirectories(configPath);
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                throw new RuntimeException(e);
+                throw new RuntimeException(exception);
             }
         }
 
@@ -74,7 +73,7 @@ public final class CfgZombieDropItem extends CfgClassAbstract
         monitorObject.addProperty("feet_damage_factor", DataZombieDropItem.zombieDrop.instance.getFeetDamageFactor());
         monitorObject.addProperty("damage_spread_factor", DataZombieDropItem.zombieDrop.instance.getDamageSpreadFactor());
 
-        jsonObject.add("zombie_drop", monitorObject);
+        jsonObject.add(DataZombieDropItem.zombieDrop.instance.getCategoryObject(), monitorObject);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -82,9 +81,9 @@ public final class CfgZombieDropItem extends CfgClassAbstract
         {
             gson.toJson(jsonObject, file);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+            throw new RuntimeException("Error writing to file: " + exception.getMessage(), exception);
         }
     }
 
@@ -99,9 +98,9 @@ public final class CfgZombieDropItem extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("zombie_drop"))
+            if (jsonObject.has(DataZombieDropItem.zombieDrop.instance.getCategoryObject()))
             {
-                JsonObject zombieDropObject = jsonObject.getAsJsonObject("zombie_drop");
+                JsonObject zombieDropObject = jsonObject.getAsJsonObject(DataZombieDropItem.zombieDrop.instance.getCategoryObject());
 
                 if (zombieDropObject.has("break_item"))
                 {
@@ -143,13 +142,13 @@ public final class CfgZombieDropItem extends CfgClassAbstract
                 Log.writeDataToLogFile(2, "'zombie_drop' section is missing in the config file.");
             }
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
+            Log.writeDataToLogFile(2, "File not found: " + exception.getMessage());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
+            Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
 }

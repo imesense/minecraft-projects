@@ -17,7 +17,7 @@ public final class DataRenderNight
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -92,7 +92,7 @@ public final class DataRenderNight
         {
 			CodeGenericUtils.printInitClassToLog(this.getClass());
 			
-            this.setCategory = category;
+            this.category = category;
         }
 
         /**
@@ -309,6 +309,15 @@ public final class DataRenderNight
         public void setBlacklistByName(String[] blacklistByName)
         {
             this.blacklistByName = blacklistByName;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
         }
     }
 }

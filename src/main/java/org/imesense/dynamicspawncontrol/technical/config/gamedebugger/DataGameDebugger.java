@@ -19,7 +19,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -38,7 +38,7 @@ public final class DataGameDebugger
         public DebugMonitor(@Nonnull final String category)
         {
             CodeGenericUtils.printInitClassToLog(this.getClass());
-            this.setCategory = category;
+            this.category = category;
         }
 
         /**
@@ -58,6 +58,15 @@ public final class DataGameDebugger
         {
             this.debugMonitorCache = value;
         }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
+        }
     }
 
     /**
@@ -68,7 +77,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        final String setCategory;
+        private final String category;
 
         /**
          *
@@ -88,7 +97,7 @@ public final class DataGameDebugger
         {
             CodeGenericUtils.printInitClassToLog(this.getClass());
 
-            this.setCategory = category;
+            this.category = category;
 
             debugSettings.put("debug_on_block_break", false);
             debugSettings.put("debug_on_block_place", false);
@@ -136,6 +145,15 @@ public final class DataGameDebugger
             {
                 throw new IllegalArgumentException("Unknown debug setting: " + key);
             }
+        }
+
+        /**
+         *
+         * @return
+         */
+        public String getCategoryObject()
+        {
+            return this.category;
         }
     }
 }

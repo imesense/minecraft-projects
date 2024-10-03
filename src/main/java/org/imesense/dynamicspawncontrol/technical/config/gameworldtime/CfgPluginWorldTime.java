@@ -34,12 +34,11 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
-            loadFromFile();
+            this.loadFromFile();
         }
         else
         {
-            Log.writeDataToLogFile(0, "Config file does not exist. Creating a new one.");
-            saveToFile();
+            this.saveToFile();
         }
     }
 
@@ -59,7 +58,7 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
         settingsNetherRack.addProperty("time_control_debug", DataPluginWorldTime.worldTime.instance.getTimeControlDebug());
         settingsNetherRack.addProperty("sync_to_system_time", DataPluginWorldTime.worldTime.instance.getSyncToSystemTime());
 
-        jsonObject.add("game_world_time", settingsNetherRack);
+        jsonObject.add(DataPluginWorldTime.worldTime.instance.getCategoryObject(), settingsNetherRack);
 
         return jsonObject;
     }
@@ -92,9 +91,9 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
         {
             gson.toJson(jsonObject, file);
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            throw new RuntimeException("Error writing to file: " + e.getMessage(), e);
+            throw new RuntimeException("Error writing to file: " + exception.getMessage(), exception);
         }
     }
 
@@ -109,9 +108,9 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
             JsonElement jsonElement = new JsonParser().parse(reader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject.has("game_world_time"))
+            if (jsonObject.has(DataPluginWorldTime.worldTime.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject("game_world_time");
+                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataPluginWorldTime.worldTime.instance.getCategoryObject());
 
                 if (gameWorldTime.has("day_length_minutes"))
                 {
@@ -143,13 +142,13 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
                 Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
             }
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
+            Log.writeDataToLogFile(2, "File not found: " + exception.getMessage());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
+            Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
 }
