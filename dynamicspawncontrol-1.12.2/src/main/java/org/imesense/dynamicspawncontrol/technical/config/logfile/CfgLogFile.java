@@ -31,7 +31,8 @@ public final class CfgLogFile extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataLogFile.ConfigDataLogFile.instance = new DataLogFile.ConfigDataLogFile("log_file");
+        DataLogFile.ConfigDataLogFile.instance =
+                new DataLogFile.ConfigDataLogFile("log_file");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -63,17 +64,19 @@ public final class CfgLogFile extends CfgClassAbstract
             }
         }
 
-        JsonObject jsonObject = new JsonObject();
-        JsonObject monitorObject = new JsonObject();
+        JsonObject recordObject = new JsonObject();
+        JsonObject jsonObjectLogFile = new JsonObject();
 
-        monitorObject.addProperty("max_lines", DataLogFile.ConfigDataLogFile.instance.getLogMaxLines());
-        jsonObject.add(DataLogFile.ConfigDataLogFile.instance.getCategoryObject(), monitorObject);
+        jsonObjectLogFile.addProperty("max_lines",
+                DataLogFile.ConfigDataLogFile.instance.getLogMaxLines());
+
+        recordObject.add(DataLogFile.ConfigDataLogFile.instance.getCategoryObject(), jsonObjectLogFile);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter file = new FileWriter(this.nameConfig))
         {
-            gson.toJson(jsonObject, file);
+            gson.toJson(recordObject, file);
         }
         catch (IOException exception)
         {
@@ -87,18 +90,21 @@ public final class CfgLogFile extends CfgClassAbstract
     @Override
     public void loadFromFile()
     {
-        try (FileReader reader = new FileReader(this.nameConfig))
+        try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement jsonElement = new JsonParser().parse(reader);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
+            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataLogFile.ConfigDataLogFile.instance.getCategoryObject()))
+            if (readableObject.has(DataLogFile.ConfigDataLogFile.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataLogFile.ConfigDataLogFile.instance.getCategoryObject());
+                JsonObject jsonObjectLogFile =
+                        readableObject.getAsJsonObject(DataLogFile.ConfigDataLogFile.instance.
+                                getCategoryObject());
 
-                if (gameWorldTime.has("max_lines"))
+                if (jsonObjectLogFile.has("max_lines"))
                 {
-                    DataLogFile.ConfigDataLogFile.instance.setLogMaxLines(gameWorldTime.get("max_lines").getAsShort());
+                    DataLogFile.ConfigDataLogFile.instance.
+                            setLogMaxLines(jsonObjectLogFile.get("max_lines").getAsShort());
                 }
             }
             else

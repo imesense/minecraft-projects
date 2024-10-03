@@ -42,20 +42,20 @@ public final class DataPlayer
 
         /**
          *
-         * @return
-         */
-        public Short getProtectRespawnPlayerRadius()
-        {
-            return this.protectRespawnPlayerRadius;
-        }
-
-        /**
-         *
          * @param value
          */
         public void setProtectRespawnPlayerRadius(Short value)
         {
             this.protectRespawnPlayerRadius = value;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Short getProtectRespawnPlayerRadius()
+        {
+            return this.protectRespawnPlayerRadius;
         }
 
         /**

@@ -30,7 +30,8 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataPluginWorldTime.ConfigDataWorldTime.instance = new DataPluginWorldTime.ConfigDataWorldTime("game_world_time");
+        DataPluginWorldTime.ConfigDataWorldTime.instance =
+                new DataPluginWorldTime.ConfigDataWorldTime("game_world_time");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -48,19 +49,28 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
      */
     private static JsonObject getJsonObject()
     {
-        JsonObject jsonObject = new JsonObject();
+        JsonObject recordObject = new JsonObject();
+        JsonObject jsonObjectWorldTime = new JsonObject();
 
-        JsonObject settingsNetherRack = new JsonObject();
+        jsonObjectWorldTime.addProperty("day_length_minutes",
+                DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
 
-        settingsNetherRack.addProperty("day_length_minutes", DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
-        settingsNetherRack.addProperty("night_length_minutes", DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
-        settingsNetherRack.addProperty("sync_to_system_time_rate", DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTimeRate());
-        settingsNetherRack.addProperty("time_control_debug", DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug());
-        settingsNetherRack.addProperty("sync_to_system_time", DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime());
+        jsonObjectWorldTime.addProperty("night_length_minutes",
+                DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
 
-        jsonObject.add(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject(), settingsNetherRack);
+        jsonObjectWorldTime.addProperty("sync_to_system_time_rate",
+                DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTimeRate());
 
-        return jsonObject;
+        jsonObjectWorldTime.addProperty("time_control_debug",
+                DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug());
+
+        jsonObjectWorldTime.addProperty("sync_to_system_time",
+                DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime());
+
+        recordObject.add(DataPluginWorldTime.ConfigDataWorldTime.instance.
+                getCategoryObject(), jsonObjectWorldTime);
+
+        return recordObject;
     }
 
     /**
@@ -83,13 +93,13 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
             }
         }
 
-        JsonObject jsonObject = getJsonObject();
+        JsonObject recordObject = getJsonObject();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter file = new FileWriter(this.nameConfig))
         {
-            gson.toJson(jsonObject, file);
+            gson.toJson(recordObject, file);
         }
         catch (IOException exception)
         {
@@ -103,38 +113,44 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
     @Override
     public void loadFromFile()
     {
-        try (FileReader reader = new FileReader(this.nameConfig))
+        try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement jsonElement = new JsonParser().parse(reader);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
+            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject()))
+            if (readableObject.has(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject());
+                JsonObject jsonObjectWorldTime =
+                        readableObject.getAsJsonObject(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject());
 
-                if (gameWorldTime.has("day_length_minutes"))
+                if (jsonObjectWorldTime.has("day_length_minutes"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.setDayLengthMinutes(gameWorldTime.get("day_length_minutes").getAsInt());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                            setDayLengthMinutes(jsonObjectWorldTime.get("day_length_minutes").getAsInt());
                 }
 
-                if (gameWorldTime.has("night_length_minutes"))
+                if (jsonObjectWorldTime.has("night_length_minutes"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.setNightLengthMinutes(gameWorldTime.get("night_length_minutes").getAsInt());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                            setNightLengthMinutes(jsonObjectWorldTime.get("night_length_minutes").getAsInt());
                 }
 
-                if (gameWorldTime.has("sync_to_system_time_rate"))
+                if (jsonObjectWorldTime.has("sync_to_system_time_rate"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.setSyncToSystemTimeRate(gameWorldTime.get("sync_to_system_time_rate").getAsInt());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                            setSyncToSystemTimeRate(jsonObjectWorldTime.get("sync_to_system_time_rate").getAsInt());
                 }
 
-                if (gameWorldTime.has("time_control_debug"))
+                if (jsonObjectWorldTime.has("time_control_debug"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.setTimeControlDebug(gameWorldTime.get("time_control_debug").getAsBoolean());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                            setTimeControlDebug(jsonObjectWorldTime.get("time_control_debug").getAsBoolean());
                 }
 
-                if (gameWorldTime.has("sync_to_system_time"))
+                if (jsonObjectWorldTime.has("sync_to_system_time"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.setSyncToSystemTime(gameWorldTime.get("sync_to_system_time").getAsBoolean());
+                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                            setSyncToSystemTime(jsonObjectWorldTime.get("sync_to_system_time").getAsBoolean());
                 }
             }
             else
