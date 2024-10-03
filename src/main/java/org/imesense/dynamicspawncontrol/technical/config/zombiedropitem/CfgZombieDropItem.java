@@ -30,7 +30,8 @@ public final class CfgZombieDropItem extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataZombieDropItem.ConfigDataZombieDrop.instance = new DataZombieDropItem.ConfigDataZombieDrop("zombie_drop");
+        DataZombieDropItem.ConfigDataZombieDrop.instance =
+                new DataZombieDropItem.ConfigDataZombieDrop("zombie_drop");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -62,24 +63,17 @@ public final class CfgZombieDropItem extends CfgClassAbstract
             }
         }
 
-        JsonObject jsonObject = new JsonObject();
-        JsonObject monitorObject = new JsonObject();
+        JsonObject recordObject = new JsonObject();
+        JsonObject jsonObjectZombieDrop = getJsonObject();
 
-        monitorObject.addProperty("break_item", DataZombieDropItem.ConfigDataZombieDrop.instance.getBreakItem());
-        monitorObject.addProperty("hand_item_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getHandItemDamageFactor());
-        monitorObject.addProperty("head_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getHeadDamageFactor());
-        monitorObject.addProperty("chest_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getChestDamageFactor());
-        monitorObject.addProperty("legs_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getLegsDamageFactor());
-        monitorObject.addProperty("feet_damage_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getFeetDamageFactor());
-        monitorObject.addProperty("damage_spread_factor", DataZombieDropItem.ConfigDataZombieDrop.instance.getDamageSpreadFactor());
-
-        jsonObject.add(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject(), monitorObject);
+        recordObject.add(DataZombieDropItem.ConfigDataZombieDrop.instance.
+                getCategoryObject(), jsonObjectZombieDrop);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter file = new FileWriter(this.nameConfig))
         {
-            gson.toJson(jsonObject, file);
+            gson.toJson(recordObject, file);
         }
         catch (IOException exception)
         {
@@ -89,52 +83,92 @@ public final class CfgZombieDropItem extends CfgClassAbstract
 
     /**
      *
+     * @return
+     */
+    private static JsonObject getJsonObject()
+    {
+        JsonObject recordObject = new JsonObject();
+
+        recordObject.addProperty("break_item",
+                DataZombieDropItem.ConfigDataZombieDrop.instance.getBreakItem());
+
+        recordObject.addProperty("hand_item_damage_factor",
+                DataZombieDropItem.ConfigDataZombieDrop.instance.getHandItemDamageFactor());
+
+        recordObject.addProperty("head_damage_factor",
+                DataZombieDropItem.ConfigDataZombieDrop.instance.getHeadDamageFactor());
+
+        recordObject.addProperty("chest_damage_factor",
+                DataZombieDropItem.ConfigDataZombieDrop.instance.getChestDamageFactor());
+
+        recordObject.addProperty("legs_damage_factor",
+                DataZombieDropItem.ConfigDataZombieDrop.instance.getLegsDamageFactor());
+
+        recordObject.addProperty("feet_damage_factor",
+                DataZombieDropItem.ConfigDataZombieDrop.instance.getFeetDamageFactor());
+
+        recordObject.addProperty("damage_spread_factor",
+                DataZombieDropItem.ConfigDataZombieDrop.instance.getDamageSpreadFactor());
+
+        return recordObject;
+    }
+
+    /**
+     *
      */
     @Override
     public void loadFromFile()
     {
-        try (FileReader reader = new FileReader(this.nameConfig))
+        try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement jsonElement = new JsonParser().parse(reader);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
+            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject()))
+            if (readableObject.has(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject()))
             {
-                JsonObject zombieDropObject = jsonObject.getAsJsonObject(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject());
+                JsonObject jsonObjectZombieDrop =
+                        readableObject.getAsJsonObject(DataZombieDropItem.ConfigDataZombieDrop.instance.getCategoryObject());
 
-                if (zombieDropObject.has("break_item"))
+                if (jsonObjectZombieDrop.has("break_item"))
                 {
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.setBreakItem(zombieDropObject.get("break_item").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.
+                            setBreakItem(jsonObjectZombieDrop.get("break_item").getAsFloat());
                 }
 
-                if (zombieDropObject.has("hand_item_damage_factor"))
+                if (jsonObjectZombieDrop.has("hand_item_damage_factor"))
                 {
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.setHandItemDamageFactor(zombieDropObject.get("hand_item_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.
+                            setHandItemDamageFactor(jsonObjectZombieDrop.get("hand_item_damage_factor").getAsFloat());
                 }
 
-                if (zombieDropObject.has("head_damage_factor"))
+                if (jsonObjectZombieDrop.has("head_damage_factor"))
                 {
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.setHeadDamageFactor(zombieDropObject.get("head_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.
+                            setHeadDamageFactor(jsonObjectZombieDrop.get("head_damage_factor").getAsFloat());
                 }
 
-                if (zombieDropObject.has("chest_damage_factor"))
+                if (jsonObjectZombieDrop.has("chest_damage_factor"))
                 {
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.setChestDamageFactor(zombieDropObject.get("chest_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.
+                            setChestDamageFactor(jsonObjectZombieDrop.get("chest_damage_factor").getAsFloat());
                 }
 
-                if (zombieDropObject.has("legs_damage_factor"))
+                if (jsonObjectZombieDrop.has("legs_damage_factor"))
                 {
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.setLegsDamageFactor(zombieDropObject.get("legs_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.
+                            setLegsDamageFactor(jsonObjectZombieDrop.get("legs_damage_factor").getAsFloat());
                 }
 
-                if (zombieDropObject.has("feet_damage_factor"))
+                if (jsonObjectZombieDrop.has("feet_damage_factor"))
                 {
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.setFeetDamageFactor(zombieDropObject.get("feet_damage_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.
+                            setFeetDamageFactor(jsonObjectZombieDrop.get("feet_damage_factor").getAsFloat());
                 }
 
-                if (zombieDropObject.has("damage_spread_factor"))
+                if (jsonObjectZombieDrop.has("damage_spread_factor"))
                 {
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.setDamageSpreadFactor(zombieDropObject.get("damage_spread_factor").getAsFloat());
+                    DataZombieDropItem.ConfigDataZombieDrop.instance.
+                            setDamageSpreadFactor(jsonObjectZombieDrop.get("damage_spread_factor").getAsFloat());
                 }
             }
             else

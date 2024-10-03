@@ -65,18 +65,8 @@ public final class DataZombieDropItem
          */
         public ConfigDataZombieDrop(@Nonnull final String category)
         {
-			CodeGenericUtils.printInitClassToLog(this.getClass());
-			
+            CodeGenericUtils.printInitClassToLog(this.getClass());
             this.category = category;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Float getBreakItem()
-        {
-            return this.breakItem;
         }
 
         /**
@@ -90,29 +80,11 @@ public final class DataZombieDropItem
 
         /**
          *
-         * @return
-         */
-        public Float getHandItemDamageFactor()
-        {
-            return this.handItemDamageFactor;
-        }
-
-        /**
-         *
          * @param handItemDamageFactor
          */
         public void setHandItemDamageFactor(Float handItemDamageFactor)
         {
             this.handItemDamageFactor = handItemDamageFactor;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Float getHeadDamageFactor()
-        {
-            return this.headDamageFactor;
         }
 
         /**
@@ -126,29 +98,11 @@ public final class DataZombieDropItem
 
         /**
          *
-         * @return
-         */
-        public Float getChestDamageFactor()
-        {
-            return this.chestDamageFactor;
-        }
-
-        /**
-         *
          * @param chestDamageFactor
          */
         public void setChestDamageFactor(Float chestDamageFactor)
         {
             this.chestDamageFactor = chestDamageFactor;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Float getLegsDamageFactor()
-        {
-            return this.legsDamageFactor;
         }
 
         /**
@@ -162,29 +116,11 @@ public final class DataZombieDropItem
 
         /**
          *
-         * @return
-         */
-        public Float getFeetDamageFactor()
-        {
-            return this.feetDamageFactor;
-        }
-
-        /**
-         *
          * @param feetDamageFactor
          */
         public void setFeetDamageFactor(Float feetDamageFactor)
         {
             this.feetDamageFactor = feetDamageFactor;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public Float getDamageSpreadFactor()
-        {
-            return this.damageSpreadFactor;
         }
 
         /**
@@ -200,9 +136,73 @@ public final class DataZombieDropItem
          *
          * @return
          */
+        public Float getBreakItem()
+        {
+            return this.breakItem;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Float getHandItemDamageFactor()
+        {
+            return this.handItemDamageFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Float getHeadDamageFactor()
+        {
+            return this.headDamageFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Float getChestDamageFactor()
+        {
+            return this.chestDamageFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Float getLegsDamageFactor()
+        {
+            return this.legsDamageFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Float getFeetDamageFactor()
+        {
+            return this.feetDamageFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Float getDamageSpreadFactor()
+        {
+            return this.damageSpreadFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
         public String getCategoryObject()
         {
             return this.category;
         }
     }
 }
+

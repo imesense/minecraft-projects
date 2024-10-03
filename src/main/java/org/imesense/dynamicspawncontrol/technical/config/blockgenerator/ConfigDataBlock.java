@@ -46,29 +46,11 @@ public abstract class ConfigDataBlock
 
     /**
      *
-     * @return
-     */
-    public Integer getChanceSpawn()
-    {
-        return this.chanceSpawn;
-    }
-
-    /**
-     *
      * @param chanceSpawn
      */
     public void setChanceSpawn(Integer chanceSpawn)
     {
         this.chanceSpawn = chanceSpawn;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getMinHeight()
-    {
-        return this.minHeight;
     }
 
     /**
@@ -82,20 +64,38 @@ public abstract class ConfigDataBlock
 
     /**
      *
-     * @return
-     */
-    public Integer getMaxHeight()
-    {
-        return this.maxHeight;
-    }
-
-    /**
-     *
      * @param maxHeight
      */
     public void setMaxHeight(Integer maxHeight)
     {
         this.maxHeight = maxHeight;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Integer getChanceSpawn()
+    {
+        return this.chanceSpawn;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Integer getMinHeight()
+    {
+        return this.minHeight;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Integer getMaxHeight()
+    {
+        return this.maxHeight;
     }
 
     /**

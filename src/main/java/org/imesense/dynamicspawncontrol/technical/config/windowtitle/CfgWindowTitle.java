@@ -30,7 +30,8 @@ public final class CfgWindowTitle extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataWindowTitle.ConfigDataWindowTitle.instance = new DataWindowTitle.ConfigDataWindowTitle("window_title");
+        DataWindowTitle.ConfigDataWindowTitle.instance =
+                new DataWindowTitle.ConfigDataWindowTitle("window_title");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -62,18 +63,20 @@ public final class CfgWindowTitle extends CfgClassAbstract
             }
         }
 
-        JsonObject jsonObject = new JsonObject();
-        JsonObject monitorObject = new JsonObject();
+        JsonObject recordObject = new JsonObject();
+        JsonObject jsonObjectWindowTitle = new JsonObject();
 
-        monitorObject.addProperty("title", DataWindowTitle.ConfigDataWindowTitle.instance.getWindowTitle());
+        jsonObjectWindowTitle.addProperty("title",
+                DataWindowTitle.ConfigDataWindowTitle.instance.getWindowTitle());
 
-        jsonObject.add(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject(), monitorObject);
+        recordObject.add(DataWindowTitle.ConfigDataWindowTitle.instance.
+                getCategoryObject(), jsonObjectWindowTitle);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter file = new FileWriter(this.nameConfig))
         {
-            gson.toJson(jsonObject, file);
+            gson.toJson(recordObject, file);
         }
         catch (IOException exception)
         {
@@ -87,20 +90,22 @@ public final class CfgWindowTitle extends CfgClassAbstract
     @Override
     public void loadFromFile()
     {
-        try (FileReader reader = new FileReader(this.nameConfig))
+        try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement jsonElement = new JsonParser().parse(reader);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
+            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject()))
+            if (readableObject.has(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject());
+                JsonObject jsonObjectWindowTitle =
+                        readableObject.getAsJsonObject(DataWindowTitle.ConfigDataWindowTitle.
+                                instance.getCategoryObject());
 
-                if (gameWorldTime.has("title"))
+                if (jsonObjectWindowTitle.has("title"))
                 {
-                    DataWindowTitle.ConfigDataWindowTitle.instance.setWindowTitle(gameWorldTime.get("title").getAsString());
+                    DataWindowTitle.ConfigDataWindowTitle.instance.
+                            setWindowTitle(jsonObjectWindowTitle.get("title").getAsString());
                 }
-
             }
             else
             {

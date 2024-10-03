@@ -57,13 +57,13 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
      */
     public void saveBlockSettings(JsonObject jsonObject, String blockName, ConfigDataBlock block)
     {
-        JsonObject settings = new JsonObject();
+        JsonObject jsonObjectBlockInfo = new JsonObject();
 
-        settings.addProperty("chance_spawn", block.getChanceSpawn());
-        settings.addProperty("min_height", block.getMinHeight());
-        settings.addProperty("max_height", block.getMaxHeight());
+        jsonObjectBlockInfo.addProperty("chance_spawn", block.getChanceSpawn());
+        jsonObjectBlockInfo.addProperty("min_height", block.getMinHeight());
+        jsonObjectBlockInfo.addProperty("max_height", block.getMaxHeight());
 
-        jsonObject.add(blockName, settings);
+        jsonObject.add(blockName, jsonObjectBlockInfo);
     }
 
     /**
@@ -76,21 +76,21 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
     {
         if (jsonObject.has(blockName))
         {
-            JsonObject settings = jsonObject.getAsJsonObject(blockName);
+            JsonObject jsonObjectBlockInfo = jsonObject.getAsJsonObject(blockName);
 
-            if (settings.has("chance_spawn"))
+            if (jsonObjectBlockInfo.has("chance_spawn"))
             {
-                block.setChanceSpawn(settings.get("chance_spawn").getAsInt());
+                block.setChanceSpawn(jsonObjectBlockInfo.get("chance_spawn").getAsInt());
             }
 
-            if (settings.has("min_height"))
+            if (jsonObjectBlockInfo.has("min_height"))
             {
-                block.setMinHeight(settings.get("min_height").getAsInt());
+                block.setMinHeight(jsonObjectBlockInfo.get("min_height").getAsInt());
             }
 
-            if (settings.has("max_height"))
+            if (jsonObjectBlockInfo.has("max_height"))
             {
-                block.setMaxHeight(settings.get("max_height").getAsInt());
+                block.setMaxHeight(jsonObjectBlockInfo.get("max_height").getAsInt());
             }
         }
         else
@@ -119,22 +119,22 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
             }
         }
 
-        JsonObject jsonObject = new JsonObject();
+        JsonObject recordObject = new JsonObject();
 
-        saveBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+        saveBlockSettings(recordObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
                 DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
 
-        saveBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+        saveBlockSettings(recordObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
                 DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
 
-        saveBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+        saveBlockSettings(recordObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
                 DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter file = new FileWriter(this.nameConfig))
         {
-            gson.toJson(jsonObject, file);
+            gson.toJson(recordObject, file);
         }
         catch (IOException exception)
         {
@@ -148,20 +148,19 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
     @Override
     public void loadFromFile()
     {
-        try (FileReader reader = new FileReader(this.nameConfig))
+        try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement jsonElement = new JsonParser().parse(reader);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
+            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            loadBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+            loadBlockSettings(readableObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
                     DataBlockWorldGenerator.InfoDataBlockNetherRack.instance);
 
-            loadBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+            loadBlockSettings(readableObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
                     DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance);
 
-            loadBlockSettings(jsonObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
+            loadBlockSettings(readableObject, DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getCategoryObject(),
                     DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance);
-
         }
         catch (FileNotFoundException exception)
         {

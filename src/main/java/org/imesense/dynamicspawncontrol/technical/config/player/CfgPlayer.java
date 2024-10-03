@@ -30,7 +30,8 @@ public final class CfgPlayer extends CfgClassAbstract
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
-        DataPlayer.ConfigDataPlayer.instance = new DataPlayer.ConfigDataPlayer("player");
+        DataPlayer.ConfigDataPlayer.instance =
+                new DataPlayer.ConfigDataPlayer("player");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -62,17 +63,19 @@ public final class CfgPlayer extends CfgClassAbstract
             }
         }
 
-        JsonObject jsonObject = new JsonObject();
-        JsonObject monitorObject = new JsonObject();
+        JsonObject recordObject = new JsonObject();
+        JsonObject jsonObjectPlayer = new JsonObject();
 
-        monitorObject.addProperty("protected_respawn_player_radius", DataPlayer.ConfigDataPlayer.instance.getProtectRespawnPlayerRadius());
-        jsonObject.add(DataPlayer.ConfigDataPlayer.instance.getCategoryObject(), monitorObject);
+        jsonObjectPlayer.addProperty("protected_respawn_player_radius",
+                DataPlayer.ConfigDataPlayer.instance.getProtectRespawnPlayerRadius());
+
+        recordObject.add(DataPlayer.ConfigDataPlayer.instance.getCategoryObject(), jsonObjectPlayer);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter file = new FileWriter(this.nameConfig))
         {
-            gson.toJson(jsonObject, file);
+            gson.toJson(recordObject, file);
         }
         catch (IOException exception)
         {
@@ -86,18 +89,20 @@ public final class CfgPlayer extends CfgClassAbstract
     @Override
     public void loadFromFile()
     {
-        try (FileReader reader = new FileReader(this.nameConfig))
+        try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement jsonElement = new JsonParser().parse(reader);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
+            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (jsonObject.has(DataPlayer.ConfigDataPlayer.instance.getCategoryObject()))
+            if (readableObject.has(DataPlayer.ConfigDataPlayer.instance.getCategoryObject()))
             {
-                JsonObject gameWorldTime = jsonObject.getAsJsonObject(DataPlayer.ConfigDataPlayer.instance.getCategoryObject());
+                JsonObject jsonObjectPlayer =
+                        readableObject.getAsJsonObject(DataPlayer.ConfigDataPlayer.instance.getCategoryObject());
 
-                if (gameWorldTime.has("protected_respawn_player_radius"))
+                if (jsonObjectPlayer.has("protected_respawn_player_radius"))
                 {
-                    DataPlayer.ConfigDataPlayer.instance.setProtectRespawnPlayerRadius(gameWorldTime.get("protected_respawn_player_radius").getAsShort());
+                    DataPlayer.ConfigDataPlayer.instance.
+                            setProtectRespawnPlayerRadius(jsonObjectPlayer.get("protected_respawn_player_radius").getAsShort());
                 }
             }
             else
