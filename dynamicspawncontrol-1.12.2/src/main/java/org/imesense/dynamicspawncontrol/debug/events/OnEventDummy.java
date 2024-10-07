@@ -12,6 +12,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static net.minecraft.client.gui.Gui.drawModalRectWithCustomSizedTexture;
 import static net.minecraft.client.gui.Gui.drawRect;
 
@@ -25,7 +28,6 @@ public final class OnEventDummy
     private Biome currentBiome = null;
     private Biome displayedBiome = null; //-' биом, который будет отображаться (с задержкой)
     private long lastBiomeChangeTime = 0;
-    private long biomeUpdateDelay = 2500; // задержка в 2.5 секунд
     private String biomeText = "";
     private final Minecraft mc = Minecraft.getMinecraft();
 
@@ -94,111 +96,131 @@ public final class OnEventDummy
         instanceExists = true;
     }
 
+    // Время, которое игрок должен провести в новом биоме, прежде чем обновить отображаемый биом (в миллисекундах)
+    private final long biomeChangeDelay = 3000; // 3 секунды
+    private Biome previousBiome = null;  // Предыдущий биом
+    // Список биомов, которые игнорируются
+    private final List<String> ignoredBiomes = Arrays.asList(
+            "Ocean", "Deep Ocean", "River", "Beach", "DesertHills" // Здесь можно указать любые биомы
+    );
+
+    // Список типов биомов, которые игнорируются
+    private final List<String> ignoredBiomeTypes = Arrays.asList(
+            "Ocean", "Beach", "River", "DesertHills"
+    );
+
+    // Время, которое игрок должен провести в новом биоме, прежде чем обновить отображаемый биом (в миллисекундах)
+    private final long biomeChangeMinTime = 3000; // 3 секунды
+    //private Biome currentBiome = null;  // Текущий биом
+    private Biome confirmedBiome = null;  // Подтверждённый биом для отображения (после задержки)
+    private long biomeEntryTime = 0;  // Время входа в новый биом
+    //private long lastBiomeChangeTime = 0;  // Время последнего подтверждённого изменения биома
+
+    /**
+     * метод для проверки игнорирования биома.
+     * игнорируем биомы не по точному совпадению имени, а по типу или категории.
+     */
+    private boolean isBiomeIgnored(Biome biome) {
+        String biomeName = biome.getBiomeName();
+
+        // Проверка по типам биома
+        for (String ignoredType : ignoredBiomeTypes) {
+            if (biomeName.toLowerCase().contains(ignoredType.toLowerCase())) {
+                return true;  // Биом должен быть проигнорирован
+            }
+        }
+
+        // Дополнительная логика игнорирования, если нужно
+        return false;
+    }
+
     @SubscribeEvent
     public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             Biome biome = player.world.getBiome(player.getPosition());
 
-            //-' изменился ли биом
+            // Проверяем, изменился ли биом
             if (biome != currentBiome) {
+                // Если биом изменился, обновляем текущий биом и запоминаем время входа
                 currentBiome = biome;
-                lastBiomeChangeTime = System.currentTimeMillis(); //-' время смены биома
+                biomeEntryTime = System.currentTimeMillis();
             }
 
-            //-' Если прошло более 5 секунд с момента смены биома, обновляем отображаемый биом
-            if (System.currentTimeMillis() - lastBiomeChangeTime > biomeUpdateDelay) {
-                displayedBiome = currentBiome;
-                biomeText = displayedBiome.getBiomeName(); //-' Обновляем текст биома для отображения
+            // Проверяем, прошло ли достаточно времени, чтобы подтвердить, что игрок остался в новом биоме
+            long currentTime = System.currentTimeMillis();
+            if (currentBiome != confirmedBiome && currentTime - biomeEntryTime >= biomeChangeMinTime) {
+                // Если игрок находится в новом биоме достаточно долго, обновляем отображаемый биом
+                confirmedBiome = currentBiome;
+                lastBiomeChangeTime = currentTime;
+                biomeText = confirmedBiome.getBiomeName();  // Обновляем текст биома для отображения
+     //           System.out.println("Biome updated to: " + biomeText);  // Для отладки
             }
         }
     }
 
+
     @SubscribeEvent
-    public void onRenderOverlay(RenderGameOverlayEvent.Text event)
-    {
+    public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         long currentTime = System.currentTimeMillis();
 
-        if (displayedBiome != null && currentTime - lastBiomeChangeTime < 5000)
-        { //-' Отображаем данные 10 секунд
-            int boxWidth = 120;  //-' Ширина рамки
-            int boxHeight = 50;  //-' Высота рамки
+        // Проверяем, есть ли биом для отображения и прошло ли меньше 5 секунд с его смены
+        if (confirmedBiome != null && currentTime - lastBiomeChangeTime < 5000) {
+            int boxWidth = 120;  // Ширина рамки
+            int boxHeight = 50;  // Высота рамки
 
-            //-' Получаем ширину и высоту экрана
+            // Получаем ширину экрана
             int screenWidth = mc.displayWidth / mc.gameSettings.guiScale;
-            //? //int screenHeight = mc.displayHeight / mc.gameSettings.guiScale;
 
             // Выравниваем по центру экрана
             int xPos = (screenWidth - boxWidth) / 2;
             int yPos = 20;  // Отступ сверху
 
-            int backgroundColor = 0x80000000;  //-' Полупрозрачный черный
+            int backgroundColor = 0x80000000;  // Полупрозрачный черный
 
-            //-' Рисуем рамку
+            // Рисуем рамку
             drawRect(xPos, yPos, xPos + boxWidth, yPos + boxHeight, backgroundColor);
 
-            //-' Центрирование текста
+            // Центрирование текста
             int textWidth = mc.fontRenderer.getStringWidth(biomeText);
             int textXPos = xPos + (boxWidth - textWidth) / 2;
             int textYPos = yPos + 10;
 
-            //-' Отрисовка текста
+            // Отрисовка текста
             mc.fontRenderer.drawString(biomeText, textXPos, textYPos, 0xFFFFFF);
 
-            //-' Получение черепков для текущего отображаемого биома
-            int redSkulls = getRedSkullCountForBiome(displayedBiome);
-            int redSkullsPart = getRedSkullCountForBiomePart(displayedBiome);
-            int orangeSkulls = getOrangeSkullCountForBiome(displayedBiome);
-            int orangeSkullsPart = getOrangeSkullCountForBiomePart(displayedBiome);
+            // Получение количества черепков
+            int[] skullCounts = {
+                    getRedSkullCountForBiome(confirmedBiome),
+                    getOrangeSkullCountForBiome(confirmedBiome),
+                    getRedSkullCountForBiomePart(confirmedBiome),
+                    getOrangeSkullCountForBiomePart(confirmedBiome)
+            };
 
-            //-' Общая ширина всех черепков с учетом отступов
-            int totalSkulls = redSkulls + orangeSkulls + redSkullsPart + orangeSkullsPart;
-            int skullWidth = 16;  //-' Ширина одного черепка
-            int skullSpacing = 2; //-' Отступ между черепками
+            ResourceLocation[] skullTextures = {
+                    new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull.png"),
+                    new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull.png"),
+                    new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull_part.png"),
+                    new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull_part.png")
+            };
+
+            // Общая ширина всех черепков с учетом отступов
+            int totalSkulls = skullCounts[0] + skullCounts[1] + skullCounts[2] + skullCounts[3];
+            int skullWidth = 16;  // Ширина одного черепка
+            int skullSpacing = 2; // Отступ между черепками
             int totalSkullWidth = (skullWidth * totalSkulls) + (skullSpacing * (totalSkulls - 1));
 
-            //-' Начальная позиция для отрисовки черепков (по центру)
+            // Начальная позиция для отрисовки черепков (по центру)
             int skullXPos = xPos + (boxWidth - totalSkullWidth) / 2;
             int skullYPos = textYPos + 20;
 
-            // полная текстура
-            ResourceLocation redSkull = new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull.png");
-            ResourceLocation orangeSkull = new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull.png");
-
-            // половина
-            ResourceLocation redSkullPart = new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull_part.png");
-            ResourceLocation orangeSkullPart = new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull_part.png");
-
-            //-' Отрисовка красных черепков
-            for (int i = 0; i < redSkulls; i++)
-            {
-                mc.getTextureManager().bindTexture(redSkull);
-                drawModalRectWithCustomSizedTexture(skullXPos, skullYPos, 0, 0, skullWidth, skullWidth, skullWidth, skullWidth);
-                skullXPos += skullWidth + skullSpacing;  //-' Смещаем следующую позицию вправо
-            }
-
-            //-' Отрисовка оранжевых черепков после красных
-            for (int i = 0; i < orangeSkulls; i++)
-            {
-                mc.getTextureManager().bindTexture(orangeSkull);
-                drawModalRectWithCustomSizedTexture(skullXPos, skullYPos, 0, 0, skullWidth, skullWidth, skullWidth, skullWidth);
-                skullXPos += skullWidth + skullSpacing;  //-' Смещаем следующую позицию вправо
-            }
-
-            //-' Отрисовка красных черепков
-            for (int i = 0; i < redSkullsPart; i++)
-            {
-                mc.getTextureManager().bindTexture(redSkullPart);
-                drawModalRectWithCustomSizedTexture(skullXPos, skullYPos, 0, 0, skullWidth, skullWidth, skullWidth, skullWidth);
-                skullXPos += skullWidth + skullSpacing;  //-' Смещаем следующую позицию вправо
-            }
-
-            //-' Отрисовка оранжевых черепков после красных
-            for (int i = 0; i < orangeSkullsPart; i++)
-            {
-                mc.getTextureManager().bindTexture(orangeSkullPart);
-                drawModalRectWithCustomSizedTexture(skullXPos, skullYPos, 0, 0, skullWidth, skullWidth, skullWidth, skullWidth);
-                skullXPos += skullWidth + skullSpacing;  //-' Смещаем следующую позицию вправо
+            // Отрисовка черепков
+            for (int i = 0; i < skullCounts.length; i++) {
+                for (int j = 0; j < skullCounts[i]; j++) {
+                    mc.getTextureManager().bindTexture(skullTextures[i]);
+                    drawModalRectWithCustomSizedTexture(skullXPos, skullYPos, 0, 0, skullWidth, skullWidth, skullWidth, skullWidth);
+                    skullXPos += skullWidth + skullSpacing;  // Смещаем следующую позицию вправо
+                }
             }
         }
     }
@@ -214,8 +236,6 @@ public final class OnEventDummy
                 return 5;
             case "Desert":
                 return 3;
-            case "DesertHills":
-                return 4;
             case "Swampland":
                 return 4;
             case "Ice Flats":
@@ -255,7 +275,6 @@ public final class OnEventDummy
             case "Savanna":
                 return 1;
             case "Desert":
-            case "DesertHills":
                 return 2;
             case "Swampland":
                 return 1;
