@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnComplexityBiomes;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnDropZombieItems;
 
 /**
@@ -17,7 +18,8 @@ public final class RegisterGameplayClasses
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnUpdateTorchLogic.class,
-        OnDropZombieItems.class
+        OnDropZombieItems.class,
+        OnComplexityBiomes.class
     };
 
     /**
