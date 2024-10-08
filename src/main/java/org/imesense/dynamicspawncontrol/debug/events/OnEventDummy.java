@@ -10,8 +10,6 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 @Mod.EventBusSubscriber
 public final class OnEventDummy
 {
-
-
     /**
      *
      */
