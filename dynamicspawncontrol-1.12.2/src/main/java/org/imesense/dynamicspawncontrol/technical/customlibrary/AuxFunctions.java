@@ -10,7 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -832,7 +832,7 @@ public class AuxFunctions
      */
     public static boolean isFakePlayer(Entity entity)
     {
-        if (!(entity instanceof EntityPlayer))
+        if (!(entity instanceof EntityPlayerMP))
         {
             return false;
         }
@@ -844,7 +844,7 @@ public class AuxFunctions
 
         // Если этот метод возвращает false, всё ещё возможно, что это фальшивый игрок. Попробуем найти игрока в списке онлайн-игроков
         PlayerList playerList = Objects.requireNonNull(DimensionManager.getWorld(0).getMinecraftServer()).getPlayerList();
-        EntityPlayerMP playerByUUID = playerList.getPlayerByUUID(((EntityPlayer) entity).getGameProfile().getId());
+        EntityPlayerMP playerByUUID = playerList.getPlayerByUUID(((EntityPlayerMP) entity).getGameProfile().getId());
 
         if (playerByUUID == null)
         {
@@ -863,7 +863,7 @@ public class AuxFunctions
      */
     public static boolean isRealPlayer(Entity entity)
     {
-        if (!(entity instanceof EntityPlayer))
+        if (!(entity instanceof EntityPlayerMP))
         {
             return false;
         }

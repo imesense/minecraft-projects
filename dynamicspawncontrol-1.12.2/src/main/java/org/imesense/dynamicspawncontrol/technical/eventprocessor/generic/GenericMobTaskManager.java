@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 import com.google.gson.JsonElement;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -172,7 +172,7 @@ public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManag
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(EntityJoinWorldEvent data)
+        public EntityPlayerMP getPlayer(EntityJoinWorldEvent data)
         {
             return getClosestPlayer(data.getWorld(), data.getEntity().getPosition());
         }
@@ -195,9 +195,9 @@ public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManag
      * @param blockPos
      * @return
      */
-    private static EntityPlayer getClosestPlayer(World world, BlockPos blockPos)
+    private static EntityPlayerMP getClosestPlayer(World world, BlockPos blockPos)
     {
-        return world.getClosestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100, false);
+        return (EntityPlayerMP) world.getClosestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100, false);
     }
 
     /**
@@ -254,7 +254,7 @@ public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManag
              * @return
              */
             @Override
-            public EntityPlayer getPlayer()
+            public EntityPlayerMP getPlayer()
             {
                 return null;
             }

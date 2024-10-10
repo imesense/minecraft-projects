@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
@@ -59,7 +59,7 @@ public final class cmdAdminDumpEntity extends CommandBase
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
     {
-        if (sender instanceof EntityPlayer)
+        if (sender instanceof EntityPlayerMP)
         {
             RayTraceResult result = Minecraft.getMinecraft().objectMouseOver;
 

@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -69,9 +69,9 @@ public final class OnUpdateTorchLogic
                     entity.setFire(5);
                 }
             }
-            else if (entityGetTrueSource instanceof EntityPlayer)
+            else if (entityGetTrueSource instanceof EntityPlayerMP)
             {
-                EntityPlayer player = (EntityPlayer)entityGetTrueSource;
+                EntityPlayerMP player = (EntityPlayerMP)entityGetTrueSource;
 
                 if (Block.getBlockFromItem(player.getHeldItemMainhand().getItem()) instanceof BlockTorch)
                 {
@@ -97,7 +97,7 @@ public final class OnUpdateTorchLogic
     @SubscribeEvent
     public synchronized void onBreak(BlockEvent.BreakEvent event)
     {
-        EntityPlayer player = event.getPlayer();
+        EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
 
         if (Block.getBlockFromItem(player.getHeldItemMainhand().getItem()) instanceof BlockTorch)
         {

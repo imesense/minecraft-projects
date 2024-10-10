@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -260,7 +260,7 @@ public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataG
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(WorldEvent.PotentialSpawns data)
+        public EntityPlayerMP getPlayer(WorldEvent.PotentialSpawns data)
         {
             return null;
         }

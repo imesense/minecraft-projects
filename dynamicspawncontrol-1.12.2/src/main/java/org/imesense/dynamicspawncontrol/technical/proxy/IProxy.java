@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -45,10 +45,10 @@ public interface IProxy
 
     /**
      * Get client player instance
-     * 
+     *
      * @return Current player instance
      */
-    EntityPlayer getClientPlayer();
+    EntityPlayerSP getClientPlayer();
 
     /**
      * Add task to schedule for execution on client

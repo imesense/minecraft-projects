@@ -7,6 +7,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.management.PlayerChunkMapEntry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
@@ -76,7 +77,7 @@ public final class Cache
 
             for (EntityPlayer player : world.playerEntities)
             {
-                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, player);
+                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, (EntityPlayerMP) player);
                 CACHE_VALID_CHUNKS.addAll(validChunks);
             }
         }
@@ -119,7 +120,7 @@ public final class Cache
         }
     }
 
-    private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayer player)
+    private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayerMP player)
     {
         Set<ChunkPos> validChunks = new HashSet<>();
 

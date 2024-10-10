@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -85,9 +85,9 @@ public final class OnComplexityBiomes
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPlayerTick(LivingEvent.LivingUpdateEvent event)
     {
-        if (event.getEntity() instanceof EntityPlayer)
+        if (event.getEntity() instanceof EntityPlayerMP)
         {
-            EntityPlayer player = (EntityPlayer) event.getEntity();
+            EntityPlayerMP player = (EntityPlayerMP) event.getEntity();
             Biome biome = player.world.getBiome(player.getPosition());
 
             if (biome != currentBiome)

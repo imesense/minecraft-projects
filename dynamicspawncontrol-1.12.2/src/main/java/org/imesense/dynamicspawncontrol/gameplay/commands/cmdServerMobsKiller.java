@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAmbientCreature;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -66,14 +66,14 @@ public final class cmdServerMobsKiller extends CommandBase
         if (args.length > 0)
         {
             String argument0 = args[0].toLowerCase();
-            WorldServer worldServer = server.getWorld((sender instanceof EntityPlayer) ? sender.getEntityWorld().provider.getDimension() : 0);
+            WorldServer worldServer = server.getWorld((sender instanceof EntityPlayerMP) ? sender.getEntityWorld().provider.getDimension() : 0);
             List<Entity> entityList = new ArrayList<>();
 
             if ("all".equals(argument0))
             {
                 for (Entity entity : worldServer.loadedEntityList)
                 {
-                    if (!(entity instanceof EntityPlayer))
+                    if (!(entity instanceof EntityPlayerMP))
                     {
                         entityList.add(entity);
                     }

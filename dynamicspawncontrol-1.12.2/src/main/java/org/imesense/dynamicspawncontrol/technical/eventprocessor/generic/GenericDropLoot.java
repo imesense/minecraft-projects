@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 import com.google.common.base.Predicate;
 import com.google.gson.JsonElement;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
@@ -231,11 +231,11 @@ public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(LivingDropsEvent data)
+        public EntityPlayerMP getPlayer(LivingDropsEvent data)
         {
             Entity entity = data.getSource().getTrueSource();
 
-            return entity instanceof EntityPlayer ? (EntityPlayer) entity : null;
+            return entity instanceof EntityPlayerMP ? (EntityPlayerMP) entity : null;
         }
 
         /**

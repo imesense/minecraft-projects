@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.gameplay.commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -65,9 +65,9 @@ public final class cmdAdminDumpItem extends CommandBase
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
     {
-        if (sender instanceof EntityPlayer)
+        if (sender instanceof EntityPlayerMP)
         {
-            EntityPlayer player = (EntityPlayer) sender;
+            EntityPlayerMP player = (EntityPlayerMP) sender;
             ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
             Item item = heldItem.getItem();
             sender.sendMessage(new TextComponentString(TextFormatting.GOLD + Objects.requireNonNull(item.getRegistryName()).toString()));

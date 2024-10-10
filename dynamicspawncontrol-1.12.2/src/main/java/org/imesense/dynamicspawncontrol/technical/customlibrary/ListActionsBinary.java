@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IAnimals;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -601,7 +601,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayer player = query.getPlayer(event);
+            EntityPlayerMP player = query.getPlayer(event);
 
             if (player != null)
             {
@@ -626,7 +626,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayer player = query.getPlayer(event);
+            EntityPlayerMP player = query.getPlayer(event);
 
             if (player != null)
             {
@@ -651,7 +651,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayer player = query.getPlayer(event);
+            EntityPlayerMP player = query.getPlayer(event);
 
             if (player != null)
             {
@@ -676,7 +676,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayer player = query.getPlayer(event);
+            EntityPlayerMP player = query.getPlayer(event);
 
             if (player != null)
             {
@@ -1059,11 +1059,11 @@ public final class ListActionsBinary<T extends SignalDataGetter>
         if ((Boolean)asPlayer)
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getAttacker(event) instanceof EntityPlayer);
+                    query.getAttacker(event) instanceof EntityPlayerMP);
         }
         //else
         //{
-        //    _arrayList.add((event, query) -> query.getAttacker(event) instanceof EntityPlayer);
+        //    _arrayList.add((event, query) -> query.getAttacker(event) instanceof EntityPlayerMP);
         //}
     }
 
@@ -1118,7 +1118,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            EntityPlayer player = query.getPlayer(event);
+            EntityPlayerMP player = query.getPlayer(event);
 
             if (player != null)
             {
@@ -1150,7 +1150,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            EntityPlayer player = query.getPlayer(event);
+            EntityPlayerMP player = query.getPlayer(event);
 
             if (player != null)
             {
@@ -1282,7 +1282,7 @@ public final class ListActionsBinary<T extends SignalDataGetter>
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            EntityPlayer player = query.getPlayer(event);
+            EntityPlayerMP player = query.getPlayer(event);
 
             if (player != null)
             {

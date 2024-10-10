@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -191,11 +191,11 @@ public abstract class ListActionsConsumer<T extends SignalDataGetter>
 
         this.ACTIONS.add(event ->
         {
-            EntityPlayer player = event.getPlayer();
+            EntityPlayerMP player = event.getPlayer();
 
             if (player == null)
             {
-                player = event.getWorld().getClosestPlayerToEntity(event.getEntityLiving(), 100);
+                player = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(event.getEntityLiving(), 100);
             }
 
             if (player != null)
@@ -222,7 +222,7 @@ public abstract class ListActionsConsumer<T extends SignalDataGetter>
                 if (entityLiving instanceof EntityPigZombie)
                 {
                     EntityPigZombie pigZombie = (EntityPigZombie) entityLiving;
-                    EntityPlayer player = event.getWorld().getClosestPlayerToEntity(entityLiving, 50);
+                    EntityPlayerMP player = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(entityLiving, 50);
 
                     if (player != null)
                     {
@@ -231,7 +231,7 @@ public abstract class ListActionsConsumer<T extends SignalDataGetter>
                 }
                 else if (entityLiving instanceof EntityLiving)
                 {
-                    EntityPlayer player = event.getWorld().getClosestPlayerToEntity(entityLiving, 50);
+                    EntityPlayerMP player = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(entityLiving, 50);
 
                     if (player != null)
                     {
@@ -576,7 +576,7 @@ public abstract class ListActionsConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                EntityPlayer player = event.getPlayer();
+                EntityPlayerMP player = event.getPlayer();
 
                 if (player != null)
                 {
@@ -593,7 +593,7 @@ public abstract class ListActionsConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                EntityPlayer player = event.getPlayer();
+                EntityPlayerMP player = event.getPlayer();
 
                 if (player != null)
                 {
@@ -656,7 +656,7 @@ public abstract class ListActionsConsumer<T extends SignalDataGetter>
 
         this.ACTIONS.add(event ->
         {
-            EntityPlayer player = event.getPlayer();
+            EntityPlayerMP player = event.getPlayer();
             MinecraftServer server = event.getWorld().getMinecraftServer();
 
             assert server != null;

@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.customlibrary;
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -27,14 +27,14 @@ public final class Sender implements ICommandSender
     /**
      *
      */
-    private final EntityPlayer PLAYER;
+    private final EntityPlayerMP PLAYER;
 
     /**
      *
      * @param world
      * @param player
      */
-    public Sender(World world, EntityPlayer player)
+    public Sender(World world, EntityPlayerMP player)
     {
         this.WORLD = world;
         this.PLAYER = player;

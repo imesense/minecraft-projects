@@ -5,7 +5,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -67,9 +67,9 @@ public final class cmdAdminDumpBlock extends CommandBase
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
     {
-        if (sender instanceof EntityPlayer)
+        if (sender instanceof EntityPlayerMP)
         {
-            EntityPlayer player = (EntityPlayer) sender;
+            EntityPlayerMP player = (EntityPlayerMP) sender;
             RayTraceResult result = RayTrace.getMovingObjectPositionFromPlayer(player.getEntityWorld(), player, false);
 
             if (result != null && result.typeOfHit == RayTraceResult.Type.BLOCK)

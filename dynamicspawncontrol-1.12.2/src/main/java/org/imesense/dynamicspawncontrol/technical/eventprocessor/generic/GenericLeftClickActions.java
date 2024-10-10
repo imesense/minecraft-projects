@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 import com.google.gson.JsonElement;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -184,9 +184,9 @@ public final class GenericLeftClickActions extends ListActionsConsumer<SignalDat
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(PlayerInteractEvent.LeftClickBlock data)
+        public EntityPlayerMP getPlayer(PlayerInteractEvent.LeftClickBlock data)
         {
-            return data.getEntityPlayer();
+            return (EntityPlayerMP) data.getEntityPlayer();
         }
 
         /**
@@ -227,9 +227,9 @@ public final class GenericLeftClickActions extends ListActionsConsumer<SignalDat
              * @return
              */
             @Override
-            public EntityPlayer getPlayer()
+            public EntityPlayerMP getPlayer()
             {
-                return event.getEntityPlayer();
+                return (EntityPlayerMP) event.getEntityPlayer();
             }
 
             /**

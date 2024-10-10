@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.gameplay.commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
@@ -63,13 +63,13 @@ public final class cmdAdminLaunchFireball extends CommandBase
             return;
         }
 
-        if (!(sender instanceof EntityPlayer))
+        if (!(sender instanceof EntityPlayerMP))
         {
             sender.sendMessage(new TextComponentString("This command can only be used by players!"));
             return;
         }
 
-        EntityPlayer player = (EntityPlayer) sender;
+        EntityPlayerMP player = (EntityPlayerMP) sender;
         World world = player.getEntityWorld();
         double speed, explosionStrength;
 

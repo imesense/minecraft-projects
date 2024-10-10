@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 
 import com.google.gson.JsonElement;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -233,9 +233,9 @@ public final class GenericExperience extends ListActionsConsumer<SignalDataGette
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(LivingExperienceDropEvent data)
+        public EntityPlayerMP getPlayer(LivingExperienceDropEvent data)
         {
-            return data.getAttackingPlayer();
+            return (EntityPlayerMP) data.getAttackingPlayer();
         }
 
         /**
