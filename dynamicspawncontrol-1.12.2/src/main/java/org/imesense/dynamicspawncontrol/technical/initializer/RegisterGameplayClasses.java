@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.initializer;
 
 import net.minecraftforge.common.MinecraftForge;
+import org.imesense.dynamicspawncontrol.ai.skeleton.AISkeletonAddFovTask;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.events.OnUpdateTorchLogic;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -21,7 +22,8 @@ public final class RegisterGameplayClasses
         OnUpdateTorchLogic.class,
         OnDropZombieItems.class,
         OnDropSkeletonItems.class,
-        OnComplexityBiomes.class
+        OnComplexityBiomes.class,
+        AISkeletonAddFovTask.class
     };
 
     /**
