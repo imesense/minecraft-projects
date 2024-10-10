@@ -14,7 +14,7 @@ import java.util.List;
  * OldSerpskiStalker
  * TODO: Все моменты отвечающие за логику живых сущностей прописывать комментариями
  */
-public class BreakTorchTask extends EntityAIBase
+public class AIZombieBreakTorchTask extends EntityAIBase
 {
     /**
      *
@@ -30,7 +30,7 @@ public class BreakTorchTask extends EntityAIBase
      *
      * @param zombie
      */
-    public BreakTorchTask(EntityZombie zombie)
+    public AIZombieBreakTorchTask(EntityZombie zombie)
     {
         this.zombie = zombie;
         this.setMutexBits(3);  //-' Устанавливаем флаги выполнения задачи (например, нельзя выполнять одновременно с атакой)
