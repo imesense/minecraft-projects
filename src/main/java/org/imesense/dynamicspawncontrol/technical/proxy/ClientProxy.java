@@ -5,12 +5,11 @@ import java.util.concurrent.Callable;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCfgClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterOreGenerators;
 
 /**
@@ -63,11 +62,11 @@ public final class ClientProxy implements IProxy
 
     /**
      * Get client player instance
-     * 
+     *
      * @return Current player instance
      */
     @Override
-    public EntityPlayer getClientPlayer()
+    public EntityPlayerSP getClientPlayer()
     {
         return Minecraft.getMinecraft().player;
     }

@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
 import com.google.gson.JsonElement;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -173,9 +173,9 @@ public final class GenericBlockBreakActions extends ListActionsConsumer<SignalDa
          * @return
          */
         @Override
-        public EntityPlayer getPlayer(BlockEvent.BreakEvent data)
+        public EntityPlayerMP getPlayer(BlockEvent.BreakEvent data)
         {
-            return data.getPlayer();
+            return (EntityPlayerMP) data.getPlayer();
         }
 
         /**
@@ -227,9 +227,9 @@ public final class GenericBlockBreakActions extends ListActionsConsumer<SignalDa
              * @return
              */
             @Override
-            public EntityPlayer getPlayer()
+            public EntityPlayerMP getPlayer()
             {
-                return event.getPlayer();
+                return (EntityPlayerMP) event.getPlayer();
             }
 
             /**

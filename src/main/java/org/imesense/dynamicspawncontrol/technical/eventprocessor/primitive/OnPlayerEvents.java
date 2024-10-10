@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -59,9 +59,9 @@ public final class OnPlayerEvents
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent event)
     {
-        if (event.getEntity() instanceof EntityPlayer && !(event.getEntity() instanceof FakePlayer))
+        if (event.getEntity() instanceof EntityPlayerMP && !(event.getEntity() instanceof FakePlayer))
         {
-            EntityPlayer player = (EntityPlayer) event.getEntity();
+            EntityPlayerMP player = (EntityPlayerMP) event.getEntity();
 
             if (!PLAYER_LIST.contains(player.getName()))
             {
@@ -78,7 +78,7 @@ public final class OnPlayerEvents
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public synchronized void onUpdatePlayerLoggedOut_1(PlayerEvent.PlayerLoggedOutEvent event)
     {
-        EntityPlayer player = event.player;
+        EntityPlayerMP player = (EntityPlayerMP) event.player;
         PLAYER_LIST.remove(player.getName());
         Log.writeDataToLogFile(0, String.format("Player [%s] has been removed from the list", player.getName()));
     }
@@ -120,7 +120,7 @@ public final class OnPlayerEvents
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPlayerRespawn_0(PlayerEvent.PlayerRespawnEvent event)
     {
-        EntityPlayer player = event.player;
+        EntityPlayerMP player = (EntityPlayerMP) event.player;
         World world = player.world;
         BlockPos playerPos = player.getPosition();
 

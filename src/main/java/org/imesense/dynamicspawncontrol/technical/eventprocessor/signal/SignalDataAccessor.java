@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
  *
@@ -60,7 +60,7 @@ public abstract class SignalDataAccessor<ClassEvent>
      * @param classEvent
      * @return
      */
-    public abstract EntityPlayer getPlayer(ClassEvent classEvent);
+    public abstract EntityPlayerMP getPlayer(ClassEvent classEvent);
 
     /**
      *

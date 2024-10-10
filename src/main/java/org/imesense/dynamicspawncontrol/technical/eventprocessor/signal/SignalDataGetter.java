@@ -4,7 +4,7 @@ import net.minecraft.world.World;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
  *
@@ -33,7 +33,7 @@ public abstract class SignalDataGetter
      *
      * @return
      */
-    public abstract EntityPlayer getPlayer();
+    public abstract EntityPlayerMP getPlayer();
 
     /**
      *

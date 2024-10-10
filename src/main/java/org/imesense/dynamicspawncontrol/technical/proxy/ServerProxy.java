@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -58,11 +58,11 @@ public final class ServerProxy implements IProxy
 
     /**
      * Get client player instance
-     * 
+     *
      * @return Current player instance
      */
     @Override
-    public EntityPlayer getClientPlayer()
+    public EntityPlayerSP getClientPlayer()
     {
         throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
     }

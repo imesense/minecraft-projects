@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -23,7 +23,7 @@ public final class RayTrace
      * @param useLiquids
      * @return
      */
-    public static RayTraceResult getMovingObjectPositionFromPlayer(World worldIn, EntityPlayer playerIn, boolean useLiquids)
+    public static RayTraceResult getMovingObjectPositionFromPlayer(World worldIn, EntityPlayerMP playerIn, boolean useLiquids)
     {
         float pitch = playerIn.rotationPitch;
         float yaw = playerIn.rotationYaw;
@@ -54,7 +54,7 @@ public final class RayTrace
      * @param playerIn
      * @return
      */
-    private static Vec3d getPlayerEyes(EntityPlayer playerIn)
+    private static Vec3d getPlayerEyes(EntityPlayerMP playerIn)
     {
         double x = playerIn.posX;
         double y = playerIn.posY + playerIn.getEyeHeight();
@@ -69,7 +69,7 @@ public final class RayTrace
      * @param player
      * @return
      */
-    public static boolean isPlayerStandingOnBlock(World world, EntityPlayer player)
+    public static boolean isPlayerStandingOnBlock(World world, EntityPlayerMP player)
     {
         double posX = player.posX;
         double posY = player.posY;
@@ -90,7 +90,7 @@ public final class RayTrace
      * @param player
      * @return
      */
-    public static BlockPos getBlockPosBelowPlayer(EntityPlayer player)
+    public static BlockPos getBlockPosBelowPlayer(EntityPlayerMP player)
     {
         double posX = player.posX;
         double posY = player.posY - 0.1;
