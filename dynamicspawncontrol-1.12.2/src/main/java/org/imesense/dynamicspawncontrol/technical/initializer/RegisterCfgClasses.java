@@ -9,6 +9,7 @@ import org.imesense.dynamicspawncontrol.technical.config.logfile.CfgLogFile;
 import org.imesense.dynamicspawncontrol.technical.config.player.CfgPlayer;
 import org.imesense.dynamicspawncontrol.technical.config.rendernight.CfgRenderNight;
 import org.imesense.dynamicspawncontrol.technical.config.skeletondropitem.CfgSkeletonDropItem;
+import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.CfgSpiderAttackWeb;
 import org.imesense.dynamicspawncontrol.technical.config.windowtitle.CfgWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.config.zombiedropitem.CfgZombieDropItem;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations.DCSSingleConfig;
@@ -35,7 +36,8 @@ public final class RegisterCfgClasses
         CfgBlockWorldGenerator.class,
         CfgPluginWorldTime.class,
         CfgZombieDropItem.class,
-        CfgSkeletonDropItem.class
+        CfgSkeletonDropItem.class,
+        CfgSpiderAttackWeb.class
     };
 
     /**

@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public class DataSkeletonDropItem
+public final class DataSkeletonDropItem
 {
     /**
      *
