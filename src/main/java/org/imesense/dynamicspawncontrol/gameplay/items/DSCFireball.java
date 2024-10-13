@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  *
  */
-public final class CustomFireball extends EntityFireball
+public final class DSCFireball extends EntityFireball
 {
     /**
      *
@@ -38,7 +38,7 @@ public final class CustomFireball extends EntityFireball
      *
      * @param worldIn
      */
-    public CustomFireball(World worldIn)
+    public DSCFireball(World worldIn)
     {
         super(worldIn);
     }
@@ -53,7 +53,7 @@ public final class CustomFireball extends EntityFireball
      * @param accelY
      * @param accelZ
      */
-    public CustomFireball(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ)
+    public DSCFireball(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ)
     {
         super(worldIn, x, y, z, accelX, accelY, accelZ);
     }
@@ -66,7 +66,7 @@ public final class CustomFireball extends EntityFireball
      * @param accelY
      * @param accelZ
      */
-    public CustomFireball(World worldIn, EntityLivingBase shooter, double accelX, double accelY, double accelZ)
+    public DSCFireball(World worldIn, EntityLivingBase shooter, double accelX, double accelY, double accelZ)
     {
         super(worldIn, shooter, accelX, accelY, accelZ);
     }
