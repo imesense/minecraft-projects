@@ -7,8 +7,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.gameplay.items.CustomFireball;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.gameplay.items.DSCFireball;
 
 import javax.annotation.Nonnull;
 
@@ -90,7 +89,7 @@ public final class cmdAdminLaunchFireball extends CommandBase
             return;
         }
 
-        CustomFireball fireball = new CustomFireball(world, player, 0, 0, 0);
+        DSCFireball fireball = new DSCFireball(world, player, 0, 0, 0);
 
         fireball.setExplosionStrength(explosionStrength);
         fireball.setPosition(player.posX, player.posY + player.getEyeHeight(), player.posZ);
