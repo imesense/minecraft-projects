@@ -71,8 +71,31 @@ public final class OnDropSkeletonItems
             addDamagedItemToDrops(skeleton, drops, skeleton.getHeldItemMainhand(),
                     DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getHandItemDamageFactor());
 
-            addArrowsToDrops(skeleton, drops,
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
+            Random rand = new Random();
+            double arrowDropChance = 0.5;
+
+            if (rand.nextDouble() < arrowDropChance)
+            {
+                boolean arrowsDropped = false;
+                for (EntityItem item : drops)
+                {
+                    if (item.getItem().getItem() == Items.ARROW)
+                    {
+                        int currentCount = item.getItem().getCount();
+
+                        item.getItem().setCount
+                                (currentCount + 1 + DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
+                        arrowsDropped = true;
+
+                        break;
+                    }
+                }
+
+                if (!arrowsDropped)
+                {
+                    addArrowsToDrops(skeleton, drops, DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
+                }
+            }
         }
     }
 
