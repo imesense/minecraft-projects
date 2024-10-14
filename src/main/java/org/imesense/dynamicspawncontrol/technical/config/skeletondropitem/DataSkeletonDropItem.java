@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.config.skeletondropitem;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
 import javax.annotation.Nonnull;
+import java.util.Random;
 
 /**
  *
@@ -58,6 +59,11 @@ public final class DataSkeletonDropItem
          *
          */
         private Float damageSpreadFactor = 0.2f;
+
+        /**
+         *
+         */
+        private Byte arrowsToDrops = (byte)(1 + new Random().nextInt(3));
 
         /**
          *
@@ -134,6 +140,15 @@ public final class DataSkeletonDropItem
 
         /**
          *
+         * @param arrowsToDrops
+         */
+        public void setArrowsToDrops(Byte arrowsToDrops)
+        {
+            this.arrowsToDrops = arrowsToDrops;
+        }
+
+        /**
+         *
          * @return
          */
         public Float getBreakItem()
@@ -193,6 +208,15 @@ public final class DataSkeletonDropItem
         public Float getDamageSpreadFactor()
         {
             return this.damageSpreadFactor;
+        }
+
+        /**
+         *
+         * @return
+         */
+        public Byte getArrowsToDrops()
+        {
+            return this.arrowsToDrops;
         }
 
         /**
