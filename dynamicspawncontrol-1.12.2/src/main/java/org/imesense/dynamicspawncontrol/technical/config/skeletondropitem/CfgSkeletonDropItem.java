@@ -110,6 +110,9 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
         recordObject.addProperty("damage_spread_factor",
                 DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getDamageSpreadFactor());
 
+        recordObject.addProperty("arrows_to_drops",
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
+
         return recordObject;
     }
 
@@ -169,6 +172,12 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
                 {
                     DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
                             setDamageSpreadFactor(jsonObjectSkeletonDrop.get("damage_spread_factor").getAsFloat());
+                }
+
+                if (jsonObjectSkeletonDrop.has("arrows_to_drops"))
+                {
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                            setArrowsToDrops(jsonObjectSkeletonDrop.get("arrows_to_drops").getAsByte());
                 }
             }
             else

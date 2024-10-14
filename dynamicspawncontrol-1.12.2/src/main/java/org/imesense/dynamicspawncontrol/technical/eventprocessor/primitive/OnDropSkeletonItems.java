@@ -70,6 +70,9 @@ public final class OnDropSkeletonItems
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getHeldItemMainhand(),
                     DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getHandItemDamageFactor());
+
+            addArrowsToDrops(skeleton, drops,
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
         }
     }
 
@@ -115,6 +118,18 @@ public final class OnDropSkeletonItems
 
             drops.add(new EntityItem(skeleton.world, skeleton.posX, skeleton.posY, skeleton.posZ, damagedItem));
         }
+    }
+
+    /**
+     *
+     * @param skeleton
+     * @param drops
+     * @param arrowCount
+     */
+    private void addArrowsToDrops(EntitySkeleton skeleton, List<EntityItem> drops, byte arrowCount)
+    {
+        ItemStack arrows = new ItemStack(Items.ARROW, arrowCount);
+        drops.add(new EntityItem(skeleton.world, skeleton.posX, skeleton.posY, skeleton.posZ, arrows));
     }
 }
 
