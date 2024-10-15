@@ -26,7 +26,7 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
      */
     public CfgBlockWorldGenerator(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 

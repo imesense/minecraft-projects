@@ -26,7 +26,7 @@ public final class CfgPlayer extends CfgClassAbstract
      */
     public CfgPlayer(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 

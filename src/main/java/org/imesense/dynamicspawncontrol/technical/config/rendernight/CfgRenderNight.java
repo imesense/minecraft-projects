@@ -26,7 +26,7 @@ public final class CfgRenderNight extends CfgClassAbstract
      */
     public CfgRenderNight(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 

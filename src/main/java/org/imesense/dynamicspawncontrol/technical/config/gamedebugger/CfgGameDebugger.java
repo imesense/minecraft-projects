@@ -24,7 +24,7 @@ public final class CfgGameDebugger extends CfgClassAbstract
      */
     public CfgGameDebugger(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
         CodeGenericUtils.printInitClassToLog(this.getClass());
 

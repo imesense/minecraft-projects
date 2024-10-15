@@ -26,7 +26,7 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
      */
     public CfgCacheWorldGame(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 

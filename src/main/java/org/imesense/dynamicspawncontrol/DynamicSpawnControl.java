@@ -85,6 +85,11 @@ public class DynamicSpawnControl
         /**
          *
          */
+        public static final String NAME_DIR_PLUGINS = "plugins";
+
+        /**
+         *
+         */
         public static final String NAME_DIR_SCRIPTS = "scripts";
 
         /**

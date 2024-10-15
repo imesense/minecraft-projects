@@ -26,7 +26,7 @@ public final class CfgWindowTitle extends CfgClassAbstract
      */
     public CfgWindowTitle(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 

@@ -26,7 +26,7 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
      */
     public CfgPluginWorldTime(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.FALSE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 

@@ -18,9 +18,9 @@ public abstract class CfgClassAbstract
      *
      * @param nameConfigFile
      */
-    public CfgClassAbstract(String nameConfigFile)
+    public CfgClassAbstract(String nameConfigFile, final Boolean isConfigFolder)
     {
-        this.nameConfig = this.constructPathToDirectory() + nameConfigFile;
+        this.nameConfig = this.constructPathToDirectory(isConfigFolder) + nameConfigFile;
     }
 
     /**
@@ -37,10 +37,11 @@ public abstract class CfgClassAbstract
      *
      * @return
      */
-    protected String constructPathToDirectory()
+    protected String constructPathToDirectory(final Boolean isConfigFolder)
     {
         return DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
                 DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator +
-                DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS + File.separator;
+                (isConfigFolder ? DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS :
+                        DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_PLUGINS) + File.separator;
     }
 }

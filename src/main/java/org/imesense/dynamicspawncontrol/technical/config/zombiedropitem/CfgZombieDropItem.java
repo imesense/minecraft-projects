@@ -26,7 +26,7 @@ public final class CfgZombieDropItem extends CfgClassAbstract
      */
     public CfgZombieDropItem(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 

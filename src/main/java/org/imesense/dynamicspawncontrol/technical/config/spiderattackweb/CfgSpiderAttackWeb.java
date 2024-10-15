@@ -28,7 +28,7 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
      */
     public CfgSpiderAttackWeb(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.FALSE);
 
         CodeGenericUtils.printInitClassToLog(this.getClass());
 
