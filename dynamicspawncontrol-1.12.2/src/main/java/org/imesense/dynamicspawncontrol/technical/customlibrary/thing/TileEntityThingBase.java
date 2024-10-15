@@ -6,7 +6,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
-public class TileEntityThingBase implements IThingBase {
+public class TileEntityThingBase implements IThingBase
+{
    public TileEntity owner = null;
 
    public TileEntityThingBase(TileEntity ownerIn)

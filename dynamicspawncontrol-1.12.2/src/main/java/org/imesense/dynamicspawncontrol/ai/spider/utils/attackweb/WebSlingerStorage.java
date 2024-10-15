@@ -6,7 +6,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
-public class WebSlingerStorage implements IStorage<IWebSlinger>
+public final class WebSlingerStorage implements IStorage<IWebSlinger>
 {
     public NBTBase writeNBT(Capability<IWebSlinger> capability, IWebSlinger instance, EnumFacing side)
     {
