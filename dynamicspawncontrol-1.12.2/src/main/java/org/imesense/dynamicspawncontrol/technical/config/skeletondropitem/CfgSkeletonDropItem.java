@@ -26,7 +26,7 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
      */
     public CfgSkeletonDropItem(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
         CodeGenericUtils.printInitClassToLog(this.getClass());
 

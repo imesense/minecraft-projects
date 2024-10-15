@@ -27,7 +27,7 @@ public final class CfgLogFile extends CfgClassAbstract
      */
     public CfgLogFile(String nameConfigFile)
     {
-        super(nameConfigFile);
+        super(nameConfigFile, Boolean.TRUE);
 
 		CodeGenericUtils.printInitClassToLog(this.getClass());
 
