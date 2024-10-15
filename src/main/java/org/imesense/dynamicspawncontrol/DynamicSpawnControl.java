@@ -2,7 +2,6 @@ package org.imesense.dynamicspawncontrol;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
@@ -11,7 +10,13 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import org.imesense.dynamicspawncontrol.ai.spider.utils.event.EventHandler;
+import org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.gameplay.recipes.IRecipes;
+import org.imesense.dynamicspawncontrol.gameplay.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCfgClasses;
@@ -21,6 +26,7 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterTechnicalClasses;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
+import org.imesense.dynamicspawncontrol.technical.network.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserManager;
@@ -29,7 +35,6 @@ import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Main class of modification
@@ -145,6 +150,11 @@ public class DynamicSpawnControl
     public static IProxy Proxy;
 
     /**
+     *
+     */
+    public static IRecipes Recipes;
+
+    /**
      * Constructor
      */
     public DynamicSpawnControl()
@@ -159,11 +169,16 @@ public class DynamicSpawnControl
     public GeneralStorageData generalStorageData = null;
 
     /**
+     *
+     */
+    public static SimpleNetworkWrapper networkWrapper = null;
+
+    /**
      * Preinitialize modification
      * 
      * @param event Preinitialization event
      */
-    @EventHandler
+    @Mod.EventHandler
     public synchronized void preInit(FMLPreInitializationEvent event)
     {
         //
@@ -178,6 +193,10 @@ public class DynamicSpawnControl
 
         //
         MessageHandler.init();
+
+        WebSlingerCapability.register();
+        networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
+        PlayerInWebMessage.register(networkWrapper);
 
         //
         RegisterCfgClasses.initializeConfigs();
@@ -212,10 +231,17 @@ public class DynamicSpawnControl
      * 
      * @param event Initialization event
      */
-    @EventHandler
+    @Mod.EventHandler
     public synchronized void init(FMLInitializationEvent event)
     {
+        //
         Proxy.init(event);
+
+        //
+        Recipes = new CraftItemWeb();
+
+        //
+        Recipes.registry();
 
         MinecraftForge.EVENT_BUS.register(OnUpdateTimeWorld.INSTANCE);
     }
@@ -225,11 +251,13 @@ public class DynamicSpawnControl
      * 
      * @param event Postinitialization event
      */
-    @EventHandler
+    @Mod.EventHandler
     public synchronized void postInit(FMLPostInitializationEvent event)
     {
         //
         Proxy.postInit(event);
+
+        MinecraftForge.EVENT_BUS.register( new EventHandler());
     }
 
     /**
@@ -237,7 +265,7 @@ public class DynamicSpawnControl
      * 
      * @param event Load complete event
      */
-    @EventHandler
+    @Mod.EventHandler
     public synchronized void onLoadComplete(FMLLoadCompleteEvent event)
     {
         ParserGenericJsonScripts.readRules();
@@ -250,7 +278,7 @@ public class DynamicSpawnControl
      * 
      * @param event Server starting event
      */
-    @EventHandler
+    @Mod.EventHandler
     public synchronized void serverLoad(FMLServerStartingEvent event)
     {
         RegisterCommandsClasses.registerCommands(event);
@@ -261,7 +289,7 @@ public class DynamicSpawnControl
      * 
      * @param event Server stopped action
      */
-    @EventHandler
+    @Mod.EventHandler
     public synchronized void serverStopped(FMLServerStoppedEvent event)
     {
         Cache.instance.cleanActualCache();
