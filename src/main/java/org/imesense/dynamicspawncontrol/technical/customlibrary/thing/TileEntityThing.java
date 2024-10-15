@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import net.minecraft.tileentity.TileEntity;
 //import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.MatchingConfig;
 
-public class TileEntityThing extends TileEntityThingBase implements IThing
+public final class TileEntityThing extends TileEntityThingBase implements IThing
 {
    public TileEntityThing(TileEntity ownerIn) {
       super(ownerIn);

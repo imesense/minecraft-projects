@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.EntityThin
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.TileEntityThing;
 
 @Mod.EventBusSubscriber
-public class EventHandler
+public final class EventHandler
 {
     @SubscribeEvent
     public static void attachCapabilitiesTileEntity(AttachCapabilitiesEvent<TileEntity> event)

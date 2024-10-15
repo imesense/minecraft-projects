@@ -7,55 +7,89 @@ import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb.EntityThrowableWeb;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
 
-public class AISpiderWebAttackTask extends EntityAIBase
+/**
+ *
+ */
+public final class AISpiderWebAttackTask extends EntityAIBase
 {
-    private int attackTimer;
+    /**
+     *
+     */
+    private Double attackTimer;
+
+    /**
+     *
+     */
     private final EntityLiving parentEntity;
 
+    /**
+     *
+     * @param entity
+     */
     public AISpiderWebAttackTask(EntityLiving entity)
     {
         this.parentEntity = entity;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public boolean shouldExecute()
     {
         EntityLivingBase entitylivingbase = this.parentEntity != null ? this.parentEntity.getAttackTarget() : null;
-        return entitylivingbase != null ? entitylivingbase.getDistanceSq(this.parentEntity) >= 4.0D : false;
+        return entitylivingbase != null && entitylivingbase.getDistanceSq(this.parentEntity) >= 4.0;
     }
 
+    /**
+     *
+     */
+    @Override
     public void startExecuting()
     {
-        this.attackTimer = 0;
+        this.attackTimer = 0.0;
     }
 
+    /**
+     *
+     */
+    @Override
     public void resetTask()
     {
         super.resetTask();
     }
 
+    /**
+     *
+     */
+    @Override
     public void updateTask()
     {
-        EntityLivingBase entitylivingbase = this.parentEntity != null ? this.parentEntity.getAttackTarget() : null;
+        EntityLivingBase entitylivingbase =
+                this.parentEntity != null ? this.parentEntity.getAttackTarget() : null;
 
-        if (this.parentEntity != null && entitylivingbase != null && entitylivingbase.getDistanceSq(this.parentEntity) < 256.0D && this.parentEntity.canEntityBeSeen(entitylivingbase))
+        if (this.parentEntity != null && entitylivingbase != null &&
+                entitylivingbase.getDistanceSq(this.parentEntity) < 256.0 &&
+                    this.parentEntity.canEntityBeSeen(entitylivingbase))
         {
             World world = this.parentEntity.world;
 
             ++this.attackTimer;
 
-            if (this.attackTimer >= DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCooldown())
+            if (this.attackTimer >= DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown())
             {
                 EntityThrowableWeb.sling(world, this.parentEntity);
 
-                double cooldown =
-                        (double)DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCooldown() +
-                                (double)((float)DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCooldown() *
-                                        world.rand.nextFloat()) * DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingVariance();
+                double coolDown =
+                        DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown() +
+                                (DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown() *
+                                        world.rand.nextDouble()) * DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingVariance();
 
-                this.attackTimer = (int)((double)this.attackTimer - cooldown);
+                this.attackTimer = this.attackTimer - coolDown;
             }
         }
-        else if (this.attackTimer > 0)
+        else if (this.attackTimer > 0.0)
         {
             --this.attackTimer;
         }

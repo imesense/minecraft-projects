@@ -74,8 +74,8 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
         jsonObjectWeb.addProperty("web_melee_chance",
                 DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getWebMeleeChance());
 
-        jsonObjectWeb.addProperty("sling_cooldown",
-                DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCooldown());
+        jsonObjectWeb.addProperty("sling_coolDown",
+                DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown());
 
         jsonObjectWeb.addProperty("sling_inaccuracy",
                 DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingInaccuracy());
@@ -137,10 +137,10 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
                             jsonObjectWeb.get("web_melee_chance").getAsFloat());
                 }
 
-                if (jsonObjectWeb.has("sling_cooldown"))
+                if (jsonObjectWeb.has("sling_coolDown"))
                 {
-                    DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.setSlingCooldown(
-                            jsonObjectWeb.get("sling_cooldown").getAsInt());
+                    DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.setSlingCoolDown(
+                            jsonObjectWeb.get("sling_coolDown").getAsDouble());
                 }
 
                 if (jsonObjectWeb.has("sling_inaccuracy"))
@@ -193,5 +193,4 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
             Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
-
 }

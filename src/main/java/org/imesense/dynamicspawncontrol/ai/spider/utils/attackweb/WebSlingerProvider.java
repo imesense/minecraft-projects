@@ -7,7 +7,7 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.IThing;
 
 import javax.annotation.Nullable;
 
-public class WebSlingerProvider extends SimpleCapabilityProvider<IWebSlinger>
+public final class WebSlingerProvider extends SimpleCapabilityProvider<IWebSlinger>
 {
     IThing owner = null;
     int taskPriority = -1;

@@ -23,7 +23,7 @@ import org.imesense.dynamicspawncontrol.gameplay.items.DSCWeb;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.registrationhelpers.RegistrationHelpers;
 
 @GameRegistry.ObjectHolder("dynamicspawncontrol")
-public class ObjectHandler
+public final class ObjectHandler
 {
     private static int entityID = 1;
     public static Item webbing = null;

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb.EntityThrowableWeb;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
 
-public class DSCWeb extends Item
+public final class DSCWeb extends Item
 {
     public DSCWeb()
     {

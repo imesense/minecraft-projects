@@ -20,7 +20,7 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.EntityThin
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.IThing;
 
 @Mod.EventBusSubscriber
-public class WebSlingerCapability implements IWebSlinger
+public final class WebSlingerCapability implements IWebSlinger
 {
     @CapabilityInject(IWebSlinger.class)
     public static final Capability<IWebSlinger> CAPABILITY = null;

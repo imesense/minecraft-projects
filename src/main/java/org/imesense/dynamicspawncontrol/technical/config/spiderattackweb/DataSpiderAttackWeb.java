@@ -37,7 +37,7 @@ public final class DataSpiderAttackWeb
         /**
          *
          */
-        private Integer slingCooldown = 45;
+        private Double slingCoolDown = 45.0;
 
         /**
          *
@@ -99,11 +99,11 @@ public final class DataSpiderAttackWeb
 
         /**
          *
-         * @param slingCooldown
+         * @param slingCoolDown
          */
-        public void setSlingCooldown(Integer slingCooldown)
+        public void setSlingCoolDown(Double slingCoolDown)
         {
-            this.slingCooldown = slingCooldown;
+            this.slingCoolDown = slingCoolDown;
         }
 
         /**
@@ -182,9 +182,9 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
-        public Integer getSlingCooldown()
+        public Double getSlingCoolDown()
         {
-            return this.slingCooldown;
+            return this.slingCoolDown;
         }
 
         /**

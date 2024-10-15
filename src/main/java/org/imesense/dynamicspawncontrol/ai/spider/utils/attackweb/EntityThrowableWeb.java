@@ -22,68 +22,95 @@ import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpi
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PlayerInWebMessage;
 
-public class EntityThrowableWeb extends EntityThrowable
+/**
+ *
+ */
+public final class EntityThrowableWeb extends EntityThrowable
 {
+    /**
+     *
+     */
     public static final EnumParticleTypes particleType;
 
+    /**
+     *
+     * @param worldIn
+     */
     public EntityThrowableWeb(World worldIn)
     {
         super(worldIn);
-        this.init();
     }
 
+    /**
+     *
+     * @param worldIn
+     * @param throwerIn
+     */
     public EntityThrowableWeb(World worldIn, EntityLivingBase throwerIn)
     {
         super(worldIn, throwerIn);
-        this.init();
     }
 
+    /**
+     *
+     * @param worldIn
+     * @param x
+     * @param y
+     * @param z
+     */
     public EntityThrowableWeb(World worldIn, double x, double y, double z)
     {
         super(worldIn, x, y, z);
-        this.init();
     }
 
+    /**
+     *
+     * @param worldIn
+     * @param x
+     * @param y
+     * @param z
+     * @param accelX
+     * @param accelY
+     * @param accelZ
+     */
     public EntityThrowableWeb(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ)
     {
         super(worldIn);
-        this.setSize(1.0F, 1.0F);
+        this.setSize(1.0f, 1.0f);
         this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
         this.setPosition(x, y, z);
-        this.init();
     }
 
-    protected void init()
-    {
-
-    }
-
-    public static void registerFixesWebbing(DataFixer fixer)
-    {
-        EntityThrowable.registerFixesThrowable(fixer, "webbing");
-    }
-
+    /**
+     *
+     * @param id
+     */
     @SideOnly(Side.CLIENT)
     public void handleStatusUpdate(byte id)
     {
         if (id == 3)
         {
-            for(int i = 0; i < 3; ++i)
+            for(byte i = 0; i < 3; ++i)
             {
-                this.world.spawnParticle(particleType, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
+                this.world.spawnParticle(particleType,
+                        this.posX, this.posY, this.posZ, 0.f, 0.f, 0.f);
             }
         }
-
     }
 
+    /**
+     *
+     * @param result
+     */
     protected void onImpact(RayTraceResult result)
     {
-        boolean doit = true;
+        boolean doIt = true;
         EntityLivingBase thrower = this.getThrower();
 
         if (result.entityHit != null && result.entityHit != thrower)
         {
-            result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, thrower), 0.0F);
+            result.entityHit.attackEntityFrom(DamageSource.
+                    causeThrownDamage(this, thrower), 0.f);
         }
 
         if (result.typeOfHit != RayTraceResult.Type.MISS)
@@ -96,7 +123,7 @@ public class EntityThrowableWeb extends EntityThrowable
                 {
                     IBlockState state = this.world.getBlockState(result.getBlockPos());
                     Block oldBlock = state.getBlock();
-                    doit &= oldBlock != Blocks.WEB;
+                    doIt &= oldBlock != Blocks.WEB;
                 }
 
                 pos = result.getBlockPos().offset(result.sideHit);
@@ -106,61 +133,70 @@ public class EntityThrowableWeb extends EntityThrowable
                 pos = result.entityHit.getPosition();
             }
 
-            doit &= this.getThrower() != result.entityHit;
+            doIt &= this.getThrower() != result.entityHit;
 
-            if (doit)
+            if (doIt)
             {
                 onHit(this.world, pos, thrower, result.entityHit);
             }
         }
 
-        if (doit && !this.world.isRemote)
+        if (doIt && !this.world.isRemote)
         {
-            this.world.setEntityState(this, (byte)3);
+            byte thisState = 3;
+            this.world.setEntityState(this, thisState);
             this.setDead();
         }
-
     }
 
+    /**
+     *
+     * @param worldIn
+     * @param entityIn
+     * @return
+     */
     public static EntityThrowableWeb sling(World worldIn, EntityLivingBase entityIn)
     {
         EntityThrowableWeb entity = null;
-        float pitch = 1.0F / (entityIn.getRNG().nextFloat() * 0.4F + 0.8F);
+        float pitch = 1.0f / (entityIn.getRNG().nextFloat() * 0.4f + 0.8f);
 
-        entityIn.playSound(ObjectHandler.WEBBING_SHOOT, 1.0F, pitch);
+        entityIn.playSound(ObjectHandler.WEBBING_SHOOT, 1.0f, pitch);
 
         if (!worldIn.isRemote)
         {
             entity = new EntityThrowableWeb(worldIn, entityIn);
-            float inaccuracy = DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingInaccuracy();
-            entity.shoot(entityIn, entityIn.rotationPitch, entityIn.rotationYaw, 0.0F, 1.1F, inaccuracy);
+            Float inaccuracy = DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingInaccuracy();
+            entity.shoot(entityIn, entityIn.rotationPitch, entityIn.rotationYaw, 0.0f, 1.1f, inaccuracy);
             worldIn.spawnEntity(entity);
         }
 
         return entity;
     }
 
+    /**
+     *
+     * @param world
+     * @param pos
+     * @param source
+     * @param target
+     */
     public static void onHit(World world, BlockPos pos, Entity source, Entity target)
     {
         IBlockState state = world.getBlockState(pos);
         Block oldBlock = state.getBlock();
-        boolean stick = true;
 
-        if (!oldBlock.isReplaceable(world, pos) ||
-                !DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getBlockWebReplacement() && !oldBlock.isAir(state, world, pos))
-        {
-            stick = false;
-        }
+        boolean stick = oldBlock.isReplaceable(world, pos) &&
+                (DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getBlockWebReplacement() || oldBlock.isAir(state, world, pos));
 
         if (!stick)
         {
-            world.playSound((EntityPlayer)null, pos, ObjectHandler.WEBBING_NONSTICK,
-                    SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, pos, ObjectHandler.WEBBING_NONSTICK,
+                    SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.rand.nextFloat() * 0.4f + 0.8f));
         }
         else
         {
-            world.playSound((EntityPlayer)null, pos, ObjectHandler.WEBBING_STICK,
-                    SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.rand.nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, pos, ObjectHandler.WEBBING_STICK,
+                    SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.rand.nextFloat() * 0.4f + 0.8f));
 
             if (!world.isRemote)
             {
@@ -175,11 +211,13 @@ public class EntityThrowableWeb extends EntityThrowable
                         DynamicSpawnControl.networkWrapper.sendTo(new PlayerInWebMessage(pos), (EntityPlayerMP)target);
                     }
                 }
-
             }
         }
     }
 
+    /**
+     *
+     */
     static
     {
         particleType = EnumParticleTypes.SNOWBALL;
