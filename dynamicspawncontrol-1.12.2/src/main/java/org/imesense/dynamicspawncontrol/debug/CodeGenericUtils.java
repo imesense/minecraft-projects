@@ -1,11 +1,18 @@
 package org.imesense.dynamicspawncontrol.debug;
 
 import com.google.gson.JsonElement;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Function;
 
@@ -118,5 +125,51 @@ public final class CodeGenericUtils
     public static <T> void printInitClassToLog(final Class<T> getClass)
     {
         Log.writeDataToLogFile(0, String.format("Initializing a class: {%s}", getClass.getName()));
+    }
+
+    /**
+     *
+     * @param getObject
+     * @param getClass
+     * @return
+     * @param <T>
+     */
+    public static <T> T as(Object getObject, Class<T> getClass)
+    {
+        return getClass.isInstance(getObject) ? getClass.cast(getObject) : null;
+    }
+
+    /**
+     *
+     * @param provider
+     * @param capability
+     * @param facing
+     * @return
+     * @param <T>
+     */
+    @Nullable
+    public static <T> T fetchCapability(@Nullable ICapabilityProvider provider, Capability<T> capability, @Nullable EnumFacing facing)
+    {
+        return provider != null && provider.hasCapability(capability, facing) ? provider.getCapability(capability, facing) : null;
+    }
+
+    /**
+     *
+     * @param worldIn
+     * @param pos
+     * @param capability
+     * @param facing
+     * @return
+     * @param <T>
+     */
+    @Nullable
+    public static <T> T fetchCapability(World worldIn, BlockPos pos, Capability<T> capability, @Nullable EnumFacing facing)
+    {
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+        return fetchCapability(tileentity, capability, facing);
+    }
+
+    public static <T> T getValueOrDefault(T value, T defaultValue) {
+        return value == null ? defaultValue : value;
     }
 }
