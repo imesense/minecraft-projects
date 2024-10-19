@@ -36,6 +36,7 @@ public final class ClientProxy implements IProxy
     @Override
     public void init(FMLInitializationEvent event)
     {
+
     }
 
     /**

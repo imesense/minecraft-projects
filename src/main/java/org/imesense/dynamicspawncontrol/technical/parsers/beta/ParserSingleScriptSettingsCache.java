@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.parsers.beta;
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumSingleScripts;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -43,7 +44,7 @@ public final class ParserSingleScriptSettingsCache implements IBetaParsers
      */
     public void loadConfig(boolean initialization)
     {
-        File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_CACHE,
+        File file = getConfigFile(initialization, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE,
                 EnumSingleScripts.SCRIPT_CACHE_MOBS.getKeyword());
 
         if (!file.exists())

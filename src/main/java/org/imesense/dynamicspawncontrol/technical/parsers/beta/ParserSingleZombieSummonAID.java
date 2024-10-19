@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumSingleScripts;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -49,7 +50,7 @@ public final class ParserSingleZombieSummonAID implements IBetaParsers
     {
         GeneralStorageData.instance.EquipmentConfigs = new ArrayList<>();
 
-        File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
+        File file = getConfigFile(initialization, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
                 EnumSingleScripts.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword());
 
         if (!file.exists())

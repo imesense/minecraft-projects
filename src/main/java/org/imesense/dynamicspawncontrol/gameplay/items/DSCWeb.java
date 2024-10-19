@@ -9,19 +9,40 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
 
+import javax.annotation.Nonnull;
+import java.util.Objects;
+
+/**
+ *
+ */
 public final class DSCWeb extends Item
 {
+    /**
+     *
+     */
     public DSCWeb()
     {
+        CodeGenericUtils.printInitClassToLog(this.getClass());
+
         this.maxStackSize = 1;
         this.setCreativeTab(CreativeTabs.MISC);
+
         ObjectHandler.RegistrationHandler.nameHelper(this, "dynamicspawncontrol:webbing");
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    /**
+     *
+     * @param worldIn
+     * @param playerIn
+     * @param handIn
+     * @return
+     */
+    @Nonnull
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn)
     {
         ItemStack itemstack = playerIn.getHeldItem(handIn);
 
@@ -31,8 +52,8 @@ public final class DSCWeb extends Item
         }
 
         EntityThrowableWeb.sling(worldIn, playerIn);
-        playerIn.addStat(StatList.getObjectUseStats(this));
+        playerIn.addStat(Objects.requireNonNull(StatList.getObjectUseStats(this)));
 
-        return new ActionResult(EnumActionResult.SUCCESS, itemstack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
     }
 }

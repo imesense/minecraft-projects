@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.technical.parsers.beta;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.EnumSingleScripts;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -44,7 +45,7 @@ public final class ParserSingleScriptCheckSpawn implements IBetaParsers
      */
     public void loadConfig(boolean initialization)
     {
-        File file = getConfigFile(initialization, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
+        File file = getConfigFile(initialization, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
                 EnumSingleScripts.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword());
 
         if (!file.exists())

@@ -17,11 +17,6 @@ public final class CacheMonitor
     /**
      *
      */
-    private final int X = 10, Y = 10;
-
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
     /**
@@ -60,6 +55,8 @@ public final class CacheMonitor
         final String VALID_CHUNKS = TextFormatting.YELLOW + "Valid Chunks: " + Cache.instance.getValidChunkCount();
 
         final String SEPARATOR = TextFormatting.WHITE + "--------------------------------------------";
+
+        final int X = 10, Y = 10;
 
         FONT_RENDER.drawString(ACTUAL_ANIMALS, X, Y, 0xFFFFFF);
         FONT_RENDER.drawString(ACTUAL_HOSTILE, X, Y + 10, 0xFFFFFF);

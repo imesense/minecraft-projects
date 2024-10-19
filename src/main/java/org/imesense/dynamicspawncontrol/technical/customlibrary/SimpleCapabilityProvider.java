@@ -1,53 +1,87 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
+/**
+ *
+ * @param <HANDLER>
+ */
 public class SimpleCapabilityProvider<HANDLER> implements ICapabilitySerializable<NBTBase>
 {
-    private final Capability<HANDLER> capability;
-    private final EnumFacing facing;
-    private final HANDLER instance;
+    /**
+     *
+     */
+    private final HANDLER INSTANCE;
 
-    public SimpleCapabilityProvider()
-    {
-        this.capability = null;
-        this.facing = null;
-        this.instance = null;
-    }
+    /**
+     *
+     */
+    private final EnumFacing FACING;
 
-    public SimpleCapabilityProvider(Capability<HANDLER> capability, @Nullable EnumFacing facing)
-    {
-        this(capability, facing, capability != null ? capability.getDefaultInstance() : null);
-    }
+    /**
+     *
+     */
+    private final Capability<HANDLER> CAPABILITY;
 
+    /**
+     *
+     * @param capability
+     * @param facing
+     * @param instance
+     */
     public SimpleCapabilityProvider(Capability<HANDLER> capability, @Nullable EnumFacing facing, HANDLER instance)
     {
-        this.capability = capability;
-        this.instance = instance;
-        this.facing = facing;
+        this.CAPABILITY = capability;
+        this.INSTANCE = instance;
+        this.FACING = facing;
     }
 
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
+    /**
+     *
+     * @param capability
+     * @param facing
+     * @return
+     */
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
     {
-        return capability != null && capability == this.getCapability();
+        return capability == this.getCapability();
     }
 
+    /**
+     *
+     * @param capability
+     * @param facing
+     * @return
+     * @param <T>
+     */
     @Nullable
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
     {
-        return this.hasCapability(capability, facing) ? this.getCapability().cast(this.getInstance()) : null;
+        return this.hasCapability(capability, facing) ?
+                this.getCapability().cast(this.getInstance()) : null;
     }
 
+    /**
+     *
+     * @return
+     */
     public NBTBase serializeNBT()
     {
-        return (NBTBase)(this.getCapability() == null ? new NBTTagCompound() : this.getCapability().writeNBT(this.getInstance(), this.getFacing()));
+        return (this.getCapability() == null ?
+                new NBTTagCompound() : this.getCapability().writeNBT(this.getInstance(), this.getFacing()));
     }
 
+    /**
+     *
+     * @param nbt
+     */
     public void deserializeNBT(NBTBase nbt)
     {
         if (this.getCapability() != null)
@@ -56,19 +90,31 @@ public class SimpleCapabilityProvider<HANDLER> implements ICapabilitySerializabl
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public final Capability<HANDLER> getCapability()
     {
-        return this.capability;
+        return this.CAPABILITY;
     }
 
+    /**
+     *
+     * @return
+     */
     @Nullable
     public EnumFacing getFacing()
     {
-        return this.facing;
+        return this.FACING;
     }
 
+    /**
+     *
+     * @return
+     */
     public HANDLER getInstance()
     {
-        return this.instance;
+        return this.INSTANCE;
     }
 }

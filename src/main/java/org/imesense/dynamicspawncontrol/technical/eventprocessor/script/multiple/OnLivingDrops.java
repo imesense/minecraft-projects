@@ -13,6 +13,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -22,7 +23,7 @@ import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScrip
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnLivingDrops
 {
     /**
@@ -50,7 +51,7 @@ public final class OnLivingDrops
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdateLivingDrops_0(LivingDropsEvent event)
     {
         AtomicInteger i = new AtomicInteger();

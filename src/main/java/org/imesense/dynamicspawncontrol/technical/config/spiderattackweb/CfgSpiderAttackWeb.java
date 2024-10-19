@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 /**
  * 
  */
-@DCSSingleConfig(fileName = "cfg_plugin_spider_attack_web.json")
+@DCSSingleConfig(fileName = "cfg_plugin_spider_attack_web")
 public final class CfgSpiderAttackWeb extends CfgClassAbstract
 {
     /**

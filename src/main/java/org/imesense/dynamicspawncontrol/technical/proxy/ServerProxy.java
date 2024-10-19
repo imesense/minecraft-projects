@@ -75,7 +75,7 @@ public final class ServerProxy implements IProxy
      * @return Task result
      */
     @Override
-    public <T> ListenableFuture<T> addScheduledTaskClient(Callable<T> callableToSchedule)
+    public synchronized <T> ListenableFuture<T> addScheduledTaskClient(Callable<T> callableToSchedule)
     {
         throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
     }
@@ -87,7 +87,7 @@ public final class ServerProxy implements IProxy
      * @return Task result
      */
     @Override
-    public ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule)
+    public synchronized ListenableFuture<Object> addScheduledTaskClient(Runnable runnableToSchedule)
     {
         throw new IllegalStateException("The server cannot process this function, the call occurs from the client side!");
     }

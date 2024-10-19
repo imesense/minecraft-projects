@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.init.SoundEvents;
@@ -18,31 +17,72 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
+import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.items.DSCWeb;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.registrationhelpers.RegistrationHelpers;
 
-@GameRegistry.ObjectHolder("dynamicspawncontrol")
+/**
+ *
+ */
+@GameRegistry.ObjectHolder(ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class ObjectHandler
 {
+    /**
+     *
+     */
     private static int entityID = 1;
+
+    /**
+     *
+     */
     public static Item webbing = null;
+
+    /**
+     *
+     */
     public static SoundEvent WEBBING_SHOOT;
+
+    /**
+     *
+     */
     public static SoundEvent WEBBING_STICK;
+
+    /**
+     *
+     */
     public static SoundEvent WEBBING_NONSTICK;
 
-    @Mod.EventBusSubscriber(
-            modid = "dynamicspawncontrol"
-    )
+    /**
+     *
+     */
+    @Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
     public static class RegistrationHandler extends RegistrationHelpers
     {
+        /**
+         *
+         */
+        public RegistrationHandler()
+        {
+            CodeGenericUtils.printInitClassToLog(this.getClass());
+        }
+
+        /**
+         *
+         * @param event
+         */
         @SubscribeEvent
         public static void registerItems(Register<Item> event)
         {
             IForgeRegistry<Item> registry = event.getRegistry();
-            ObjectHandler.webbing = (Item)regHelper(registry, new DSCWeb());
+            ObjectHandler.webbing = regHelper(registry, new DSCWeb());
         }
 
+        /**
+         *
+         * @param event
+         */
         @SubscribeEvent
         @SideOnly(Side.CLIENT)
         public static void registerRenders(ModelRegistryEvent event)
@@ -50,17 +90,23 @@ public final class ObjectHandler
             registerRender(ObjectHandler.webbing);
 
             RenderingRegistry.registerEntityRenderingHandler(EntityThrowableWeb.class, (manager) ->
-            {
-                return new RenderSnowball(manager, ObjectHandler.webbing, Minecraft.getMinecraft().getRenderItem());
-            });
+                    new RenderSnowball<>(manager, ObjectHandler.webbing, Minecraft.getMinecraft().getRenderItem()));
         }
 
+        /**
+         *
+         * @param event
+         */
         @SubscribeEvent
         public static void entityRegistration(Register<EntityEntry> event)
         {
             registerEntity(event.getRegistry());
         }
 
+        /**
+         *
+         * @param registry
+         */
         protected static void registerEntity(IForgeRegistry<EntityEntry> registry)
         {
             EntityEntry entry =
@@ -71,6 +117,10 @@ public final class ObjectHandler
             registry.register(entry);
         }
 
+        /**
+         *
+         * @param event
+         */
         @SubscribeEvent
         public static void soundRegistration(Register<SoundEvent> event)
         {

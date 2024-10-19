@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_render_night.json")
+@DCSSingleConfig(fileName = "cfg_plugin_render_night")
 public final class CfgRenderNight extends CfgClassAbstract
 {
     /**

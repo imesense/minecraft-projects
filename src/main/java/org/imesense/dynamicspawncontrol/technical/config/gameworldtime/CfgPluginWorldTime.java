@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_plugin_world_time.json")
+@DCSSingleConfig(fileName = "cfg_plugin_world_time")
 public final class CfgPluginWorldTime extends CfgClassAbstract
 {
     /**
@@ -87,9 +87,9 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
             {
                 Files.createDirectories(configPath);
             }
-            catch (IOException e)
+            catch (IOException exception)
             {
-                throw new RuntimeException(e);
+                throw new RuntimeException(exception);
             }
         }
 

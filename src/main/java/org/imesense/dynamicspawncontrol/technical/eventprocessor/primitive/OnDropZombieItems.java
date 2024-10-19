@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.zombiedropitem.DataZombieDropItem;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -19,7 +20,7 @@ import java.util.Random;
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnDropZombieItems
 {
     /**
@@ -47,7 +48,7 @@ public final class OnDropZombieItems
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdateLivingDropsEvent_0(LivingDropsEvent event)
     {
         if (event.getEntity() instanceof EntityZombie)

@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_log_file.json")
+@DCSSingleConfig(fileName = "cfg_log_file")
 public final class CfgLogFile extends CfgClassAbstract
 {
     /**
