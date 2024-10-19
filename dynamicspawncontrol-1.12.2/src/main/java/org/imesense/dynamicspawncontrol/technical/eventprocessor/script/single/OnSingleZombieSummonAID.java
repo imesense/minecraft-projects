@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
@@ -22,7 +23,7 @@ import java.util.*;
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnSingleZombieSummonAID
 {
     /**
@@ -124,8 +125,8 @@ public final class OnSingleZombieSummonAID
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onZombieAttack_0(LivingAttackEvent event)
+    @SubscribeEvent
+    public synchronized void onZombieAttack_0(LivingAttackEvent event)
     {
         if (event.getEntityLiving() instanceof EntityZombie)
         {

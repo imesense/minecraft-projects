@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -17,7 +18,7 @@ import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScrip
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnPlayerTick
 {
     /**
@@ -37,7 +38,7 @@ public final class OnPlayerTick
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdatePlayerTick_0(TickEvent.PlayerTickEvent event)
     {
         if (event.phase != TickEvent.Phase.END || event.side != Side.SERVER)

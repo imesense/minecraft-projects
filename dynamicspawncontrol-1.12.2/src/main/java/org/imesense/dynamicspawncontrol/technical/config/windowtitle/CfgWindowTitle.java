@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_window_title.json")
+@DCSSingleConfig(fileName = "cfg_window_title")
 public final class CfgWindowTitle extends CfgClassAbstract
 {
     /**
@@ -112,13 +112,13 @@ public final class CfgWindowTitle extends CfgClassAbstract
                 Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
             }
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "File not found: " + e.getMessage());
+            Log.writeDataToLogFile(2, "File not found: " + exception.getMessage());
         }
-        catch (IOException e)
+        catch (IOException exception)
         {
-            Log.writeDataToLogFile(2, "IO Exception while loading: " + e.getMessage());
+            Log.writeDataToLogFile(2, "IO Exception while loading: " + exception.getMessage());
         }
     }
 }

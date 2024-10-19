@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_block_world_generator.json")
+@DCSSingleConfig(fileName = "cfg_block_world_generator")
 public final class CfgBlockWorldGenerator extends CfgClassAbstract
 {
     /**

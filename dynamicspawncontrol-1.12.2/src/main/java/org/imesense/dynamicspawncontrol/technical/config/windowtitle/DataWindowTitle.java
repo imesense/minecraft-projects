@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.config.windowtitle;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
 import javax.annotation.Nonnull;
@@ -29,7 +30,7 @@ public final class DataWindowTitle
          *
          */
         private String windowTitle =
-                String.format("Minecraft: %s + %s", DynamicSpawnControl.STRUCT_INFO_MOD.VERSION, DynamicSpawnControl.STRUCT_INFO_MOD.NAME);
+                String.format("Minecraft: %s + %s", ProjectStructure.STRUCT_INFO_MOD.VERSION, ProjectStructure.STRUCT_INFO_MOD.NAME);
 
         /**
          *

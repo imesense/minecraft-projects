@@ -7,6 +7,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnSingleJsonCheckSpawn
 {
     /**
@@ -44,7 +45,7 @@ public final class OnSingleJsonCheckSpawn
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onCheckSpawn_0(LivingSpawnEvent.CheckSpawn event)
     {
         if (event.getWorld().isRemote)

@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.player.DataPlayer;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnPlayerEvents
 {
     /**
@@ -56,7 +57,7 @@ public final class OnPlayerEvents
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent event)
     {
         if (event.getEntity() instanceof EntityPlayerMP && !(event.getEntity() instanceof FakePlayer))
@@ -75,7 +76,7 @@ public final class OnPlayerEvents
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdatePlayerLoggedOut_1(PlayerEvent.PlayerLoggedOutEvent event)
     {
         EntityPlayerMP player = (EntityPlayerMP) event.player;
@@ -87,7 +88,7 @@ public final class OnPlayerEvents
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdatePlayerLogin_0(FMLNetworkEvent.ClientConnectedToServerEvent event)
     {
         Log.writeDataToLogFile(0, "ClientConnectedToServerEvent " + event);
@@ -97,7 +98,7 @@ public final class OnPlayerEvents
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdatePlayerLoginServer_0(PlayerEvent.PlayerLoggedInEvent event)
     {
         Log.writeDataToLogFile(0, "PlayerLoggedInEvent " + event.player.getName() + " logged in.");
@@ -107,7 +108,7 @@ public final class OnPlayerEvents
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdatePlayerLogout_0(FMLNetworkEvent.ClientDisconnectionFromServerEvent event)
     {
         Log.writeDataToLogFile(0, "ClientDisconnectionFromServerEvent " + event);
@@ -117,8 +118,8 @@ public final class OnPlayerEvents
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onPlayerRespawn_0(PlayerEvent.PlayerRespawnEvent event)
+    @SubscribeEvent
+    public synchronized void onPlayerRespawn_0(PlayerEvent.PlayerRespawnEvent event)
     {
         EntityPlayerMP player = (EntityPlayerMP) event.player;
         World world = player.world;

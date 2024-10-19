@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_game_debugger.json")
+@DCSSingleConfig(fileName = "cfg_game_debugger")
 public final class CfgGameDebugger extends CfgClassAbstract
 {
     /**

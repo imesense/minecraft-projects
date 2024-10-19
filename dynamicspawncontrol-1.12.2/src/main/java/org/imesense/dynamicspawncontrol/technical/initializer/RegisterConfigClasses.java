@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.initializer;
 
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.CfgBlockWorldGenerator;
 import org.imesense.dynamicspawncontrol.technical.config.cachedameworld.CfgCacheWorldGame;
@@ -20,7 +21,7 @@ import java.lang.reflect.Constructor;
 /**
  *
  */
-public final class RegisterCfgClasses
+public final class RegisterConfigClasses
 {
     /**
      *
@@ -43,7 +44,7 @@ public final class RegisterCfgClasses
     /**
      *
      */
-    public RegisterCfgClasses()
+    public RegisterConfigClasses()
     {
         CodeGenericUtils.printInitClassToLog(this.getClass());
     }
@@ -71,10 +72,10 @@ public final class RegisterCfgClasses
             if (configClass.isAnnotationPresent(DCSSingleConfig.class))
             {
                 DCSSingleConfig configAnnotation = configClass.getAnnotation(DCSSingleConfig.class);
-                String configFileName = configAnnotation.fileName();
+                String configFileName = configAnnotation.fileName() + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
 
                 Constructor<T> constructor = configClass.getConstructor(String.class);
-                T configInstance = constructor.newInstance(configFileName);
+                final T configInstance = constructor.newInstance(configFileName);
 
                 Log.writeDataToLogFile(0, "Initialized config: " + configFileName);
                 Log.writeDataToLogFile(0, "configClass: " + configClass + " " + configInstance);
@@ -84,14 +85,14 @@ public final class RegisterCfgClasses
                 Log.writeDataToLogFile(2, "No ConfigClass annotation found in: " + configClass.getName());
             }
         }
-        catch (NoSuchMethodException e)
+        catch (NoSuchMethodException exception)
         {
-            Log.writeDataToLogFile(2, "Constructor with String parameter not found in class: " + configClass.getName() + " - " + e.getMessage());
+            Log.writeDataToLogFile(2, "Constructor with String parameter not found in class: " + configClass.getName() + " - " + exception.getMessage());
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Exception in class: " + configClass.getName() + " - " + e.getMessage());
-            throw new RuntimeException(e);
+            Log.writeDataToLogFile(2, "Exception in class: " + configClass.getName() + " - " + exception.getMessage());
+            throw new RuntimeException(exception);
         }
     }
 }

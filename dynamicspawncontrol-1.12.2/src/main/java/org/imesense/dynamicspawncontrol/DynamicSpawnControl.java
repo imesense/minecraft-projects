@@ -12,14 +12,15 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.ai.spider.utils.event.EventHandler;
-import org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb.WebSlingerCapability;
+import org.imesense.dynamicspawncontrol.ai.spider.util.event.WebAttackEvent;
+import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.WebSlingerCapability;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.BreakTorchEvent;
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.IRecipes;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCfgClasses;
+import org.imesense.dynamicspawncontrol.technical.initializer.RegisterConfigClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterGameplayClasses;
 import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCommandsClasses;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -40,90 +41,12 @@ import java.io.File;
  * Main class of modification
  */
 @Mod(
-    modid = DynamicSpawnControl.STRUCT_INFO_MOD.MOD_ID,
-    name = DynamicSpawnControl.STRUCT_INFO_MOD.NAME,
-    version = DynamicSpawnControl.STRUCT_INFO_MOD.VERSION
+    modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID,
+    name = ProjectStructure.STRUCT_INFO_MOD.NAME,
+    version = ProjectStructure.STRUCT_INFO_MOD.VERSION
 )
 public class DynamicSpawnControl
 {
-    /**
-     *
-     */
-    public static final class STRUCT_INFO_MOD
-    {
-        /**
-         * Modification ID
-         */
-        public static final String MOD_ID = "dynamicspawncontrol";
-
-        /**
-         * Modification name
-         */
-        public static final String NAME = "Dynamic Spawn Control";
-
-        /**
-         * Minecraft version
-         */
-        public static final String VERSION = "1.12.2-14.23.5.2860";
-    }
-
-    /**
-     *
-     */
-    public static final class STRUCT_FILES_DIRS
-    {
-        /**
-         *
-         */
-        public static final String NAME_DIRECTORY = "DynamicSpawnControl";
-
-        /**
-         *
-         */
-        public static final String NAME_DIR_CONFIGS = "configs";
-
-        /**
-         *
-         */
-        public static final String NAME_DIR_PLUGINS = "plugins";
-
-        /**
-         *
-         */
-        public static final String NAME_DIR_SCRIPTS = "scripts";
-
-        /**
-         *
-         */
-        public static final String NAME_DIR_SINGLE_SCRIPTS = "single_scripts";
-
-        /**
-         *
-         */
-        public static final String NAME_DIR_LOGS = "logs";
-
-        /**
-         *
-         */
-        public static final String NAME_DIR_CACHE = "cache";
-    }
-
-    /**
-     *
-     */
-    public static final class STRUCT_FILES_EXTENSION
-    {
-        /**
-         *
-         */
-        public static final String SCRIPT_FILE_EXTENSION = ".json";
-
-        /**
-         *
-         */
-        public static final String LOG_FILE_EXTENSION = ".txt";
-    }
-
     /**
      * Main class instance
      */
@@ -193,7 +116,7 @@ public class DynamicSpawnControl
         globalDirectory = event.getModConfigurationDirectory();
 
         //
-        Log.createLogFile(globalDirectory.getPath() + File.separator + STRUCT_FILES_DIRS.NAME_DIRECTORY, CheckDebugger.instance.IsRunDebugger);
+        Log.createLogFile(globalDirectory.getPath() + File.separator + ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY, CheckDebugger.instance.IsRunDebugger);
         Log.writeDataToLogFile(1, "Debugger is running: " + (CheckDebugger.instance.IsRunDebugger ? "true" : "false"));
 
         //
@@ -204,7 +127,7 @@ public class DynamicSpawnControl
         PlayerInWebMessage.register(networkWrapper);
 
         //
-        RegisterCfgClasses.initializeConfigs();
+        RegisterConfigClasses.initializeConfigs();
 
         //
         generalStorageData = new GeneralStorageData();
@@ -262,7 +185,9 @@ public class DynamicSpawnControl
         //
         Proxy.postInit(event);
 
-        MinecraftForge.EVENT_BUS.register( new EventHandler());
+        //-' TODO: перенести это в отдельную инициализацию
+        MinecraftForge.EVENT_BUS.register(new WebAttackEvent());
+        MinecraftForge.EVENT_BUS.register(new BreakTorchEvent());
     }
 
     /**

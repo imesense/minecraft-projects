@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_player.json")
+@DCSSingleConfig(fileName = "cfg_player")
 public final class CfgPlayer extends CfgClassAbstract
 {
     /**

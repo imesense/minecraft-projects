@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -16,7 +17,7 @@ import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScrip
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnRightClickEvent
 {
     /**
@@ -44,7 +45,7 @@ public final class OnRightClickEvent
      *
      * @param event
      */
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdateRightClickEvent_0(PlayerInteractEvent.RightClickBlock event)
     {
         if (event.getWorld().isRemote)

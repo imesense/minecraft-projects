@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.technical.config.logfile.DataLogFile;
 
 import java.io.*;
@@ -39,7 +40,7 @@ public final class Log
     {
         try
         {
-            File logsDirectory = new File(path, DynamicSpawnControl.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
+            File logsDirectory = new File(path, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
 
             if (!logsDirectory.exists())
             {
@@ -62,7 +63,7 @@ public final class Log
             {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
                 String currentDate = dateFormat.format(new Date());
-                String fileName = logsDirectory + "/log_" + currentDate + DynamicSpawnControl.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+                String fileName = logsDirectory + "/log_" + currentDate + ProjectStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
                 logFile = new File(fileName);
             }
 

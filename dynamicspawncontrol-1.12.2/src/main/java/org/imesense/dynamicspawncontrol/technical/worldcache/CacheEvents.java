@@ -15,23 +15,35 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.HashSet;
 
-@Mod.EventBusSubscriber
+/**
+ *
+ */
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class CacheEvents
 {
-    static CacheMonitor cacheMonitor = null;
-
+    /**
+     *
+     */
     private static boolean instanceExists = false;
 
+    /**
+     *
+     */
+    private static CacheMonitor cacheMonitor = null;
+
+    /**
+     *
+     */
     public CacheEvents()
     {
 		CodeGenericUtils.printInitClassToLog(this.getClass());
@@ -47,7 +59,11 @@ public final class CacheEvents
         cacheMonitor = new CacheMonitor();
     }
 
-    @SubscribeEvent(priority = EventPriority.NORMAL)
+    /**
+     *
+     * @param event
+     */
+    @SubscribeEvent
     public synchronized void onWorldTick_0(TickEvent.WorldTickEvent event)
     {
         if (event.phase == TickEvent.Phase.END)
@@ -70,6 +86,10 @@ public final class CacheEvents
         }
     }
 
+    /**
+     *
+     * @param event
+     */
     @SubscribeEvent
     public synchronized void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent event)
     {
@@ -81,17 +101,24 @@ public final class CacheEvents
             Cache.instance.isFirstUpdate = true;
         }
 
-
         Cache.instance.copyActualToBuffer();
     }
 
+    /**
+     *
+     * @param event
+     */
     @SubscribeEvent
     public synchronized void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent event)
     {
         Cache.instance.copyActualToBuffer();
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    /**
+     *
+     * @param event
+     */
+    @SubscribeEvent
     public synchronized void onRenderOverlay_3(RenderGameOverlayEvent.Post event)
     {
         if (!DataGameDebugger.ConfigDataMonitor.instance.getDebugMonitorCache())
@@ -105,7 +132,11 @@ public final class CacheEvents
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
+    /**
+     *
+     * @param event
+     */
+    @SubscribeEvent
     public synchronized void onEntityJoinWorld_4(EntityJoinWorldEvent event)
     {
         World world = event.getWorld();
@@ -154,7 +185,11 @@ public final class CacheEvents
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
+    /**
+     *
+     * @param event
+     */
+    @SubscribeEvent
     public synchronized void updateEntitySpawnEvent_5(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();

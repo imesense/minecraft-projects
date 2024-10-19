@@ -23,24 +23,6 @@ public final class CodeGenericUtils
 {
     /**
      *
-     * @param object
-     * @param message
-     * @return
-     * @param <T>
-     */
-    public static <T> T checkObjectNotNull(final T object, final String message)
-    {
-        if (object == null)
-        {
-            Log.writeDataToLogFile(2, "Object or class return null: " + message);
-            throw new NullPointerException(message);
-        }
-
-        return object;
-    }
-
-    /**
-     *
      * @param mobMap
      * @param parameterName
      * @param min
@@ -137,39 +119,5 @@ public final class CodeGenericUtils
     public static <T> T as(Object getObject, Class<T> getClass)
     {
         return getClass.isInstance(getObject) ? getClass.cast(getObject) : null;
-    }
-
-    /**
-     *
-     * @param provider
-     * @param capability
-     * @param facing
-     * @return
-     * @param <T>
-     */
-    @Nullable
-    public static <T> T fetchCapability(@Nullable ICapabilityProvider provider, Capability<T> capability, @Nullable EnumFacing facing)
-    {
-        return provider != null && provider.hasCapability(capability, facing) ? provider.getCapability(capability, facing) : null;
-    }
-
-    /**
-     *
-     * @param worldIn
-     * @param pos
-     * @param capability
-     * @param facing
-     * @return
-     * @param <T>
-     */
-    @Nullable
-    public static <T> T fetchCapability(World worldIn, BlockPos pos, Capability<T> capability, @Nullable EnumFacing facing)
-    {
-        TileEntity tileentity = worldIn.getTileEntity(pos);
-        return fetchCapability(tileentity, capability, facing);
-    }
-
-    public static <T> T getValueOrDefault(T value, T defaultValue) {
-        return value == null ? defaultValue : value;
     }
 }

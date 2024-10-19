@@ -1,24 +1,24 @@
-package org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb;
+package org.imesense.dynamicspawncontrol.ai.spider.util.attackweb;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PlayerInWebMessage;
 
@@ -30,7 +30,7 @@ public final class EntityThrowableWeb extends EntityThrowable
     /**
      *
      */
-    public static final EnumParticleTypes particleType;
+    public static final EnumParticleTypes PARTICLE_TYPES;
 
     /**
      *
@@ -39,6 +39,8 @@ public final class EntityThrowableWeb extends EntityThrowable
     public EntityThrowableWeb(World worldIn)
     {
         super(worldIn);
+
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**
@@ -49,53 +51,8 @@ public final class EntityThrowableWeb extends EntityThrowable
     public EntityThrowableWeb(World worldIn, EntityLivingBase throwerIn)
     {
         super(worldIn, throwerIn);
-    }
 
-    /**
-     *
-     * @param worldIn
-     * @param x
-     * @param y
-     * @param z
-     */
-    public EntityThrowableWeb(World worldIn, double x, double y, double z)
-    {
-        super(worldIn, x, y, z);
-    }
-
-    /**
-     *
-     * @param worldIn
-     * @param x
-     * @param y
-     * @param z
-     * @param accelX
-     * @param accelY
-     * @param accelZ
-     */
-    public EntityThrowableWeb(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ)
-    {
-        super(worldIn);
-        this.setSize(1.0f, 1.0f);
-        this.setLocationAndAngles(x, y, z, this.rotationYaw, this.rotationPitch);
-        this.setPosition(x, y, z);
-    }
-
-    /**
-     *
-     * @param id
-     */
-    @SideOnly(Side.CLIENT)
-    public void handleStatusUpdate(byte id)
-    {
-        if (id == 3)
-        {
-            for(byte i = 0; i < 3; ++i)
-            {
-                this.world.spawnParticle(particleType,
-                        this.posX, this.posY, this.posZ, 0.f, 0.f, 0.f);
-            }
-        }
+        CodeGenericUtils.printInitClassToLog(this.getClass());
     }
 
     /**
@@ -220,6 +177,6 @@ public final class EntityThrowableWeb extends EntityThrowable
      */
     static
     {
-        particleType = EnumParticleTypes.SNOWBALL;
+        PARTICLE_TYPES = EnumParticleTypes.SNOWBALL;
     }
 }

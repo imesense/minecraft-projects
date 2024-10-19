@@ -16,6 +16,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.commands.cmdServerSingleScriptsReload;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
@@ -23,7 +24,7 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnUpdateTorchLogic
 {
     /**

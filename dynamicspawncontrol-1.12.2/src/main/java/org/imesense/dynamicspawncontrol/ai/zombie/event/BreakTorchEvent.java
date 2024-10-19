@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.debug.events;
+package org.imesense.dynamicspawncontrol.ai.zombie.event;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -7,32 +7,32 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.ai.zombie.entityaibase.BreakTorchTask;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 /**
  *
  */
 @Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventDummy
+public final class BreakTorchEvent
 {
     /**
      *
      */
-    private static boolean instanceExists = false;
+    public BreakTorchEvent()
+    {
+        CodeGenericUtils.printInitClassToLog(this.getClass());
+    }
 
     /**
      *
+     * @param event
      */
-    public OnEventDummy()
+    @SubscribeEvent
+    public synchronized void onZombieSpawn(EntityJoinWorldEvent event)
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
-
-        if (instanceExists)
+        if (event.getEntity() instanceof EntityZombie)
         {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
+            EntityZombie zombie = (EntityZombie) event.getEntity();
+            zombie.tasks.addTask(1, new BreakTorchTask(zombie));
         }
-
-        instanceExists = true;
     }
 }

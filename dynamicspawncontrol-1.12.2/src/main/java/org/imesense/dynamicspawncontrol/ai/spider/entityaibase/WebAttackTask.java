@@ -1,16 +1,18 @@
-package org.imesense.dynamicspawncontrol.ai.spider.task;
+package org.imesense.dynamicspawncontrol.ai.spider.entityaibase;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.ai.spider.utils.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 /**
  *
  */
-public final class AISpiderWebAttackTask extends EntityAIBase
+public final class WebAttackTask extends EntityAIBase
 {
     /**
      *
@@ -26,8 +28,10 @@ public final class AISpiderWebAttackTask extends EntityAIBase
      *
      * @param entity
      */
-    public AISpiderWebAttackTask(EntityLiving entity)
+    public WebAttackTask(EntityLiving entity)
     {
+        CodeGenericUtils.printInitClassToLog(this.getClass());
+
         this.parentEntity = entity;
     }
 
@@ -38,8 +42,11 @@ public final class AISpiderWebAttackTask extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        EntityLivingBase entitylivingbase = this.parentEntity != null ? this.parentEntity.getAttackTarget() : null;
-        return entitylivingbase != null && entitylivingbase.getDistanceSq(this.parentEntity) >= 4.0;
+        EntityLivingBase entitylivingbase = this.parentEntity != null ?
+                this.parentEntity.getAttackTarget() : null;
+
+        return entitylivingbase != null &&
+                entitylivingbase.getDistanceSq(this.parentEntity) >= 4.0;
     }
 
     /**

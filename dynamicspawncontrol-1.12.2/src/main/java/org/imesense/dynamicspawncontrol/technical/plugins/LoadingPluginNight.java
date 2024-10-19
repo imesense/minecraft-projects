@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.technical.asm.EntityRendererTransformer;
 import org.imesense.dynamicspawncontrol.technical.asm.WorldProviderTransformer;
 
@@ -15,7 +15,7 @@ import org.imesense.dynamicspawncontrol.technical.asm.WorldProviderTransformer;
  * -Dfml.coreMods.load=org.imesense.dynamicspawncontrol.technical.plugins.LoadingPluginNight
  */
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
-@IFMLLoadingPlugin.Name(DynamicSpawnControl.STRUCT_INFO_MOD.MOD_ID)
+@IFMLLoadingPlugin.Name(ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 @IFMLLoadingPlugin.SortingIndex(LoadingPluginNight.AFTER_DEOBF)
 public final class LoadingPluginNight implements IFMLLoadingPlugin
 {

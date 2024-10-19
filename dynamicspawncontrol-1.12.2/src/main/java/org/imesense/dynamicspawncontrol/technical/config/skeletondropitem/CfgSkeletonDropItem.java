@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_skeleton_drop_item.json")
+@DCSSingleConfig(fileName = "cfg_skeleton_drop_item")
 public final class CfgSkeletonDropItem extends CfgClassAbstract
 {
     /**

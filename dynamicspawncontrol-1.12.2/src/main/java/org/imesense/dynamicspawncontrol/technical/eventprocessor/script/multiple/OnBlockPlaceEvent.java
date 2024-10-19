@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
@@ -17,7 +18,7 @@ import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScrip
 /**
  *
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnBlockPlaceEvent
 {
     /**
@@ -46,7 +47,7 @@ public final class OnBlockPlaceEvent
      * @param event
      */
     @Deprecated
-    @SubscribeEvent(priority = EventPriority.LOWEST)
+    @SubscribeEvent
     public synchronized void onUpdateBlockPaceEvent_0(BlockEvent.PlaceEvent event)
     {
         if (event.getWorld().isRemote)

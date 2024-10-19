@@ -6,8 +6,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
 
+/**
+ *
+ */
 public final class CraftItemWeb implements IRecipes
 {
+    /**
+     *
+     */
     @Override
     public void registry()
     {

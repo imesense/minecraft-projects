@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_cache_world_game.json")
+@DCSSingleConfig(fileName = "cfg_cache_world_game")
 public final class CfgCacheWorldGame extends CfgClassAbstract
 {
     /**

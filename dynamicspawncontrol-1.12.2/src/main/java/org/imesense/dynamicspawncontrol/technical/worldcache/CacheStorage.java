@@ -63,20 +63,40 @@ public final class CacheStorage
      */
     public static class EntityData
     {
+        /**
+         *
+         */
         private final int MAX_COUNT;
+
+        /**
+         *
+         */
         private final ResourceLocation ENTITY;
 
+        /**
+         *
+         * @param entity
+         * @param maxCount
+         */
         public EntityData(ResourceLocation entity, int maxCount)
         {
             this.ENTITY = entity;
             this.MAX_COUNT = maxCount;
         }
 
+        /**
+         *
+         * @return
+         */
         public ResourceLocation getEntity()
         {
             return this.ENTITY;
         }
 
+        /**
+         *
+         * @return
+         */
         public int getMaxCount()
         {
             return this.MAX_COUNT;
