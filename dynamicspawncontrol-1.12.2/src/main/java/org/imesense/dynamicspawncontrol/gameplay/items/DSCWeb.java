@@ -9,7 +9,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.gameplay.throwingobjects.DSCThrowItemWeb;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
 
@@ -51,7 +51,7 @@ public final class DSCWeb extends Item
             itemstack.shrink(1);
         }
 
-        EntityThrowableWeb.sling(worldIn, playerIn);
+        DSCThrowItemWeb.sling(worldIn, playerIn);
         playerIn.addStat(Objects.requireNonNull(StatList.getObjectUseStats(this)));
 
         return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);

@@ -4,10 +4,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.gameplay.throwingobjects.DSCThrowItemWeb;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 /**
  *
@@ -86,7 +85,7 @@ public final class WebAttackTask extends EntityAIBase
 
             if (this.attackTimer >= DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown())
             {
-                EntityThrowableWeb.sling(world, this.parentEntity);
+                DSCThrowItemWeb.sling(world, this.parentEntity);
 
                 double coolDown =
                         DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown() +
