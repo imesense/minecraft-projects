@@ -64,9 +64,11 @@ public final class ParserSingleScriptSettingsCache implements IBetaParsers
                     try (FileWriter writer = new FileWriter(file))
                     {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        JsonArray emptyJsonArray = new JsonArray();
-                        gson.toJson(emptyJsonArray, writer);
-                        Log.writeDataToLogFile(0, "Initialized new script file with empty JSON array: " + file.getAbsolutePath());
+
+                        JsonArray initialData = getJsonElements();
+
+                        gson.toJson(initialData, writer);
+                        Log.writeDataToLogFile(0, "Initialized new script file with default JSON data: " + file.getAbsolutePath());
                     }
                 }
                 else
@@ -126,5 +128,41 @@ public final class ParserSingleScriptSettingsCache implements IBetaParsers
             Log.writeDataToLogFile(0, "Error loading script file: " + exception.getMessage());
             throw new RuntimeException(exception);
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    private static JsonArray getJsonElements()
+    {
+        JsonArray initialData = new JsonArray();
+
+        JsonObject cow = new JsonObject();
+        cow.addProperty("entity", "minecraft:cow");
+        cow.addProperty("max_count", 10);
+        initialData.add(cow);
+
+        JsonObject pig = new JsonObject();
+        pig.addProperty("entity", "minecraft:pig");
+        pig.addProperty("max_count", 8);
+        initialData.add(pig);
+
+        JsonObject chicken = new JsonObject();
+        chicken.addProperty("entity", "minecraft:chicken");
+        chicken.addProperty("max_count", 6);
+        initialData.add(chicken);
+
+        JsonObject sheep = new JsonObject();
+        sheep.addProperty("entity", "minecraft:sheep");
+        sheep.addProperty("max_count", 4);
+        initialData.add(sheep);
+
+        JsonObject squid = new JsonObject();
+        squid.addProperty("entity", "minecraft:squid");
+        squid.addProperty("max_count", 5);
+        initialData.add(squid);
+
+        return initialData;
     }
 }
