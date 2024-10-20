@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.EntityThrowableWeb;
+import org.imesense.dynamicspawncontrol.gameplay.throwingobjects.DSCThrowItemWeb;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.gameplay.items.DSCWeb;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.registrationhelpers.RegistrationHelpers;
@@ -89,7 +89,7 @@ public final class ObjectHandler
         {
             registerRender(ObjectHandler.webbing);
 
-            RenderingRegistry.registerEntityRenderingHandler(EntityThrowableWeb.class, (manager) ->
+            RenderingRegistry.registerEntityRenderingHandler(DSCThrowItemWeb.class, (manager) ->
                     new RenderSnowball<>(manager, ObjectHandler.webbing, Minecraft.getMinecraft().getRenderItem()));
         }
 
@@ -110,7 +110,7 @@ public final class ObjectHandler
         protected static void registerEntity(IForgeRegistry<EntityEntry> registry)
         {
             EntityEntry entry =
-                    EntityEntryBuilder.create().entity(EntityThrowableWeb.class).id(
+                    EntityEntryBuilder.create().entity(DSCThrowItemWeb.class).id(
                             new ResourceLocation("dynamicspawncontrol", "webbing"),
                                 ObjectHandler.entityID++).name("webbing").tracker(64, 10, true).build();
 

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.ai.spider.util.attackweb;
+package org.imesense.dynamicspawncontrol.gameplay.throwingobjects;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -13,19 +13,16 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PlayerInWebMessage;
 
 /**
  *
  */
-public final class EntityThrowableWeb extends EntityThrowable
+public final class DSCThrowItemWeb extends EntityThrowable
 {
     /**
      *
@@ -36,7 +33,7 @@ public final class EntityThrowableWeb extends EntityThrowable
      *
      * @param worldIn
      */
-    public EntityThrowableWeb(World worldIn)
+    public DSCThrowItemWeb(World worldIn)
     {
         super(worldIn);
 
@@ -48,7 +45,7 @@ public final class EntityThrowableWeb extends EntityThrowable
      * @param worldIn
      * @param throwerIn
      */
-    public EntityThrowableWeb(World worldIn, EntityLivingBase throwerIn)
+    public DSCThrowItemWeb(World worldIn, EntityLivingBase throwerIn)
     {
         super(worldIn, throwerIn);
 
@@ -112,16 +109,16 @@ public final class EntityThrowableWeb extends EntityThrowable
      * @param entityIn
      * @return
      */
-    public static EntityThrowableWeb sling(World worldIn, EntityLivingBase entityIn)
+    public static DSCThrowItemWeb sling(World worldIn, EntityLivingBase entityIn)
     {
-        EntityThrowableWeb entity = null;
+        DSCThrowItemWeb entity = null;
         float pitch = 1.0f / (entityIn.getRNG().nextFloat() * 0.4f + 0.8f);
 
         entityIn.playSound(ObjectHandler.WEBBING_SHOOT, 1.0f, pitch);
 
         if (!worldIn.isRemote)
         {
-            entity = new EntityThrowableWeb(worldIn, entityIn);
+            entity = new DSCThrowItemWeb(worldIn, entityIn);
             Float inaccuracy = DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getSlingInaccuracy();
             entity.shoot(entityIn, entityIn.rotationPitch, entityIn.rotationYaw, 0.0f, 1.1f, inaccuracy);
             worldIn.spawnEntity(entity);

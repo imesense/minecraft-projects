@@ -18,8 +18,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.entityaibase.WebAttackTask;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.gameplay.throwingobjects.DSCThrowItemWeb;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.EntityThingBase;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.IThingBase;
 
@@ -191,7 +191,7 @@ public final class WebSlingerCapability implements IWebSlinger
             }
 
             BlockPos pos = new BlockPos(target.posX, target.posY, target.posZ);
-            EntityThrowableWeb.onHit(world, pos, source, target);
+            DSCThrowItemWeb.onHit(world, pos, source, target);
         }
     }
 }
