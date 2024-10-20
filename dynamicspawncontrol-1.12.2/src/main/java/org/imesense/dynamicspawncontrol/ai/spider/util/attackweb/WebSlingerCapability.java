@@ -2,6 +2,8 @@ package org.imesense.dynamicspawncontrol.ai.spider.util.attackweb;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -114,7 +116,38 @@ public final class WebSlingerCapability implements IWebSlinger
      */
     public static void register()
     {
-        CapabilityManager.INSTANCE.register(IWebSlinger.class, new WebSlingerStorage(), WebSlingerCapability::new);
+        /**
+         *
+         */
+        CapabilityManager.INSTANCE.register(IWebSlinger.class, new Capability.IStorage<IWebSlinger>()
+        {
+            /**
+             *
+             * @param capability
+             * @param instance
+             * @param side
+             * @return
+             */
+            @Override
+            public NBTBase writeNBT(Capability<IWebSlinger> capability, IWebSlinger instance, EnumFacing side)
+            {
+                return new NBTTagCompound();
+            }
+
+            /**
+             *
+             * @param capability
+             * @param instance
+             * @param side
+             * @param nbt
+             */
+            @Override
+            public void readNBT(Capability<IWebSlinger> capability, IWebSlinger instance, EnumFacing side, NBTBase nbt)
+            {
+
+            }
+
+        }, WebSlingerCapability::new);
     }
 
     /**
