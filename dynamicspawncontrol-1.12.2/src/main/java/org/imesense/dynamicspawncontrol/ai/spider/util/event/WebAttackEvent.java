@@ -7,10 +7,12 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
+import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.IWebSlinger;
 import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.WebSlingerCapability;
-import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.WebSlingerProvider;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.SimpleCapabilityProvider;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.EntityThingBase;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.IThingBase;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.TileEntityThingBase;
 
 /**
@@ -40,14 +42,25 @@ public final class WebAttackEvent
 
         if (doesIt(priority))
         {
-            WebSlingerProvider provider = new WebSlingerProvider(
-                    WebSlingerCapability.CAPABILITY,
-                    WebSlingerCapability.DEFAULT_FACING,
-                    new TileEntityThingBase(entity),
-                    priority
-            );
+            event.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
+            (
+                WebSlingerCapability.CAPABILITY,
+                WebSlingerCapability.DEFAULT_FACING,
+                WebSlingerCapability.CAPABILITY.getDefaultInstance())
+            {
+                private final int TASK_PRIORITY = priority;
 
-            event.addCapability(WebSlingerCapability.ID, provider);
+                private final IThingBase OWNER = new TileEntityThingBase(entity);
+
+                @Override
+                public IWebSlinger getInstance()
+                {
+                    final IWebSlinger CAP = super.getInstance();
+                    CAP.checkInit(this.OWNER, this.TASK_PRIORITY);
+
+                    return CAP;
+                }
+            });
         }
     }
 
@@ -64,14 +77,25 @@ public final class WebAttackEvent
 
         if (doesIt(priority))
         {
-            WebSlingerProvider provider = new WebSlingerProvider(
-                    WebSlingerCapability.CAPABILITY,
-                    WebSlingerCapability.DEFAULT_FACING,
-                    new EntityThingBase(entity),
-                    priority
-            );
+            event.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
+            (
+                WebSlingerCapability.CAPABILITY,
+                WebSlingerCapability.DEFAULT_FACING,
+                WebSlingerCapability.CAPABILITY.getDefaultInstance())
+            {
+                private final int TASK_PRIORITY = priority;
 
-            event.addCapability(WebSlingerCapability.ID, provider);
+                private final IThingBase OWNER = new EntityThingBase(entity);
+
+                @Override
+                public IWebSlinger getInstance()
+                {
+                    final IWebSlinger CAP = super.getInstance();
+                    CAP.checkInit(this.OWNER, this.TASK_PRIORITY);
+
+                    return CAP;
+                }
+            });
         }
     }
 
