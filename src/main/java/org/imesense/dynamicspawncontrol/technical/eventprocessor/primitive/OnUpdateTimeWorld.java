@@ -98,7 +98,7 @@ public final class OnUpdateTimeWorld
      * @param event
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerTick_2(TickEvent.PlayerTickEvent event)
+    public static void onUpdatePlayerTick_2(TickEvent.PlayerTickEvent event)
     {
         if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START &&
                 event.player.world.provider.getDimension() == 0 &&
@@ -113,7 +113,7 @@ public final class OnUpdateTimeWorld
      * @param event
      */
     @SubscribeEvent
-    public synchronized void onUpdateWorldTick_4(TickEvent.WorldTickEvent event)
+    public static void onUpdateWorldTick_4(TickEvent.WorldTickEvent event)
     {
         if (event.world.provider.getDimension() == 0 && event.phase == TickEvent.Phase.START
                 && event.world.getGameRules().getBoolean("doDaylightCycle_tc"))
