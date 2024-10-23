@@ -2,7 +2,6 @@ package org.imesense.dynamicspawncontrol;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -20,18 +19,14 @@ import org.imesense.dynamicspawncontrol.gameplay.recipes.IRecipes;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
-import org.imesense.dynamicspawncontrol.technical.register.RegisterConfigClass;
-import org.imesense.dynamicspawncontrol.technical.register.RegisterGameplayClass;
-import org.imesense.dynamicspawncontrol.technical.register.RegisterCommandClass;
+import org.imesense.dynamicspawncontrol.technical.register.*;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.gamestructure.Structure;
-import org.imesense.dynamicspawncontrol.technical.register.RegisterTechnicalClass;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserManager;
-import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
@@ -67,15 +62,6 @@ public class DynamicSpawnControl
         //
         return globalDirectory;
     }
-
-    /**
-     * Sided proxy settings
-     */
-    @SidedProxy(
-        clientSide = "org.imesense.dynamicspawncontrol.technical.proxy.ClientProxy",
-        serverSide = "org.imesense.dynamicspawncontrol.technical.proxy.ServerProxy"
-    )
-    public static IProxy Proxy;
 
     /**
      *
@@ -151,7 +137,7 @@ public class DynamicSpawnControl
         RegisterGameplayClass.registerClasses();
 
         //
-        Proxy.preInit(event);
+        RegisterOreGenerator.init(event);
     }
 
     /**
@@ -162,9 +148,6 @@ public class DynamicSpawnControl
     @Mod.EventHandler
     public synchronized void init(FMLInitializationEvent event)
     {
-        //
-        Proxy.init(event);
-
         //
         Recipes = new CraftItemWeb();
 
@@ -182,9 +165,6 @@ public class DynamicSpawnControl
     @Mod.EventHandler
     public synchronized void postInit(FMLPostInitializationEvent event)
     {
-        //
-        Proxy.postInit(event);
-
         //-' TODO: перенести это в отдельную инициализацию
         MinecraftForge.EVENT_BUS.register(new WebAttackEvent());
         MinecraftForge.EVENT_BUS.register(new BreakTorchEvent());
