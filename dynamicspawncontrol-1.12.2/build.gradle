@@ -56,7 +56,7 @@ minecraft
             property 'forge.logging.console.level', 'debug'
 
             // Loading plugin
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugins.LoadingPluginNight'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginNight'
         }
 
         server
@@ -68,7 +68,7 @@ minecraft
             property 'forge.logging.console.level', 'debug'
 
             // Loading plugin
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugins.LoadingPluginNight'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginNight'
         }
     }
 }

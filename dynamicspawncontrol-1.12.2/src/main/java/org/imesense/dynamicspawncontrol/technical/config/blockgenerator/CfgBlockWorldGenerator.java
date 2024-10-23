@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.technical.config.blockgenerator;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.CfgClassAbstract;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations.DCSSingleConfig;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.DCSSingleConfig;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,7 +28,7 @@ public final class CfgBlockWorldGenerator extends CfgClassAbstract
     {
         super(nameConfigFile, Boolean.TRUE);
 
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 
         DataBlockWorldGenerator.InfoDataBlockNetherRack.instance =
                 new DataBlockWorldGenerator.InfoDataBlockNetherRack("settings_block_nether_rack");

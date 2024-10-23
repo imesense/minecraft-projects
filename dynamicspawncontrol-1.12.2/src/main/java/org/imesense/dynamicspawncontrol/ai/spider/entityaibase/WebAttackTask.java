@@ -4,8 +4,8 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.gameplay.throwingobjects.DSCThrowItemWeb;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.gameplay.throwingobject.DSCThrowItemWeb;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
 
 /**
@@ -29,7 +29,7 @@ public final class WebAttackTask extends EntityAIBase
      */
     public WebAttackTask(EntityLiving entity)
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
 
         this.parentEntity = entity;
     }

@@ -5,15 +5,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockPlaceActions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockPlaceAction;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
@@ -31,7 +30,7 @@ public final class OnBlockPlaceEvent
      */
     public OnBlockPlaceEvent()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -57,7 +56,7 @@ public final class OnBlockPlaceEvent
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericBlockPlaceActions rule : ParserGenericJsonScripts.GENERIC_BLOCK_PLACE_ACTIONS_LIST)
+        for (GenericBlockPlaceAction rule : ParserGenericJsonScript.GENERIC_BLOCK_PLACE_ACTIONS_LIST)
         {
             if (rule.match(event))
             {

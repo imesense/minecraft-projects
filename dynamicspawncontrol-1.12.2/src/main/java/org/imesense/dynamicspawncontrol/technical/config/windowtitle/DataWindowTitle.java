@@ -1,8 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.config.windowtitle;
 
-import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import javax.annotation.Nonnull;
 
@@ -38,7 +37,7 @@ public final class DataWindowTitle
          */
         public ConfigDataWindowTitle(@Nonnull final String category)
         {
-			CodeGenericUtils.printInitClassToLog(this.getClass());
+			CodeGenericUtil.printInitClassToLog(this.getClass());
 			
             this.category = category;
         }

@@ -5,14 +5,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericSpawnConditions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericSpawnCondition;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
@@ -30,7 +29,7 @@ public final class OnEntitySpawnEvent
      */
     public OnEntitySpawnEvent()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -55,7 +54,7 @@ public final class OnEntitySpawnEvent
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericSpawnConditions rule : ParserGenericJsonScripts.GENERIC_SPAWN_CONDITIONS_LIST)
+        for (GenericSpawnCondition rule : ParserGenericJsonScript.GENERIC_SPAWN_CONDITIONS_LIST)
         {
             if (rule.match(event))
             {

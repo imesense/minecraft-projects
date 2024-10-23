@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.gameplay.gameworld;
 
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ public final class WorldTime
      */
     public WorldTime()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**

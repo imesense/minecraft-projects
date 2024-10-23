@@ -17,7 +17,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
@@ -29,13 +29,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.PotentialSpawn.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.PotentialSpawn.*;
 
 /**
  *
  */
-public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataGetter>
+public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGetter>
 {
     /**
      *
@@ -45,7 +45,7 @@ public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataG
     /**
      *
      */
-    private final ListActionsBinary RULE_EVALUATOR;
+    private final ListActionBinary RULE_EVALUATOR;
 
     /**
      *
@@ -132,7 +132,7 @@ public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataG
 
         Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericPotentialSpawn.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(map);
 
         for (AttributeMap<?> mobMap : map.getListA(MOB_STRUCT))
         {
@@ -146,12 +146,12 @@ public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataG
                 throw new RuntimeException();
             }
 
-            int weight = CodeGenericUtils.checkParameter(mobMap, MOB_WEIGHT, 1, 100, "frequency");
-            int groupCountMin = CodeGenericUtils.checkParameter(mobMap, MOB_GROUP_COUNT_MIN, 1, 10, "group_count_min");
-            int groupCountMax = CodeGenericUtils.checkParameter(mobMap, MOB_GROUP_COUNT_MAX, 1, 20, "group_count_max");
-            float spawnChance = CodeGenericUtils.checkParameter(mobMap, MOB_SPAWN_CHANCE, 0.01f, 1.0f, "spawnChanceValue");
-            int maxHeight = CodeGenericUtils.checkParameter(mobMap, MOB_MAX_HEIGHT, 5, 255, "max_height");
-            int minHeight = CodeGenericUtils.checkParameter(mobMap, MOB_MIN_HEIGHT, 5, 255, "min_height");
+            int weight = CodeGenericUtil.checkParameter(mobMap, MOB_WEIGHT, 1, 100, "frequency");
+            int groupCountMin = CodeGenericUtil.checkParameter(mobMap, MOB_GROUP_COUNT_MIN, 1, 10, "group_count_min");
+            int groupCountMax = CodeGenericUtil.checkParameter(mobMap, MOB_GROUP_COUNT_MAX, 1, 20, "group_count_max");
+            float spawnChance = CodeGenericUtil.checkParameter(mobMap, MOB_SPAWN_CHANCE, 0.01f, 1.0f, "spawnChanceValue");
+            int maxHeight = CodeGenericUtil.checkParameter(mobMap, MOB_MAX_HEIGHT, 5, 255, "max_height");
+            int minHeight = CodeGenericUtil.checkParameter(mobMap, MOB_MIN_HEIGHT, 5, 255, "min_height");
 
             Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) typeClass, weight, groupCountMin, groupCountMax);
 
@@ -316,7 +316,7 @@ public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataG
         {
             JsonObject jsonObject = element.getAsJsonObject();
 
-            if (!jsonObject.has(SingleKeyWords.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT))
+            if (!jsonObject.has(SingleKeyWord.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT))
             {
                 Log.writeDataToLogFile(0, "Not found 'struct' for rule [ { ... } ]");
                 throw new RuntimeException();
@@ -324,14 +324,14 @@ public final class GenericPotentialSpawn extends ListActionsConsumer<SignalDataG
 
             AttributeMap<Object> map = FACTORY.parse(element);
 
-            JsonArray mobs = jsonObject.getAsJsonArray(SingleKeyWords.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT);
+            JsonArray mobs = jsonObject.getAsJsonArray(SingleKeyWord.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT);
 
             if (mobs != null)
             {
                 for (JsonElement mob : mobs)
                 {
                     AttributeMap<?> mobMap = FACTORY.parse(mob);
-                    map.addList(MultipleKeyWords.PotentialSpawn.MOB_STRUCT, mobMap);
+                    map.addList(MultipleKeyWord.PotentialSpawn.MOB_STRUCT, mobMap);
                 }
             }
 

@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.config.blockgenerator;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 /**
  *
@@ -41,7 +41,7 @@ public abstract class ConfigDataBlock
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
 
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**

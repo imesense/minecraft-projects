@@ -17,12 +17,12 @@ import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
 
 /**
  *
  */
-public final class GenericExperience extends ListActionsConsumer<SignalDataGetter>
+public final class GenericExperience extends ListActionConsumer<SignalDataGetter>
 {
     /**
      *
@@ -52,7 +52,7 @@ public final class GenericExperience extends ListActionsConsumer<SignalDataGette
     /**
      *
      */
-    private final ListActionsBinary RULE_EVALUATOR;
+    private final ListActionBinary RULE_EVALUATOR;
 
     /**
      *
@@ -91,7 +91,7 @@ public final class GenericExperience extends ListActionsConsumer<SignalDataGette
 
         Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericExperience.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(map);
 
         this.addActions(map);
 
@@ -117,25 +117,25 @@ public final class GenericExperience extends ListActionsConsumer<SignalDataGette
         {
             AttributeMap<?> map = FACTORY.parse(element);
 
-            int localSetXp = JsonServices.getValueFromJson(
+            int localSetXp = InlineJsonService.getValueFromJson(
                     element.getAsJsonObject(),
-                    SingleKeyWords.DROP_ALL_EXPERIENCE.SET_XP,
+                    SingleKeyWord.DROP_ALL_EXPERIENCE.SET_XP,
                     0,
                     (_element, defaultValue) ->
                             _element.getAsJsonPrimitive().isNumber() ? _element.getAsInt() : defaultValue
             );
 
-            float localMultiXp = JsonServices.getValueFromJson(
+            float localMultiXp = InlineJsonService.getValueFromJson(
                     element.getAsJsonObject(),
-                    SingleKeyWords.DROP_ALL_EXPERIENCE.MULTI_XP,
+                    SingleKeyWord.DROP_ALL_EXPERIENCE.MULTI_XP,
                     0.f,
                     (_element, defaultValue) ->
                             _element.getAsJsonPrimitive().isNumber() ? _element.getAsFloat() : defaultValue
             );
 
-            float localAddXp = JsonServices.getValueFromJson(
+            float localAddXp = InlineJsonService.getValueFromJson(
                     element.getAsJsonObject(),
-                    SingleKeyWords.DROP_ALL_EXPERIENCE.ADD_XP,
+                    SingleKeyWord.DROP_ALL_EXPERIENCE.ADD_XP,
                     0.f,
                     (_element, defaultValue) ->
                             _element.getAsJsonPrimitive().isNumber() ? _element.getAsFloat() : defaultValue

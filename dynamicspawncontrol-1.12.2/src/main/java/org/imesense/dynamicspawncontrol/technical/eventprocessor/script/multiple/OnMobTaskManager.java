@@ -5,13 +5,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMobTaskManager;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
@@ -29,7 +28,7 @@ public final class OnMobTaskManager
      */
     public OnMobTaskManager()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -54,7 +53,7 @@ public final class OnMobTaskManager
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericMobTaskManager rule : ParserGenericJsonScripts.GENERIC_MOBS_TASK_MANAGER_LIST)
+        for (GenericMobTaskManager rule : ParserGenericJsonScript.GENERIC_MOBS_TASK_MANAGER_LIST)
         {
             if (rule.match(event))
             {

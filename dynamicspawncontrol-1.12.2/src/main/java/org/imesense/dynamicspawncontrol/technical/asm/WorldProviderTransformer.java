@@ -59,7 +59,7 @@ public final class WorldProviderTransformer implements IClassTransformer
      *
      */
     private static final String WORLD_PROVIDER_HOOKS =
-            WorldProviderHooks.class.getName().replace('.', '/');
+            WorldProviderHook.class.getName().replace('.', '/');
 
     /**
      *

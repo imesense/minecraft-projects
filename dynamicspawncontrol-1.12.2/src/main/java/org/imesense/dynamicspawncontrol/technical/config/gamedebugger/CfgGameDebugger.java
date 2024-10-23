@@ -1,9 +1,9 @@
 package org.imesense.dynamicspawncontrol.technical.config.gamedebugger;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.CfgClassAbstract;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations.DCSSingleConfig;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.DCSSingleConfig;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.io.*;
@@ -26,7 +26,7 @@ public final class CfgGameDebugger extends CfgClassAbstract
     {
         super(nameConfigFile, Boolean.TRUE);
 
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
 
         DataGameDebugger.ConfigDataMonitor.instance =
                 new DataGameDebugger.ConfigDataMonitor("monitor");

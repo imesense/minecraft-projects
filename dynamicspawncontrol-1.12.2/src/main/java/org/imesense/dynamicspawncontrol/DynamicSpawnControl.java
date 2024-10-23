@@ -20,17 +20,17 @@ import org.imesense.dynamicspawncontrol.gameplay.recipes.IRecipes;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterConfigClasses;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterGameplayClasses;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterCommandsClasses;
+import org.imesense.dynamicspawncontrol.technical.register.RegisterConfigClass;
+import org.imesense.dynamicspawncontrol.technical.register.RegisterGameplayClass;
+import org.imesense.dynamicspawncontrol.technical.register.RegisterCommandClass;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.gamestructures.Structures;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterTechnicalClasses;
+import org.imesense.dynamicspawncontrol.technical.gamestructure.Structure;
+import org.imesense.dynamicspawncontrol.technical.register.RegisterTechnicalClass;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PlayerInWebMessage;
-import org.imesense.dynamicspawncontrol.technical.parsers.GeneralStorageData;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserManager;
+import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserManager;
 import org.imesense.dynamicspawncontrol.technical.proxy.IProxy;
 import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
@@ -127,7 +127,7 @@ public class DynamicSpawnControl
         PlayerInWebMessage.register(networkWrapper);
 
         //
-        RegisterConfigClasses.initializeConfigs();
+        RegisterConfigClass.initializeConfigs();
 
         //
         generalStorageData = new GeneralStorageData();
@@ -139,16 +139,16 @@ public class DynamicSpawnControl
         Cache.instance = new Cache();
 
         //
-        ParserGenericJsonScripts.setRulePath(event.getModConfigurationDirectory());
+        ParserGenericJsonScript.setRulePath(event.getModConfigurationDirectory());
 
         //
-        RegisterTechnicalClasses.registerClasses();
+        RegisterTechnicalClass.registerClasses();
 
         //
         OnWindowTitle.replace();
 
         //
-        RegisterGameplayClasses.registerClasses();
+        RegisterGameplayClass.registerClasses();
 
         //
         Proxy.preInit(event);
@@ -198,7 +198,7 @@ public class DynamicSpawnControl
     @Mod.EventHandler
     public synchronized void onLoadComplete(FMLLoadCompleteEvent event)
     {
-        ParserGenericJsonScripts.readRules();
+        ParserGenericJsonScript.readRules();
 
         ParserManager.init();
     }
@@ -211,7 +211,7 @@ public class DynamicSpawnControl
     @Mod.EventHandler
     public synchronized void serverLoad(FMLServerStartingEvent event)
     {
-        RegisterCommandsClasses.registerCommands(event);
+        RegisterCommandClass.registerCommands(event);
     }
 
     /**
@@ -225,6 +225,6 @@ public class DynamicSpawnControl
         Cache.instance.cleanActualCache();
         Cache.instance.cleanBufferCache();
 
-        Structures.STRUCTURES_CACHE.clean();
+        Structure.STRUCTURES_CACHE.clean();
     }
 }

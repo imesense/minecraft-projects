@@ -6,14 +6,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMapEffectsActions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMapEffectAction;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
@@ -31,7 +30,7 @@ public final class OnPlayerTick
      */
     public OnPlayerTick()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**
@@ -55,7 +54,7 @@ public final class OnPlayerTick
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericMapEffectsActions rule : ParserGenericJsonScripts.GENERIC_MAP_EFFECTS_ACTIONS_LIST)
+        for (GenericMapEffectAction rule : ParserGenericJsonScript.GENERIC_MAP_EFFECTS_ACTIONS_LIST)
         {
             if (tickCounter % rule.getTimeout() == 0 && rule.match(event))
             {

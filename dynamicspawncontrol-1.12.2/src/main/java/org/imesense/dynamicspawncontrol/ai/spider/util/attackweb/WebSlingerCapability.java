@@ -17,8 +17,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.entityaibase.WebAttackTask;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.gameplay.throwingobjects.DSCThrowItemWeb;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.gameplay.throwingobject.DSCThrowItemWeb;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.EntityThingBase;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.IThingBase;
@@ -82,11 +82,11 @@ public final class WebSlingerCapability implements IWebSlinger
     {
         if (this.owner instanceof EntityThingBase)
         {
-            EntityThingBase thing = CodeGenericUtils.as(this.owner, EntityThingBase.class);
+            EntityThingBase thing = CodeGenericUtil.as(this.owner, EntityThingBase.class);
 
             assert thing != null;
 
-            return CodeGenericUtils.as(thing.owner, EntityLiving.class);
+            return CodeGenericUtil.as(thing.owner, EntityLiving.class);
         }
         else
         {
