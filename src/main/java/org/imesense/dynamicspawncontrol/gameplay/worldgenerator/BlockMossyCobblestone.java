@@ -8,7 +8,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.DataBlockWorldGenerator;
 
 import java.util.Objects;
@@ -31,7 +31,7 @@ public final class BlockMossyCobblestone implements IWorldGenerator
      */
     public BlockMossyCobblestone()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
 
         CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 5);

@@ -13,7 +13,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import javax.annotation.Nonnull;
@@ -129,7 +129,7 @@ public final class Cache
      */
     public Cache()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {

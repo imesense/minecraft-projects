@@ -15,7 +15,7 @@ public final class Timer
      */
     public Timer()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**

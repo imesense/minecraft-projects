@@ -2,8 +2,8 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor;
 
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.SingleKeyWords;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.SingleKeyWord;
 
 /**
  *
@@ -27,19 +27,19 @@ public final class ResultEvents
      */
     public Event.Result getResult(AttributeMap<?> map)
     {
-        if (map.has(MultipleKeyWords.CommonKeyWorlds.ACTION_RESULT))
+        if (map.has(MultipleKeyWord.CommonKeyWorlds.ACTION_RESULT))
         {
-            this.finalResult = map.get(MultipleKeyWords.CommonKeyWorlds.ACTION_RESULT);
+            this.finalResult = map.get(MultipleKeyWord.CommonKeyWorlds.ACTION_RESULT);
         }
-        if (SingleKeyWords.EVENT_RESULTS.SUPER.equals(this.finalResult))
+        if (SingleKeyWord.EVENT_RESULTS.SUPER.equals(this.finalResult))
         {
             this.result = Event.Result.DEFAULT;
         }
-        else if (SingleKeyWords.EVENT_RESULTS.TRUE.equals(this.finalResult))
+        else if (SingleKeyWord.EVENT_RESULTS.TRUE.equals(this.finalResult))
         {
             this.result = Event.Result.ALLOW;
         }
-        else if (SingleKeyWords.EVENT_RESULTS.FALSE.equals(this.finalResult))
+        else if (SingleKeyWord.EVENT_RESULTS.FALSE.equals(this.finalResult))
         {
             this.result = Event.Result.DENY;
         }

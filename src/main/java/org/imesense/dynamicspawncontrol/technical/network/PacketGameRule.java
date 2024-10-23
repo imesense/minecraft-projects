@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.apache.logging.log4j.LogManager;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
 
 /**
@@ -24,7 +24,7 @@ public final class PacketGameRule implements IMessage
      */
     public PacketGameRule()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**

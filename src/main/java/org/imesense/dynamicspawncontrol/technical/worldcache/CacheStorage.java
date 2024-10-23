@@ -1,8 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.worldcache;
 
 import net.minecraft.util.ResourceLocation;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserManager;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public final class CacheStorage
      */
     public CacheStorage()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         instance = this;
     }

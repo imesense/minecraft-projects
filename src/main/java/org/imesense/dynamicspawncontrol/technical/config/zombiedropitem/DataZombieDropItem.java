@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.config.zombiedropitem;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import javax.annotation.Nonnull;
 
@@ -65,7 +65,7 @@ public final class DataZombieDropItem
          */
         public ConfigDataZombieDrop(@Nonnull final String category)
         {
-            CodeGenericUtils.printInitClassToLog(this.getClass());
+            CodeGenericUtil.printInitClassToLog(this.getClass());
             this.category = category;
         }
 

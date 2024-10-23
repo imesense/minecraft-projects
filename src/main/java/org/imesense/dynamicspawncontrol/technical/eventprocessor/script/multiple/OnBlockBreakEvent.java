@@ -5,15 +5,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockBreakActions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockBreakAction;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
@@ -31,7 +30,7 @@ public final class OnBlockBreakEvent
      */
     public OnBlockBreakEvent()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -56,7 +55,7 @@ public final class OnBlockBreakEvent
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericBlockBreakActions rule : ParserGenericJsonScripts.GENERIC_BLOCK_BREAK_ACTIONS_LIST)
+        for (GenericBlockBreakAction rule : ParserGenericJsonScript.GENERIC_BLOCK_BREAK_ACTIONS_LIST)
         {
             if (rule.match(event))
             {

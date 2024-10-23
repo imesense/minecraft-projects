@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.config.rendernight;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import javax.annotation.Nonnull;
 
@@ -90,7 +90,7 @@ public final class DataRenderNight
          */
         public ConfigDataRenderNight(@Nonnull final String category)
         {
-            CodeGenericUtils.printInitClassToLog(this.getClass());
+            CodeGenericUtil.printInitClassToLog(this.getClass());
 
             this.category = category;
         }

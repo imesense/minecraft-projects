@@ -26,13 +26,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.DroopLoot.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.DroopLoot.*;
 
 /**
  *
  */
-public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
+public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
 {
     /**
      *
@@ -47,7 +47,7 @@ public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
     /**
      *
      */
-    private final ListActionsBinary RULE_EVALUATOR;
+    private final ListActionBinary RULE_EVALUATOR;
 
     /**
      *
@@ -104,7 +104,7 @@ public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
 
         Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericDropLoot.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(map);
 
         this.addActions(map);
 
@@ -113,14 +113,14 @@ public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
             this.addItem(map);
         }
 
-        if (map.has(MultipleKeyWords.DroopLoot.ACTION_REMOVE))
+        if (map.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE))
         {
             this.removeItem(map);
         }
 
-        if (map.has(MultipleKeyWords.DroopLoot.ACTION_REMOVE_ALL))
+        if (map.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL))
         {
-            this.removeAll = (Boolean) map.get(MultipleKeyWords.DroopLoot.ACTION_REMOVE_ALL);
+            this.removeAll = (Boolean) map.get(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL);
         }
     }
 
@@ -456,8 +456,8 @@ public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
      */
     private void addItem(AttributeMap<?> map)
     {
-        Object nbt = map.get(MultipleKeyWords.DroopLoot.ACTION_ITEM_NBT);
-        Object itemCount = map.get(MultipleKeyWords.DroopLoot.ACTION_ITEM_COUNT);
+        Object nbt = map.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_NBT);
+        Object itemCount = map.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_COUNT);
 
         this.TO_ADD_ITEMS.addAll(getItems(map.getList(ACTION_ITEM), (String)nbt, (String)itemCount));
     }
@@ -468,6 +468,6 @@ public final class GenericDropLoot extends ListActionsConsumer<SignalDataGetter>
      */
     private void removeItem(AttributeMap<?> map)
     {
-        this.TO_REMOVE_ITEMS.addAll(AuxFunctions.getItems((JsonElement)map.getList(MultipleKeyWords.DroopLoot.ACTION_REMOVE)));
+        this.TO_REMOVE_ITEMS.addAll(AuxFunction.getItems((JsonElement)map.getList(MultipleKeyWord.DroopLoot.ACTION_REMOVE)));
     }
 }

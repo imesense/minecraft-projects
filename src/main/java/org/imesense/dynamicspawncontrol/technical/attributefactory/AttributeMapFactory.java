@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.attributefactory;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.JsonServices;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.InlineJsonService;
 
 import java.util.*;
 import javax.annotation.Nonnull;
@@ -56,9 +56,9 @@ public final class AttributeMapFactory<T>
                 transformers.put((AttributeType<T>)AttributeType.STRING, JsonElement::getAsString);
                 transformers.put((AttributeType<T>)AttributeType.JSON, JsonElement::toString);
 
-                JsonServices.getElement(jsonObject, key.getName())
+                InlineJsonService.getElement(jsonObject, key.getName())
                         .ifPresent(e ->
-                                JsonServices.asArrayOrSingle(e)
+                                InlineJsonService.asArrayOrSingle(e)
                                         .map(transformers.getOrDefault(type, x -> "INVALID"))
                                         .forEach(s -> map.addListNonnull(key, (T) s)));
             }
@@ -66,15 +66,15 @@ public final class AttributeMapFactory<T>
             {
                 if (type == AttributeType.INTEGER)
                 {
-                    map.setNonnull(key, (T) JsonServices.parseInt(jsonObject, key.getName()));
+                    map.setNonnull(key, (T) InlineJsonService.parseInt(jsonObject, key.getName()));
                 }
                 else if (type == AttributeType.FLOAT)
                 {
-                    map.setNonnull(key, (T) JsonServices.parseFloat(jsonObject, key.getName()));
+                    map.setNonnull(key, (T) InlineJsonService.parseFloat(jsonObject, key.getName()));
                 }
                 else if (type == AttributeType.BOOLEAN)
                 {
-                    map.setNonnull(key, (T) JsonServices.parseBool(jsonObject, key.getName()));
+                    map.setNonnull(key, (T) InlineJsonService.parseBool(jsonObject, key.getName()));
                 }
                 else if (type == AttributeType.STRING)
                 {

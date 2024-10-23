@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.ai.zombie.entityaibase.BreakTorchTask;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 /**
  *
@@ -19,7 +19,7 @@ public final class BreakTorchEvent
      */
     public BreakTorchEvent()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**

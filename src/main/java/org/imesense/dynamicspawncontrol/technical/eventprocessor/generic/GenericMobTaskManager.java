@@ -12,21 +12,21 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsBinary;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionsConsumerMobTaskManager;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionBinary;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionConsumerMobTaskManager;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
 
 import java.util.function.Consumer;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWords.MobTaskManager.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.MobTaskManager.*;
 
 /**
  *
  */
-public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManager<SignalDataGetter>
+public final class GenericMobTaskManager extends ListActionConsumerMobTaskManager<SignalDataGetter>
 {
     /**
      *
@@ -36,7 +36,7 @@ public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManag
     /**
      *
      */
-    private final ListActionsBinary RULE_EVALUATOR;
+    private final ListActionBinary RULE_EVALUATOR;
 
     /**
      *
@@ -60,7 +60,7 @@ public final class GenericMobTaskManager extends ListActionsConsumerMobTaskManag
 
         Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericMobTaskManager.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionsBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(map);
 
         this.addActions(map);
     }

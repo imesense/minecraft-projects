@@ -4,7 +4,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ObjectHandler;
+import org.imesense.dynamicspawncontrol.technical.handler.ObjectHandlerClient;
 
 /**
  *
@@ -18,7 +18,7 @@ public final class CraftItemWeb implements IRecipes
     public void registry()
     {
         GameRegistry.addShapedRecipe(new ResourceLocation("dynamicspawncontrol", "webbing"), null,
-                new ItemStack(ObjectHandler.webbing),
+                new ItemStack(ObjectHandlerClient.webbing),
                 "SSS",
                 "SWS",
                 "SSS",

@@ -71,7 +71,7 @@ public final class EntityRendererTransformer implements IClassTransformer
      *
      */
     private static final String ENTITY_RENDERER_HOOKS =
-            EntityRendererHooks.class.getName().replace('.', '/');
+            EntityRendererHook.class.getName().replace('.', '/');
 
     /**
      *

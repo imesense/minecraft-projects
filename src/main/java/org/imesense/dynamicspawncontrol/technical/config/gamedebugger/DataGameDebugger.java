@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.config.gamedebugger;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public final class DataGameDebugger
          */
         public ConfigDataMonitor(@Nonnull final String category)
         {
-            CodeGenericUtils.printInitClassToLog(this.getClass());
+            CodeGenericUtil.printInitClassToLog(this.getClass());
             this.category = category;
         }
 
@@ -95,7 +95,7 @@ public final class DataGameDebugger
          */
         public ConfigDataEvent(@Nonnull final String category)
         {
-            CodeGenericUtils.printInitClassToLog(this.getClass());
+            CodeGenericUtil.printInitClassToLog(this.getClass());
 
             this.category = category;
 

@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import org.imesense.dynamicspawncontrol.technical.initializer.RegisterOreGenerators;
+import org.imesense.dynamicspawncontrol.technical.register.RegisterOreGenerator;
 
 /**
  * Client sided proxy
@@ -25,7 +25,7 @@ public final class ClientProxy implements IProxy
     @Override
     public void preInit(FMLPreInitializationEvent event)
     {
-        RegisterOreGenerators.init(event);
+        RegisterOreGenerator.init(event);
     }
 
     /**

@@ -8,14 +8,13 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
 
@@ -35,7 +34,7 @@ public final class OnPotentialSpawn
      */
     public OnPotentialSpawn()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
 			
@@ -61,7 +60,7 @@ public final class OnPotentialSpawn
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericPotentialSpawn rule : ParserGenericJsonScripts.GENERIC_POTENTIAL_SPAWN_LIST)
+        for (GenericPotentialSpawn rule : ParserGenericJsonScript.GENERIC_POTENTIAL_SPAWN_LIST)
         {
             if (rule.match(event))
             {

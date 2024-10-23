@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.technical.config.gameworldtime;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.CfgClassAbstract;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotations.DCSSingleConfig;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.DCSSingleConfig;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -28,7 +28,7 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
     {
         super(nameConfigFile, Boolean.FALSE);
 
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 
         DataPluginWorldTime.ConfigDataWorldTime.instance =
                 new DataPluginWorldTime.ConfigDataWorldTime("game_world_time");

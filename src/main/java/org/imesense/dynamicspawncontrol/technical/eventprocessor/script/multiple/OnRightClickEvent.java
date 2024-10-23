@@ -4,15 +4,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericRightClickActions;
-import org.imesense.dynamicspawncontrol.technical.parsers.ParserGenericJsonScripts;
+import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericRightClickAction;
+import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
@@ -30,7 +29,7 @@ public final class OnRightClickEvent
      */
     public OnRightClickEvent()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -55,7 +54,7 @@ public final class OnRightClickEvent
 
         AtomicInteger i = new AtomicInteger();
 
-        for (GenericRightClickActions rule : ParserGenericJsonScripts.GENERIC_RIGHT_CLICK_ACTIONS_LIST)
+        for (GenericRightClickAction rule : ParserGenericJsonScript.GENERIC_RIGHT_CLICK_ACTIONS_LIST)
         {
             if (rule.match(event))
             {

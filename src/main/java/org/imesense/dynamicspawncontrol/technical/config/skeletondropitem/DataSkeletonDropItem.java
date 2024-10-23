@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.config.skeletondropitem;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -71,7 +71,7 @@ public final class DataSkeletonDropItem
          */
         public ConfigDataSkeletonDrop(@Nonnull final String category)
         {
-            CodeGenericUtils.printInitClassToLog(this.getClass());
+            CodeGenericUtil.printInitClassToLog(this.getClass());
             this.category = category;
         }
 

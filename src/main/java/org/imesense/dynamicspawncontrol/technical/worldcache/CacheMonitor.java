@@ -4,10 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.gui.ScaledResolution;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-
-import static org.imesense.dynamicspawncontrol.technical.worldcache.Cache.*;
 
 /**
  *
@@ -29,7 +27,7 @@ public final class CacheMonitor
      */
     public CacheMonitor()
     {
-		CodeGenericUtils.printInitClassToLog(this.getClass());
+		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {

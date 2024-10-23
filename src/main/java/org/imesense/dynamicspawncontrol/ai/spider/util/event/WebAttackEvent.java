@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.IWebSlinger;
 import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.WebSlingerCapability;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.SimpleCapabilityProvider;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.EntityThingBase;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.IThingBase;
@@ -26,7 +26,7 @@ public final class WebAttackEvent
      */
     public WebAttackEvent()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**
@@ -48,10 +48,20 @@ public final class WebAttackEvent
                 WebSlingerCapability.DEFAULT_FACING,
                 WebSlingerCapability.CAPABILITY.getDefaultInstance())
             {
+                /**
+                 *
+                 */
                 private final int TASK_PRIORITY = priority;
 
+                /**
+                 *
+                 */
                 private final IThingBase OWNER = new TileEntityThingBase(entity);
 
+                /**
+                 *
+                 * @return
+                 */
                 @Override
                 public IWebSlinger getInstance()
                 {
@@ -83,10 +93,20 @@ public final class WebAttackEvent
                 WebSlingerCapability.DEFAULT_FACING,
                 WebSlingerCapability.CAPABILITY.getDefaultInstance())
             {
+                /**
+                 *
+                 */
                 private final int TASK_PRIORITY = priority;
 
+                /**
+                 *
+                 */
                 private final IThingBase OWNER = new EntityThingBase(entity);
 
+                /**
+                 *
+                 * @return
+                 */
                 @Override
                 public IWebSlinger getInstance()
                 {

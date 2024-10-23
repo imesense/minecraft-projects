@@ -16,12 +16,12 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.gameplay.gameworld.WorldTime;
 import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
-import org.imesense.dynamicspawncontrol.technical.handlers.ITimeHandler;
-import org.imesense.dynamicspawncontrol.technical.handlers.TimeHandlerClient;
-import org.imesense.dynamicspawncontrol.technical.handlers.TimeHandlerServer;
+import org.imesense.dynamicspawncontrol.technical.handler.ITimeHandler;
+import org.imesense.dynamicspawncontrol.technical.handler.TimeHandlerClient;
+import org.imesense.dynamicspawncontrol.technical.handler.TimeHandlerServer;
 import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.technical.network.PacketGameRule;
 
@@ -51,7 +51,7 @@ public final class OnUpdateTimeWorld
      */
     private OnUpdateTimeWorld()
     {
-        CodeGenericUtils.printInitClassToLog(this.getClass());
+        CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
     /**

@@ -5,8 +5,6 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 import java.util.ArrayList;
 import java.util.List;

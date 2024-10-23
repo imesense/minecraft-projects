@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.config.spiderattackweb;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtils;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 import javax.annotation.Nonnull;
 
@@ -75,7 +75,7 @@ public final class DataSpiderAttackWeb
          */
         public ConfigDataSpiderAttackWeb(@Nonnull final String category)
         {
-            CodeGenericUtils.printInitClassToLog(this.getClass());
+            CodeGenericUtil.printInitClassToLog(this.getClass());
             this.category = category;
         }
 
