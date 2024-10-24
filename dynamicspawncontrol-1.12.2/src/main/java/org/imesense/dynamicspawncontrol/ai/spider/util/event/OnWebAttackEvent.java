@@ -19,12 +19,12 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.TileEntity
  *
  */
 @Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class WebAttackEvent
+public final class OnWebAttackEvent
 {
     /**
      *
      */
-    public WebAttackEvent()
+    public OnWebAttackEvent()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }
@@ -34,7 +34,7 @@ public final class WebAttackEvent
      * @param event
      */
     @SubscribeEvent
-    public synchronized void attachCapabilitiesTileEntity(AttachCapabilitiesEvent<TileEntity> event)
+    public synchronized void onAttachCapabilitiesTileEntity_0(AttachCapabilitiesEvent<TileEntity> event)
     {
         TileEntity entity = event.getObject();
 
@@ -79,7 +79,7 @@ public final class WebAttackEvent
      * @param event
      */
     @SubscribeEvent
-    public synchronized void attachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event)
+    public synchronized void onAttachCapabilitiesEntity_1(AttachCapabilitiesEvent<Entity> event)
     {
         Entity entity = event.getObject();
 

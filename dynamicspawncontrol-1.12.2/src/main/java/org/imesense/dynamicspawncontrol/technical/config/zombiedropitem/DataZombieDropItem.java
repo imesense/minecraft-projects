@@ -17,7 +17,7 @@ public final class DataZombieDropItem
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -61,12 +61,12 @@ public final class DataZombieDropItem
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataZombieDrop(@Nonnull final String category)
+        public ConfigDataZombieDrop(@Nonnull final String CATEGORY)
         {
             CodeGenericUtil.printInitClassToLog(this.getClass());
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -201,7 +201,7 @@ public final class DataZombieDropItem
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

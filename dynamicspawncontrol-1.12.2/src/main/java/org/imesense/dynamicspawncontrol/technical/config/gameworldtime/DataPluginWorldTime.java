@@ -17,7 +17,7 @@ public final class DataPluginWorldTime
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -51,13 +51,13 @@ public final class DataPluginWorldTime
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataWorldTime(@Nonnull final String category)
+        public ConfigDataWorldTime(@Nonnull final String CATEGORY)
         {
 			CodeGenericUtil.printInitClassToLog(this.getClass());
 			
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -156,7 +156,7 @@ public final class DataPluginWorldTime
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

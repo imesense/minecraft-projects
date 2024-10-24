@@ -23,7 +23,7 @@ public final class OnPlayerTick
     /**
      *
      */
-    private final static Map<Integer, Integer> tickCounters = new HashMap<>();
+    private final static Map<Integer, Integer> TICK_COUNTERS = new HashMap<>();
 
     /**
      *
@@ -47,10 +47,10 @@ public final class OnPlayerTick
 
         int id = event.player.getEntityId();
 
-        tickCounters.putIfAbsent(id, 0);
+        TICK_COUNTERS.putIfAbsent(id, 0);
 
-        int tickCounter = tickCounters.get(id) + 1;
-        tickCounters.put(id, tickCounter);
+        int tickCounter = TICK_COUNTERS.get(id) + 1;
+        TICK_COUNTERS.put(id, tickCounter);
 
         AtomicInteger i = new AtomicInteger();
 

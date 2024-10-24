@@ -17,7 +17,7 @@ public final class DataRenderNight
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -86,13 +86,13 @@ public final class DataRenderNight
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataRenderNight(@Nonnull final String category)
+        public ConfigDataRenderNight(@Nonnull final String CATEGORY)
         {
             CodeGenericUtil.printInitClassToLog(this.getClass());
 
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -317,7 +317,7 @@ public final class DataRenderNight
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

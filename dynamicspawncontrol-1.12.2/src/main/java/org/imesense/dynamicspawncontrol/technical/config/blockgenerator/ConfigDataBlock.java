@@ -10,7 +10,7 @@ public abstract class ConfigDataBlock
     /**
      *
      */
-    private final String category;
+    private final String CATEGORY;
 
     /**
      *
@@ -36,7 +36,7 @@ public abstract class ConfigDataBlock
      */
     public ConfigDataBlock(String category, Integer chanceSpawn, Integer minHeight, Integer maxHeight)
     {
-        this.category = category;
+        this.CATEGORY = category;
         this.chanceSpawn = chanceSpawn;
         this.minHeight = minHeight;
         this.maxHeight = maxHeight;
@@ -104,6 +104,6 @@ public abstract class ConfigDataBlock
      */
     public String getCategoryObject()
     {
-        return this.category;
+        return this.CATEGORY;
     }
 }

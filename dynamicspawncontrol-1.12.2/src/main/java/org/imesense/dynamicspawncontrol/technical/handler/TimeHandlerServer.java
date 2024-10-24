@@ -42,12 +42,12 @@ public final class TimeHandlerServer implements ITimeHandler
     /**
      *
      */
+    @Deprecated
     private static final Method WAKE_ALL_PLAYERS =
             ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
 
     /**
      *
-     * TODO: Time out of sync
      * @param world
      */
     @Override

@@ -512,8 +512,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                 continue;
             }
 
-            int duration;
-            int amplifier;
+            int duration, amplifier;
             double chance = 1.0D; // Default to 100% chance
 
             try
@@ -755,7 +754,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
     {
         String damage = (String) map.get(ACTION_DAMAGE);
         String[] split = StringUtils.split(damage, "=");
-        DamageSource source = AuxFunction.DamageMap.get(split[0]);
+        DamageSource source = AuxFunction.DAMAGE_MAP.get(split[0]);
 
         if (source == null)
         {

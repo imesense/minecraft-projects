@@ -15,12 +15,12 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public final class cmdServerJsonScriptReload extends CommandBase
+public final class CmdServerJsonScriptReload extends CommandBase
 {
     /**
      *
      */
-    public cmdServerJsonScriptReload()
+    public CmdServerJsonScriptReload()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

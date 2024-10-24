@@ -18,7 +18,7 @@ public final class DataSkeletonDropItem
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -67,12 +67,12 @@ public final class DataSkeletonDropItem
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataSkeletonDrop(@Nonnull final String category)
+        public ConfigDataSkeletonDrop(@Nonnull final String CATEGORY)
         {
             CodeGenericUtil.printInitClassToLog(this.getClass());
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -225,7 +225,7 @@ public final class DataSkeletonDropItem
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

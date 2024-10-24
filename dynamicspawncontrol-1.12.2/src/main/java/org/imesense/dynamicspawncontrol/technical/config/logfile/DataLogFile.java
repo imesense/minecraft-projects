@@ -17,7 +17,7 @@ public final class DataLogFile
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -31,13 +31,13 @@ public final class DataLogFile
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataLogFile(@Nonnull final String category)
+        public ConfigDataLogFile(@Nonnull final String CATEGORY)
         {
 			CodeGenericUtil.printInitClassToLog(this.getClass());
 			
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -64,7 +64,7 @@ public final class DataLogFile
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

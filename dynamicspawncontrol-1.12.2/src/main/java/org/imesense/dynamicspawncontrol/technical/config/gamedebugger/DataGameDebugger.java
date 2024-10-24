@@ -19,7 +19,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -33,12 +33,13 @@ public final class DataGameDebugger
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataMonitor(@Nonnull final String category)
+        public ConfigDataMonitor(@Nonnull final String CATEGORY)
         {
             CodeGenericUtil.printInitClassToLog(this.getClass());
-            this.category = category;
+
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -65,7 +66,7 @@ public final class DataGameDebugger
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 
@@ -77,7 +78,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -87,28 +88,28 @@ public final class DataGameDebugger
         /**
          *
          */
-        private final Map<String, Boolean> debugSettings = new HashMap<>();
+        private final Map<String, Boolean> DEBUG_SETTINGS = new HashMap<>();
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataEvent(@Nonnull final String category)
+        public ConfigDataEvent(@Nonnull final String CATEGORY)
         {
             CodeGenericUtil.printInitClassToLog(this.getClass());
 
-            this.category = category;
+            this.CATEGORY = CATEGORY;
 
-            debugSettings.put("debug_on_block_break", false);
-            debugSettings.put("debug_on_block_place", false);
-            debugSettings.put("debug_on_entity_spawn", false);
-            debugSettings.put("debug_on_left_click", false);
-            debugSettings.put("debug_on_living_drops", false);
-            debugSettings.put("debug_on_living_experience_drop", false);
-            debugSettings.put("debug_on_task_manager", false);
-            debugSettings.put("debug_on_player_tick", false);
-            debugSettings.put("debug_on_potential_spawn", false);
-            debugSettings.put("debug_on_right_click", false);
+            DEBUG_SETTINGS.put("debug_on_block_break", false);
+            DEBUG_SETTINGS.put("debug_on_block_place", false);
+            DEBUG_SETTINGS.put("debug_on_entity_spawn", false);
+            DEBUG_SETTINGS.put("debug_on_left_click", false);
+            DEBUG_SETTINGS.put("debug_on_living_drops", false);
+            DEBUG_SETTINGS.put("debug_on_living_experience_drop", false);
+            DEBUG_SETTINGS.put("debug_on_task_manager", false);
+            DEBUG_SETTINGS.put("debug_on_player_tick", false);
+            DEBUG_SETTINGS.put("debug_on_potential_spawn", false);
+            DEBUG_SETTINGS.put("debug_on_right_click", false);
         }
 
         /**
@@ -118,7 +119,7 @@ public final class DataGameDebugger
          */
         public Boolean getDebugSetting(String key)
         {
-            return debugSettings.getOrDefault(key, false);
+            return DEBUG_SETTINGS.getOrDefault(key, false);
         }
 
         /**
@@ -127,7 +128,7 @@ public final class DataGameDebugger
          */
         public Map<String, Boolean> getDebugSettings()
         {
-            return debugSettings;
+            return this.DEBUG_SETTINGS;
         }
 
         /**
@@ -137,9 +138,9 @@ public final class DataGameDebugger
          */
         public void setDebugSetting(String key, Boolean value)
         {
-            if (debugSettings.containsKey(key))
+            if (DEBUG_SETTINGS.containsKey(key))
             {
-                debugSettings.put(key, value);
+                DEBUG_SETTINGS.put(key, value);
             }
             else
             {
@@ -153,7 +154,7 @@ public final class DataGameDebugger
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

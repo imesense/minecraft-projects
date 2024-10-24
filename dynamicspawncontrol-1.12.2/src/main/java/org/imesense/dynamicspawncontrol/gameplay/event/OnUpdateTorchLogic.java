@@ -52,7 +52,7 @@ public final class OnUpdateTorchLogic
      * @param event
      */
     @SubscribeEvent
-    public synchronized void onHit(LivingHurtEvent event)
+    public synchronized void onHit_0(LivingHurtEvent event)
     {
         if ((event.getSource().getDamageType().equalsIgnoreCase("mob") ||
                 event.getSource().getDamageType().equalsIgnoreCase("player")) && event.getSource().getTrueSource() != null)
@@ -95,7 +95,7 @@ public final class OnUpdateTorchLogic
      * @param event
      */
     @SubscribeEvent
-    public synchronized void onBreak(BlockEvent.BreakEvent event)
+    public synchronized void onBreak_1(BlockEvent.BreakEvent event)
     {
         EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
 
@@ -107,7 +107,9 @@ public final class OnUpdateTorchLogic
             if (block == Blocks.TNT)
             {
                 event.setCanceled(true);
-                Explosion ex = new Explosion(player.world, player, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100.0F, true, true);
+                Explosion ex = new Explosion(player.world,
+                        player, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100.0F, true, true);
+
                 event.getState().getBlock().onBlockExploded(player.world, blockPos, ex);
 
                 if (!player.capabilities.isCreativeMode)

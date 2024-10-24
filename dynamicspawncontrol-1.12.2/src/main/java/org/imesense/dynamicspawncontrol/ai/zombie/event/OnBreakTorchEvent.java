@@ -12,12 +12,12 @@ import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
  *
  */
 @Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class BreakTorchEvent
+public final class OnBreakTorchEvent
 {
     /**
      *
      */
-    public BreakTorchEvent()
+    public OnBreakTorchEvent()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }
@@ -27,7 +27,7 @@ public final class BreakTorchEvent
      * @param event
      */
     @SubscribeEvent
-    public synchronized void onZombieSpawn(EntityJoinWorldEvent event)
+    public synchronized void onSearchToBreakTorch_0(EntityJoinWorldEvent event)
     {
         if (event.getEntity() instanceof EntityZombie)
         {

@@ -17,7 +17,7 @@ public final class DataSpiderAttackWeb
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -71,12 +71,12 @@ public final class DataSpiderAttackWeb
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataSpiderAttackWeb(@Nonnull final String category)
+        public ConfigDataSpiderAttackWeb(@Nonnull final String CATEGORY)
         {
             CodeGenericUtil.printInitClassToLog(this.getClass());
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -247,7 +247,7 @@ public final class DataSpiderAttackWeb
          */
         public String getCategoryObject()
         {
-            return category;
+            return this.CATEGORY;
         }
     }
 }

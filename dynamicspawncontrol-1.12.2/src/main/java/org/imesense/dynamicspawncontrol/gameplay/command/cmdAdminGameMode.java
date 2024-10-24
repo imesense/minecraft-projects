@@ -16,12 +16,12 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public final class cmdAdminGameMode extends CommandBase
+public final class CmdAdminGameMode extends CommandBase
 {
     /**
      *
      */
-    public cmdAdminGameMode()
+    public CmdAdminGameMode()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

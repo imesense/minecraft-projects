@@ -28,11 +28,11 @@ public enum EnumSingleScript
 
     /**
      *
-     * @param keyword
+     * @param KEYWORD
      */
-    EnumSingleScript(final String keyword)
+    EnumSingleScript(final String KEYWORD)
     {
-        this.KEYWORD = keyword;
+        this.KEYWORD = KEYWORD;
     }
 
     /**

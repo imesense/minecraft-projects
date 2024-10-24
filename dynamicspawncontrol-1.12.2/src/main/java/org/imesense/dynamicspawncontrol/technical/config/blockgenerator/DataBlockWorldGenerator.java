@@ -19,11 +19,11 @@ public final class DataBlockWorldGenerator
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public InfoDataBlockNetherRack(@Nonnull final String category)
+        public InfoDataBlockNetherRack(@Nonnull final String CATEGORY)
         {
-            super(category, 20, 5, 20);
+            super(CATEGORY, 20, 5, 20);
         }
     }
 
@@ -39,11 +39,11 @@ public final class DataBlockWorldGenerator
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public InfoDataBlockMossyCobblestone(@Nonnull final String category)
+        public InfoDataBlockMossyCobblestone(@Nonnull final String CATEGORY)
         {
-            super(category, 35, 10, 45);
+            super(CATEGORY, 35, 10, 45);
         }
     }
 
@@ -59,11 +59,11 @@ public final class DataBlockWorldGenerator
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public InfoDataBlockBlockMonsterEgg(@Nonnull final String category)
+        public InfoDataBlockBlockMonsterEgg(@Nonnull final String CATEGORY)
         {
-            super(category, 10, 7, 40);
+            super(CATEGORY, 10, 7, 40);
         }
     }
 }

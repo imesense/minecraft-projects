@@ -5,6 +5,7 @@ import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 
 /**
@@ -23,12 +24,12 @@ public final class WorldTime
     /**
      *
      */
-    private static final double day_multiplier = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
+    private static final double DAY_MULTIPLIER = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
 
     /**
      *
      */
-    private static final double night_multiplier = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
+    private static final double NIGHT_MULTIPLIER = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
 
     /**
      *
@@ -37,7 +38,7 @@ public final class WorldTime
      */
     public static double multiplier(long worldTime)
     {
-        return isDaytime(worldTime) ? day_multiplier : night_multiplier;
+        return isDaytime(worldTime) ? DAY_MULTIPLIER : NIGHT_MULTIPLIER;
     }
 
     /**
@@ -83,6 +84,7 @@ public final class WorldTime
     {
         hour = (hour - 6 + 24) % 24 * 1000;
         minute = (int)Math.round((double)minute * 16.94D % 1000.0D);
+
         return (long)(hour + minute) + (long)day * 24000L;
     }
 
@@ -105,8 +107,8 @@ public final class WorldTime
     public static String progressString(long item, String addition)
     {
         item %= 12000L;
-        int percent = (int)(item * 100L / 12000L);
-        int division = 2;
+
+        int percent = (int)(item * 100L / 12000L), division = 2;
 
         return String.join
                 ("", Collections.nCopies(percent == 0 ? 2 : 2 - (int)Math.log10((double)percent), " "))
@@ -124,7 +126,7 @@ public final class WorldTime
      */
     private static double multiplier(int length)
     {
-        return (new BigDecimal(String.valueOf((double)length / 10.0D))).setScale(2, 6).doubleValue();
+        return (new BigDecimal(String.valueOf((double)length / 10.0D))).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
     }
 
     /**

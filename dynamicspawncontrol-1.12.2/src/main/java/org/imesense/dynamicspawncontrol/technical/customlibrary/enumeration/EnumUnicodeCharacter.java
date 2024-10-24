@@ -52,13 +52,13 @@ public enum EnumUnicodeCharacter
 
     /**
      *
-     * @param character
-     * @param description
+     * @param CHARACTER
+     * @param DESCRIPTION
      */
-    EnumUnicodeCharacter(char character, String description)
+    EnumUnicodeCharacter(final char CHARACTER, final String DESCRIPTION)
     {
-        this.CHARACTER = character;
-        this.DESCRIPTION = description;
+        this.CHARACTER = CHARACTER;
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     /**

@@ -59,11 +59,11 @@ public enum EnumTextColor
 
     /**
      *
-     * @param code
+     * @param CODE
      */
-    EnumTextColor(final String code)
+    EnumTextColor(final String CODE)
     {
-        this.CODE = code;
+        this.CODE = CODE;
     }
 
     /**

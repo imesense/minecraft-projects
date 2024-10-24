@@ -81,7 +81,7 @@ public class AuxFunction
     /**
      *
      */
-    public static final Map<String, DamageSource> DamageMap = new HashMap<>();
+    public static final Map<String, DamageSource> DAMAGE_MAP = new HashMap<>();
 
     /**
      *
@@ -102,7 +102,7 @@ public class AuxFunction
             }
         )
         {
-            DamageMap.put(source.getDamageType(), source);
+            DAMAGE_MAP.put(source.getDamageType(), source);
         }
     }
 

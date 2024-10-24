@@ -48,20 +48,20 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
         /**
          *
          */
-        final boolean hasEnemiesTo = map.has(ENEMIES_TO);
-        final boolean hasToThem = map.has(TO_THEM);
+        boolean hasEnemiesTo = map.has(ENEMIES_TO);
+        boolean hasToThem = map.has(TO_THEM);
 
         /**
          *
          */
-        final boolean hasEnemyId = map.has(ENEMY_ID);
-        final boolean hasThemId = map.has(THEM_ID);
+        boolean hasEnemyId = map.has(ENEMY_ID);
+        boolean hasThemId = map.has(THEM_ID);
 
         /**
          *
          */
-        final boolean hasPanicTo = map.has(PANIC_TO);
-        final boolean hasPanicId = map.has(PANIC_ID);
+        boolean hasPanicTo = map.has(PANIC_TO);
+        boolean hasPanicId = map.has(PANIC_ID);
 
         try
         {

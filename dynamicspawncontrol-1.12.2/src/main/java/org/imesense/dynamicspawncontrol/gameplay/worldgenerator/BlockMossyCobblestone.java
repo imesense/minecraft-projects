@@ -87,6 +87,7 @@ public final class BlockMossyCobblestone implements IWorldGenerator
                         DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getMinHeight(),
                         DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.instance.getMaxHeight()
                 );
+
                 break;
             }
 
