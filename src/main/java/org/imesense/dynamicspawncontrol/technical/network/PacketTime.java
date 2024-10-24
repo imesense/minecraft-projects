@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
 
 /**
@@ -74,7 +75,7 @@ public final class PacketTime implements IMessage
          */
         public IMessage onMessage(PacketTime message, MessageContext ctx)
         {
-            Minecraft.getMinecraft().addScheduledTask(() ->
+            UniqueField.CLIENT.addScheduledTask(() ->
             {
                 OnUpdateTimeWorld.INSTANCE.clientUpdate(message.customTime, message.multiplier);
             });

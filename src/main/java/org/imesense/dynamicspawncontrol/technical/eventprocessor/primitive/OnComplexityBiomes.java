@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -51,11 +52,6 @@ public final class OnComplexityBiomes
      *
      */
     private final long BIOMES_CHANGE_MIN_TIME = 3000;
-
-    /**
-     *
-     */
-    private final Minecraft mc = Minecraft.getMinecraft();
 
     /**
      *
@@ -121,7 +117,7 @@ public final class OnComplexityBiomes
             int boxWidth = 120;
             int boxHeight = 50;
 
-            int screenWidth = mc.displayWidth / mc.gameSettings.guiScale;
+            int screenWidth = UniqueField.CLIENT.displayWidth / UniqueField.CLIENT.gameSettings.guiScale;
 
             int xPos = (screenWidth - boxWidth) / 2;
             int yPos = 20;
@@ -130,11 +126,11 @@ public final class OnComplexityBiomes
 
             drawRect(xPos, yPos, xPos + boxWidth, yPos + boxHeight, backgroundColor);
 
-            int textWidth = mc.fontRenderer.getStringWidth(biomeText);
+            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(biomeText);
             int textXPos = xPos + (boxWidth - textWidth) / 2;
             int textYPos = yPos + 10;
 
-            mc.fontRenderer.drawString(biomeText, textXPos, textYPos, 0xFFFFFF);
+            UniqueField.CLIENT.fontRenderer.drawString(biomeText, textXPos, textYPos, 0xFFFFFF);
 
             int[] skullCounts =
             {
@@ -171,7 +167,7 @@ public final class OnComplexityBiomes
             {
                 for (int j = 0; j < skullCounts[i]; j++)
                 {
-                    mc.getTextureManager().bindTexture(skullTextures[i]);
+                    UniqueField.CLIENT.getTextureManager().bindTexture(skullTextures[i]);
                     drawModalRectWithCustomSizedTexture(skullXPos, skullYPos, 0, 0, skullWidth, skullWidth, skullWidth, skullWidth);
                     skullXPos += skullWidth + skullSpacing;
                 }

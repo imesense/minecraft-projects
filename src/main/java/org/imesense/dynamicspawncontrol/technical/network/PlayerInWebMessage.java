@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 
 /**
@@ -84,20 +85,15 @@ public final class PlayerInWebMessage implements IMessage
             /**
              *
              */
-            Minecraft getMinecraft = Minecraft.getMinecraft();
-
-            /**
-             *
-             */
-            getMinecraft.addScheduledTask(new Runnable()
+            UniqueField.CLIENT.addScheduledTask(new Runnable()
             {
                 /**
                  *
                  */
                 public void run()
                 {
-                    getMinecraft.world.setBlockState(msg.pos, Blocks.WEB.getDefaultState());
-                    getMinecraft.player.setInWeb();
+                    UniqueField.CLIENT.world.setBlockState(msg.pos, Blocks.WEB.getDefaultState());
+                    UniqueField.CLIENT.player.setInWeb();
                 }
             });
 

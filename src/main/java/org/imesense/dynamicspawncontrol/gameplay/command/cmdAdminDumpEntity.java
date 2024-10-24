@@ -9,6 +9,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -61,7 +62,7 @@ public final class CmdAdminDumpEntity extends CommandBase
     {
         if (sender instanceof EntityPlayerMP)
         {
-            RayTraceResult result = Minecraft.getMinecraft().objectMouseOver;
+            RayTraceResult result = UniqueField.CLIENT.objectMouseOver;
 
             if (result != null && result.typeOfHit == RayTraceResult.Type.ENTITY)
             {

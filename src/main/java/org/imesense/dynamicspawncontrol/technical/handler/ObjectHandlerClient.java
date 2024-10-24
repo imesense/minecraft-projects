@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.gameplay.throwingobject.DSCThrowItemWeb;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.gameplay.item.DSCWeb;
@@ -90,7 +91,7 @@ public final class ObjectHandlerClient
             registerRender(ObjectHandlerClient.webbing);
 
             RenderingRegistry.registerEntityRenderingHandler(DSCThrowItemWeb.class, (manager) ->
-                    new RenderSnowball<>(manager, ObjectHandlerClient.webbing, Minecraft.getMinecraft().getRenderItem()));
+                    new RenderSnowball<>(manager, ObjectHandlerClient.webbing, UniqueField.CLIENT.getRenderItem()));
         }
 
         /**
