@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.ai.spider.util.event.WebAttackEvent;
+import org.imesense.dynamicspawncontrol.ai.spider.util.event.OnWebAttackEvent;
 import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.WebSlingerCapability;
-import org.imesense.dynamicspawncontrol.ai.zombie.event.BreakTorchEvent;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.OnBreakTorchEvent;
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.IRecipes;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.CraftItemWeb;
@@ -93,7 +93,7 @@ public class DynamicSpawnControl
      * @param event Preinitialization event
      */
     @Mod.EventHandler
-    public synchronized void preInit(FMLPreInitializationEvent event)
+    public synchronized void preInit(FMLPreInitializationEvent event) throws IllegalAccessException
     {
         //
         CheckDebugger.instance = new CheckDebugger();
@@ -104,6 +104,10 @@ public class DynamicSpawnControl
         //
         Log.createLogFile(globalDirectory.getPath() + File.separator + ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY, CheckDebugger.instance.IsRunDebugger);
         Log.writeDataToLogFile(1, "Debugger is running: " + (CheckDebugger.instance.IsRunDebugger ? "true" : "false"));
+
+        //
+        UniqueField uniqueField = new UniqueField();
+        Log.writeDataToLogFile(0, "Object create [UniqueField]: " + uniqueField.hashCode());
 
         //
         MessageHandler.init();
@@ -166,8 +170,8 @@ public class DynamicSpawnControl
     public synchronized void postInit(FMLPostInitializationEvent event)
     {
         //-' TODO: перенести это в отдельную инициализацию
-        MinecraftForge.EVENT_BUS.register(new WebAttackEvent());
-        MinecraftForge.EVENT_BUS.register(new BreakTorchEvent());
+        MinecraftForge.EVENT_BUS.register(new OnWebAttackEvent());
+        MinecraftForge.EVENT_BUS.register(new OnBreakTorchEvent());
     }
 
     /**
