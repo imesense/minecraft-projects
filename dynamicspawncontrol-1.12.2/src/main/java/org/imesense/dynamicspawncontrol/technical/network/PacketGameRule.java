@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.apache.logging.log4j.LogManager;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.DataPluginWorldTime;
 
@@ -67,9 +68,9 @@ public final class PacketGameRule implements IMessage
          */
         public IMessage onMessage(PacketGameRule message, MessageContext ctx)
         {
-            Minecraft.getMinecraft().addScheduledTask(() ->
+            UniqueField.CLIENT.addScheduledTask(() ->
             {
-                Minecraft.getMinecraft().world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", Boolean.toString(message.doDaylightCycle_tc));
+                UniqueField.CLIENT.world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", Boolean.toString(message.doDaylightCycle_tc));
 
                 if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug())
                 {

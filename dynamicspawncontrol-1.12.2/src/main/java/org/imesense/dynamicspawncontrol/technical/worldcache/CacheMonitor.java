@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.client.gui.ScaledResolution;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
@@ -16,11 +17,6 @@ public final class CacheMonitor
      *
      */
     private static boolean instanceExists = false;
-
-    /**
-     *
-     */
-    public final Minecraft GetMinecraft = Minecraft.getMinecraft();
 
     /**
      *
@@ -44,7 +40,7 @@ public final class CacheMonitor
      */
     public void renderDebugInfo(ScaledResolution resolution)
     {
-        final FontRenderer FONT_RENDER = GetMinecraft.fontRenderer;
+        final FontRenderer FONT_RENDER = UniqueField.CLIENT.fontRenderer;
 
         final String ACTUAL_ANIMALS = TextFormatting.GREEN + "Actual Animals: " + Cache.instance.getActualAnimalCount();
         final String ACTUAL_HOSTILE = TextFormatting.RED + "Actual Hostile Entities: " + Cache.instance.getActualHostileEntityCount();
