@@ -16,7 +16,7 @@ public final class UniqueField
      *
      */
     @UniqueObject
-    private final Minecraft CLIENT = Minecraft.getMinecraft();
+    public static final Minecraft CLIENT = Minecraft.getMinecraft();
 
     /**
      *
