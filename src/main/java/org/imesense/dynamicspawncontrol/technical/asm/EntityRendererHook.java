@@ -271,7 +271,6 @@ public final class EntityRendererHook
         WorldProvider dim = world.provider;
         DimensionType dimType = dim.getDimensionType();
 
-        // Light to brightness float[16] conversion table.
         float[] brightnessTable = dim.getLightBrightnessTable();
 
         boolean dimDark = isDark(dim, dimType);

@@ -16,7 +16,7 @@ public final class ParserManager
     /**
      *
      */
-    private static final List<IBetaParser> betaParsersList = new ArrayList<>();
+    private static final List<IBetaParser> BETA_PARSER_LIST = new ArrayList<>();
 
     /**
      *
@@ -31,11 +31,11 @@ public final class ParserManager
      */
     public static void init()
     {
-        betaParsersList.add(new ParserSingleScriptSettingsCache());
-        betaParsersList.add(new ParserSingleZombieSummonAID());
-        betaParsersList.add(new ParserSingleScriptCheckSpawn());
+        BETA_PARSER_LIST.add(new ParserSingleScriptSettingsCache());
+        BETA_PARSER_LIST.add(new ParserSingleZombieSummonAID());
+        BETA_PARSER_LIST.add(new ParserSingleScriptCheckSpawn());
 
-        for (IBetaParser parser : betaParsersList)
+        for (IBetaParser parser : BETA_PARSER_LIST)
         {
             parser.loadConfig(true);
         }
@@ -46,7 +46,7 @@ public final class ParserManager
      */
     public static void reloadAllConfigs()
     {
-        for (IBetaParser parser : betaParsersList)
+        for (IBetaParser parser : BETA_PARSER_LIST)
         {
             parser.reloadConfig();
         }

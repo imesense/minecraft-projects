@@ -23,12 +23,12 @@ import java.util.Objects;
 /**
  *
  */
-public final class cmdAdminDumpBlock extends CommandBase
+public final class CmdAdminDumpBlock extends CommandBase
 {
     /**
      *
      */
-    public cmdAdminDumpBlock()
+    public CmdAdminDumpBlock()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

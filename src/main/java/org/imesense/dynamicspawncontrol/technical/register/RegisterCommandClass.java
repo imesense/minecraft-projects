@@ -20,17 +20,17 @@ public final class RegisterCommandClass
      */
     private static final Class<?>[] COMMAND_CLASSES =
     {
-        cmdAdminDumpBlock.class,
-        cmdAdminDumpEntity.class,
-        cmdAdminDumpItem.class,
-        cmdAdminGameMode.class,
-        cmdAdminGetWorldMoonPhase.class,
-        cmdAdminLaunchFireball.class,
-        cmdAdminScanEntities.class,
-        cmdAdminSwitchVanish.class,
-        cmdServerJsonScriptReload.class,
-        cmdServerMobsKiller.class,
-        cmdServerSingleScriptReload.class
+        CmdAdminDumpBlock.class,
+        CmdAdminDumpEntity.class,
+        CmdAdminDumpItem.class,
+        CmdAdminGameMode.class,
+        CmdAdminGetWorldMoonPhase.class,
+        CmdAdminLaunchFireball.class,
+        CmdAdminScanEntities.class,
+        CmdAdminSwitchVanish.class,
+        CmdServerJsonScriptReload.class,
+        CmdServerMobsKiller.class,
+        CmdServerSingleScriptReload.class
     };
 
     /**

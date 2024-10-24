@@ -21,12 +21,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  *
  */
-public final class cmdAdminScanEntities extends CommandBase
+public final class CmdAdminScanEntities extends CommandBase
 {
     /**
      *
      */
-    public cmdAdminScanEntities()
+    public CmdAdminScanEntities()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

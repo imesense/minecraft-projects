@@ -15,12 +15,12 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public final class cmdAdminGetWorldMoonPhase extends CommandBase
+public final class CmdAdminGetWorldMoonPhase extends CommandBase
 {
     /**
      *
      */
-    public cmdAdminGetWorldMoonPhase()
+    public CmdAdminGetWorldMoonPhase()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

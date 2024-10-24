@@ -15,12 +15,12 @@ import java.util.Objects;
 /**
  *
  */
-public final class cmdAdminSwitchVanish extends CommandBase
+public final class CmdAdminSwitchVanish extends CommandBase
 {
     /**
      *
      */
-    public cmdAdminSwitchVanish()
+    public CmdAdminSwitchVanish()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

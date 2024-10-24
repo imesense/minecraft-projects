@@ -87,6 +87,7 @@ public final class BlockNetherRack implements IWorldGenerator
                         DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getMinHeight(),
                         DataBlockWorldGenerator.InfoDataBlockNetherRack.instance.getMaxHeight()
                 );
+
                 break;
             }
 

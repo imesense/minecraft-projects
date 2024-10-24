@@ -42,11 +42,11 @@ public enum EnumCmdCallType
 
     /**
      *
-     * @param description
+     * @param DESCRIPTION
      */
-    EnumCmdCallType(final String description)
+    EnumCmdCallType(final String DESCRIPTION)
     {
-        this.DESCRIPTION = description;
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     /**

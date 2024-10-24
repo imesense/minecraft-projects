@@ -89,7 +89,8 @@ public final class DSCFireball extends EntityFireball
     {
         if (!this.world.isRemote)
         {
-            this.world.createExplosion(this.shootingEntity, this.posX, this.posY, this.posZ, (float)this.explosionStrength, true);
+            this.world.createExplosion(this.shootingEntity,
+                    this.posX, this.posY, this.posZ, (float)this.explosionStrength, true);
 
             FireSpawnAction fireSpawnAction = (world, explosionPos, radius) ->
             {

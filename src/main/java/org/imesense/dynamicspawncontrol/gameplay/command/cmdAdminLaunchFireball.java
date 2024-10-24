@@ -14,12 +14,12 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public final class cmdAdminLaunchFireball extends CommandBase
+public final class CmdAdminLaunchFireball extends CommandBase
 {
     /**
      *
      */
-    public cmdAdminLaunchFireball()
+    public CmdAdminLaunchFireball()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

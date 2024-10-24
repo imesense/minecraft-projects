@@ -50,7 +50,7 @@ public final class OnComplexityBiomes
     /**
      *
      */
-    private final long biomeChangeMinTime = 3000;
+    private final long BIOMES_CHANGE_MIN_TIME = 3000;
 
     /**
      *
@@ -98,7 +98,7 @@ public final class OnComplexityBiomes
 
             long currentTime = System.currentTimeMillis();
 
-            if (currentBiome != confirmedBiome && currentTime - biomeEntryTime >= biomeChangeMinTime)
+            if (currentBiome != confirmedBiome && currentTime - biomeEntryTime >= this.BIOMES_CHANGE_MIN_TIME)
             {
                 confirmedBiome = currentBiome;
                 lastBiomeChangeTime = currentTime;

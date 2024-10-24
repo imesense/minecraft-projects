@@ -32,11 +32,11 @@ public class EnumGameProperty
 
         /**
          *
-         * @param value
+         * @param VALUE
          */
-        Coordinates(final String value)
+        Coordinates(final String VALUE)
         {
-            this.VALUE = value;
+            this.VALUE = VALUE;
         }
 
         /**
@@ -76,11 +76,11 @@ public class EnumGameProperty
 
         /**
          *
-         * @param value
+         * @param VALUE
          */
-         BlockProperties(final String value)
+         BlockProperties(final String VALUE)
          {
-            this.VALUE = value;
+            this.VALUE = VALUE;
          }
 
          /**

@@ -18,7 +18,7 @@ public final class DataWindowTitle
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -33,13 +33,13 @@ public final class DataWindowTitle
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataWindowTitle(@Nonnull final String category)
+        public ConfigDataWindowTitle(@Nonnull final String CATEGORY)
         {
 			CodeGenericUtil.printInitClassToLog(this.getClass());
 			
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -66,7 +66,7 @@ public final class DataWindowTitle
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

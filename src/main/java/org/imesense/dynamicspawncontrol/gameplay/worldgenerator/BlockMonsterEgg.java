@@ -87,6 +87,7 @@ public final class BlockMonsterEgg implements IWorldGenerator
                         DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMinHeight(),
                         DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMaxHeight()
                 );
+                
                 break;
             }
 

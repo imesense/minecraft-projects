@@ -17,7 +17,7 @@ public final class DataPlayer
         /**
          *
          */
-        private final String category;
+        private final String CATEGORY;
 
         /**
          *
@@ -31,13 +31,13 @@ public final class DataPlayer
 
         /**
          *
-         * @param category
+         * @param CATEGORY
          */
-        public ConfigDataPlayer(@Nonnull final String category)
+        public ConfigDataPlayer(@Nonnull final String CATEGORY)
         {
 			CodeGenericUtil.printInitClassToLog(this.getClass());
 			
-            this.category = category;
+            this.CATEGORY = CATEGORY;
         }
 
         /**
@@ -64,7 +64,7 @@ public final class DataPlayer
          */
         public String getCategoryObject()
         {
-            return this.category;
+            return this.CATEGORY;
         }
     }
 }

@@ -20,12 +20,12 @@ import java.util.List;
 /**
  *
  */
-public final class cmdServerMobsKiller extends CommandBase
+public final class CmdServerMobsKiller extends CommandBase
 {
     /**
      *
      */
-    public cmdServerMobsKiller()
+    public CmdServerMobsKiller()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

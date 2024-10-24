@@ -17,12 +17,12 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public final class cmdAdminDumpEntity extends CommandBase
+public final class CmdAdminDumpEntity extends CommandBase
 {
     /**
      *
      */
-    public cmdAdminDumpEntity()
+    public CmdAdminDumpEntity()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }

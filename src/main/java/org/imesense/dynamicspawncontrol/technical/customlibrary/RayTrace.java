@@ -37,12 +37,8 @@ public final class RayTrace
         float f6 = f3 * f4;
         float f7 = f2 * f4;
 
-        double reach = 5.00;
-
-        if (playerIn instanceof net.minecraft.entity.player.EntityPlayerMP)
-        {
-            reach = ((EntityPlayerMP)playerIn).interactionManager.getBlockReachDistance();
-        }
+        @Deprecated
+        double reach = (playerIn).interactionManager.getBlockReachDistance();
 
         Vec3d vec31 = vec3.addVector(f6 * reach, f5 * reach, f7 * reach);
 
