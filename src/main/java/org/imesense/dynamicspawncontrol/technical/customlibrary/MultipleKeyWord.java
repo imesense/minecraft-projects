@@ -8,16 +8,8 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeType
  */
 public final class MultipleKeyWord
 {
-    /*
-     * *********************************************************************************************************************
-     * Общие ключевые слова
-     * *********************************************************************************************************************
-     */
     public static class CommonKeyWorlds
     {
-        /*
-         * Текущий игровой мир
-         */
         public static final AttributeKey<Integer> ID_RULE = AttributeKey.create(AttributeType.INTEGER, "id_rule");
         public static final AttributeKey<Boolean> SEE_SKY = AttributeKey.create(AttributeType.BOOLEAN, "see_sky");
         public static final AttributeKey<String> WEATHER = AttributeKey.create(AttributeType.STRING, "weather");
@@ -26,70 +18,37 @@ public final class MultipleKeyWord
         public static final AttributeKey<String> BIOMES_TYPE = AttributeKey.create(AttributeType.STRING, "biomes_type");
         public static final AttributeKey<Integer> DIMENSION = AttributeKey.create(AttributeType.INTEGER, "dimension");
 
-        /*
-         * Экипировка игрока
-         */
         public static final AttributeKey<String> HELMET = AttributeKey.create(AttributeType.JSON, "helmet");
         public static final AttributeKey<String> CHEST_PLATE = AttributeKey.create(AttributeType.JSON, "chest_plate");
         public static final AttributeKey<String> LEGGINGS = AttributeKey.create(AttributeType.JSON, "leggings");
         public static final AttributeKey<String> BOOTS = AttributeKey.create(AttributeType.JSON, "boots");
 
-        /*
-         * Минимальное/максимальное время
-         */
         public static final AttributeKey<Integer> MIN_TIME = AttributeKey.create(AttributeType.INTEGER, "min_world_time");
         public static final AttributeKey<Integer> MAX_TIME = AttributeKey.create(AttributeType.INTEGER, "max_world_time");
 
-        /*
-         * Минимальный/максимальный свет
-         */
         public static final AttributeKey<Integer> MIN_LIGHT = AttributeKey.create(AttributeType.INTEGER, "min_light");
         public static final AttributeKey<Integer> MAX_LIGHT = AttributeKey.create(AttributeType.INTEGER, "max_light");
 
-        /*
-         * Минимальная/максимальная высота
-         */
         public static final AttributeKey<Integer> MIN_HEIGHT = AttributeKey.create(AttributeType.INTEGER, "min_height");
         public static final AttributeKey<Integer> MAX_HEIGHT = AttributeKey.create(AttributeType.INTEGER, "max_height");
 
-        /*
-         * Минимальная/максимальная сложность в мире
-         */
         public static final AttributeKey<String> DIFFICULTY = AttributeKey.create(AttributeType.STRING, "difficulty");
         public static final AttributeKey<Float> MIN_DIFFICULTY = AttributeKey.create(AttributeType.FLOAT, "min_difficulty");
         public static final AttributeKey<Float> MAX_DIFFICULTY = AttributeKey.create(AttributeType.FLOAT, "max_difficulty");
 
-        /*
-         * Минимальная/максимальная дистанция спавна
-         */
         public static final AttributeKey<Float> MIN_SPAWN_DIST = AttributeKey.create(AttributeType.FLOAT, "min_spawn_dist");
         public static final AttributeKey<Float> MAX_SPAWN_DIST = AttributeKey.create(AttributeType.FLOAT, "max_spawn_dist");
 
-        /*
-         * Блок и положение блока в мире
-         */
         public static final AttributeKey<String> BLOCK = AttributeKey.create(AttributeType.JSON, "block");
         public static final AttributeKey<String> BLOCK_OFFSET = AttributeKey.create(AttributeType.JSON, "block_offset");
 
-        /*
-         * Активная фаза луны
-         */
         public static final AttributeKey<Integer> GET_MOON_PHASE = AttributeKey.create(AttributeType.INTEGER, "moon_phase");
 
-        /*
-         * Определение живого существа
-         */
         public static final AttributeKey<String> MOB = AttributeKey.create(AttributeType.STRING, "mob");
 
-        /*
-         * Глобальный тип живых существ
-         */
         public static final AttributeKey<Boolean> ANIMALS = AttributeKey.create(AttributeType.BOOLEAN, "animals");
         public static final AttributeKey<Boolean> MONSTERS = AttributeKey.create(AttributeType.BOOLEAN, "monsters");
 
-        /*
-         * Определение того, что действие выполнил игрок
-         */
         public static final AttributeKey<Boolean> PLAYER = AttributeKey.create(AttributeType.BOOLEAN, "player");
         public static final AttributeKey<Boolean> FAKE_PLAYER = AttributeKey.create(AttributeType.BOOLEAN, "fake_player");
         public static final AttributeKey<Boolean> REAL_PLAYER = AttributeKey.create(AttributeType.BOOLEAN, "real_player");
@@ -98,32 +57,20 @@ public final class MultipleKeyWord
         public static final AttributeKey<String> OFF_HAND_ITEM = AttributeKey.create(AttributeType.JSON, "off_hand_item");
         public static final AttributeKey<String> BOTH_HANDS_ITEM = AttributeKey.create(AttributeType.JSON, "both_hands_item");
 
-        /*
-         * Проверка на вид повреждения
-         */
         public static final AttributeKey<Boolean> EXPLOSION = AttributeKey.create(AttributeType.BOOLEAN, "explosion");
         public static final AttributeKey<Boolean> PROJECTILE = AttributeKey.create(AttributeType.BOOLEAN, "projectile");
         public static final AttributeKey<Boolean> FIRE = AttributeKey.create(AttributeType.BOOLEAN, "fire");
         public static final AttributeKey<Boolean> MAGIC = AttributeKey.create(AttributeType.BOOLEAN, "magic");
         public static final AttributeKey<String> SOURCE = AttributeKey.create(AttributeType.STRING, "source");
 
-        /*
-         * Ключи рандомайзера для определения шансов действия
-         */
         public static final AttributeKey<Float> RANDOM_KEY_0 = AttributeKey.create(AttributeType.FLOAT, "random_key_0");
         public static final AttributeKey<Float> RANDOM_KEY_1 = AttributeKey.create(AttributeType.FLOAT, "random_key_1");
         public static final AttributeKey<Float> RANDOM_KEY_2 = AttributeKey.create(AttributeType.FLOAT, "random_key_2");
         public static final AttributeKey<Float> RANDOM_KEY_3 = AttributeKey.create(AttributeType.FLOAT, "random_key_3");
         public static final AttributeKey<Float> RANDOM_KEY_4 = AttributeKey.create(AttributeType.FLOAT, "random_key_4");
 
-        /*
-         * Условия на срабатывания блоков кода
-         */
         public static final AttributeKey<String> ACTION_RESULT = AttributeKey.create(AttributeType.STRING, "return");
 
-        /*
-         * Мировые действия
-         */
         public static final AttributeKey<String> ACTION_MESSAGE = AttributeKey.create(AttributeType.STRING, "message");
         public static final AttributeKey<Boolean> ACTION_ANGRY = AttributeKey.create(AttributeType.BOOLEAN, "angry");
         public static final AttributeKey<String> ACTION_HELD_ITEM = AttributeKey.create(AttributeType.JSON, "mob_held_item");
@@ -152,11 +99,6 @@ public final class MultipleKeyWord
         public static final AttributeKey<String> ACTION_DAMAGE = AttributeKey.create(AttributeType.STRING, "damage");
     }
 
-    /*
-     * *********************************************************************************************************************
-     * Индивидуальные ключевые слова (SpawnConditions.json/ZombieSummonAid.json)
-     * *********************************************************************************************************************
-     */
     public static class SpawnCondition
     {
         public static final AttributeKey<Boolean> CAN_SPAWN_HERE = AttributeKey.create(AttributeType.BOOLEAN, "can_spawn_here");
@@ -164,11 +106,6 @@ public final class MultipleKeyWord
         public static final AttributeKey<Boolean> SPAWNER = AttributeKey.create(AttributeType.BOOLEAN, "spawner");
     }
 
-    /*
-     * *********************************************************************************************************************
-     * Индивидуальные ключевые слова (MainPotentialSpawn.json)
-     * *********************************************************************************************************************
-     */
     public static class PotentialSpawn
     {
         public static AttributeKey<?> MOB_STRUCT = AttributeKey.create(AttributeType.MAP, "struct");
@@ -181,11 +118,6 @@ public final class MultipleKeyWord
         public static AttributeKey<Integer> MOB_GROUP_COUNT_MAX = AttributeKey.create(AttributeType.INTEGER, "group_count_max");
     }
 
-    /*
-     * *********************************************************************************************************************
-     * Индивидуальные ключевые слова (MobTaskManager.json)
-     * *********************************************************************************************************************
-     */
     public static class MobTaskManager
     {
         public static final AttributeKey<String> ENEMIES_TO = AttributeKey.create(AttributeType.STRING, "enemies_to");
@@ -196,11 +128,6 @@ public final class MultipleKeyWord
         public static final AttributeKey<String> THEM_ID = AttributeKey.create(AttributeType.STRING, "them_id");
     }
 
-    /*
-     * *********************************************************************************************************************
-     * Индивидуальные ключевые слова (DropAllItems.json)
-     * *********************************************************************************************************************
-     */
     public static class DroopLoot
     {
         public static final AttributeKey<String> ACTION_ITEM = AttributeKey.create(AttributeType.STRING, "item");
