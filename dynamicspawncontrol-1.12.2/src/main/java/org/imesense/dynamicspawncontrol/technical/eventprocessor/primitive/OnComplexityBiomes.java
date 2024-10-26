@@ -26,12 +26,27 @@ public final class OnComplexityBiomes
     /**
      *
      */
-    private String biomeText = "";
+    private String biomesText = "";
 
     /**
      *
      */
-    private long biomeEntryTime = 0;
+    private long biomesEntryTime = 0;
+
+    /**
+     *
+     */
+    private final byte NULL = 0;
+
+    /**
+     *
+     */
+    private final byte MIN = 1;
+
+    /**
+     *
+     */
+    private final byte MAX = 7;
 
     /**
      *
@@ -46,12 +61,7 @@ public final class OnComplexityBiomes
     /**
      *
      */
-    private long lastBiomeChangeTime = 0;
-
-    /**
-     *
-     */
-    private final long BIOMES_CHANGE_MIN_TIME = 3000;
+    private long lastBiomesChangeTime = 0;
 
     /**
      *
@@ -89,16 +99,18 @@ public final class OnComplexityBiomes
             if (biome != currentBiome)
             {
                 currentBiome = biome;
-                biomeEntryTime = System.currentTimeMillis();
+                biomesEntryTime = System.currentTimeMillis();
             }
 
             long currentTime = System.currentTimeMillis();
 
-            if (currentBiome != confirmedBiome && currentTime - biomeEntryTime >= this.BIOMES_CHANGE_MIN_TIME)
+            long BIOMES_CHANGE_MIN_TIME = 3000;
+
+            if (currentBiome != confirmedBiome && currentTime - biomesEntryTime >= BIOMES_CHANGE_MIN_TIME)
             {
                 confirmedBiome = currentBiome;
-                lastBiomeChangeTime = currentTime;
-                biomeText = confirmedBiome.getBiomeName();
+                lastBiomesChangeTime = currentTime;
+                biomesText = confirmedBiome.getBiomeName();
             }
         }
     }
@@ -112,9 +124,9 @@ public final class OnComplexityBiomes
     {
         long currentTime = System.currentTimeMillis();
 
-        if (confirmedBiome != null && currentTime - lastBiomeChangeTime < 5000)
+        if (confirmedBiome != null && currentTime - lastBiomesChangeTime < 5000)
         {
-            int boxWidth = 120;
+            int boxWidth = 148;
             int boxHeight = 50;
 
             int screenWidth = UniqueField.CLIENT.displayWidth / UniqueField.CLIENT.gameSettings.guiScale;
@@ -126,18 +138,18 @@ public final class OnComplexityBiomes
 
             drawRect(xPos, yPos, xPos + boxWidth, yPos + boxHeight, backgroundColor);
 
-            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(biomeText);
+            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(biomesText);
             int textXPos = xPos + (boxWidth - textWidth) / 2;
             int textYPos = yPos + 10;
 
-            UniqueField.CLIENT.fontRenderer.drawString(biomeText, textXPos, textYPos, 0xFFFFFF);
+            UniqueField.CLIENT.fontRenderer.drawString(biomesText, textXPos, textYPos, 0xFFFFFF);
 
             int[] skullCounts =
             {
-                getRedSkullCountForBiome(confirmedBiome),
-                getOrangeSkullCountForBiome(confirmedBiome),
-                getRedSkullCountForBiomePart(confirmedBiome),
-                getOrangeSkullCountForBiomePart(confirmedBiome)
+                getRedSkullCountForBiomes(confirmedBiome),
+                getOrangeSkullCountForBiomes(confirmedBiome),
+                getRedSkullCountForBiomesPart(confirmedBiome),
+                getOrangeSkullCountForBiomesPart(confirmedBiome)
             };
 
             ResourceLocation[] skullTextures =
@@ -156,8 +168,7 @@ public final class OnComplexityBiomes
             };
 
             int totalSkulls = skullCounts[0] + skullCounts[1] + skullCounts[2] + skullCounts[3];
-            int skullWidth = 16;
-            int skullSpacing = 2;
+            int skullWidth = 16, skullHeight = 16, skullSpacing = 2;
             int totalSkullWidth = (skullWidth * totalSkulls) + (skullSpacing * (totalSkulls - 1));
 
             int skullXPos = xPos + (boxWidth - totalSkullWidth) / 2;
@@ -168,7 +179,10 @@ public final class OnComplexityBiomes
                 for (int j = 0; j < skullCounts[i]; j++)
                 {
                     UniqueField.CLIENT.getTextureManager().bindTexture(skullTextures[i]);
-                    drawModalRectWithCustomSizedTexture(skullXPos, skullYPos, 0, 0, skullWidth, skullWidth, skullWidth, skullWidth);
+
+                    drawModalRectWithCustomSizedTexture(skullXPos, skullYPos,
+                            0, 0, skullWidth, skullHeight, skullWidth, skullHeight);
+
                     skullXPos += skullWidth + skullSpacing;
                 }
             }
@@ -180,30 +194,63 @@ public final class OnComplexityBiomes
      * @param biome
      * @return
      */
-    private int getRedSkullCountForBiome(Biome biome)
+    private int getRedSkullCountForBiomes(Biome biome)
+    {
+        switch (biome.getBiomeName())
+        {
+            case "Sunflower Plains":
+            case "Birch Forest":
+                return this.MIN;
+            case "Taiga":
+            case "TaigaHills":
+            case "Forest":
+            case "Mega Taiga":
+            case "Taiga M":
+            case "Savanna Plateau":
+            case "Birch Forest Hills":
+                return 2;
+            case "Roofed Forest":
+            case "Mega Taiga Hills":
+            case "ForestHills":
+            case "Ice Plains":
+                return 3;
+            case "Swampland":
+            case "Extreme Hills":
+            case "Desert":
+            case "Cold Taiga":
+            case "Ice Mountains":
+                return 4;
+            case "Mega Spruce Taiga":
+            case "DesertHills":
+            case "Extreme Hills M":
+            case "Cold Taiga Hills":
+                return 5;
+            case "Extreme Hills+":
+            case "Savanna Plateau M":
+                return 6;
+            case "Jungle":
+            case "JungleHills":
+                return this.MAX;
+            default:
+                return this.NULL;
+        }
+    }
+
+    /**
+     *
+     * @param biome
+     * @return
+     */
+    private int getRedSkullCountForBiomesPart(Biome biome)
     {
         switch (biome.getBiomeName())
         {
             case "Extreme Hills":
-                return 5;
-            case "Desert":
-                return 3;
-            case "Swampland":
-                return 4;
-            case "Ice Flats":
-                return 5;
-            case "Forest":
-                return 2;
-            case "Jungle":
-                return 4;
-            case "Beach":
-                return 1;
-            case "Taiga":
-                return 3;
-            case "Mesa":
-                return 4;
+            case "DesertHills":
+            case "Ice Plains":
+                return this.MIN;
             default:
-                return 0;
+                return this.NULL;
         }
     }
 
@@ -212,48 +259,32 @@ public final class OnComplexityBiomes
      * @param biome
      * @return
      */
-    private int getRedSkullCountForBiomePart(Biome biome)
-    {
-        switch (biome.getBiomeName())
-        {
-            default:
-                return 0;
-        }
-    }
-
-    /**
-     *
-     * @param biome
-     * @return
-     */
-    private int getOrangeSkullCountForBiome(Biome biome)
+    private int getOrangeSkullCountForBiomes(Biome biome)
     {
         switch (biome.getBiomeName())
         {
             case "Plains":
-                return 1;
-            case "Savanna":
-                return 1;
-            case "Savanna Plateau":
-                return 3;
-            case "Desert":
-                return 2;
-            case "Swampland":
-                return 1;
-            case "Ice Flats":
-                return 2;
             case "Forest":
-                return 3;
-            case "Jungle":
-                return 1;
-            case "Beach":
+            case "Mega Taiga":
+            case "Savanna Plateau":
+            case "Savanna Plateau M":
+            case "Sunflower Plains":
+            case "Birch Forest":
+            case "Cold Taiga":
+                return this.MIN;
+            case "TaigaHills":
+            case "Swampland":
+            case "Mega Taiga Hills":
+            case "Mega Spruce Taiga":
+            case "ForestHills":
+            case "Ice Mountains":
                 return 2;
-            case "Taiga":
-                return 1;
-            case "Mesa":
-                return 1;
+            case "Savanna":
+                return 3;
+            case "Savanna M":
+                return 4;
             default:
-                return 0;
+                return this.NULL;
         }
     }
 
@@ -262,12 +293,16 @@ public final class OnComplexityBiomes
      * @param biome
      * @return
      */
-    private int getOrangeSkullCountForBiomePart(Biome biome)
+    private int getOrangeSkullCountForBiomesPart(Biome biome)
     {
         switch (biome.getBiomeName())
         {
+            case "Plains":
+            case "Taiga M":
+            case "Sunflower Plains":
+                return this.MIN;
             default:
-                return 0;
+                return this.NULL;
         }
     }
 }
