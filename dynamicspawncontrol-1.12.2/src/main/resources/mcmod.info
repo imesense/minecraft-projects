@@ -1,7 +1,7 @@
 [
     {
         "modid": "dynamicspawncontrol",
-        "name": "Empty Mod",
+        "name": "Dynamic Spawn Control",
         "description": "Description placeholder",
         "version": "0.1",
         "url": "",
@@ -12,7 +12,7 @@
             "OldSerpskiStalker"
         ],
         "credits": "ImeSense and contributors",
-        "logoFile": "",
+        "logoFile": "logo.png",
         "screenshots": [],
         "dependencies": []
     }
