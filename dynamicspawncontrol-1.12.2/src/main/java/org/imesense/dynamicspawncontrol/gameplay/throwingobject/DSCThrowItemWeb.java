@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
@@ -63,8 +64,10 @@ public final class DSCThrowItemWeb extends EntityThrowable
 
         if (result.entityHit != null && result.entityHit != thrower)
         {
-            result.entityHit.attackEntityFrom(DamageSource.
-                    causeThrownDamage(this, thrower), 0.f);
+            if (!(result.entityHit instanceof EntitySpider))
+            {
+                result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, thrower), 0.f);
+            }
         }
 
         if (result.typeOfHit != RayTraceResult.Type.MISS)
