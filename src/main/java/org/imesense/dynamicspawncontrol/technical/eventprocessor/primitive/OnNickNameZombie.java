@@ -10,6 +10,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
+import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
 import scala.util.Random;
 
 /**
@@ -39,7 +40,7 @@ public final class OnNickNameZombie
                 String[] randomNames = {"Adik", "Boris", "Igor", "Alex", "Nikolay"};
                 String randomName = randomNames[random.nextInt(randomNames.length)];
                 zombie.setCustomNameTag(randomName);
-                zombie.setAlwaysRenderNameTag(true); // debug
+                zombie.setAlwaysRenderNameTag(CheckDebugger.instance.IsRunDebugger);
             }
         }
     }
