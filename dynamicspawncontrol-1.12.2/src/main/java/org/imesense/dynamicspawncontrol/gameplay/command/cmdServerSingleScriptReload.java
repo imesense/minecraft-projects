@@ -25,6 +25,10 @@ public final class CmdServerSingleScriptReload extends CommandBase
         CodeGenericUtil.printInitClassToLog(this.getClass());
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public String getName()
@@ -32,6 +36,11 @@ public final class CmdServerSingleScriptReload extends CommandBase
         return "dsc_single_scripts_reload";
     }
 
+    /**
+     *
+     * @param sender
+     * @return
+     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender sender)

@@ -19,7 +19,8 @@ public final class RegisterOreGenerator
     {
         BlockNetherRack.class,
         BlockMossyCobblestone.class,
-        BlockMonsterEgg.class
+        BlockMonsterEgg.class,
+        BlockWaterMelon.class
     };
 
     /**
