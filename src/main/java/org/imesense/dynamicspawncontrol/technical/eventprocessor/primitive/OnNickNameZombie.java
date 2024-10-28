@@ -11,7 +11,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import scala.util.Random;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -22,23 +28,79 @@ public final class OnNickNameZombie
     /**
      *
      */
-    private static final Random random = new Random();
+    private static boolean instanceExists = false;
+
+    /**
+     *
+     */
+    private static final Random RANDOM = new Random();
+
+    /**
+     *
+     */
+    private final List<String> RANDOM_NAMES = new ArrayList<>();
+
+    /**
+     *
+     */
+    public OnNickNameZombie()
+    {
+        CodeGenericUtil.printInitClassToLog(this.getClass());
+
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+
+        instanceExists = true;
+
+        this.loadNamesFromFile();
+    }
+
+    /**
+     *
+     */
+    private void loadNamesFromFile()
+    {
+        InputStream inputStream = getClass().getResourceAsStream("/assets/dynamicspawncontrol/names.txt");
+
+        if (inputStream == null)
+        {
+            System.err.println("Файл names.txt не найден!");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)))
+        {
+            String line;
+
+            while ((line = reader.readLine()) != null)
+            {
+                this.RANDOM_NAMES.add(line.trim());
+            }
+        }
+        catch (IOException exception)
+        {
+
+        }
+    }
 
     /**
      *
      * @param event
      */
     @SubscribeEvent
-    public void onZombieSpawn(LivingSpawnEvent.SpecialSpawn event)
+    public void onZombieSpawn_0(LivingSpawnEvent.SpecialSpawn event)
     {
         if (event.getEntity() instanceof EntityZombie)
         {
             EntityZombie zombie = (EntityZombie) event.getEntity();
 
-            if (random.nextFloat() < 0.3f)
+            if (RANDOM.nextFloat() < 0.3f)
             {
-                String[] randomNames = {"Adik", "Boris", "Igor", "Alex", "Nikolay"};
-                String randomName = randomNames[random.nextInt(randomNames.length)];
+                String randomName = this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
+
                 zombie.setCustomNameTag(randomName);
                 zombie.setAlwaysRenderNameTag(CheckDebugger.instance.IsRunDebugger);
             }
@@ -50,7 +112,7 @@ public final class OnNickNameZombie
      * @param event
      */
     @SubscribeEvent
-    public void onZombieDeath(LivingDeathEvent event)
+    public void onZombieDeath_1(LivingDeathEvent event)
     {
         if (event.getEntity() instanceof EntityZombie)
         {
@@ -63,11 +125,11 @@ public final class OnNickNameZombie
             {
                 String zombieName = zombie.getCustomNameTag();
 
-                String deathMessage = getDeathMessage(zombieName, source, killer);
+                String deathMessage = this.getDeathMessage(zombieName, source, killer);
 
                 if (!world.isRemote && world.getMinecraftServer() != null)
                 {
-                    if (random.nextFloat() < 0.75f)
+                    if (RANDOM.nextFloat() < 0.75f)
                     {
                         world.getMinecraftServer().getPlayerList().sendMessage(new TextComponentString(deathMessage));
                     }
