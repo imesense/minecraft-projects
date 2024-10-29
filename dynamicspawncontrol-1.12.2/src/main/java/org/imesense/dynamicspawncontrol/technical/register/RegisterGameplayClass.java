@@ -21,7 +21,7 @@ public final class RegisterGameplayClass
         OnDropSkeletonItem.class,
         OnComplexityBiomes.class,
         OnDropHeadMob.class,
-        OnNickNameZombie.class
+        OnNickNameEntity.class
     };
 
     /**
