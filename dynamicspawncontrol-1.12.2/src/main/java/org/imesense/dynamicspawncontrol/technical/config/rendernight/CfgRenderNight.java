@@ -26,11 +26,12 @@ public final class CfgRenderNight extends CfgClassAbstract
      */
     public CfgRenderNight(String nameConfigFile)
     {
-        super(nameConfigFile, Boolean.TRUE);
+        super(nameConfigFile, Boolean.FALSE);
 
 		CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataRenderNight.ConfigDataRenderNight.instance = new DataRenderNight.ConfigDataRenderNight("render_night");
+        DataRenderNight.ConfigDataRenderNight.instance =
+                new DataRenderNight.ConfigDataRenderNight("render_night");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
