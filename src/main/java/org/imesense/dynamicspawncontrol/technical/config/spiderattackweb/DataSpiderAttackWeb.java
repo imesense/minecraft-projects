@@ -162,16 +162,6 @@ public final class DataSpiderAttackWeb
 
         /**
          *
-         * @param value
-         */
-        @Setter
-        public void setDebugInfo(Boolean value)
-        {
-            this.debugInfo = value;
-        }
-
-        /**
-         *
          * @return
          */
         @Getter
@@ -248,16 +238,6 @@ public final class DataSpiderAttackWeb
         public Integer getAIPrioritySlingWebs()
         {
             return this.AIPrioritySlingWebs;
-        }
-
-        /**
-         *
-         * @return
-         */
-        @Getter
-        public Boolean getDebugInfo()
-        {
-            return this.debugInfo;
         }
 
         /**

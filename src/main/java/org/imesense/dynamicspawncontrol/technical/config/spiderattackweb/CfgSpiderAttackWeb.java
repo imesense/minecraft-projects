@@ -90,9 +90,6 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
         jsonObjectWeb.addProperty("ai_priority_sling_webs",
                 DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs());
 
-        jsonObjectWeb.addProperty("debug_info",
-                DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getDebugInfo());
-
         recordObject.add(DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getCategoryObject(), jsonObjectWeb);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -169,12 +166,6 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
                 {
                     DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.setAIPrioritySlingWebs(
                             jsonObjectWeb.get("ai_priority_sling_webs").getAsInt());
-                }
-
-                if (jsonObjectWeb.has("debug_info"))
-                {
-                    DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.setDebugInfo(
-                            jsonObjectWeb.get("debug_info").getAsBoolean());
                 }
             }
             else
