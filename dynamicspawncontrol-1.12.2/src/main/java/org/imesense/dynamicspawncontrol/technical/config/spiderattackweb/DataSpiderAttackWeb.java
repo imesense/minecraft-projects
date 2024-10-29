@@ -5,6 +5,8 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation
 import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -69,7 +71,7 @@ public final class DataSpiderAttackWeb
         /**
          *
          */
-        private Boolean debugInfo = false;
+        private String[] entityIds = { "minecraft:spider" };
 
         /**
          *
@@ -162,6 +164,15 @@ public final class DataSpiderAttackWeb
 
         /**
          *
+         */
+        @Setter
+        public void setEntityIds(String[] value)
+        {
+            this.entityIds = value;
+        }
+
+        /**
+         *
          * @return
          */
         @Getter
@@ -238,6 +249,16 @@ public final class DataSpiderAttackWeb
         public Integer getAIPrioritySlingWebs()
         {
             return this.AIPrioritySlingWebs;
+        }
+
+        /**
+         *
+         * @return
+         */
+        @Getter
+        public String[] getEntityIds()
+        {
+            return this.entityIds;
         }
 
         /**

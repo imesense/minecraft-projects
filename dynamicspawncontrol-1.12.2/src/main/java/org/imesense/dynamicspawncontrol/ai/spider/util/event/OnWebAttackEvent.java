@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.ai.spider.util.event;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -10,10 +12,14 @@ import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.IWebSlinger;
 import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.DataSpiderAttackWeb;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.SimpleCapabilityProvider;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.EntityThingBase;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.IThingBase;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.thing.TileEntityThingBase;
+
+import java.util.Arrays;
 
 /**
  *
@@ -40,7 +46,7 @@ public final class OnWebAttackEvent
 
         int priority = getEntityPriority(entity);
 
-        if (doesIt(priority))
+        if (priority > 0)
         {
             event.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
             (
@@ -85,7 +91,7 @@ public final class OnWebAttackEvent
 
         int priority = getEntityPriority(entity);
 
-        if (doesIt(priority))
+        if (priority > 0)
         {
             event.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
             (
@@ -126,23 +132,24 @@ public final class OnWebAttackEvent
      */
     private static int getEntityPriority(Object entity)
     {
-        if (entity instanceof EntitySpider)
+        //if (entity instanceof EntitySpider)
+        //{
+        //    return 3;
+        //}
+        /*else*/ if (entity instanceof EntityLivingBase)
         {
-            return 3;
-        }
-        else
-        {
-            return -1;
-        }
-    }
+            String entityId = EntityList.getEntityString((EntityLivingBase) entity);
 
-    /**
-     *
-     * @param priority
-     * @return
-     */
-    private static boolean doesIt(int priority)
-    {
-        return priority > 0;
+            Log.writeDataToLogFile(0, "entity 1: " + entityId);
+
+            if (entityId != null && Arrays.asList(DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getEntityIds()).contains(entityId))
+            {
+                Log.writeDataToLogFile(0, "entity 2: " + DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs());
+
+                return DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs();
+            }
+        }
+
+        return -1;
     }
 }
