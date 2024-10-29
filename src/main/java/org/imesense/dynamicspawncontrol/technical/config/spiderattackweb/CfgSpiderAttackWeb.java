@@ -90,6 +90,15 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
         jsonObjectWeb.addProperty("ai_priority_sling_webs",
                 DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs());
 
+        JsonArray EntityIdsNameArray = new JsonArray();
+
+        for (String name : DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getEntityIds())
+        {
+            EntityIdsNameArray.add(name);
+        }
+
+        jsonObjectWeb.add("entity_to_attack_web", EntityIdsNameArray);
+
         recordObject.add(DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getCategoryObject(), jsonObjectWeb);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -166,6 +175,22 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
                 {
                     DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.setAIPrioritySlingWebs(
                             jsonObjectWeb.get("ai_priority_sling_webs").getAsInt());
+                }
+
+                if (jsonObjectWeb.has("entity_to_attack_web"))
+                {
+                    JsonArray entityToAttackWebArray =
+                            jsonObjectWeb.getAsJsonArray("entity_to_attack_web");
+
+                    String[] entity = new String[entityToAttackWebArray.size()];
+
+                    for (int i = 0; i < entityToAttackWebArray.size(); i++)
+                    {
+                        entity[i] = entityToAttackWebArray.get(i).getAsString();
+                    }
+
+                    DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.
+                            setEntityIds(entity);
                 }
             }
             else
