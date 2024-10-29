@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.gameworldtime;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -64,6 +66,7 @@ public final class DataPluginWorldTime
          *
          * @return
          */
+        @Getter
         public Integer getDayLengthMinutes()
         {
             return this.dayLengthMinutes;
@@ -73,6 +76,7 @@ public final class DataPluginWorldTime
          *
          * @return
          */
+        @Getter
         public Integer getNightLengthMinutes()
         {
             return this.nightLengthMinutes;
@@ -82,6 +86,7 @@ public final class DataPluginWorldTime
          *
          * @return
          */
+        @Getter
         public Integer getSyncToSystemTimeRate()
         {
             return this.syncToSystemTimeRate;
@@ -91,6 +96,7 @@ public final class DataPluginWorldTime
          *
          * @return
          */
+        @Getter
         public Boolean getTimeControlDebug()
         {
             return this.timeControlDebug;
@@ -100,6 +106,7 @@ public final class DataPluginWorldTime
          *
          * @return
          */
+        @Getter
         public Boolean getSyncToSystemTime()
         {
             return this.syncToSystemTime;
@@ -109,6 +116,7 @@ public final class DataPluginWorldTime
          *
          * @param value
          */
+        @Setter
         public void setDayLengthMinutes(Integer value)
         {
             this.dayLengthMinutes = value;
@@ -118,6 +126,7 @@ public final class DataPluginWorldTime
          *
          * @param value
          */
+        @Setter
         public void setNightLengthMinutes(Integer value)
         {
             this.nightLengthMinutes = value;
@@ -127,6 +136,7 @@ public final class DataPluginWorldTime
          *
          * @param value
          */
+        @Setter
         public void setSyncToSystemTimeRate(Integer value)
         {
             this.syncToSystemTimeRate = value;
@@ -136,6 +146,7 @@ public final class DataPluginWorldTime
          *
          * @param value
          */
+        @Setter
         public void setTimeControlDebug(Boolean value)
         {
             this.timeControlDebug = value;
@@ -145,6 +156,7 @@ public final class DataPluginWorldTime
          *
          * @param value
          */
+        @Setter
         public void setSyncToSystemTime(Boolean value)
         {
             this.syncToSystemTime = value;
@@ -154,6 +166,7 @@ public final class DataPluginWorldTime
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

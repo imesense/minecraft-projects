@@ -2,8 +2,12 @@ package org.imesense.dynamicspawncontrol.technical.config.windowtitle;
 
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Method;
 
 /**
  *
@@ -46,6 +50,7 @@ public final class DataWindowTitle
          *
          * @return
          */
+        @Getter
         public String getWindowTitle()
         {
             return this.windowTitle;
@@ -55,6 +60,7 @@ public final class DataWindowTitle
          *
          * @param value
          */
+        @Setter
         public void setWindowTitle(String value)
         {
             this.windowTitle = value;
@@ -64,6 +70,7 @@ public final class DataWindowTitle
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

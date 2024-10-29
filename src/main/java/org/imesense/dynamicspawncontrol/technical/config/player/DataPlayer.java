@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.player;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -44,6 +46,7 @@ public final class DataPlayer
          *
          * @param value
          */
+        @Setter
         public void setProtectRespawnPlayerRadius(Short value)
         {
             this.protectRespawnPlayerRadius = value;
@@ -53,6 +56,7 @@ public final class DataPlayer
          *
          * @return
          */
+        @Getter
         public Short getProtectRespawnPlayerRadius()
         {
             return this.protectRespawnPlayerRadius;
@@ -62,6 +66,7 @@ public final class DataPlayer
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;
