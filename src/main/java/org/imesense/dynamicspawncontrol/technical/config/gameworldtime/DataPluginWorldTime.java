@@ -107,47 +107,47 @@ public final class DataPluginWorldTime
 
         /**
          *
-         * @param dayLengthMinutes
+         * @param value
          */
-        public void setDayLengthMinutes(Integer dayLengthMinutes)
+        public void setDayLengthMinutes(Integer value)
         {
-            this.dayLengthMinutes = dayLengthMinutes;
+            this.dayLengthMinutes = value;
         }
 
         /**
          *
-         * @param nightLengthMinutes
+         * @param value
          */
-        public void setNightLengthMinutes(Integer nightLengthMinutes)
+        public void setNightLengthMinutes(Integer value)
         {
-            this.nightLengthMinutes = nightLengthMinutes;
+            this.nightLengthMinutes = value;
         }
 
         /**
          *
-         * @param syncToSystemTimeRate
+         * @param value
          */
-        public void setSyncToSystemTimeRate(Integer syncToSystemTimeRate)
+        public void setSyncToSystemTimeRate(Integer value)
         {
-            this.syncToSystemTimeRate = syncToSystemTimeRate;
+            this.syncToSystemTimeRate = value;
         }
 
         /**
          *
-         * @param timeControlDebug
+         * @param value
          */
-        public void setTimeControlDebug(Boolean timeControlDebug)
+        public void setTimeControlDebug(Boolean value)
         {
-            this.timeControlDebug = timeControlDebug;
+            this.timeControlDebug = value;
         }
 
         /**
          *
-         * @param syncToSystemTime
+         * @param value
          */
-        public void setSyncToSystemTime(Boolean syncToSystemTime)
+        public void setSyncToSystemTime(Boolean value)
         {
-            this.syncToSystemTime = syncToSystemTime;
+            this.syncToSystemTime = value;
         }
 
         /**

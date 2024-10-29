@@ -14,22 +14,64 @@ public final class DataStaminaPlayer
      */
     public static final class ConfigDataStaminaPlayer
     {
+        /**
+         *
+         */
         private final String CATEGORY;
 
+        /**
+         *
+         */
         public static ConfigDataStaminaPlayer instance;
 
+        /**
+         *
+         */
         private Boolean showBar = true;
 
+        /**
+         *
+         */
         private Integer xOffset = 0;
+
+        /**
+         *
+         */
         private Integer yOffset = 0;
 
+        /**
+         *
+         */
         private Double increaseMultiplier = 1.50;
 
+        /**
+         *
+         */
         private Float maxStamina = 200.f;
+
+        /**
+         *
+         */
         private Float walking = 2.5f;
+
+        /**
+         *
+         */
         private Float standing = 1.5f;
+
+        /**
+         *
+         */
         private Float sprinting = 3.f;
+
+        /**
+         *
+         */
         private Float sneaking = 2.0f;
+
+        /**
+         *
+         */
         private Float jumping = 10.f;
 
         /**
@@ -44,92 +86,92 @@ public final class DataStaminaPlayer
 
         /**
          *
-         * @param showBar
+         * @param value
          */
-        public void setShowBar(Boolean showBar)
+        public void setShowBar(Boolean value)
         {
-            this.showBar = showBar;
+            this.showBar = value;
         }
 
         /**
          *
-         * @param xOffset
+         * @param value
          */
-        public void setXOffset(Integer xOffset)
+        public void setXOffset(Integer value)
         {
-            this.xOffset = xOffset;
+            this.xOffset = value;
         }
 
         /**
          *
-         * @param yOffset
+         * @param value
          */
-        public void setYOffset(Integer yOffset)
+        public void setYOffset(Integer value)
         {
-            this.yOffset = yOffset;
+            this.yOffset = value;
         }
 
         /**
          *
-         * @param increaseMultiplier
+         * @param value
          */
-        public void setIncreaseMultiplier(Double increaseMultiplier)
+        public void setIncreaseMultiplier(Double value)
         {
-            this.increaseMultiplier = increaseMultiplier;
+            this.increaseMultiplier = value;
         }
 
         /**
          *
-         * @param maxStamina
+         * @param value
          */
-        public void setMaxStamina(Float maxStamina)
+        public void setMaxStamina(Float value)
         {
-            this.maxStamina = maxStamina;
+            this.maxStamina = value;
         }
 
         /**
          *
-         * @param walking
+         * @param value
          */
-        public void setWalking(Float walking)
+        public void setWalking(Float value)
         {
-            this.walking = walking;
+            this.walking = value;
         }
 
         /**
          *
-         * @param standing
+         * @param value
          */
-        public void setStanding(Float standing)
+        public void setStanding(Float value)
         {
-            this.standing = standing;
+            this.standing = value;
         }
 
         /**
          *
-         * @param sprinting
+         * @param value
          */
-        public void setSprinting(Float sprinting)
+        public void setSprinting(Float value)
         {
-            this.sprinting = sprinting;
+            this.sprinting = value;
         }
 
         /**
          *
-         * @param sneaking
+         * @param value
          */
-        public void setSneaking(Float sneaking)
+        public void setSneaking(Float value)
         {
-            this.sneaking = sneaking;
+            this.sneaking = value;
         }
 
         /**
          *
-         * @param jumping
+         * @param value
          */
-        public void setJumping(Float jumping)
+        public void setJumping(Float value)
         {
-            this.jumping = jumping;
+            this.jumping = value;
         }
 
         /**

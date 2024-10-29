@@ -81,83 +81,83 @@ public final class DataSpiderAttackWeb
 
         /**
          *
-         * @param blockWebReplacement
+         * @param value
          */
-        public void setBlockWebReplacement(Boolean blockWebReplacement)
+        public void setBlockWebReplacement(Boolean value)
         {
-            this.blockWebReplacement = blockWebReplacement;
+            this.blockWebReplacement = value;
         }
 
         /**
          *
-         * @param webMeleeChance
+         * @param value
          */
-        public void setWebMeleeChance(Float webMeleeChance)
+        public void setWebMeleeChance(Float value)
         {
-            this.webMeleeChance = webMeleeChance;
+            this.webMeleeChance = value;
         }
 
         /**
          *
-         * @param slingCoolDown
+         * @param value
          */
-        public void setSlingCoolDown(Double slingCoolDown)
+        public void setSlingCoolDown(Double value)
         {
-            this.slingCoolDown = slingCoolDown;
+            this.slingCoolDown = value;
         }
 
         /**
          *
-         * @param slingInaccuracy
+         * @param value
          */
-        public void setSlingInaccuracy(Float slingInaccuracy)
+        public void setSlingInaccuracy(Float value)
         {
-            this.slingInaccuracy = slingInaccuracy;
+            this.slingInaccuracy = value;
         }
 
         /**
          *
-         * @param slingVariance
+         * @param value
          */
-        public void setSlingVariance(Float slingVariance)
+        public void setSlingVariance(Float value)
         {
-            this.slingVariance = slingVariance;
+            this.slingVariance = value;
         }
 
         /**
          *
-         * @param slingWebbing
+         * @param value
          */
-        public void setSlingWebbing(Boolean slingWebbing)
+        public void setSlingWebbing(Boolean value)
         {
-            this.slingWebbing = slingWebbing;
+            this.slingWebbing = value;
         }
 
         /**
          *
-         * @param slingWebbingOnWeb
+         * @param value
          */
-        public void setSlingWebbingOnWeb(Boolean slingWebbingOnWeb)
+        public void setSlingWebbingOnWeb(Boolean value)
         {
-            this.slingWebbingOnWeb = slingWebbingOnWeb;
+            this.slingWebbingOnWeb = value;
         }
 
         /**
          *
-         * @param AIPrioritySlingWebs
+         * @param value
          */
-        public void setAIPrioritySlingWebs(Integer AIPrioritySlingWebs)
+        public void setAIPrioritySlingWebs(Integer value)
         {
-            this.AIPrioritySlingWebs = AIPrioritySlingWebs;
+            this.AIPrioritySlingWebs = value;
         }
 
         /**
          *
-         * @param debugInfo
+         * @param value
          */
-        public void setDebugInfo(Boolean debugInfo)
+        public void setDebugInfo(Boolean value)
         {
-            this.debugInfo = debugInfo;
+            this.debugInfo = value;
         }
 
         /**

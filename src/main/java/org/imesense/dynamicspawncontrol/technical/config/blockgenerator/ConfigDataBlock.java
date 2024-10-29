@@ -46,29 +46,29 @@ public abstract class ConfigDataBlock
 
     /**
      *
-     * @param chanceSpawn
+     * @param value
      */
-    public void setChanceSpawn(Integer chanceSpawn)
+    public void setChanceSpawn(Integer value)
     {
-        this.chanceSpawn = chanceSpawn;
+        this.chanceSpawn = value;
     }
 
     /**
      *
-     * @param minHeight
+     * @param value
      */
-    public void setMinHeight(Integer minHeight)
+    public void setMinHeight(Integer value)
     {
-        this.minHeight = minHeight;
+        this.minHeight = value;
     }
 
     /**
      *
-     * @param maxHeight
+     * @param value
      */
-    public void setMaxHeight(Integer maxHeight)
+    public void setMaxHeight(Integer value)
     {
-        this.maxHeight = maxHeight;
+        this.maxHeight = value;
     }
 
     /**

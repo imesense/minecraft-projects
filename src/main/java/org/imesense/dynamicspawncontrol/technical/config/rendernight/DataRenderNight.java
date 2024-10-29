@@ -97,110 +97,110 @@ public final class DataRenderNight
 
         /**
          *
-         * @param darknessOverWorld
+         * @param value
          */
-        public void setDarknessOverWorld(Boolean darknessOverWorld)
+        public void setDarknessOverWorld(Boolean value)
         {
-            this.darknessOverWorld = darknessOverWorld;
+            this.darknessOverWorld = value;
         }
 
         /**
          *
-         * @param darknessNether
+         * @param value
          */
-        public void setDarknessNether(Boolean darknessNether)
+        public void setDarknessNether(Boolean value)
         {
-            this.darknessNether = darknessNether;
+            this.darknessNether = value;
         }
 
         /**
          *
-         * @param darknessEnd
+         * @param value
          */
-        public void setDarknessEnd(Boolean darknessEnd)
+        public void setDarknessEnd(Boolean value)
         {
-            this.darknessEnd = darknessEnd;
+            this.darknessEnd = value;
         }
 
         /**
          *
-         * @param darknessDefault
+         * @param value
          */
-        public void setDarknessDefault(Boolean darknessDefault)
+        public void setDarknessDefault(Boolean value)
         {
-            this.darknessDefault = darknessDefault;
+            this.darknessDefault = value;
         }
 
         /**
          *
-         * @param darknessSkyLess
+         * @param value
          */
-        public void setDarknessSkyLess(Boolean darknessSkyLess)
+        public void setDarknessSkyLess(Boolean value)
         {
-            this.darknessSkyLess = darknessSkyLess;
+            this.darknessSkyLess = value;
         }
 
         /**
          *
-         * @param darknessNetherFog
+         * @param value
          */
-        public void setDarknessNetherFog(Boolean darknessNetherFog)
+        public void setDarknessNetherFog(Boolean value)
         {
-            this.darknessNetherFog = darknessNetherFog;
+            this.darknessNetherFog = value;
         }
 
         /**
          *
-         * @param darknessEndFog
+         * @param value
          */
-        public void setDarknessEndFog(Boolean darknessEndFog)
+        public void setDarknessEndFog(Boolean value)
         {
-            this.darknessEndFog = darknessEndFog;
+            this.darknessEndFog = value;
         }
 
         /**
          *
-         * @param ignoreMoonLight
+         * @param value
          */
-        public void setIgnoreMoonLight(Boolean ignoreMoonLight)
+        public void setIgnoreMoonLight(Boolean value)
         {
-            this.ignoreMoonLight = ignoreMoonLight;
+            this.ignoreMoonLight = value;
         }
 
         /**
          *
-         * @param invertBlacklist
+         * @param value
          */
-        public void setInvertBlacklist(Boolean invertBlacklist)
+        public void setInvertBlacklist(Boolean value)
         {
-            this.invertBlacklist = invertBlacklist;
+            this.invertBlacklist = value;
         }
 
         /**
          *
-         * @param blacklistByID
+         * @param value
          */
-        public void setBlacklistByID(Integer[] blacklistByID)
+        public void setBlacklistByID(Integer[] value)
         {
-            this.blacklistByID = blacklistByID;
+            this.blacklistByID = value;
         }
 
         /**
          *
-         * @param moonPhaseFactors
+         * @param value
          */
-        public void setMoonPhaseFactors(Double[] moonPhaseFactors)
+        public void setMoonPhaseFactors(Double[] value)
         {
-            this.moonPhaseFactors = moonPhaseFactors;
+            this.moonPhaseFactors = value;
         }
 
         /**
          *
-         * @param blacklistByName
+         * @param value
          */
-        public void setBlacklistByName(String[] blacklistByName)
+        public void setBlacklistByName(String[] value)
         {
-            this.blacklistByName = blacklistByName;
+            this.blacklistByName = value;
         }
 
         /**

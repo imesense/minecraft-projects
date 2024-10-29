@@ -71,65 +71,65 @@ public final class DataZombieDropItem
 
         /**
          *
-         * @param breakItem
+         * @param value
          */
-        public void setBreakItem(Float breakItem)
+        public void setBreakItem(Float value)
         {
-            this.breakItem = breakItem;
+            this.breakItem = value;
         }
 
         /**
          *
-         * @param handItemDamageFactor
+         * @param value
          */
-        public void setHandItemDamageFactor(Float handItemDamageFactor)
+        public void setHandItemDamageFactor(Float value)
         {
-            this.handItemDamageFactor = handItemDamageFactor;
+            this.handItemDamageFactor = value;
         }
 
         /**
          *
-         * @param headDamageFactor
+         * @param value
          */
-        public void setHeadDamageFactor(Float headDamageFactor)
+        public void setHeadDamageFactor(Float value)
         {
-            this.headDamageFactor = headDamageFactor;
+            this.headDamageFactor = value;
         }
 
         /**
          *
-         * @param chestDamageFactor
+         * @param value
          */
-        public void setChestDamageFactor(Float chestDamageFactor)
+        public void setChestDamageFactor(Float value)
         {
-            this.chestDamageFactor = chestDamageFactor;
+            this.chestDamageFactor = value;
         }
 
         /**
          *
-         * @param legsDamageFactor
+         * @param value
          */
-        public void setLegsDamageFactor(Float legsDamageFactor)
+        public void setLegsDamageFactor(Float value)
         {
-            this.legsDamageFactor = legsDamageFactor;
+            this.legsDamageFactor = value;
         }
 
         /**
          *
-         * @param feetDamageFactor
+         * @param value
          */
-        public void setFeetDamageFactor(Float feetDamageFactor)
+        public void setFeetDamageFactor(Float value)
         {
-            this.feetDamageFactor = feetDamageFactor;
+            this.feetDamageFactor = value;
         }
 
         /**
          *
-         * @param damageSpreadFactor
+         * @param value
          */
-        public void setDamageSpreadFactor(Float damageSpreadFactor)
+        public void setDamageSpreadFactor(Float value)
         {
-            this.damageSpreadFactor = damageSpreadFactor;
+            this.damageSpreadFactor = value;
         }
 
         /**
