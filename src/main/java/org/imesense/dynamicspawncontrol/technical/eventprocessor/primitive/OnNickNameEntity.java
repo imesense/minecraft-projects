@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
@@ -23,7 +24,7 @@ import java.util.List;
  *
  */
 @Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnNickNameZombie
+public final class OnNickNameEntity
 {
     /**
      *
@@ -43,7 +44,7 @@ public final class OnNickNameZombie
     /**
      *
      */
-    public OnNickNameZombie()
+    public OnNickNameEntity()
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
 
@@ -65,11 +66,7 @@ public final class OnNickNameZombie
     {
         InputStream inputStream = getClass().getResourceAsStream("/assets/dynamicspawncontrol/names.txt");
 
-        if (inputStream == null)
-        {
-            System.err.println("Файл names.txt не найден!");
-            return;
-        }
+        assert inputStream != null;
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)))
         {
@@ -91,7 +88,7 @@ public final class OnNickNameZombie
      * @param event
      */
     @SubscribeEvent
-    public void onZombieSpawn_0(LivingSpawnEvent.SpecialSpawn event)
+    public void onEntitySpawn_0(LivingSpawnEvent.SpecialSpawn event)
     {
         if (event.getEntity() instanceof EntityZombie)
         {
@@ -99,11 +96,23 @@ public final class OnNickNameZombie
 
             if (RANDOM.nextFloat() < 0.3f)
             {
-                String randomName = this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
+                String randomName =
+                        this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
                 zombie.setCustomNameTag(randomName);
                 zombie.setAlwaysRenderNameTag(CheckDebugger.instance.IsRunDebugger);
             }
+        }
+
+        if (event.getEntity() instanceof EntityVillager)
+        {
+            EntityVillager villager = (EntityVillager) event.getEntity();
+
+            String randomName =
+                    this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
+
+            villager.setCustomNameTag(randomName);
+            villager.setAlwaysRenderNameTag(CheckDebugger.instance.IsRunDebugger);
         }
     }
 
@@ -112,7 +121,7 @@ public final class OnNickNameZombie
      * @param event
      */
     @SubscribeEvent
-    public void onZombieDeath_1(LivingDeathEvent event)
+    public void onEntityDeath_1(LivingDeathEvent event)
     {
         if (event.getEntity() instanceof EntityZombie)
         {
@@ -133,6 +142,26 @@ public final class OnNickNameZombie
                     {
                         world.getMinecraftServer().getPlayerList().sendMessage(new TextComponentString(deathMessage));
                     }
+                }
+            }
+        }
+
+        if (event.getEntity() instanceof EntityVillager)
+        {
+            EntityVillager villager = (EntityVillager) event.getEntity();
+            World world = villager.getEntityWorld();
+            DamageSource source = event.getSource();
+            Entity killer = source.getTrueSource();
+
+            if (villager.hasCustomName())
+            {
+                String villagerName = villager.getCustomNameTag();
+
+                String deathMessage = this.getDeathMessage(villagerName, source, killer);
+
+                if (!world.isRemote && world.getMinecraftServer() != null)
+                {
+                    world.getMinecraftServer().getPlayerList().sendMessage(new TextComponentString(deathMessage));
                 }
             }
         }
