@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.skeletondropitem;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -79,6 +81,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setBreakItem(Float value)
         {
             this.breakItem = value;
@@ -88,6 +91,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setHandItemDamageFactor(Float value)
         {
             this.handItemDamageFactor = value;
@@ -97,6 +101,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setHeadDamageFactor(Float value)
         {
             this.headDamageFactor = value;
@@ -106,6 +111,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setChestDamageFactor(Float value)
         {
             this.chestDamageFactor = value;
@@ -115,6 +121,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setLegsDamageFactor(Float value)
         {
             this.legsDamageFactor = value;
@@ -124,6 +131,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setFeetDamageFactor(Float value)
         {
             this.feetDamageFactor = value;
@@ -133,6 +141,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setDamageSpreadFactor(Float value)
         {
             this.damageSpreadFactor = value;
@@ -142,6 +151,7 @@ public final class DataSkeletonDropItem
          *
          * @param value
          */
+        @Setter
         public void setArrowsToDrops(Byte value)
         {
             this.arrowsToDrops = value;
@@ -151,6 +161,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Float getBreakItem()
         {
             return this.breakItem;
@@ -160,6 +171,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Float getHandItemDamageFactor()
         {
             return this.handItemDamageFactor;
@@ -169,6 +181,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Float getHeadDamageFactor()
         {
             return this.headDamageFactor;
@@ -178,6 +191,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Float getChestDamageFactor()
         {
             return this.chestDamageFactor;
@@ -187,6 +201,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Float getLegsDamageFactor()
         {
             return this.legsDamageFactor;
@@ -196,6 +211,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Float getFeetDamageFactor()
         {
             return this.feetDamageFactor;
@@ -205,6 +221,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Float getDamageSpreadFactor()
         {
             return this.damageSpreadFactor;
@@ -214,6 +231,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public Byte getArrowsToDrops()
         {
             return this.arrowsToDrops;
@@ -223,6 +241,7 @@ public final class DataSkeletonDropItem
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

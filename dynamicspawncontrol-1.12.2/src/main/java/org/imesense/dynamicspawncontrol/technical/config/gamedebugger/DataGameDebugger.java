@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.gamedebugger;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -46,6 +48,7 @@ public final class DataGameDebugger
          *
          * @return
          */
+        @Getter
         public Boolean getDebugMonitorCache()
         {
             return this.debugMonitorCache;
@@ -55,6 +58,7 @@ public final class DataGameDebugger
          *
          * @param value
          */
+        @Setter
         public void setDebugMonitorCache(Boolean value)
         {
             this.debugMonitorCache = value;
@@ -64,6 +68,7 @@ public final class DataGameDebugger
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;
@@ -117,6 +122,7 @@ public final class DataGameDebugger
          * @param key
          * @return
          */
+        @Getter
         public Boolean getDebugSetting(String key)
         {
             return DEBUG_SETTINGS.getOrDefault(key, false);
@@ -126,6 +132,7 @@ public final class DataGameDebugger
          *
          * @return
          */
+        @Getter
         public Map<String, Boolean> getDebugSettings()
         {
             return this.DEBUG_SETTINGS;
@@ -136,6 +143,7 @@ public final class DataGameDebugger
          * @param key
          * @param value
          */
+        @Setter
         public void setDebugSetting(String key, Boolean value)
         {
             if (DEBUG_SETTINGS.containsKey(key))
@@ -152,6 +160,7 @@ public final class DataGameDebugger
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

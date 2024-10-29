@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.blockgenerator;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 /**
  *
@@ -48,6 +50,7 @@ public abstract class ConfigDataBlock
      *
      * @param value
      */
+    @Setter
     public void setChanceSpawn(Integer value)
     {
         this.chanceSpawn = value;
@@ -57,6 +60,7 @@ public abstract class ConfigDataBlock
      *
      * @param value
      */
+    @Setter
     public void setMinHeight(Integer value)
     {
         this.minHeight = value;
@@ -66,6 +70,7 @@ public abstract class ConfigDataBlock
      *
      * @param value
      */
+    @Setter
     public void setMaxHeight(Integer value)
     {
         this.maxHeight = value;
@@ -75,6 +80,7 @@ public abstract class ConfigDataBlock
      *
      * @return
      */
+    @Getter
     public Integer getChanceSpawn()
     {
         return this.chanceSpawn;
@@ -84,6 +90,7 @@ public abstract class ConfigDataBlock
      *
      * @return
      */
+    @Getter
     public Integer getMinHeight()
     {
         return this.minHeight;
@@ -93,6 +100,7 @@ public abstract class ConfigDataBlock
      *
      * @return
      */
+    @Getter
     public Integer getMaxHeight()
     {
         return this.maxHeight;
@@ -102,6 +110,7 @@ public abstract class ConfigDataBlock
      *
      * @return
      */
+    @Getter
     public String getCategoryObject()
     {
         return this.CATEGORY;

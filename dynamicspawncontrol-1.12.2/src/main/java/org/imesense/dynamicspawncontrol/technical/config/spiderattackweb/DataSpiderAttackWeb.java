@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.spiderattackweb;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -92,6 +94,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setWebMeleeChance(Float value)
         {
             this.webMeleeChance = value;
@@ -101,6 +104,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setSlingCoolDown(Double value)
         {
             this.slingCoolDown = value;
@@ -110,6 +114,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setSlingInaccuracy(Float value)
         {
             this.slingInaccuracy = value;
@@ -119,6 +124,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setSlingVariance(Float value)
         {
             this.slingVariance = value;
@@ -128,6 +134,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setSlingWebbing(Boolean value)
         {
             this.slingWebbing = value;
@@ -137,6 +144,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setSlingWebbingOnWeb(Boolean value)
         {
             this.slingWebbingOnWeb = value;
@@ -146,6 +154,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setAIPrioritySlingWebs(Integer value)
         {
             this.AIPrioritySlingWebs = value;
@@ -155,6 +164,7 @@ public final class DataSpiderAttackWeb
          *
          * @param value
          */
+        @Setter
         public void setDebugInfo(Boolean value)
         {
             this.debugInfo = value;
@@ -164,6 +174,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Boolean getBlockWebReplacement()
         {
             return this.blockWebReplacement;
@@ -173,6 +184,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Float getWebMeleeChance()
         {
             return this.webMeleeChance;
@@ -182,6 +194,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Double getSlingCoolDown()
         {
             return this.slingCoolDown;
@@ -191,6 +204,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Float getSlingInaccuracy()
         {
             return this.slingInaccuracy;
@@ -200,6 +214,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Float getSlingVariance()
         {
             return this.slingVariance;
@@ -209,6 +224,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Boolean getSlingWebbing()
         {
             return this.slingWebbing;
@@ -218,6 +234,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Boolean getSlingWebbingOnWeb()
         {
             return this.slingWebbingOnWeb;
@@ -227,6 +244,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Integer getAIPrioritySlingWebs()
         {
             return this.AIPrioritySlingWebs;
@@ -236,6 +254,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public Boolean getDebugInfo()
         {
             return this.debugInfo;
@@ -245,6 +264,7 @@ public final class DataSpiderAttackWeb
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

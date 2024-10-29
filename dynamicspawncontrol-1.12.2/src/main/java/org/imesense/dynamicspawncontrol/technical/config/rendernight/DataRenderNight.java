@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.rendernight;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -99,6 +101,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setDarknessOverWorld(Boolean value)
         {
             this.darknessOverWorld = value;
@@ -108,6 +111,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setDarknessNether(Boolean value)
         {
             this.darknessNether = value;
@@ -117,6 +121,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setDarknessEnd(Boolean value)
         {
             this.darknessEnd = value;
@@ -126,6 +131,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setDarknessDefault(Boolean value)
         {
             this.darknessDefault = value;
@@ -135,6 +141,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setDarknessSkyLess(Boolean value)
         {
             this.darknessSkyLess = value;
@@ -144,6 +151,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setDarknessNetherFog(Boolean value)
         {
             this.darknessNetherFog = value;
@@ -153,6 +161,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setDarknessEndFog(Boolean value)
         {
             this.darknessEndFog = value;
@@ -162,6 +171,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setIgnoreMoonLight(Boolean value)
         {
             this.ignoreMoonLight = value;
@@ -171,6 +181,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setInvertBlacklist(Boolean value)
         {
             this.invertBlacklist = value;
@@ -180,6 +191,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setBlacklistByID(Integer[] value)
         {
             this.blacklistByID = value;
@@ -189,6 +201,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setMoonPhaseFactors(Double[] value)
         {
             this.moonPhaseFactors = value;
@@ -198,6 +211,7 @@ public final class DataRenderNight
          *
          * @param value
          */
+        @Setter
         public void setBlacklistByName(String[] value)
         {
             this.blacklistByName = value;
@@ -207,6 +221,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getDarknessOverWorld()
         {
             return this.darknessOverWorld;
@@ -216,6 +231,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getDarknessNether()
         {
             return this.darknessNether;
@@ -225,6 +241,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getDarknessEnd()
         {
             return this.darknessEnd;
@@ -234,6 +251,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getDarknessDefault()
         {
             return this.darknessDefault;
@@ -243,6 +261,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getDarknessSkyLess()
         {
             return this.darknessSkyLess;
@@ -252,6 +271,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getDarknessNetherFog()
         {
             return this.darknessNetherFog;
@@ -261,6 +281,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getDarknessEndFog()
         {
             return this.darknessEndFog;
@@ -270,6 +291,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getIgnoreMoonLight()
         {
             return this.ignoreMoonLight;
@@ -279,6 +301,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Boolean getInvertBlacklist()
         {
             return this.invertBlacklist;
@@ -288,6 +311,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Integer[] getBlacklistByID()
         {
             return this.blacklistByID;
@@ -297,6 +321,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public Double[] getMoonPhaseFactors()
         {
             return this.moonPhaseFactors;
@@ -306,6 +331,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public String[] getBlacklistByName()
         {
             return this.blacklistByName;
@@ -315,6 +341,7 @@ public final class DataRenderNight
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

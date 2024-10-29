@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.technical.config.staminaplayer;
 
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -88,6 +90,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setShowBar(Boolean value)
         {
             this.showBar = value;
@@ -97,6 +100,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setXOffset(Integer value)
         {
             this.xOffset = value;
@@ -106,6 +110,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setYOffset(Integer value)
         {
             this.yOffset = value;
@@ -115,6 +120,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setIncreaseMultiplier(Double value)
         {
             this.increaseMultiplier = value;
@@ -124,6 +130,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setMaxStamina(Float value)
         {
             this.maxStamina = value;
@@ -133,6 +140,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setWalking(Float value)
         {
             this.walking = value;
@@ -142,6 +150,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setStanding(Float value)
         {
             this.standing = value;
@@ -151,6 +160,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setSprinting(Float value)
         {
             this.sprinting = value;
@@ -160,6 +170,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setSneaking(Float value)
         {
             this.sneaking = value;
@@ -169,6 +180,7 @@ public final class DataStaminaPlayer
          *
          * @param value
          */
+        @Setter
         public void setJumping(Float value)
         {
             this.jumping = value;
@@ -178,6 +190,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Boolean getShowBar()
         {
             return this.showBar;
@@ -187,6 +200,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Integer getXOffset()
         {
             return this.xOffset;
@@ -196,6 +210,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Integer getYOffset()
         {
             return this.yOffset;
@@ -205,6 +220,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Double getIncreaseMultiplier()
         {
             return this.increaseMultiplier;
@@ -214,6 +230,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Float getMaxStamina()
         {
             return this.maxStamina;
@@ -223,6 +240,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Float getWalking()
         {
             return this.walking;
@@ -232,6 +250,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Float getStanding()
         {
             return this.standing;
@@ -241,6 +260,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Float getSprinting()
         {
             return this.sprinting;
@@ -250,6 +270,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Float getSneaking()
         {
             return this.sneaking;
@@ -259,6 +280,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public Float getJumping()
         {
             return this.jumping;
@@ -268,6 +290,7 @@ public final class DataStaminaPlayer
          *
          * @return
          */
+        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;
