@@ -53,11 +53,11 @@ public final class DataWindowTitle
 
         /**
          *
-         * @param windowTitle
+         * @param value
          */
-        public void setWindowTitle(String windowTitle)
+        public void setWindowTitle(String value)
         {
-            this.windowTitle = windowTitle;
+            this.windowTitle = value;
         }
 
         /**
