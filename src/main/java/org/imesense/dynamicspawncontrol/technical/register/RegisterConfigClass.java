@@ -11,6 +11,7 @@ import org.imesense.dynamicspawncontrol.technical.config.player.CfgPlayer;
 import org.imesense.dynamicspawncontrol.technical.config.rendernight.CfgRenderNight;
 import org.imesense.dynamicspawncontrol.technical.config.skeletondropitem.CfgSkeletonDropItem;
 import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.CfgSpiderAttackWeb;
+import org.imesense.dynamicspawncontrol.technical.config.staminaplayer.CfgStaminaPlayer;
 import org.imesense.dynamicspawncontrol.technical.config.windowtitle.CfgWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.config.zombiedropitem.CfgZombieDropItem;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.DCSSingleConfig;
@@ -38,7 +39,8 @@ public final class RegisterConfigClass
         CfgPluginWorldTime.class,
         CfgZombieDropItem.class,
         CfgSkeletonDropItem.class,
-        CfgSpiderAttackWeb.class
+        CfgSpiderAttackWeb.class,
+        CfgStaminaPlayer.class
     };
 
     /**
