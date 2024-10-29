@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -130,23 +131,20 @@ public final class OnWebAttackEvent
      * @param entity
      * @return
      */
-    private static int getEntityPriority(Object entity)
-    {
-        //if (entity instanceof EntitySpider)
-        //{
-        //    return 3;
-        //}
-        /*else*/ if (entity instanceof EntityLivingBase)
-        {
-            String entityId = EntityList.getEntityString((EntityLivingBase) entity);
+    private static int getEntityPriority(Object entity) {
+        if (entity instanceof EntityLivingBase) {
 
-            Log.writeDataToLogFile(0, "entity 1: " + entityId);
+            ResourceLocation entityId = EntityList.getKey((EntityLivingBase) entity);
 
-            if (entityId != null && Arrays.asList(DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getEntityIds()).contains(entityId))
-            {
-                Log.writeDataToLogFile(0, "entity 2: " + DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs());
+            if (entityId != null) {
+                Log.writeDataToLogFile(0, "entity 1: " + entityId.toString());
 
-                return DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs();
+                int priority = DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getEntityPriority(entityId.toString());
+
+                if (priority > 0) {
+                    Log.writeDataToLogFile(0, "entity 2: " + priority);
+                    return priority;
+                }
             }
         }
 
