@@ -6,7 +6,9 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -73,6 +75,18 @@ public final class DataSpiderAttackWeb
          */
         private String[] entityIds = { "minecraft:spider" };
 
+        private Map<String, Integer> entityIdPriorityMap;
+
+        public Map<String, Integer> getEntityIdPriorityMap() {
+            return entityIdPriorityMap;
+        }
+        public Integer getEntityPriority(String entityId) {
+            return entityIdPriorityMap.getOrDefault(entityId, -1);
+        }
+        public void setEntityIdPriorityMap(Map<String, Integer> entityIdPriorityMap) {
+            this.entityIdPriorityMap = entityIdPriorityMap;
+        }
+
         /**
          *
          * @param CATEGORY
@@ -81,6 +95,9 @@ public final class DataSpiderAttackWeb
         {
             CodeGenericUtil.printInitClassToLog(this.getClass());
             this.CATEGORY = CATEGORY;
+
+            entityIdPriorityMap = new HashMap<>();
+            entityIdPriorityMap.put("minecraft:spider", 3);
         }
 
         /**

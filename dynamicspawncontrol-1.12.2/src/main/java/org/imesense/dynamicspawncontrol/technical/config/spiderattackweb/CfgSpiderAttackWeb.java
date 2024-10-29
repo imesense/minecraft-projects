@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -32,6 +34,9 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
 
         DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance =
                 new DataSpiderAttackWeb.ConfigDataSpiderAttackWeb("spider_web_attack");
+
+        //entityIdPriorityMap = new HashMap<>();
+        //entityIdPriorityMap.put("minecraft:spider", 3);
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -90,14 +95,24 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
         jsonObjectWeb.addProperty("ai_priority_sling_webs",
                 DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs());
 
-        JsonArray EntityIdsNameArray = new JsonArray();
+        //JsonArray EntityIdsNameArray = new JsonArray();
 
-        for (String name : DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getEntityIds())
-        {
-            EntityIdsNameArray.add(name);
+        //for (String name : DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getEntityIds())
+        //{
+        //    EntityIdsNameArray.add(name);
+        //}
+
+        //jsonObjectWeb.add("entity_to_attack_web", EntityIdsNameArray);
+
+        JsonArray entityIdPriorityArray = new JsonArray();
+        for (Map.Entry<String, Integer> entry : DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getEntityIdPriorityMap().entrySet()) {
+            JsonObject entityObject = new JsonObject();
+            entityObject.addProperty("entityId", entry.getKey());
+            entityObject.addProperty("priority", entry.getValue());
+            entityIdPriorityArray.add(entityObject);
         }
 
-        jsonObjectWeb.add("entity_to_attack_web", EntityIdsNameArray);
+        jsonObjectWeb.add("entity_to_attack_web", entityIdPriorityArray);
 
         recordObject.add(DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.getCategoryObject(), jsonObjectWeb);
 
@@ -177,21 +192,35 @@ public final class CfgSpiderAttackWeb extends CfgClassAbstract
                             jsonObjectWeb.get("ai_priority_sling_webs").getAsInt());
                 }
 
-                if (jsonObjectWeb.has("entity_to_attack_web"))
-                {
-                    JsonArray entityToAttackWebArray =
-                            jsonObjectWeb.getAsJsonArray("entity_to_attack_web");
+                if (jsonObjectWeb.has("entity_to_attack_web")) {
+                    JsonArray entityIdPriorityArray = jsonObjectWeb.getAsJsonArray("entity_to_attack_web");
+                    Map<String, Integer> entityIdPriorityMap = new HashMap<>();
 
-                    String[] entity = new String[entityToAttackWebArray.size()];
-
-                    for (int i = 0; i < entityToAttackWebArray.size(); i++)
-                    {
-                        entity[i] = entityToAttackWebArray.get(i).getAsString();
+                    for (JsonElement element : entityIdPriorityArray) {
+                        JsonObject entityObject = element.getAsJsonObject();
+                        String entityId = entityObject.get("entityId").getAsString();
+                        int priority = entityObject.get("priority").getAsInt();
+                        entityIdPriorityMap.put(entityId, priority);
                     }
 
-                    DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.
-                            setEntityIds(entity);
+                    DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.setEntityIdPriorityMap(entityIdPriorityMap);
                 }
+
+                //if (jsonObjectWeb.has("entity_to_attack_web"))
+                //{
+                //    JsonArray entityToAttackWebArray =
+                //            jsonObjectWeb.getAsJsonArray("entity_to_attack_web");
+                //
+                //    String[] entity = new String[entityToAttackWebArray.size()];
+                //
+                //    for (int i = 0; i < entityToAttackWebArray.size(); i++)
+                //    {
+                    //        entity[i] = entityToAttackWebArray.get(i).getAsString();
+                    //    }
+                //
+                //    DataSpiderAttackWeb.ConfigDataSpiderAttackWeb.instance.
+                //            setEntityIds(entity);
+                //}
             }
             else
             {
