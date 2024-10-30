@@ -242,6 +242,7 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
                 .attribute(Attribute.create(BLOCK_OFFSET))
 
                 .attribute(Attribute.create(GET_MOON_PHASE))
+                .attribute(Attribute.create(GET_CURRENT_GAME_DAY))
 
                 .attribute(Attribute.createMulti(MOB))
 
