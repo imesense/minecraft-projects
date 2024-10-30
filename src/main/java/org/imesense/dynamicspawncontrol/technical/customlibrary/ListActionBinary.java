@@ -29,6 +29,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
+import static org.imesense.dynamicspawncontrol.UniqueField.CLIENT;
 import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
 import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.SpawnCondition.*;
 
@@ -205,6 +206,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
         if (map.has(GET_MOON_PHASE))
         {
             this.addCheckMoonPhase(map);
+        }
+
+        if (map.has(GET_CURRENT_GAME_DAY))
+        {
+            this.addCheckCurrentGameDay(map);
         }
 
         if (map.has(MOB))
@@ -941,14 +947,42 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param _map
+     * @param map
      */
-    private void addCheckMoonPhase(AttributeMap<?> _map)
+    private void addCheckMoonPhase(AttributeMap<?> map)
     {
-        Object moon = _map.get(GET_MOON_PHASE);
+        Object moon = map.get(GET_MOON_PHASE);
 
         this.ARRAY_LIST.add((event,query) ->
                 query.getWorld(event).getMoonPhase() == (Integer)moon);
+    }
+
+    /**
+     *
+     * @param map
+     */
+    private void addCheckCurrentGameDay(AttributeMap<?> map)
+    {
+        Object targetDay = map.get(GET_CURRENT_GAME_DAY);
+
+        if (targetDay == null)
+        {
+            return;
+        }
+        
+        this.ARRAY_LIST.add((event, query) ->
+        {
+            World world = query.getWorld(event);
+
+            if (world != null)
+            {
+                long currentDay = world.getWorldTime() / 24000;
+                Log.writeDataToLogFile(0, "cDay: " + currentDay);
+                return currentDay == (Integer)targetDay;
+            }
+
+            return false;
+        });
     }
 
     /**

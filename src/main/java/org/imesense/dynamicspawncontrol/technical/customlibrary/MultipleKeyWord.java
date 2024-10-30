@@ -44,6 +44,8 @@ public final class MultipleKeyWord
 
         public static final AttributeKey<Integer> GET_MOON_PHASE = AttributeKey.create(AttributeType.INTEGER, "moon_phase");
 
+        public static final AttributeKey<Integer> GET_CURRENT_GAME_DAY = AttributeKey.create(AttributeType.INTEGER, "current_day");
+
         public static final AttributeKey<String> MOB = AttributeKey.create(AttributeType.STRING, "mob");
 
         public static final AttributeKey<Boolean> ANIMALS = AttributeKey.create(AttributeType.BOOLEAN, "animals");
