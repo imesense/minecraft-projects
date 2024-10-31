@@ -208,9 +208,34 @@ public final class ListActionBinary<T extends SignalDataGetter>
             this.addCheckMoonPhase(map);
         }
 
-        if (map.has(GET_CURRENT_GAME_DAY))
+        if (map.has(GET_CURRENT_GAME_DAY_EQUAL))
         {
-            this.addCheckCurrentGameDay(map);
+            this.addCheckCurrentGameDayEqual(map);
+        }
+
+        if (map.has(GET_CURRENT_GAME_DAY_GREATER))
+        {
+            this.addCheckCurrentGameDayGreater(map);
+        }
+
+        if (map.has(GET_CURRENT_GAME_DAY_LESS))
+        {
+            this.addCheckCurrentGameDayLess(map);
+        }
+
+        if (map.has(GET_CURRENT_GAME_DAY_GREATER_OR_EQUAL))
+        {
+            this.addCheckCurrentGameDayGreaterOrEqual(map);
+        }
+
+        if (map.has(GET_CURRENT_GAME_DAY_LESS_OR_EQUAL))
+        {
+            this.addCheckCurrentGameDayLessOrEqual(map);
+        }
+
+        if (map.has(GET_CURRENT_GAME_DAY_INTERVAL))
+        {
+            this.addCheckCurrentGameDayInterval(map);
         }
 
         if (map.has(MOB))
@@ -961,15 +986,10 @@ public final class ListActionBinary<T extends SignalDataGetter>
      *
      * @param map
      */
-    private void addCheckCurrentGameDay(AttributeMap<?> map)
+    private void addCheckCurrentGameDayEqual(AttributeMap<?> map)
     {
-        Object targetDay = map.get(GET_CURRENT_GAME_DAY);
+        Object targetDay = map.get(GET_CURRENT_GAME_DAY_EQUAL);
 
-        if (targetDay == null)
-        {
-            return;
-        }
-        
         this.ARRAY_LIST.add((event, query) ->
         {
             World world = query.getWorld(event);
@@ -977,8 +997,119 @@ public final class ListActionBinary<T extends SignalDataGetter>
             if (world != null)
             {
                 long currentDay = world.getWorldTime() / 24000;
-                Log.writeDataToLogFile(0, "cDay: " + currentDay);
-                return currentDay == (Integer)targetDay;
+                return currentDay == (Long)targetDay;
+            }
+
+            return false;
+        });
+    }
+
+    /**
+     *
+     * @param map
+     */
+    private void addCheckCurrentGameDayGreater(AttributeMap<?> map)
+    {
+        Object targetDay = map.get(GET_CURRENT_GAME_DAY_GREATER);
+
+        this.ARRAY_LIST.add((event, query) ->
+        {
+            World world = query.getWorld(event);
+
+            if (world != null)
+            {
+                long currentDay = world.getWorldTime() / 24000;
+                return currentDay > (Long)targetDay;
+            }
+
+            return false;
+        });
+    }
+
+    /**
+     *
+     * @param map
+     */
+    private void addCheckCurrentGameDayLess(AttributeMap<?> map)
+    {
+        Object targetDay = map.get(GET_CURRENT_GAME_DAY_LESS);
+
+        this.ARRAY_LIST.add((event, query) ->
+        {
+            World world = query.getWorld(event);
+
+            if (world != null)
+            {
+                long currentDay = world.getWorldTime() / 24000;
+                return currentDay < (Long)targetDay;
+            }
+
+            return false;
+        });
+    }
+
+    /**
+     *
+     * @param map
+     */
+    private void addCheckCurrentGameDayGreaterOrEqual(AttributeMap<?> map)
+    {
+        Object targetDay = map.get(GET_CURRENT_GAME_DAY_GREATER_OR_EQUAL);
+
+        this.ARRAY_LIST.add((event, query) ->
+        {
+            World world = query.getWorld(event);
+
+            if (world != null)
+            {
+                long currentDay = world.getWorldTime() / 24000;
+                return currentDay >= (Long)targetDay;
+            }
+
+            return false;
+        });
+    }
+
+    /**
+     *
+     * @param map
+     */
+    private void addCheckCurrentGameDayLessOrEqual(AttributeMap<?> map)
+    {
+        Object targetDay = map.get(GET_CURRENT_GAME_DAY_LESS_OR_EQUAL);
+
+        this.ARRAY_LIST.add((event, query) ->
+        {
+            World world = query.getWorld(event);
+
+            if (world != null)
+            {
+                long currentDay = world.getWorldTime() / 24000;
+                return currentDay <= (Long)targetDay;
+            }
+
+            return false;
+        });
+    }
+
+    /**
+     *
+     * @param map
+     */
+    private void addCheckCurrentGameDayInterval(AttributeMap<?> map)
+    {
+        Object intervalObj = map.get(GET_CURRENT_GAME_DAY_INTERVAL);
+
+        long interval = (Long) intervalObj;
+
+        this.ARRAY_LIST.add((event, query) ->
+        {
+            World world = query.getWorld(event);
+
+            if (world != null)
+            {
+                long currentDay = world.getWorldTime() / 24000;
+                return currentDay % interval == 0;
             }
 
             return false;
