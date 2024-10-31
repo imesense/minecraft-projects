@@ -44,7 +44,19 @@ public final class MultipleKeyWord
 
         public static final AttributeKey<Integer> GET_MOON_PHASE = AttributeKey.create(AttributeType.INTEGER, "moon_phase");
 
-        public static final AttributeKey<Integer> GET_CURRENT_GAME_DAY = AttributeKey.create(AttributeType.INTEGER, "current_day");
+        //-' '='
+        public static final AttributeKey<Long> GET_CURRENT_GAME_DAY_EQUAL = AttributeKey.create(AttributeType.LONG, "current_day_equal");
+        //-' '>'
+        public static final AttributeKey<Long> GET_CURRENT_GAME_DAY_GREATER = AttributeKey.create(AttributeType.LONG, "current_day_greater");
+        //-' '<'
+        public static final AttributeKey<Long> GET_CURRENT_GAME_DAY_LESS = AttributeKey.create(AttributeType.LONG, "current_day_less");
+        //-' '>='
+        public static final AttributeKey<Long> GET_CURRENT_GAME_DAY_GREATER_OR_EQUAL = AttributeKey.create(AttributeType.LONG, "current_day_greater_or_equal");
+        //-' '<='
+        public static final AttributeKey<Long> GET_CURRENT_GAME_DAY_LESS_OR_EQUAL = AttributeKey.create(AttributeType.LONG, "current_day_less_or_equal");
+
+        //-' currentDay % value == 0 -> true
+        public static final AttributeKey<Long> GET_CURRENT_GAME_DAY_INTERVAL = AttributeKey.create(AttributeType.LONG, "current_day_interval");
 
         public static final AttributeKey<String> MOB = AttributeKey.create(AttributeType.STRING, "mob");
 
