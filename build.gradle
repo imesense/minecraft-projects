@@ -55,8 +55,11 @@ minecraft
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            // Loading plugin
+            // Loading plugin 'Real Nights'
             property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginNight'
+
+            // Loading plugin 'Blood Moon'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginBloodMoon'
         }
 
         server
@@ -67,8 +70,11 @@ minecraft
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            // Loading plugin
+            // Loading plugin 'Real Nights'
             property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginNight'
+
+            // Loading plugin 'Blood Moon'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginBloodMoon'
         }
     }
 }
