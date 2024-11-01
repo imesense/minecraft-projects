@@ -16,8 +16,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-public final class ClassTransformerBloodMoon implements IClassTransformer
-{
+public final class ClassTransformerBloodMoon implements IClassTransformer {
     Logger logger = LogManager.getLogger("Bloodmoon");
 
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
@@ -35,49 +34,48 @@ public final class ClassTransformerBloodMoon implements IClassTransformer
         this.logger.log(Level.DEBUG, "Found World Class: " + classNode.name);
         MethodNode getSkyColor = null;
         MethodNode getMoonPhase = null;
-        Iterator var6 = classNode.methods.iterator();
 
-        while(var6.hasNext()) {
-            MethodNode mn = (MethodNode)var6.next();
-            if (mn.name.equals(MCPNames.method("func_72833_a"))) {
+        for (MethodNode mn : classNode.methods) {
+            if (mn.name.equals("getSkyColor")) {
                 getSkyColor = mn;
-            } else if (mn.name.equals(MCPNames.method("func_72853_d"))) {
+            } else if (mn.name.equals("getMoonPhase")) {
                 getMoonPhase = mn;
             }
         }
 
         InsnList toInsert;
-        int i;
         AbstractInsnNode ain;
+
         if (getSkyColor != null) {
             this.logger.log(Level.DEBUG, " - Found getSkyColor");
 
-            for(i = 0; i < getSkyColor.instructions.size(); ++i) {
+            /*
+            for (int i = 0; i < getSkyColor.instructions.size(); ++i) {
                 ain = getSkyColor.instructions.get(i);
-                if (ain.getOpcode() == 176) {
+                if (ain.getOpcode() == 176) { // Opcodes.ARETURN
                     toInsert = new InsnList();
                     toInsert.add(new FieldInsnNode(178, "lumien/bloodmoon/client/ClientBloodmoonHandler", "INSTANCE", "Llumien/bloodmoon/client/ClientBloodmoonHandler;"));
-                    toInsert.add(new InsnNode(95));
+                    toInsert.add(new InsnNode(95)); // Swap
                     toInsert.add(new MethodInsnNode(182, "lumien/bloodmoon/client/ClientBloodmoonHandler", "skyColorHook", "(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;", false));
-                    i += 3;
                     getSkyColor.instructions.insertBefore(ain, toInsert);
                 }
             }
+             */
         }
 
         if (getMoonPhase != null) {
             this.logger.log(Level.DEBUG, " - Found getMoonPhase");
-
-            for(i = 0; i < getMoonPhase.instructions.size(); ++i) {
+/*
+            for (int i = 0; i < getMoonPhase.instructions.size(); ++i) {
                 ain = getMoonPhase.instructions.get(i);
-                if (ain.getOpcode() == 172) {
+                if (ain.getOpcode() == 172) { // Opcodes.IRETURN
                     toInsert = new InsnList();
                     toInsert.add(new FieldInsnNode(178, "lumien/bloodmoon/client/ClientBloodmoonHandler", "INSTANCE", "Llumien/bloodmoon/client/ClientBloodmoonHandler;"));
                     toInsert.add(new MethodInsnNode(182, "lumien/bloodmoon/client/ClientBloodmoonHandler", "moonColorHook", "()V", false));
-                    i += 2;
                     getMoonPhase.instructions.insertBefore(ain, toInsert);
                 }
             }
+ */
         }
 
         ClassWriter writer = new ClassWriter(3);
@@ -90,32 +88,31 @@ public final class ClassTransformerBloodMoon implements IClassTransformer
         ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
         this.logger.log(Level.DEBUG, "Found EntityRenderer Class: " + classNode.name);
-        String methodName = MCPNames.method("func_78472_g");
-        MethodNode updateLightmap = null;
-        Iterator var6 = classNode.methods.iterator();
 
-        while(var6.hasNext()) {
-            MethodNode mn = (MethodNode)var6.next();
-            if (mn.name.equals(methodName)) {
+        MethodNode updateLightmap = null;
+        for (MethodNode mn : classNode.methods) {
+            if (mn.name.equals("updateLightmap")) {
                 updateLightmap = mn;
             }
         }
 
         if (updateLightmap != null) {
             this.logger.log(Level.DEBUG, " - Found updateLightmap");
+
+            /*
             boolean insertedHook = false;
 
-            for(int i = 0; i < updateLightmap.instructions.size(); ++i) {
+            for (int i = 0; i < updateLightmap.instructions.size(); ++i) {
                 AbstractInsnNode an = updateLightmap.instructions.get(i);
                 if (an instanceof VarInsnNode && !insertedHook) {
-                    VarInsnNode iin = (VarInsnNode)an;
+                    VarInsnNode iin = (VarInsnNode) an;
                     if (iin.getOpcode() == 54 && iin.var == 23) {
                         InsnList toInsert = new InsnList();
                         toInsert.add(new FieldInsnNode(178, "lumien/bloodmoon/client/ClientBloodmoonHandler", "INSTANCE", "Llumien/bloodmoon/client/ClientBloodmoonHandler;"));
-                        toInsert.add(new VarInsnNode(21, 5));
-                        toInsert.add(new VarInsnNode(21, 21));
+                        toInsert.add(new VarInsnNode(21, 5)); // Load float from local variable 5
+                        toInsert.add(new VarInsnNode(21, 21)); // Load int from local variable 21
                         toInsert.add(new MethodInsnNode(182, "lumien/bloodmoon/client/ClientBloodmoonHandler", "manipulateRed", "(II)I", false));
-                        toInsert.add(new VarInsnNode(54, 21));
+                        toInsert.add(new VarInsnNode(54, 21)); // Store result in local variable 21
                         toInsert.add(new FieldInsnNode(178, "lumien/bloodmoon/client/ClientBloodmoonHandler", "INSTANCE", "Llumien/bloodmoon/client/ClientBloodmoonHandler;"));
                         toInsert.add(new VarInsnNode(21, 5));
                         toInsert.add(new VarInsnNode(21, 22));
@@ -131,22 +128,12 @@ public final class ClassTransformerBloodMoon implements IClassTransformer
                     }
                 }
             }
+             */
         }
 
         ClassWriter writer = new ClassWriter(1);
         classNode.accept(writer);
         return writer.toByteArray();
     }
-
-    private byte[] patchDummyClass(byte[] basicClass) {
-        ClassNode classNode = new ClassNode();
-        ClassReader classReader = new ClassReader(basicClass);
-        classReader.accept(classNode, 0);
-        this.logger.log(Level.INFO, "Found Dummy Class: " + classNode.name);
-        ClassWriter writer = new ClassWriter(3);
-        classNode.accept(writer);
-        return writer.toByteArray();
-    }
 }
 
-}
