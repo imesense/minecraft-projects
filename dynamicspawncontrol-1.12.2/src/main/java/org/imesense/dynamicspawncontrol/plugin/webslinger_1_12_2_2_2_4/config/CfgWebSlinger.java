@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * 
  */
-@DCSSingleConfig(fileName = "cfg_plugin_spider_attack_web")
+@DCSSingleConfig(fileName = "cfg_webslinger_1_12_2_2_2_4")
 public final class CfgWebSlinger extends CfgClassAbstract
 {
     /**
