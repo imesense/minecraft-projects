@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.DataDarkness;
 
 import java.lang.reflect.Field;
@@ -70,7 +70,7 @@ public final class EntityRendererHook
 
         boolean lightmapUpdateNeededValue;
         {
-            lightmapUpdateNeededField = rendererClass.getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "lightmapUpdateNeeded" : "field_78536_aa");
+            lightmapUpdateNeededField = rendererClass.getDeclaredField(UniqueField.IDEA_RT ? "lightmapUpdateNeeded" : "field_78536_aa");
             lightmapUpdateNeededField.setAccessible(true);
             lightmapUpdateNeededValue = lightmapUpdateNeededField.getBoolean(renderer);
         }
@@ -82,7 +82,7 @@ public final class EntityRendererHook
 
         Minecraft mc;
         {
-            mcField = rendererClass.getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "mc" : "field_78531_r");
+            mcField = rendererClass.getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
             mcField.setAccessible(true);
             mc = (Minecraft) mcField.get(renderer);
         }
@@ -302,7 +302,8 @@ public final class EntityRendererHook
             float bossColorModifier;
             {
                 bossColorModifierField =
-                        renderer.getClass().getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "bossColorModifier" : "field_82831_U");
+                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifier" : "field_82831_U");
+
                 bossColorModifierField.setAccessible(true);
                 bossColorModifier = bossColorModifierField.getFloat(renderer);
             }
@@ -310,7 +311,8 @@ public final class EntityRendererHook
             float bossColorModifierPrev;
             {
                 bossColorModifierPrevField =
-                        renderer.getClass().getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "bossColorModifierPrev" : "field_82832_V");
+                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifierPrev" : "field_82832_V");
+
                 bossColorModifierPrevField.setAccessible(true);
                 bossColorModifierPrev = bossColorModifierPrevField.getFloat(renderer);
             }
@@ -318,7 +320,8 @@ public final class EntityRendererHook
             float torchFlickerX;
             {
                 torchFlickerXField =
-                        renderer.getClass().getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "torchFlickerX" : "field_78514_e");
+                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "torchFlickerX" : "field_78514_e");
+
                 torchFlickerXField.setAccessible(true);
                 torchFlickerX = torchFlickerXField.getFloat(renderer);
             }
@@ -326,7 +329,8 @@ public final class EntityRendererHook
             Object mcObject;
             {
                 mcField =
-                        renderer.getClass().getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "mc" : "field_78531_r");
+                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
+
                 mcField.setAccessible(true);
                 mcObject = mcField.get(renderer);
             }
@@ -334,7 +338,8 @@ public final class EntityRendererHook
             Object gameSettingsObject;
             {
                 gameSettingsField =
-                        mcObject.getClass().getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "gameSettings" : "field_71474_y");
+                        mcObject.getClass().getDeclaredField(UniqueField.IDEA_RT ? "gameSettings" : "field_71474_y");
+
                 gameSettingsField.setAccessible(true);
                 gameSettingsObject = gameSettingsField.get(mcObject);
             }
@@ -342,14 +347,17 @@ public final class EntityRendererHook
             float gammaSetting;
             {
                 gammaSettingField =
-                        gameSettingsObject.getClass().getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "gammaSetting" : "field_74333_Y");
+                        gameSettingsObject.getClass().getDeclaredField(UniqueField.IDEA_RT ? "gammaSetting" : "field_74333_Y");
+
                 gammaSettingField.setAccessible(true);
                 gammaSetting = gammaSettingField.getFloat(gameSettingsObject);
             }
 
             int[] lightmapColors;
             {
-                lightmapColorsField = renderer.getClass().getDeclaredField(CheckDebugger.instance.IsRunDebugger ? "lightmapColors" : "field_78504_Q");
+                lightmapColorsField =
+                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "lightmapColors" : "field_78504_Q");
+
                 lightmapColorsField.setAccessible(true);
                 lightmapColors = (int[]) lightmapColorsField.get(renderer);
             }
