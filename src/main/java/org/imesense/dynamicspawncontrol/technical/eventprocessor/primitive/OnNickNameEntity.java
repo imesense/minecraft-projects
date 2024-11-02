@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
+import org.imesense.dynamicspawncontrol.UniqueField;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import scala.util.Random;
@@ -100,7 +100,7 @@ public final class OnNickNameEntity
                         this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
                 zombie.setCustomNameTag(randomName);
-                zombie.setAlwaysRenderNameTag(CheckDebugger.instance.IsRunDebugger);
+                zombie.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
             }
         }
 
@@ -112,7 +112,7 @@ public final class OnNickNameEntity
                     this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
             villager.setCustomNameTag(randomName);
-            villager.setAlwaysRenderNameTag(CheckDebugger.instance.IsRunDebugger);
+            villager.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
         }
     }
 

@@ -21,6 +21,12 @@ public final class UniqueField
     /**
      *
      */
+    @UniqueObject
+    public static final Boolean IDEA_RT = System.getProperty("java.class.path").toLowerCase().contains("idea_rt.jar");
+
+    /**
+     *
+     */
     public UniqueField() throws IllegalAccessException
     {
         this.validateUniqueFields(this);

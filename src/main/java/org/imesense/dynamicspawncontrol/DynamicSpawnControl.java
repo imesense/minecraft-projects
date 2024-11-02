@@ -14,7 +14,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnBreakTorchEvent;
-import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.IRecipes;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
@@ -96,18 +95,15 @@ public class DynamicSpawnControl
     public synchronized void preInit(FMLPreInitializationEvent event) throws IllegalAccessException
     {
         //
-        CheckDebugger.instance = new CheckDebugger();
-
-        //
         globalDirectory = event.getModConfigurationDirectory();
-
-        //
-        Log.createLogFile(globalDirectory.getPath() + File.separator + ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY, CheckDebugger.instance.IsRunDebugger);
-        Log.writeDataToLogFile(1, "Debugger is running: " + (CheckDebugger.instance.IsRunDebugger ? "true" : "false"));
 
         //
         UniqueField uniqueField = new UniqueField();
         Log.writeDataToLogFile(0, "Object create [UniqueField]: " + uniqueField.hashCode());
+
+        //
+        Log.createLogFile(globalDirectory.getPath() + File.separator + ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY, UniqueField.IDEA_RT);
+        Log.writeDataToLogFile(1, "Launching from Intellij Idea: " + (UniqueField.IDEA_RT ? "true" : "false"));
 
         //
         MessageHandler.init();
