@@ -5,12 +5,12 @@ import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.CfgBlockWorldGenerator;
 import org.imesense.dynamicspawncontrol.technical.config.cachedameworld.CfgCacheWorldGame;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.CfgGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.config.gameworldtime.CfgPluginWorldTime;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgPluginWorldTime;
 import org.imesense.dynamicspawncontrol.technical.config.logfile.CfgLogFile;
 import org.imesense.dynamicspawncontrol.technical.config.player.CfgPlayer;
-import org.imesense.dynamicspawncontrol.technical.config.rendernight.CfgRenderNight;
+import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
 import org.imesense.dynamicspawncontrol.technical.config.skeletondropitem.CfgSkeletonDropItem;
-import org.imesense.dynamicspawncontrol.technical.config.spiderattackweb.CfgSpiderAttackWeb;
+import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.CfgWebSlinger;
 import org.imesense.dynamicspawncontrol.technical.config.staminaplayer.CfgStaminaPlayer;
 import org.imesense.dynamicspawncontrol.technical.config.windowtitle.CfgWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.config.zombiedropitem.CfgZombieDropItem;
@@ -33,13 +33,13 @@ public final class RegisterConfigClass
         CfgGameDebugger.class,
         CfgLogFile.class,
         CfgPlayer.class,
-        CfgRenderNight.class,
+        CfgDarkness.class,
         CfgWindowTitle.class,
         CfgBlockWorldGenerator.class,
         CfgPluginWorldTime.class,
         CfgZombieDropItem.class,
         CfgSkeletonDropItem.class,
-        CfgSpiderAttackWeb.class,
+        CfgWebSlinger.class,
         CfgStaminaPlayer.class
     };
 

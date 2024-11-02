@@ -11,19 +11,19 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.ai.spider.util.event.OnWebAttackEvent;
-import org.imesense.dynamicspawncontrol.ai.spider.util.attackweb.WebSlingerCapability;
+import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
+import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnBreakTorchEvent;
 import org.imesense.dynamicspawncontrol.debug.CheckDebugger;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.IRecipes;
 import org.imesense.dynamicspawncontrol.gameplay.recipes.CraftItemWeb;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnUpdateTimeWorld;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
 import org.imesense.dynamicspawncontrol.technical.register.*;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.technical.gamestructure.Structure;
-import org.imesense.dynamicspawncontrol.technical.network.MessageHandler;
-import org.imesense.dynamicspawncontrol.technical.network.PlayerInWebMessage;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
+import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserManager;
@@ -158,7 +158,7 @@ public class DynamicSpawnControl
         //
         Recipes.registry();
 
-        MinecraftForge.EVENT_BUS.register(OnUpdateTimeWorld.INSTANCE);
+        MinecraftForge.EVENT_BUS.register(TimeEvents.INSTANCE);
     }
 
     /**
@@ -170,7 +170,7 @@ public class DynamicSpawnControl
     public synchronized void postInit(FMLPostInitializationEvent event)
     {
         //-' TODO: перенести это в отдельную инициализацию
-        MinecraftForge.EVENT_BUS.register(new OnWebAttackEvent());
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new OnBreakTorchEvent());
     }
 

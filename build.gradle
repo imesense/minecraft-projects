@@ -56,10 +56,10 @@ minecraft
             property 'forge.logging.console.level', 'debug'
 
             // Loading plugin 'Real Nights'
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginNight'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.LoadingPlugin'
 
             // Loading plugin 'Blood Moon'
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginBloodMoon'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.plugin.bloodmoon_mc1_12_2_1_5_3.asm.LoadingPlugin'
         }
 
         server
@@ -71,10 +71,10 @@ minecraft
             property 'forge.logging.console.level', 'debug'
 
             // Loading plugin 'Real Nights'
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginNight'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.LoadingPlugin'
 
             // Loading plugin 'Blood Moon'
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.technical.plugin.LoadingPluginBloodMoon'
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.plugin.bloodmoon_mc1_12_2_1_5_3.asm.LoadingPlugin'
         }
     }
 }
