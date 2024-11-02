@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_plugin_world_time")
+@DCSSingleConfig(fileName = "cfg_time_control_mod_forge_1_12_2")
 public final class CfgPluginWorldTime extends CfgClassAbstract
 {
     /**
