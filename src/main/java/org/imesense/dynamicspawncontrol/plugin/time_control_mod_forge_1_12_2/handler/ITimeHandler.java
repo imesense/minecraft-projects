@@ -5,18 +5,8 @@ import net.minecraft.world.World;
 /**
  *
  */
-public interface ITimeHandler
-{
-    /**
-     *
-     * @param world
-     */
-    void tick(World world);
+public interface ITimeHandler {
+    void tick(World var1);
 
-    /**
-     *
-     * @param customWorldTime
-     * @param multiplierWorldTime
-     */
-    void update(long customWorldTime, double multiplierWorldTime);
+    void update(long var1, double var3);
 }

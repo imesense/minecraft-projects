@@ -29,12 +29,12 @@ public final class DataTimeControl
         /**
          *
          */
-        private Integer dayLengthMinutes = 12;
+        private Integer dayLengthMinutes = 10;
 
         /**
          *
          */
-        private Integer nightLengthMinutes = 12;
+        private Integer nightLengthMinutes = 10;
 
         /**
          *

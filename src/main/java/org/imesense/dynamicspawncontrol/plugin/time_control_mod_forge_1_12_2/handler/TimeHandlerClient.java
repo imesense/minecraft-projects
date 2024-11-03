@@ -6,68 +6,36 @@ import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.Num
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
-/**
- *
- */
-public final class TimeHandlerClient implements ITimeHandler
-{
-    /**
-     *
-     */
+import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class TimeHandlerClient implements ITimeHandler {
+    private static final Logger log = LogManager.getLogger(TimeHandlerClient.class.getSimpleName());
     private int debugLogDelay = 0;
+    private long customtime = 0L;
+    private double multiplier = 0.0D;
 
-    /**
-     *
-     */
-    private long customTime = 0L;
-
-    /**
-     *
-     */
-    private double multiplier = 0.00;
-
-    /**
-     *
-     * @param world
-     */
-    @Override
-    public void tick(World world)
-    {
-        if (!DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime())
-        {
+    public void tick(World world) {
+        if (!DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime()) {
             ++this.debugLogDelay;
-
-            if (this.multiplier == 0.0D && this.debugLogDelay % 20 == 0)
-            {
-                Log.writeDataToLogFile(0, "Waiting for server time packet...");
+            if (this.multiplier == 0.0D && this.debugLogDelay % 20 == 0) {
+                log.info("Waiting for server time packet...");
                 return;
             }
 
-            ++this.customTime;
-
-            Numbers.setWorldTime(world, this.customTime, this.multiplier);
-
-            if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug() &&
-                    this.debugLogDelay % 20 == 0)
-            {
-                long worldTime = world.getWorldTime();
-
-                Log.writeDataToLogFile(0, String.format("Client time: %s | multiplier: %s | game_rules: %s, %s",
-                        worldTime, this.multiplier, world.getGameRules().getBoolean("doDaylightCycle"),
-                        world.getGameRules().getBoolean("doDaylightCycle_tc")));
+            ++this.customtime;
+            Numbers.setWorldtime(world, this.customtime, this.multiplier);
+            if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug() && this.debugLogDelay % 20 == 0) {
+                long worldtime = world.getWorldTime();
+                log.info(String.format("Client time: %s | multiplier: %s | gamerules: %s, %s", worldtime, this.multiplier, world.getGameRules().getBoolean("doDaylightCycle"), world.getGameRules().getBoolean("doDaylightCycle_tc")));
             }
         }
+
     }
 
-    /**
-     *
-     * @param customTime
-     * @param multiplier
-     */
-    @Override
-    public void update(long customTime, double multiplier)
-    {
+    public void update(long customtime, double multiplier) {
         this.multiplier = multiplier;
-        this.customTime = customTime;
+        this.customtime = customtime;
     }
 }
