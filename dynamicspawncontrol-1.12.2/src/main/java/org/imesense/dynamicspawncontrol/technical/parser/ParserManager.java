@@ -35,9 +35,9 @@ public final class ParserManager
         BETA_PARSER_LIST.add(new ParserSingleZombieSummonAID());
         BETA_PARSER_LIST.add(new ParserSingleScriptCheckSpawn());
 
-        for (IBetaParser parser : BETA_PARSER_LIST)
+        for (IBetaParser iBetaParser : BETA_PARSER_LIST)
         {
-            parser.loadConfig(true);
+            iBetaParser.loadConfig(true);
         }
     }
 
@@ -46,9 +46,9 @@ public final class ParserManager
      */
     public static void reloadAllConfigs()
     {
-        for (IBetaParser parser : BETA_PARSER_LIST)
+        for (IBetaParser iBetaParser : BETA_PARSER_LIST)
         {
-            parser.reloadConfig();
+            iBetaParser.reloadConfig();
         }
     }
 }

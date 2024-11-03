@@ -6,32 +6,66 @@ import org.imesense.dynamicspawncontrol.ProjectStructure;
 
 import java.util.Map;
 
+/**
+ *
+ */
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 @IFMLLoadingPlugin.Name(ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
-@IFMLLoadingPlugin.SortingIndex(LoadingPlugin.AFTER_DEOBF)
+@IFMLLoadingPlugin.SortingIndex(LoadingPlugin.AFTER_DEOBFUSCATION)
 public final class LoadingPlugin implements IFMLLoadingPlugin
 {
+    /**
+     *
+     */
     public static boolean IN_MCP = false;
 
-    public static final int AFTER_DEOBF = 1002;
+    /**
+     *
+     */
+    public static final int AFTER_DEOBFUSCATION = 1002;
 
-    public String[] getASMTransformerClass() {
-        return new String[]{ClassTransformer.class.getName()};
+    /**
+     *
+     * @return
+     */
+    public String[] getASMTransformerClass()
+    {
+        return new String[] { ClassTransformer.class.getName() };
     }
 
-    public String getModContainerClass() {
+    /**
+     *
+     * @return
+     */
+    public String getModContainerClass()
+    {
         return null;
     }
 
-    public String getSetupClass() {
+    /**
+     *
+     * @return
+     */
+    public String getSetupClass()
+    {
         return null;
     }
 
-    public void injectData(Map<String, Object> data) {
-        IN_MCP = !(Boolean)data.get("runtimeDeobfuscationEnabled");
+    /**
+     *
+     * @param objectMap
+     */
+    public void injectData(Map<String, Object> objectMap)
+    {
+        IN_MCP = !(Boolean)objectMap.get("runtimeDeobfuscationEnabled");
     }
 
-    public String getAccessTransformerClass() {
+    /**
+     *
+     * @return
+     */
+    public String getAccessTransformerClass()
+    {
         return null;
     }
 }

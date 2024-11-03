@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.ha
 import net.minecraft.world.World;
 
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.Numbers;
-import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataPluginWorldTime;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
 /**
@@ -24,7 +24,7 @@ public final class TimeHandlerClient implements ITimeHandler
     /**
      *
      */
-    private double multiplier = 0.0;
+    private double multiplier = 0.00;
 
     /**
      *
@@ -33,7 +33,7 @@ public final class TimeHandlerClient implements ITimeHandler
     @Override
     public void tick(World world)
     {
-        if (!DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
+        if (!DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime())
         {
             ++this.debugLogDelay;
 
@@ -47,7 +47,8 @@ public final class TimeHandlerClient implements ITimeHandler
 
             Numbers.setWorldTime(world, this.customTime, this.multiplier);
 
-            if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug() && this.debugLogDelay % 20 == 0)
+            if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug() &&
+                    this.debugLogDelay % 20 == 0)
             {
                 long worldTime = world.getWorldTime();
 

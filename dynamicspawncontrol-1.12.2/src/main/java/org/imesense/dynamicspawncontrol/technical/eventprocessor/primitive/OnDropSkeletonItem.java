@@ -45,38 +45,39 @@ public final class OnDropSkeletonItem
 
     /**
      *
-     * @param event
+     * @param livingDropsEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingDropsEvent_0(LivingDropsEvent event)
+    public synchronized void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
     {
-        if (event.getEntity() instanceof EntitySkeleton)
+        if (livingDropsEvent.getEntity() instanceof EntitySkeleton)
         {
-            EntitySkeleton skeleton = (EntitySkeleton)event.getEntity();
+            EntitySkeleton entitySkeleton = (EntitySkeleton) livingDropsEvent.getEntity();
 
-            List<EntityItem> drops = event.getDrops();
+            List<EntityItem> drops = livingDropsEvent.getDrops();
 
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getHeadDamageFactor());
+            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getHeadDamageFactor());
 
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getChestDamageFactor());
+            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getChestDamageFactor());
 
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getLegsDamageFactor());
+            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getLegsDamageFactor());
 
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET),
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getFeetDamageFactor());
+            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET),
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getFeetDamageFactor());
 
-            addDamagedItemToDrops(skeleton, drops, skeleton.getHeldItemMainhand(),
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getHandItemDamageFactor());
+            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getHeldItemMainhand(),
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getHandItemDamageFactor());
 
             Random rand = new Random();
-            double arrowDropChance = 0.5;
+            double arrowDropChance = 0.50;
 
             if (rand.nextDouble() < arrowDropChance)
             {
                 boolean arrowsDropped = false;
+
                 for (EntityItem item : drops)
                 {
                     if (item.getItem().getItem() == Items.ARROW)
@@ -84,7 +85,8 @@ public final class OnDropSkeletonItem
                         int currentCount = item.getItem().getCount();
 
                         item.getItem().setCount
-                                (currentCount + 1 + DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
+                                (currentCount + 1 + DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
+
                         arrowsDropped = true;
 
                         break;
@@ -93,7 +95,7 @@ public final class OnDropSkeletonItem
 
                 if (!arrowsDropped)
                 {
-                    addArrowsToDrops(skeleton, drops, DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
+                    addArrowsToDrops(entitySkeleton, drops, DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
                 }
             }
         }
@@ -101,58 +103,61 @@ public final class OnDropSkeletonItem
 
     /**
      *
-     * @param skeleton
+     * @param entitySkeleton
      * @param drops
      * @param originalItem
      * @param damageFactor
      */
-    private void addDamagedItemToDrops(EntitySkeleton skeleton, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
+    private void addDamagedItemToDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (new Random().nextDouble() < DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getBreakItem())
+            if (new Random().nextDouble() < DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getBreakItem())
             {
                 return;
             }
 
-            ItemStack damagedItem = originalItem.copy();
-            int maxDamage = damagedItem.getMaxDamage();
+            ItemStack itemStack = originalItem.copy();
+            int maxDamage = itemStack.getMaxDamage();
 
             if (maxDamage > 0)
             {
-                Random rand = new Random();
-                int minDamage = (int)(maxDamage * damageFactor);
+                Random random = new Random();
+                int minDamage = (int) (maxDamage * damageFactor);
 
-                int damageSpread = (int)(maxDamage * DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getDamageSpreadFactor());
-                int randomDamage = minDamage + rand.nextInt(damageSpread);
+                int damageSpread = (int) (maxDamage * DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getDamageSpreadFactor());
+                int randomDamage = minDamage + random.nextInt(damageSpread);
 
-                damagedItem.setItemDamage(randomDamage);
+                itemStack.setItemDamage(randomDamage);
             }
 
             for (EntityItem item : drops)
             {
-                ItemStack stack = item.getItem();
+                ItemStack itemStack1 = item.getItem();
 
-                if (stack.isItemEqualIgnoreDurability(damagedItem))
+                if (itemStack1.isItemEqualIgnoreDurability(itemStack))
                 {
                     return;
                 }
             }
 
-            drops.add(new EntityItem(skeleton.world, skeleton.posX, skeleton.posY, skeleton.posZ, damagedItem));
+            drops.add(new EntityItem(entitySkeleton.world,
+                    entitySkeleton.posX, entitySkeleton.posY, entitySkeleton.posZ, itemStack));
         }
     }
 
     /**
      *
-     * @param skeleton
+     * @param entitySkeleton
      * @param drops
      * @param arrowCount
      */
-    private void addArrowsToDrops(EntitySkeleton skeleton, List<EntityItem> drops, byte arrowCount)
+    private void addArrowsToDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops, byte arrowCount)
     {
-        ItemStack arrows = new ItemStack(Items.ARROW, arrowCount);
-        drops.add(new EntityItem(skeleton.world, skeleton.posX, skeleton.posY, skeleton.posZ, arrows));
+        ItemStack itemStack = new ItemStack(Items.ARROW, arrowCount);
+
+        drops.add(new EntityItem
+                (entitySkeleton.world, entitySkeleton.posX, entitySkeleton.posY, entitySkeleton.posZ, itemStack));
     }
 }
 

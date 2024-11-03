@@ -19,7 +19,7 @@ public final class PlayerInWebMessage implements IMessage
     /**
      *
      */
-    public BlockPos pos;
+    public BlockPos BlockPos;
 
     /**
      *
@@ -31,31 +31,31 @@ public final class PlayerInWebMessage implements IMessage
 
     /**
      *
-     * @param pos
+     * @param blockPos
      */
-    public PlayerInWebMessage(BlockPos pos)
+    public PlayerInWebMessage(BlockPos blockPos)
     {
-        this.pos = pos;
+        this.BlockPos = blockPos;
     }
 
     /**
      *
-     * @param buf
+     * @param byteBuf
      */
-    public void fromBytes(ByteBuf buf)
+    public void fromBytes(ByteBuf byteBuf)
     {
-        this.pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
+        this.BlockPos = new BlockPos(byteBuf.readInt(), byteBuf.readInt(), byteBuf.readInt());
     }
 
     /**
      *
-     * @param buf
+     * @param byteBuf
      */
-    public void toBytes(ByteBuf buf)
+    public void toBytes(ByteBuf byteBuf)
     {
-        buf.writeInt(this.pos.getX());
-        buf.writeInt(this.pos.getY());
-        buf.writeInt(this.pos.getZ());
+        byteBuf.writeInt(this.BlockPos.getX());
+        byteBuf.writeInt(this.BlockPos.getY());
+        byteBuf.writeInt(this.BlockPos.getZ());
     }
 
     /**
@@ -75,11 +75,11 @@ public final class PlayerInWebMessage implements IMessage
     {
         /**
          *
-         * @param msg The message
+         * @param MSG
          * @param ctx
          * @return
          */
-        public IMessage onMessage(final PlayerInWebMessage msg, MessageContext ctx)
+        public IMessage onMessage(final PlayerInWebMessage MSG, MessageContext ctx)
         {
             /**
              *
@@ -91,7 +91,7 @@ public final class PlayerInWebMessage implements IMessage
                  */
                 public void run()
                 {
-                    UniqueField.CLIENT.world.setBlockState(msg.pos, Blocks.WEB.getDefaultState());
+                    UniqueField.CLIENT.world.setBlockState(MSG.BlockPos, Blocks.WEB.getDefaultState());
                     UniqueField.CLIENT.player.setInWeb();
                 }
             });

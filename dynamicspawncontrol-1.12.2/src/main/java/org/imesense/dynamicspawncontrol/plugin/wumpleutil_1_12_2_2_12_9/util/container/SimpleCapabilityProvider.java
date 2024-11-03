@@ -32,23 +32,23 @@ public class SimpleCapabilityProvider<HANDLER> implements ICapabilitySerializabl
     /**
      *
      * @param capability
-     * @param facing
-     * @param instance
+     * @param enumFacing
+     * @param handler
      */
-    public SimpleCapabilityProvider(Capability<HANDLER> capability, @Nullable EnumFacing facing, HANDLER instance)
+    public SimpleCapabilityProvider(Capability<HANDLER> capability, @Nullable EnumFacing enumFacing, HANDLER handler)
     {
         this.CAPABILITY = capability;
-        this.INSTANCE = instance;
-        this.FACING = facing;
+        this.INSTANCE = handler;
+        this.FACING = enumFacing;
     }
 
     /**
      *
      * @param capability
-     * @param facing
+     * @param enumFacing
      * @return
      */
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing enumFacing)
     {
         return capability == this.getCapability();
     }
@@ -56,14 +56,14 @@ public class SimpleCapabilityProvider<HANDLER> implements ICapabilitySerializabl
     /**
      *
      * @param capability
-     * @param facing
+     * @param enumFacing
      * @return
      * @param <T>
      */
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing enumFacing)
     {
-        return this.hasCapability(capability, facing) ?
+        return this.hasCapability(capability, enumFacing) ?
                 this.getCapability().cast(this.getInstance()) : null;
     }
 
@@ -79,13 +79,13 @@ public class SimpleCapabilityProvider<HANDLER> implements ICapabilitySerializabl
 
     /**
      *
-     * @param nbt
+     * @param nbtBase
      */
-    public void deserializeNBT(NBTBase nbt)
+    public void deserializeNBT(NBTBase nbtBase)
     {
         if (this.getCapability() != null)
         {
-            this.getCapability().readNBT(this.getInstance(), this.getFacing(), nbt);
+            this.getCapability().readNBT(this.getInstance(), this.getFacing(), nbtBase);
         }
     }
 

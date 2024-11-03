@@ -97,21 +97,21 @@ public final class WorldProviderTransformer implements IClassTransformer
                 {
                     @Override
                     public MethodVisitor visitMethod(
-                            int _access,
-                            String _name,
-                            String _desc,
-                            String _signature,
-                            String[] _exceptions)
+                            int access,
+                            String name,
+                            String desc,
+                            String signature,
+                            String... exceptions)
                     {
-                        MethodVisitor mv =
-                                super.visitMethod(_access, _name, _desc, _signature, _exceptions);
+                        MethodVisitor methodVisitor =
+                                super.visitMethod(access, name, desc, signature, exceptions);
 
-                        if (!GET_FOG_COLOR_NAME.equals(_name) || !GET_FOG_COLOR_DESC.equals(_desc))
+                        if (!GET_FOG_COLOR_NAME.equals(name) || !GET_FOG_COLOR_DESC.equals(desc))
                         {
-                            return mv;
+                            return methodVisitor;
                         }
 
-                        return new GeneratorAdapter(api, mv, _access, _name, _desc)
+                        return new GeneratorAdapter(api, methodVisitor, access, name, desc)
                         {
                             @Override
                             public void visitCode()

@@ -42,41 +42,41 @@ public final class OnLivingExperienceDrop
 
     /**
      *
-     * @param event
+     * @param livingExperienceDropEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingExperienceDrop_0(LivingExperienceDropEvent event)
+    public synchronized void onUpdateLivingExperienceDrop_0(LivingExperienceDropEvent livingExperienceDropEvent)
     {
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericExperience rule : ParserGenericJsonScript.GENERIC_EXPERIENCE_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(livingExperienceDropEvent))
             {
                 Event.Result result = rule.getResult();
 
                 if (result != Event.Result.DENY)
                 {
-                    int modifyXp = rule.modifyXp(event.getDroppedExperience());
-                    event.setDroppedExperience(modifyXp);
+                    int modifyXp = rule.modifyXp(livingExperienceDropEvent.getDroppedExperience());
+                    livingExperienceDropEvent.setDroppedExperience(modifyXp);
 
-                    if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_living_experience_drop"))
+                    if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_experience_drop"))
                     {
-                        Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + i + ": "
+                        Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + atomicInteger + ": "
                                 + result
-                                + " entity: " + event.getEntity().getName()
-                                + " y: " + event.getEntity().getPosition().getY() + " new xp: " + modifyXp);
+                                + " entity: " + livingExperienceDropEvent.getEntity().getName()
+                                + " y: " + livingExperienceDropEvent.getEntity().getPosition().getY() + " new xp: " + modifyXp);
                     }
                 }
                 else
                 {
-                    event.setCanceled(true);
+                    livingExperienceDropEvent.setCanceled(true);
                 }
 
                 return;
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

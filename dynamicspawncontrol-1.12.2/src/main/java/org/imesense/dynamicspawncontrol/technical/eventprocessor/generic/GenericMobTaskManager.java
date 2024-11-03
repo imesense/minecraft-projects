@@ -45,42 +45,43 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
 
     /**
      *
-     * @param event
+     * @param entityJoinWorldEvent
      * @return
      */
-    public boolean match(EntityJoinWorldEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY_JOIN); }
+    public boolean match(EntityJoinWorldEvent entityJoinWorldEvent) { return RULE_EVALUATOR.match(entityJoinWorldEvent, EVENT_QUERY_JOIN); }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private GenericMobTaskManager(AttributeMap<?> map)
+    private GenericMobTaskManager(AttributeMap<?> attributeMap)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericMobTaskManager.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericMobTaskManager.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
     }
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericMobTaskManager parse(JsonElement element)
+    public static GenericMobTaskManager parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<?> map = FACTORY.parse(element);
+            AttributeMap<?> attributeMap = FACTORY.parse(jsonElement);
 
-            return new GenericMobTaskManager(map);
+            return new GenericMobTaskManager(attributeMap);
         }
     }
 
@@ -91,99 +92,99 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
     {
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public World getWorld(EntityJoinWorldEvent data)
+        public World getWorld(EntityJoinWorldEvent entityJoinWorldEvent)
         {
-            return data.getWorld();
+            return entityJoinWorldEvent.getWorld();
         }
 
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public BlockPos getPos(EntityJoinWorldEvent data)
+        public BlockPos getPos(EntityJoinWorldEvent entityJoinWorldEvent)
         {
-            return data.getEntity().getPosition();
+            return entityJoinWorldEvent.getEntity().getPosition();
         }
 
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(EntityJoinWorldEvent data)
+        public BlockPos getValidBlockPos(EntityJoinWorldEvent entityJoinWorldEvent)
         {
-            return data.getEntity().getPosition().down();
+            return entityJoinWorldEvent.getEntity().getPosition().down();
         }
 
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public int getY(EntityJoinWorldEvent data)
+        public int getY(EntityJoinWorldEvent entityJoinWorldEvent)
         {
-            return data.getEntity().getPosition().getY();
+            return entityJoinWorldEvent.getEntity().getPosition().getY();
         }
 
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public Entity getEntity(EntityJoinWorldEvent data)
+        public Entity getEntity(EntityJoinWorldEvent entityJoinWorldEvent)
         {
-            return data.getEntity();
+            return entityJoinWorldEvent.getEntity();
         }
 
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public DamageSource getSource(EntityJoinWorldEvent data)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param data
-         * @return
-         */
-        @Override
-        public Entity getAttacker(EntityJoinWorldEvent data)
+        public DamageSource getSource(EntityJoinWorldEvent entityJoinWorldEvent)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(EntityJoinWorldEvent data)
+        public Entity getAttacker(EntityJoinWorldEvent entityJoinWorldEvent)
         {
-            return getClosestPlayer(data.getWorld(), data.getEntity().getPosition());
+            return null;
         }
 
         /**
          *
-         * @param data
+         * @param entityJoinWorldEvent
          * @return
          */
         @Override
-        public ItemStack getItem(EntityJoinWorldEvent data)
+        public EntityPlayerMP getPlayer(EntityJoinWorldEvent entityJoinWorldEvent)
+        {
+            return getClosestPlayer(entityJoinWorldEvent.getWorld(), entityJoinWorldEvent.getEntity().getPosition());
+        }
+
+        /**
+         *
+         * @param entityJoinWorldEvent
+         * @return
+         */
+        @Override
+        public ItemStack getItem(EntityJoinWorldEvent entityJoinWorldEvent)
         {
             return ItemStack.EMPTY;
         }
@@ -230,14 +231,14 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
 
     /**
      *
-     * @param event
+     * @param entityJoinWorldEvent
      */
-    public void action(EntityJoinWorldEvent event)
+    public void action(EntityJoinWorldEvent entityJoinWorldEvent)
     {
         /**
          *
          */
-        SignalDataGetter eventBase = new SignalDataGetter()
+        SignalDataGetter signalDataGetter = new SignalDataGetter()
         {
             /**
              *
@@ -246,7 +247,7 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
             @Override
             public EntityLivingBase getEntityLiving()
             {
-                return event.getEntity() instanceof EntityLivingBase ? (EntityLivingBase) event.getEntity() : null;
+                return entityJoinWorldEvent.getEntity() instanceof EntityLivingBase ? (EntityLivingBase) entityJoinWorldEvent.getEntity() : null;
             }
 
             /**
@@ -266,7 +267,7 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
             @Override
             public World getWorld()
             {
-                return event.getWorld();
+                return entityJoinWorldEvent.getWorld();
             }
 
             /**
@@ -276,7 +277,7 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
             @Override
             public Entity getEntity()
             {
-                return event.getEntity();
+                return entityJoinWorldEvent.getEntity();
             }
 
             /**
@@ -286,16 +287,16 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
             @Override
             public BlockPos getPosition()
             {
-                return event.getEntity() != null ? event.getEntity().getPosition() : null;
+                return entityJoinWorldEvent.getEntity() != null ? entityJoinWorldEvent.getEntity().getPosition() : null;
             }
         };
 
         /**
          *
          */
-        for (Consumer<SignalDataGetter> action : this.ACTIONS)
+        for (Consumer<SignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
         {
-            action.accept(eventBase);
+            signalDataGetterConsumer.accept(signalDataGetter);
         }
     }
 }

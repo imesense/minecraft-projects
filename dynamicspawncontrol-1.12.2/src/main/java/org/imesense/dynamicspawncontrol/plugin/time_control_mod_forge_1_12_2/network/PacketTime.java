@@ -43,22 +43,22 @@ public final class PacketTime implements IMessage
 
     /**
      *
-     * @param buf
+     * @param byteBuf
      */
-    public void toBytes(ByteBuf buf)
+    public void toBytes(ByteBuf byteBuf)
     {
-        buf.writeLong(this.customTime);
-        buf.writeDouble(this.multiplier);
+        byteBuf.writeLong(this.customTime);
+        byteBuf.writeDouble(this.multiplier);
     }
 
     /**
      *
-     * @param buf
+     * @param byteBuf
      */
-    public void fromBytes(ByteBuf buf)
+    public void fromBytes(ByteBuf byteBuf)
     {
-        this.customTime = buf.readLong();
-        this.multiplier = buf.readDouble();
+        this.customTime = byteBuf.readLong();
+        this.multiplier = byteBuf.readDouble();
     }
 
     /**
@@ -68,15 +68,15 @@ public final class PacketTime implements IMessage
     {
         /**
          *
-         * @param message
-         * @param ctx
+         * @param packetTime
+         * @param messageContext
          * @return
          */
-        public IMessage onMessage(PacketTime message, MessageContext ctx)
+        public IMessage onMessage(PacketTime packetTime, MessageContext messageContext)
         {
             UniqueField.CLIENT.addScheduledTask(() ->
             {
-                TimeEvents.INSTANCE.clientUpdate(message.customTime, message.multiplier);
+                TimeEvents.INSTANCE.clientUpdate(packetTime.customTime, packetTime.multiplier);
             });
 
             return null;

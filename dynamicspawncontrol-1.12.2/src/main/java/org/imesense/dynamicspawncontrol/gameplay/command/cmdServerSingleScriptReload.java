@@ -38,30 +38,28 @@ public final class CmdServerSingleScriptReload extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_single_scripts_reload";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
         if (args.length > 0)
         {
-            this.getUsage(sender);
-
-            sender.sendMessage(new TextComponentString(
+            iCommandSender.sendMessage(new TextComponentString(
                     EnumUnicodeCharacter.SECTION.getCharacter() +
                             EnumTextColor.RED.getCode() +
                             EnumCmdCallType.CMD.getDescription() +
@@ -72,7 +70,7 @@ public final class CmdServerSingleScriptReload extends CommandBase
         {
             ParserManager.reloadAllConfigs();
 
-            sender.sendMessage(new TextComponentString(
+            iCommandSender.sendMessage(new TextComponentString(
                     EnumUnicodeCharacter.SECTION.getCharacter() +
                             EnumTextColor.GREEN.getCode() +
                             EnumCmdCallType.CMD.getDescription() +

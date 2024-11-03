@@ -43,16 +43,16 @@ public final class ItemWebbing extends Item
     @Nonnull
     public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn)
     {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        ItemStack itemStack = playerIn.getHeldItem(handIn);
 
         if (!playerIn.capabilities.isCreativeMode)
         {
-            itemstack.shrink(1);
+            itemStack.shrink(1);
         }
 
         EntityWebbing.sling(worldIn, playerIn);
         playerIn.addStat(Objects.requireNonNull(StatList.getObjectUseStats(this)));
 
-        return new ActionResult<>(EnumActionResult.SUCCESS, itemstack);
+        return new ActionResult<>(EnumActionResult.SUCCESS, itemStack);
     }
 }

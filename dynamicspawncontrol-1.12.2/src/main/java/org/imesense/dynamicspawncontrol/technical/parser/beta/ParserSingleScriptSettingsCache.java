@@ -50,23 +50,23 @@ public final class ParserSingleScriptSettingsCache implements IBetaParser
         {
             try
             {
-                File parentDir = file.getParentFile();
-                if (!parentDir.exists() && !parentDir.mkdirs())
+                File file1 = file.getParentFile();
+                if (!file1.exists() && !file1.mkdirs())
                 {
-                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + parentDir.getAbsolutePath());
-                    throw new RuntimeException("Failed to create directories for script file: " + parentDir.getAbsolutePath());
+                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + file1.getAbsolutePath());
+                    throw new RuntimeException("Failed to create directories for script file: " + file1.getAbsolutePath());
                 }
 
                 if (file.createNewFile())
                 {
                     Log.writeDataToLogFile(0, "Created new script file: " + file.getAbsolutePath());
-                    try (FileWriter writer = new FileWriter(file))
+                    try (FileWriter fileWriter = new FileWriter(file))
                     {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-                        JsonArray initialData = getJsonElements();
+                        JsonArray jsonArray = getJsonElements();
 
-                        gson.toJson(initialData, writer);
+                        gson.toJson(jsonArray, fileWriter);
                         Log.writeDataToLogFile(0, "Initialized new script file with default JSON data: " + file.getAbsolutePath());
                     }
                 }
@@ -83,32 +83,32 @@ public final class ParserSingleScriptSettingsCache implements IBetaParser
             }
         }
 
-        try (FileReader reader = new FileReader(file))
+        try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+            JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
             if (jsonArray != null)
             {
                 List<CacheStorage.EntityData> entitiesList = new ArrayList<>();
 
-                for (JsonElement element : jsonArray)
+                for (JsonElement jsonElement : jsonArray)
                 {
-                    JsonObject dataObject = element.getAsJsonObject();
-                    String entityName = dataObject.get("entity").getAsString();
-                    int maxCount = dataObject.get("max_count").getAsInt();
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
+                    String entityName = jsonObject.get("entity").getAsString();
+                    int maxCount = jsonObject.get("max_count").getAsInt();
 
                     String[] parts = entityName.split(":");
                     String domain = parts.length > 1 ? parts[0] : "minecraft";
                     String path = parts.length > 1 ? parts[1] : parts[0];
-                    ResourceLocation entityResourceLocation = new ResourceLocation(domain, path);
+                    ResourceLocation resourceLocation = new ResourceLocation(domain, path);
 
-                    Log.writeDataToLogFile(0, "Entity Loaded: " + entityResourceLocation + " Max Count: " + maxCount);
+                    Log.writeDataToLogFile(0, "Entity Loaded: " + resourceLocation + " Max Count: " + maxCount);
 
-                    entitiesList.add(new CacheStorage.EntityData(entityResourceLocation, maxCount));
+                    entitiesList.add(new CacheStorage.EntityData(resourceLocation, maxCount));
                 }
 
-                CacheStorage.instance.EntityCacheMobs = entitiesList;
+                CacheStorage.Instance.EntityCacheMobs = entitiesList;
                 Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
             }
             else
@@ -135,33 +135,33 @@ public final class ParserSingleScriptSettingsCache implements IBetaParser
      */
     private static JsonArray getJsonElements()
     {
-        JsonArray initialData = new JsonArray();
+        JsonArray jsonArray = new JsonArray();
 
-        JsonObject cow = new JsonObject();
-        cow.addProperty("entity", "minecraft:cow");
-        cow.addProperty("max_count", 10);
-        initialData.add(cow);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("entity", "minecraft:cow");
+        jsonObject.addProperty("max_count", 10);
+        jsonArray.add(jsonObject);
 
-        JsonObject pig = new JsonObject();
-        pig.addProperty("entity", "minecraft:pig");
-        pig.addProperty("max_count", 8);
-        initialData.add(pig);
+        JsonObject jsonObject1 = new JsonObject();
+        jsonObject1.addProperty("entity", "minecraft:pig");
+        jsonObject1.addProperty("max_count", 8);
+        jsonArray.add(jsonObject1);
 
-        JsonObject chicken = new JsonObject();
-        chicken.addProperty("entity", "minecraft:chicken");
-        chicken.addProperty("max_count", 6);
-        initialData.add(chicken);
+        JsonObject jsonObject2 = new JsonObject();
+        jsonObject2.addProperty("entity", "minecraft:chicken");
+        jsonObject2.addProperty("max_count", 6);
+        jsonArray.add(jsonObject2);
 
-        JsonObject sheep = new JsonObject();
-        sheep.addProperty("entity", "minecraft:sheep");
-        sheep.addProperty("max_count", 4);
-        initialData.add(sheep);
+        JsonObject jsonObject3 = new JsonObject();
+        jsonObject3.addProperty("entity", "minecraft:sheep");
+        jsonObject3.addProperty("max_count", 4);
+        jsonArray.add(jsonObject3);
 
-        JsonObject squid = new JsonObject();
-        squid.addProperty("entity", "minecraft:squid");
-        squid.addProperty("max_count", 5);
-        initialData.add(squid);
+        JsonObject jsonObject4 = new JsonObject();
+        jsonObject4.addProperty("entity", "minecraft:squid");
+        jsonObject4.addProperty("max_count", 5);
+        jsonArray.add(jsonObject4);
 
-        return initialData;
+        return jsonArray;
     }
 }

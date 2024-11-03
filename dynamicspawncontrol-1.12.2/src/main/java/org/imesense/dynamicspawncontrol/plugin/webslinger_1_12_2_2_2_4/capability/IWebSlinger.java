@@ -10,8 +10,8 @@ public interface IWebSlinger
 {
     /**
      *
-     * @param param1
-     * @param param2
+     * @param owner
+     * @param priority
      */
-    void checkInit(IThingBase param1, int param2);
+    void checkInit(IThingBase owner, int priority);
 }

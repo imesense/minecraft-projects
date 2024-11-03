@@ -19,16 +19,16 @@ public final class RayTrace
     /**
      *
      * @param worldIn
-     * @param playerIn
+     * @param entityPlayerMP
      * @param useLiquids
      * @return
      */
-    public static RayTraceResult getMovingObjectPositionFromPlayer(World worldIn, EntityPlayerMP playerIn, boolean useLiquids)
+    public static RayTraceResult getMovingObjectPositionFromPlayer(World worldIn, EntityPlayerMP entityPlayerMP, boolean useLiquids)
     {
-        float pitch = playerIn.rotationPitch;
-        float yaw = playerIn.rotationYaw;
+        float pitch = entityPlayerMP.rotationPitch;
+        float yaw = entityPlayerMP.rotationYaw;
 
-        Vec3d vec3 = getPlayerEyes(playerIn);
+        Vec3d vec3 = getPlayerEyes(entityPlayerMP);
 
         float f2 = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
         float f3 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
@@ -38,7 +38,7 @@ public final class RayTrace
         float f7 = f2 * f4;
 
         @Deprecated
-        double reach = (playerIn).interactionManager.getBlockReachDistance();
+        double reach = entityPlayerMP.interactionManager.getBlockReachDistance();
 
         Vec3d vec31 = vec3.addVector(f6 * reach, f5 * reach, f7 * reach);
 
@@ -47,14 +47,14 @@ public final class RayTrace
 
     /**
      *
-     * @param playerIn
+     * @param entityPlayerMP
      * @return
      */
-    private static Vec3d getPlayerEyes(EntityPlayerMP playerIn)
+    private static Vec3d getPlayerEyes(EntityPlayerMP entityPlayerMP)
     {
-        double x = playerIn.posX;
-        double y = playerIn.posY + playerIn.getEyeHeight();
-        double z = playerIn.posZ;
+        double x = entityPlayerMP.posX;
+        double y = entityPlayerMP.posY + entityPlayerMP.getEyeHeight();
+        double z = entityPlayerMP.posZ;
 
         return new Vec3d(x, y, z);
     }
@@ -62,35 +62,35 @@ public final class RayTrace
     /**
      *
      * @param world
-     * @param player
+     * @param entityPlayerMP
      * @return
      */
-    public static boolean isPlayerStandingOnBlock(World world, EntityPlayerMP player)
+    public static boolean isPlayerStandingOnBlock(World world, EntityPlayerMP entityPlayerMP)
     {
-        double posX = player.posX;
-        double posY = player.posY;
-        double posZ = player.posZ;
+        double posX = entityPlayerMP.posX;
+        double posY = entityPlayerMP.posY;
+        double posZ = entityPlayerMP.posZ;
 
-        double adjustedY = posY - 0.1;
+        double adjustedY = posY - 0.10;
 
-        BlockPos blockPosBelow = new BlockPos(posX, adjustedY, posZ);
+        BlockPos blockPos = new BlockPos(posX, adjustedY, posZ);
 
-        IBlockState blockStateBelow = world.getBlockState(blockPosBelow);
-        Block blockBelow = blockStateBelow.getBlock();
+        IBlockState blockStateBelow = world.getBlockState(blockPos);
+        Block block = blockStateBelow.getBlock();
 
-        return blockBelow != Blocks.AIR;
+        return block != Blocks.AIR;
     }
 
     /**
      *
-     * @param player
+     * @param entityPlayerMP
      * @return
      */
-    public static BlockPos getBlockPosBelowPlayer(EntityPlayerMP player)
+    public static BlockPos getBlockPosBelowPlayer(EntityPlayerMP entityPlayerMP)
     {
-        double posX = player.posX;
-        double posY = player.posY - 0.1;
-        double posZ = player.posZ;
+        double posX = entityPlayerMP.posX;
+        double posY = entityPlayerMP.posY - 0.10;
+        double posZ = entityPlayerMP.posZ;
 
         return new BlockPos(posX, posY, posZ);
     }

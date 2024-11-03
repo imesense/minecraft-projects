@@ -26,11 +26,11 @@ public class BreakTorchTask extends EntityAIBase
 
     /**
      *
-     * @param zombie
+     * @param entityZombie
      */
-    public BreakTorchTask(EntityZombie zombie)
+    public BreakTorchTask(EntityZombie entityZombie)
     {
-        this.ZOMBIE = zombie;
+        this.ZOMBIE = entityZombie;
         this.setMutexBits(3);
     }
 
@@ -61,7 +61,7 @@ public class BreakTorchTask extends EntityAIBase
         if (this.targetTorchPos != null)
         {
             this.ZOMBIE.getNavigator().tryMoveToXYZ(this.targetTorchPos.getX(),
-                    this.targetTorchPos.getY(), this.targetTorchPos.getZ(), 1.0);
+                    this.targetTorchPos.getY(), this.targetTorchPos.getZ(), 1.00);
         }
     }
 
@@ -82,11 +82,11 @@ public class BreakTorchTask extends EntityAIBase
     public void updateTask()
     {
         if (this.targetTorchPos != null &&
-                this.ZOMBIE.getDistanceSqToCenter(this.targetTorchPos) < 2.0)
+                this.ZOMBIE.getDistanceSqToCenter(this.targetTorchPos) < 2.00)
         {
-            IBlockState blockState = this.ZOMBIE.world.getBlockState(this.targetTorchPos);
+            IBlockState iBlockState = this.ZOMBIE.world.getBlockState(this.targetTorchPos);
 
-            if (blockState.getBlock() == Blocks.TORCH)
+            if (iBlockState.getBlock() == Blocks.TORCH)
             {
                 this.ZOMBIE.world.destroyBlock(this.targetTorchPos, false);
                 this.targetTorchPos = null;
@@ -100,18 +100,18 @@ public class BreakTorchTask extends EntityAIBase
      */
     private List<BlockPos> findNearbyTorches()
     {
-        BlockPos zombiePos = new BlockPos(this.ZOMBIE);
-        List<BlockPos> torchesListPos = new ArrayList<>();
+        BlockPos blockPos = new BlockPos(this.ZOMBIE);
+        List<BlockPos> listBlockPos = new ArrayList<>();
 
-        for (BlockPos pos : BlockPos.getAllInBox(zombiePos.
-                add(-10, -10, -10), zombiePos.add(10, 10, 10)))
+        for (BlockPos pos : BlockPos.getAllInBox(blockPos.
+                add(-10, -10, -10), blockPos.add(10, 10, 10)))
         {
             if (this.ZOMBIE.world.getBlockState(pos).getBlock() == Blocks.TORCH)
             {
-                torchesListPos.add(pos);
+                listBlockPos.add(pos);
             }
         }
 
-        return torchesListPos;
+        return listBlockPos;
     }
 }

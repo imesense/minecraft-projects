@@ -41,49 +41,49 @@ public final class CmdAdminDumpEntity extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_dump_entity";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
-        if (sender instanceof EntityPlayerMP)
+        if (iCommandSender instanceof EntityPlayerMP)
         {
-            RayTraceResult result = UniqueField.CLIENT.objectMouseOver;
+            RayTraceResult rayTraceResult = UniqueField.CLIENT.objectMouseOver;
 
-            if (result != null && result.typeOfHit == RayTraceResult.Type.ENTITY)
+            if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.ENTITY)
             {
-                Entity target = result.entityHit;
+                Entity entityHit = rayTraceResult.entityHit;
                 String entityInfo = "Entity Info: ";
 
-                entityInfo += "Name: " + target.getName() + ", ";
-                entityInfo += "ID: " + target.getEntityId() + ", ";
-                entityInfo += "Class: " + target.getClass().getSimpleName();
+                entityInfo += "Name: " + entityHit.getName() + ", ";
+                entityInfo += "ID: " + entityHit.getEntityId() + ", ";
+                entityInfo += "Class: " + entityHit.getClass().getSimpleName();
 
-                sender.sendMessage(new TextComponentString(entityInfo));
+                iCommandSender.sendMessage(new TextComponentString(entityInfo));
                 Log.writeDataToLogFile(0, entityInfo);
             }
             else
             {
-                sender.sendMessage(new TextComponentString(TextFormatting.RED + "The entity is not selected!"));
+                iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED + "The entity is not selected!"));
             }
         }
         else
         {
-            sender.sendMessage(new TextComponentString(TextFormatting.RED + "This command can only be used by players!"));
+            iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED + "This command can only be used by players!"));
         }
     }
 }

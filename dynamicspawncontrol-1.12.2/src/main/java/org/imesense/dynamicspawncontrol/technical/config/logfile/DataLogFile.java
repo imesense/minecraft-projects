@@ -24,7 +24,7 @@ public final class DataLogFile
         /**
          *
          */
-        public static ConfigDataLogFile instance;
+        public static ConfigDataLogFile Instance;
 
         /**
          *

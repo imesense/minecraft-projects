@@ -33,6 +33,6 @@ public final class Timer
     public double stop()
     {
         long endTime = System.nanoTime();
-        return (endTime - this.startTime) / 1_000_000.0;
+        return (endTime - this.startTime) / 1_000_000.00;
     }
 }

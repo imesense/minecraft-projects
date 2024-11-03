@@ -1,4 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunctionS;
 
-public class Player {
+public final class Player
+{
+
 }

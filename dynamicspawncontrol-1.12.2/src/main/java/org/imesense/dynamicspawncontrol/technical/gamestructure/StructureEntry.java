@@ -81,19 +81,19 @@ public final class StructureEntry
             return false;
         }
 
-        StructureEntry that = (StructureEntry) object;
+        StructureEntry structureEntry = (StructureEntry) object;
 
-        if (this.DIMENSION != that.DIMENSION)
+        if (this.DIMENSION != structureEntry.DIMENSION)
         {
             return false;
         }
 
-        if (this.CHUNK_POS != that.CHUNK_POS)
+        if (this.CHUNK_POS != structureEntry.CHUNK_POS)
         {
             return false;
         }
 
-        return this.STRUCTURE.equals(that.STRUCTURE);
+        return this.STRUCTURE.equals(structureEntry.STRUCTURE);
     }
 
     /**

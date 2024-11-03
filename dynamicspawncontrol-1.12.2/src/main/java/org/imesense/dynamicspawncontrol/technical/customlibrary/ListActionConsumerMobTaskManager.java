@@ -41,45 +41,45 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    protected void addActions(AttributeMap<?> map)
+    protected void addActions(AttributeMap<?> attributeMap)
     {
         /**
          *
          */
-        boolean hasEnemiesTo = map.has(ENEMIES_TO);
-        boolean hasToThem = map.has(TO_THEM);
+        boolean hasEnemiesTo = attributeMap.has(ENEMIES_TO);
+        boolean hasToThem = attributeMap.has(TO_THEM);
 
         /**
          *
          */
-        boolean hasEnemyId = map.has(ENEMY_ID);
-        boolean hasThemId = map.has(THEM_ID);
+        boolean hasEnemyId = attributeMap.has(ENEMY_ID);
+        boolean hasThemId = attributeMap.has(THEM_ID);
 
         /**
          *
          */
-        boolean hasPanicTo = map.has(PANIC_TO);
-        boolean hasPanicId = map.has(PANIC_ID);
+        boolean hasPanicTo = attributeMap.has(PANIC_TO);
+        boolean hasPanicId = attributeMap.has(PANIC_ID);
 
         try
         {
             if (hasEnemiesTo && hasToThem)
             {
-                this.addEnemy(map);
+                this.addEnemy(attributeMap);
             }
             else if (hasEnemiesTo && hasEnemyId)
             {
-                this.addEnemyId(map);
+                this.addEnemyId(attributeMap);
             }
             else if (hasPanicTo && hasPanicId)
             {
-                this.addPanicToId(map);
+                this.addPanicToId(attributeMap);
             }
             else if (hasEnemyId && hasThemId)
             {
-                this.addEnemyToIdThemToId(map);
+                this.addEnemyToIdThemToId(attributeMap);
             }
             else
             {
@@ -96,12 +96,12 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addEnemy(AttributeMap<?> map)
+    private void addEnemy(AttributeMap<?> attributeMap)
     {
-        List<String> enemiesToList = map.getList(ENEMIES_TO);
-        List<String> targetList = map.getList(TO_THEM);
+        List<String> enemiesToList = attributeMap.getList(ENEMIES_TO);
+        List<String> targetList = attributeMap.getList(TO_THEM);
 
         if (enemiesToList.size() == 1 && targetList.size() == 1)
         {
@@ -125,11 +125,15 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
 
                     if (enemyToEntityClass.isInstance(currentEntity))
                     {
-                        currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, targetEntityClass.asSubclass(EntityLiving.class), true));
+                        currentEntity.targetTasks.addTask(5,
+                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                        targetEntityClass.asSubclass(EntityLiving.class), true));
                     }
                     else if (targetEntityClass.isInstance(currentEntity))
                     {
-                        currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, enemyToEntityClass.asSubclass(EntityLiving.class), true));
+                        currentEntity.targetTasks.addTask(5,
+                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                        enemyToEntityClass.asSubclass(EntityLiving.class), true));
                     }
                 });
             }
@@ -176,14 +180,18 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
                     {
                         for (Class<? extends EntityLiving> targetClass : targetClassesSet)
                         {
-                            currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, targetClass, true));
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
                         }
                     }
                     else if (targetClassesSet.contains(entityClass))
                     {
                         for (Class<? extends EntityLiving> enemyClass : enemyClassesSet)
                         {
-                            currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, enemyClass, true));
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            enemyClass, true));
                         }
                     }
                 });
@@ -193,12 +201,12 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addEnemyId(AttributeMap<?> map)
+    private void addEnemyId(AttributeMap<?> attributeMap)
     {
-        List<String> enemiesToList = map.getList(ENEMIES_TO);
-        List<String> enemyIdPrefixList = map.getList(ENEMY_ID);
+        List<String> enemiesToList = attributeMap.getList(ENEMIES_TO);
+        List<String> enemyIdPrefixList = attributeMap.getList(ENEMY_ID);
 
         Set<Class<? extends EntityLiving>> enemyClassesSet = new HashSet<>();
         Set<Class<? extends EntityLiving>> enemyIdClassesSet = new HashSet<>();
@@ -242,14 +250,18 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
                 {
                     for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
                     {
-                        currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, targetClass, true));
+                        currentEntity.targetTasks.addTask(5,
+                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                        targetClass, true));
                     }
                 }
                 else if (enemyIdClassesSet.contains(currentEntityClass))
                 {
                     for (Class<? extends EntityLiving> targetClass : enemyClassesSet)
                     {
-                        currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, targetClass, true));
+                        currentEntity.targetTasks.addTask(5,
+                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                        targetClass, true));
                     }
                 }
             });
@@ -258,12 +270,12 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addPanicToId(AttributeMap<?> map)
+    private void addPanicToId(AttributeMap<?> attributeMap)
     {
-        List<String> panicToList = map.getList(PANIC_TO);
-        List<String> panicIdPrefixList = map.getList(PANIC_ID);
+        List<String> panicToList = attributeMap.getList(PANIC_TO);
+        List<String> panicIdPrefixList = attributeMap.getList(PANIC_ID);
 
         Set<Class<? extends EntityLiving>> panicToClassesSet = new HashSet<>();
         Set<Class<? extends EntityLiving>> panicIdClassesSet = new HashSet<>();
@@ -318,12 +330,12 @@ public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGette
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addEnemyToIdThemToId(AttributeMap<?> map)
+    private void addEnemyToIdThemToId(AttributeMap<?> attributeMap)
     {
-        List<String> enemyIdList = map.getList(ENEMY_ID);
-        List<String> themIdList = map.getList(THEM_ID);
+        List<String> enemyIdList = attributeMap.getList(ENEMY_ID);
+        List<String> themIdList = attributeMap.getList(THEM_ID);
 
         Set<Class<? extends EntityLiving>> enemyIdClassesSet = new HashSet<>();
         Set<Class<? extends EntityLiving>> themIdClassesSet = new HashSet<>();

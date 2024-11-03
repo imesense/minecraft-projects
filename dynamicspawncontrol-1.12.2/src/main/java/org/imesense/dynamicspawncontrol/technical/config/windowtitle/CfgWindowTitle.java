@@ -30,7 +30,7 @@ public final class CfgWindowTitle extends CfgClassAbstract
 
 		CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataWindowTitle.ConfigDataWindowTitle.instance =
+        DataWindowTitle.ConfigDataWindowTitle.Instance =
                 new DataWindowTitle.ConfigDataWindowTitle("window_title");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -49,13 +49,13 @@ public final class CfgWindowTitle extends CfgClassAbstract
     @Override
     public void saveToFile()
     {
-        Path configPath = Paths.get(this.nameConfig).getParent();
+        Path path = Paths.get(this.nameConfig).getParent();
 
-        if (Files.notExists(configPath))
+        if (Files.notExists(path))
         {
             try
             {
-                Files.createDirectories(configPath);
+                Files.createDirectories(path);
             }
             catch (IOException exception)
             {
@@ -67,16 +67,16 @@ public final class CfgWindowTitle extends CfgClassAbstract
         JsonObject jsonObjectWindowTitle = new JsonObject();
 
         jsonObjectWindowTitle.addProperty("title",
-                DataWindowTitle.ConfigDataWindowTitle.instance.getWindowTitle());
+                DataWindowTitle.ConfigDataWindowTitle.Instance.getWindowTitle());
 
-        recordObject.add(DataWindowTitle.ConfigDataWindowTitle.instance.
+        recordObject.add(DataWindowTitle.ConfigDataWindowTitle.Instance.
                 getCategoryObject(), jsonObjectWindowTitle);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter file = new FileWriter(this.nameConfig))
+        try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(recordObject, file);
+            gson.toJson(recordObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -95,15 +95,15 @@ public final class CfgWindowTitle extends CfgClassAbstract
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(DataWindowTitle.ConfigDataWindowTitle.instance.getCategoryObject()))
+            if (readableObject.has(DataWindowTitle.ConfigDataWindowTitle.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectWindowTitle =
                         readableObject.getAsJsonObject(DataWindowTitle.ConfigDataWindowTitle.
-                                instance.getCategoryObject());
+                                Instance.getCategoryObject());
 
                 if (jsonObjectWindowTitle.has("title"))
                 {
-                    DataWindowTitle.ConfigDataWindowTitle.instance.
+                    DataWindowTitle.ConfigDataWindowTitle.Instance.
                             setWindowTitle(jsonObjectWindowTitle.get("title").getAsString());
                 }
             }

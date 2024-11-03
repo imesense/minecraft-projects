@@ -75,7 +75,7 @@ public final class EntityWebbing extends EntityThrowable
 
             if (result.typeOfHit == RayTraceResult.Type.BLOCK)
             {
-                if (!DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingWebbingOnWeb())
+                if (!DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingWebbingOnWeb())
                 {
                     IBlockState state = this.world.getBlockState(result.getBlockPos());
                     Block oldBlock = state.getBlock();
@@ -86,6 +86,8 @@ public final class EntityWebbing extends EntityThrowable
             }
             else
             {
+                assert result.entityHit != null;
+
                 pos = result.entityHit.getPosition();
             }
 
@@ -116,12 +118,12 @@ public final class EntityWebbing extends EntityThrowable
         EntityWebbing entity = null;
         float pitch = 1.0f / (entityIn.getRNG().nextFloat() * 0.4f + 0.8f);
 
-        entityIn.playSound(ObjectHandlerClient.WEBBING_SHOOT, 1.0f, pitch);
+        entityIn.playSound(ObjectHandlerClient.WebbingShoot, 1.0f, pitch);
 
         if (!worldIn.isRemote)
         {
             entity = new EntityWebbing(worldIn, entityIn);
-            Float inaccuracy = DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingInaccuracy();
+            Float inaccuracy = DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingInaccuracy();
             entity.shoot(entityIn, entityIn.rotationPitch, entityIn.rotationYaw, 0.0f, 1.1f, inaccuracy);
             worldIn.spawnEntity(entity);
         }
@@ -142,16 +144,16 @@ public final class EntityWebbing extends EntityThrowable
         Block oldBlock = state.getBlock();
 
         boolean stick = oldBlock.isReplaceable(world, pos) &&
-                (DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getBlockWebReplacement() || oldBlock.isAir(state, world, pos));
+                (DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getBlockWebReplacement() || oldBlock.isAir(state, world, pos));
 
         if (!stick)
         {
-            world.playSound(null, pos, ObjectHandlerClient.WEBBING_NONSTICK,
+            world.playSound(null, pos, ObjectHandlerClient.WebbingNonStick,
                     SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.rand.nextFloat() * 0.4f + 0.8f));
         }
         else
         {
-            world.playSound(null, pos, ObjectHandlerClient.WEBBING_STICK,
+            world.playSound(null, pos, ObjectHandlerClient.WebbingStick,
                     SoundCategory.NEUTRAL, 0.5f, 0.4f / (world.rand.nextFloat() * 0.4f + 0.8f));
 
             if (!world.isRemote)

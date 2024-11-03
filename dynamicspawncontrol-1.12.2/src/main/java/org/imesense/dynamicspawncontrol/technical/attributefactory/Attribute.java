@@ -18,37 +18,37 @@ public final class Attribute<T>
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @param multiKey
      */
-    public Attribute(AttributeKey<T> key, boolean multiKey)
+    public Attribute(AttributeKey<T> attributeKey, boolean multiKey)
     {
-        this.KEY = key;
+        this.KEY = attributeKey;
         this.MULTI_KEY = multiKey;
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      * @param <T>
      */
     @SuppressWarnings("unchecked")
-    public static <T> Attribute<Object> create(AttributeKey<T> key)
+    public static <T> Attribute<Object> create(AttributeKey<T> attributeKey)
     {
-        return (Attribute<Object>) new Attribute<>(key, false);
+        return (Attribute<Object>) new Attribute<>(attributeKey, false);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      * @param <T>
      */
     @SuppressWarnings("unchecked")
-    public static <T> Attribute<Object> createMulti(AttributeKey<T> key)
+    public static <T> Attribute<Object> createMulti(AttributeKey<T> attributeKey)
     {
-        return (Attribute<Object>) new Attribute<>(key, true);
+        return (Attribute<Object>) new Attribute<>(attributeKey, true);
     }
 
     /**

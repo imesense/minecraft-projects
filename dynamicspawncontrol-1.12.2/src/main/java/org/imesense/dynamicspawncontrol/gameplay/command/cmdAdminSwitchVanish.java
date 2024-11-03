@@ -38,66 +38,71 @@ public final class CmdAdminSwitchVanish extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_sv";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
         if (args.length != 1 || (!args[0].equalsIgnoreCase("1") && !args[0].equalsIgnoreCase("0")))
         {
-            sender.sendMessage(new TextComponentString(getUsage(sender)));
+            iCommandSender.sendMessage(new TextComponentString(getUsage(iCommandSender)));
             return;
         }
 
-        if (!(sender instanceof EntityPlayerMP))
+        if (!(iCommandSender instanceof EntityPlayerMP))
         {
-            sender.sendMessage(new TextComponentString("This command can only be used by players!"));
+            iCommandSender.sendMessage(new TextComponentString("This command can only be used by players!"));
             return;
         }
 
-        EntityPlayerMP player = (EntityPlayerMP) sender;
+        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) iCommandSender;
 
         if (args[0].equalsIgnoreCase("1"))
         {
-            this.apply(player);
+            this.apply(entityPlayerMP);
         }
         else if (args[0].equalsIgnoreCase("0"))
         {
-            this.remove(player);
+            this.remove(entityPlayerMP);
         }
     }
 
     /**
      *
-     * @param player
+     * @param entityPlayerMP
      */
-    private void apply(EntityPlayerMP player)
+    private void apply(EntityPlayerMP entityPlayerMP)
     {
-        player.addPotionEffect(new PotionEffect(Objects.requireNonNull(Potion.getPotionById(1)), Integer.MAX_VALUE, 1, false, false));
-        player.addPotionEffect(new PotionEffect(Objects.requireNonNull(Potion.getPotionById(14)), Integer.MAX_VALUE, 0, false, false));
+        entityPlayerMP.addPotionEffect(new
+                PotionEffect(Objects.requireNonNull(Potion.getPotionById
+                    (1)), Integer.MAX_VALUE, 1, false, false));
+
+        entityPlayerMP.addPotionEffect(new
+                PotionEffect(Objects.requireNonNull(Potion.getPotionById
+                    (14)), Integer.MAX_VALUE, 0, false, false));
     }
 
     /**
      *
-     * @param player
+     * @param entityPlayerMP
      */
-    private void remove(EntityPlayerMP player)
+    private void remove(EntityPlayerMP entityPlayerMP)
     {
-        player.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(1)));
-        player.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(14)));
+        entityPlayerMP.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(1)));
+        entityPlayerMP.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(14)));
     }
 }

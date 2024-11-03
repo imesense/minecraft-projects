@@ -68,11 +68,11 @@ public final class OnNickNameEntity
 
         assert inputStream != null;
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)))
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream)))
         {
             String line;
 
-            while ((line = reader.readLine()) != null)
+            while ((line = bufferedReader.readLine()) != null)
             {
                 this.RANDOM_NAMES.add(line.trim());
             }
@@ -85,56 +85,56 @@ public final class OnNickNameEntity
 
     /**
      *
-     * @param event
+     * @param specialSpawn
      */
     @SubscribeEvent
-    public void onEntitySpawn_0(LivingSpawnEvent.SpecialSpawn event)
+    public void onEntitySpawn_0(LivingSpawnEvent.SpecialSpawn specialSpawn)
     {
-        if (event.getEntity() instanceof EntityZombie)
+        if (specialSpawn.getEntity() instanceof EntityZombie)
         {
-            EntityZombie zombie = (EntityZombie) event.getEntity();
+            EntityZombie entityZombie = (EntityZombie) specialSpawn.getEntity();
 
             if (RANDOM.nextFloat() < 0.3f)
             {
                 String randomName =
                         this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
-                zombie.setCustomNameTag(randomName);
-                zombie.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
+                entityZombie.setCustomNameTag(randomName);
+                entityZombie.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
             }
         }
 
-        if (event.getEntity() instanceof EntityVillager)
+        if (specialSpawn.getEntity() instanceof EntityVillager)
         {
-            EntityVillager villager = (EntityVillager) event.getEntity();
+            EntityVillager entityVillager = (EntityVillager) specialSpawn.getEntity();
 
             String randomName =
                     this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
-            villager.setCustomNameTag(randomName);
-            villager.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
+            entityVillager.setCustomNameTag(randomName);
+            entityVillager.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
         }
     }
 
     /**
      *
-     * @param event
+     * @param livingDeathEvent
      */
     @SubscribeEvent
-    public void onEntityDeath_1(LivingDeathEvent event)
+    public void onEntityDeath_1(LivingDeathEvent livingDeathEvent)
     {
-        if (event.getEntity() instanceof EntityZombie)
+        if (livingDeathEvent.getEntity() instanceof EntityZombie)
         {
-            EntityZombie zombie = (EntityZombie) event.getEntity();
-            World world = zombie.getEntityWorld();
-            DamageSource source = event.getSource();
-            Entity killer = source.getTrueSource();
+            EntityZombie entityZombie = (EntityZombie) livingDeathEvent.getEntity();
+            World world = entityZombie.getEntityWorld();
+            DamageSource damageSource = livingDeathEvent.getSource();
+            Entity killer = damageSource.getTrueSource();
 
-            if (zombie.hasCustomName())
+            if (entityZombie.hasCustomName())
             {
-                String zombieName = zombie.getCustomNameTag();
+                String zombieName = entityZombie.getCustomNameTag();
 
-                String deathMessage = this.getDeathMessage(zombieName, source, killer);
+                String deathMessage = this.getDeathMessage(zombieName, damageSource, killer);
 
                 if (!world.isRemote && world.getMinecraftServer() != null)
                 {
@@ -146,18 +146,18 @@ public final class OnNickNameEntity
             }
         }
 
-        if (event.getEntity() instanceof EntityVillager)
+        if (livingDeathEvent.getEntity() instanceof EntityVillager)
         {
-            EntityVillager villager = (EntityVillager) event.getEntity();
+            EntityVillager villager = (EntityVillager) livingDeathEvent.getEntity();
             World world = villager.getEntityWorld();
-            DamageSource source = event.getSource();
-            Entity killer = source.getTrueSource();
+            DamageSource damageSource = livingDeathEvent.getSource();
+            Entity killer = damageSource.getTrueSource();
 
             if (villager.hasCustomName())
             {
                 String villagerName = villager.getCustomNameTag();
 
-                String deathMessage = this.getDeathMessage(villagerName, source, killer);
+                String deathMessage = this.getDeathMessage(villagerName, damageSource, killer);
 
                 if (!world.isRemote && world.getMinecraftServer() != null)
                 {
@@ -169,60 +169,60 @@ public final class OnNickNameEntity
 
     /**
      *
-     * @param zombieName
-     * @param source
+     * @param entity
+     * @param damageSource
      * @param killer
      * @return
      */
-    private String getDeathMessage(String zombieName, DamageSource source, Entity killer)
+    private String getDeathMessage(String entity, DamageSource damageSource, Entity killer)
     {
-        if (source.isFireDamage())
+        if (damageSource.isFireDamage())
         {
-            return zombieName + " burned in flames";
+            return entity + " burned in flames";
         }
-        else if (source == DamageSource.LAVA)
+        else if (damageSource == DamageSource.LAVA)
         {
-            return zombieName + " tried to swim in lava";
+            return entity + " tried to swim in lava";
         }
-        else if (source == DamageSource.DROWN)
+        else if (damageSource == DamageSource.DROWN)
         {
-            return zombieName + " drowned";
+            return entity + " drowned";
         }
-        else if (source == DamageSource.FALL)
+        else if (damageSource == DamageSource.FALL)
         {
-            return zombieName + " couldn't survive the fall";
+            return entity + " couldn't survive the fall";
         }
-        else if (source == DamageSource.CACTUS)
+        else if (damageSource == DamageSource.CACTUS)
         {
-            return zombieName + " got pricked by a cactus";
+            return entity + " got pricked by a cactus";
         }
-        else if (source == DamageSource.STARVE)
+        else if (damageSource == DamageSource.STARVE)
         {
-            return zombieName + " starved to death";
+            return entity + " starved to death";
         }
-        else if (source == DamageSource.WITHER)
+        else if (damageSource == DamageSource.WITHER)
         {
-            return zombieName + " withered away";
+            return entity + " withered away";
         }
-        else if (source.getDamageType().equals("player") && killer != null)
+        else if (damageSource.getDamageType().equals("player") && killer != null)
         {
-            return zombieName + " was slain by player " + killer.getName();
+            return entity + " was slain by player " + killer.getName();
         }
-        else if (source.getDamageType().equals("mob") && killer != null)
+        else if (damageSource.getDamageType().equals("mob") && killer != null)
         {
-            return zombieName + " was slain by " + killer.getName();
+            return entity + " was slain by " + killer.getName();
         }
-        else if (source == DamageSource.MAGIC)
+        else if (damageSource == DamageSource.MAGIC)
         {
-            return zombieName + " was killed by magic";
+            return entity + " was killed by magic";
         }
-        else if (source == DamageSource.LIGHTNING_BOLT)
+        else if (damageSource == DamageSource.LIGHTNING_BOLT)
         {
-            return zombieName + " was struck by lightning";
+            return entity + " was struck by lightning";
         }
         else
         {
-            return zombieName + " died under mysterious circumstances";
+            return entity + " died under mysterious circumstances";
         }
     }
 }

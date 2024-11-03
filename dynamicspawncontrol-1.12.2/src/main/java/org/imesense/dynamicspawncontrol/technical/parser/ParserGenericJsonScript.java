@@ -21,7 +21,7 @@ public final class ParserGenericJsonScript
     /**
      *
      */
-    private static String path = "Unknown";
+    private static volatile String _PATH = "Unknown";
 
     /**
      *
@@ -104,7 +104,7 @@ public final class ParserGenericJsonScript
      */
     public static void setRulePath(File directory)
     {
-        path = directory.getPath();
+        _PATH = directory.getPath();
     }
 
     /**
@@ -121,69 +121,69 @@ public final class ParserGenericJsonScript
     private static void readAllRules()
     {
         //
-        CodeGenericUtil.readAndLogRules(path, "DropAllItems" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "DropAllItems" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "DropAllExperience" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "DropAllExperience" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "MainPotentialSpawn" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "MainPotentialSpawn" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericPotentialSpawn::parse, GENERIC_POTENTIAL_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "SpawnConditions" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "SpawnConditions" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericSpawnCondition::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "MobTaskManager" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "MobTaskManager" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericMobTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "EventEffects" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "EventEffects" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericMapEffectAction::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "EventBlockPlace" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "EventBlockPlace" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericBlockPlaceAction::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "EventBlockBreak" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "EventBlockBreak" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericBlockBreakAction::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "EventLeftMouseClick" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "EventLeftMouseClick" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericLeftClickAction::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
 
         //
-        CodeGenericUtil.readAndLogRules(path, "EventRightMouseClick" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGenericUtil.readAndLogRules(_PATH, "EventRightMouseClick" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericRightClickAction::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
     }
 
     /**
      *
-     * @param path
-     * @param filename
+     * @param PATH
+     * @param FILE_NAME
      * @param parser
      * @param rules
-     * @param getTypeScript
+     * @param TYPE_SCRIPT
      * @param <T>
      */
-    public static <T> void readRules(final String path, final String filename, Function<JsonElement, T> parser, List<T> rules, final String getTypeScript)
+    public static <T> void readRules(final String PATH, final String FILE_NAME, Function<JsonElement, T> parser, List<T> rules, final String TYPE_SCRIPT)
     {
-        JsonElement element = getRootElement(path, filename, getTypeScript);
+        JsonElement jsonElement = getRootElement(PATH, FILE_NAME, TYPE_SCRIPT);
 
-        if (element == null)
+        if (jsonElement == null)
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
-        for (JsonElement entry : element.getAsJsonArray())
+        for (JsonElement jsonElement1 : jsonElement.getAsJsonArray())
         {
-            T rule = parser.apply(entry);
+            T rule = parser.apply(jsonElement1);
 
             if (rule != null)
             {
@@ -191,36 +191,36 @@ public final class ParserGenericJsonScript
             }
             else
             {
-                Log.writeDataToLogFile(0, "Rule " + i + " in " + filename + " is invalid, skipping!");
+                Log.writeDataToLogFile(0, "Rule " + atomicInteger + " in " + FILE_NAME + " is invalid, skipping!");
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
 
-        if (i.get() != 0)
+        if (atomicInteger.get() != 0)
         {
-            Log.writeDataToLogFile(0, "Loaded " + i + " rules!");
+            Log.writeDataToLogFile(0, "Loaded " + atomicInteger + " rules!");
         }
     }
 
     /**
      *
-     * @param path
-     * @param filename
+     * @param PATH
+     * @param FILE_NAME
      * @param getTypeScript
      * @return
      */
-    private static JsonElement getRootElement(final String path, final String filename, final String getTypeScript)
+    private static JsonElement getRootElement(final String PATH, final String FILE_NAME, final String getTypeScript)
     {
         File file;
 
-        if (path == null)
+        if (PATH == null)
         {
-            file = new File(filename);
+            file = new File(FILE_NAME);
         }
         else
         {
-            File infinityForceSpawnConfigsDir = new File(path + File.separator + ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
+            File infinityForceSpawnConfigsDir = new File(PATH + File.separator + ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
             File scriptsDir = new File(infinityForceSpawnConfigsDir, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_SCRIPTS + File.separator + getTypeScript);
 
             if (!scriptsDir.exists())
@@ -231,7 +231,7 @@ public final class ParserGenericJsonScript
                 }
             }
 
-            file = new File(scriptsDir, filename);
+            file = new File(scriptsDir, FILE_NAME);
         }
 
         if (!file.exists())
@@ -240,7 +240,7 @@ public final class ParserGenericJsonScript
             return null;
         }
 
-        Log.writeDataToLogFile(0, "Reading spawn rules from " + filename);
+        Log.writeDataToLogFile(0, "Reading spawn rules from " + FILE_NAME);
 
         InputStream inputstream;
 
@@ -250,25 +250,25 @@ public final class ParserGenericJsonScript
         }
         catch (FileNotFoundException exception)
         {
-            Log.writeDataToLogFile(2, "Error reading " + filename + "!");
+            Log.writeDataToLogFile(2, "Error reading " + FILE_NAME + "!");
             return null;
         }
 
-        BufferedReader br;
+        BufferedReader bufferedReader;
 
         try
         {
-            br = new BufferedReader(new InputStreamReader(inputstream, "UTF-8"));
+            bufferedReader = new BufferedReader(new InputStreamReader(inputstream, "UTF-8"));
         }
         catch (UnsupportedEncodingException exception)
         {
-            Log.writeDataToLogFile(2, "Error reading " + filename + "!");
+            Log.writeDataToLogFile(2, "Error reading " + FILE_NAME + "!");
             return null;
         }
 
-        JsonParser parser = new JsonParser();
+        JsonParser jsonParser = new JsonParser();
 
-        return parser.parse(br);
+        return jsonParser.parse(bufferedReader);
     }
 
     /**
@@ -277,11 +277,11 @@ public final class ParserGenericJsonScript
      */
     private static void makeEmptyRuleFile(File file)
     {
-        PrintWriter writer;
+        PrintWriter printWriter;
 
         try
         {
-            writer = new PrintWriter(file);
+            printWriter = new PrintWriter(file);
         }
         catch (FileNotFoundException exception)
         {
@@ -289,12 +289,12 @@ public final class ParserGenericJsonScript
             return;
         }
 
-        writer.println("[");
-        writer.println("//-' OldSerpskiStalker, acidicMercury8");
-        writer.println("//-' Dynamic Spawn Control for Minecraft: " + ProjectStructure.STRUCT_INFO_MOD.VERSION);
-        writer.println("//-' Our organization: https://github.com/imesense");
-        writer.println("]");
+        printWriter.println("[");
+        printWriter.println("//-' OldSerpskiStalker, acidicMercury8");
+        printWriter.println("//-' Dynamic Spawn Control for Minecraft: " + ProjectStructure.STRUCT_INFO_MOD.VERSION);
+        printWriter.println("//-' Our organization: https://github.com/imesense");
+        printWriter.println("]");
 
-        writer.close();
+        printWriter.close();
     }
 }

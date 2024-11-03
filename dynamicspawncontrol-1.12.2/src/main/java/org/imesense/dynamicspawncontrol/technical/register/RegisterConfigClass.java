@@ -5,7 +5,7 @@ import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
 import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.CfgBlockWorldGenerator;
 import org.imesense.dynamicspawncontrol.technical.config.cachedameworld.CfgCacheWorldGame;
 import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.CfgGameDebugger;
-import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgPluginWorldTime;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgTimeControl;
 import org.imesense.dynamicspawncontrol.technical.config.logfile.CfgLogFile;
 import org.imesense.dynamicspawncontrol.technical.config.player.CfgPlayer;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
@@ -36,7 +36,7 @@ public final class RegisterConfigClass
         CfgDarkness.class,
         CfgWindowTitle.class,
         CfgBlockWorldGenerator.class,
-        CfgPluginWorldTime.class,
+        CfgTimeControl.class,
         CfgZombieDropItem.class,
         CfgSkeletonDropItem.class,
         CfgWebSlinger.class,
@@ -64,36 +64,36 @@ public final class RegisterConfigClass
 
     /**
      *
-     * @param configClass
+     * @param _class
      * @param <T>
      */
-    private static <T> void initializeConfig(Class<T> configClass)
+    private static <T> void initializeConfig(Class<T> _class)
     {
         try
         {
-            if (configClass.isAnnotationPresent(DCSSingleConfig.class))
+            if (_class.isAnnotationPresent(DCSSingleConfig.class))
             {
-                DCSSingleConfig configAnnotation = configClass.getAnnotation(DCSSingleConfig.class);
-                String configFileName = configAnnotation.fileName() + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
+                DCSSingleConfig dcsSingleConfig = _class.getAnnotation(DCSSingleConfig.class);
+                String configFileName = dcsSingleConfig.fileName() + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
 
-                Constructor<T> constructor = configClass.getConstructor(String.class);
-                final T configInstance = constructor.newInstance(configFileName);
+                Constructor<T> constructor = _class.getConstructor(String.class);
+                final T INSTANCE = constructor.newInstance(configFileName);
 
                 Log.writeDataToLogFile(0, "Initialized config: " + configFileName);
-                Log.writeDataToLogFile(0, "configClass: " + configClass + " " + configInstance);
+                Log.writeDataToLogFile(0, "configClass: " + _class + " " + INSTANCE);
             }
             else
             {
-                Log.writeDataToLogFile(2, "No ConfigClass annotation found in: " + configClass.getName());
+                Log.writeDataToLogFile(2, "No ConfigClass annotation found in: " + _class.getName());
             }
         }
         catch (NoSuchMethodException exception)
         {
-            Log.writeDataToLogFile(2, "Constructor with String parameter not found in class: " + configClass.getName() + " - " + exception.getMessage());
+            Log.writeDataToLogFile(2, "Constructor with String parameter not found in class: " + _class.getName() + " - " + exception.getMessage());
         }
         catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Exception in class: " + configClass.getName() + " - " + exception.getMessage());
+            Log.writeDataToLogFile(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
             throw new RuntimeException(exception);
         }
     }

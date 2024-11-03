@@ -16,8 +16,6 @@ import java.util.Random;
 
 /**
  *
- * OldSerpskiStalker:
- * <a href="https://forum.mcmodding.ru/threads/1-12-2-generacija.21375/">...</a>
  */
 public final class BlockMonsterEgg implements IWorldGenerator
 {
@@ -39,29 +37,29 @@ public final class BlockMonsterEgg implements IWorldGenerator
 
     /**
      *
-     * @param gen
+     * @param worldGenerator
      * @param world
-     * @param rand
+     * @param random
      * @param chunkX
      * @param chunkZ
      * @param chance
      * @param minHeight
      * @param maxHeight
      */
-    private void run(WorldGenerator gen, World world, Random rand, int chunkX, int chunkZ, int chance, int minHeight, int maxHeight)
+    private void run(WorldGenerator worldGenerator, World world, Random random, int chunkX, int chunkZ, int chance, int minHeight, int maxHeight)
     {
         int heightDiff = maxHeight - minHeight + 1;
 
         for (int i = 0; i < chance; i++)
         {
-            int x = chunkX * 16 + rand.nextInt(16);
-            int y = minHeight + rand.nextInt(heightDiff);
-            int z = chunkZ * 16 + rand.nextInt(16);
+            int x = chunkX * 16 + random.nextInt(16);
+            int y = minHeight + random.nextInt(heightDiff);
+            int z = chunkZ * 16 + random.nextInt(16);
 
-            x += rand.nextInt(10) - 6 / 2;
-            z += rand.nextInt(10) - 6 / 2;
+            x += random.nextInt(10) - 6 / 2;
+            z += random.nextInt(10) - 6 / 2;
 
-            gen.generate(world, rand, new BlockPos(x, y, z));
+            worldGenerator.generate(world, random, new BlockPos(x, y, z));
         }
     }
 
@@ -71,11 +69,11 @@ public final class BlockMonsterEgg implements IWorldGenerator
      * @param chunkX
      * @param chunkZ
      * @param world
-     * @param chunkGenerator
-     * @param chunkProvider
+     * @param iChunkGenerator
+     * @param iChunkProvider
      */
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
     {
         switch (world.provider.getDimension())
         {
@@ -83,9 +81,9 @@ public final class BlockMonsterEgg implements IWorldGenerator
             {
                 run(
                         CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
-                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getChanceSpawn(),
-                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMinHeight(),
-                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.instance.getMaxHeight()
+                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.Instance.getChanceSpawn(),
+                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.Instance.getMinHeight(),
+                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.Instance.getMaxHeight()
                 );
                 
                 break;

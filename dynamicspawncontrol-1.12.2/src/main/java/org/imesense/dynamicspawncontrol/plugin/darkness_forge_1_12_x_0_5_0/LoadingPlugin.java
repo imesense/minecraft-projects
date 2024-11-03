@@ -16,24 +16,23 @@ import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.asm.W
  */
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 @IFMLLoadingPlugin.Name(ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
-@IFMLLoadingPlugin.SortingIndex(LoadingPlugin.AFTER_DEOBF)
+@IFMLLoadingPlugin.SortingIndex(LoadingPlugin.AFTER_DEOBFUSCATION)
 public final class LoadingPlugin implements IFMLLoadingPlugin
 {
     /**
      *
      */
-    public static File FILE_LOCATION;
+    public static File File_location;
 
     /**
      *
      */
-    public static Boolean RUNTIME_DEOBF;
+    public static Boolean Runtime_deobfuscation;
 
     /**
-     * FMLDeobfTweaker:
-     * https://github.com/MinecraftForge/MinecraftForge/blob/a8b9abcb17e28007ed5f5e110997be8e499575e5/src/main/java/net/minecraftforge/fml/relauncher/CoreModManager.java#L633
+     *
      */
-    public static final int AFTER_DEOBF = 1001;
+    public static final int AFTER_DEOBFUSCATION = 1001;
 
     /**
      *
@@ -71,17 +70,17 @@ public final class LoadingPlugin implements IFMLLoadingPlugin
 
     /**
      *
-     * @param data
+     * @param objectMap
      */
     @Override
-    public void injectData(Map<String, Object> data)
+    public void injectData(Map<String, Object> objectMap)
     {
-        RUNTIME_DEOBF = (Boolean) data.get("runtimeDeobfuscationEnabled");
-        FILE_LOCATION = (File) data.get("coremodLocation");
+        Runtime_deobfuscation = (Boolean) objectMap.get("runtimeDeobfuscationEnabled");
+        File_location = (File) objectMap.get("coremodLocation");
 
-        if (FILE_LOCATION == null)
+        if (File_location == null)
         {
-            FILE_LOCATION = new File(
+            File_location = new File(
                     getClass()
                             .getProtectionDomain()
                             .getCodeSource()

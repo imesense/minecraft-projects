@@ -50,18 +50,18 @@ public final class RegisterTechnicalClass
      */
     public static void registerClasses()
     {
-        for (Class<?> eventClass : EVENT_CLASSES)
+        for (Class<?> _class : EVENT_CLASSES)
         {
             try
             {
-                Object eventInstance =
-                        eventClass.getConstructor().newInstance();
+                Object object =
+                        _class.getConstructor().newInstance();
 
-                MinecraftForge.EVENT_BUS.register(eventInstance);
+                MinecraftForge.EVENT_BUS.register(object);
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception in class: " + eventClass.getName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
                 throw new RuntimeException(exception);
             }
         }

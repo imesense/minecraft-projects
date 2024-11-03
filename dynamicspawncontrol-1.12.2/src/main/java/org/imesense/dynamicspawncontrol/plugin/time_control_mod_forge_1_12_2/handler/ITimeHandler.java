@@ -15,8 +15,8 @@ public interface ITimeHandler
 
     /**
      *
-     * @param param1
-     * @param param2
+     * @param customWorldTime
+     * @param multiplierWorldTime
      */
-    void update(long param1, double param2);
+    void update(long customWorldTime, double multiplierWorldTime);
 }

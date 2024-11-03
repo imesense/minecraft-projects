@@ -20,17 +20,17 @@ public final class InlineJsonService
 {
     /**
      *
-     * @param element
+     * @param jsonObject
      * @param name
      * @return
      */
-    public static Optional<JsonElement> getElement(JsonObject element, String name)
+    public static Optional<JsonElement> getElement(JsonObject jsonObject, String name)
     {
-        JsonElement el = element.get(name);
+        JsonElement jsonElement = jsonObject.get(name);
 
-        if (el != null)
+        if (jsonElement != null)
         {
-            return Optional.of(el);
+            return Optional.of(jsonElement);
         }
         else
         {
@@ -97,14 +97,14 @@ public final class InlineJsonService
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static Stream<Pair<String, String>> asPairs(JsonElement element)
+    public static Stream<Pair<String, String>> asPairs(JsonElement jsonElement)
     {
         Stream.Builder<Pair<String, String>> builder = Stream.builder();
 
-        for (Map.Entry<String, JsonElement> entry : element.getAsJsonObject().entrySet())
+        for (Map.Entry<String, JsonElement> entry : jsonElement.getAsJsonObject().entrySet())
         {
             builder.add(Pair.of(entry.getKey(), entry.getValue().getAsString()));
         }
@@ -114,16 +114,16 @@ public final class InlineJsonService
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static Stream<JsonElement> asArrayOrSingle(JsonElement element)
+    public static Stream<JsonElement> asArrayOrSingle(JsonElement jsonElement)
     {
-        if (element.isJsonArray())
+        if (jsonElement.isJsonArray())
         {
             Stream.Builder<JsonElement> builder = Stream.builder();
 
-            for (JsonElement el : element.getAsJsonArray())
+            for (JsonElement el : jsonElement.getAsJsonArray())
             {
                 builder.add(el);
             }
@@ -132,83 +132,83 @@ public final class InlineJsonService
         }
         else
         {
-            return Stream.of(element);
+            return Stream.of(jsonElement);
         }
     }
 
     /**
      *
-     * @param parent
+     * @param jsonObject
      * @param name
-     * @param pairs
+     * @param pair
      */
-    public static void addPairs(JsonObject parent, String name, Map<String, String> pairs)
+    public static void addPairs(JsonObject jsonObject, String name, Map<String, String> pair)
     {
-        if (pairs != null)
+        if (pair != null)
         {
-            JsonObject object = new JsonObject();
+            JsonObject jsonObject1 = new JsonObject();
 
-            for (Map.Entry<String, String> entry : pairs.entrySet())
+            for (Map.Entry<String, String> entry : pair.entrySet())
             {
-                object.add(entry.getKey(), new JsonPrimitive(entry.getValue()));
+                jsonObject1.add(entry.getKey(), new JsonPrimitive(entry.getValue()));
             }
 
-            parent.add(name, object);
+            jsonObject.add(name, jsonObject1);
         }
     }
 
     /**
      *
-     * @param parent
+     * @param jsonObject
      * @param name
-     * @param strings
+     * @param stringCollection
      */
-    public static void addArrayOrSingle(JsonObject parent, String name, Collection<String> strings)
+    public static void addArrayOrSingle(JsonObject jsonObject, String name, Collection<String> stringCollection)
     {
-        if (strings != null)
+        if (stringCollection != null)
         {
-            if (strings.size() == 1)
+            if (stringCollection.size() == 1)
             {
-                parent.add(name, new JsonPrimitive(strings.iterator().next()));
+                jsonObject.add(name, new JsonPrimitive(stringCollection.iterator().next()));
             }
             else
             {
-                JsonArray array = new JsonArray();
+                JsonArray jsonArray = new JsonArray();
 
-                for (String value : strings)
+                for (String value : stringCollection)
                 {
-                    array.add(new JsonPrimitive(value));
+                    jsonArray.add(new JsonPrimitive(value));
                 }
 
-                parent.add(name, array);
+                jsonObject.add(name, jsonArray);
             }
         }
     }
 
     /**
      *
-     * @param parent
+     * @param jsonObject
      * @param name
-     * @param integers
+     * @param integerCollection
      */
-    public static void addIntArrayOrSingle(JsonObject parent, String name, Collection<Integer> integers)
+    public static void addIntArrayOrSingle(JsonObject jsonObject, String name, Collection<Integer> integerCollection)
     {
-        if (integers != null)
+        if (integerCollection != null)
         {
-            if (integers.size() == 1)
+            if (integerCollection.size() == 1)
             {
-                parent.add(name, new JsonPrimitive(integers.iterator().next()));
+                jsonObject.add(name, new JsonPrimitive(integerCollection.iterator().next()));
             }
             else
             {
-                JsonArray array = new JsonArray();
+                JsonArray jsonArray = new JsonArray();
 
-                for (Integer value : integers)
+                for (Integer value : integerCollection)
                 {
-                    array.add(new JsonPrimitive(value));
+                    jsonArray.add(new JsonPrimitive(value));
                 }
 
-                parent.add(name, array);
+                jsonObject.add(name, jsonArray);
             }
         }
     }
@@ -218,20 +218,21 @@ public final class InlineJsonService
      * @param jsonObject
      * @param key
      * @param defaultValue
-     * @param extractor
+     * @param biFunction
      * @return
      * @param <T>
      */
-    public static <T> T getValueFromJson(JsonObject jsonObject, String key, T defaultValue, BiFunction<JsonElement, T, T> extractor)
+    public static <T> T getValueFromJson(JsonObject jsonObject, String key, T defaultValue, BiFunction<JsonElement, T, T> biFunction)
     {
         Log.writeDataToLogFile(0, "Read jsonObject: " + jsonObject);
 
         if (jsonObject.has(key))
         {
-            JsonElement element = jsonObject.get(key);
-            if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber())
+            JsonElement jsonElement = jsonObject.get(key);
+
+            if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isNumber())
             {
-                return extractor.apply(element, defaultValue);
+                return biFunction.apply(jsonElement, defaultValue);
             }
         }
 

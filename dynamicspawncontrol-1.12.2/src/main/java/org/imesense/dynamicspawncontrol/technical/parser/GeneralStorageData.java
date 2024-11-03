@@ -12,7 +12,7 @@ public final class GeneralStorageData
     /**
      *
      */
-    public static GeneralStorageData instance;
+    public static GeneralStorageData Instance;
 
     /**
      *
@@ -20,8 +20,8 @@ public final class GeneralStorageData
     public GeneralStorageData()
     {
 		CodeGenericUtil.printInitClassToLog(this.getClass());
-		
-        instance = this;
+
+        Instance = this;
     }
 
     /**

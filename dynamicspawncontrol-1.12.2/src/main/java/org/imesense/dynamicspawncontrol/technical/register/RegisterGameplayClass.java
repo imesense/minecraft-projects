@@ -41,10 +41,10 @@ public final class RegisterGameplayClass
         {
             try
             {
-                Object eventInstance =
+                Object object =
                         eventClass.getConstructor().newInstance();
 
-                MinecraftForge.EVENT_BUS.register(eventInstance);
+                MinecraftForge.EVENT_BUS.register(object);
             }
             catch (Exception exception)
             {

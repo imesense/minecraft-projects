@@ -11,37 +11,68 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;
 
-public final class ClassTransformer implements IClassTransformer {
-    Logger logger = LogManager.getLogger("Bloodmoon");
+/**
+ *
+ */
+public final class ClassTransformer implements IClassTransformer
+{
+    /**
+     *
+     */
+    Logger logger = LogManager.getLogger("BloodMoon");
 
-    public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        if (transformedName.equals("net.minecraft.client.renderer.EntityRenderer")) {
+    /**
+     *
+     * @param name
+     * @param transformedName
+     * @param basicClass
+     * @return
+     */
+    public byte[] transform(String name, String transformedName, byte... basicClass)
+    {
+        if (transformedName.equals("net.minecraft.client.renderer.EntityRenderer"))
+        {
             return this.patchEntityRendererClass(basicClass);
-        } else {
+        }
+        else
+        {
             return transformedName.equals("net.minecraft.world.World") ? this.patchWorld(basicClass) : basicClass;
         }
     }
 
-    private byte[] patchWorld(byte[] basicClass) {
+    /**
+     *
+     * @param basicClass
+     * @return
+     */
+    private byte[] patchWorld(byte... basicClass)
+    {
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
+
         this.logger.log(Level.DEBUG, "Found World Class: " + classNode.name);
+
         MethodNode getSkyColor = null;
         MethodNode getMoonPhase = null;
 
-        for (MethodNode mn : classNode.methods) {
-            if (mn.name.equals("getSkyColor")) {
+        for (MethodNode mn : classNode.methods)
+        {
+            if (mn.name.equals("getSkyColor"))
+            {
                 getSkyColor = mn;
-            } else if (mn.name.equals("getMoonPhase")) {
+            }
+            else if (mn.name.equals("getMoonPhase"))
+            {
                 getMoonPhase = mn;
             }
         }
 
-        InsnList toInsert;
-        AbstractInsnNode ain;
+        InsnList toInsert = null;
+        AbstractInsnNode ain = null;
 
-        if (getSkyColor != null) {
+        if (getSkyColor != null)
+        {
             this.logger.log(Level.DEBUG, " - Found getSkyColor");
 
             /*
@@ -58,7 +89,8 @@ public final class ClassTransformer implements IClassTransformer {
              */
         }
 
-        if (getMoonPhase != null) {
+        if (getMoonPhase != null)
+        {
             this.logger.log(Level.DEBUG, " - Found getMoonPhase");
 /*
             for (int i = 0; i < getMoonPhase.instructions.size(); ++i) {
@@ -73,25 +105,38 @@ public final class ClassTransformer implements IClassTransformer {
  */
         }
 
-        ClassWriter writer = new ClassWriter(3);
-        classNode.accept(writer);
-        return writer.toByteArray();
+        ClassWriter classWriter = new ClassWriter(3);
+        classNode.accept(classWriter);
+
+        return classWriter.toByteArray();
     }
 
-    private byte[] patchEntityRendererClass(byte[] basicClass) {
+    /**
+     * 
+     * @param basicClass
+     * @return
+     */
+    private byte[] patchEntityRendererClass(byte... basicClass)
+    {
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(basicClass);
+
         classReader.accept(classNode, 0);
+
         this.logger.log(Level.DEBUG, "Found EntityRenderer Class: " + classNode.name);
 
         MethodNode updateLightmap = null;
-        for (MethodNode mn : classNode.methods) {
-            if (mn.name.equals("updateLightmap")) {
+
+        for (MethodNode mn : classNode.methods)
+        {
+            if (mn.name.equals("updateLightmap"))
+            {
                 updateLightmap = mn;
             }
         }
 
-        if (updateLightmap != null) {
+        if (updateLightmap != null)
+        {
             this.logger.log(Level.DEBUG, " - Found updateLightmap");
 
             /*
@@ -126,9 +171,10 @@ public final class ClassTransformer implements IClassTransformer {
              */
         }
 
-        ClassWriter writer = new ClassWriter(1);
-        classNode.accept(writer);
-        return writer.toByteArray();
+        ClassWriter classWriter = new ClassWriter(1);
+        classNode.accept(classWriter);
+
+        return classWriter.toByteArray();
     }
 }
 

@@ -48,29 +48,29 @@ public final class OnPotentialSpawn
 
     /**
      *
-     * @param event
+     * @param potentialSpawns
      */
     @SubscribeEvent
-    public synchronized void onUpdatePotentialSpawns_0(WorldEvent.PotentialSpawns event)
+    public synchronized void onUpdatePotentialSpawns_0(WorldEvent.PotentialSpawns potentialSpawns)
     {
-        if (event.getWorld().isRemote)
+        if (potentialSpawns.getWorld().isRemote)
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericPotentialSpawn rule : ParserGenericJsonScript.GENERIC_POTENTIAL_SPAWN_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(potentialSpawns))
             {
                 for (Class<?> _class : rule.getToRemoveMobs())
                 {
-                    for (int idx = event.getList().size() - 1; idx >= 0; idx--)
+                    for (int idx = potentialSpawns.getList().size() - 1; idx >= 0; idx--)
                     {
-                        if (event.getList().get(idx).entityClass == _class)
+                        if (potentialSpawns.getList().get(idx).entityClass == _class)
                         {
-                            event.getList().remove(idx);
+                            potentialSpawns.getList().remove(idx);
                         }
                     }
                 }
@@ -79,14 +79,14 @@ public final class OnPotentialSpawn
 
                 for (Biome.SpawnListEntry entry : spawnEntries)
                 {
-                    ResourceLocation entityKey = EntityList.getKey(entry.entityClass);
-                    CacheStorage.EntityData entityData = CacheStorage.instance.getEntityDataByResourceLocation(entityKey);
+                    ResourceLocation resourceLocation = EntityList.getKey(entry.entityClass);
+                    CacheStorage.EntityData entityData = CacheStorage.Instance.getEntityDataByResourceLocation(resourceLocation);
 
                     if (entityData != null)
                     {
-                        assert entityKey != null;
+                        assert resourceLocation != null;
 
-                        int currentCount = Cache.instance.getEntitiesByResourceLocation(entityKey).size();
+                        int currentCount = Cache.Instance.getEntitiesByResourceLocation(resourceLocation).size();
                         int maxCount = entityData.getMaxCount();
 
                         if (currentCount >= maxCount)
@@ -98,21 +98,21 @@ public final class OnPotentialSpawn
                     float spawnChance = rule.getSpawnChance(entry.entityClass);
                     float minHeight = rule.getMinHeightChance(entry.entityClass);
                     float maxHeight = rule.getMaxHeightChance(entry.entityClass);
-                    int eventY = event.getPos().getY();
+                    int eventY = potentialSpawns.getPos().getY();
 
                     if (Math.random() < spawnChance && eventY >= minHeight && eventY <= maxHeight)
                     {
-                        event.getList().add(entry);
+                        potentialSpawns.getList().add(entry);
                     }
 
-                    if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_potential_spawn"))
+                    if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_potential_spawn"))
                     {
-                        Log.writeDataToLogFile(0, "ConfigsParser._GenericOverrideSpawn. List: " + event.getList());
+                        Log.writeDataToLogFile(0, "ConfigsParser._GenericOverrideSpawn. List: " + potentialSpawns.getList());
                     }
                 }
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

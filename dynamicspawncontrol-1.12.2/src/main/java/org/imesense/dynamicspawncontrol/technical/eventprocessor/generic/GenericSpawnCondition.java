@@ -45,42 +45,43 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
 
     /**
      *
-     * @param event
+     * @param checkSpawn
      * @return
      */
-    public boolean match(LivingSpawnEvent.CheckSpawn event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(LivingSpawnEvent.CheckSpawn checkSpawn) { return RULE_EVALUATOR.match(checkSpawn, EVENT_QUERY); }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private GenericSpawnCondition(AttributeMap<?> map)
+    private GenericSpawnCondition(AttributeMap<?> attributeMap)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericSpawnCondition.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericSpawnCondition.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
     }
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericSpawnCondition parse(JsonElement element)
+    public static GenericSpawnCondition parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<?> map = FACTORY.parse(element);
+            AttributeMap<?> attributeMap = FACTORY.parse(jsonElement);
 
-            return new GenericSpawnCondition(map);
+            return new GenericSpawnCondition(attributeMap);
         }
     }
 
@@ -91,99 +92,100 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
     {
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public World getWorld(LivingSpawnEvent.CheckSpawn data)
+        public World getWorld(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
-            return data.getWorld();
+            return checkSpawn.getWorld();
         }
 
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public BlockPos getPos(LivingSpawnEvent.CheckSpawn data)
+        public BlockPos getPos(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
-            return new BlockPos(data.getX(), data.getY(), data.getZ());
+            return new BlockPos(checkSpawn.getX(), checkSpawn.getY(), checkSpawn.getZ());
         }
 
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(LivingSpawnEvent.CheckSpawn data)
+        public BlockPos getValidBlockPos(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
-            return new BlockPos(data.getX(), data.getY() - 1, data.getZ());
+            return new BlockPos(checkSpawn.getX(), checkSpawn.getY() - 1.00, checkSpawn.getZ());
         }
 
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public int getY(LivingSpawnEvent.CheckSpawn data)
+        public int getY(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
-            return (int) data.getY();
+            return (int) checkSpawn.getY();
         }
 
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public Entity getEntity(LivingSpawnEvent.CheckSpawn data)
+        public Entity getEntity(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
-            return data.getEntity();
+            return checkSpawn.getEntity();
         }
 
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public DamageSource getSource(LivingSpawnEvent.CheckSpawn data)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param data
-         * @return
-         */
-        @Override
-        public Entity getAttacker(LivingSpawnEvent.CheckSpawn data)
+        public DamageSource getSource(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(LivingSpawnEvent.CheckSpawn data)
+        public Entity getAttacker(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
-            return getClosestPlayer(data.getWorld(), new BlockPos(data.getX(), data.getY(), data.getZ()));
+            return null;
         }
 
         /**
          *
-         * @param data
+         * @param checkSpawn
          * @return
          */
         @Override
-        public ItemStack getItem(LivingSpawnEvent.CheckSpawn data)
+        public EntityPlayerMP getPlayer(LivingSpawnEvent.CheckSpawn checkSpawn)
+        {
+            return getClosestPlayer(checkSpawn.getWorld(),
+                    new BlockPos(checkSpawn.getX(), checkSpawn.getY(), checkSpawn.getZ()));
+        }
+
+        /**
+         *
+         * @param checkSpawn
+         * @return
+         */
+        @Override
+        public ItemStack getItem(LivingSpawnEvent.CheckSpawn checkSpawn)
         {
             return ItemStack.EMPTY;
         }
@@ -197,7 +199,7 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
      */
     private static EntityPlayerMP getClosestPlayer(World world, BlockPos blockPos)
     {
-        return (EntityPlayerMP) world.getClosestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100, false);
+        return (EntityPlayerMP) world.getClosestPlayer(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100.00, false);
     }
 
     /**
@@ -286,14 +288,14 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
 
     /**
      *
-     * @param event
+     * @param checkSpawn
      */
-    public void action(LivingSpawnEvent.CheckSpawn event)
+    public void action(LivingSpawnEvent.CheckSpawn checkSpawn)
     {
         /**
          *
          */
-        SignalDataGetter eventBase = new SignalDataGetter()
+        SignalDataGetter signalDataGetter = new SignalDataGetter()
         {
             /**
              *
@@ -302,7 +304,7 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
             @Override
             public EntityLivingBase getEntityLiving()
             {
-                return event.getEntityLiving();
+                return checkSpawn.getEntityLiving();
             }
 
             /**
@@ -322,7 +324,7 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
             @Override
             public World getWorld()
             {
-                return event.getWorld();
+                return checkSpawn.getWorld();
             }
 
             /**
@@ -332,7 +334,7 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
             @Override
             public Entity getEntity()
             {
-                return event.getEntity();
+                return checkSpawn.getEntity();
             }
 
             /**
@@ -342,16 +344,16 @@ public final class GenericSpawnCondition extends ListActionConsumer<SignalDataGe
             @Override
             public BlockPos getPosition()
             {
-                return event.getEntityLiving().getPosition();
+                return checkSpawn.getEntityLiving().getPosition();
             }
         };
 
         /**
          *
          */
-        for (Consumer<SignalDataGetter> action : this.ACTIONS)
+        for (Consumer<SignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
         {
-            action.accept(eventBase);
+            signalDataGetterConsumer.accept(signalDataGetter);
         }
     }
 }

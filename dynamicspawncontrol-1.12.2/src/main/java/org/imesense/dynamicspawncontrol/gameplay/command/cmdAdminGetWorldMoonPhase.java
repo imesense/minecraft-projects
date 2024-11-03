@@ -38,29 +38,29 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_moon_phase";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
-        WorldProvider worldProvider = sender.getEntityWorld().provider;
-        int moonPhase = worldProvider.getMoonPhase(sender.getEntityWorld().getWorldTime());
+        WorldProvider worldProvider = iCommandSender.getEntityWorld().provider;
+        int moonPhase = worldProvider.getMoonPhase(iCommandSender.getEntityWorld().getWorldTime());
 
-        sender.sendMessage(new TextComponentString(
+        iCommandSender.sendMessage(new TextComponentString(
                    EnumUnicodeCharacter.SECTION.getCharacter() +
                         EnumTextColor.AQUA.getCode() +
                         EnumCmdCallType.CMD.getDescription() +

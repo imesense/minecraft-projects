@@ -43,29 +43,32 @@ public final class CmdServerMobsKiller extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_mob_killer <'all', 'entity' (id), 'animals' or 'monsters'>";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
         if (args.length > 0)
         {
             String argument0 = args[0].toLowerCase();
-            WorldServer worldServer = server.getWorld((sender instanceof EntityPlayerMP) ? sender.getEntityWorld().provider.getDimension() : 0);
+
+            WorldServer worldServer = minecraftServer.getWorld((iCommandSender instanceof EntityPlayerMP) ?
+                    iCommandSender.getEntityWorld().provider.getDimension() : 0);
+
             List<Entity> entityList = new ArrayList<>();
 
             if ("all".equals(argument0))
@@ -90,7 +93,8 @@ public final class CmdServerMobsKiller extends CommandBase
                     }
                     catch (NumberFormatException exception)
                     {
-                        sender.sendMessage(new TextComponentString(TextFormatting.RED + "Invalid entity ID: " + args[i]));
+                        iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED +
+                                "Invalid entity ID: " + args[i]));
                         return;
                     }
 
@@ -102,7 +106,8 @@ public final class CmdServerMobsKiller extends CommandBase
                     }
                     else
                     {
-                        sender.sendMessage(new TextComponentString(TextFormatting.RED + "An entity with an ID " + entityId + " not found."));
+                        iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED +
+                                "An entity with an ID " + entityId + " not found."));
                     }
                 }
             }
@@ -128,7 +133,9 @@ public final class CmdServerMobsKiller extends CommandBase
             }
             else
             {
-                sender.sendMessage(new TextComponentString(TextFormatting.RED + "An invalid argument. Use 'all', 'animals', 'monsters' или 'entity <id>'"));
+                iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED +
+                        "An invalid argument. Use 'all', 'animals', 'monsters' или 'entity <id>'"));
+
                 return;
             }
 
@@ -137,11 +144,12 @@ public final class CmdServerMobsKiller extends CommandBase
                 worldServer.removeEntity(entity);
             }
 
-            sender.sendMessage(new TextComponentString(TextFormatting.GREEN + "Total deleted entities: " + entityList.size()));
+            iCommandSender.sendMessage(new TextComponentString(TextFormatting.GREEN + "Total deleted entities: " + entityList.size()));
         }
         else
         {
-            sender.sendMessage(new TextComponentString(TextFormatting.RED + "No arguments are provided. Use 'all', 'animals', 'monsters' или 'entity <id>'"));
+            iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED +
+                    "No arguments are provided. Use 'all', 'animals', 'monsters' или 'entity <id>'"));
         }
     }
 }

@@ -44,25 +44,25 @@ public final class OnDropHeadMob
 
     /**
      *
-     * @param event
+     * @param livingDeathEvent
      */
     @SubscribeEvent
-    public synchronized void onEntityDeath(LivingDeathEvent event)
+    public synchronized void onEntityDeath(LivingDeathEvent livingDeathEvent)
     {
-        if (event.getSource().getTrueSource() instanceof EntityLivingBase)
+        if (livingDeathEvent.getSource().getTrueSource() instanceof EntityLivingBase)
         {
-            Entity entity = event.getEntity();
-            EntityLivingBase killer = (EntityLivingBase) event.getSource().getTrueSource();
+            Entity entity = livingDeathEvent.getEntity();
+            EntityLivingBase entityLivingBase = (EntityLivingBase) livingDeathEvent.getSource().getTrueSource();
 
             if (entity instanceof EntitySkeleton ||
                     entity instanceof EntityZombie ||
                     entity instanceof EntityCreeper)
             {
-                float dropChance = calculateDropChance(killer);
+                float dropChance = calculateDropChance(entityLivingBase);
 
-                if (killer.getRNG().nextFloat() < dropChance)
+                if (entityLivingBase.getRNG().nextFloat() < dropChance)
                 {
-                    dropHead((EntityLivingBase) entity, killer.world);
+                    dropHead((EntityLivingBase) entity, entityLivingBase.world);
                 }
             }
         }
@@ -70,14 +70,14 @@ public final class OnDropHeadMob
 
     /**
      *
-     * @param killer
+     * @param entityLivingBase
      * @return
      */
-    private float calculateDropChance(EntityLivingBase killer)
+    private float calculateDropChance(EntityLivingBase entityLivingBase)
     {
         float baseChance = 0.0f;
 
-        ItemStack heldItem = killer.getHeldItemMainhand();
+        ItemStack heldItem = entityLivingBase.getHeldItemMainhand();
 
         if (heldItem.getItem() == Items.WOODEN_SWORD)
         {
@@ -110,29 +110,29 @@ public final class OnDropHeadMob
 
     /**
      *
-     * @param entity
+     * @param entityLivingBase
      * @param world
      */
-    private void dropHead(EntityLivingBase entity, World world)
+    private void dropHead(EntityLivingBase entityLivingBase, World world)
     {
-        ItemStack headItem = ItemStack.EMPTY;
+        ItemStack itemStack = ItemStack.EMPTY;
 
-        if (entity instanceof EntitySkeleton)
+        if (entityLivingBase instanceof EntitySkeleton)
         {
-            headItem = new ItemStack(Items.SKULL, 1, 0);
+            itemStack = new ItemStack(Items.SKULL, 1, 0);
         }
-        else if (entity instanceof EntityZombie)
+        else if (entityLivingBase instanceof EntityZombie)
         {
-            headItem = new ItemStack(Items.SKULL, 1, 2);
+            itemStack = new ItemStack(Items.SKULL, 1, 2);
         }
-        else if (entity instanceof EntityCreeper)
+        else if (entityLivingBase instanceof EntityCreeper)
         {
-            headItem = new ItemStack(Items.SKULL, 1, 4);
+            itemStack = new ItemStack(Items.SKULL, 1, 4);
         }
 
-        if (!headItem.isEmpty())
+        if (!itemStack.isEmpty())
         {
-            entity.entityDropItem(headItem, 0);
+            entityLivingBase.entityDropItem(itemStack, 0);
         }
     }
 }

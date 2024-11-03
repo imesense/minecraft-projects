@@ -43,45 +43,45 @@ public final class OnBlockPlaceEvent
 
     /**
      *
-     * @param event
+     * @param placeEvent
      */
     @Deprecated
     @SubscribeEvent
-    public synchronized void onUpdateBlockPaceEvent_0(BlockEvent.PlaceEvent event)
+    public synchronized void onUpdateBlockPaceEvent_0(BlockEvent.PlaceEvent placeEvent)
     {
-        if (event.getWorld().isRemote)
+        if (placeEvent.getWorld().isRemote)
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericBlockPlaceAction rule : ParserGenericJsonScript.GENERIC_BLOCK_PLACE_ACTIONS_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(placeEvent))
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_block_place"))
+                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_block_place"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockPlaceActions. ID Rule "
-                            + i + ": "
+                            + atomicInteger + ": "
                             + result + " entity: "
-                            + event.getPlayer().getName()
-                            + " y: " + event.getPos().getY()
+                            + placeEvent.getPlayer().getName()
+                            + " y: " + placeEvent.getPos().getY()
                             + " biomes: "
-                            + event.getWorld().getBiome(event.getPos()).getBiomeName());
+                            + placeEvent.getWorld().getBiome(placeEvent.getPos()).getBiomeName());
                 }
 
-                rule.action(event);
+                rule.action(placeEvent);
 
                 if (result == Event.Result.DENY)
                 {
-                    event.setCanceled(true);
+                    placeEvent.setCanceled(true);
                 }
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

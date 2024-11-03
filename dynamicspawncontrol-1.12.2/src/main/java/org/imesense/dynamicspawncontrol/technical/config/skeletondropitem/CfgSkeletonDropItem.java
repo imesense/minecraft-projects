@@ -30,7 +30,7 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
 
         CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataSkeletonDropItem.ConfigDataSkeletonDrop.instance =
+        DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance =
                 new DataSkeletonDropItem.ConfigDataSkeletonDrop("skeleton_drop");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -49,13 +49,13 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
     @Override
     public void saveToFile()
     {
-        Path configPath = Paths.get(this.nameConfig).getParent();
+        Path path = Paths.get(this.nameConfig).getParent();
 
-        if (Files.notExists(configPath))
+        if (Files.notExists(path))
         {
             try
             {
-                Files.createDirectories(configPath);
+                Files.createDirectories(path);
             }
             catch (IOException exception)
             {
@@ -66,14 +66,14 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
         JsonObject recordObject = new JsonObject();
         JsonObject jsonObjectSkeletonDrop = getJsonObject();
 
-        recordObject.add(DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+        recordObject.add(DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                 getCategoryObject(), jsonObjectSkeletonDrop);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter file = new FileWriter(this.nameConfig))
+        try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(recordObject, file);
+            gson.toJson(recordObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -90,28 +90,28 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
         JsonObject recordObject = new JsonObject();
 
         recordObject.addProperty("break_item",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getBreakItem());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getBreakItem());
 
         recordObject.addProperty("hand_item_damage_factor",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getHandItemDamageFactor());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getHandItemDamageFactor());
 
         recordObject.addProperty("head_damage_factor",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getHeadDamageFactor());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getHeadDamageFactor());
 
         recordObject.addProperty("chest_damage_factor",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getChestDamageFactor());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getChestDamageFactor());
 
         recordObject.addProperty("legs_damage_factor",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getLegsDamageFactor());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getLegsDamageFactor());
 
         recordObject.addProperty("feet_damage_factor",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getFeetDamageFactor());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getFeetDamageFactor());
 
         recordObject.addProperty("damage_spread_factor",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getDamageSpreadFactor());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getDamageSpreadFactor());
 
         recordObject.addProperty("arrows_to_drops",
-                DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getArrowsToDrops());
+                DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
 
         return recordObject;
     }
@@ -127,56 +127,56 @@ public final class CfgSkeletonDropItem extends CfgClassAbstract
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getCategoryObject()))
+            if (readableObject.has(DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectSkeletonDrop =
-                        readableObject.getAsJsonObject(DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.getCategoryObject());
+                        readableObject.getAsJsonObject(DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.getCategoryObject());
 
                 if (jsonObjectSkeletonDrop.has("break_item"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setBreakItem(jsonObjectSkeletonDrop.get("break_item").getAsFloat());
                 }
 
                 if (jsonObjectSkeletonDrop.has("hand_item_damage_factor"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setHandItemDamageFactor(jsonObjectSkeletonDrop.get("hand_item_damage_factor").getAsFloat());
                 }
 
                 if (jsonObjectSkeletonDrop.has("head_damage_factor"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setHeadDamageFactor(jsonObjectSkeletonDrop.get("head_damage_factor").getAsFloat());
                 }
 
                 if (jsonObjectSkeletonDrop.has("chest_damage_factor"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setChestDamageFactor(jsonObjectSkeletonDrop.get("chest_damage_factor").getAsFloat());
                 }
 
                 if (jsonObjectSkeletonDrop.has("legs_damage_factor"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setLegsDamageFactor(jsonObjectSkeletonDrop.get("legs_damage_factor").getAsFloat());
                 }
 
                 if (jsonObjectSkeletonDrop.has("feet_damage_factor"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setFeetDamageFactor(jsonObjectSkeletonDrop.get("feet_damage_factor").getAsFloat());
                 }
 
                 if (jsonObjectSkeletonDrop.has("damage_spread_factor"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setDamageSpreadFactor(jsonObjectSkeletonDrop.get("damage_spread_factor").getAsFloat());
                 }
 
                 if (jsonObjectSkeletonDrop.has("arrows_to_drops"))
                 {
-                    DataSkeletonDropItem.ConfigDataSkeletonDrop.instance.
+                    DataSkeletonDropItem.ConfigDataSkeletonDrop.Instance.
                             setArrowsToDrops(jsonObjectSkeletonDrop.get("arrows_to_drops").getAsByte());
                 }
             }

@@ -31,20 +31,20 @@ public final class AttributeMapFactory<T>
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
     @Nonnull
     @SuppressWarnings("unchecked")
-    public AttributeMap<T> parse(@Nonnull JsonElement element)
+    public AttributeMap<T> parse(@Nonnull JsonElement jsonElement)
     {
-        AttributeMap<T> map = new AttributeMap<>();
-        JsonObject jsonObject = element.getAsJsonObject();
+        AttributeMap<T> attributeMap = new AttributeMap<>();
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         for (Attribute<T> attribute : this.ATTRIBUTES)
         {
-            AttributeKey<T> key = attribute.getKey();
-            AttributeType<T> type = key.getType();
+            AttributeKey<T> attributeKey = attribute.getKey();
+            AttributeType<T> attributeType = attributeKey.getType();
 
             if (attribute.isMulti())
             {
@@ -56,59 +56,59 @@ public final class AttributeMapFactory<T>
                 transformers.put((AttributeType<T>)AttributeType.STRING, JsonElement::getAsString);
                 transformers.put((AttributeType<T>)AttributeType.JSON, JsonElement::toString);
 
-                InlineJsonService.getElement(jsonObject, key.getName())
+                InlineJsonService.getElement(jsonObject, attributeKey.getName())
                         .ifPresent(e ->
                                 InlineJsonService.asArrayOrSingle(e)
-                                        .map(transformers.getOrDefault(type, x -> "INVALID"))
-                                        .forEach(s -> map.addListNonnull(key, (T) s)));
+                                        .map(transformers.getOrDefault(attributeType, x -> "INVALID"))
+                                        .forEach(s -> attributeMap.addListNonnull(attributeKey, (T) s)));
             }
             else
             {
-                if (type == AttributeType.INTEGER)
+                if (attributeType == AttributeType.INTEGER)
                 {
-                    map.setNonnull(key, (T) InlineJsonService.parseInt(jsonObject, key.getName()));
+                    attributeMap.setNonnull(attributeKey, (T) InlineJsonService.parseInt(jsonObject, attributeKey.getName()));
                 }
-                else if (type == AttributeType.FLOAT)
+                else if (attributeType == AttributeType.FLOAT)
                 {
-                    map.setNonnull(key, (T) InlineJsonService.parseFloat(jsonObject, key.getName()));
+                    attributeMap.setNonnull(attributeKey, (T) InlineJsonService.parseFloat(jsonObject, attributeKey.getName()));
                 }
-                else if (type == AttributeType.BOOLEAN)
+                else if (attributeType == AttributeType.BOOLEAN)
                 {
-                    map.setNonnull(key, (T) InlineJsonService.parseBool(jsonObject, key.getName()));
+                    attributeMap.setNonnull(attributeKey, (T) InlineJsonService.parseBool(jsonObject, attributeKey.getName()));
                 }
-                else if (type == AttributeType.STRING)
+                else if (attributeType == AttributeType.STRING)
                 {
-                    if (jsonObject.has(key.getName()))
+                    if (jsonObject.has(attributeKey.getName()))
                     {
-                        map.setNonnull(key, (T)jsonObject.get(key.getName()).getAsString());
+                        attributeMap.setNonnull(attributeKey, (T) jsonObject.get(attributeKey.getName()).getAsString());
                     }
                 }
-                else if (type == AttributeType.JSON)
+                else if (attributeType == AttributeType.JSON)
                 {
-                    if (jsonObject.has(key.getName()))
+                    if (jsonObject.has(attributeKey.getName()))
                     {
-                        JsonElement el = jsonObject.get(key.getName());
+                        JsonElement jsonElement1 = jsonObject.get(attributeKey.getName());
 
-                        if (el.isJsonObject())
+                        if (jsonElement1.isJsonObject())
                         {
-                            JsonObject obj = el.getAsJsonObject();
-                            map.setNonnull(key, (T)obj.toString());
+                            JsonObject jsonObject1 = jsonElement1.getAsJsonObject();
+                            attributeMap.setNonnull(attributeKey, (T) jsonObject1.toString());
                         }
-                        else if (el.isJsonPrimitive())
+                        else if (jsonElement1.isJsonPrimitive())
                         {
-                            JsonPrimitive prim = el.getAsJsonPrimitive();
+                            JsonPrimitive jsonPrimitive = jsonElement1.getAsJsonPrimitive();
 
-                            if (prim.isString())
+                            if (jsonPrimitive.isString())
                             {
-                                map.setNonnull(key, (T)prim.getAsString());
+                                attributeMap.setNonnull(attributeKey, (T) jsonPrimitive.getAsString());
                             }
-                            else if (prim.isNumber())
+                            else if (jsonPrimitive.isNumber())
                             {
-                                map.setNonnull(key, (T)("" + prim.getAsInt()));
+                                attributeMap.setNonnull(attributeKey, (T) ("" + jsonPrimitive.getAsInt()));
                             }
                             else
                             {
-                                throw new RuntimeException("Неверный тип для ключа '" + key.getName() + "'!");
+                                throw new RuntimeException("Неверный тип для ключа '" + attributeKey.getName() + "'!");
                             }
                         }
                     }
@@ -116,6 +116,6 @@ public final class AttributeMapFactory<T>
             }
         }
 
-        return map;
+        return attributeMap;
     }
 }

@@ -57,6 +57,7 @@ public final class WebSlingerCapability implements IWebSlinger
     public WebSlingerCapability()
     {
         this.owner = null;
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -86,7 +87,7 @@ public final class WebSlingerCapability implements IWebSlinger
 
             assert thing != null;
 
-            return CodeGenericUtil.as(thing.owner, EntityLiving.class);
+            return CodeGenericUtil.as(thing.Owner, EntityLiving.class);
         }
         else
         {
@@ -100,13 +101,13 @@ public final class WebSlingerCapability implements IWebSlinger
      */
     private void initialize(int taskPriority)
     {
-        if (DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingWebbing())
+        if (DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingWebbing())
         {
-            EntityLiving living = this.getOwner();
+            EntityLiving entityLiving = this.getOwner();
 
-            if (living != null)
+            if (entityLiving != null)
             {
-                living.tasks.addTask(taskPriority, new AIWebbingAttack(living));
+                entityLiving.tasks.addTask(taskPriority, new AIWebbingAttack(entityLiving));
             }
         }
     }
@@ -123,26 +124,26 @@ public final class WebSlingerCapability implements IWebSlinger
         {
             /**
              *
-             * @param capability
-             * @param instance
-             * @param side
+             * @param iWebSlingerCapability
+             * @param iWebSlinger
+             * @param enumFacing
              * @return
              */
             @Override
-            public NBTBase writeNBT(Capability<IWebSlinger> capability, IWebSlinger instance, EnumFacing side)
+            public NBTBase writeNBT(Capability<IWebSlinger> iWebSlingerCapability, IWebSlinger iWebSlinger, EnumFacing enumFacing)
             {
                 return new NBTTagCompound();
             }
 
             /**
              *
-             * @param capability
-             * @param instance
-             * @param side
-             * @param nbt
+             * @param iWebSlingerCapability
+             * @param iWebSlinger
+             * @param enumFacing
+             * @param nbtBase
              */
             @Override
-            public void readNBT(Capability<IWebSlinger> capability, IWebSlinger instance, EnumFacing side, NBTBase nbt)
+            public void readNBT(Capability<IWebSlinger> iWebSlingerCapability, IWebSlinger iWebSlinger, EnumFacing enumFacing, NBTBase nbtBase)
             {
 
             }
@@ -152,19 +153,19 @@ public final class WebSlingerCapability implements IWebSlinger
 
     /**
      *
-     * @param event
+     * @param livingAttackEvent
      */
     @SubscribeEvent
-    public synchronized void onLivingAttack(LivingAttackEvent event)
+    public synchronized void onLivingAttack(LivingAttackEvent livingAttackEvent)
     {
-        Entity target = event.getEntity();
-        EntityLiving getOwner = this.getOwner();
-        Entity trueSource = event.getSource().getTrueSource();
-        Entity immediateSource = event.getSource().getImmediateSource();
+        Entity targetEntity = livingAttackEvent.getEntity();
+        EntityLiving ownerEntity = this.getOwner();
+        Entity attackerEntity = livingAttackEvent.getSource().getTrueSource();
+        Entity damageSourceEntity = livingAttackEvent.getSource().getImmediateSource();
 
-        if (getOwner != null && immediateSource == getOwner && immediateSource == trueSource)
+        if (ownerEntity != null && damageSourceEntity == ownerEntity && damageSourceEntity == attackerEntity)
         {
-            tryAttack(immediateSource, trueSource, target);
+            tryAttack(damageSourceEntity, attackerEntity, targetEntity);
         }
     }
 
@@ -178,7 +179,7 @@ public final class WebSlingerCapability implements IWebSlinger
     {
         World world = target.world;
 
-        if (!(DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getWebMeleeChance() <= world.rand.nextDouble()))
+        if (!(DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getWebMeleeChance() <= world.rand.nextDouble()))
         {
             if (immediateSource != null)
             {
@@ -190,8 +191,8 @@ public final class WebSlingerCapability implements IWebSlinger
                 }
             }
 
-            BlockPos pos = new BlockPos(target.posX, target.posY, target.posZ);
-            EntityWebbing.onHit(world, pos, source, target);
+            BlockPos blockPos = new BlockPos(target.posX, target.posY, target.posZ);
+            EntityWebbing.onHit(world, blockPos, source, target);
         }
     }
 }

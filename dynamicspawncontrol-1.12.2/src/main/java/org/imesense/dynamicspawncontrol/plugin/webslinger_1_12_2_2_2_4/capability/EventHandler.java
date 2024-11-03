@@ -33,18 +33,18 @@ public final class EventHandler
 
     /**
      *
-     * @param event
+     * @param attachCapabilitiesEvent
      */
     @SubscribeEvent
-    public synchronized void onAttachCapabilitiesTileEntity_0(AttachCapabilitiesEvent<TileEntity> event)
+    public synchronized void onAttachCapabilitiesTileEntity_0(AttachCapabilitiesEvent<TileEntity> attachCapabilitiesEvent)
     {
-        TileEntity entity = event.getObject();
+        TileEntity entity = attachCapabilitiesEvent.getObject();
 
         int priority = getEntityPriority(entity);
 
         if (priority > 0)
         {
-            event.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
+            attachCapabilitiesEvent.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
             (
                 WebSlingerCapability.CAPABILITY,
                 WebSlingerCapability.DEFAULT_FACING,
@@ -67,10 +67,10 @@ public final class EventHandler
                 @Override
                 public IWebSlinger getInstance()
                 {
-                    final IWebSlinger CAP = super.getInstance();
-                    CAP.checkInit(this.OWNER, this.TASK_PRIORITY);
+                    IWebSlinger cap = super.getInstance();
+                    cap.checkInit(this.OWNER, this.TASK_PRIORITY);
 
-                    return CAP;
+                    return cap;
                 }
             });
         }
@@ -78,18 +78,18 @@ public final class EventHandler
 
     /**
      *
-     * @param event
+     * @param attachCapabilitiesEvent
      */
     @SubscribeEvent
-    public synchronized void onAttachCapabilitiesEntity_1(AttachCapabilitiesEvent<Entity> event)
+    public synchronized void onAttachCapabilitiesEntity_1(AttachCapabilitiesEvent<Entity> attachCapabilitiesEvent)
     {
-        Entity entity = event.getObject();
+        Entity entity = attachCapabilitiesEvent.getObject();
 
         int priority = getEntityPriority(entity);
 
         if (priority > 0)
         {
-            event.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
+            attachCapabilitiesEvent.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
             (
                 WebSlingerCapability.CAPABILITY,
                 WebSlingerCapability.DEFAULT_FACING,
@@ -112,10 +112,10 @@ public final class EventHandler
                 @Override
                 public IWebSlinger getInstance()
                 {
-                    final IWebSlinger CAP = super.getInstance();
-                    CAP.checkInit(this.OWNER, this.TASK_PRIORITY);
+                    IWebSlinger cap = super.getInstance();
+                    cap.checkInit(this.OWNER, this.TASK_PRIORITY);
 
-                    return CAP;
+                    return cap;
                 }
             });
         }
@@ -134,7 +134,7 @@ public final class EventHandler
             if (entityId != null) {
                 Log.writeDataToLogFile(0, "entity 1: " + entityId.toString());
 
-                int priority = DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getEntityPriority(entityId.toString());
+                int priority = DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getEntityPriority(entityId.toString());
 
                 if (priority > 0) {
                     Log.writeDataToLogFile(0, "entity 2: " + priority);

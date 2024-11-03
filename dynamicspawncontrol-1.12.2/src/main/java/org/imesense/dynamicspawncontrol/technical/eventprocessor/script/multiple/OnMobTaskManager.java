@@ -41,26 +41,26 @@ public final class OnMobTaskManager
 
     /**
      *
-     * @param event
+     * @param entityJoinWorldEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent event)
+    public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent entityJoinWorldEvent)
     {
-        if (!(event.getEntity() instanceof EntityLiving))
+        if (!(entityJoinWorldEvent.getEntity() instanceof EntityLiving))
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericMobTaskManager rule : ParserGenericJsonScript.GENERIC_MOBS_TASK_MANAGER_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(entityJoinWorldEvent))
             {
-                rule.action(event);
+                rule.action(entityJoinWorldEvent);
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

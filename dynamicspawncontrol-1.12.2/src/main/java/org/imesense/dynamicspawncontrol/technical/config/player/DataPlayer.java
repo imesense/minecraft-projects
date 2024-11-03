@@ -24,7 +24,7 @@ public final class DataPlayer
         /**
          *
          */
-        public static ConfigDataPlayer instance;
+        public static ConfigDataPlayer Instance;
 
         /**
          *

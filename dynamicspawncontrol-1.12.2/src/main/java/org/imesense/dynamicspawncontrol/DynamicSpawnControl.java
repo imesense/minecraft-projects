@@ -79,7 +79,7 @@ public class DynamicSpawnControl
     /**
      *
      */
-    public GeneralStorageData generalStorageData = null;
+    public GeneralStorageData GeneralStorageData = null;
 
     /**
      *
@@ -116,13 +116,13 @@ public class DynamicSpawnControl
         RegisterConfigClass.initializeConfigs();
 
         //
-        generalStorageData = new GeneralStorageData();
+        GeneralStorageData = new GeneralStorageData();
 
         //
-        CacheStorage.instance = new CacheStorage();
+        CacheStorage.Instance = new CacheStorage();
 
         //
-        Cache.instance = new Cache();
+        Cache.Instance = new Cache();
 
         //
         ParserGenericJsonScript.setRulePath(event.getModConfigurationDirectory());
@@ -143,10 +143,10 @@ public class DynamicSpawnControl
     /**
      * Initialize modification
      * 
-     * @param event Initialization event
+     * @param fmlInitializationEvent Initialization event
      */
     @Mod.EventHandler
-    public synchronized void init(FMLInitializationEvent event)
+    public synchronized void init(FMLInitializationEvent fmlInitializationEvent)
     {
         //
         Recipes = new CraftItemWeb();
@@ -160,10 +160,10 @@ public class DynamicSpawnControl
     /**
      * Postinitialize modification
      * 
-     * @param event Postinitialization event
+     * @param fmlPostInitializationEvent Postinitialization event
      */
     @Mod.EventHandler
-    public synchronized void postInit(FMLPostInitializationEvent event)
+    public synchronized void postInit(FMLPostInitializationEvent fmlPostInitializationEvent)
     {
         //-' TODO: перенести это в отдельную инициализацию
         MinecraftForge.EVENT_BUS.register(new EventHandler());
@@ -173,10 +173,10 @@ public class DynamicSpawnControl
     /**
      * Load complete action
      * 
-     * @param event Load complete event
+     * @param fmlLoadCompleteEvent Load complete event
      */
     @Mod.EventHandler
-    public synchronized void onLoadComplete(FMLLoadCompleteEvent event)
+    public synchronized void onLoadComplete(FMLLoadCompleteEvent fmlLoadCompleteEvent)
     {
         ParserGenericJsonScript.readRules();
 
@@ -186,24 +186,24 @@ public class DynamicSpawnControl
     /**
      * Server load action
      * 
-     * @param event Server starting event
+     * @param fmlServerStartingEvent Server starting event
      */
     @Mod.EventHandler
-    public synchronized void serverLoad(FMLServerStartingEvent event)
+    public synchronized void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
     {
-        RegisterCommandClass.registerCommands(event);
+        RegisterCommandClass.registerCommands(fmlServerStartingEvent);
     }
 
     /**
      * Server stopped action
      * 
-     * @param event Server stopped action
+     * @param fmlServerStoppedEvent Server stopped action
      */
     @Mod.EventHandler
-    public synchronized void serverStopped(FMLServerStoppedEvent event)
+    public synchronized void serverStopped(FMLServerStoppedEvent fmlServerStoppedEvent)
     {
-        Cache.instance.cleanActualCache();
-        Cache.instance.cleanBufferCache();
+        Cache.Instance.cleanActualCache();
+        Cache.Instance.cleanBufferCache();
 
         Structure.STRUCTURES_CACHE.clean();
     }

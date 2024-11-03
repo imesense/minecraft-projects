@@ -43,18 +43,18 @@ public final class RegisterCommandClass
 
     /**
      *
-     * @param event
+     * @param fmlServerStartingEvent
      */
-    public static void registerCommands(FMLServerStartingEvent event)
+    public static void registerCommands(FMLServerStartingEvent fmlServerStartingEvent)
     {
         for (Class<?> cmdClass : COMMAND_CLASSES)
         {
             try
             {
-                Object commandInstance =
+                Object object =
                         cmdClass.getConstructor().newInstance();
 
-                event.registerServerCommand((ICommand)commandInstance);
+                fmlServerStartingEvent.registerServerCommand((ICommand) object);
             }
             catch (Exception exception)
             {

@@ -28,10 +28,10 @@ public final class CfgGameDebugger extends CfgClassAbstract
 
         CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataGameDebugger.ConfigDataMonitor.instance =
+        DataGameDebugger.ConfigDataMonitor.Instance =
                 new DataGameDebugger.ConfigDataMonitor("monitor");
 
-        DataGameDebugger.ConfigDataEvent.instance =
+        DataGameDebugger.ConfigDataEvent.Instance =
                 new DataGameDebugger.ConfigDataEvent("event");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -55,20 +55,20 @@ public final class CfgGameDebugger extends CfgClassAbstract
         JsonObject jsonObjectMonitor = new JsonObject();
 
         jsonObjectMonitor.addProperty("debug_monitor_cache",
-                DataGameDebugger.ConfigDataMonitor.instance.getDebugMonitorCache());
+                DataGameDebugger.ConfigDataMonitor.Instance.getDebugMonitorCache());
 
-        recordObject.add(DataGameDebugger.ConfigDataEvent.instance.
+        recordObject.add(DataGameDebugger.ConfigDataEvent.Instance.
                 getCategoryObject(), jsonObjectMonitor);
 
         Map<String, Boolean> mapDebugSettings =
-                DataGameDebugger.ConfigDataEvent.instance.getDebugSettings();
+                DataGameDebugger.ConfigDataEvent.Instance.getDebugSettings();
 
         for (Map.Entry<String, Boolean> entry : mapDebugSettings.entrySet())
         {
             jsonObjectEvent.addProperty(entry.getKey(), entry.getValue());
         }
 
-        recordObject.add(DataGameDebugger.ConfigDataEvent.instance.
+        recordObject.add(DataGameDebugger.ConfigDataEvent.Instance.
                 getCategoryObject(), jsonObjectEvent);
 
         return recordObject;
@@ -80,13 +80,13 @@ public final class CfgGameDebugger extends CfgClassAbstract
     @Override
     public void saveToFile()
     {
-        Path configPath = Paths.get(this.nameConfig).getParent();
+        Path path = Paths.get(this.nameConfig).getParent();
 
-        if (Files.notExists(configPath))
+        if (Files.notExists(path))
         {
             try
             {
-                Files.createDirectories(configPath);
+                Files.createDirectories(path);
             }
             catch (IOException exception)
             {
@@ -98,9 +98,9 @@ public final class CfgGameDebugger extends CfgClassAbstract
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter file = new FileWriter(this.nameConfig))
+        try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(recordObject, file);
+            gson.toJson(recordObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -119,22 +119,22 @@ public final class CfgGameDebugger extends CfgClassAbstract
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(DataGameDebugger.ConfigDataMonitor.instance.getCategoryObject()))
+            if (readableObject.has(DataGameDebugger.ConfigDataMonitor.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectMonitor =
-                        readableObject.getAsJsonObject(DataGameDebugger.ConfigDataMonitor.instance.getCategoryObject());
+                        readableObject.getAsJsonObject(DataGameDebugger.ConfigDataMonitor.Instance.getCategoryObject());
 
-                DataGameDebugger.ConfigDataMonitor.instance.setDebugMonitorCache(jsonObjectMonitor.get("debug_monitor_cache").getAsBoolean());
+                DataGameDebugger.ConfigDataMonitor.Instance.setDebugMonitorCache(jsonObjectMonitor.get("debug_monitor_cache").getAsBoolean());
             }
 
-            if (readableObject.has(DataGameDebugger.ConfigDataEvent.instance.getCategoryObject()))
+            if (readableObject.has(DataGameDebugger.ConfigDataEvent.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectEvent =
-                        readableObject.getAsJsonObject(DataGameDebugger.ConfigDataEvent.instance.
+                        readableObject.getAsJsonObject(DataGameDebugger.ConfigDataEvent.Instance.
                                 getCategoryObject());
 
                 Map<String, Boolean> debugSettings =
-                        DataGameDebugger.ConfigDataEvent.instance.getDebugSettings();
+                        DataGameDebugger.ConfigDataEvent.Instance.getDebugSettings();
 
                 for (Map.Entry<String, Boolean> entry : debugSettings.entrySet())
                 {

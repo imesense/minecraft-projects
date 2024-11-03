@@ -35,42 +35,42 @@ public final class OnPlayerTick
 
     /**
      *
-     * @param event
+     * @param playerTickEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerTick_0(TickEvent.PlayerTickEvent event)
+    public synchronized void onUpdatePlayerTick_0(TickEvent.PlayerTickEvent playerTickEvent)
     {
-        if (event.phase != TickEvent.Phase.END || event.side != Side.SERVER)
+        if (playerTickEvent.phase != TickEvent.Phase.END || playerTickEvent.side != Side.SERVER)
         {
             return;
         }
 
-        int id = event.player.getEntityId();
+        int id = playerTickEvent.player.getEntityId();
 
         TICK_COUNTERS.putIfAbsent(id, 0);
 
         int tickCounter = TICK_COUNTERS.get(id) + 1;
         TICK_COUNTERS.put(id, tickCounter);
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericMapEffectAction rule : ParserGenericJsonScript.GENERIC_MAP_EFFECTS_ACTIONS_LIST)
         {
-            if (tickCounter % rule.getTimeout() == 0 && rule.match(event))
+            if (tickCounter % rule.getTimeout() == 0 && rule.match(playerTickEvent))
             {
-                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_player_tick"))
+                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_player_tick"))
                 {
-                    Log.writeDataToLogFile(0, "ConfigsParser._GenericMapEffectsActions. ID Rule: " + i
-                            + " entity: " + event.player.getName()
-                            + " y: " + event.player.getPosition().getY());
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericMapEffectsActions. ID Rule: " + atomicInteger
+                            + " entity: " + playerTickEvent.player.getName()
+                            + " y: " + playerTickEvent.player.getPosition().getY());
                 }
 
-                rule.action(event);
+                rule.action(playerTickEvent);
 
                 return;
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

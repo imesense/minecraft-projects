@@ -65,7 +65,8 @@ public final class EntityRendererTransformer implements IClassTransformer
      */
     private static final String UPDATE_DYNAMIC_TEXTURE_NAME =
             FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(
-                    UPDATE_DYNAMIC_TEXTURE_OWNER, "func_110564_a", UPDATE_DYNAMIC_TEXTURE_DESC);
+                    UPDATE_DYNAMIC_TEXTURE_OWNER, "func_110564_a",
+                        UPDATE_DYNAMIC_TEXTURE_DESC);
 
     /**
      *
@@ -112,18 +113,18 @@ public final class EntityRendererTransformer implements IClassTransformer
                             String name,
                             String desc,
                             String signature,
-                            String[] exceptions)
+                            String... exceptions)
                     {
-                        MethodVisitor mv =
+                        MethodVisitor methodVisitor =
                                 super.visitMethod(access, name, desc, signature, exceptions);
 
                         if (!UPDATE_LIGHTMAP_NAME.equals(name)
                                 || !UPDATE_LIGHTMAP_DESC.equals(desc))
                         {
-                            return mv;
+                            return methodVisitor;
                         }
 
-                        return new GeneratorAdapter(api, mv, access, name, desc)
+                        return new GeneratorAdapter(api, methodVisitor, access, name, desc)
                         {
                             @Override
                             public void visitMethodInsn(

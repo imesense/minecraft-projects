@@ -18,20 +18,20 @@ import java.nio.file.Paths;
  *
  */
 @DCSSingleConfig(fileName = "cfg_time_control_mod_forge_1_12_2")
-public final class CfgPluginWorldTime extends CfgClassAbstract
+public final class CfgTimeControl extends CfgClassAbstract
 {
     /**
      *
      * @param nameConfigFile
      */
-    public CfgPluginWorldTime(String nameConfigFile)
+    public CfgTimeControl(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.FALSE);
 
 		CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataPluginWorldTime.ConfigDataWorldTime.instance =
-                new DataPluginWorldTime.ConfigDataWorldTime("time_control_mod_forge_1_12_2");
+        DataTimeControl.ConfigDataWorldTime.Instance =
+                new DataTimeControl.ConfigDataWorldTime("time_control_mod_forge_1_12_2");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -53,21 +53,21 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
         JsonObject jsonObjectWorldTime = new JsonObject();
 
         jsonObjectWorldTime.addProperty("day_length_minutes",
-                DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
+                DataTimeControl.ConfigDataWorldTime.Instance.getDayLengthMinutes());
 
         jsonObjectWorldTime.addProperty("night_length_minutes",
-                DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
+                DataTimeControl.ConfigDataWorldTime.Instance.getNightLengthMinutes());
 
         jsonObjectWorldTime.addProperty("sync_to_system_time_rate",
-                DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTimeRate());
+                DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTimeRate());
 
         jsonObjectWorldTime.addProperty("time_control_debug",
-                DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug());
+                DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug());
 
         jsonObjectWorldTime.addProperty("sync_to_system_time",
-                DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime());
+                DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime());
 
-        recordObject.add(DataPluginWorldTime.ConfigDataWorldTime.instance.
+        recordObject.add(DataTimeControl.ConfigDataWorldTime.Instance.
                 getCategoryObject(), jsonObjectWorldTime);
 
         return recordObject;
@@ -118,38 +118,38 @@ public final class CfgPluginWorldTime extends CfgClassAbstract
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject()))
+            if (readableObject.has(DataTimeControl.ConfigDataWorldTime.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectWorldTime =
-                        readableObject.getAsJsonObject(DataPluginWorldTime.ConfigDataWorldTime.instance.getCategoryObject());
+                        readableObject.getAsJsonObject(DataTimeControl.ConfigDataWorldTime.Instance.getCategoryObject());
 
                 if (jsonObjectWorldTime.has("day_length_minutes"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                    DataTimeControl.ConfigDataWorldTime.Instance.
                             setDayLengthMinutes(jsonObjectWorldTime.get("day_length_minutes").getAsInt());
                 }
 
                 if (jsonObjectWorldTime.has("night_length_minutes"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                    DataTimeControl.ConfigDataWorldTime.Instance.
                             setNightLengthMinutes(jsonObjectWorldTime.get("night_length_minutes").getAsInt());
                 }
 
                 if (jsonObjectWorldTime.has("sync_to_system_time_rate"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                    DataTimeControl.ConfigDataWorldTime.Instance.
                             setSyncToSystemTimeRate(jsonObjectWorldTime.get("sync_to_system_time_rate").getAsInt());
                 }
 
                 if (jsonObjectWorldTime.has("time_control_debug"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                    DataTimeControl.ConfigDataWorldTime.Instance.
                             setTimeControlDebug(jsonObjectWorldTime.get("time_control_debug").getAsBoolean());
                 }
 
                 if (jsonObjectWorldTime.has("sync_to_system_time"))
                 {
-                    DataPluginWorldTime.ConfigDataWorldTime.instance.
+                    DataTimeControl.ConfigDataWorldTime.Instance.
                             setSyncToSystemTime(jsonObjectWorldTime.get("sync_to_system_time").getAsBoolean());
                 }
             }

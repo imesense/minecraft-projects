@@ -44,52 +44,55 @@ public final class CmdAdminScanEntities extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_scan_entities";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
-        World world = sender.getEntityWorld();
+        World world = iCommandSender.getEntityWorld();
 
-        AtomicInteger iterator = new AtomicInteger();
-        List<Entity> entities = world.loadedEntityList;
+        AtomicInteger atomicInteger = new AtomicInteger();
+        List<Entity> entityList = world.loadedEntityList;
 
         Log.writeDataToLogFile(0, "------------ START SCAN ENTITY LIST ------------");
 
-        for (Entity entity : entities)
+        for (Entity entity : entityList)
         {
             if (entity != null)
             {
                 Log.writeDataToLogFile(0, "-----------------------------------------------------------");
 
                 @Nonnull String entityType;
-                Log.writeDataToLogFile(0, "Iteration: " + iterator.getAndIncrement());
+
+                Log.writeDataToLogFile(0, "Iteration: " + atomicInteger.getAndIncrement());
                 Log.writeDataToLogFile(0, entity.toString());
                 Log.writeDataToLogFile(0, "Entity ID: " + entity.getEntityId());
 
-                ResourceLocation entityKey = EntityList.getKey(entity);
+                ResourceLocation resourceLocation = EntityList.getKey(entity);
 
-                if (entityKey != null && entityKey.getResourceDomain().equals("minecraft"))
+                if (resourceLocation != null &&
+                        resourceLocation.getResourceDomain().equals("minecraft"))
                 {
-                    entityType = "minecraft:" + entityKey.getResourcePath();
+                    entityType = "minecraft:" + resourceLocation.getResourcePath();
                 }
                 else
                 {
-                    entityType = entityKey != null ? entityKey.toString() : "Unknown";
+                    entityType = resourceLocation != null ?
+                            resourceLocation.toString() : "Unknown";
                 }
 
                 Log.writeDataToLogFile(0, "Entity: " + entityType);
@@ -98,7 +101,7 @@ public final class CmdAdminScanEntities extends CommandBase
             }
         }
 
-        sender.sendMessage(new TextComponentString(
+        iCommandSender.sendMessage(new TextComponentString(
                    EnumUnicodeCharacter.SECTION.getCharacter() +
                         EnumTextColor.GREEN.getCode() +
                         EnumCmdCallType.CMD.getDescription() +
