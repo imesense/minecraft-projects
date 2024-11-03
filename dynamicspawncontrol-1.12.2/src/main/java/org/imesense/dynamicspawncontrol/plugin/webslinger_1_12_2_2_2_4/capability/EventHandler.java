@@ -132,12 +132,12 @@ public final class EventHandler
             ResourceLocation entityId = EntityList.getKey((EntityLivingBase) entity);
 
             if (entityId != null) {
-                Log.writeDataToLogFile(0, "entity 1: " + entityId.toString());
+                //Log.writeDataToLogFile(0, "entity 1: " + entityId.toString());
 
                 int priority = DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getEntityPriority(entityId.toString());
 
                 if (priority > 0) {
-                    Log.writeDataToLogFile(0, "entity 2: " + priority);
+                   // Log.writeDataToLogFile(0, "entity 2: " + priority);
                     return priority;
                 }
             }
