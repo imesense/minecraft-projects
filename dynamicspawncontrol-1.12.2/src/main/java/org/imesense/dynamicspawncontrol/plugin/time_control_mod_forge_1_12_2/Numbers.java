@@ -11,131 +11,53 @@ import java.util.Collections;
 /**
  *
  */
-public final class Numbers
-{
-    /**
-     *
-     */
-    public Numbers()
-    {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+public class Numbers {
+    static final long night_start = 12000L;
+    private static final double day_multiplier = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getDayLengthMinutes());
+    private static final double night_multiplier = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getNightLengthMinutes());
+    private static final int irl_hour_offset = 6;
+    private static final double irl_minute_multiplier = 16.94D;
+
+    public static double multiplier(long worldtime) {
+        return isDaytime(worldtime) ? day_multiplier : night_multiplier;
     }
 
-    /**
-     *
-     */
-    private static final double DAY_MULTIPLIER = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getDayLengthMinutes());
-
-    /**
-     *
-     */
-    private static final double NIGHT_MULTIPLIER = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getNightLengthMinutes());
-
-    /**
-     *
-     * @param worldTime
-     * @return
-     */
-    public static double multiplier(long worldTime)
-    {
-        return isDaytime(worldTime) ? DAY_MULTIPLIER : NIGHT_MULTIPLIER;
+    public static long customtime(long worldtime) {
+        return (long)((double)worldtime * multiplier(worldtime));
     }
 
-    /**
-     *
-     * @param worldTime
-     * @return
-     */
-    public static long customTime(long worldTime)
-    {
-        return (long)((double)worldTime * multiplier(worldTime));
+    private static long worldtime(long customtime, double multiplier) {
+        return (long)((double)customtime / multiplier);
     }
 
-    /**
-     *
-     * @param customTime
-     * @param multiplier
-     * @return
-     */
-    private static long worldTime(long customTime, double multiplier)
-    {
-        return (long)((double)customTime / multiplier);
+    public static void setWorldtime(World world, long customtime, double multiplier) {
+        world.provider.setWorldTime(worldtime(customtime, multiplier));
     }
 
-    /**
-     *
-     * @param world
-     * @param customTime
-     * @param multiplier
-     */
-    public static void setWorldTime(World world, long customTime, double multiplier)
-    {
-        world.provider.setWorldTime(worldTime(customTime, multiplier));
-    }
-
-    /**
-     *
-     * @param hour
-     * @param minute
-     * @param day
-     * @return
-     */
-    public static long systemTime(int hour, int minute, int day)
-    {
+    public static long systemtime(int hour, int minute, int day) {
         hour = (hour - 6 + 24) % 24 * 1000;
         minute = (int)Math.round((double)minute * 16.94D % 1000.0D);
-
         return (long)(hour + minute) + (long)day * 24000L;
     }
 
-    /**
-     *
-     * @param worldTime
-     * @return
-     */
-    public static long day(long worldTime)
-    {
-        return worldTime / 24000L;
+    public static long day(long worldtime) {
+        return worldtime / 24000L;
     }
 
-    /**
-     *
-     * @param item
-     * @param addition
-     * @return
-     */
-    public static String progressString(long item, String addition)
-    {
+    public static String progressString(long item, String addition) {
+        int stringLength = 1;
         item %= 12000L;
-
-        int percent = (int)(item * 100L / 12000L), division = 2;
-
-        return String.join
-                ("", Collections.nCopies(percent == 0 ? 2 : 2 - (int)Math.log10(percent), " "))
-                + String.format(" %d%% [", percent) + String.join("", Collections.nCopies(percent / division, "="))
-                + '>' + String.join("", Collections.nCopies(50 - percent / division, " ")) + ']'
-                + String.join("", Collections.nCopies(item == 0L ? (int)Math.log10(12000.0D)
-                : (int)Math.log10(12000.0D) - (int)Math.log10((double)item), " "))
-                + String.format(" %d/%d%s", item, 12000, addition);
+        int total = 1;
+        int percent = (int)(item * 100L / 12000L);
+        int division = 2;
+        return String.join("", Collections.nCopies(percent == 0 ? 2 : 2 - (int)Math.log10((double)percent), " ")) + String.format(" %d%% [", percent) + String.join("", Collections.nCopies(percent / division, "=")) + '>' + String.join("", Collections.nCopies(50 - percent / division, " ")) + ']' + String.join("", Collections.nCopies(item == 0L ? (int)Math.log10(12000.0D) : (int)Math.log10(12000.0D) - (int)Math.log10((double)item), " ")) + String.format(" %d/%d%s", item, 12000, addition);
     }
 
-    /**
-     *
-     * @param length
-     * @return
-     */
-    private static double multiplier(int length)
-    {
-        return (new BigDecimal(String.valueOf((double)length / 10.0D))).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+    private static double multiplier(int length) {
+        return (new BigDecimal(String.valueOf((double)length / 10.0D))).setScale(2, 6).doubleValue();
     }
 
-    /**
-     *
-     * @param worldTime
-     * @return
-     */
-    public static boolean isDaytime(long worldTime)
-    {
-        return worldTime % 24000L >= 0L && worldTime % 24000L < 12000L;
+    public static boolean isDaytime(long worldtime) {
+        return worldtime % 24000L >= 0L && worldtime % 24000L < 12000L;
     }
 }

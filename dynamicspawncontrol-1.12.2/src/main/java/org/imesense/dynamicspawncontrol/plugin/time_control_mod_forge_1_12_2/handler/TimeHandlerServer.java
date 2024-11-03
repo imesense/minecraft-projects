@@ -13,158 +13,87 @@ import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.Num
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Calendar;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-/**
- *
- */
-public final class TimeHandlerServer implements ITimeHandler
-{
-    /**
-     *
-     */
-    private long customTime = 0L;
-
-    /**
-     *
-     */
-    private double multiplier = 0.00;
-
-    /**
-     *
-     */
+public class TimeHandlerServer implements ITimeHandler {
+    private static final Logger log = LogManager.getLogger(TimeHandlerServer.class.getSimpleName());
+    private static final Method wakeAllPlayers = ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
     private int lastMinute = 0;
-
-    /**
-     *
-     */
+    private long customtime;
+    private double multiplier;
     private boolean wasDaytime = true;
 
-    /**
-     *
-     */
-    @Deprecated
-    private static final Method WAKE_ALL_PLAYERS =
-            ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
-
-    /**
-     *
-     * @param world
-     */
-    @Override
-    public void tick(World world)
-    {
-        if (DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime())
-        {
-            if (!world.isRemote && Objects.requireNonNull(world.getMinecraftServer()).getTickCounter() %
-                    DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTimeRate() == 0)
-            {
+    public void tick(World world) {
+        if (DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime()) {
+            if (!world.isRemote && world.getMinecraftServer().getTickCounter() % DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTimeRate() == 0) {
                 this.syncTimeWithSystem(world);
             }
-        }
-        else
-        {
-            long worldTime = world.getWorldTime();
-            boolean isDaytime = Numbers.isDaytime(worldTime);
-
-            if (isDaytime != this.wasDaytime)
-            {
-                this.reset(worldTime);
+        } else {
+            long worldtime = world.getWorldTime();
+            boolean isDaytime = Numbers.isDaytime(worldtime);
+            if (isDaytime != this.wasDaytime) {
+                this.reset(worldtime);
                 this.wasDaytime = isDaytime;
             }
 
-            long updatedWorldTime;
-
-            try
-            {
-                if (world instanceof WorldServer &&
-                        ((WorldServer)world).areAllPlayersAsleep())
-                {
-                    updatedWorldTime = worldTime + 24000L;
-                    updatedWorldTime -= updatedWorldTime % 24000L;
-
-                    world.provider.setWorldTime(updatedWorldTime);
-
-                    this.reset(updatedWorldTime);
+            long updatedWorldtime;
+            try {
+                if (world instanceof WorldServer && ((WorldServer)world).areAllPlayersAsleep()) {
+                    updatedWorldtime = worldtime + 24000L;
+                    updatedWorldtime -= updatedWorldtime % 24000L;
+                    world.provider.setWorldTime(updatedWorldtime);
+                    this.reset(updatedWorldtime);
                     this.wasDaytime = true;
-
-                    WAKE_ALL_PLAYERS.invoke(world);
+                    wakeAllPlayers.invoke(world);
                 }
-            }
-            catch (InvocationTargetException | IllegalAccessException exception)
-            {
-                Log.writeDataToLogFile(2, "Unable to wake players!");
-                Log.writeDataToLogFile(2, "exception: " + exception);
+            } catch (InvocationTargetException | IllegalAccessException var7) {
+                log.error("Unable to wake players!", var7);
             }
 
-            ++this.customTime;
-
-            Numbers.setWorldTime(world, this.customTime, this.multiplier);
-
-            if (Objects.requireNonNull(world.getMinecraftServer()).getTickCounter() % 20 == 0)
-            {
-                MessageHandler.Instance.sendToAll(new PacketTime(this.customTime, this.multiplier));
-
-                if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug())
-                {
-                    updatedWorldTime = world.getWorldTime();
-
-                    Log.writeDataToLogFile(0, Numbers.progressString(updatedWorldTime, ""));
-
-                    Log.writeDataToLogFile(0, String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s",
-                            worldTime, updatedWorldTime, this.customTime - 1L, this.customTime, Numbers.day(updatedWorldTime), this.multiplier));
+            ++this.customtime;
+            Numbers.setWorldtime(world, this.customtime, this.multiplier);
+            if (world.getMinecraftServer().getTickCounter() % 20 == 0) {
+                MessageHandler.INSTANCE.sendToAll(new PacketTime(this.customtime, this.multiplier));
+                if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug()) {
+                    updatedWorldtime = world.getWorldTime();
+                    log.info(Numbers.progressString(updatedWorldtime, ""));
+                    log.info(String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s", worldtime, updatedWorldtime, this.customtime - 1L, this.customtime, Numbers.day(updatedWorldtime), this.multiplier));
                 }
             }
         }
+
     }
 
-    /**
-     *
-     * @param worldTime
-     */
-    private void reset(long worldTime)
-    {
-        this.update(Numbers.customTime(worldTime), Numbers.multiplier(worldTime));
+    private void reset(long worldtime) {
+        this.update(Numbers.customtime(worldtime), Numbers.multiplier(worldtime));
     }
 
-    /**
-     *
-     * @param customTime
-     * @param multiplier
-     */
-    @Override
-    public void update(long customTime, double multiplier)
-    {
-        MessageHandler.Instance.sendToAll(new PacketTime(customTime, multiplier));
-
-        this.customTime = customTime;
+    public void update(long customtime, double multiplier) {
+        MessageHandler.INSTANCE.sendToAll(new PacketTime(customtime, multiplier));
+        this.customtime = customtime;
         this.multiplier = multiplier;
     }
 
-    /**
-     *
-     * @param world
-     */
-    private void syncTimeWithSystem(World world)
-    {
+    private void syncTimeWithSystem(World world) {
         Calendar calendar = Calendar.getInstance();
-
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        if (minute != this.lastMinute)
-        {
+        int hour = calendar.get(11);
+        int minute = calendar.get(12);
+        if (minute != this.lastMinute) {
             this.lastMinute = minute;
-
-            long worldTime = world.getWorldTime();
-            long time = Numbers.systemTime(hour, minute, calendar.get(Calendar.DAY_OF_YEAR));
-
+            long worldtime = world.getWorldTime();
+            long time = Numbers.systemtime(hour, minute, calendar.get(6));
             world.provider.setWorldTime(time);
-
-            if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug())
-            {
-                Log.writeDataToLogFile(0, String.format("System time update: %d -> %d | day %s, %s:%s",
-                        worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
+            if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug()) {
+                log.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldtime, time, calendar.get(6), hour, minute));
             }
         }
+
     }
 }
