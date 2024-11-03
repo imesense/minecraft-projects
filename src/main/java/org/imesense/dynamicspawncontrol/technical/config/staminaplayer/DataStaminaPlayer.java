@@ -24,7 +24,7 @@ public final class DataStaminaPlayer
         /**
          *
          */
-        public static ConfigDataStaminaPlayer instance;
+        public static ConfigDataStaminaPlayer Instance;
 
         /**
          *

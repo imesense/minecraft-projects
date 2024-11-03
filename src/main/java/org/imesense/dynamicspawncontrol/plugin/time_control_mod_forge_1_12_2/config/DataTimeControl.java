@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public final class DataPluginWorldTime
+public final class DataTimeControl
 {
     /**
      *
@@ -24,7 +24,7 @@ public final class DataPluginWorldTime
         /**
          *
          */
-        public static ConfigDataWorldTime instance;
+        public static ConfigDataWorldTime Instance;
 
         /**
          *
@@ -49,7 +49,7 @@ public final class DataPluginWorldTime
         /**
          *
          */
-        public Boolean syncToSystemTime = false;
+        public Boolean SyncToSystemTime = false;
 
         /**
          *
@@ -109,7 +109,7 @@ public final class DataPluginWorldTime
         @Getter
         public Boolean getSyncToSystemTime()
         {
-            return this.syncToSystemTime;
+            return this.SyncToSystemTime;
         }
 
         /**
@@ -159,7 +159,7 @@ public final class DataPluginWorldTime
         @Setter
         public void setSyncToSystemTime(Boolean value)
         {
-            this.syncToSystemTime = value;
+            this.SyncToSystemTime = value;
         }
 
         /**

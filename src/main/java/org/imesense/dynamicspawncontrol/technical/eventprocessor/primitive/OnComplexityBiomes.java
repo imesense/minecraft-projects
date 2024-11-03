@@ -86,15 +86,15 @@ public final class OnComplexityBiomes
 
     /**
      *
-     * @param event
+     * @param livingUpdateEvent
      */
     @SubscribeEvent
-    public synchronized void onPlayerTick(LivingEvent.LivingUpdateEvent event)
+    public synchronized void onPlayerTick(LivingEvent.LivingUpdateEvent livingUpdateEvent)
     {
-        if (event.getEntity() instanceof EntityPlayerMP)
+        if (livingUpdateEvent.getEntity() instanceof EntityPlayerMP)
         {
-            EntityPlayerMP player = (EntityPlayerMP) event.getEntity();
-            Biome biome = player.world.getBiome(player.getPosition());
+            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) livingUpdateEvent.getEntity();
+            Biome biome = entityPlayerMP.world.getBiome(entityPlayerMP.getPosition());
 
             if (biome != currentBiome)
             {
@@ -117,10 +117,10 @@ public final class OnComplexityBiomes
 
     /**
      *
-     * @param event
+     * @param text
      */
     @SubscribeEvent
-    public synchronized void onRenderOverlay(RenderGameOverlayEvent.Text event)
+    public synchronized void onRenderOverlay(RenderGameOverlayEvent.Text text)
     {
         long currentTime = System.currentTimeMillis();
 

@@ -42,28 +42,28 @@ public final class OnSingleJsonCheckSpawn
 
     /**
      *
-     * @param event
+     * @param checkSpawn
      */
     @SubscribeEvent
-    public synchronized void onCheckSpawn_0(LivingSpawnEvent.CheckSpawn event)
+    public synchronized void onCheckSpawn_0(LivingSpawnEvent.CheckSpawn checkSpawn)
     {
-        if (event.getWorld().isRemote)
+        if (checkSpawn.getWorld().isRemote)
         {
             return;
         }
 
-        if (event.getWorld().canBlockSeeSky(event.getEntity().getPosition()))
+        if (checkSpawn.getWorld().canBlockSeeSky(checkSpawn.getEntity().getPosition()))
         {
-            EntityLiving entity = (EntityLiving) event.getEntity();
-            ResourceLocation entityResource = EntityList.getKey(entity);
+            EntityLiving entityLiving = (EntityLiving) checkSpawn.getEntity();
+            ResourceLocation resourceLocation = EntityList.getKey(entityLiving);
 
-            if (entityResource != null)
+            if (resourceLocation != null)
             {
-                List<String> blockedEntities = GeneralStorageData.instance.getEntitiesProhibitedOutdoors();
+                List<String> blockedEntities = GeneralStorageData.Instance.getEntitiesProhibitedOutdoors();
 
-                if (blockedEntities != null && blockedEntities.contains(entityResource.toString()))
+                if (blockedEntities != null && blockedEntities.contains(resourceLocation.toString()))
                 {
-                    event.setResult(LivingSpawnEvent.Result.DENY);
+                    checkSpawn.setResult(LivingSpawnEvent.Result.DENY);
                 }
             }
         }

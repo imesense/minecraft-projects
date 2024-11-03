@@ -25,7 +25,7 @@ public final class DataSkeletonDropItem
         /**
          *
          */
-        public static DataSkeletonDropItem.ConfigDataSkeletonDrop instance;
+        public static DataSkeletonDropItem.ConfigDataSkeletonDrop Instance;
 
         /**
          *

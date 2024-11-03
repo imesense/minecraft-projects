@@ -96,10 +96,10 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
 
     /**
      *
-     * @param event
+     * @param potentialSpawns
      * @return
      */
-    public boolean match(WorldEvent.PotentialSpawns event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(WorldEvent.PotentialSpawns potentialSpawns) { return RULE_EVALUATOR.match(potentialSpawns, EVENT_QUERY); }
 
     /**
      *
@@ -124,17 +124,17 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private GenericPotentialSpawn(AttributeMap<?> map)
+    private GenericPotentialSpawn(AttributeMap<?> attributeMap)
     {
         super();
 
         Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericPotentialSpawn.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        for (AttributeMap<?> mobMap : map.getListA(MOB_STRUCT))
+        for (AttributeMap<?> mobMap : attributeMap.getListA(MOB_STRUCT))
         {
             String entityId = fixEntityId((String) mobMap.get(MOB_NAME));
             EntityEntry typeEntity = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entityId));
@@ -179,99 +179,99 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
     {
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public World getWorld(WorldEvent.PotentialSpawns data)
+        public World getWorld(WorldEvent.PotentialSpawns potentialSpawns)
         {
-            return data.getWorld();
+            return potentialSpawns.getWorld();
         }
 
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public BlockPos getPos(WorldEvent.PotentialSpawns data)
+        public BlockPos getPos(WorldEvent.PotentialSpawns potentialSpawns)
         {
-            return data.getPos();
+            return potentialSpawns.getPos();
         }
 
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(WorldEvent.PotentialSpawns data)
+        public BlockPos getValidBlockPos(WorldEvent.PotentialSpawns potentialSpawns)
         {
-            return data.getPos().down();
+            return potentialSpawns.getPos().down();
         }
 
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public int getY(WorldEvent.PotentialSpawns data)
+        public int getY(WorldEvent.PotentialSpawns potentialSpawns)
         {
-            return data.getPos().getY();
+            return potentialSpawns.getPos().getY();
         }
 
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public Entity getEntity(WorldEvent.PotentialSpawns data)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param data
-         * @return
-         */
-        @Override
-        public DamageSource getSource(WorldEvent.PotentialSpawns data)
+        public Entity getEntity(WorldEvent.PotentialSpawns potentialSpawns)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public Entity getAttacker(WorldEvent.PotentialSpawns data)
+        public DamageSource getSource(WorldEvent.PotentialSpawns potentialSpawns)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(WorldEvent.PotentialSpawns data)
+        public Entity getAttacker(WorldEvent.PotentialSpawns potentialSpawns)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param potentialSpawns
          * @return
          */
         @Override
-        public ItemStack getItem(WorldEvent.PotentialSpawns data)
+        public EntityPlayerMP getPlayer(WorldEvent.PotentialSpawns potentialSpawns)
+        {
+            return null;
+        }
+
+        /**
+         *
+         * @param potentialSpawns
+         * @return
+         */
+        @Override
+        public ItemStack getItem(WorldEvent.PotentialSpawns potentialSpawns)
         {
             return ItemStack.EMPTY;
         }
@@ -303,18 +303,18 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericPotentialSpawn parse(JsonElement element)
+    public static GenericPotentialSpawn parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            JsonObject jsonObject = element.getAsJsonObject();
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
 
             if (!jsonObject.has(SingleKeyWord.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT))
             {
@@ -322,20 +322,21 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
                 throw new RuntimeException();
             }
 
-            AttributeMap<Object> map = FACTORY.parse(element);
+            AttributeMap<Object> attributeMap = FACTORY.parse(jsonElement);
 
-            JsonArray mobs = jsonObject.getAsJsonArray(SingleKeyWord.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT);
+            JsonArray jsonArray = jsonObject.getAsJsonArray(SingleKeyWord.MAIN_POTENTIAL_SPAWN.MAIN_STRUCT);
 
-            if (mobs != null)
+            if (jsonArray != null)
             {
-                for (JsonElement mob : mobs)
+                for (JsonElement jsonElement1 : jsonArray)
                 {
-                    AttributeMap<?> mobMap = FACTORY.parse(mob);
-                    map.addList(MultipleKeyWord.PotentialSpawn.MOB_STRUCT, mobMap);
+                    AttributeMap<?> attributeMap1 = FACTORY.parse(jsonElement1);
+
+                    attributeMap.addList(MultipleKeyWord.PotentialSpawn.MOB_STRUCT, attributeMap1);
                 }
             }
 
-            return new GenericPotentialSpawn(map);
+            return new GenericPotentialSpawn(attributeMap);
         }
     }
 

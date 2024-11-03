@@ -45,14 +45,14 @@ public final class OnWindowTitle
      *
      */
     @Nonnull
-    private static final String TITLE = DataWindowTitle.ConfigDataWindowTitle.instance.getWindowTitle();
+    private static final String TITLE = DataWindowTitle.ConfigDataWindowTitle.Instance.getWindowTitle();
 
     /**
      *
-     * @param event
+     * @param clientTickEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateClientTick_0(TickEvent.ClientTickEvent event)
+    public synchronized void onUpdateClientTick_0(TickEvent.ClientTickEvent clientTickEvent)
     {
         replace();
     }
@@ -64,11 +64,11 @@ public final class OnWindowTitle
      */
     public static String setTextWindowTitle(@Nonnull String formatString)
     {
-        @Nonnull final String mcVersion = Loader.instance().getMinecraftModContainer().getVersion();
-        @Nonnull final String modCount = Integer.toString(Loader.instance().getModList().size());
+        @Nonnull final String MC_VERSION = Loader.instance().getMinecraftModContainer().getVersion();
+        @Nonnull final String MOD_COUNT = Integer.toString(Loader.instance().getModList().size());
 
-        formatString = formatString.replaceAll("%mcver%", mcVersion);
-        formatString = formatString.replaceAll("%modcount%", modCount);
+        formatString = formatString.replaceAll("%mcver%", MC_VERSION);
+        formatString = formatString.replaceAll("%modcount%", MOD_COUNT);
 
         return formatString;
     }

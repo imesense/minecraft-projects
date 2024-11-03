@@ -56,48 +56,49 @@ public final class GenericMapEffectAction extends ListActionConsumer<SignalDataG
 
     /**
      *
-     * @param event
+     * @param playerTickEvent
      * @return
      */
-    public boolean match(TickEvent.PlayerTickEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(TickEvent.PlayerTickEvent playerTickEvent) { return RULE_EVALUATOR.match(playerTickEvent, EVENT_QUERY); }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      * @param timeout
      */
-    private GenericMapEffectAction(AttributeMap<?> map, int timeout)
+    private GenericMapEffectAction(AttributeMap<?> attributeMap, int timeout)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericMapEffectAction.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericMapEffectAction.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
 
         this.TIMEOUT = timeout > 0 ? timeout : 1;
     }
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericMapEffectAction parse(JsonElement element)
+    public static GenericMapEffectAction parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<?> map = FACTORY.parse(element);
+            AttributeMap<?> attributeMap = FACTORY.parse(jsonElement);
 
-            int localTimeOut = element.getAsJsonObject().has(SingleKeyWord.EVENT_EFFECTS.KEYWORD_TIMEOUT)
-                    ? element.getAsJsonObject().get(SingleKeyWord.EVENT_EFFECTS.KEYWORD_TIMEOUT).getAsInt() : 20;
+            int localTimeOut = jsonElement.getAsJsonObject().has(SingleKeyWord.EVENT_EFFECTS.KEYWORD_TIMEOUT)
+                    ? jsonElement.getAsJsonObject().get(SingleKeyWord.EVENT_EFFECTS.KEYWORD_TIMEOUT).getAsInt() : 20;
 
-            return new GenericMapEffectAction(map, localTimeOut);
+            return new GenericMapEffectAction(attributeMap, localTimeOut);
         }
     }
 
@@ -108,99 +109,99 @@ public final class GenericMapEffectAction extends ListActionConsumer<SignalDataG
     {
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public World getWorld(TickEvent.PlayerTickEvent data)
+        public World getWorld(TickEvent.PlayerTickEvent playerTickEvent)
         {
-            return data.player.getEntityWorld();
+            return playerTickEvent.player.getEntityWorld();
         }
 
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public BlockPos getPos(TickEvent.PlayerTickEvent data)
+        public BlockPos getPos(TickEvent.PlayerTickEvent playerTickEvent)
         {
-            return data.player.getPosition();
+            return playerTickEvent.player.getPosition();
         }
 
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(TickEvent.PlayerTickEvent data)
+        public BlockPos getValidBlockPos(TickEvent.PlayerTickEvent playerTickEvent)
         {
-            return data.player.getPosition().down();
+            return playerTickEvent.player.getPosition().down();
         }
 
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public int getY(TickEvent.PlayerTickEvent data)
+        public int getY(TickEvent.PlayerTickEvent playerTickEvent)
         {
-            return data.player.getPosition().getY();
+            return playerTickEvent.player.getPosition().getY();
         }
 
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public Entity getEntity(TickEvent.PlayerTickEvent data)
+        public Entity getEntity(TickEvent.PlayerTickEvent playerTickEvent)
         {
-            return data.player;
+            return playerTickEvent.player;
         }
 
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public DamageSource getSource(TickEvent.PlayerTickEvent data)
-        {
-            return null;
-        }
-
-        /**
-         *
-         * @param data
-         * @return
-         */
-        @Override
-        public Entity getAttacker(TickEvent.PlayerTickEvent data)
+        public DamageSource getSource(TickEvent.PlayerTickEvent playerTickEvent)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(TickEvent.PlayerTickEvent data)
+        public Entity getAttacker(TickEvent.PlayerTickEvent playerTickEvent)
         {
-            return (EntityPlayerMP) data.player;
+            return null;
         }
 
         /**
          *
-         * @param data
+         * @param playerTickEvent
          * @return
          */
         @Override
-        public ItemStack getItem(TickEvent.PlayerTickEvent data)
+        public EntityPlayerMP getPlayer(TickEvent.PlayerTickEvent playerTickEvent)
+        {
+            return (EntityPlayerMP) playerTickEvent.player;
+        }
+
+        /**
+         *
+         * @param playerTickEvent
+         * @return
+         */
+        @Override
+        public ItemStack getItem(TickEvent.PlayerTickEvent playerTickEvent)
         {
             return ItemStack.EMPTY;
         }
@@ -274,14 +275,14 @@ public final class GenericMapEffectAction extends ListActionConsumer<SignalDataG
 
     /**
      *
-     * @param event
+     * @param playerTickEvent
      */
-    public void action(TickEvent.PlayerTickEvent event)
+    public void action(TickEvent.PlayerTickEvent playerTickEvent)
     {
         /**
          *
          */
-        SignalDataGetter eventBase = new SignalDataGetter()
+        SignalDataGetter signalDataGetter = new SignalDataGetter()
         {
             /**
              *
@@ -290,7 +291,7 @@ public final class GenericMapEffectAction extends ListActionConsumer<SignalDataG
             @Override
             public EntityLivingBase getEntityLiving()
             {
-                return event.player;
+                return playerTickEvent.player;
             }
 
             /**
@@ -300,7 +301,7 @@ public final class GenericMapEffectAction extends ListActionConsumer<SignalDataG
             @Override
             public EntityPlayerMP getPlayer()
             {
-                return (EntityPlayerMP) event.player;
+                return (EntityPlayerMP) playerTickEvent.player;
             }
 
             /**
@@ -310,7 +311,7 @@ public final class GenericMapEffectAction extends ListActionConsumer<SignalDataG
             @Override
             public World getWorld()
             {
-                return event.player.getEntityWorld();
+                return playerTickEvent.player.getEntityWorld();
             }
 
             /**
@@ -330,16 +331,16 @@ public final class GenericMapEffectAction extends ListActionConsumer<SignalDataG
             @Override
             public BlockPos getPosition()
             {
-                return event.player.getPosition();
+                return playerTickEvent.player.getPosition();
             }
         };
 
         /**
          *
          */
-        for (Consumer<SignalDataGetter> action : this.ACTIONS)
+        for (Consumer<SignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
         {
-            action.accept(eventBase);
+            signalDataGetterConsumer.accept(signalDataGetter);
         }
     }
 }

@@ -47,9 +47,9 @@ public final class UniqueField
             {
                 field.setAccessible(true);
 
-                Object value = field.get(object);
+                Object object1 = field.get(object);
 
-                if (!uniqueValues.add(value))
+                if (!uniqueValues.add(object1))
                 {
                     throw new IllegalStateException("Duplicate field value detected: " + field.getName());
                 }

@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2;
 
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataPluginWorldTime;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -24,12 +24,12 @@ public final class Numbers
     /**
      *
      */
-    private static final double DAY_MULTIPLIER = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getDayLengthMinutes());
+    private static final double DAY_MULTIPLIER = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getDayLengthMinutes());
 
     /**
      *
      */
-    private static final double NIGHT_MULTIPLIER = multiplier(DataPluginWorldTime.ConfigDataWorldTime.instance.getNightLengthMinutes());
+    private static final double NIGHT_MULTIPLIER = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getNightLengthMinutes());
 
     /**
      *
@@ -111,7 +111,7 @@ public final class Numbers
         int percent = (int)(item * 100L / 12000L), division = 2;
 
         return String.join
-                ("", Collections.nCopies(percent == 0 ? 2 : 2 - (int)Math.log10((double)percent), " "))
+                ("", Collections.nCopies(percent == 0 ? 2 : 2 - (int)Math.log10(percent), " "))
                 + String.format(" %d%% [", percent) + String.join("", Collections.nCopies(percent / division, "="))
                 + '>' + String.join("", Collections.nCopies(50 - percent / division, " ")) + ']'
                 + String.join("", Collections.nCopies(item == 0L ? (int)Math.log10(12000.0D)

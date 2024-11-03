@@ -73,29 +73,33 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
 
     /**
      *
-     * @param event
+     * @param livingExperienceDropEvent
      * @return
      */
-    public boolean match(LivingExperienceDropEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(LivingExperienceDropEvent livingExperienceDropEvent)
+    {
+        return RULE_EVALUATOR.match(livingExperienceDropEvent, EVENT_QUERY);
+    }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      * @param xp
      * @param multiXp
      * @param addingXp
      */
-    private GenericExperience(AttributeMap<?> map, int xp, float multiXp, float addingXp)
+    private GenericExperience(AttributeMap<?> attributeMap, int xp, float multiXp, float addingXp)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericExperience.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericExperience.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
 
-        this.RESULT = RESULT_EVENTS.getResult(map);
+        this.RESULT = RESULT_EVENTS.getResult(attributeMap);
 
         this.XP = xp;
         this.MULTI_XP = multiXp;
@@ -104,44 +108,44 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericExperience parse(JsonElement element)
+    public static GenericExperience parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<?> map = FACTORY.parse(element);
+            AttributeMap<?> attributeMap = FACTORY.parse(jsonElement);
 
             int localSetXp = InlineJsonService.getValueFromJson(
-                    element.getAsJsonObject(),
+                    jsonElement.getAsJsonObject(),
                     SingleKeyWord.DROP_ALL_EXPERIENCE.SET_XP,
                     0,
-                    (_element, defaultValue) ->
-                            _element.getAsJsonPrimitive().isNumber() ? _element.getAsInt() : defaultValue
+                    (element, defaultValue) ->
+                            element.getAsJsonPrimitive().isNumber() ? element.getAsInt() : defaultValue
             );
 
             float localMultiXp = InlineJsonService.getValueFromJson(
-                    element.getAsJsonObject(),
+                    jsonElement.getAsJsonObject(),
                     SingleKeyWord.DROP_ALL_EXPERIENCE.MULTI_XP,
                     0.f,
-                    (_element, defaultValue) ->
-                            _element.getAsJsonPrimitive().isNumber() ? _element.getAsFloat() : defaultValue
+                    (element, defaultValue) ->
+                            element.getAsJsonPrimitive().isNumber() ? element.getAsFloat() : defaultValue
             );
 
             float localAddXp = InlineJsonService.getValueFromJson(
-                    element.getAsJsonObject(),
+                    jsonElement.getAsJsonObject(),
                     SingleKeyWord.DROP_ALL_EXPERIENCE.ADD_XP,
                     0.f,
-                    (_element, defaultValue) ->
-                            _element.getAsJsonPrimitive().isNumber() ? _element.getAsFloat() : defaultValue
+                    (element, defaultValue) ->
+                            element.getAsJsonPrimitive().isNumber() ? element.getAsFloat() : defaultValue
             );
 
-            return new GenericExperience(map, localSetXp, localMultiXp, localAddXp);
+            return new GenericExperience(attributeMap, localSetXp, localMultiXp, localAddXp);
         }
     }
 
@@ -152,99 +156,99 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
     {
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public World getWorld(LivingExperienceDropEvent data)
+        public World getWorld(LivingExperienceDropEvent livingExperienceDropEvent)
         {
-            return data.getEntity().getEntityWorld();
+            return livingExperienceDropEvent.getEntity().getEntityWorld();
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public BlockPos getPos(LivingExperienceDropEvent data)
+        public BlockPos getPos(LivingExperienceDropEvent livingExperienceDropEvent)
         {
-            return data.getEntity().getPosition();
+            return livingExperienceDropEvent.getEntity().getPosition();
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(LivingExperienceDropEvent data)
+        public BlockPos getValidBlockPos(LivingExperienceDropEvent livingExperienceDropEvent)
         {
-            return data.getEntity().getPosition().down();
+            return livingExperienceDropEvent.getEntity().getPosition().down();
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public int getY(LivingExperienceDropEvent data)
+        public int getY(LivingExperienceDropEvent livingExperienceDropEvent)
         {
-            return data.getEntity().getPosition().getY();
+            return livingExperienceDropEvent.getEntity().getPosition().getY();
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public Entity getEntity(LivingExperienceDropEvent data)
+        public Entity getEntity(LivingExperienceDropEvent livingExperienceDropEvent)
         {
-            return data.getEntity();
+            return livingExperienceDropEvent.getEntity();
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public DamageSource getSource(LivingExperienceDropEvent data)
+        public DamageSource getSource(LivingExperienceDropEvent livingExperienceDropEvent)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public Entity getAttacker(LivingExperienceDropEvent data)
+        public Entity getAttacker(LivingExperienceDropEvent livingExperienceDropEvent)
         {
-            return data.getAttackingPlayer();
+            return livingExperienceDropEvent.getAttackingPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(LivingExperienceDropEvent data)
+        public EntityPlayerMP getPlayer(LivingExperienceDropEvent livingExperienceDropEvent)
         {
-            return (EntityPlayerMP) data.getAttackingPlayer();
+            return (EntityPlayerMP) livingExperienceDropEvent.getAttackingPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param livingExperienceDropEvent
          * @return
          */
         @Override
-        public ItemStack getItem(LivingExperienceDropEvent data)
+        public ItemStack getItem(LivingExperienceDropEvent livingExperienceDropEvent)
         {
             return ItemStack.EMPTY;
         }

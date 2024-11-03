@@ -59,20 +59,20 @@ public final class EntityRendererHook
 
     /**
      *
-     * @param renderer
+     * @param entityRenderer
      * @param partialTicks
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
      */
-    public static void onUpdateLightmap(EntityRenderer renderer, float partialTicks) throws NoSuchFieldException, IllegalAccessException
+    public static void onUpdateLightmap(EntityRenderer entityRenderer, float partialTicks) throws NoSuchFieldException, IllegalAccessException
     {
-        Class<?> rendererClass = renderer.getClass();
+        Class<?> _class = entityRenderer.getClass();
 
         boolean lightmapUpdateNeededValue;
         {
-            lightmapUpdateNeededField = rendererClass.getDeclaredField(UniqueField.IDEA_RT ? "lightmapUpdateNeeded" : "field_78536_aa");
+            lightmapUpdateNeededField = _class.getDeclaredField(UniqueField.IDEA_RT ? "lightmapUpdateNeeded" : "field_78536_aa");
             lightmapUpdateNeededField.setAccessible(true);
-            lightmapUpdateNeededValue = lightmapUpdateNeededField.getBoolean(renderer);
+            lightmapUpdateNeededValue = lightmapUpdateNeededField.getBoolean(entityRenderer);
         }
 
         if (!lightmapUpdateNeededValue)
@@ -82,9 +82,9 @@ public final class EntityRendererHook
 
         Minecraft mc;
         {
-            mcField = rendererClass.getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
+            mcField = _class.getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
             mcField.setAccessible(true);
-            mc = (Minecraft) mcField.get(renderer);
+            mc = (Minecraft) mcField.get(entityRenderer);
         }
 
         if (mc == null)
@@ -109,39 +109,41 @@ public final class EntityRendererHook
             return;
         }
 
-        updateLuminance(renderer, partialTicks, world);
+        updateLuminance(entityRenderer, partialTicks, world);
     }
 
     /**
      *
-     * @param dimension
+     * @param worldProvider
      * @return
      */
-    private static boolean blacklistDim(WorldProvider dimension)
+    private static boolean blacklistDim(WorldProvider worldProvider)
     {
-        DimensionType dimType = dimension.getDimensionType();
+        DimensionType dimensionType = worldProvider.getDimensionType();
 
-        if (dimType == DimensionType.THE_END && !DataDarkness.ConfigDataRenderNight.instance.getDarknessEnd())
+        if (dimensionType == DimensionType.THE_END &&
+                !DataDarkness.ConfigDataRenderNight.Instance.getDarknessEnd())
         {
             return true;
         }
 
-        return blacklistContains(dimension, dimType) ^ DataDarkness.ConfigDataRenderNight.instance.getInvertBlacklist();
+        return blacklistContains(worldProvider, dimensionType) ^ DataDarkness.ConfigDataRenderNight.Instance.getInvertBlacklist();
     }
 
     /**
      *
-     * @param dimension
+     * @param worldProvider
      * @param dimensionType
      * @return
      */
-    private static boolean blacklistContains(WorldProvider dimension, DimensionType dimensionType)
+    private static boolean blacklistContains(WorldProvider worldProvider, DimensionType dimensionType)
     {
-        String dimName = dimensionType.getName();
+        String dimensionTypeName = dimensionType.getName();
 
-        for (String blacklistName : DataDarkness.ConfigDataRenderNight.instance.getBlacklistByName())
+        for (String blacklistName :
+                DataDarkness.ConfigDataRenderNight.Instance.getBlacklistByName())
         {
-            if (!blacklistName.equals(dimName))
+            if (!blacklistName.equals(dimensionTypeName))
             {
                 continue;
             }
@@ -149,9 +151,9 @@ public final class EntityRendererHook
             return true;
         }
 
-        int dimID = dimension.getDimension();
+        int dimID = worldProvider.getDimension();
 
-        for (int blacklistID : DataDarkness.ConfigDataRenderNight.instance.getBlacklistByID())
+        for (int blacklistID : DataDarkness.ConfigDataRenderNight.Instance.getBlacklistByID())
         {
             if (dimID != blacklistID)
             {
@@ -166,31 +168,31 @@ public final class EntityRendererHook
 
     /**
      *
-     * @param dimension
+     * @param worldProvider
      * @param dimensionType
      * @return
      */
-    private static boolean isDark(WorldProvider dimension, DimensionType dimensionType)
+    private static boolean isDark(WorldProvider worldProvider, DimensionType dimensionType)
     {
         if (dimensionType == DimensionType.OVERWORLD)
         {
-            return DataDarkness.ConfigDataRenderNight.instance.getDarknessOverWorld();
+            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessOverWorld();
         }
         else if (dimensionType == DimensionType.NETHER)
         {
-            return DataDarkness.ConfigDataRenderNight.instance.getDarknessNether();
+            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessNether();
         }
         else if (dimensionType == DimensionType.THE_END)
         {
-            return DataDarkness.ConfigDataRenderNight.instance.getDarknessEnd();
+            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessEnd();
         }
-        else if (dimension.hasSkyLight())
+        else if (worldProvider.hasSkyLight())
         {
-            return DataDarkness.ConfigDataRenderNight.instance.getDarknessDefault();
+            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessDefault();
         }
         else
         {
-            return DataDarkness.ConfigDataRenderNight.instance.getDarknessSkyLess();
+            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessSkyLess();
         }
     }
 
@@ -202,15 +204,15 @@ public final class EntityRendererHook
      */
     private static float getMoonBrightness(float partialTicks, World world)
     {
-        WorldProvider dim = world.provider;
-        DimensionType dimType = dim.getDimensionType();
+        WorldProvider worldProvider = world.provider;
+        DimensionType dimensionType = worldProvider.getDimensionType();
 
-        if (!isDark(dim, dimType))
+        if (!isDark(worldProvider, dimensionType))
         {
             return 1.f;
         }
 
-        if (!dim.hasSkyLight())
+        if (!worldProvider.hasSkyLight())
         {
             return 0.f;
         }
@@ -224,11 +226,11 @@ public final class EntityRendererHook
 
         final double moon;
 
-        if (!DataDarkness.ConfigDataRenderNight.instance.getIgnoreMoonLight())
+        if (!DataDarkness.ConfigDataRenderNight.Instance.getIgnoreMoonLight())
         {
-            Double[] phaseFactors = DataDarkness.ConfigDataRenderNight.instance.getMoonPhaseFactors();
+            Double[] phaseFactors = DataDarkness.ConfigDataRenderNight.Instance.getMoonPhaseFactors();
 
-            int moonPhase = dim.getMoonPhase(world.getWorldTime());
+            int moonPhase = worldProvider.getMoonPhase(world.getWorldTime());
 
             if (moonPhase < phaseFactors.length)
             {
@@ -260,20 +262,20 @@ public final class EntityRendererHook
 
     /**
      *
-     * @param renderer
+     * @param entityRenderer
      * @param partialTicks
      * @param world
      * @throws NoSuchFieldException
      * @throws IllegalAccessException
      */
-    private static void updateLuminance(EntityRenderer renderer, float partialTicks, World world) throws NoSuchFieldException, IllegalAccessException
+    private static void updateLuminance(EntityRenderer entityRenderer, float partialTicks, World world) throws NoSuchFieldException, IllegalAccessException
     {
-        WorldProvider dim = world.provider;
-        DimensionType dimType = dim.getDimensionType();
+        WorldProvider worldProvider = world.provider;
+        DimensionType dimensionType = worldProvider.getDimensionType();
 
-        float[] brightnessTable = dim.getLightBrightnessTable();
+        float[] brightnessTable = worldProvider.getLightBrightnessTable();
 
-        boolean dimDark = isDark(dim, dimType);
+        boolean dimDark = isDark(worldProvider, dimensionType);
 
         float sunBrightness = world.getSunBrightness(1.0f);
         float moonBrightness = getMoonBrightness(partialTicks, world);
@@ -302,37 +304,37 @@ public final class EntityRendererHook
             float bossColorModifier;
             {
                 bossColorModifierField =
-                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifier" : "field_82831_U");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifier" : "field_82831_U");
 
                 bossColorModifierField.setAccessible(true);
-                bossColorModifier = bossColorModifierField.getFloat(renderer);
+                bossColorModifier = bossColorModifierField.getFloat(entityRenderer);
             }
 
             float bossColorModifierPrev;
             {
                 bossColorModifierPrevField =
-                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifierPrev" : "field_82832_V");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifierPrev" : "field_82832_V");
 
                 bossColorModifierPrevField.setAccessible(true);
-                bossColorModifierPrev = bossColorModifierPrevField.getFloat(renderer);
+                bossColorModifierPrev = bossColorModifierPrevField.getFloat(entityRenderer);
             }
 
             float torchFlickerX;
             {
                 torchFlickerXField =
-                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "torchFlickerX" : "field_78514_e");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "torchFlickerX" : "field_78514_e");
 
                 torchFlickerXField.setAccessible(true);
-                torchFlickerX = torchFlickerXField.getFloat(renderer);
+                torchFlickerX = torchFlickerXField.getFloat(entityRenderer);
             }
 
             Object mcObject;
             {
                 mcField =
-                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
 
                 mcField.setAccessible(true);
-                mcObject = mcField.get(renderer);
+                mcObject = mcField.get(entityRenderer);
             }
 
             Object gameSettingsObject;
@@ -356,16 +358,17 @@ public final class EntityRendererHook
             int[] lightmapColors;
             {
                 lightmapColorsField =
-                        renderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "lightmapColors" : "field_78504_Q");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "lightmapColors" : "field_78504_Q");
 
                 lightmapColorsField.setAccessible(true);
-                lightmapColors = (int[]) lightmapColorsField.get(renderer);
+                lightmapColors = (int[]) lightmapColorsField.get(entityRenderer);
             }
 
             if (bossColorModifier > 0.f)
             {
                 float d = bossColorModifier - bossColorModifierPrev;
                 float m = bossColorModifierPrev + partialTicks * d;
+
                 skyRed = skyRed * (1.f - m) + skyRed * 0.7f * m;
                 skyGreen = skyGreen * (1.f - m) + skyGreen * 0.6F * m;
                 skyBlue = skyBlue * (1.f - m) + skyBlue * 0.6f * m;
@@ -381,6 +384,7 @@ public final class EntityRendererHook
 
             float flicker = torchFlickerX * 0.1f + 1.5f;
             float blockBase = blockFactor * brightnessTable[blockIndex] * flicker;
+
             min = 0.4f * blockFactor;
 
             float blockGreen = blockBase * ((blockBase * (1.f - min) + min) * (1.f - min) + min);
@@ -391,12 +395,13 @@ public final class EntityRendererHook
             float blue = skyBlue + blockBlue;
 
             float f = Math.max(skyFactor, blockFactor);
+
             min = 0.03f * f;
             red = red * (0.99f - min) + min;
             green = green * (0.99f - min) + min;
             blue = blue * (0.99f - min) + min;
 
-            if (dimType == DimensionType.THE_END)
+            if (dimensionType == DimensionType.THE_END)
             {
                 red = skyFactor * 0.22f + blockBase * 0.75f;
                 green = skyFactor * 0.28f + blockGreen * 0.75f;
@@ -411,6 +416,7 @@ public final class EntityRendererHook
             float invRed = 1.0f - red;
             float invGreen = 1.0f - green;
             float invBlue = 1.0f - blue;
+
             invRed = 1.0f - invRed * invRed * invRed * invRed;
             invGreen = 1.0f - invGreen * invGreen * invGreen * invGreen;
             invBlue = 1.0f - invBlue * invBlue * invBlue * invBlue;
@@ -428,7 +434,9 @@ public final class EntityRendererHook
             blue = MathHelper.clamp(blue, 0.f, 1.f);
 
             float lTarget = luminance(red, green, blue);
+
             int c = lightmapColors[i];
+
             lightmapColors[i] = darken(c, lTarget);
         }
     }
@@ -436,10 +444,10 @@ public final class EntityRendererHook
     /**
      *
      * @param color
-     * @param lTarget
+     * @param lightTarget
      * @return
      */
-    private static int darken(int color, float lTarget)
+    private static int darken(int color, float lightTarget)
     {
         float r = (color & 0xFF) / 255.f;
         float g = ((color >> 8) & 0xFF) / 255.f;
@@ -451,12 +459,12 @@ public final class EntityRendererHook
             return color;
         }
 
-        if (lTarget >= l)
+        if (lightTarget >= l)
         {
             return color;
         }
 
-        float f = lTarget / l;
+        float f = lightTarget / l;
 
         color = 0xFF000000;
         color |= Math.round(f * r * 255);
@@ -480,13 +488,13 @@ public final class EntityRendererHook
 
     /**
      *
-     * @param f
-     * @param g
-     * @param h
+     * @param t
+     * @param start
+     * @param end
      * @return
      */
-    private static float linear(float f, float g, float h)
+    private static float linear(float t, float start, float end)
     {
-        return g + f * (h - g);
+        return start + t * (end - start);
     }
 }

@@ -55,44 +55,45 @@ public final class GenericRightClickAction extends ListActionConsumer<SignalData
 
     /**
      *
-     * @param event
+     * @param rightClickBlock
      * @return
      */
-    public boolean match(PlayerInteractEvent.RightClickBlock event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(PlayerInteractEvent.RightClickBlock rightClickBlock) { return RULE_EVALUATOR.match(rightClickBlock, EVENT_QUERY); }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private GenericRightClickAction(AttributeMap<?> map)
+    private GenericRightClickAction(AttributeMap<?> attributeMap)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericRightClickAction.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericRightClickAction.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
 
-        this.RESULT = RESULT_EVENTS.getResult(map);
+        this.RESULT = RESULT_EVENTS.getResult(attributeMap);
     }
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericRightClickAction parse(JsonElement element)
+    public static GenericRightClickAction parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<Object> map = ListActionStaticFactoryMouse.FACTORY.parse(element);
+            AttributeMap<Object> attributeMap = ListActionStaticFactoryMouse.FACTORY.parse(jsonElement);
 
-            return new GenericRightClickAction(map);
+            return new GenericRightClickAction(attributeMap);
         }
     }
 
@@ -103,113 +104,113 @@ public final class GenericRightClickAction extends ListActionConsumer<SignalData
     {
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public World getWorld(PlayerInteractEvent.RightClickBlock data)
+        public World getWorld(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
-            return data.getWorld();
+            return rightClickBlock.getWorld();
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public BlockPos getPos(PlayerInteractEvent.RightClickBlock data)
+        public BlockPos getPos(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
-            return data.getPos();
+            return rightClickBlock.getPos();
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(PlayerInteractEvent.RightClickBlock data)
+        public BlockPos getValidBlockPos(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
-            return data.getPos();
+            return rightClickBlock.getPos();
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public int getY(PlayerInteractEvent.RightClickBlock data)
+        public int getY(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
-            return data.getPos().getY();
+            return rightClickBlock.getPos().getY();
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public Entity getEntity(PlayerInteractEvent.RightClickBlock data)
+        public Entity getEntity(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
-            return data.getEntityPlayer();
+            return rightClickBlock.getEntityPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public DamageSource getSource(PlayerInteractEvent.RightClickBlock data)
+        public DamageSource getSource(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public Entity getAttacker(PlayerInteractEvent.RightClickBlock data)
+        public Entity getAttacker(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(PlayerInteractEvent.RightClickBlock data)
+        public EntityPlayerMP getPlayer(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
-            return (EntityPlayerMP) data.getEntityPlayer();
+            return (EntityPlayerMP) rightClickBlock.getEntityPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param rightClickBlock
          * @return
          */
         @Override
-        public ItemStack getItem(PlayerInteractEvent.RightClickBlock data)
+        public ItemStack getItem(PlayerInteractEvent.RightClickBlock rightClickBlock)
         {
-            return data.getItemStack();
+            return rightClickBlock.getItemStack();
         }
     };
 
     /**
-     * @param event
+     * @param rightClickBlock
      */
-    public void action(PlayerInteractEvent.RightClickBlock event)
+    public void action(PlayerInteractEvent.RightClickBlock rightClickBlock)
     {
         /**
          *
          */
-        SignalDataGetter eventBase = new SignalDataGetter()
+        SignalDataGetter signalDataGetter = new SignalDataGetter()
         {
             /**
              *
@@ -218,7 +219,7 @@ public final class GenericRightClickAction extends ListActionConsumer<SignalData
             @Override
             public EntityLivingBase getEntityLiving()
             {
-                return event.getEntityPlayer();
+                return rightClickBlock.getEntityPlayer();
             }
 
             /**
@@ -228,7 +229,7 @@ public final class GenericRightClickAction extends ListActionConsumer<SignalData
             @Override
             public EntityPlayerMP getPlayer()
             {
-                return (EntityPlayerMP) event.getEntityPlayer();
+                return (EntityPlayerMP) rightClickBlock.getEntityPlayer();
             }
 
             /**
@@ -238,7 +239,7 @@ public final class GenericRightClickAction extends ListActionConsumer<SignalData
             @Override
             public World getWorld()
             {
-                return event.getWorld();
+                return rightClickBlock.getWorld();
             }
 
             /**
@@ -248,7 +249,7 @@ public final class GenericRightClickAction extends ListActionConsumer<SignalData
             @Override
             public Entity getEntity()
             {
-                return event.getEntity();
+                return rightClickBlock.getEntity();
             }
 
             /**
@@ -258,16 +259,16 @@ public final class GenericRightClickAction extends ListActionConsumer<SignalData
             @Override
             public BlockPos getPosition()
             {
-                return event.getPos();
+                return rightClickBlock.getPos();
             }
         };
 
         /**
          *
          */
-        for (Consumer<SignalDataGetter> action : this.ACTIONS)
+        for (Consumer<SignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
         {
-            action.accept(eventBase);
+            signalDataGetterConsumer.accept(signalDataGetter);
         }
     }
 }

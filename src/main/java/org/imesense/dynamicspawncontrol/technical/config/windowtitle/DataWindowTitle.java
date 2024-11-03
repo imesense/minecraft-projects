@@ -27,13 +27,14 @@ public final class DataWindowTitle
         /**
          *
          */
-        public static ConfigDataWindowTitle instance;
+        public static ConfigDataWindowTitle Instance;
 
         /**
          *
          */
         private String windowTitle =
-                String.format("Minecraft: %s + %s", ProjectStructure.STRUCT_INFO_MOD.VERSION, ProjectStructure.STRUCT_INFO_MOD.NAME);
+                String.format("Minecraft: %s + %s",
+                        ProjectStructure.STRUCT_INFO_MOD.VERSION, ProjectStructure.STRUCT_INFO_MOD.NAME);
 
         /**
          *

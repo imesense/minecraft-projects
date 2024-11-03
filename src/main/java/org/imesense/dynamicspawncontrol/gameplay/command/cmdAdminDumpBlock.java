@@ -46,61 +46,66 @@ public final class CmdAdminDumpBlock extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_dump_block";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
-        if (sender instanceof EntityPlayerMP)
+        if (iCommandSender instanceof EntityPlayerMP)
         {
-            EntityPlayerMP player = (EntityPlayerMP) sender;
-            RayTraceResult result = RayTrace.getMovingObjectPositionFromPlayer(player.getEntityWorld(), player, false);
+            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) iCommandSender;
+            RayTraceResult rayTraceResult =
+                    RayTrace.getMovingObjectPositionFromPlayer(entityPlayerMP.getEntityWorld(), entityPlayerMP, false);
 
-            if (result != null && result.typeOfHit == RayTraceResult.Type.BLOCK)
+            if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK)
             {
-                BlockPos blockPos = result.getBlockPos();
-                IBlockState state = player.getEntityWorld().getBlockState(blockPos);
-                int blockId = Block.getIdFromBlock(state.getBlock());
+                BlockPos blockPos = rayTraceResult.getBlockPos();
+                IBlockState iBlockState = entityPlayerMP.getEntityWorld().getBlockState(blockPos);
+                int blockId = Block.getIdFromBlock(iBlockState.getBlock());
 
-                sender.sendMessage(new TextComponentString(TextFormatting.GOLD + "Block ID: " + blockId));
+                iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD + "Block ID: " + blockId));
+
                 Log.writeDataToLogFile(0, "Block ID: " + blockId);
-                sender.sendMessage(new TextComponentString(TextFormatting.GOLD + Objects.requireNonNull(state.getBlock().getRegistryName()).toString()));
-                Log.writeDataToLogFile(0, Objects.requireNonNull(state.getBlock().getRegistryName()).toString());
 
-                for (IProperty<?> key : state.getPropertyKeys())
+                iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD +
+                        Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString()));
+
+                Log.writeDataToLogFile(0, Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString());
+
+                for (IProperty<?> key : iBlockState.getPropertyKeys())
                 {
-                    String value = state.getValue(key).toString();
-                    sender.sendMessage(new TextComponentString("State: " + key.getName() + " = " + value));
-                    Log.writeDataToLogFile(0, "State: " + key.getName() + " = " + value);
+                    String getString = iBlockState.getValue(key).toString();
+                    iCommandSender.sendMessage(new TextComponentString("State: " + key.getName() + " = " + getString));
+                    Log.writeDataToLogFile(0, "State: " + key.getName() + " = " + getString);
                 }
 
-                TileEntity tileEntity = player.getEntityWorld().getTileEntity(blockPos);
+                TileEntity tileEntity = entityPlayerMP.getEntityWorld().getTileEntity(blockPos);
 
                 if (tileEntity != null)
                 {
-                    NBTTagCompound nbt = tileEntity.writeToNBT(new NBTTagCompound());
-                    sender.sendMessage(new TextComponentString("NBT Tags: " + nbt));
-                    Log.writeDataToLogFile(0, "NBT Tags: " + nbt);
+                    NBTTagCompound nbtTagCompound = tileEntity.writeToNBT(new NBTTagCompound());
+                    iCommandSender.sendMessage(new TextComponentString("NBT Tags: " + nbtTagCompound));
+                    Log.writeDataToLogFile(0, "NBT Tags: " + nbtTagCompound);
                 }
             }
         }
         else
         {
-            sender.sendMessage(new TextComponentString(TextFormatting.RED + "This command can only be used by players!"));
+            iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED + "This command can only be used by players!"));
         }
     }
 }

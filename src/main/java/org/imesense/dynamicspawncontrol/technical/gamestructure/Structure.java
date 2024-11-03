@@ -45,8 +45,10 @@ public final class Structure
     public boolean isInStructure(World world, String structure, BlockPos blockPos)
     {
         int dimension = world.provider.getDimension();
-        ChunkPos objectChunkPos = new ChunkPos(blockPos);
-        long longChunkPos = ChunkPos.asLong(objectChunkPos.x, objectChunkPos.z);
+
+        ChunkPos chunkPos = new ChunkPos(blockPos);
+
+        long longChunkPos = ChunkPos.asLong(chunkPos.x, chunkPos.z);
         StructureEntry entry = new StructureEntry(structure, dimension, longChunkPos);
 
         if (STRUCTURE_HASH.containsKey(entry))
@@ -54,14 +56,15 @@ public final class Structure
             return STRUCTURE_HASH.get(entry);
         }
 
-        MapGenStructureData data = (MapGenStructureData) world.getPerWorldStorage().getOrLoadData(MapGenStructureData.class, structure);
+        MapGenStructureData mapGenStructureData =
+                (MapGenStructureData) world.getPerWorldStorage().getOrLoadData(MapGenStructureData.class, structure);
 
-        if (data == null)
+        if (mapGenStructureData == null)
         {
             return false;
         }
 
-        Set<Long> longs = parseStructureData(data);
+        Set<Long> longs = parseStructureData(mapGenStructureData);
 
         for (Long _long : longs)
         {
@@ -81,26 +84,26 @@ public final class Structure
 
     /**
      *
-     * @param data
+     * @param mapGenStructureData
      * @return
      */
-    private static Set<Long> parseStructureData(MapGenStructureData data)
+    private static Set<Long> parseStructureData(MapGenStructureData mapGenStructureData)
     {
         Set<Long> chunks = new HashSet<>();
-        NBTTagCompound nbttagcompound = data.getTagCompound();
+        NBTTagCompound nbtTagCompound = mapGenStructureData.getTagCompound();
 
-        for (String _getStringNBT : nbttagcompound.getKeySet())
+        for (String getStringNBT : nbtTagCompound.getKeySet())
         {
-            NBTBase nbtbase = nbttagcompound.getTag(_getStringNBT);
+            NBTBase nbtbase = nbtTagCompound.getTag(getStringNBT);
 
             if (nbtbase.getId() == 10)
             {
-                NBTTagCompound _nbtBase = (NBTTagCompound) nbtbase;
+                NBTTagCompound nbtTagCompound1 = (NBTTagCompound) nbtbase;
 
-                if (_nbtBase.hasKey("ChunkX") && _nbtBase.hasKey("ChunkZ"))
+                if (nbtTagCompound1.hasKey("ChunkX") && nbtTagCompound1.hasKey("ChunkZ"))
                 {
-                    int i = _nbtBase.getInteger("ChunkX");
-                    int j = _nbtBase.getInteger("ChunkZ");
+                    int i = nbtTagCompound1.getInteger("ChunkX");
+                    int j = nbtTagCompound1.getInteger("ChunkZ");
 
                     chunks.add(ChunkPos.asLong(i, j));
                 }

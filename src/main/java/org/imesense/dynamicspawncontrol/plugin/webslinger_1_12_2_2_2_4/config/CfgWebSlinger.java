@@ -32,7 +32,7 @@ public final class CfgWebSlinger extends CfgClassAbstract
 
         CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataWebSlinger.ConfigDataSpiderAttackWeb.instance =
+        DataWebSlinger.ConfigDataSpiderAttackWeb.Instance =
                 new DataWebSlinger.ConfigDataSpiderAttackWeb("webslinger_1_12_2_2_2_4");
 
         //entityIdPriorityMap = new HashMap<>();
@@ -72,28 +72,28 @@ public final class CfgWebSlinger extends CfgClassAbstract
         JsonObject jsonObjectWeb = new JsonObject();
 
         jsonObjectWeb.addProperty("block_web_replacement",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getBlockWebReplacement());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getBlockWebReplacement());
 
         jsonObjectWeb.addProperty("web_melee_chance",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getWebMeleeChance());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getWebMeleeChance());
 
         jsonObjectWeb.addProperty("sling_coolDown",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingCoolDown());
 
         jsonObjectWeb.addProperty("sling_inaccuracy",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingInaccuracy());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingInaccuracy());
 
         jsonObjectWeb.addProperty("sling_variance",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingVariance());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingVariance());
 
         jsonObjectWeb.addProperty("sling_webbing",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingWebbing());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingWebbing());
 
         jsonObjectWeb.addProperty("sling_webbing_on_web",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingWebbingOnWeb());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingWebbingOnWeb());
 
         jsonObjectWeb.addProperty("ai_priority_sling_webs",
-                DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getAIPrioritySlingWebs());
+                DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getAIPrioritySlingWebs());
 
         //JsonArray EntityIdsNameArray = new JsonArray();
 
@@ -105,7 +105,7 @@ public final class CfgWebSlinger extends CfgClassAbstract
         //jsonObjectWeb.add("entity_to_attack_web", EntityIdsNameArray);
 
         JsonArray entityIdPriorityArray = new JsonArray();
-        for (Map.Entry<String, Integer> entry : DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getEntityIdPriorityMap().entrySet()) {
+        for (Map.Entry<String, Integer> entry : DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getEntityIdPriorityMap().entrySet()) {
             JsonObject entityObject = new JsonObject();
             entityObject.addProperty("entityId", entry.getKey());
             entityObject.addProperty("priority", entry.getValue());
@@ -114,7 +114,7 @@ public final class CfgWebSlinger extends CfgClassAbstract
 
         jsonObjectWeb.add("entity_to_attack_web", entityIdPriorityArray);
 
-        recordObject.add(DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getCategoryObject(), jsonObjectWeb);
+        recordObject.add(DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getCategoryObject(), jsonObjectWeb);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -139,56 +139,56 @@ public final class CfgWebSlinger extends CfgClassAbstract
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getCategoryObject()))
+            if (readableObject.has(DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectWeb = readableObject.getAsJsonObject(
-                        DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getCategoryObject());
+                        DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getCategoryObject());
 
                 if (jsonObjectWeb.has("block_web_replacement"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setBlockWebReplacement(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setBlockWebReplacement(
                             jsonObjectWeb.get("block_web_replacement").getAsBoolean());
                 }
 
                 if (jsonObjectWeb.has("web_melee_chance"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setWebMeleeChance(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setWebMeleeChance(
                             jsonObjectWeb.get("web_melee_chance").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("sling_coolDown"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setSlingCoolDown(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setSlingCoolDown(
                             jsonObjectWeb.get("sling_coolDown").getAsDouble());
                 }
 
                 if (jsonObjectWeb.has("sling_inaccuracy"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setSlingInaccuracy(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setSlingInaccuracy(
                             jsonObjectWeb.get("sling_inaccuracy").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("sling_variance"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setSlingVariance(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setSlingVariance(
                             jsonObjectWeb.get("sling_variance").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("sling_webbing"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setSlingWebbing(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setSlingWebbing(
                             jsonObjectWeb.get("sling_webbing").getAsBoolean());
                 }
 
                 if (jsonObjectWeb.has("sling_webbing_on_web"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setSlingWebbingOnWeb(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setSlingWebbingOnWeb(
                             jsonObjectWeb.get("sling_webbing_on_web").getAsBoolean());
                 }
 
                 if (jsonObjectWeb.has("ai_priority_sling_webs"))
                 {
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setAIPrioritySlingWebs(
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setAIPrioritySlingWebs(
                             jsonObjectWeb.get("ai_priority_sling_webs").getAsInt());
                 }
 
@@ -203,7 +203,7 @@ public final class CfgWebSlinger extends CfgClassAbstract
                         entityIdPriorityMap.put(entityId, priority);
                     }
 
-                    DataWebSlinger.ConfigDataSpiderAttackWeb.instance.setEntityIdPriorityMap(entityIdPriorityMap);
+                    DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.setEntityIdPriorityMap(entityIdPriorityMap);
                 }
 
                 //if (jsonObjectWeb.has("entity_to_attack_web"))

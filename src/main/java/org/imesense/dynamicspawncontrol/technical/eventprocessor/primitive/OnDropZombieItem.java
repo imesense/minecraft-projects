@@ -45,75 +45,75 @@ public final class OnDropZombieItem
 
     /**
      *
-     * @param event
+     * @param livingDropsEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingDropsEvent_0(LivingDropsEvent event)
+    public synchronized void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
     {
-        if (event.getEntity() instanceof EntityZombie)
+        if (livingDropsEvent.getEntity() instanceof EntityZombie)
         {
-            EntityZombie zombie = (EntityZombie)event.getEntity();
+            EntityZombie entityZombie = (EntityZombie) livingDropsEvent.getEntity();
 
-            List<EntityItem> drops = event.getDrops();
+            List<EntityItem> drops = livingDropsEvent.getDrops();
 
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.getHeadDamageFactor());
+            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
+                    DataZombieDropItem.ConfigDataZombieDrop.Instance.getHeadDamageFactor());
 
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.getChestDamageFactor());
+            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
+                    DataZombieDropItem.ConfigDataZombieDrop.Instance.getChestDamageFactor());
 
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.getLegsDamageFactor());
+            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
+                    DataZombieDropItem.ConfigDataZombieDrop.Instance.getLegsDamageFactor());
 
-            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.FEET),
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.getFeetDamageFactor());
+            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.FEET),
+                    DataZombieDropItem.ConfigDataZombieDrop.Instance.getFeetDamageFactor());
 
-            addDamagedItemToDrops(zombie, drops, zombie.getHeldItemMainhand(),
-                    DataZombieDropItem.ConfigDataZombieDrop.instance.getHandItemDamageFactor());
+            addDamagedItemToDrops(entityZombie, drops, entityZombie.getHeldItemMainhand(),
+                    DataZombieDropItem.ConfigDataZombieDrop.Instance.getHandItemDamageFactor());
         }
     }
 
     /**
      *
-     * @param zombie
+     * @param entityZombie
      * @param drops
      * @param originalItem
      * @param damageFactor
      */
-    private void addDamagedItemToDrops(EntityZombie zombie, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
+    private void addDamagedItemToDrops(EntityZombie entityZombie, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (new Random().nextDouble() < DataZombieDropItem.ConfigDataZombieDrop.instance.getBreakItem())
+            if (new Random().nextDouble() < DataZombieDropItem.ConfigDataZombieDrop.Instance.getBreakItem())
             {
                 return;
             }
 
-            ItemStack damagedItem = originalItem.copy();
-            int maxDamage = damagedItem.getMaxDamage();
+            ItemStack itemStack = originalItem.copy();
+            int maxDamage = itemStack.getMaxDamage();
 
             if (maxDamage > 0)
             {
-                Random rand = new Random();
-                int minDamage = (int)(maxDamage * damageFactor);
+                Random random = new Random();
+                int minDamage = (int) (maxDamage * damageFactor);
 
-                int damageSpread = (int)(maxDamage * DataZombieDropItem.ConfigDataZombieDrop.instance.getDamageSpreadFactor());
-                int randomDamage = minDamage + rand.nextInt(damageSpread);
+                int damageSpread = (int) (maxDamage * DataZombieDropItem.ConfigDataZombieDrop.Instance.getDamageSpreadFactor());
+                int randomDamage = minDamage + random.nextInt(damageSpread);
 
-                damagedItem.setItemDamage(randomDamage);
+                itemStack.setItemDamage(randomDamage);
             }
 
             for (EntityItem item : drops)
             {
-                ItemStack stack = item.getItem();
+                ItemStack itemStack1 = item.getItem();
 
-                if (stack.isItemEqualIgnoreDurability(damagedItem))
+                if (itemStack1.isItemEqualIgnoreDurability(itemStack))
                 {
                     return;
                 }
             }
 
-            drops.add(new EntityItem(zombie.world, zombie.posX, zombie.posY, zombie.posZ, damagedItem));
+            drops.add(new EntityItem(entityZombie.world, entityZombie.posX, entityZombie.posY, entityZombie.posZ, itemStack));
         }
     }
 }

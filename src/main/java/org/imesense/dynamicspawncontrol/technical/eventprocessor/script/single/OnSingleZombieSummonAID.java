@@ -59,47 +59,51 @@ public final class OnSingleZombieSummonAID
     /**
      *
      * @param world
-     * @param pos
+     * @param blockPos
      * @return
      */
-    public boolean isPositionValid(World world, BlockPos pos)
+    public boolean isPositionValid(World world, BlockPos blockPos)
     {
-        IBlockState state = world.getBlockState(pos);
-        return state.getBlock().isAir(state, world, pos) && world.getBlockState(pos.down()).getBlock().isFullBlock(state);
+        IBlockState iBlockState = world.getBlockState(blockPos);
+
+        return iBlockState.getBlock().isAir(iBlockState, world, blockPos) &&
+                world.getBlockState(blockPos.down()).getBlock().isFullBlock(iBlockState);
     }
 
     /**
      *
      * @param world
-     * @param originalPos
+     * @param blockPos
      * @param maxAttempts
      * @return
      */
-    public BlockPos findValidSpawnPosition(World world, BlockPos originalPos, int maxAttempts)
+    public BlockPos findValidSpawnPosition(World world, BlockPos blockPos, int maxAttempts)
     {
         Random random = new Random();
 
         for (int i = 0; i < maxAttempts; i++)
         {
-            BlockPos potentialPos = originalPos.add((random.nextDouble() - 0.5) * 25.0, 0, (random.nextDouble() - 0.5) * 25.0);
-            if (isPositionValid(world, potentialPos))
+            BlockPos blockPos1 =
+                    blockPos.add((random.nextDouble() - 0.50) * 25.00, 0, (random.nextDouble() - 0.50) * 25.00);
+
+            if (isPositionValid(world, blockPos1))
             {
-                return potentialPos;
+                return blockPos1;
             }
         }
 
-        return originalPos;
+        return blockPos;
     }
 
     /**
      *
      * @param world
-     * @param pos
+     * @param blockPos
      * @param width
      * @param height
      * @return
      */
-    public boolean hasSufficientSpace(World world, BlockPos pos, int width, int height)
+    public boolean hasSufficientSpace(World world, BlockPos blockPos, int width, int height)
     {
         for (int x = -width / 2; x <= width / 2; x++)
         {
@@ -107,7 +111,7 @@ public final class OnSingleZombieSummonAID
             {
                 for (int y = 0; y < height; y++)
                 {
-                    BlockPos checkPos = pos.add(x, y, z);
+                    BlockPos checkPos = blockPos.add(x, y, z);
 
                     if (!world.getBlockState(checkPos).getBlock().isAir(world.getBlockState(checkPos), world, checkPos))
                     {
@@ -122,92 +126,93 @@ public final class OnSingleZombieSummonAID
 
     /**
      *
-     * @param event
+     * @param livingAttackEvent
      */
     @SubscribeEvent
-    public synchronized void onZombieAttack_0(LivingAttackEvent event)
+    public synchronized void onZombieAttack_0(LivingAttackEvent livingAttackEvent)
     {
-        if (event.getEntityLiving() instanceof EntityZombie)
+        if (livingAttackEvent.getEntityLiving() instanceof EntityZombie)
         {
-            EntityZombie zombie = (EntityZombie) event.getEntityLiving();
+            EntityZombie entityZombie = (EntityZombie) livingAttackEvent.getEntityLiving();
 
-            EntityLivingBase attacker = null;
-            if (event.getSource().getTrueSource() instanceof EntityLivingBase)
-            {
-                attacker = (EntityLivingBase) event.getSource().getTrueSource();
-            }
-
-            if (attacker == null)
-            {
-                return;
-            }
-
-            World world = zombie.world;
+            World world = entityZombie.world;
 
             if (world.isRemote)
             {
                 return;
             }
 
-            if (spawnedZombies.contains(event.getEntity().getUniqueID()))
+            EntityLivingBase entityLivingBase = null;
+
+            if (livingAttackEvent.getSource().getTrueSource() instanceof EntityLivingBase)
+            {
+                entityLivingBase = (EntityLivingBase) livingAttackEvent.getSource().getTrueSource();
+            }
+
+            if (entityLivingBase == null)
             {
                 return;
             }
 
-            if (processedZombies.contains(event.getEntity().getUniqueID()))
+            if (spawnedZombies.contains(livingAttackEvent.getEntity().getUniqueID()))
+            {
+                return;
+            }
+
+            if (processedZombies.contains(livingAttackEvent.getEntity().getUniqueID()))
             {
                 return;
             }
 
             Random random = new Random();
 
-            BlockPos spawnPos =
-                    zombie.getPosition().add((random.nextDouble() - 0.5) * 5.0, 0, (random.nextDouble() - 0.5) * 5.0);
+            BlockPos blockPos =
+                    entityZombie.getPosition().add((random.nextDouble() - 0.50) * 5.00, 0.00, (random.nextDouble() - 0.50) * 5.00);
 
-            spawnPos = findValidSpawnPosition(world, spawnPos, 10);
+            blockPos = findValidSpawnPosition(world, blockPos, 10);
 
-            if (hasSufficientSpace(world, spawnPos, 2, 3))
+            if (hasSufficientSpace(world, blockPos, 2, 3))
             {
-                EntityZombie newZombie = new EntityZombie(world);
-                newZombie.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+                EntityZombie entityZombie1 = new EntityZombie(world);
+                entityZombie1.setPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ());
 
-                GeneralStorageData parser = GeneralStorageData.instance;
+                GeneralStorageData generalStorageData = GeneralStorageData.Instance;
 
-                if (parser != null)
+                if (generalStorageData != null)
                 {
-                    List<GeneralStorageData.Equipment> configs = parser.getEquipmentConfigs();
+                    List<GeneralStorageData.Equipment> configs = generalStorageData.getEquipmentConfigs();
 
                     if (configs != null && !configs.isEmpty())
                     {
                         GeneralStorageData.Equipment selectedConfig = getConfigByPriority(configs, random);
 
-                        equipZombie(newZombie, selectedConfig.HeldItems, EntityEquipmentSlot.MAINHAND, random);
-                        equipZombie(newZombie, selectedConfig.Helmets, EntityEquipmentSlot.HEAD, random);
-                        equipZombie(newZombie, selectedConfig.ChestPlates, EntityEquipmentSlot.CHEST, random);
-                        equipZombie(newZombie, selectedConfig.Leggings, EntityEquipmentSlot.LEGS, random);
-                        equipZombie(newZombie, selectedConfig.Boots, EntityEquipmentSlot.FEET, random);
+                        equipZombie(entityZombie1, selectedConfig.HeldItems, EntityEquipmentSlot.MAINHAND, random);
+                        equipZombie(entityZombie1, selectedConfig.Helmets, EntityEquipmentSlot.HEAD, random);
+                        equipZombie(entityZombie1, selectedConfig.ChestPlates, EntityEquipmentSlot.CHEST, random);
+                        equipZombie(entityZombie1, selectedConfig.Leggings, EntityEquipmentSlot.LEGS, random);
+                        equipZombie(entityZombie1, selectedConfig.Boots, EntityEquipmentSlot.FEET, random);
                     }
                 }
 
-                processedZombies.add(event.getEntity().getUniqueID());
+                processedZombies.add(livingAttackEvent.getEntity().getUniqueID());
 
-                world.spawnEntity(newZombie);
+                world.spawnEntity(entityZombie1);
 
-                spawnedZombies.add(newZombie.getUniqueID());
+                spawnedZombies.add(entityZombie1.getUniqueID());
 
-                newZombie.setAttackTarget(attacker);
+                entityZombie1.setAttackTarget(entityLivingBase);
             }
         }
     }
 
     /**
      *
-     * @param zombie
+     * @param entityZombie
      * @param items
-     * @param slot
+     * @param entityEquipmentSlot
      * @param random
      */
-    private void equipZombie(EntityZombie zombie, List<String> items, EntityEquipmentSlot slot, Random random)
+    private void equipZombie(EntityZombie entityZombie, List<String> items, EntityEquipmentSlot entityEquipmentSlot, Random random)
     {
         if (items != null && !items.isEmpty())
         {
@@ -216,7 +221,7 @@ public final class OnSingleZombieSummonAID
 
             if (itemStack.getItem() != Items.AIR)
             {
-                zombie.setItemStackToSlot(slot, itemStack);
+                entityZombie.setItemStackToSlot(entityEquipmentSlot, itemStack);
             }
             else
             {
@@ -228,18 +233,18 @@ public final class OnSingleZombieSummonAID
 
     /**
      *
-     * @param configs
+     * @param equipmentList
      * @param random
      * @return
      */
-    private GeneralStorageData.Equipment getConfigByPriority(List<GeneralStorageData.Equipment> configs, Random random)
+    private GeneralStorageData.Equipment getConfigByPriority(List<GeneralStorageData.Equipment> equipmentList, Random random)
     {
-        int totalPriority = configs.stream().mapToInt(config -> config.Priority).sum();
+        int totalPriority = equipmentList.stream().mapToInt(config -> config.Priority).sum();
         int randomValue = random.nextInt(totalPriority);
 
         int cumulativePriority = 0;
 
-        for (GeneralStorageData.Equipment config : configs)
+        for (GeneralStorageData.Equipment config : equipmentList)
         {
             cumulativePriority += config.Priority;
 
@@ -249,6 +254,6 @@ public final class OnSingleZombieSummonAID
             }
         }
 
-        return configs.get(configs.size() - 1);
+        return equipmentList.get(equipmentList.size() - 1);
     }
 }

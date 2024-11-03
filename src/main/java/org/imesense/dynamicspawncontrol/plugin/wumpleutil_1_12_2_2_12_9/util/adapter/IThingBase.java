@@ -22,26 +22,26 @@ public interface IThingBase extends ICapabilityProvider
    /**
     *
     * @param capability
-    * @param facing
+    * @param enumFacing
     * @return
     */
-   default boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
+   default boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing enumFacing)
    {
-      ICapabilityProvider provider = this.capProvider();
-      return provider != null && provider.hasCapability(capability, facing);
+      ICapabilityProvider iCapabilityProvider = this.capProvider();
+      return iCapabilityProvider != null && iCapabilityProvider.hasCapability(capability, enumFacing);
    }
 
    /**
     *
     * @param capability
-    * @param facing
+    * @param enumFacing
     * @return
     * @param <T>
     */
    @Nullable
-   default <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
+   default <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing enumFacing)
    {
-      ICapabilityProvider provider = this.capProvider();
-      return provider != null ? provider.getCapability(capability, facing) : null;
+      ICapabilityProvider iCapabilityProvider = this.capProvider();
+      return iCapabilityProvider != null ? iCapabilityProvider.getCapability(capability, enumFacing) : null;
    }
 }

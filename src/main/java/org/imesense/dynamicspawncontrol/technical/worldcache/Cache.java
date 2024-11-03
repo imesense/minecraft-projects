@@ -32,7 +32,7 @@ public final class Cache
     /**
      *
      */
-    public static Cache instance;
+    public static Cache Instance;
 
     /**
      *
@@ -52,7 +52,7 @@ public final class Cache
     /**
      *
      */
-    public volatile int DynamicUpdateInterval = 1200;
+    public volatile int _DYNAMIC_UPDATE_INTERVAL = 1200;
 
     /**
      *
@@ -62,12 +62,12 @@ public final class Cache
     /**
      *
      */
-    public boolean isFirstUpdate = true;
+    public boolean IsFirstUpdate = true;
 
     /**
      *
      */
-    public boolean isPrimaryPlayerLogged = false;
+    public boolean IsPrimaryPlayerLogged = false;
 
     /**
      *
@@ -139,7 +139,7 @@ public final class Cache
 
         instanceExists = true;
 
-        instance = this;
+        Instance = this;
     }
 
     /**
@@ -154,9 +154,9 @@ public final class Cache
         {
             WorldServer worldServer = (WorldServer) world;
 
-            for (EntityPlayer player : world.playerEntities)
+            for (EntityPlayer entityPlayer : world.playerEntities)
             {
-                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, (EntityPlayerMP) player);
+                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, (EntityPlayerMP) entityPlayer);
                 CACHE_VALID_CHUNKS.addAll(validChunks);
             }
         }
@@ -165,7 +165,7 @@ public final class Cache
         {
             if (entity instanceof EntityLivingBase)
             {
-                EntityLivingBase livingEntity = (EntityLivingBase) entity;
+                EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
 
                 if (CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
                 {
@@ -181,18 +181,19 @@ public final class Cache
                         }
                     }
 
-                    CACHED_ACTUAL_ALL.add(livingEntity);
+                    CACHED_ACTUAL_ALL.add(entityLivingBase);
 
                     String entityName = entity.getName();
 
                     ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
-                            new HashSet<>()).add(livingEntity);
+                            new HashSet<>()).add(entityLivingBase);
 
-                    ResourceLocation entityKey = EntityList.getKey(entity);
-                    if (entityKey != null)
+                    ResourceLocation resourceLocation = EntityList.getKey(entity);
+
+                    if (resourceLocation != null)
                     {
-                        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(entityKey, k ->
-                                new HashSet<>()).add(livingEntity);
+                        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k ->
+                                new HashSet<>()).add(entityLivingBase);
                     }
                 }
             }
@@ -202,18 +203,18 @@ public final class Cache
     /**
      *
      * @param worldServer
-     * @param player
+     * @param entityPlayerMP
      * @return
      */
-    private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayerMP player)
+    private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayerMP entityPlayerMP)
     {
         Set<ChunkPos> validChunks = new HashSet<>();
 
         int viewDistance =
                 Objects.requireNonNull(worldServer.getMinecraftServer()).getPlayerList().getViewDistance();
 
-        int playerChunkX = MathHelper.floor(player.posX) >> 4;
-        int playerChunkZ = MathHelper.floor(player.posZ) >> 4;
+        int playerChunkX = MathHelper.floor(entityPlayerMP.posX) >> 4;
+        int playerChunkZ = MathHelper.floor(entityPlayerMP.posZ) >> 4;
 
         for (int x = playerChunkX - viewDistance; x <= playerChunkX + viewDistance; x++)
         {

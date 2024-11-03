@@ -15,7 +15,7 @@ public final class DataBlockWorldGenerator
         /**
          *
          */
-        public static InfoDataBlockNetherRack instance;
+        public static InfoDataBlockNetherRack Instance;
 
         /**
          *
@@ -35,7 +35,7 @@ public final class DataBlockWorldGenerator
         /**
          *
          */
-        public static InfoDataBlockMossyCobblestone instance;
+        public static InfoDataBlockMossyCobblestone Instance;
 
         /**
          *
@@ -55,7 +55,7 @@ public final class DataBlockWorldGenerator
         /**
          *
          */
-        public static InfoDataBlockBlockMonsterEgg instance;
+        public static InfoDataBlockBlockMonsterEgg Instance;
 
         /**
          *

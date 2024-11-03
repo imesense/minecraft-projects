@@ -3,13 +3,14 @@ package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.ha
 import java.util.Calendar;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.Numbers;
-import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataPluginWorldTime;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 
@@ -26,7 +27,7 @@ public final class TimeHandlerServer implements ITimeHandler
     /**
      *
      */
-    private double multiplier = 0.0;
+    private double multiplier = 0.00;
 
     /**
      *
@@ -52,9 +53,10 @@ public final class TimeHandlerServer implements ITimeHandler
     @Override
     public void tick(World world)
     {
-        if (DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
+        if (DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime())
         {
-            if (!world.isRemote && world.getMinecraftServer().getTickCounter() % DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTimeRate() == 0)
+            if (!world.isRemote && Objects.requireNonNull(world.getMinecraftServer()).getTickCounter() %
+                    DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTimeRate() == 0)
             {
                 this.syncTimeWithSystem(world);
             }
@@ -74,7 +76,8 @@ public final class TimeHandlerServer implements ITimeHandler
 
             try
             {
-                if (world instanceof WorldServer && ((WorldServer)world).areAllPlayersAsleep())
+                if (world instanceof WorldServer &&
+                        ((WorldServer)world).areAllPlayersAsleep())
                 {
                     updatedWorldTime = worldTime + 24000L;
                     updatedWorldTime -= updatedWorldTime % 24000L;
@@ -97,11 +100,11 @@ public final class TimeHandlerServer implements ITimeHandler
 
             Numbers.setWorldTime(world, this.customTime, this.multiplier);
 
-            if (world.getMinecraftServer().getTickCounter() % 20 == 0)
+            if (Objects.requireNonNull(world.getMinecraftServer()).getTickCounter() % 20 == 0)
             {
-                MessageHandler.instance.sendToAll(new PacketTime(this.customTime, this.multiplier));
+                MessageHandler.Instance.sendToAll(new PacketTime(this.customTime, this.multiplier));
 
-                if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug())
+                if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug())
                 {
                     updatedWorldTime = world.getWorldTime();
 
@@ -131,7 +134,7 @@ public final class TimeHandlerServer implements ITimeHandler
     @Override
     public void update(long customTime, double multiplier)
     {
-        MessageHandler.instance.sendToAll(new PacketTime(customTime, multiplier));
+        MessageHandler.Instance.sendToAll(new PacketTime(customTime, multiplier));
 
         this.customTime = customTime;
         this.multiplier = multiplier;
@@ -144,6 +147,7 @@ public final class TimeHandlerServer implements ITimeHandler
     private void syncTimeWithSystem(World world)
     {
         Calendar calendar = Calendar.getInstance();
+
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
@@ -156,9 +160,10 @@ public final class TimeHandlerServer implements ITimeHandler
 
             world.provider.setWorldTime(time);
 
-            if (DataPluginWorldTime.ConfigDataWorldTime.instance.getTimeControlDebug())
+            if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug())
             {
-                Log.writeDataToLogFile(0, String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
+                Log.writeDataToLogFile(0, String.format("System time update: %d -> %d | day %s, %s:%s",
+                        worldTime, time, calendar.get(Calendar.DAY_OF_YEAR), hour, minute));
             }
         }
     }

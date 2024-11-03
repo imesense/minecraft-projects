@@ -26,7 +26,7 @@ public final class DataWebSlinger
         /**
          *
          */
-        public static ConfigDataSpiderAttackWeb instance;
+        public static ConfigDataSpiderAttackWeb Instance;
 
         /**
          *
@@ -41,7 +41,7 @@ public final class DataWebSlinger
         /**
          *
          */
-        private Double slingCoolDown = 45.0;
+        private Double slingCoolDown = 45.00;
 
         /**
          *

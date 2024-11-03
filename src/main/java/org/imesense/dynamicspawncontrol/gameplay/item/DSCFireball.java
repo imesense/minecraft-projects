@@ -18,7 +18,7 @@ public final class DSCFireball extends EntityFireball
     /**
      *
      */
-    private double explosionStrength = 1.0;
+    private double explosionStrength = 1.00;
 
     /**
      *
@@ -28,10 +28,10 @@ public final class DSCFireball extends EntityFireball
         /**
          *
          * @param world
-         * @param explosionPos
+         * @param blockPos
          * @param radius
          */
-        void spawnFire(World world, BlockPos explosionPos, int radius);
+        void spawnFire(World world, BlockPos blockPos, int radius);
     }
 
     /**
@@ -61,14 +61,14 @@ public final class DSCFireball extends EntityFireball
     /**
      *
      * @param worldIn
-     * @param shooter
+     * @param entityLivingBase
      * @param accelX
      * @param accelY
      * @param accelZ
      */
-    public DSCFireball(World worldIn, EntityLivingBase shooter, double accelX, double accelY, double accelZ)
+    public DSCFireball(World worldIn, EntityLivingBase entityLivingBase, double accelX, double accelY, double accelZ)
     {
-        super(worldIn, shooter, accelX, accelY, accelZ);
+        super(worldIn, entityLivingBase, accelX, accelY, accelZ);
     }
 
     /**
@@ -82,10 +82,10 @@ public final class DSCFireball extends EntityFireball
 
     /**
      *
-     * @param result
+     * @param rayTraceResult
      */
     @Override
-    protected void onImpact(@Nonnull RayTraceResult result)
+    protected void onImpact(@Nonnull RayTraceResult rayTraceResult)
     {
         if (!this.world.isRemote)
         {

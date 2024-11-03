@@ -46,24 +46,24 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public ListActionBinary(AttributeMap<?> map)
+    public ListActionBinary(AttributeMap<?> attributeMap)
     {
-        this.CreateListActions(map);
+        this.CreateListActions(attributeMap);
     }
 
     /**
      *
      * @param event
-     * @param query
+     * @param signalDataAccessor
      * @return
      */
-    public boolean match(Event event, SignalDataAccessor<T> query)
+    public boolean match(Event event, SignalDataAccessor<T> signalDataAccessor)
     {
         for (BiFunction<Event, SignalDataAccessor, Boolean> rule : this.ARRAY_LIST)
         {
-            if (!rule.apply(event, query))
+            if (!rule.apply(event, signalDataAccessor))
             {
                 return false;
             }
@@ -74,278 +74,278 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void CreateListActions(AttributeMap<?> map)
+    public void CreateListActions(AttributeMap<?> attributeMap)
     {
-        if (map.has(SEE_SKY))
+        if (attributeMap.has(SEE_SKY))
         {
-            this.addSeeSkyCheck(map);
+            this.addSeeSkyCheck(attributeMap);
         }
 
-        if (map.has(CAN_SPAWN_HERE))
+        if (attributeMap.has(CAN_SPAWN_HERE))
         {
-            this.addCanSpawnHereCheck(map);
+            this.addCanSpawnHereCheck(attributeMap);
         }
 
-        if (map.has(NOT_COLLIDING))
+        if (attributeMap.has(NOT_COLLIDING))
         {
-            this.addNotCollidingCheck(map);
+            this.addNotCollidingCheck(attributeMap);
         }
 
-        if (map.has(SPAWNER))
+        if (attributeMap.has(SPAWNER))
         {
-            this.addSpawnerCheck(map);
+            this.addSpawnerCheck(attributeMap);
         }
 
-        if (map.has(WEATHER))
+        if (attributeMap.has(WEATHER))
         {
-            this.addWeatherCheck(map);
+            this.addWeatherCheck(attributeMap);
         }
 
-        if (map.has(BIOMES))
+        if (attributeMap.has(BIOMES))
         {
-            addBiomesCheck(map);
+            addBiomesCheck(attributeMap);
         }
 
-        if (map.has(BIOMES_TYPE))
+        if (attributeMap.has(BIOMES_TYPE))
         {
-            this.addBiomesTypesCheck(map);
+            this.addBiomesTypesCheck(attributeMap);
         }
 
-        if (map.has(STRUCTURE))
+        if (attributeMap.has(STRUCTURE))
         {
-            this.addStructureCheck(map);
+            this.addStructureCheck(attributeMap);
         }
 
-        if (map.has(DIMENSION))
+        if (attributeMap.has(DIMENSION))
         {
-            this.addDimensionCheck(map);
+            this.addDimensionCheck(attributeMap);
         }
 
-        if (map.has(HELMET))
+        if (attributeMap.has(HELMET))
         {
-            this.addHelmetCheck(map);
+            this.addHelmetCheck(attributeMap);
         }
 
-        if (map.has(CHEST_PLATE))
+        if (attributeMap.has(CHEST_PLATE))
         {
-            this.addChestPlateCheck(map);
+            this.addChestPlateCheck(attributeMap);
         }
 
-        if (map.has(LEGGINGS))
+        if (attributeMap.has(LEGGINGS))
         {
-            this.addLeggingsCheck(map);
+            this.addLeggingsCheck(attributeMap);
         }
 
-        if (map.has(BOOTS))
+        if (attributeMap.has(BOOTS))
         {
-            this.addBootsCheck(map);
+            this.addBootsCheck(attributeMap);
         }
 
-        if (map.has(MIN_TIME))
+        if (attributeMap.has(MIN_TIME))
         {
-            this.addMinTimeCheck(map);
+            this.addMinTimeCheck(attributeMap);
         }
 
-        if (map.has(MAX_TIME))
+        if (attributeMap.has(MAX_TIME))
         {
-            this.addMaxTimeCheck(map);
+            this.addMaxTimeCheck(attributeMap);
         }
 
-        if (map.has(MIN_LIGHT))
+        if (attributeMap.has(MIN_LIGHT))
         {
-            this.addMinLightCheck(map);
+            this.addMinLightCheck(attributeMap);
         }
 
-        if (map.has(MAX_LIGHT))
+        if (attributeMap.has(MAX_LIGHT))
         {
-            this.addMaxLightCheck(map);
+            this.addMaxLightCheck(attributeMap);
         }
 
-        if (map.has(MIN_HEIGHT))
+        if (attributeMap.has(MIN_HEIGHT))
         {
-            this.addMinHeightCheck(map);
+            this.addMinHeightCheck(attributeMap);
         }
 
-        if (map.has(MAX_HEIGHT))
+        if (attributeMap.has(MAX_HEIGHT))
         {
-            this.addMaxHeightCheck(map);
+            this.addMaxHeightCheck(attributeMap);
         }
 
-        if (map.has(DIFFICULTY))
+        if (attributeMap.has(DIFFICULTY))
         {
-            this.addDifficultyCheck(map);
+            this.addDifficultyCheck(attributeMap);
         }
 
-        if (map.has(MIN_DIFFICULTY))
+        if (attributeMap.has(MIN_DIFFICULTY))
         {
-            this.addMinAdditionalDifficultyCheck(map);
+            this.addMinAdditionalDifficultyCheck(attributeMap);
         }
 
-        if (map.has(MAX_DIFFICULTY))
+        if (attributeMap.has(MAX_DIFFICULTY))
         {
-            this.addMaxAdditionalDifficultyCheck(map);
+            this.addMaxAdditionalDifficultyCheck(attributeMap);
         }
 
-        if (map.has(MIN_SPAWN_DIST))
+        if (attributeMap.has(MIN_SPAWN_DIST))
         {
-            this.addMinSpawnDistCheck(map);
+            this.addMinSpawnDistCheck(attributeMap);
         }
 
-        if (map.has(MAX_SPAWN_DIST))
+        if (attributeMap.has(MAX_SPAWN_DIST))
         {
-            this.addMaxSpawnDistCheck(map);
+            this.addMaxSpawnDistCheck(attributeMap);
         }
 
-        if (map.has(BLOCK))
+        if (attributeMap.has(BLOCK))
         {
-            this.addBlocksCheck(map);
+            this.addBlocksCheck(attributeMap);
         }
 
-        if (map.has(GET_MOON_PHASE))
+        if (attributeMap.has(GET_MOON_PHASE))
         {
-            this.addCheckMoonPhase(map);
+            this.addCheckMoonPhase(attributeMap);
         }
 
-        if (map.has(GET_CURRENT_GAME_DAY_EQUAL))
+        if (attributeMap.has(GET_CURRENT_GAME_DAY_EQUAL))
         {
-            this.addCheckCurrentGameDayEqual(map);
+            this.addCheckCurrentGameDayEqual(attributeMap);
         }
 
-        if (map.has(GET_CURRENT_GAME_DAY_GREATER))
+        if (attributeMap.has(GET_CURRENT_GAME_DAY_GREATER))
         {
-            this.addCheckCurrentGameDayGreater(map);
+            this.addCheckCurrentGameDayGreater(attributeMap);
         }
 
-        if (map.has(GET_CURRENT_GAME_DAY_LESS))
+        if (attributeMap.has(GET_CURRENT_GAME_DAY_LESS))
         {
-            this.addCheckCurrentGameDayLess(map);
+            this.addCheckCurrentGameDayLess(attributeMap);
         }
 
-        if (map.has(GET_CURRENT_GAME_DAY_GREATER_OR_EQUAL))
+        if (attributeMap.has(GET_CURRENT_GAME_DAY_GREATER_OR_EQUAL))
         {
-            this.addCheckCurrentGameDayGreaterOrEqual(map);
+            this.addCheckCurrentGameDayGreaterOrEqual(attributeMap);
         }
 
-        if (map.has(GET_CURRENT_GAME_DAY_LESS_OR_EQUAL))
+        if (attributeMap.has(GET_CURRENT_GAME_DAY_LESS_OR_EQUAL))
         {
-            this.addCheckCurrentGameDayLessOrEqual(map);
+            this.addCheckCurrentGameDayLessOrEqual(attributeMap);
         }
 
-        if (map.has(GET_CURRENT_GAME_DAY_INTERVAL))
+        if (attributeMap.has(GET_CURRENT_GAME_DAY_INTERVAL))
         {
-            this.addCheckCurrentGameDayInterval(map);
+            this.addCheckCurrentGameDayInterval(attributeMap);
         }
 
-        if (map.has(MOB))
+        if (attributeMap.has(MOB))
         {
-            this.addMobsCheck(map);
+            this.addMobsCheck(attributeMap);
         }
 
-        if (map.has(ANIMALS))
+        if (attributeMap.has(ANIMALS))
         {
-            this.addInterfaceAnimalsCheck(map);
+            this.addInterfaceAnimalsCheck(attributeMap);
         }
 
-        if (map.has(MONSTERS))
+        if (attributeMap.has(MONSTERS))
         {
-            this.addInterfaceMonstersCheck(map);
+            this.addInterfaceMonstersCheck(attributeMap);
         }
 
-        if (map.has(PLAYER))
+        if (attributeMap.has(PLAYER))
         {
-            this.addPlayerCheck(map);
+            this.addPlayerCheck(attributeMap);
         }
 
-        if (map.has(FAKE_PLAYER))
+        if (attributeMap.has(FAKE_PLAYER))
         {
-            this.addFakePlayerCheck(map);
+            this.addFakePlayerCheck(attributeMap);
         }
 
-        if (map.has(REAL_PLAYER))
+        if (attributeMap.has(REAL_PLAYER))
         {
-            this.addRealPlayerCheck(map);
+            this.addRealPlayerCheck(attributeMap);
         }
 
-        if (map.has(HELD_ITEM))
+        if (attributeMap.has(HELD_ITEM))
         {
-            this.addHeldItemCheck(map, HELD_ITEM);
+            this.addHeldItemCheck(attributeMap, HELD_ITEM);
         }
 
-        if (map.has(PLAYER_HELD_ITEM))
+        if (attributeMap.has(PLAYER_HELD_ITEM))
         {
-            this.addHeldItemCheck(map, PLAYER_HELD_ITEM);
+            this.addHeldItemCheck(attributeMap, PLAYER_HELD_ITEM);
         }
 
-        if (map.has(OFF_HAND_ITEM))
+        if (attributeMap.has(OFF_HAND_ITEM))
         {
-            this.addOffHandItemCheck(map);
+            this.addOffHandItemCheck(attributeMap);
         }
 
-        if (map.has(BOTH_HANDS_ITEM))
+        if (attributeMap.has(BOTH_HANDS_ITEM))
         {
-            this.addBothHandsItemCheck(map);
+            this.addBothHandsItemCheck(attributeMap);
         }
 
-        if (map.has(EXPLOSION))
+        if (attributeMap.has(EXPLOSION))
         {
-            this.addExplosionCheck(map);
+            this.addExplosionCheck(attributeMap);
         }
 
-        if (map.has(PROJECTILE))
+        if (attributeMap.has(PROJECTILE))
         {
-            this.addProjectileCheck(map);
+            this.addProjectileCheck(attributeMap);
         }
 
-        if (map.has(FIRE))
+        if (attributeMap.has(FIRE))
         {
-            this.addFireCheck(map);
+            this.addFireCheck(attributeMap);
         }
 
-        if (map.has(MAGIC))
+        if (attributeMap.has(MAGIC))
         {
-            this.addMagicCheck(map);
+            this.addMagicCheck(attributeMap);
         }
 
-        if (map.has(SOURCE))
+        if (attributeMap.has(SOURCE))
         {
-            this.addSourceCheck(map);
+            this.addSourceCheck(attributeMap);
         }
 
-        if (map.has(RANDOM_KEY_0))
+        if (attributeMap.has(RANDOM_KEY_0))
         {
-            this.addRandomCheck_0(map);
+            this.addRandomCheck_0(attributeMap);
         }
 
-        if (map.has(RANDOM_KEY_1))
+        if (attributeMap.has(RANDOM_KEY_1))
         {
-            this.addRandomCheck_1(map);
+            this.addRandomCheck_1(attributeMap);
         }
 
-        if (map.has(RANDOM_KEY_2))
+        if (attributeMap.has(RANDOM_KEY_2))
         {
-            this.addRandomCheck_2(map);
+            this.addRandomCheck_2(attributeMap);
         }
 
-        if (map.has(RANDOM_KEY_3))
+        if (attributeMap.has(RANDOM_KEY_3))
         {
-            this.addRandomCheck_3(map);
+            this.addRandomCheck_3(attributeMap);
         }
 
-        if (map.has(RANDOM_KEY_4))
+        if (attributeMap.has(RANDOM_KEY_4))
         {
-            this.addRandomCheck_4(map);
+            this.addRandomCheck_4(attributeMap);
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addSeeSkyCheck(AttributeMap<?> map)
+    private void addSeeSkyCheck(AttributeMap<?> attributeMap)
     {
-        Object seeSky = map.get(SEE_SKY);
+        Object seeSky = attributeMap.get(SEE_SKY);
 
         if ((Boolean)seeSky)
         {
@@ -361,11 +361,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCanSpawnHereCheck(AttributeMap<?> map)
+    private void addCanSpawnHereCheck(AttributeMap<?> attributeMap)
     {
-        Object canSpawn = map.get(CAN_SPAWN_HERE);
+        Object canSpawn = attributeMap.get(CAN_SPAWN_HERE);
 
         if ((Boolean)canSpawn)
         {
@@ -403,11 +403,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addNotCollidingCheck(AttributeMap<?> map)
+    private void addNotCollidingCheck(AttributeMap<?> attributeMap)
     {
-        Object notCollidingCheck = map.get(NOT_COLLIDING);
+        Object notCollidingCheck = attributeMap.get(NOT_COLLIDING);
 
         if ((Boolean)notCollidingCheck)
         {
@@ -445,11 +445,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addSpawnerCheck(AttributeMap<?> map)
+    private void addSpawnerCheck(AttributeMap<?> attributeMap)
     {
-        Object spawner = map.get(SPAWNER);
+        Object spawner = attributeMap.get(SPAWNER);
 
         if ((Boolean)spawner)
         {
@@ -485,11 +485,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addBiomesCheck(AttributeMap<?> map)
+    private void addBiomesCheck(AttributeMap<?> attributeMap)
     {
-        List<String> biomes = map.getList(BIOMES);
+        List<String> biomes = attributeMap.getList(BIOMES);
 
         if (biomes.size() == 1)
         {
@@ -515,11 +515,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addBiomesTypesCheck(AttributeMap<?> map)
+    private void addBiomesTypesCheck(AttributeMap<?> attributeMap)
     {
-        List<String> biomesTypes = map.getList(BIOMES_TYPE);
+        List<String> biomesTypes = attributeMap.getList(BIOMES_TYPE);
 
         if (biomesTypes.size() == 1)
         {
@@ -537,9 +537,9 @@ public final class ListActionBinary<T extends SignalDataGetter>
         {
             Set<BiomeDictionary.Type> types = new HashSet<>();
 
-            for (String s : biomesTypes)
+            for (String biomes : biomesTypes)
             {
-                types.add(BiomeDictionary.Type.getType(s));
+                types.add(BiomeDictionary.Type.getType(biomes));
             }
 
             this.ARRAY_LIST.add((event,query) ->
@@ -552,11 +552,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addWeatherCheck(AttributeMap<?> map)
+    private void addWeatherCheck(AttributeMap<?> attributeMap)
     {
-        Object weatherObject = map.get(WEATHER);
+        Object weatherObject = attributeMap.get(WEATHER);
 
         if (weatherObject instanceof String)
         {
@@ -588,11 +588,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addStructureCheck(AttributeMap<?> map)
+    private void addStructureCheck(AttributeMap<?> attributeMap)
     {
-        Object structure = map.get(STRUCTURE);
+        Object structure = attributeMap.get(STRUCTURE);
 
         this.ARRAY_LIST.add((event,query) ->
                 Structure.STRUCTURES_CACHE.isInStructure(query.getWorld(event), (String) structure, query.getPos(event)));
@@ -600,46 +600,48 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addDimensionCheck(AttributeMap<?> map)
+    private void addDimensionCheck(AttributeMap<?> attributeMap)
     {
-        List<Integer> dimensions = map.getListI(DIMENSION);
+        List<Integer> dimensions = attributeMap.getListI(DIMENSION);
 
         if (dimensions.size() == 1)
         {
-            Integer dim = dimensions.get(0);
+            Integer dimension = dimensions.get(0);
 
             this.ARRAY_LIST.add((event, query) ->
-                    query.getWorld(event).provider.getDimension() == dim);
+                    query.getWorld(event).provider.getDimension() == dimension);
         }
         else
         {
-            Set<Integer> dims = new HashSet<>(dimensions);
+            Set<Integer> dimensions1 = new HashSet<>(dimensions);
 
             this.ARRAY_LIST.add((event, query) ->
-                    dims.contains(query.getWorld(event).provider.getDimension()));
+                    dimensions1.contains(query.getWorld(event).provider.getDimension()));
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void addHelmetCheck(AttributeMap<?> map)
+    public void addHelmetCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(map.getList(HELMET));
+        List<Predicate<ItemStack>> predicateList = AuxFunction.getItems(attributeMap.getList(HELMET));
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayerMP player = query.getPlayer(event);
+            EntityPlayerMP entityPlayerMP = query.getPlayer(event);
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                ItemStack armorItem = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
-                if (!armorItem.isEmpty())
+                ItemStack itemStack =
+                        entityPlayerMP.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+
+                if (!itemStack.isEmpty())
                 {
-                    return items.stream().anyMatch(item -> item.test(armorItem));
+                    return predicateList.stream().anyMatch(item -> item.test(itemStack));
                 }
             }
 
@@ -649,22 +651,25 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void addChestPlateCheck(AttributeMap<?> map)
+    public void addChestPlateCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(map.getList(CHEST_PLATE));
+        List<Predicate<ItemStack>> predicateList =
+                AuxFunction.getItems(attributeMap.getList(CHEST_PLATE));
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayerMP player = query.getPlayer(event);
+            EntityPlayerMP entityPlayerMP = query.getPlayer(event);
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                ItemStack armorItem = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-                if (!armorItem.isEmpty())
+                ItemStack itemStack =
+                        entityPlayerMP.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+
+                if (!itemStack.isEmpty())
                 {
-                    return items.stream().anyMatch(item -> item.test(armorItem));
+                    return predicateList.stream().anyMatch(item -> item.test(itemStack));
                 }
             }
 
@@ -674,22 +679,24 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void addLeggingsCheck(AttributeMap<?> map)
+    public void addLeggingsCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(map.getList(LEGGINGS));
+        List<Predicate<ItemStack>> predicateList = AuxFunction.getItems(attributeMap.getList(LEGGINGS));
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayerMP player = query.getPlayer(event);
+            EntityPlayerMP entityPlayerMP = query.getPlayer(event);
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                ItemStack armorItem = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
-                if (!armorItem.isEmpty())
+                ItemStack itemStack =
+                        entityPlayerMP.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+
+                if (!itemStack.isEmpty())
                 {
-                    return items.stream().anyMatch(item -> item.test(armorItem));
+                    return predicateList.stream().anyMatch(item -> item.test(itemStack));
                 }
             }
 
@@ -699,22 +706,24 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void addBootsCheck(AttributeMap<?> map)
+    public void addBootsCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(map.getList(BOOTS));
+        List<Predicate<ItemStack>> predicateList = AuxFunction.getItems(attributeMap.getList(BOOTS));
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            EntityPlayerMP player = query.getPlayer(event);
+            EntityPlayerMP entityPlayerMP = query.getPlayer(event);
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                ItemStack armorItem = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
-                if (!armorItem.isEmpty())
+                ItemStack itemStack =
+                        entityPlayerMP.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+
+                if (!itemStack.isEmpty())
                 {
-                    return items.stream().anyMatch(item -> item.test(armorItem));
+                    return predicateList.stream().anyMatch(item -> item.test(itemStack));
                 }
             }
 
@@ -724,71 +733,71 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMinTimeCheck(AttributeMap<?> map)
+    private void addMinTimeCheck(AttributeMap<?> attributeMap)
     {
-        Object minTime = map.get(MIN_TIME);
+        Object minTime = attributeMap.get(MIN_TIME);
 
         this.ARRAY_LIST.add((event, query) ->
         {
             long time = query.getWorld(event).getWorldTime();
-            return (time % 24000) >= (Integer) minTime;
+            return (time % 24000L) >= (Long) minTime;
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMaxTimeCheck(AttributeMap<?> map)
+    private void addMaxTimeCheck(AttributeMap<?> attributeMap)
     {
-        Object maxTime = map.get(MAX_TIME);
+        Object maxTime = attributeMap.get(MAX_TIME);
 
         this.ARRAY_LIST.add((event, query) ->
         {
             long time = query.getWorld(event).getWorldTime();
-            return (time % 24000) <= (Integer) maxTime;
+            return (time % 24000) <= (Long) maxTime;
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMinLightCheck(AttributeMap<?> map)
+    private void addMinLightCheck(AttributeMap<?> attributeMap)
     {
-        Object minLight = map.get(MIN_LIGHT);
+        Object minLight = attributeMap.get(MIN_LIGHT);
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            BlockPos pos = query.getPos(event);
-            return query.getWorld(event).getLight(pos, true) >= (Integer) minLight;
+            BlockPos blockPos = query.getPos(event);
+            return query.getWorld(event).getLight(blockPos, true) >= (Integer) minLight;
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMaxLightCheck(AttributeMap<?> map)
+    private void addMaxLightCheck(AttributeMap<?> attributeMap)
     {
-        Object maxLight = map.get(MAX_LIGHT);
+        Object maxLight = attributeMap.get(MAX_LIGHT);
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            BlockPos pos = query.getPos(event);
-            return query.getWorld(event).getLight(pos, true) <= (Integer) maxLight;
+            BlockPos blockPos = query.getPos(event);
+            return query.getWorld(event).getLight(blockPos, true) <= (Integer) maxLight;
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMinHeightCheck(AttributeMap<?> map)
+    private void addMinHeightCheck(AttributeMap<?> attributeMap)
     {
-        Object minHeight = map.get(MIN_HEIGHT);
+        Object minHeight = attributeMap.get(MIN_HEIGHT);
 
         this.ARRAY_LIST.add((event,query) ->
                 query.getY(event) >= (Integer) minHeight);
@@ -796,11 +805,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMaxHeightCheck(AttributeMap<?> map)
+    private void addMaxHeightCheck(AttributeMap<?> attributeMap)
     {
-        Object maxHeight = map.get(MAX_HEIGHT);
+        Object maxHeight = attributeMap.get(MAX_HEIGHT);
 
         this.ARRAY_LIST.add((event,query) ->
                 query.getY(event) <= (Integer) maxHeight);
@@ -808,73 +817,77 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMinAdditionalDifficultyCheck(AttributeMap<?> map)
+    private void addMinAdditionalDifficultyCheck(AttributeMap<?> attributeMap)
     {
-        Object minDifficulty = map.get(MIN_DIFFICULTY);
+        Object minDifficulty = attributeMap.get(MIN_DIFFICULTY);
 
         this.ARRAY_LIST.add((event,query) ->
-                query.getWorld(event).getDifficultyForLocation(query.getPos(event)).getAdditionalDifficulty() >= (Float) minDifficulty);
+                query.getWorld(event).getDifficultyForLocation(
+                        query.getPos(event)).getAdditionalDifficulty() >= (Float) minDifficulty);
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addDifficultyCheck(AttributeMap<?> map)
+    private void addDifficultyCheck(AttributeMap<?> attributeMap)
     {
         EnumDifficulty enumDifficulty = null;
 
-        Object difficulty = map.get(DIFFICULTY);
+        Object difficulty = attributeMap.get(DIFFICULTY);
 
-        for (EnumDifficulty _difficulty : EnumDifficulty.values())
+        for (EnumDifficulty enumDifficulty1 : EnumDifficulty.values())
         {
-            if (_difficulty.getDifficultyResourceKey().endsWith("." + difficulty))
+            if (enumDifficulty1.getDifficultyResourceKey().endsWith("." + difficulty))
             {
-                enumDifficulty = _difficulty;
+                enumDifficulty = enumDifficulty1;
                 break;
             }
         }
 
         if (enumDifficulty != null)
         {
-            EnumDifficulty finalDiff = enumDifficulty;
+            EnumDifficulty enumDifficulty1 = enumDifficulty;
 
             this.ARRAY_LIST.add((event,query) ->
-                    query.getWorld(event).getDifficulty() == finalDiff);
+                    query.getWorld(event).getDifficulty() == enumDifficulty1);
         }
         else
         {
-            Log.writeDataToLogFile(2, "Unknown difficulty '" + difficulty + "'! Use one of 'easy', 'normal', 'hard',  or 'peaceful'");
+            Log.writeDataToLogFile(2, "Unknown difficulty '" +
+                    difficulty + "'! Use one of 'easy', 'normal', 'hard',  or 'peaceful'");
+
             throw new RuntimeException();
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMaxAdditionalDifficultyCheck(AttributeMap<?> map)
+    private void addMaxAdditionalDifficultyCheck(AttributeMap<?> attributeMap)
     {
-        Object maxDifficulty = map.get(MAX_DIFFICULTY);
+        Object maxDifficulty = attributeMap.get(MAX_DIFFICULTY);
 
         this.ARRAY_LIST.add((event,query) ->
-                query.getWorld(event).getDifficultyForLocation(query.getPos(event)).getAdditionalDifficulty() <= (Float) maxDifficulty);
+                query.getWorld(event).getDifficultyForLocation(
+                        query.getPos(event)).getAdditionalDifficulty() <= (Float) maxDifficulty);
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMinSpawnDistCheck(AttributeMap<?> map)
+    private void addMinSpawnDistCheck(AttributeMap<?> attributeMap)
     {
-        Object degree = map.get(MIN_SPAWN_DIST);
+        Object degree = attributeMap.get(MIN_SPAWN_DIST);
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            BlockPos pos = query.getPos(event);
-            double sqDist = pos.distanceSq(query.getWorld(event).getSpawnPoint());
+            BlockPos blockPos = query.getPos(event);
+            double sqDist = blockPos.distanceSq(query.getWorld(event).getSpawnPoint());
 
             return sqDist >= (Float) degree * (Float) degree;
         });
@@ -882,16 +895,16 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMaxSpawnDistCheck(AttributeMap<?> map)
+    private void addMaxSpawnDistCheck(AttributeMap<?> attributeMap)
     {
-        Object degree = map.get(MAX_SPAWN_DIST);
+        Object degree = attributeMap.get(MAX_SPAWN_DIST);
 
         this.ARRAY_LIST.add((event, query) ->
         {
-            BlockPos pos = query.getPos(event);
-            double sqDist = pos.distanceSq(query.getWorld(event).getSpawnPoint());
+            BlockPos blockPos = query.getPos(event);
+            double sqDist = blockPos.distanceSq(query.getWorld(event).getSpawnPoint());
 
             return sqDist <= (Float) degree * (Float) degree;
         });
@@ -899,15 +912,16 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addBlocksCheck(AttributeMap<?> map)
+    private void addBlocksCheck(AttributeMap<?> attributeMap)
     {
         BiFunction<Event, SignalDataAccessor, BlockPos> posFunction;
 
-        if (map.has(BLOCK_OFFSET))
+        if (attributeMap.has(BLOCK_OFFSET))
         {
-            posFunction = AuxFunction.parseOffset((String)map.get(BLOCK_OFFSET));
+            posFunction =
+                    AuxFunction.parseOffset((String)attributeMap.get(BLOCK_OFFSET));
         }
         else
         {
@@ -915,20 +929,20 @@ public final class ListActionBinary<T extends SignalDataGetter>
                     query.getPos(event);
         }
 
-        List<String> blocks = map.getList(BLOCK);
+        List<String> blocks = attributeMap.getList(BLOCK);
 
         if (blocks.size() == 1)
         {
             String json = blocks.get(0);
-            BiPredicate<World, BlockPos> blockMatcher = AuxFunction.parseBlock(json);
+            BiPredicate<World, BlockPos> blockPosBiPredicate = AuxFunction.parseBlock(json);
 
-            if (blockMatcher != null)
+            if (blockPosBiPredicate != null)
             {
                 this.ARRAY_LIST.add((event, query) ->
                 {
-                    BlockPos pos = posFunction.apply(event, query);
+                    BlockPos blockPos = posFunction.apply(event, query);
 
-                    return pos != null && blockMatcher.test(query.getWorld(event), pos);
+                    return blockPos != null && blockPosBiPredicate.test(query.getWorld(event), blockPos);
                 });
             }
         }
@@ -950,15 +964,15 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             this.ARRAY_LIST.add((event,query) ->
             {
-                BlockPos pos = posFunction.apply(event, query);
+                BlockPos blockPos = posFunction.apply(event, query);
 
-                if (pos != null)
+                if (blockPos != null)
                 {
                     World world = query.getWorld(event);
 
                     for (BiPredicate<World, BlockPos> matcher : blockMatchers)
                     {
-                        if (matcher.test(world, pos))
+                        if (matcher.test(world, blockPos))
                         {
                             return true;
                         }
@@ -972,11 +986,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCheckMoonPhase(AttributeMap<?> map)
+    private void addCheckMoonPhase(AttributeMap<?> attributeMap)
     {
-        Object moon = map.get(GET_MOON_PHASE);
+        Object moon = attributeMap.get(GET_MOON_PHASE);
 
         this.ARRAY_LIST.add((event,query) ->
                 query.getWorld(event).getMoonPhase() == (Integer)moon);
@@ -984,11 +998,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCheckCurrentGameDayEqual(AttributeMap<?> map)
+    private void addCheckCurrentGameDayEqual(AttributeMap<?> attributeMap)
     {
-        Object targetDay = map.get(GET_CURRENT_GAME_DAY_EQUAL);
+        Object targetDay = attributeMap.get(GET_CURRENT_GAME_DAY_EQUAL);
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -996,8 +1010,8 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             if (world != null)
             {
-                long currentDay = world.getWorldTime() / 24000;
-                return currentDay == (Long)targetDay;
+                long currentDay = world.getWorldTime() / 24000L;
+                return currentDay == (Long) targetDay;
             }
 
             return false;
@@ -1006,11 +1020,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCheckCurrentGameDayGreater(AttributeMap<?> map)
+    private void addCheckCurrentGameDayGreater(AttributeMap<?> attributeMap)
     {
-        Object targetDay = map.get(GET_CURRENT_GAME_DAY_GREATER);
+        Object targetDay = attributeMap.get(GET_CURRENT_GAME_DAY_GREATER);
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -1018,8 +1032,8 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             if (world != null)
             {
-                long currentDay = world.getWorldTime() / 24000;
-                return currentDay > (Long)targetDay;
+                long currentDay = world.getWorldTime() / 24000L;
+                return currentDay > (Long) targetDay;
             }
 
             return false;
@@ -1028,11 +1042,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCheckCurrentGameDayLess(AttributeMap<?> map)
+    private void addCheckCurrentGameDayLess(AttributeMap<?> attributeMap)
     {
-        Object targetDay = map.get(GET_CURRENT_GAME_DAY_LESS);
+        Object targetDay = attributeMap.get(GET_CURRENT_GAME_DAY_LESS);
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -1040,8 +1054,8 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             if (world != null)
             {
-                long currentDay = world.getWorldTime() / 24000;
-                return currentDay < (Long)targetDay;
+                long currentDay = world.getWorldTime() / 24000L;
+                return currentDay < (Long) targetDay;
             }
 
             return false;
@@ -1050,11 +1064,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCheckCurrentGameDayGreaterOrEqual(AttributeMap<?> map)
+    private void addCheckCurrentGameDayGreaterOrEqual(AttributeMap<?> attributeMap)
     {
-        Object targetDay = map.get(GET_CURRENT_GAME_DAY_GREATER_OR_EQUAL);
+        Object targetDay = attributeMap.get(GET_CURRENT_GAME_DAY_GREATER_OR_EQUAL);
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -1062,8 +1076,8 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             if (world != null)
             {
-                long currentDay = world.getWorldTime() / 24000;
-                return currentDay >= (Long)targetDay;
+                long currentDay = world.getWorldTime() / 24000L;
+                return currentDay >= (Long) targetDay;
             }
 
             return false;
@@ -1072,11 +1086,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCheckCurrentGameDayLessOrEqual(AttributeMap<?> map)
+    private void addCheckCurrentGameDayLessOrEqual(AttributeMap<?> attributeMap)
     {
-        Object targetDay = map.get(GET_CURRENT_GAME_DAY_LESS_OR_EQUAL);
+        Object targetDay = attributeMap.get(GET_CURRENT_GAME_DAY_LESS_OR_EQUAL);
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -1084,8 +1098,8 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             if (world != null)
             {
-                long currentDay = world.getWorldTime() / 24000;
-                return currentDay <= (Long)targetDay;
+                long currentDay = world.getWorldTime() / 24000L;
+                return currentDay <= (Long) targetDay;
             }
 
             return false;
@@ -1094,11 +1108,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCheckCurrentGameDayInterval(AttributeMap<?> map)
+    private void addCheckCurrentGameDayInterval(AttributeMap<?> attributeMap)
     {
-        Object intervalObj = map.get(GET_CURRENT_GAME_DAY_INTERVAL);
+        Object intervalObj = attributeMap.get(GET_CURRENT_GAME_DAY_INTERVAL);
 
         long interval = (Long) intervalObj;
 
@@ -1108,8 +1122,8 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             if (world != null)
             {
-                long currentDay = world.getWorldTime() / 24000;
-                return currentDay % interval == 0;
+                long currentDay = world.getWorldTime() / 24000L;
+                return currentDay % interval == 0L;
             }
 
             return false;
@@ -1118,18 +1132,19 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMobsCheck(AttributeMap<?> map)
+    private void addMobsCheck(AttributeMap<?> attributeMap)
     {
-        List<String> listMobs = map.getList(MOB);
+        List<String> listMobs = attributeMap.getList(MOB);
 
         if (listMobs.size() == 1)
         {
             String name = listMobs.get(0);
             String id = GenericPotentialSpawn.fixEntityId(name);
-            EntityEntry _forgeRegEntity0 = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
-            Class<? extends Entity> typeClass = _forgeRegEntity0 == null ? null : _forgeRegEntity0.getEntityClass();
+
+            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+            Class<? extends Entity> typeClass = entityEntry == null ? null : entityEntry.getEntityClass();
 
             if (typeClass != null)
             {
@@ -1149,8 +1164,9 @@ public final class ListActionBinary<T extends SignalDataGetter>
             for (String name : listMobs)
             {
                 String id = GenericPotentialSpawn.fixEntityId(name);
-                EntityEntry _forgeRegEntity1 = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
-                Class<? extends Entity> typeClass = _forgeRegEntity1 == null ? null : _forgeRegEntity1.getEntityClass();
+                EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+
+                Class<? extends Entity> typeClass = entityEntry == null ? null : entityEntry.getEntityClass();
 
                 if (typeClass != null)
                 {
@@ -1173,11 +1189,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addInterfaceAnimalsCheck(AttributeMap<?> map)
+    private void addInterfaceAnimalsCheck(AttributeMap<?> attributeMap)
     {
-        Object animalsObj = map.get(ANIMALS);
+        Object animalsObj = attributeMap.get(ANIMALS);
 
         if ((Boolean)animalsObj)
         {
@@ -1195,11 +1211,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addInterfaceMonstersCheck(AttributeMap<?> map)
+    private void addInterfaceMonstersCheck(AttributeMap<?> attributeMap)
     {
-        Object monstersObj = map.get(MONSTERS);
+        Object monstersObj = attributeMap.get(MONSTERS);
 
         if ((Boolean)monstersObj)
         {
@@ -1215,11 +1231,11 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addPlayerCheck(AttributeMap<?> map)
+    private void addPlayerCheck(AttributeMap<?> attributeMap)
     {
-        Object asPlayer = map.get(PLAYER);
+        Object asPlayer = attributeMap.get(PLAYER);
 
         if ((Boolean)asPlayer)
         {
@@ -1234,66 +1250,70 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param _map
+     * @param attributeMap
      */
-    private void addFakePlayerCheck(AttributeMap<?> _map)
+    private void addFakePlayerCheck(AttributeMap<?> attributeMap)
     {
-        Object asPlayer = _map.get(FAKE_PLAYER);
+        Object asPlayer = attributeMap.get(FAKE_PLAYER);
 
         if ((Boolean)asPlayer)
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getAttacker(event) == null ? false : AuxFunction.isFakePlayer(query.getAttacker(event)));
+                    query.getAttacker(event) == null ? false :
+                            AuxFunction.isFakePlayer(query.getAttacker(event)));
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getAttacker(event) == null ? true : !AuxFunction.isFakePlayer(query.getAttacker(event)));
+                    query.getAttacker(event) == null ? true :
+                            !AuxFunction.isFakePlayer(query.getAttacker(event)));
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addRealPlayerCheck(AttributeMap<?> map)
+    private void addRealPlayerCheck(AttributeMap<?> attributeMap)
     {
-        Object asPlayer = map.get(REAL_PLAYER);
+        Object asPlayer = attributeMap.get(REAL_PLAYER);
 
         if ((Boolean)asPlayer)
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getAttacker(event) == null ? false : AuxFunction.isRealPlayer(query.getAttacker(event)));
+                    query.getAttacker(event) == null ? false :
+                            AuxFunction.isRealPlayer(query.getAttacker(event)));
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getAttacker(event) == null ? true : !AuxFunction.isRealPlayer(query.getAttacker(event)));
+                    query.getAttacker(event) == null ? true :
+                            !AuxFunction.isRealPlayer(query.getAttacker(event)));
         }
     }
 
     /**
      *
-     * @param map
-     * @param key
+     * @param attributeMap
+     * @param attributeKey
      */
-    public void addHeldItemCheck(AttributeMap<?> map, AttributeKey<String> key)
+    public void addHeldItemCheck(AttributeMap<?> attributeMap, AttributeKey<String> attributeKey)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(map.getList(key));
+        List<Predicate<ItemStack>> items = AuxFunction.getItems(attributeMap.getList(attributeKey));
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            EntityPlayerMP player = query.getPlayer(event);
+            EntityPlayerMP entityPlayerMP = query.getPlayer(event);
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                ItemStack main_hand = player.getHeldItemMainhand();
+                ItemStack itemStack = entityPlayerMP.getHeldItemMainhand();
 
-                if (!main_hand.isEmpty())
+                if (!itemStack.isEmpty())
                 {
                     for (Predicate<ItemStack> item : items)
                     {
-                        if (item.test(main_hand))
+                        if (item.test(itemStack))
                         {
                             return true;
                         }
@@ -1307,19 +1327,19 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void addOffHandItemCheck(AttributeMap<?> map)
+    public void addOffHandItemCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(map.getList(OFF_HAND_ITEM));
+        List<Predicate<ItemStack>> items = AuxFunction.getItems(attributeMap.getList(OFF_HAND_ITEM));
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            EntityPlayerMP player = query.getPlayer(event);
+            EntityPlayerMP entityPlayerMP = query.getPlayer(event);
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                ItemStack offhand = player.getHeldItemOffhand();
+                ItemStack offhand = entityPlayerMP.getHeldItemOffhand();
 
                 if (!offhand.isEmpty())
                 {
@@ -1339,91 +1359,99 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addExplosionCheck(AttributeMap<?> map)
+    private void addExplosionCheck(AttributeMap<?> attributeMap)
     {
-        Object explosion = map.get(EXPLOSION);
+        Object explosion = attributeMap.get(EXPLOSION);
 
         if ((Boolean)explosion)
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? false : query.getSource(event).isExplosion());
+                    query.getSource(event) == null ? false :
+                            query.getSource(event).isExplosion());
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? true : !query.getSource(event).isExplosion());
+                    query.getSource(event) == null ? true :
+                            !query.getSource(event).isExplosion());
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addProjectileCheck(AttributeMap<?> map)
+    private void addProjectileCheck(AttributeMap<?> attributeMap)
     {
-        Object projectile = map.get(PROJECTILE);
+        Object projectile = attributeMap.get(PROJECTILE);
 
         if ((Boolean)projectile)
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? false : query.getSource(event).isProjectile());
+                    query.getSource(event) == null ? false :
+                            query.getSource(event).isProjectile());
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? true : !query.getSource(event).isProjectile());
+                    query.getSource(event) == null ? true :
+                            !query.getSource(event).isProjectile());
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addFireCheck(AttributeMap<?> map)
+    private void addFireCheck(AttributeMap<?> attributeMap)
     {
-        Object fire = map.get(FIRE);
+        Object fire = attributeMap.get(FIRE);
 
         if ((Boolean)fire)
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? false : query.getSource(event).isFireDamage());
+                    query.getSource(event) == null ? false :
+                            query.getSource(event).isFireDamage());
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? true : !query.getSource(event).isFireDamage());
+                    query.getSource(event) == null ? true :
+                            !query.getSource(event).isFireDamage());
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMagicCheck(AttributeMap<?> map)
+    private void addMagicCheck(AttributeMap<?> attributeMap)
     {
-        Object magic = map.get(MAGIC);
+        Object magic = attributeMap.get(MAGIC);
 
         if ((Boolean)magic)
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? false : query.getSource(event).isMagicDamage());
+                    query.getSource(event) == null ? false :
+                            query.getSource(event).isMagicDamage());
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
-                    query.getSource(event) == null ? true : !query.getSource(event).isMagicDamage());
+                    query.getSource(event) == null ? true :
+                            !query.getSource(event).isMagicDamage());
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addSourceCheck(AttributeMap<?> map)
+    private void addSourceCheck(AttributeMap<?> attributeMap)
     {
-        List<String> sources = map.getList(SOURCE);
+        List<String> sources = attributeMap.getList(SOURCE);
         Set<String> sourceSet = new HashSet<>(sources);
 
         this.ARRAY_LIST.add((event, query) ->
@@ -1439,38 +1467,38 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void addBothHandsItemCheck(AttributeMap<?> map)
+    public void addBothHandsItemCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(map.getList(BOTH_HANDS_ITEM));
+        List<Predicate<ItemStack>> items = AuxFunction.getItems(attributeMap.getList(BOTH_HANDS_ITEM));
 
         this.ARRAY_LIST.add((event,query) ->
         {
-            EntityPlayerMP player = query.getPlayer(event);
+            EntityPlayerMP entityPlayerMP = query.getPlayer(event);
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                ItemStack offhand = player.getHeldItemOffhand();
+                ItemStack itemStack = entityPlayerMP.getHeldItemOffhand();
 
-                if (!offhand.isEmpty())
+                if (!itemStack.isEmpty())
                 {
                     for (Predicate<ItemStack> item : items)
                     {
-                        if (item.test(offhand))
+                        if (item.test(itemStack))
                         {
                             return true;
                         }
                     }
                 }
 
-                ItemStack mainHand = player.getHeldItemMainhand();
+                ItemStack itemStack1 = entityPlayerMP.getHeldItemMainhand();
 
-                if (!mainHand.isEmpty())
+                if (!itemStack1.isEmpty())
                 {
                     for (Predicate<ItemStack> item : items)
                     {
-                        if (item.test(mainHand))
+                        if (item.test(itemStack1))
                         {
                             return true;
                         }
@@ -1484,61 +1512,61 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addRandomCheck_0(AttributeMap<?> map)
+    private void addRandomCheck_0(AttributeMap<?> attributeMap)
     {
-        Object _random = map.get(RANDOM_KEY_0);
+        Object random = attributeMap.get(RANDOM_KEY_0);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float)_random);
+                new Random().nextFloat() < (Float) random);
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addRandomCheck_1(AttributeMap<?> map)
+    private void addRandomCheck_1(AttributeMap<?> attributeMap)
     {
-        Object _random = map.get(RANDOM_KEY_1);
+        Object random = attributeMap.get(RANDOM_KEY_1);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float)_random);
+                new Random().nextFloat() < (Float) random);
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addRandomCheck_2(AttributeMap<?> map)
+    private void addRandomCheck_2(AttributeMap<?> attributeMap)
     {
-        Object _random = map.get(RANDOM_KEY_2);
+        Object random = attributeMap.get(RANDOM_KEY_2);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float)_random);
+                new Random().nextFloat() < (Float) random);
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addRandomCheck_3(AttributeMap<?> map)
+    private void addRandomCheck_3(AttributeMap<?> attributeMap)
     {
-        Object _random = map.get(RANDOM_KEY_3);
+        Object random = attributeMap.get(RANDOM_KEY_3);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float)_random);
+                new Random().nextFloat() < (Float) random);
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addRandomCheck_4(AttributeMap<?> map)
+    private void addRandomCheck_4(AttributeMap<?> attributeMap)
     {
-        Object _random = map.get(RANDOM_KEY_4);
+        Object random = attributeMap.get(RANDOM_KEY_4);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float)_random);
+                new Random().nextFloat() < (Float) random);
     }
 }

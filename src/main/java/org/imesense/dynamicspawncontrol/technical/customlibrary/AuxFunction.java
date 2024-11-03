@@ -133,32 +133,33 @@ public class AuxFunction
      */
     public static boolean isMatchingOreDict(int oreId, Block block)
     {
-        ItemStack stack = new ItemStack(block);
+        ItemStack itemStack = new ItemStack(block);
 
-        int[] oreIDs = stack.isEmpty() ? new int[0] : OreDictionary.getOreIDs(stack);
+        int[] oreIDs = itemStack.isEmpty() ? new int[0] :
+                OreDictionary.getOreIDs(itemStack);
 
         return isMatchingOreId(oreIDs, oreId);
     }
 
     /**
      *
-     * @param state
-     * @param property
+     * @param iBlockState
+     * @param iProperty
      * @param value
      * @return
      * @param <T>
      */
-    public static <T extends Comparable<T>> IBlockState set(IBlockState state, IProperty<T> property, String value)
+    public static <T extends Comparable<T>> IBlockState set(IBlockState iBlockState, IProperty<T> iProperty, String value)
     {
-        Optional<T> optionalValue = property.parseValue(value);
+        Optional<T> optional = iProperty.parseValue(value);
 
-        if (optionalValue.isPresent())
+        if (optional.isPresent())
         {
-            return state.withProperty(property, optionalValue.get());
+            return iBlockState.withProperty(iProperty, optional.get());
         }
         else
         {
-            return state;
+            return iBlockState;
         }
     }
 
@@ -172,23 +173,23 @@ public class AuxFunction
     {
         int offsetX, offsetY, offsetZ;
 
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(json);
-        JsonObject obj = element.getAsJsonObject();
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(json);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        if (obj.has(EnumGameProperty.BlockProperties.OFFSET.getValue()))
+        if (jsonObject.has(EnumGameProperty.BlockProperties.OFFSET.getValue()))
         {
-            JsonObject offset =
-                    obj.getAsJsonObject(EnumGameProperty.BlockProperties.OFFSET.getValue());
+            JsonObject jsonObject1 =
+                    jsonObject.getAsJsonObject(EnumGameProperty.BlockProperties.OFFSET.getValue());
 
-            offsetX = offset.has(EnumGameProperty.Coordinates.X.getValue()) ?
-                    offset.get(EnumGameProperty.Coordinates.X.getValue()).getAsInt() : 0;
+            offsetX = jsonObject1.has(EnumGameProperty.Coordinates.X.getValue()) ?
+                    jsonObject1.get(EnumGameProperty.Coordinates.X.getValue()).getAsInt() : 0;
 
-            offsetY = offset.has(EnumGameProperty.Coordinates.Y.getValue()) ?
-                    offset.get(EnumGameProperty.Coordinates.Y.getValue()).getAsInt() : 0;
+            offsetY = jsonObject1.has(EnumGameProperty.Coordinates.Y.getValue()) ?
+                    jsonObject1.get(EnumGameProperty.Coordinates.Y.getValue()).getAsInt() : 0;
 
-            offsetZ = offset.has(EnumGameProperty.Coordinates.Z.getValue()) ?
-                    offset.get(EnumGameProperty.Coordinates.Z.getValue()).getAsInt() : 0;
+            offsetZ = jsonObject1.has(EnumGameProperty.Coordinates.Z.getValue()) ?
+                    jsonObject1.get(EnumGameProperty.Coordinates.Z.getValue()).getAsInt() : 0;
         }
         else
         {
@@ -197,7 +198,7 @@ public class AuxFunction
             offsetZ = 0;
         }
 
-        if (obj.has(EnumGameProperty.BlockProperties.STEP.getValue()))
+        if (jsonObject.has(EnumGameProperty.BlockProperties.STEP.getValue()))
         {
             return (event, query) ->
             {
@@ -215,17 +216,17 @@ public class AuxFunction
             };
         }
 
-        if (obj.has(EnumGameProperty.BlockProperties.LOOK.getValue()))
+        if (jsonObject.has(EnumGameProperty.BlockProperties.LOOK.getValue()))
         {
             return (event, query) ->
             {
-                RayTraceResult result =
+                RayTraceResult rayTraceResult =
                         RayTrace.getMovingObjectPositionFromPlayer
                                 (query.getWorld(event), query.getPlayer(event), false);
 
-                if (result != null && result.typeOfHit == RayTraceResult.Type.BLOCK)
+                if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.BLOCK)
                 {
-                    return result.getBlockPos().add(offsetX, offsetY, offsetZ);
+                    return rayTraceResult.getBlockPos().add(offsetX, offsetY, offsetZ);
                 }
                 else
                 {
@@ -248,23 +249,23 @@ public class AuxFunction
 
         if (itemObj.isJsonObject())
         {
-            Predicate<ItemStack> matcher = getMatcher(itemObj.getAsJsonObject());
+            Predicate<ItemStack> itemStackPredicate = getMatcher(itemObj.getAsJsonObject());
 
-            if (matcher != null)
+            if (itemStackPredicate != null)
             {
-                items.add(matcher);
+                items.add(itemStackPredicate);
             }
         }
         else if (itemObj.isJsonArray())
         {
-            for (JsonElement element : itemObj.getAsJsonArray())
+            for (JsonElement jsonElement : itemObj.getAsJsonArray())
             {
-                JsonObject obj = element.getAsJsonObject();
-                Predicate<ItemStack> matcher = getMatcher(obj);
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                Predicate<ItemStack> itemStackPredicate = getMatcher(jsonObject);
 
-                if (matcher != null)
+                if (itemStackPredicate != null)
                 {
-                    items.add(matcher);
+                    items.add(itemStackPredicate);
                 }
             }
         }
@@ -287,28 +288,28 @@ public class AuxFunction
 
         for (String json : itemNames)
         {
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(json);
+            JsonParser jsonParser = new JsonParser();
+            JsonElement jsonElement = jsonParser.parse(json);
 
-            if (element.isJsonPrimitive())
+            if (jsonElement.isJsonPrimitive())
             {
-                String name = element.getAsString();
-                Predicate<ItemStack> matcher = getMatcher(name);
+                String name = jsonElement.getAsString();
+                Predicate<ItemStack> itemStackPredicate = getMatcher(name);
 
-                if (matcher != null)
+                if (itemStackPredicate != null)
                 {
-                    items.add(matcher);
+                    items.add(itemStackPredicate);
                 }
 
             }
-            else if (element.isJsonObject())
+            else if (jsonElement.isJsonObject())
             {
-                JsonObject obj = element.getAsJsonObject();
-                Predicate<ItemStack> matcher = getMatcher(obj);
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                Predicate<ItemStack> itemStackPredicate = getMatcher(jsonObject);
 
-                if (matcher != null)
+                if (itemStackPredicate != null)
                 {
-                    items.add(matcher);
+                    items.add(itemStackPredicate);
                 }
             }
             else
@@ -328,12 +329,12 @@ public class AuxFunction
     @Nullable
     public static BiPredicate<World, BlockPos> parseBlock(String json)
     {
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(json);
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(json);
 
-        if (element.isJsonPrimitive())
+        if (jsonElement.isJsonPrimitive())
         {
-            String blockName = element.getAsString();
+            String blockName = jsonElement.getAsString();
 
             if (blockName.startsWith("ore:"))
             {
@@ -355,20 +356,20 @@ public class AuxFunction
                 return (world, pos) -> world.getBlockState(pos).getBlock() == block;
             }
         }
-        else if (element.isJsonObject())
+        else if (jsonElement.isJsonObject())
         {
-            JsonObject obj = element.getAsJsonObject();
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            BiPredicate<World, BlockPos> test;
+            BiPredicate<World, BlockPos> blockPosBiPredicate;
 
-            if (obj.has("ore"))
+            if (jsonObject.has("ore"))
             {
-                int oreId = OreDictionary.getOreID(obj.get("ore").getAsString());
-                test = (world, pos) -> isMatchingOreDict(oreId, world.getBlockState(pos).getBlock());
+                int oreId = OreDictionary.getOreID(jsonObject.get("ore").getAsString());
+                blockPosBiPredicate = (world, pos) -> isMatchingOreDict(oreId, world.getBlockState(pos).getBlock());
             }
-            else if (obj.has("block"))
+            else if (jsonObject.has("block"))
             {
-                String blockName = obj.get("block").getAsString();
+                String blockName = jsonObject.get("block").getAsString();
                 Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));
 
                 if (block == null)
@@ -377,87 +378,95 @@ public class AuxFunction
                     return null;
                 }
 
-                if (obj.has("properties"))
+                if (jsonObject.has("properties"))
                 {
-                    IBlockState blockState = block.getDefaultState();
-                    JsonArray propArray = obj.get("properties").getAsJsonArray();
+                    IBlockState iBlockState = block.getDefaultState();
+                    JsonArray jsonArray = jsonObject.get("properties").getAsJsonArray();
 
-                    for (JsonElement el : propArray)
+                    for (JsonElement jsonElement1 : jsonArray)
                     {
-                        JsonObject propObj = el.getAsJsonObject();
-                        String name = propObj.get("name").getAsString();
-                        String value = propObj.get("value").getAsString();
+                        JsonObject jsonObject1 = jsonElement1.getAsJsonObject();
 
-                        for (IProperty<?> key : blockState.getPropertyKeys())
+                        String name = jsonObject1.get("name").getAsString();
+                        String value = jsonObject1.get("value").getAsString();
+
+                        for (IProperty<?> iProperty : iBlockState.getPropertyKeys())
                         {
-                            if (name.equals(key.getName()))
+                            if (name.equals(iProperty.getName()))
                             {
-                                blockState = set(blockState, key, value);
+                                iBlockState = set(iBlockState, iProperty, value);
                             }
                         }
                     }
 
-                    IBlockState finalBlockState = blockState;
-                    test = (world, pos) -> world.getBlockState(pos) == finalBlockState;
+                    IBlockState iBlockState1 = iBlockState;
+                    blockPosBiPredicate = (world, pos) -> world.getBlockState(pos) == iBlockState1;
                 }
                 else
                 {
-                    test = (world, pos) -> world.getBlockState(pos).getBlock() == block;
+                    blockPosBiPredicate = (world, pos) -> world.getBlockState(pos).getBlock() == block;
                 }
             }
             else
             {
-                test = (world, pos) -> true;
+                blockPosBiPredicate = (world, pos) -> true;
             }
 
-            if (obj.has("mod"))
+            if (jsonObject.has("mod"))
             {
-                String mod = obj.get("mod").getAsString();
-                BiPredicate<World, BlockPos> finalTest = test;
-                test = (world, pos) -> finalTest.test(world, pos) && mod.equals(world.getBlockState(pos).getBlock().getRegistryName().getResourceDomain());
+                String mod = jsonObject.get("mod").getAsString();
+                BiPredicate<World, BlockPos> blockPosBiPredicate1 = blockPosBiPredicate;
+
+                blockPosBiPredicate = (world, pos) -> blockPosBiPredicate1.test(world, pos) &&
+                        mod.equals(world.getBlockState(pos).getBlock().getRegistryName().getResourceDomain());
             }
 
-            if (obj.has("energy"))
+            if (jsonObject.has("energy"))
             {
-                Predicate<Integer> energy = getExpression(obj.get("energy"));
+                Predicate<Integer> integerPredicate = getExpression(jsonObject.get("energy"));
 
-                if (energy != null)
+                if (integerPredicate != null)
                 {
-                    EnumFacing side;
+                    EnumFacing enumFacing;
 
-                    if (obj.has("side"))
+                    if (jsonObject.has("side"))
                     {
-                        side = EnumFacing.byName(obj.get("side").getAsString().toLowerCase());
+                        enumFacing =
+                                EnumFacing.byName(jsonObject.get("side").getAsString().toLowerCase());
                     }
                     else
                     {
-                        side = null;
+                        enumFacing = null;
                     }
 
-                    BiPredicate<World, BlockPos> finalTest = test;
-                    test = (world, pos) -> finalTest.test(world, pos) && energy.test(getEnergy(world, pos, side));
+                    BiPredicate<World, BlockPos> blockPosBiPredicate1 = blockPosBiPredicate;
+
+                    blockPosBiPredicate = (world, pos) -> blockPosBiPredicate1.test(world, pos) &&
+                            integerPredicate.test(getEnergy(world, pos, enumFacing));
                 }
             }
 
-            if (obj.has("contains"))
+            if (jsonObject.has("contains"))
             {
-                EnumFacing side;
+                EnumFacing enumFacing;
 
-                if (obj.has("side"))
+                if (jsonObject.has("side"))
                 {
-                    side = EnumFacing.byName(obj.get("energyside").getAsString().toLowerCase());
+                    enumFacing =
+                            EnumFacing.byName(jsonObject.get("energyside").getAsString().toLowerCase());
                 }
                 else
                 {
-                    side = null;
+                    enumFacing = null;
                 }
 
-                List<Predicate<ItemStack>> items = getItems(obj.get("contains"));
-                BiPredicate<World, BlockPos> finalTest = test;
-                test = (world, pos) -> finalTest.test(world, pos) && contains(world, pos, side, items);
+                List<Predicate<ItemStack>> items = getItems(jsonObject.get("contains"));
+                BiPredicate<World, BlockPos> blockPosBiPredicate1 = blockPosBiPredicate;
+
+                blockPosBiPredicate = (world, pos) -> blockPosBiPredicate1.test(world, pos) && contains(world, pos, enumFacing, items);
             }
 
-            return test;
+            return blockPosBiPredicate;
         }
         else
         {
@@ -541,22 +550,22 @@ public class AuxFunction
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static Predicate<Integer> getExpression(JsonElement element)
+    public static Predicate<Integer> getExpression(JsonElement jsonElement)
     {
-        if (element.isJsonPrimitive())
+        if (jsonElement.isJsonPrimitive())
         {
-            if (element.getAsJsonPrimitive().isNumber())
+            if (jsonElement.getAsJsonPrimitive().isNumber())
             {
-                int amount = element.getAsInt();
+                int amount = jsonElement.getAsInt();
 
                 return i -> i == amount;
             }
             else
             {
-                return getExpression(element.getAsString());
+                return getExpression(jsonElement.getAsString());
             }
         }
         else
@@ -573,25 +582,25 @@ public class AuxFunction
      */
     public static Predicate<ItemStack> getMatcher(String name)
     {
-        ItemStack stack = ItemStackBuilder.parseStack(name);
+        ItemStack itemStack = ItemStackBuilder.parseStack(name);
 
-        if (!stack.isEmpty())
+        if (!itemStack.isEmpty())
         {
             if (name.contains("/") && name.contains("@"))
             {
-                return s -> ItemStack.areItemsEqual(s, stack) && ItemStack.areItemStackTagsEqual(s, stack);
+                return s -> ItemStack.areItemsEqual(s, itemStack) && ItemStack.areItemStackTagsEqual(s, itemStack);
             }
             else if (name.contains("/"))
             {
-                return s -> ItemStack.areItemsEqualIgnoreDurability(s, stack) && ItemStack.areItemStackTagsEqual(s, stack);
+                return s -> ItemStack.areItemsEqualIgnoreDurability(s, itemStack) && ItemStack.areItemStackTagsEqual(s, itemStack);
             }
             else if (name.contains("@"))
             {
-                return s -> ItemStack.areItemsEqual(s, stack);
+                return s -> ItemStack.areItemsEqual(s, itemStack);
             }
             else
             {
-                return s -> s.getItem() == stack.getItem();
+                return s -> s.getItem() == itemStack.getItem();
             }
         }
 
@@ -620,7 +629,7 @@ public class AuxFunction
             return null;
         }
 
-        Predicate<ItemStack> test;
+        Predicate<ItemStack> predicate;
 
         if (jsonObject.has("damage"))
         {
@@ -631,11 +640,11 @@ public class AuxFunction
                 return null;
             }
 
-            test = s -> s.getItem() == item && damage.test(s.getItemDamage());
+            predicate = s -> s.getItem() == item && damage.test(s.getItemDamage());
         }
         else
         {
-            test = s -> s.getItem() == item;
+            predicate = s -> s.getItem() == item;
         }
 
         if (jsonObject.has("count"))
@@ -644,22 +653,24 @@ public class AuxFunction
 
             if (count != null)
             {
-                Predicate<ItemStack> finalTest = test;
-                test = s -> finalTest.test(s) && count.test(s.getCount());
+                Predicate<ItemStack> predicate1 = predicate;
+                predicate = s -> predicate1.test(s) && count.test(s.getCount());
             }
         }
 
         if (jsonObject.has("ore"))
         {
             int oreId = OreDictionary.getOreID(jsonObject.get("ore").getAsString());
-            Predicate<ItemStack> finalTest = test;
-            test = s -> finalTest.test(s) && isMatchingOreId(s.isEmpty() ? new int[0] : OreDictionary.getOreIDs(s), oreId);
+            Predicate<ItemStack> predicate1 = predicate;
+
+            predicate = s -> predicate1.test(s) && isMatchingOreId(s.isEmpty() ? new int[0] :
+                    OreDictionary.getOreIDs(s), oreId);
         }
 
         if (jsonObject.has("mod"))
         {
-            Predicate<ItemStack> finalTest = test;
-            test = s -> finalTest.test(s) && "mod".equals(s.getItem().getRegistryName().getResourceDomain());
+            Predicate<ItemStack> predicate1 = predicate;
+            predicate = s -> predicate1.test(s) && "mod".equals(s.getItem().getRegistryName().getResourceDomain());
         }
 
         if (jsonObject.has("nbt"))
@@ -668,8 +679,8 @@ public class AuxFunction
 
             if (nbtMatchers != null)
             {
-                Predicate<ItemStack> finalTest = test;
-                test = s -> finalTest.test(s) && nbtMatchers.stream().allMatch(p -> p.test(s.getTagCompound()));
+                Predicate<ItemStack> predicate1 = predicate;
+                predicate = s -> predicate1.test(s) && nbtMatchers.stream().allMatch(p -> p.test(s.getTagCompound()));
             }
         }
 
@@ -679,12 +690,12 @@ public class AuxFunction
 
             if (energy != null)
             {
-                Predicate<ItemStack> finalTest = test;
-                test = s -> finalTest.test(s) && energy.test(getEnergy(s));
+                Predicate<ItemStack> predicate1 = predicate;
+                predicate = s -> predicate1.test(s) && energy.test(getEnergy(s));
             }
         }
 
-        return test;
+        return predicate;
     }
 
     /**
@@ -696,8 +707,8 @@ public class AuxFunction
     {
         if (itemStack.hasCapability(CapabilityEnergy.ENERGY, null))
         {
-            IEnergyStorage capability = itemStack.getCapability(CapabilityEnergy.ENERGY, null);
-            return capability.getEnergyStored();
+            IEnergyStorage iEnergyStorage = itemStack.getCapability(CapabilityEnergy.ENERGY, null);
+            return iEnergyStorage.getEnergyStored();
         }
 
         return 0;
@@ -707,27 +718,28 @@ public class AuxFunction
      *
      * @param world
      * @param blockPos
-     * @param side
+     * @param enumFacing
      * @param predicateItemStack
      * @return
      */
-    public static boolean contains(World world, BlockPos blockPos, @Nullable EnumFacing side, @Nonnull List<Predicate<ItemStack>> predicateItemStack)
+    public static boolean contains(World world, BlockPos blockPos,
+                                   @Nullable EnumFacing enumFacing, @Nonnull List<Predicate<ItemStack>> predicateItemStack)
     {
         TileEntity tileEntity = world.getTileEntity(blockPos);
 
-        if (tileEntity != null && tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side))
+        if (tileEntity != null && tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, enumFacing))
         {
-            IItemHandler handler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, side);
+            IItemHandler iItemHandler = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, enumFacing);
 
-            for (int i = 0; i < Objects.requireNonNull(handler).getSlots() ; i++)
+            for (int i = 0; i < Objects.requireNonNull(iItemHandler).getSlots() ; i++)
             {
-                ItemStack stack = handler.getStackInSlot(i);
+                ItemStack itemStack = iItemHandler.getStackInSlot(i);
 
-                if (!stack.isEmpty())
+                if (!itemStack.isEmpty())
                 {
-                    for (Predicate<ItemStack> matcher : predicateItemStack)
+                    for (Predicate<ItemStack> itemStackPredicate : predicateItemStack)
                     {
-                        if (matcher.test(stack))
+                        if (itemStackPredicate.test(itemStack))
                         {
                             return true;
                         }
@@ -743,17 +755,17 @@ public class AuxFunction
      *
      * @param world
      * @param blockPos
-     * @param side
+     * @param enumFacing
      * @return
      */
-    public static int getEnergy(World world, BlockPos blockPos, @Nullable EnumFacing side)
+    public static int getEnergy(World world, BlockPos blockPos, @Nullable EnumFacing enumFacing)
     {
         TileEntity tileEntity = world.getTileEntity(blockPos);
 
-        if (tileEntity != null && tileEntity.hasCapability(CapabilityEnergy.ENERGY, side))
+        if (tileEntity != null && tileEntity.hasCapability(CapabilityEnergy.ENERGY, enumFacing))
         {
-            IEnergyStorage energy = tileEntity.getCapability(CapabilityEnergy.ENERGY, side);
-            return energy.getEnergyStored();
+            IEnergyStorage iEnergyStorage = tileEntity.getCapability(CapabilityEnergy.ENERGY, enumFacing);
+            return iEnergyStorage.getEnergyStored();
         }
 
         return 0;
@@ -766,21 +778,21 @@ public class AuxFunction
      */
     public static List<Predicate<NBTTagCompound>> getNbtMatchers(JsonObject jsonObject)
     {
-        JsonArray nbtArray = jsonObject.getAsJsonArray("nbt");
+        JsonArray jsonArray = jsonObject.getAsJsonArray("nbt");
 
-        return getNbtMatchers(nbtArray);
+        return getNbtMatchers(jsonArray);
     }
 
     /**
      *
-     * @param nbtArray
+     * @param jsonArray
      * @return
      */
-    public static List<Predicate<NBTTagCompound>> getNbtMatchers(JsonArray nbtArray)
+    public static List<Predicate<NBTTagCompound>> getNbtMatchers(JsonArray jsonArray)
     {
         List<Predicate<NBTTagCompound>> nbtMatchers = new ArrayList<>();
 
-        for (JsonElement element : nbtArray)
+        for (JsonElement element : jsonArray)
         {
             JsonObject o = element.getAsJsonObject();
             String tag = o.get("tag").getAsString();
@@ -793,13 +805,13 @@ public class AuxFunction
                 {
                     if (tagCompound != null)
                     {
-                        NBTTagList list = tagCompound.getTagList(tag, Constants.NBT.TAG_COMPOUND);
+                        NBTTagList nbtTagList = tagCompound.getTagList(tag, Constants.NBT.TAG_COMPOUND);
 
-                        for (NBTBase base : list)
+                        for (NBTBase nbtBase : nbtTagList)
                         {
                             for (Predicate<NBTTagCompound> matcher : Objects.requireNonNull(subMatchers))
                             {
-                                if (matcher.test((NBTTagCompound) base))
+                                if (matcher.test((NBTTagCompound) nbtBase))
                                 {
                                     return true;
                                 }
@@ -811,14 +823,14 @@ public class AuxFunction
             }
             else
             {
-                Predicate<Integer> nbt = getExpression(o.get("value"));
+                Predicate<Integer> integerPredicate = getExpression(o.get("value"));
 
-                if (nbt == null)
+                if (integerPredicate == null)
                 {
                     return null;
                 }
 
-                nbtMatchers.add(tagCompound -> nbt.test(tagCompound.getInteger(tag)));
+                nbtMatchers.add(tagCompound -> integerPredicate.test(tagCompound.getInteger(tag)));
             }
         }
 
@@ -882,12 +894,12 @@ public class AuxFunction
 
         for (String json : itemNames)
         {
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(json);
+            JsonParser jsonParser = new JsonParser();
+            JsonElement jsonElement = jsonParser.parse(json);
 
-            if (element.isJsonPrimitive())
+            if (jsonElement.isJsonPrimitive())
             {
-                String name = element.getAsString();
+                String name = jsonElement.getAsString();
                 Pair<Float, ItemStack> pair = ItemStackBuilder.parseStackWithFactor(name);
 
                 if (pair.getValue().isEmpty())
@@ -899,10 +911,10 @@ public class AuxFunction
                     items.add(pair);
                 }
             }
-            else if (element.isJsonObject())
+            else if (jsonElement.isJsonObject())
             {
-                JsonObject obj = element.getAsJsonObject();
-                Pair<Float, ItemStack> pair = ItemStackBuilder.parseStackWithFactor(obj);
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                Pair<Float, ItemStack> pair = ItemStackBuilder.parseStackWithFactor(jsonObject);
 
                 if (pair != null)
                 {

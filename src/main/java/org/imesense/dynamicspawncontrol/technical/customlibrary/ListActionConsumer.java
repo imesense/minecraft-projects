@@ -61,181 +61,181 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    protected void addActions(AttributeMap<?> map)
+    protected void addActions(AttributeMap<?> attributeMap)
     {
-        if (map.has(ACTION_MESSAGE))
+        if (attributeMap.has(ACTION_MESSAGE))
         {
-            this.addDoMessageAction(map);
+            this.addDoMessageAction(attributeMap);
         }
 
-        if (map.has(ACTION_ANGRY))
+        if (attributeMap.has(ACTION_ANGRY))
         {
-            this.addAngryAction(map);
+            this.addAngryAction(attributeMap);
         }
 
-        if (map.has(ACTION_HELD_ITEM))
+        if (attributeMap.has(ACTION_HELD_ITEM))
         {
-            this.addHeldItem(map);
+            this.addHeldItem(attributeMap);
         }
 
-        if (map.has(ACTION_ARMOR_BOOTS))
+        if (attributeMap.has(ACTION_ARMOR_BOOTS))
         {
-            this.addArmorItem(map, ACTION_ARMOR_BOOTS, EntityEquipmentSlot.FEET);
+            this.addArmorItem(attributeMap, ACTION_ARMOR_BOOTS, EntityEquipmentSlot.FEET);
         }
 
-        if (map.has(ACTION_ARMOR_LEGS))
+        if (attributeMap.has(ACTION_ARMOR_LEGS))
         {
-            this.addArmorItem(map, ACTION_ARMOR_LEGS, EntityEquipmentSlot.LEGS);
+            this.addArmorItem(attributeMap, ACTION_ARMOR_LEGS, EntityEquipmentSlot.LEGS);
         }
 
-        if (map.has(ACTION_ARMOR_HELMET))
+        if (attributeMap.has(ACTION_ARMOR_HELMET))
         {
-            this.addArmorItem(map, ACTION_ARMOR_HELMET, EntityEquipmentSlot.HEAD);
+            this.addArmorItem(attributeMap, ACTION_ARMOR_HELMET, EntityEquipmentSlot.HEAD);
         }
 
-        if (map.has(ACTION_ARMOR_CHEST))
+        if (attributeMap.has(ACTION_ARMOR_CHEST))
         {
-            this.addArmorItem(map, ACTION_ARMOR_CHEST, EntityEquipmentSlot.CHEST);
+            this.addArmorItem(attributeMap, ACTION_ARMOR_CHEST, EntityEquipmentSlot.CHEST);
         }
 
-        if (map.has(ACTION_SET_NBT))
+        if (attributeMap.has(ACTION_SET_NBT))
         {
-            this.addMobNBT(map);
+            this.addMobNBT(attributeMap);
         }
 
-        if (map.has(ACTION_HEALTH_MULTIPLY) && map.has(ACTION_HEALTH_ADD))
+        if (attributeMap.has(ACTION_HEALTH_MULTIPLY) && attributeMap.has(ACTION_HEALTH_ADD))
         {
-            this.addHealthAction(map);
+            this.addHealthAction(attributeMap);
         }
 
-        if (map.has(ACTION_SPEED_MULTIPLY) && map.has(ACTION_SPEED_ADD))
+        if (attributeMap.has(ACTION_SPEED_MULTIPLY) && attributeMap.has(ACTION_SPEED_ADD))
         {
-            this.addSpeedAction(map);
+            this.addSpeedAction(attributeMap);
         }
 
-        if (map.has(ACTION_DAMAGE_MULTIPLY) && map.has(ACTION_DAMAGE_ADD))
+        if (attributeMap.has(ACTION_DAMAGE_MULTIPLY) && attributeMap.has(ACTION_DAMAGE_ADD))
         {
-            this.addDamageAction(map);
+            this.addDamageAction(attributeMap);
         }
 
-        if (map.has(ACTION_CUSTOM_NAME))
+        if (attributeMap.has(ACTION_CUSTOM_NAME))
         {
-            this.addCustomName(map);
+            this.addCustomName(attributeMap);
         }
 
-        if (map.has(ACTION_POTION))
+        if (attributeMap.has(ACTION_POTION))
         {
-            this.addPotionsAction(map);
+            this.addPotionsAction(attributeMap);
         }
 
-        if (map.has(ACTION_GIVE))
+        if (attributeMap.has(ACTION_GIVE))
         {
-            this.addGiveAction(map);
+            this.addGiveAction(attributeMap);
         }
 
-        if (map.has(ACTION_DROP))
+        if (attributeMap.has(ACTION_DROP))
         {
-            this.addDropAction(map);
+            this.addDropAction(attributeMap);
         }
 
-        if (map.has(ACTION_COMMAND))
+        if (attributeMap.has(ACTION_COMMAND))
         {
-            this.addCommandAction(map);
+            this.addCommandAction(attributeMap);
         }
 
-        if (map.has(ACTION_FIRE))
+        if (attributeMap.has(ACTION_FIRE))
         {
-            this.addFireAction(map);
+            this.addFireAction(attributeMap);
         }
 
-        if (map.has(ACTION_EXPLOSION))
+        if (attributeMap.has(ACTION_EXPLOSION))
         {
-            this.addExplosionAction(map);
+            this.addExplosionAction(attributeMap);
         }
 
-        if (map.has(ACTION_CLEAR))
+        if (attributeMap.has(ACTION_CLEAR))
         {
-            this.addClearAction(map);
+            this.addClearAction(attributeMap);
         }
 
-        if (map.has(ACTION_DAMAGE))
+        if (attributeMap.has(ACTION_DAMAGE))
         {
-            this.addDoDamageAction(map);
+            this.addDoDamageAction(attributeMap);
         }
 
-        if (map.has(ACTION_SET_BLOCK))
+        if (attributeMap.has(ACTION_SET_BLOCK))
         {
-            this.addSetBlockAction(map);
+            this.addSetBlockAction(attributeMap);
         }
 
-        if (map.has(ACTION_SET_HELD_ITEM))
+        if (attributeMap.has(ACTION_SET_HELD_ITEM))
         {
-            this.addSetHeldItemAction(map);
+            this.addSetHeldItemAction(attributeMap);
         }
 
-        if (map.has(ACTION_SET_HELD_AMOUNT))
+        if (attributeMap.has(ACTION_SET_HELD_AMOUNT))
         {
-            this.addSetHeldAmountAction(map);
+            this.addSetHeldAmountAction(attributeMap);
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addDoMessageAction(AttributeMap<?> map)
+    private void addDoMessageAction(AttributeMap<?> attributeMap)
     {
-        Object message = map.get(ACTION_MESSAGE);
+        Object message = attributeMap.get(ACTION_MESSAGE);
 
         this.ACTIONS.add(event ->
         {
-            EntityPlayerMP player = event.getPlayer();
+            EntityPlayerMP entityPlayerMP = event.getPlayer();
 
-            if (player == null)
+            if (entityPlayerMP == null)
             {
-                player = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(event.getEntityLiving(), 100);
+                entityPlayerMP = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(event.getEntityLiving(), 100.00);
             }
 
-            if (player != null)
+            if (entityPlayerMP != null)
             {
-                player.sendStatusMessage(new TextComponentString((String)message), false);
+                entityPlayerMP.sendStatusMessage(new TextComponentString((String) message), false);
             }
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    public void addAngryAction(AttributeMap<?> map)
+    public void addAngryAction(AttributeMap<?> attributeMap)
     {
-        Object actionAngry = map.get(ACTION_ANGRY);
+        Object actionAngry = attributeMap.get(ACTION_ANGRY);
 
         if ((Boolean)actionAngry)
         {
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase entityLiving = event.getEntityLiving();
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-                if (entityLiving instanceof EntityPigZombie)
+                if (entityLivingBase instanceof EntityPigZombie)
                 {
-                    EntityPigZombie pigZombie = (EntityPigZombie) entityLiving;
-                    EntityPlayerMP player = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(entityLiving, 50);
+                    EntityPigZombie entityPigZombie = (EntityPigZombie) entityLivingBase;
+                    EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(entityLivingBase, 50.00);
 
-                    if (player != null)
+                    if (entityPlayerMP != null)
                     {
-                        pigZombie.setRevengeTarget(player);
+                        entityPigZombie.setRevengeTarget(entityPlayerMP);
                     }
                 }
-                else if (entityLiving instanceof EntityLiving)
+                else if (entityLivingBase instanceof EntityLiving)
                 {
-                    EntityPlayerMP player = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(entityLiving, 50);
+                    EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.getWorld().getClosestPlayerToEntity(entityLivingBase, 50.00);
 
-                    if (player != null)
+                    if (entityPlayerMP != null)
                     {
-                        ((EntityLiving) entityLiving).setAttackTarget(player);
+                        ((EntityLiving) entityLivingBase).setAttackTarget(entityPlayerMP);
                     }
                 }
             });
@@ -244,11 +244,11 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addHeldItem(AttributeMap<?> map)
+    private void addHeldItem(AttributeMap<?> attributeMap)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(map.getList(ACTION_HELD_ITEM));
+        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(attributeMap.getList(ACTION_HELD_ITEM));
 
         if (items.isEmpty())
         {
@@ -257,7 +257,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
         if (items.size() == 1)
         {
-            ItemStack item = items.get(0).getRight();
+            ItemStack itemStack = items.get(0).getRight();
 
             this.ACTIONS.add(event ->
             {
@@ -267,15 +267,17 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                 {
                     if (entityLiving instanceof EntityEnderman)
                     {
-                        if (item.getItem() instanceof ItemBlock)
+                        if (itemStack.getItem() instanceof ItemBlock)
                         {
-                            ItemBlock b = (ItemBlock) item.getItem();
-                            ((EntityEnderman) entityLiving).setHeldBlockState(b.getBlock().getStateFromMeta(b.getMetadata(item.getItemDamage())));
+                            ItemBlock itemBlock = (ItemBlock) itemStack.getItem();
+
+                            ((EntityEnderman) entityLiving).setHeldBlockState(itemBlock.getBlock().
+                                    getStateFromMeta(itemBlock.getMetadata(itemStack.getItemDamage())));
                         }
                     }
                     else
                     {
-                        entityLiving.setHeldItem(EnumHand.MAIN_HAND, item.copy());
+                        entityLiving.setHeldItem(EnumHand.MAIN_HAND, itemStack.copy());
                     }
                 }
             });
@@ -286,23 +288,25 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase entityLiving = event.getEntityLiving();
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-                if (entityLiving != null)
+                if (entityLivingBase != null)
                 {
-                    ItemStack item = AuxFunction.getRandomItem(items, total);
+                    ItemStack itemStack = AuxFunction.getRandomItem(items, total);
 
-                    if (entityLiving instanceof EntityEnderman)
+                    if (entityLivingBase instanceof EntityEnderman)
                     {
-                        if (item.getItem() instanceof ItemBlock)
+                        if (itemStack.getItem() instanceof ItemBlock)
                         {
-                            ItemBlock b = (ItemBlock) item.getItem();
-                            ((EntityEnderman) entityLiving).setHeldBlockState(b.getBlock().getStateFromMeta(b.getMetadata(item.getItemDamage())));
+                            ItemBlock itemBlock = (ItemBlock) itemStack.getItem();
+
+                            ((EntityEnderman) entityLivingBase).setHeldBlockState(itemBlock.getBlock().
+                                    getStateFromMeta(itemBlock.getMetadata(itemStack.getItemDamage())));
                         }
                     }
                     else
                     {
-                        entityLiving.setHeldItem(EnumHand.MAIN_HAND, item.copy());
+                        entityLivingBase.setHeldItem(EnumHand.MAIN_HAND, itemStack.copy());
                     }
                 }
             });
@@ -311,13 +315,14 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
-     * @param itemKey
-     * @param slot
+     * @param attributeMap
+     * @param stringAttributeKey
+     * @param entityEquipmentSlot
      */
-    private void addArmorItem(AttributeMap<?> map, AttributeKey<String> itemKey, EntityEquipmentSlot slot)
+    private void addArmorItem(AttributeMap<?> attributeMap, AttributeKey<String> stringAttributeKey, EntityEquipmentSlot entityEquipmentSlot)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(map.getList(itemKey));
+        List<Pair<Float, ItemStack>> items =
+                AuxFunction.getItemsWeighted(attributeMap.getList(stringAttributeKey));
 
         if (items.isEmpty())
         {
@@ -326,15 +331,15 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
         if (items.size() == 1)
         {
-            ItemStack item = items.get(0).getRight();
+            ItemStack itemStack = items.get(0).getRight();
 
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase entityLiving = event.getEntityLiving();
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-                if (entityLiving != null)
+                if (entityLivingBase != null)
                 {
-                    entityLiving.setItemStackToSlot(slot, item.copy());
+                    entityLivingBase.setItemStackToSlot(entityEquipmentSlot, itemStack.copy());
                 }
             });
         }
@@ -344,11 +349,11 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase entityLiving = event.getEntityLiving();
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-                if (entityLiving != null)
+                if (entityLivingBase != null)
                 {
-                    entityLiving.setItemStackToSlot(slot, AuxFunction.getRandomItem(items, total));
+                    entityLivingBase.setItemStackToSlot(entityEquipmentSlot, AuxFunction.getRandomItem(items, total));
                 }
             });
         }
@@ -356,19 +361,19 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addMobNBT(AttributeMap<?> map)
+    private void addMobNBT(AttributeMap<?> attributeMap)
     {
-        String mobNbt = (String)map.get(ACTION_SET_NBT);
+        String mobNbt = (String)attributeMap.get(ACTION_SET_NBT);
 
         if (mobNbt != null)
         {
-            NBTTagCompound tagCompound;
+            NBTTagCompound nbtTagCompound;
 
             try
             {
-                tagCompound = JsonToNBT.getTagFromJson(mobNbt);
+                nbtTagCompound = JsonToNBT.getTagFromJson(mobNbt);
             }
             catch (NBTException exception)
             {
@@ -378,35 +383,37 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase entityLiving = event.getEntityLiving();
-                entityLiving.readEntityFromNBT(tagCompound);
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
+                entityLivingBase.readEntityFromNBT(nbtTagCompound);
             });
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addHealthAction(AttributeMap<?> map)
+    private void addHealthAction(AttributeMap<?> attributeMap)
     {
-        Object multiple = map.has(ACTION_HEALTH_MULTIPLY) ? map.get(ACTION_HEALTH_MULTIPLY) : 1.f;
-        Object added = map.has(ACTION_HEALTH_ADD) ? map.get(ACTION_HEALTH_ADD) : 0.f;
+        Object multiple = attributeMap.has(ACTION_HEALTH_MULTIPLY) ? attributeMap.get(ACTION_HEALTH_MULTIPLY) : 1.f;
+        Object added = attributeMap.has(ACTION_HEALTH_ADD) ? attributeMap.get(ACTION_HEALTH_ADD) : 0.f;
 
         this.ACTIONS.add(event ->
         {
-            EntityLivingBase entityLiving = event.getEntityLiving();
+            EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-            if (entityLiving != null)
+            if (entityLivingBase != null)
             {
-                if (!entityLiving.getTags().contains("ctrlHealth"))
+                if (!entityLivingBase.getTags().contains("ctrlHealth"))
                 {
-                    IAttributeInstance entityAttribute = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+                    IAttributeInstance iAttributeInstance = entityLivingBase.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
 
-                    double newMax = entityAttribute.getBaseValue() * (Float)multiple + (Float)added;
-                    entityAttribute.setBaseValue(newMax);
-                    entityLiving.setHealth((float)newMax);
-                    entityLiving.addTag("ctrlHealth");
+                    double newMax = iAttributeInstance.getBaseValue() * (Float) multiple + (Float) added;
+
+                    iAttributeInstance.setBaseValue(newMax);
+
+                    entityLivingBase.setHealth((float)newMax);
+                    entityLivingBase.addTag("ctrlHealth");
                 }
             }
         });
@@ -414,26 +421,26 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addSpeedAction(AttributeMap<?> map)
+    private void addSpeedAction(AttributeMap<?> attributeMap)
     {
-        Object multiple = map.has(ACTION_SPEED_MULTIPLY) ? map.get(ACTION_SPEED_MULTIPLY) : 1.f;
-        Object added = map.has(ACTION_SPEED_ADD) ? map.get(ACTION_SPEED_ADD) : 0.f;
+        Object multiple = attributeMap.has(ACTION_SPEED_MULTIPLY) ? attributeMap.get(ACTION_SPEED_MULTIPLY) : 1.f;
+        Object added = attributeMap.has(ACTION_SPEED_ADD) ? attributeMap.get(ACTION_SPEED_ADD) : 0.f;
 
         this.ACTIONS.add(event ->
         {
-            EntityLivingBase entityLiving = event.getEntityLiving();
+            EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-            if (entityLiving != null)
+            if (entityLivingBase != null)
             {
-                if (!entityLiving.getTags().contains("ctrlSpeed"))
+                if (!entityLivingBase.getTags().contains("ctrlSpeed"))
                 {
-                    IAttributeInstance entityAttribute = entityLiving.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+                    IAttributeInstance iAttributeInstance = entityLivingBase.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
 
-                    double newMax = entityAttribute.getBaseValue() * (Float)multiple + (Float)added;
-                    entityAttribute.setBaseValue(newMax);
-                    entityLiving.addTag("ctrlSpeed");
+                    double newMax = iAttributeInstance.getBaseValue() * (Float) multiple + (Float) added;
+                    iAttributeInstance.setBaseValue(newMax);
+                    entityLivingBase.addTag("ctrlSpeed");
                 }
             }
         });
@@ -441,12 +448,12 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addDamageAction(AttributeMap<?> map)
+    private void addDamageAction(AttributeMap<?> attributeMap)
     {
-        Object multiple = map.has(ACTION_DAMAGE_MULTIPLY) ? map.get(ACTION_DAMAGE_MULTIPLY) : 1.f;
-        Object added = map.has(ACTION_DAMAGE_ADD) ? map.get(ACTION_DAMAGE_ADD) : 0.f;
+        Object multiple = attributeMap.has(ACTION_DAMAGE_MULTIPLY) ? attributeMap.get(ACTION_DAMAGE_MULTIPLY) : 1.f;
+        Object added = attributeMap.has(ACTION_DAMAGE_ADD) ? attributeMap.get(ACTION_DAMAGE_ADD) : 0.f;
 
         this.ACTIONS.add(event ->
         {
@@ -456,10 +463,10 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
             {
                 if (!entityLiving.getTags().contains("ctrlDamage"))
                 {
-                    IAttributeInstance entityAttribute = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+                    IAttributeInstance iAttributeInstance = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 
-                    double newMax = entityAttribute.getBaseValue() * (Float)multiple + (Float)added;
-                    entityAttribute.setBaseValue(newMax);
+                    double newMax = iAttributeInstance.getBaseValue() * (Float) multiple + (Float) added;
+                    iAttributeInstance.setBaseValue(newMax);
                     entityLiving.addTag("ctrlDamage");
                 }
             }
@@ -478,21 +485,21 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         {
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase entityLiving = event.getEntityLiving();
-                entityLiving.setCustomNameTag((String)customName);
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
+                entityLivingBase.setCustomNameTag((String) customName);
             });
         }
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addPotionsAction(AttributeMap<?> map)
+    private void addPotionsAction(AttributeMap<?> attributeMap)
     {
         List<AuxFunction.PotionEffectWithChance> effects = new ArrayList<>();
 
-        for (String actionPotion : map.getList(ACTION_POTION))
+        for (String actionPotion : attributeMap.getList(ACTION_POTION))
         {
             String[] split = Arrays.stream(StringUtils.split(actionPotion, ','))
                     .map(String::trim)
@@ -500,7 +507,9 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
             if (split.length < 3 || split.length > 4)
             {
-                Log.writeDataToLogFile(2, "Bad potion specifier '" + actionPotion + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                Log.writeDataToLogFile(2, "Bad potion specifier '" +
+                        actionPotion + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+
                 continue;
             }
 
@@ -513,7 +522,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
             }
 
             int duration, amplifier;
-            double chance = 1.0D; // Default to 100% chance
+            double chance = 1.0D;
 
             try
             {
@@ -538,9 +547,9 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         {
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase living = event.getEntityLiving();
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-                if (living != null)
+                if (entityLivingBase != null)
                 {
                     for (AuxFunction.PotionEffectWithChance effectWithChance : effects)
                     {
@@ -548,7 +557,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                         {
                             PotionEffect effect = effectWithChance.Effect;
                             PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
-                            living.addPotionEffect(newEffect);
+                            entityLivingBase.addPotionEffect(newEffect);
                         }
                     }
                 }
@@ -558,11 +567,11 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addGiveAction(AttributeMap<?> map)
+    private void addGiveAction(AttributeMap<?> attributeMap)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(map.getList(ACTION_GIVE));
+        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(attributeMap.getList(ACTION_GIVE));
 
         if (items.isEmpty())
         {
@@ -571,17 +580,17 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
         if (items.size() == 1)
         {
-            ItemStack item = items.get(0).getRight();
+            ItemStack itemStack = items.get(0).getRight();
 
             this.ACTIONS.add(event ->
             {
-                EntityPlayerMP player = event.getPlayer();
+                EntityPlayerMP entityPlayerMP = event.getPlayer();
 
-                if (player != null)
+                if (entityPlayerMP != null)
                 {
-                    if (!player.inventory.addItemStackToInventory(item.copy()))
+                    if (!entityPlayerMP.inventory.addItemStackToInventory(itemStack.copy()))
                     {
-                        player.entityDropItem(item.copy(), 1.05f);
+                        entityPlayerMP.entityDropItem(itemStack.copy(), 1.05f);
                     }
                 }
             });
@@ -592,15 +601,15 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                EntityPlayerMP player = event.getPlayer();
+                EntityPlayerMP entityPlayerMP = event.getPlayer();
 
-                if (player != null)
+                if (entityPlayerMP != null)
                 {
-                    ItemStack item = AuxFunction.getRandomItem(items, total);
+                    ItemStack itemStack = AuxFunction.getRandomItem(items, total);
 
-                    if (!player.inventory.addItemStackToInventory(item.copy()))
+                    if (!entityPlayerMP.inventory.addItemStackToInventory(itemStack.copy()))
                     {
-                        player.entityDropItem(item.copy(), 1.05f);
+                        entityPlayerMP.entityDropItem(itemStack.copy(), 1.05f);
                     }
                 }
             });
@@ -609,11 +618,11 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addDropAction(AttributeMap<?> map)
+    private void addDropAction(AttributeMap<?> attributeMap)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(map.getList(ACTION_DROP));
+        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(attributeMap.getList(ACTION_DROP));
 
         if (items.isEmpty())
         {
@@ -622,12 +631,12 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
         if (items.size() == 1)
         {
-            ItemStack item = items.get(0).getRight();
+            ItemStack itemStack = items.get(0).getRight();
 
             this.ACTIONS.add(event ->
             {
-                BlockPos pos = event.getPosition();
-                EntityItem entityItem = new EntityItem(event.getWorld(), pos.getX(), pos.getY(), pos.getZ(), item.copy());
+                BlockPos blockPos = event.getPosition();
+                EntityItem entityItem = new EntityItem(event.getWorld(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack.copy());
                 event.getWorld().spawnEntity(entityItem);
             });
         }
@@ -637,9 +646,9 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                BlockPos pos = event.getPosition();
-                ItemStack item = AuxFunction.getRandomItem(items, total);
-                EntityItem entityItem = new EntityItem(event.getWorld(), pos.getX(), pos.getY(), pos.getZ(), item.copy());
+                BlockPos blockPos = event.getPosition();
+                ItemStack itemStack = AuxFunction.getRandomItem(items, total);
+                EntityItem entityItem = new EntityItem(event.getWorld(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack.copy());
                 event.getWorld().spawnEntity(entityItem);
             });
         }
@@ -647,50 +656,51 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addCommandAction(AttributeMap<?> map)
+    private void addCommandAction(AttributeMap<?> attributeMap)
     {
-        Object command = map.get(ACTION_COMMAND);
+        Object command = attributeMap.get(ACTION_COMMAND);
 
         this.ACTIONS.add(event ->
         {
-            EntityPlayerMP player = event.getPlayer();
-            MinecraftServer server = event.getWorld().getMinecraftServer();
+            EntityPlayerMP entityPlayerMP = event.getPlayer();
+            MinecraftServer minecraftServer = event.getWorld().getMinecraftServer();
 
-            assert server != null;
+            assert minecraftServer != null;
 
-            server.commandManager.executeCommand(player != null ? player : new Sender(event.getWorld(), null), (String)command);
+            minecraftServer.commandManager.executeCommand(entityPlayerMP != null ? entityPlayerMP :
+                    new Sender(event.getWorld(), null), (String) command);
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addFireAction(AttributeMap<?> map)
+    private void addFireAction(AttributeMap<?> attributeMap)
     {
-        Object fireAction = map.get(ACTION_FIRE);
+        Object fireAction = attributeMap.get(ACTION_FIRE);
 
         this.ACTIONS.add(event ->
         {
-            EntityLivingBase living = event.getEntityLiving();
+            EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-            if (living != null)
+            if (entityLivingBase != null)
             {
-                living.attackEntityFrom(DamageSource.ON_FIRE, 0.1f);
-                living.setFire((Integer)fireAction);
+                entityLivingBase.attackEntityFrom(DamageSource.ON_FIRE, 0.1f);
+                entityLivingBase.setFire((Integer) fireAction);
             }
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addExplosionAction(AttributeMap<?> map)
+    private void addExplosionAction(AttributeMap<?> attributeMap)
     {
-        String fireAction = (String)map.get(ACTION_EXPLOSION);
+        String fireAction = (String) attributeMap.get(ACTION_EXPLOSION);
         String[] split = StringUtils.split(fireAction, ",");
 
         float strength = 1.0f;
@@ -701,6 +711,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         try
         {
             strength = Float.parseFloat(split[0]);
+
             flaming = "1".equalsIgnoreCase(split[1]) || "true".equals(split[1].toLowerCase()) || "yes".equals(split[1].toLowerCase());
             smoking = "1".equalsIgnoreCase(split[2]) || "true".equals(split[2].toLowerCase()) || "yes".equals(split[2].toLowerCase());
         }
@@ -715,32 +726,33 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
         this.ACTIONS.add(event ->
         {
-            BlockPos pos = event.getPosition();
+            BlockPos blockPos = event.getPosition();
 
-            if (pos != null)
+            if (blockPos != null)
             {
-                event.getWorld().newExplosion(null, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, finalStrength, finalFlaming, finalSmoking);
+                event.getWorld().newExplosion(null,
+                        blockPos.getX() + .5, blockPos.getY() + .5, blockPos.getZ() + .5, finalStrength, finalFlaming, finalSmoking);
             }
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addClearAction(AttributeMap<?> map)
+    private void addClearAction(AttributeMap<?> attributeMap)
     {
-        Object clear = map.get(ACTION_CLEAR);
+        Object clear = attributeMap.get(ACTION_CLEAR);
 
-        if ((Boolean)clear)
+        if ((Boolean) clear)
         {
             this.ACTIONS.add(event ->
             {
-                EntityLivingBase living = event.getEntityLiving();
+                EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-                if (living != null)
+                if (entityLivingBase != null)
                 {
-                    living.clearActivePotions();
+                    entityLivingBase.clearActivePotions();
                 }
             });
         }
@@ -748,15 +760,15 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addDoDamageAction(AttributeMap<?> map)
+    private void addDoDamageAction(AttributeMap<?> attributeMap)
     {
-        String damage = (String) map.get(ACTION_DAMAGE);
+        String damage = (String) attributeMap.get(ACTION_DAMAGE);
         String[] split = StringUtils.split(damage, "=");
-        DamageSource source = AuxFunction.DAMAGE_MAP.get(split[0]);
+        DamageSource damageSource = AuxFunction.DAMAGE_MAP.get(split[0]);
 
-        if (source == null)
+        if (damageSource == null)
         {
             Log.writeDataToLogFile(2, "Can't find damage source '" + split[0] + "'!");
             return;
@@ -766,40 +778,40 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
         this.ACTIONS.add(event ->
         {
-            EntityLivingBase living = event.getEntityLiving();
+            EntityLivingBase entityLivingBase = event.getEntityLiving();
 
-            if (living != null)
+            if (entityLivingBase != null)
             {
-                living.attackEntityFrom(source, amount);
+                entityLivingBase.attackEntityFrom(damageSource, amount);
             }
         });
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addSetBlockAction(AttributeMap<?> map)
+    private void addSetBlockAction(AttributeMap<?> attributeMap)
     {
-        Function<SignalDataGetter, BlockPos> posFunction;
+        Function<SignalDataGetter, BlockPos> signalDataGetterBlockPosFunction;
 
-        if (map.has(BLOCK_OFFSET))
+        if (attributeMap.has(BLOCK_OFFSET))
         {
-            posFunction = (Function<SignalDataGetter, BlockPos>)
-                    AuxFunction.parseOffset((String)map.get(BLOCK_OFFSET));
+            signalDataGetterBlockPosFunction = (Function<SignalDataGetter, BlockPos>)
+                    AuxFunction.parseOffset((String) attributeMap.get(BLOCK_OFFSET));
         }
         else
         {
-            posFunction = event -> event.getPosition();
+            signalDataGetterBlockPosFunction = event -> event.getPosition();
         }
 
-        Object json = map.get(ACTION_SET_BLOCK);
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse((String)json);
+        Object object = attributeMap.get(ACTION_SET_BLOCK);
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse((String) object);
 
-        if (element.isJsonPrimitive())
+        if (jsonElement.isJsonPrimitive())
         {
-            String blockName = element.getAsString();
+            String blockName = jsonElement.getAsString();
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));
 
             if (block == null)
@@ -808,29 +820,29 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                 return;
             }
 
-            IBlockState state = block.getDefaultState();
+            IBlockState iBlockState = block.getDefaultState();
 
             this.ACTIONS.add(event ->
             {
-                BlockPos pos = posFunction.apply(event);
+                BlockPos blockPos = signalDataGetterBlockPosFunction.apply(event);
 
-                if (pos != null)
+                if (blockPos != null)
                 {
-                    event.getWorld().setBlockState(pos, state, 3);
+                    event.getWorld().setBlockState(blockPos, iBlockState, 3);
                 }
             });
         }
         else
         {
-            JsonObject obj = element.getAsJsonObject();
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (!obj.has("block"))
+            if (!jsonObject.has("block"))
             {
                 Log.writeDataToLogFile(2, "Block is not valid!");
                 return;
             }
 
-            String blockName = obj.get("block").getAsString();
+            String blockName = jsonObject.get("block").getAsString();
             Block block = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blockName));
 
             if (block == null)
@@ -839,37 +851,38 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                 return;
             }
 
-            IBlockState state = block.getDefaultState();
+            IBlockState iBlockState = block.getDefaultState();
 
-            if (obj.has("properties"))
+            if (jsonObject.has("properties"))
             {
-                JsonArray propArray = obj.get("properties").getAsJsonArray();
+                JsonArray propArray = jsonObject.get("properties").getAsJsonArray();
 
-                for (JsonElement el : propArray)
+                for (JsonElement jsonElement1 : propArray)
                 {
-                    JsonObject propObj = el.getAsJsonObject();
-                    String name = propObj.get("name").getAsString();
-                    String value = propObj.get("value").getAsString();
+                    JsonObject jsonObject1 = jsonElement1.getAsJsonObject();
 
-                    for (IProperty<?> key : state.getPropertyKeys())
+                    String name = jsonObject1.get("name").getAsString();
+                    String value = jsonObject1.get("value").getAsString();
+
+                    for (IProperty<?> iProperty : iBlockState.getPropertyKeys())
                     {
-                        if (name.equals(key.getName()))
+                        if (name.equals(iProperty.getName()))
                         {
-                            state = AuxFunction.set(state, key, value);
+                            iBlockState = AuxFunction.set(iBlockState, iProperty, value);
                         }
                     }
                 }
             }
 
-            IBlockState finalState = state;
+            IBlockState iBlockState1 = iBlockState;
 
             this.ACTIONS.add(event ->
             {
-                BlockPos pos = posFunction.apply(event);
+                BlockPos blockPos = signalDataGetterBlockPosFunction.apply(event);
 
-                if (pos != null)
+                if (blockPos != null)
                 {
-                    event.getWorld().setBlockState(pos, finalState, 3);
+                    event.getWorld().setBlockState(blockPos, iBlockState1, 3);
                 }
             });
         }
@@ -877,26 +890,26 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addSetHeldItemAction(AttributeMap<?> map)
+    private void addSetHeldItemAction(AttributeMap<?> attributeMap)
     {
-        Object json = map.get(ACTION_SET_HELD_ITEM);
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse((String)json);
-        ItemStack stack;
+        Object json = attributeMap.get(ACTION_SET_HELD_ITEM);
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse((String)json);
+        ItemStack itemStack;
 
-        if (element.isJsonPrimitive())
+        if (jsonElement.isJsonPrimitive())
         {
-            String name = element.getAsString();
-            stack = ItemStackBuilder.parseStack(name);
+            String name = jsonElement.getAsString();
+            itemStack = ItemStackBuilder.parseStack(name);
         }
-        else if (element.isJsonObject())
+        else if (jsonElement.isJsonObject())
         {
-            JsonObject obj = element.getAsJsonObject();
-            stack = ItemStackBuilder.parseStack(obj);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            itemStack = ItemStackBuilder.parseStack(jsonObject);
 
-            if (stack == null)
+            if (itemStack == null)
             {
                 return;
             }
@@ -907,7 +920,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
             return;
         }
 
-        this.ACTIONS.add(event -> event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, stack.copy()));
+        this.ACTIONS.add(event -> event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, itemStack.copy()));
     }
 
     /**
@@ -944,9 +957,9 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         {
             this.ACTIONS.add(event ->
             {
-                ItemStack item = event.getPlayer().getHeldItemMainhand();
-                item.setCount(finalSet);
-                event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, item.copy());
+                ItemStack itemStack = event.getPlayer().getHeldItemMainhand();
+                itemStack.setCount(finalSet);
+                event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, itemStack.copy());
             });
         }
         else
@@ -955,21 +968,21 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
             this.ACTIONS.add(event ->
             {
-                ItemStack item = event.getPlayer().getHeldItemMainhand();
+                ItemStack itemStack = event.getPlayer().getHeldItemMainhand();
 
-                int newCount = item.getCount() + finalAdd;
+                int newCount = itemStack.getCount() + finalAdd;
 
                 if (newCount < 0)
                 {
                     newCount = 0;
                 }
-                else if (newCount >= item.getMaxStackSize())
+                else if (newCount >= itemStack.getMaxStackSize())
                 {
-                    newCount = item.getMaxStackSize()-1;
+                    newCount = itemStack.getMaxStackSize()-1;
                 }
 
-                item.setCount(newCount);
-                event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, item.copy());
+                itemStack.setCount(newCount);
+                event.getPlayer().setHeldItem(EnumHand.MAIN_HAND, itemStack.copy());
             });
         }
     }

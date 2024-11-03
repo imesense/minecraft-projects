@@ -46,13 +46,13 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
     @Override
     public void saveToFile()
     {
-        Path configPath = Paths.get(this.nameConfig).getParent();
+        Path path = Paths.get(this.nameConfig).getParent();
 
-        if (Files.notExists(configPath))
+        if (Files.notExists(path))
         {
             try
             {
-                Files.createDirectories(configPath);
+                Files.createDirectories(path);
             }
             catch (IOException exception)
             {
@@ -64,9 +64,9 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter file = new FileWriter(this.nameConfig))
+        try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(jsonObject, file);
+            gson.toJson(jsonObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -80,9 +80,9 @@ public final class CfgCacheWorldGame extends CfgClassAbstract
     @Override
     public void loadFromFile()
     {
-        try (FileReader reader = new FileReader(this.nameConfig))
+        try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement jsonElement = new JsonParser().parse(reader);
+            JsonElement jsonElement = new JsonParser().parse(fileReader);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
         }
         catch (FileNotFoundException exception)

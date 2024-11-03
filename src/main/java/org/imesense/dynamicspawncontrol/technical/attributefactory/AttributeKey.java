@@ -20,28 +20,28 @@ public final class AttributeKey<T>
 
     /**
      *
-     * @param type
+     * @param attributeType
      * @param name
      */
-    public AttributeKey(@Nonnull AttributeType<T> type,
+    public AttributeKey(@Nonnull AttributeType<T> attributeType,
                         @Nonnull String name)
     {
-        this.TYPE = type;
+        this.TYPE = attributeType;
         this.NAME = name;
     }
 
     /**
      *
-     * @param type
+     * @param attributeType
      * @param code
      * @return
      * @param <T>
      */
     @Nonnull
-    public static <T> AttributeKey<T> create(@Nonnull AttributeType<T> type,
+    public static <T> AttributeKey<T> create(@Nonnull AttributeType<T> attributeType,
                                              @Nonnull String code)
     {
-        return new AttributeKey<>(type, code);
+        return new AttributeKey<>(attributeType, code);
     }
 
     /**

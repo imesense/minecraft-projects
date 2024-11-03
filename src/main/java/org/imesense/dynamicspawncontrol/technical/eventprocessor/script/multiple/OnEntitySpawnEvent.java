@@ -42,34 +42,35 @@ public final class OnEntitySpawnEvent
 
     /**
      *
-     * @param event
+     * @param checkSpawn
      */
     @SubscribeEvent
-    public synchronized void onUpdateEntitySpawnEvent_0(LivingSpawnEvent.CheckSpawn event)
+    public synchronized void onUpdateEntitySpawnEvent_0(LivingSpawnEvent.CheckSpawn checkSpawn)
     {
-        if (event.getWorld().isRemote)
+        if (checkSpawn.getWorld().isRemote)
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericSpawnCondition rule : ParserGenericJsonScript.GENERIC_SPAWN_CONDITIONS_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(checkSpawn))
             {
-                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_entity_spawn"))
+                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_entity_spawn"))
                 {
-                    Log.writeDataToLogFile(0, "ConfigsParser._GenericSpawnConditions. ID Rule: " + i + ": "
-                            + "entity: " + event.getEntity().getName()
-                            + " y: " + event.getY()
-                            + " biomes: " + event.getWorld().getBiome(new BlockPos(event.getX(), event.getY(), event.getZ())).getBiomeName());
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericSpawnConditions. ID Rule: " + atomicInteger + ": "
+                            + "entity: " + checkSpawn.getEntity().getName()
+                            + " y: " + checkSpawn.getY()
+                            + " biomes: " + checkSpawn.getWorld().getBiome(new BlockPos(
+                                    checkSpawn.getX(), checkSpawn.getY(), checkSpawn.getZ())).getBiomeName());
                 }
 
-                rule.action(event);
+                rule.action(checkSpawn);
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

@@ -36,45 +36,45 @@ public class RegistrationHelper
     {
         assert item != null;
 
-        ModelResourceLocation loc =
+        ModelResourceLocation modelResourceLocation =
                 new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory");
 
-        ModelLoader.setCustomModelResourceLocation(item, 0, loc);
+        ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
     }
 
     /**
      *
-     * @param registry
+     * @param iForgeRegistry
      * @param thing
      * @return
      * @param <T>
      */
-    public static <T extends IForgeRegistryEntry<T>> T regHelper(IForgeRegistry<T> registry, T thing)
+    public static <T extends IForgeRegistryEntry<T>> T regHelper(IForgeRegistry<T> iForgeRegistry, T thing)
     {
         assert thing != null;
 
-        registry.register(thing);
+        iForgeRegistry.register(thing);
         return thing;
     }
 
     /**
      *
      * @param thing
-     * @param loc
+     * @param resourceLocation
      * @param doTransKey
      * @param <T>
      */
-    public static <T extends IForgeRegistryEntry<T>> void nameHelper(T thing, ResourceLocation loc, boolean doTransKey)
+    public static <T extends IForgeRegistryEntry<T>> void nameHelper(T thing, ResourceLocation resourceLocation, boolean doTransKey)
     {
         assert thing != null;
 
-        assert loc != null;
+        assert resourceLocation != null;
 
-        thing.setRegistryName(loc);
+        thing.setRegistryName(resourceLocation);
 
         if (doTransKey)
         {
-            String dotName = loc.getResourceDomain() + "." + loc.getResourcePath();
+            String dotName = resourceLocation.getResourceDomain() + "." + resourceLocation.getResourcePath();
 
             if (thing instanceof Block)
             {

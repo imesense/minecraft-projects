@@ -55,45 +55,46 @@ public final class GenericBlockPlaceAction extends ListActionConsumer<SignalData
 
     /**
      *
-     * @param event
+     * @param placeEvent
      * @return
      */
     @Deprecated
-    public boolean match(BlockEvent.PlaceEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(BlockEvent.PlaceEvent placeEvent) { return RULE_EVALUATOR.match(placeEvent, EVENT_QUERY); }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private GenericBlockPlaceAction(AttributeMap<?> map)
+    private GenericBlockPlaceAction(AttributeMap<?> attributeMap)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericBlockPlaceAction.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericBlockPlaceAction.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
 
-        this.RESULT = RESULT_EVENTS.getResult(map);
+        this.RESULT = RESULT_EVENTS.getResult(attributeMap);
     }
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericBlockPlaceAction parse(JsonElement element)
+    public static GenericBlockPlaceAction parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<Object> map = ListActionStaticFactoryBlock.FACTORY.parse(element);
+            AttributeMap<Object> attributeMap = ListActionStaticFactoryBlock.FACTORY.parse(jsonElement);
 
-            return new GenericBlockPlaceAction(map);
+            return new GenericBlockPlaceAction(attributeMap);
         }
     }
 
@@ -105,115 +106,115 @@ public final class GenericBlockPlaceAction extends ListActionConsumer<SignalData
     {
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public int getY(BlockEvent.PlaceEvent data)
+        public int getY(BlockEvent.PlaceEvent placeEvent)
         {
-            return data.getPos().getY();
+            return placeEvent.getPos().getY();
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public World getWorld(BlockEvent.PlaceEvent data)
+        public World getWorld(BlockEvent.PlaceEvent placeEvent)
         {
-            return data.getWorld();
+            return placeEvent.getWorld();
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public BlockPos getPos(BlockEvent.PlaceEvent data)
+        public BlockPos getPos(BlockEvent.PlaceEvent placeEvent)
         {
-            return data.getPos();
+            return placeEvent.getPos();
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public Entity getEntity(BlockEvent.PlaceEvent data)
+        public Entity getEntity(BlockEvent.PlaceEvent placeEvent)
         {
-            return data.getPlayer();
+            return placeEvent.getPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public ItemStack getItem(BlockEvent.PlaceEvent data)
+        public ItemStack getItem(BlockEvent.PlaceEvent placeEvent)
         {
-            return data.getItemInHand();
+            return placeEvent.getItemInHand();
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public Entity getAttacker(BlockEvent.PlaceEvent data)
+        public Entity getAttacker(BlockEvent.PlaceEvent placeEvent)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(BlockEvent.PlaceEvent data)
+        public EntityPlayerMP getPlayer(BlockEvent.PlaceEvent placeEvent)
         {
-            return (EntityPlayerMP) data.getPlayer();
+            return (EntityPlayerMP) placeEvent.getPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public DamageSource getSource(BlockEvent.PlaceEvent data)
+        public DamageSource getSource(BlockEvent.PlaceEvent placeEvent)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param placeEvent
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(BlockEvent.PlaceEvent data)
+        public BlockPos getValidBlockPos(BlockEvent.PlaceEvent placeEvent)
         {
-            return data.getPos();
+            return placeEvent.getPos();
         }
     };
 
     /**
      *
-     * @param event
+     * @param placeEvent
      */
     @Deprecated
-    public void action(BlockEvent.PlaceEvent event)
+    public void action(BlockEvent.PlaceEvent placeEvent)
     {
         /**
          *
          */
-        SignalDataGetter eventBase = new SignalDataGetter()
+        SignalDataGetter signalDataGetter = new SignalDataGetter()
         {
             /**
              *
@@ -222,7 +223,7 @@ public final class GenericBlockPlaceAction extends ListActionConsumer<SignalData
             @Override
             public EntityLivingBase getEntityLiving()
             {
-                return event.getPlayer();
+                return placeEvent.getPlayer();
             }
 
             /**
@@ -232,7 +233,7 @@ public final class GenericBlockPlaceAction extends ListActionConsumer<SignalData
             @Override
             public EntityPlayerMP getPlayer()
             {
-                return (EntityPlayerMP) event.getPlayer();
+                return (EntityPlayerMP) placeEvent.getPlayer();
             }
 
             /**
@@ -242,7 +243,7 @@ public final class GenericBlockPlaceAction extends ListActionConsumer<SignalData
             @Override
             public World getWorld()
             {
-                return event.getWorld();
+                return placeEvent.getWorld();
             }
 
             /**
@@ -262,16 +263,16 @@ public final class GenericBlockPlaceAction extends ListActionConsumer<SignalData
             @Override
             public BlockPos getPosition()
             {
-                return event.getPos();
+                return placeEvent.getPos();
             }
         };
 
         /**
          *
          */
-        for (Consumer<SignalDataGetter> action : this.ACTIONS)
+        for (Consumer<SignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
         {
-            action.accept(eventBase);
+            signalDataGetterConsumer.accept(signalDataGetter);
         }
     }
 }

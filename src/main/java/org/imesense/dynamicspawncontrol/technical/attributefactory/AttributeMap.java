@@ -16,143 +16,143 @@ public final class AttributeMap<T>
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      */
-    public boolean has(@Nonnull AttributeKey<?> key)
+    public boolean has(@Nonnull AttributeKey<?> attributeKey)
     {
-        return this.VALUES.containsKey(key);
+        return this.VALUES.containsKey(attributeKey);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @param value
      */
-    public void set(@Nonnull AttributeKey<T> key, T value)
+    public void set(@Nonnull AttributeKey<T> attributeKey, T value)
     {
-        this.VALUES.put(key, value);
+        this.VALUES.put(attributeKey, value);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @param value
      */
-    public void setNonnull(@Nonnull AttributeKey<T> key, T value)
+    public void setNonnull(@Nonnull AttributeKey<T> attributeKey, T value)
     {
         if (value != null)
         {
-            this.VALUES.put(key, value);
+            this.VALUES.put(attributeKey, value);
         }
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      */
     @SuppressWarnings("unchecked")
-    public T get(@Nonnull AttributeKey<?> key)
+    public T get(@Nonnull AttributeKey<?> attributeKey)
     {
-        return (T) this.VALUES.get(key);
+        return (T) this.VALUES.get(attributeKey);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      */
     @SuppressWarnings("unchecked")
-    public Optional<T> getOptional(@Nonnull AttributeKey<T> key)
+    public Optional<T> getOptional(@Nonnull AttributeKey<T> attributeKey)
     {
-        return Optional.ofNullable((T) this.VALUES.get(key));
+        return Optional.ofNullable((T) this.VALUES.get(attributeKey));
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @param value
      */
     @SuppressWarnings("unchecked")
-    public void addList(@Nonnull AttributeKey<?> key, T value)
+    public void addList(@Nonnull AttributeKey<?> attributeKey, T value)
     {
-        if (!this.VALUES.containsKey(key))
+        if (!this.VALUES.containsKey(attributeKey))
         {
-            this.VALUES.put(key, new ArrayList<>());
+            this.VALUES.put(attributeKey, new ArrayList<>());
         }
 
-        List<T> list = (List<T>) this.VALUES.get(key);
+        List<T> list = (List<T>) this.VALUES.get(attributeKey);
         list.add(value);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @param value
      */
     @SuppressWarnings("unchecked")
-    public void addListNonnull(@Nonnull AttributeKey<T> key, T value)
+    public void addListNonnull(@Nonnull AttributeKey<T> attributeKey, T value)
     {
         if (value == null)
         {
             return;
         }
 
-        if (!this.VALUES.containsKey(key))
+        if (!this.VALUES.containsKey(attributeKey))
         {
-            this.VALUES.put(key, new ArrayList<>());
+            this.VALUES.put(attributeKey, new ArrayList<>());
         }
 
-        List<T> list = (List<T>) this.VALUES.get(key);
+        List<T> list = (List<T>) this.VALUES.get(attributeKey);
         list.add(value);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<String> getList(@Nonnull AttributeKey<?> key)
+    public List<String> getList(@Nonnull AttributeKey<?> attributeKey)
     {
-        if (!this.VALUES.containsKey(key))
+        if (!this.VALUES.containsKey(attributeKey))
         {
             return Collections.emptyList();
         }
 
-        return (List<String>) this.VALUES.get(key);
+        return (List<String>) this.VALUES.get(attributeKey);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<Integer> getListI(@Nonnull AttributeKey<?> key)
+    public List<Integer> getListI(@Nonnull AttributeKey<?> attributeKey)
     {
-        if (!this.VALUES.containsKey(key))
+        if (!this.VALUES.containsKey(attributeKey))
         {
             return Collections.emptyList();
         }
 
-        return (List<Integer>) this.VALUES.get(key);
+        return (List<Integer>) this.VALUES.get(attributeKey);
     }
 
     /**
      *
-     * @param key
+     * @param attributeKey
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<AttributeMap<String>> getListA(@Nonnull AttributeKey<?> key)
+    public List<AttributeMap<String>> getListA(@Nonnull AttributeKey<?> attributeKey)
     {
-        if (!this.VALUES.containsKey(key))
+        if (!this.VALUES.containsKey(attributeKey))
         {
             return Collections.emptyList();
         }
 
-        return (List<AttributeMap<String>>) this.VALUES.get(key);
+        return (List<AttributeMap<String>>) this.VALUES.get(attributeKey);
     }
 }

@@ -42,46 +42,46 @@ public final class OnLeftClickEvent
 
     /**
      *
-     * @param event
+     * @param leftClickBlock
      */
     @SubscribeEvent
-    public synchronized void onUpdateLeftClickEvent_0(PlayerInteractEvent.LeftClickBlock event)
+    public synchronized void onUpdateLeftClickEvent_0(PlayerInteractEvent.LeftClickBlock leftClickBlock)
     {
-        if (event.getWorld().isRemote)
+        if (leftClickBlock.getWorld().isRemote)
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericLeftClickAction rule : ParserGenericJsonScript.GENERIC_LEFT_CLICK_ACTIONS_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(leftClickBlock))
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_left_click"))
+                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_left_click"))
                 {
-                    Log.writeDataToLogFile(0, "ConfigsParser._GenericLeftClickActions. ID Rule: " + i + ": "
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericLeftClickActions. ID Rule: " + atomicInteger + ": "
                             + result
-                            + " entity: " + event.getEntityPlayer().getName()
-                            + " y: " + event.getPos().getY()
-                            + " biome: " + event.getWorld().getBiome(event.getPos()).getBiomeName());
+                            + " entity: " + leftClickBlock.getEntityPlayer().getName()
+                            + " y: " + leftClickBlock.getPos().getY()
+                            + " biomes: " + leftClickBlock.getWorld().getBiome(leftClickBlock.getPos()).getBiomeName());
                 }
 
-                rule.action(event);
+                rule.action(leftClickBlock);
 
-                event.setUseBlock(result);
+                leftClickBlock.setUseBlock(result);
 
                 if (result == Event.Result.DENY)
                 {
-                    event.setCanceled(true);
+                    leftClickBlock.setCanceled(true);
                 }
 
                 return;
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

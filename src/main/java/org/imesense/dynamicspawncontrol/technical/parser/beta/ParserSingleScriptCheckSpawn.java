@@ -50,26 +50,28 @@ public final class ParserSingleScriptCheckSpawn implements IBetaParser
         {
             try
             {
-                File parentDir = file.getParentFile();
+                File file1 = file.getParentFile();
 
-                if (!parentDir.exists() && !parentDir.mkdirs())
+                if (!file1.exists() && !file1.mkdirs())
                 {
-                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + parentDir.getAbsolutePath());
-                    throw new RuntimeException("Failed to create directories for script file: " + parentDir.getAbsolutePath());
+                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + file1.getAbsolutePath());
+                    throw new RuntimeException("Failed to create directories for script file: " + file1.getAbsolutePath());
                 }
 
                 if (file.createNewFile())
                 {
                     Log.writeDataToLogFile(0, "Created new script file: " + file.getAbsolutePath());
 
-                    try (FileWriter writer = new FileWriter(file))
+                    try (FileWriter fileWriter = new FileWriter(file))
                     {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        JsonObject emptyJson = new JsonObject();
-                        JsonObject dataObject = new JsonObject();
-                        dataObject.add("entities", new JsonArray());
-                        emptyJson.add("data", dataObject);
-                        gson.toJson(emptyJson, writer);
+
+                        JsonObject jsonObject = new JsonObject();
+                        JsonObject jsonObject1 = new JsonObject();
+
+                        jsonObject1.add("entities", new JsonArray());
+                        jsonObject.add("data", jsonObject1);
+                        gson.toJson(jsonObject, fileWriter);
                         Log.writeDataToLogFile(0, "Initialized new script file with empty JSON object: " + file.getAbsolutePath());
                     }
                 }
@@ -86,21 +88,21 @@ public final class ParserSingleScriptCheckSpawn implements IBetaParser
             }
         }
 
-        try (FileReader reader = new FileReader(file))
+        try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
 
-            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
-            JsonObject entitiesObject = jsonObject.getAsJsonObject("data");
+            JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
+            JsonObject jsonObject1 = jsonObject.getAsJsonObject("data");
 
-            if (entitiesObject != null)
+            if (jsonObject1 != null)
             {
                 final Type listType = new TypeToken<List<String>>() {}.getType();
-                GeneralStorageData.instance.EntitiesProhibitedOutdoors = gson.fromJson(entitiesObject.get("entities"), listType);
+                GeneralStorageData.Instance.EntitiesProhibitedOutdoors = gson.fromJson(jsonObject1.get("entities"), listType);
 
                 Log.writeDataToLogFile(0, "Script: " +
                         EnumSingleScript.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword() +
-                            " data blockedEntities: " + GeneralStorageData.instance.EntitiesProhibitedOutdoors);
+                            " data blockedEntities: " + GeneralStorageData.Instance.EntitiesProhibitedOutdoors);
             }
             else
             {

@@ -24,7 +24,7 @@ public final class DataDarkness
         /**
          *
          */
-        public static ConfigDataRenderNight instance;
+        public static ConfigDataRenderNight Instance;
 
         /**
          *
@@ -74,7 +74,7 @@ public final class DataDarkness
         /**
          *
          */
-        private Integer[] blacklistByID = {};
+        private Integer[] blacklistByID = { };
 
         /**
          *
@@ -84,7 +84,7 @@ public final class DataDarkness
         /**
          *
          */
-        private String[] blacklistByName = {};
+        private String[] blacklistByName = { };
 
         /**
          *

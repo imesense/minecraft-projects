@@ -42,11 +42,11 @@ public final class CacheMonitor
     {
         final FontRenderer FONT_RENDER = UniqueField.CLIENT.fontRenderer;
 
-        final String ACTUAL_ANIMALS = TextFormatting.GREEN + "Actual Animals: " + Cache.instance.getActualAnimalCount();
-        final String ACTUAL_HOSTILE = TextFormatting.RED + "Actual Hostile Entities: " + Cache.instance.getActualHostileEntityCount();
-        final String ACTUAL_TOTAL = TextFormatting.YELLOW + "Actual Total Entities: " + Cache.instance.getActualTotalEntityCount();
-        final String UPDATE_TICK = TextFormatting.WHITE + "Tick Counter: " + Cache.instance.TickCounter;
-        final String VALID_CHUNKS = TextFormatting.YELLOW + "Valid Chunks: " + Cache.instance.getValidChunkCount();
+        final String ACTUAL_ANIMALS = TextFormatting.GREEN + "Actual Animals: " + Cache.Instance.getActualAnimalCount();
+        final String ACTUAL_HOSTILE = TextFormatting.RED + "Actual Hostile Entities: " + Cache.Instance.getActualHostileEntityCount();
+        final String ACTUAL_TOTAL = TextFormatting.YELLOW + "Actual Total Entities: " + Cache.Instance.getActualTotalEntityCount();
+        final String UPDATE_TICK = TextFormatting.WHITE + "Tick Counter: " + Cache.Instance.TickCounter;
+        final String VALID_CHUNKS = TextFormatting.YELLOW + "Valid Chunks: " + Cache.Instance.getValidChunkCount();
 
         final String SEPARATOR = TextFormatting.WHITE + "--------------------------------------------";
 
@@ -59,9 +59,9 @@ public final class CacheMonitor
         FONT_RENDER.drawString(VALID_CHUNKS, X, Y + 40, 0xFFFFFF);
         FONT_RENDER.drawString(SEPARATOR, X, Y + 50, 0xFFFFFF);
 
-        final String BUFFER_ANIMALS = TextFormatting.GREEN + "Buffer Animals: " + Cache.instance.getBufferAnimalCount();
-        final String BUFFER_HOSTILE = TextFormatting.RED + "Buffer Hostile Entities: " + Cache.instance.getBufferHostileEntityCount();
-        final String BUFFER_TOTAL = TextFormatting.YELLOW + "Buffer Total Entities: " + Cache.instance.getBufferTotalEntityCount();
+        final String BUFFER_ANIMALS = TextFormatting.GREEN + "Buffer Animals: " + Cache.Instance.getBufferAnimalCount();
+        final String BUFFER_HOSTILE = TextFormatting.RED + "Buffer Hostile Entities: " + Cache.Instance.getBufferHostileEntityCount();
+        final String BUFFER_TOTAL = TextFormatting.YELLOW + "Buffer Total Entities: " + Cache.Instance.getBufferTotalEntityCount();
 
         FONT_RENDER.drawString(BUFFER_ANIMALS, X, Y + 60, 0xFFFFFF);
         FONT_RENDER.drawString(BUFFER_HOSTILE, X, Y + 70, 0xFFFFFF);

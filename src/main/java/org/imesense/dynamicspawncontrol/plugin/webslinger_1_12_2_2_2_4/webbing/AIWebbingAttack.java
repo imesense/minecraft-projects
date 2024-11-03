@@ -24,13 +24,13 @@ public final class AIWebbingAttack extends EntityAIBase
 
     /**
      *
-     * @param entity
+     * @param entityLiving
      */
-    public AIWebbingAttack(EntityLiving entity)
+    public AIWebbingAttack(EntityLiving entityLiving)
     {
         CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        this.parentEntity = entity;
+        this.parentEntity = entityLiving;
     }
 
     /**
@@ -44,7 +44,7 @@ public final class AIWebbingAttack extends EntityAIBase
                 this.parentEntity.getAttackTarget() : null;
 
         return entitylivingbase != null &&
-                entitylivingbase.getDistanceSq(this.parentEntity) >= 4.0;
+                entitylivingbase.getDistanceSq(this.parentEntity) >= 4.00;
     }
 
     /**
@@ -53,7 +53,7 @@ public final class AIWebbingAttack extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        this.attackTimer = 0.0;
+        this.attackTimer = 0.00;
     }
 
     /**
@@ -75,26 +75,26 @@ public final class AIWebbingAttack extends EntityAIBase
                 this.parentEntity != null ? this.parentEntity.getAttackTarget() : null;
 
         if (this.parentEntity != null && entitylivingbase != null &&
-                entitylivingbase.getDistanceSq(this.parentEntity) < 256.0 &&
+                entitylivingbase.getDistanceSq(this.parentEntity) < 256.00 &&
                     this.parentEntity.canEntityBeSeen(entitylivingbase))
         {
             World world = this.parentEntity.world;
 
             ++this.attackTimer;
 
-            if (this.attackTimer >= DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown())
+            if (this.attackTimer >= DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingCoolDown())
             {
                 EntityWebbing.sling(world, this.parentEntity);
 
                 double coolDown =
-                        DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown() +
-                                (DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingCoolDown() *
-                                        world.rand.nextDouble()) * DataWebSlinger.ConfigDataSpiderAttackWeb.instance.getSlingVariance();
+                        DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingCoolDown() +
+                                (DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingCoolDown() *
+                                        world.rand.nextDouble()) * DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingVariance();
 
                 this.attackTimer = this.attackTimer - coolDown;
             }
         }
-        else if (this.attackTimer > 0.0)
+        else if (this.attackTimer > 0.00)
         {
             --this.attackTimer;
         }

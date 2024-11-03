@@ -42,45 +42,45 @@ public final class OnRightClickEvent
 
     /**
      *
-     * @param event
+     * @param rightClickBlock
      */
     @SubscribeEvent
-    public synchronized void onUpdateRightClickEvent_0(PlayerInteractEvent.RightClickBlock event)
+    public synchronized void onUpdateRightClickEvent_0(PlayerInteractEvent.RightClickBlock rightClickBlock)
     {
-        if (event.getWorld().isRemote)
+        if (rightClickBlock.getWorld().isRemote)
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericRightClickAction rule : ParserGenericJsonScript.GENERIC_RIGHT_CLICK_ACTIONS_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(rightClickBlock))
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_right_click"))
+                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_right_click"))
                 {
-                    Log.writeDataToLogFile(0, "ConfigsParser._GenericRightClickActions. ID Rule: " + i + ": " + result
-                            + " entity: " + event.getEntityPlayer().getName()
-                            + " y: " + event.getPos().getY()
-                            + " biomes: " + event.getWorld().getBiome(event.getPos()).getBiomeName());
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericRightClickActions. ID Rule: " + atomicInteger + ": " + result
+                            + " entity: " + rightClickBlock.getEntityPlayer().getName()
+                            + " y: " + rightClickBlock.getPos().getY()
+                            + " biomes: " + rightClickBlock.getWorld().getBiome(rightClickBlock.getPos()).getBiomeName());
                 }
 
-                rule.action(event);
+                rule.action(rightClickBlock);
 
-                event.setUseBlock(result);
+                rightClickBlock.setUseBlock(result);
 
                 if (result == Event.Result.DENY)
                 {
-                    event.setCanceled(true);
+                    rightClickBlock.setCanceled(true);
                 }
 
                 return;
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

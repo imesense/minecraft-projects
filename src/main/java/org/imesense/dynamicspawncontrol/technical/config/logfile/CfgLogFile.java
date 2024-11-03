@@ -31,7 +31,7 @@ public final class CfgLogFile extends CfgClassAbstract
 
 		CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataLogFile.ConfigDataLogFile.instance =
+        DataLogFile.ConfigDataLogFile.Instance =
                 new DataLogFile.ConfigDataLogFile("log_file");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -50,13 +50,13 @@ public final class CfgLogFile extends CfgClassAbstract
     @Override
     public void saveToFile()
     {
-        Path configPath = Paths.get(this.nameConfig).getParent();
+        Path path = Paths.get(this.nameConfig).getParent();
 
-        if (Files.notExists(configPath))
+        if (Files.notExists(path))
         {
             try
             {
-                Files.createDirectories(configPath);
+                Files.createDirectories(path);
             }
             catch (IOException exception)
             {
@@ -68,15 +68,15 @@ public final class CfgLogFile extends CfgClassAbstract
         JsonObject jsonObjectLogFile = new JsonObject();
 
         jsonObjectLogFile.addProperty("max_lines",
-                DataLogFile.ConfigDataLogFile.instance.getLogMaxLines());
+                DataLogFile.ConfigDataLogFile.Instance.getLogMaxLines());
 
-        recordObject.add(DataLogFile.ConfigDataLogFile.instance.getCategoryObject(), jsonObjectLogFile);
+        recordObject.add(DataLogFile.ConfigDataLogFile.Instance.getCategoryObject(), jsonObjectLogFile);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter file = new FileWriter(this.nameConfig))
+        try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(recordObject, file);
+            gson.toJson(recordObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -95,15 +95,15 @@ public final class CfgLogFile extends CfgClassAbstract
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(DataLogFile.ConfigDataLogFile.instance.getCategoryObject()))
+            if (readableObject.has(DataLogFile.ConfigDataLogFile.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectLogFile =
-                        readableObject.getAsJsonObject(DataLogFile.ConfigDataLogFile.instance.
+                        readableObject.getAsJsonObject(DataLogFile.ConfigDataLogFile.Instance.
                                 getCategoryObject());
 
                 if (jsonObjectLogFile.has("max_lines"))
                 {
-                    DataLogFile.ConfigDataLogFile.instance.
+                    DataLogFile.ConfigDataLogFile.Instance.
                             setLogMaxLines(jsonObjectLogFile.get("max_lines").getAsShort());
                 }
             }

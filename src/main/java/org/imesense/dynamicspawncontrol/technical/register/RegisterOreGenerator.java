@@ -33,28 +33,28 @@ public final class RegisterOreGenerator
 
     /**
      *
-     * @param event
+     * @param fmlPreInitializationEvent
      */
-    public static void init(FMLPreInitializationEvent event)
+    public static void init(FMLPreInitializationEvent fmlPreInitializationEvent)
     {
-        for (Class<?> oreGeneratorClass : ORE_GENERATOR_CLASSES)
+        for (Class<?> _class : ORE_GENERATOR_CLASSES)
         {
             try
             {
-                if (!CodeGenericUtil.hasDefaultConstructor(oreGeneratorClass))
+                if (!CodeGenericUtil.hasDefaultConstructor(_class))
                 {
-                    Log.writeDataToLogFile(2, "Class " + oreGeneratorClass.getName() + " does not have a default constructor.");
-                    throw new RuntimeException("Default constructor not found in class: " + oreGeneratorClass.getName());
+                    Log.writeDataToLogFile(2, "Class " + _class.getName() + " does not have a default constructor.");
+                    throw new RuntimeException("Default constructor not found in class: " + _class.getName());
                 }
 
-                Object oreGeneratorInstance =
-                        oreGeneratorClass.getConstructor().newInstance();
+                Object object =
+                        _class.getConstructor().newInstance();
 
-                GameRegistry.registerWorldGenerator((IWorldGenerator) oreGeneratorInstance, 3);
+                GameRegistry.registerWorldGenerator((IWorldGenerator) object, 3);
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception in class: " + oreGeneratorClass.getName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
                 throw new RuntimeException(exception);
             }
         }

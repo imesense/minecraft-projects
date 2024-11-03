@@ -61,24 +61,24 @@ public final class AttributeType<T>
 
     /**
      *
-     * @param type
+     * @param _class
      */
-    private AttributeType(@Nonnull Class<T> type)
+    private AttributeType(@Nonnull Class<T> _class)
     {
-        this.type = type;
+        this.type = _class;
     }
 
     /**
      *
-     * @param type
+     * @param _class
      * @return
      * @param <T>
      */
     @Nonnull
     @SuppressWarnings("unchecked")
-    public static <T> AttributeType<T> create(@Nonnull Class<? super T> type)
+    public static <T> AttributeType<T> create(@Nonnull Class<? super T> _class)
     {
-        return new AttributeType<>((Class<T>) type);
+        return new AttributeType<>((Class<T>) _class);
     }
 
     /**
@@ -104,14 +104,14 @@ public final class AttributeType<T>
 
     /**
      *
-     * @param javaObject
+     * @param object
      * @return
      */
     @Nonnull
     @SuppressWarnings("unchecked")
-    public T convert(Object javaObject)
+    public T convert(Object object)
     {
-        return (T) javaObject;
+        return (T) object;
     }
 
     /**

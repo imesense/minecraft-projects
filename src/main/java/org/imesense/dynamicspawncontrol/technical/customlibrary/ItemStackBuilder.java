@@ -35,19 +35,20 @@ public final class ItemStackBuilder
 
         if (i < name.length() && name.charAt(i) == '=')
         {
-            String f = name.substring(0, i);
-            float v;
+            float value;
+
+            String subStringed = name.substring(0, i);
 
             try
             {
-                v = Float.parseFloat(f);
+                value = Float.parseFloat(subStringed);
             }
             catch (NumberFormatException exception)
             {
-                v = 1.0f;
+                value = 1.0f;
             }
 
-            return Pair.of(v, parseStack(name.substring(i+1)));
+            return Pair.of(value, parseStack(name.substring(i+1)));
         }
 
         return Pair.of(1.0f, parseStack(name));
@@ -67,14 +68,14 @@ public final class ItemStackBuilder
             factor = jsonObject.get("factor").getAsFloat();
         }
 
-        ItemStack stack = parseStack(jsonObject);
+        ItemStack itemStack = parseStack(jsonObject);
 
-        if (stack == null)
+        if (itemStack == null)
         {
             return null;
         }
 
-        return Pair.of(factor, stack);
+        return Pair.of(factor, itemStack);
     }
 
     /**
@@ -88,18 +89,18 @@ public final class ItemStackBuilder
         if (name.contains("/"))
         {
             String[] split = StringUtils.split(name, "/");
-            ItemStack stack = parseStackNoNBT(split[0]);
+            ItemStack itemStack = parseStackNoNBT(split[0]);
 
-            if (stack.isEmpty())
+            if (itemStack.isEmpty())
             {
-                return stack;
+                return itemStack;
             }
 
-            NBTTagCompound nbt;
+            NBTTagCompound nbtTagCompound;
 
             try
             {
-                nbt = JsonToNBT.getTagFromJson(split[1]);
+                nbtTagCompound = JsonToNBT.getTagFromJson(split[1]);
             }
             catch (NBTException exception)
             {
@@ -107,8 +108,9 @@ public final class ItemStackBuilder
                 return ItemStack.EMPTY;
             }
 
-            stack.setTagCompound(nbt);
-            return stack;
+            itemStack.setTagCompound(nbtTagCompound);
+
+            return itemStack;
         }
         else
         {
@@ -153,11 +155,11 @@ public final class ItemStackBuilder
         if (jsonObject.has("nbt"))
         {
             String nbt = jsonObject.get("nbt").toString();
-            NBTTagCompound tag;
+            NBTTagCompound nbtTagCompound;
 
             try
             {
-                tag = JsonToNBT.getTagFromJson(nbt);
+                nbtTagCompound = JsonToNBT.getTagFromJson(nbt);
             }
             catch (NBTException exception)
             {
@@ -165,7 +167,7 @@ public final class ItemStackBuilder
                 return ItemStack.EMPTY;
             }
 
-            stack.setTagCompound(tag);
+            stack.setTagCompound(nbtTagCompound);
         }
 
         return stack;

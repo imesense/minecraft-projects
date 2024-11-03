@@ -21,11 +21,11 @@ public final class BlockWaterMelon implements IWorldGenerator
      * @param chunkX the chunk X coordinate of this chunk.
      * @param chunkZ the chunk Z coordinate of this chunk.
      * @param world : additionalData[0] The minecraft {@link World} we're generating for.
-     * @param chunkGenerator : additionalData[1] The {@link IChunkProvider} that is generating.
-     * @param chunkProvider : additionalData[2] {@link IChunkProvider} that is requesting the world generation.
+     * @param iChunkGenerator : additionalData[1] The {@link IChunkProvider} that is generating.
+     * @param iChunkProvider : additionalData[2] {@link IChunkProvider} that is requesting the world generation.
      */
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
     {
         if (world.provider.getDimension() == 0)
         {
@@ -67,14 +67,14 @@ public final class BlockWaterMelon implements IWorldGenerator
     /**
      *
      * @param world
-     * @param pos
+     * @param blockPos
      * @return
      */
-    private boolean isNextToWater(World world, BlockPos pos)
+    private boolean isNextToWater(World world, BlockPos blockPos)
     {
-        return world.getBlockState(pos.north()).getBlock() == Blocks.WATER ||
-                world.getBlockState(pos.south()).getBlock() == Blocks.WATER ||
-                world.getBlockState(pos.east()).getBlock() == Blocks.WATER ||
-                world.getBlockState(pos.west()).getBlock() == Blocks.WATER;
+        return world.getBlockState(blockPos.north()).getBlock() == Blocks.WATER ||
+                world.getBlockState(blockPos.south()).getBlock() == Blocks.WATER ||
+                world.getBlockState(blockPos.east()).getBlock() == Blocks.WATER ||
+                world.getBlockState(blockPos.west()).getBlock() == Blocks.WATER;
     }
 }

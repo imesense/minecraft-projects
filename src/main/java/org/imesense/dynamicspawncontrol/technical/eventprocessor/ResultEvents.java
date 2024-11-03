@@ -22,14 +22,14 @@ public final class ResultEvents
 
     /**
      *
-     * @param map
+     * @param attributeMap
      * @return
      */
-    public Event.Result getResult(AttributeMap<?> map)
+    public Event.Result getResult(AttributeMap<?> attributeMap)
     {
-        if (map.has(MultipleKeyWord.CommonKeyWorlds.ACTION_RESULT))
+        if (attributeMap.has(MultipleKeyWord.CommonKeyWorlds.ACTION_RESULT))
         {
-            this.finalResult = map.get(MultipleKeyWord.CommonKeyWorlds.ACTION_RESULT);
+            this.finalResult = attributeMap.get(MultipleKeyWord.CommonKeyWorlds.ACTION_RESULT);
         }
         if (SingleKeyWord.EVENT_RESULTS.SUPER.equals(this.finalResult))
         {

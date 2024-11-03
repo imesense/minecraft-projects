@@ -55,44 +55,45 @@ public final class GenericBlockBreakAction extends ListActionConsumer<SignalData
 
     /**
      *
-     * @param event
+     * @param breakEvent
      * @return
      */
-    public boolean match(BlockEvent.BreakEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(BlockEvent.BreakEvent breakEvent) { return RULE_EVALUATOR.match(breakEvent, EVENT_QUERY); }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private GenericBlockBreakAction(AttributeMap<?> map)
+    private GenericBlockBreakAction(AttributeMap<?> attributeMap)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericBlockBreakAction.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericBlockBreakAction.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
 
-        this.RESULT = RESULT_EVENTS.getResult(map);
+        this.RESULT = RESULT_EVENTS.getResult(attributeMap);
     }
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericBlockBreakAction parse(JsonElement element)
+    public static GenericBlockBreakAction parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<Object> map = ListActionStaticFactoryBlock.FACTORY.parse(element);
+            AttributeMap<Object> attributeMap = ListActionStaticFactoryBlock.FACTORY.parse(jsonElement);
 
-            return new GenericBlockBreakAction(map);
+            return new GenericBlockBreakAction(attributeMap);
         }
     }
 
@@ -103,114 +104,114 @@ public final class GenericBlockBreakAction extends ListActionConsumer<SignalData
     {
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public int getY(BlockEvent.BreakEvent data)
+        public int getY(BlockEvent.BreakEvent breakEvent)
         {
-            return data.getPos().getY();
+            return breakEvent.getPos().getY();
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public World getWorld(BlockEvent.BreakEvent data)
+        public World getWorld(BlockEvent.BreakEvent breakEvent)
         {
-            return data.getWorld();
+            return breakEvent.getWorld();
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public BlockPos getPos(BlockEvent.BreakEvent data)
+        public BlockPos getPos(BlockEvent.BreakEvent breakEvent)
         {
-            return data.getPos();
+            return breakEvent.getPos();
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public Entity getEntity(BlockEvent.BreakEvent data)
+        public Entity getEntity(BlockEvent.BreakEvent breakEvent)
         {
-            return data.getPlayer();
+            return breakEvent.getPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public ItemStack getItem(BlockEvent.BreakEvent data)
+        public ItemStack getItem(BlockEvent.BreakEvent breakEvent)
         {
             return ItemStack.EMPTY;
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public Entity getAttacker(BlockEvent.BreakEvent data)
+        public Entity getAttacker(BlockEvent.BreakEvent breakEvent)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(BlockEvent.BreakEvent data)
+        public EntityPlayerMP getPlayer(BlockEvent.BreakEvent breakEvent)
         {
-            return (EntityPlayerMP) data.getPlayer();
+            return (EntityPlayerMP) breakEvent.getPlayer();
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public DamageSource getSource(BlockEvent.BreakEvent data)
+        public DamageSource getSource(BlockEvent.BreakEvent breakEvent)
         {
             return null;
         }
 
         /**
          *
-         * @param data
+         * @param breakEvent
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(BlockEvent.BreakEvent data)
+        public BlockPos getValidBlockPos(BlockEvent.BreakEvent breakEvent)
         {
-            return data.getPos();
+            return breakEvent.getPos();
         }
     };
 
     /**
      *
-     * @param event
+     * @param breakEvent
      */
-    public void action(BlockEvent.BreakEvent event)
+    public void action(BlockEvent.BreakEvent breakEvent)
     {
         /**
          *
          */
-        SignalDataGetter eventBase = new SignalDataGetter()
+        SignalDataGetter signalDataGetter = new SignalDataGetter()
         {
             /**
              *
@@ -219,7 +220,7 @@ public final class GenericBlockBreakAction extends ListActionConsumer<SignalData
             @Override
             public EntityLivingBase getEntityLiving()
             {
-                return event.getPlayer();
+                return breakEvent.getPlayer();
             }
 
             /**
@@ -229,7 +230,7 @@ public final class GenericBlockBreakAction extends ListActionConsumer<SignalData
             @Override
             public EntityPlayerMP getPlayer()
             {
-                return (EntityPlayerMP) event.getPlayer();
+                return (EntityPlayerMP) breakEvent.getPlayer();
             }
 
             /**
@@ -239,7 +240,7 @@ public final class GenericBlockBreakAction extends ListActionConsumer<SignalData
             @Override
             public World getWorld()
             {
-                return event.getWorld();
+                return breakEvent.getWorld();
             }
 
             /**
@@ -259,16 +260,16 @@ public final class GenericBlockBreakAction extends ListActionConsumer<SignalData
             @Override
             public BlockPos getPosition()
             {
-                return event.getPos();
+                return breakEvent.getPos();
             }
         };
 
         /**
          *
          */
-        for (Consumer<SignalDataGetter> action : this.ACTIONS)
+        for (Consumer<SignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
         {
-            action.accept(eventBase);
+            signalDataGetterConsumer.accept(signalDataGetter);
         }
     }
 }

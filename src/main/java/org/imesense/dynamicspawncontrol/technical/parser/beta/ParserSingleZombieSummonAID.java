@@ -47,7 +47,7 @@ public final class ParserSingleZombieSummonAID implements IBetaParser
      */
     public void loadConfig(boolean initialization)
     {
-        GeneralStorageData.instance.EquipmentConfigs = new ArrayList<>();
+        GeneralStorageData.Instance.EquipmentConfigs = new ArrayList<>();
 
         File file = getConfigFile(initialization, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
                 EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword());
@@ -56,20 +56,21 @@ public final class ParserSingleZombieSummonAID implements IBetaParser
         {
             try
             {
-                File parentDir = file.getParentFile();
-                if (!parentDir.exists() && !parentDir.mkdirs())
+                File file1 = file.getParentFile();
+
+                if (!file1.exists() && !file1.mkdirs())
                 {
-                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + parentDir.getAbsolutePath());
-                    throw new RuntimeException("Failed to create directories for script file: " + parentDir.getAbsolutePath());
+                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + file1.getAbsolutePath());
+                    throw new RuntimeException("Failed to create directories for script file: " + file1.getAbsolutePath());
                 }
 
                 if (file.createNewFile())
                 {
                     Log.writeDataToLogFile(0, "Created new script file: " + file.getAbsolutePath());
 
-                    try (FileWriter writer = new FileWriter(file))
+                    try (FileWriter fileWriter = new FileWriter(file))
                     {
-                        writer.write("[]");
+                        fileWriter.write("[]");
                         Log.writeDataToLogFile(0, "Initialized new script file with empty JSON array: " + file.getAbsolutePath());
                     }
                 }
@@ -86,10 +87,10 @@ public final class ParserSingleZombieSummonAID implements IBetaParser
             }
         }
 
-        try (FileReader reader = new FileReader(file))
+        try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+            JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
             if (jsonArray.size() == 0)
             {
@@ -102,25 +103,26 @@ public final class ParserSingleZombieSummonAID implements IBetaParser
             for (int i = 0; i < jsonArray.size(); i++)
             {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                JsonObject dataObject = jsonObject.getAsJsonObject("data");
+                JsonObject jsonObject1 = jsonObject.getAsJsonObject("data");
 
-                if (dataObject != null)
+                if (jsonObject1 != null)
                 {
                     GeneralStorageData.Equipment config = new GeneralStorageData.Equipment();
-                    config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
+                    config.Priority = jsonObject1.has("priority") ? jsonObject1.get("priority").getAsInt() : 0;
 
-                    JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
+                    JsonObject jsonObject2 = jsonObject1.getAsJsonObject("equipment");
 
-                    if (equipmentObject != null)
+                    if (jsonObject2 != null)
                     {
                         Type listType = new TypeToken<List<String>>() {}.getType();
-                        config.HeldItems = gson.fromJson(equipmentObject.get("held_item"), listType);
-                        config.Helmets = gson.fromJson(equipmentObject.get("armor_helmet"), listType);
-                        config.ChestPlates = gson.fromJson(equipmentObject.get("armor_chest"), listType);
-                        config.Leggings = gson.fromJson(equipmentObject.get("armor_legs"), listType);
-                        config.Boots = gson.fromJson(equipmentObject.get("armor_boots"), listType);
 
-                        GeneralStorageData.instance.EquipmentConfigs.add(config);
+                        config.HeldItems = gson.fromJson(jsonObject2.get("held_item"), listType);
+                        config.Helmets = gson.fromJson(jsonObject2.get("armor_helmet"), listType);
+                        config.ChestPlates = gson.fromJson(jsonObject2.get("armor_chest"), listType);
+                        config.Leggings = gson.fromJson(jsonObject2.get("armor_legs"), listType);
+                        config.Boots = gson.fromJson(jsonObject2.get("armor_boots"), listType);
+
+                        GeneralStorageData.Instance.EquipmentConfigs.add(config);
 
                         Log.writeDataToLogFile(0, "Script: " +
                                 EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() + " data loaded.");
@@ -131,6 +133,7 @@ public final class ParserSingleZombieSummonAID implements IBetaParser
                                 "Script: " +
                                         EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() +
                                         " not found key 'equipment'");
+
                         throw new RuntimeException("Key 'equipment' not found in JSON file.");
                     }
                 }
@@ -140,6 +143,7 @@ public final class ParserSingleZombieSummonAID implements IBetaParser
                             "Script: " +
                                     EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() +
                                     " not found key 'data'");
+
                     throw new RuntimeException("Key 'data' not found in JSON file.");
                 }
             }

@@ -24,7 +24,7 @@ public final class DataZombieDropItem
         /**
          *
          */
-        public static ConfigDataZombieDrop instance;
+        public static ConfigDataZombieDrop Instance;
 
         /**
          *

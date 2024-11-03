@@ -39,28 +39,28 @@ public final class CmdAdminGameMode extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_gm";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
         if (args.length != 1)
         {
-            sender.sendMessage(new TextComponentString(getUsage(sender)));
+            iCommandSender.sendMessage(new TextComponentString(getUsage(iCommandSender)));
             return;
         }
 
@@ -74,17 +74,17 @@ public final class CmdAdminGameMode extends CommandBase
         {
             Log.writeDataToLogFile(2, String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
 
-            sender.sendMessage(new TextComponentString(EnumUnicodeCharacter.SECTION.getCharacter() +
+            iCommandSender.sendMessage(new TextComponentString(EnumUnicodeCharacter.SECTION.getCharacter() +
                     EnumTextColor.RED.getCode() +
                     "Invalid game mode: " + args[0]));
 
             return;
         }
 
-        if (sender instanceof EntityPlayerMP)
+        if (iCommandSender instanceof EntityPlayerMP)
         {
-            EntityPlayerMP player = (EntityPlayerMP) sender;
-            player.setGameType(GameType.getByID(mode));
+            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) iCommandSender;
+            entityPlayerMP.setGameType(GameType.getByID(mode));
         }
     }
 }

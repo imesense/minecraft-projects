@@ -24,14 +24,14 @@ public interface IBetaParser
     /**
      *
      * @param initialization
-     * @param directory
-     * @param filename
+     * @param DIRECTORY
+     * @param FILE_NAME
      * @return
      */
-    default File getConfigFile(boolean initialization, final String directory, final String filename)
+    default File getConfigFile(boolean initialization, final String DIRECTORY, final String FILE_NAME)
     {
         return initialization ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
-                ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator + directory, filename) :
-                    new File("config/DynamicSpawnControl/" + directory + "/" + filename);
+                ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator + DIRECTORY, FILE_NAME) :
+                    new File("config/DynamicSpawnControl/" + DIRECTORY + "/" + FILE_NAME);
     }
 }

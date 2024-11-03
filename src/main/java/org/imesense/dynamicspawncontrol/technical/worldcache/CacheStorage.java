@@ -13,7 +13,7 @@ public final class CacheStorage
     /**
      *
      */
-    public static CacheStorage instance;
+    public static CacheStorage Instance;
 
     /**
      *
@@ -22,7 +22,7 @@ public final class CacheStorage
     {
 		CodeGenericUtil.printInitClassToLog(this.getClass());
 		
-        instance = this;
+        Instance = this;
     }
 
     /**
@@ -70,7 +70,7 @@ public final class CacheStorage
         /**
          *
          */
-        private final ResourceLocation ENTITY;
+        private final ResourceLocation RESOURCE_LOCATION;
 
         /**
          *
@@ -79,7 +79,7 @@ public final class CacheStorage
          */
         public EntityData(ResourceLocation entity, int maxCount)
         {
-            this.ENTITY = entity;
+            this.RESOURCE_LOCATION = entity;
             this.MAX_COUNT = maxCount;
         }
 
@@ -89,7 +89,7 @@ public final class CacheStorage
          */
         public ResourceLocation getEntity()
         {
-            return this.ENTITY;
+            return this.RESOURCE_LOCATION;
         }
 
         /**

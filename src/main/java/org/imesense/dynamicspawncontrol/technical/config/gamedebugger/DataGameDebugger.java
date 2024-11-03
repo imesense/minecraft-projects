@@ -26,7 +26,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        public static ConfigDataMonitor instance;
+        public static ConfigDataMonitor Instance;
 
         /**
          *
@@ -88,7 +88,7 @@ public final class DataGameDebugger
         /**
          *
          */
-        public static ConfigDataEvent instance;
+        public static ConfigDataEvent Instance;
 
         /**
          *

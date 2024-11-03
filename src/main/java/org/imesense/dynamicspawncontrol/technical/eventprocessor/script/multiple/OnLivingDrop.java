@@ -48,32 +48,32 @@ public final class OnLivingDrop
 
     /**
      *
-     * @param event
+     * @param livingDropsEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingDrops_0(LivingDropsEvent event)
+    public synchronized void onUpdateLivingDrops_0(LivingDropsEvent livingDropsEvent)
     {
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericDropLoot rule : ParserGenericJsonScript.GENERIC_DROP_LOOT_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(livingDropsEvent))
             {
                 if (rule.isRemoveAll())
                 {
-                    event.getDrops().clear();
+                    livingDropsEvent.getDrops().clear();
                 }
                 else
                 {
                     for (Predicate<ItemStack> stackTest : rule.getToRemoveItems())
                     {
-                        for (int idx = event.getDrops().size() - 1; idx >= 0; idx--)
+                        for (int idx = livingDropsEvent.getDrops().size() - 1; idx >= 0; idx--)
                         {
-                            ItemStack stack = event.getDrops().get(idx).getItem();
+                            ItemStack itemStack = livingDropsEvent.getDrops().get(idx).getItem();
 
-                            if (stackTest.test(stack))
+                            if (stackTest.test(itemStack))
                             {
-                                event.getDrops().remove(idx);
+                                livingDropsEvent.getDrops().remove(idx);
                             }
                         }
                     }
@@ -81,37 +81,43 @@ public final class OnLivingDrop
 
                 for (Pair<ItemStack, Function<Integer, Integer>> pair : rule.getToAddItems())
                 {
-                    ItemStack item = pair.getLeft();
-                    int fortune = event.getLootingLevel();
+                    ItemStack itemStack = pair.getLeft();
+
+                    int fortune = livingDropsEvent.getLootingLevel();
                     int amount = pair.getValue().apply(fortune);
 
-                    BlockPos pos = event.getEntity().getPosition();
+                    BlockPos blockPos = livingDropsEvent.getEntity().getPosition();
 
-                    if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_living_drops"))
+                    if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_drops"))
                     {
-                        Log.writeDataToLogFile(0, "ConfigsParser._GenericDropLoot. ID Rule: " + i
-                                + " entity: " + event.getEntity().getName() + " new drop @item: " + item);
+                        Log.writeDataToLogFile(0, "ConfigsParser._GenericDropLoot. ID Rule: " + atomicInteger
+                                + " entity: " + livingDropsEvent.getEntity().getName() + " new drop @item: " + itemStack);
                     }
 
-                    while (amount > item.getMaxStackSize())
+                    while (amount > itemStack.getMaxStackSize())
                     {
-                        ItemStack copy = item.copy();
-                        copy.setCount(item.getMaxStackSize());
-                        amount -= item.getMaxStackSize();
+                        ItemStack itemStack1 = itemStack.copy();
 
-                        event.getDrops().add(new EntityItem(event.getEntity().getEntityWorld(), pos.getX(), pos.getY(), pos.getZ(), copy));
+                        itemStack1.setCount(itemStack.getMaxStackSize());
+                        amount -= itemStack.getMaxStackSize();
+
+                        livingDropsEvent.getDrops().add(new EntityItem(
+                                livingDropsEvent.getEntity().getEntityWorld(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack1));
                     }
 
                     if (amount > 0)
                     {
-                        ItemStack copy = item.copy();
-                        copy.setCount(amount);
-                        event.getDrops().add(new EntityItem(event.getEntity().getEntityWorld(), pos.getX(), pos.getY(), pos.getZ(), copy));
+                        ItemStack itemStack2 = itemStack.copy();
+
+                        itemStack2.setCount(amount);
+
+                        livingDropsEvent.getDrops().add(new EntityItem(
+                                livingDropsEvent.getEntity().getEntityWorld(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack2));
                     }
                 }
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

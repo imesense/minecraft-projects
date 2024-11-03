@@ -49,40 +49,40 @@ public final class OnUpdateTorchLogic
 
     /**
      *
-     * @param event
+     * @param livingHurtEvent
      */
     @SubscribeEvent
-    public synchronized void onHit_0(LivingHurtEvent event)
+    public synchronized void onHit_0(LivingHurtEvent livingHurtEvent)
     {
-        if ((event.getSource().getDamageType().equalsIgnoreCase("mob") ||
-                event.getSource().getDamageType().equalsIgnoreCase("player")) && event.getSource().getTrueSource() != null)
+        if ((livingHurtEvent.getSource().getDamageType().equalsIgnoreCase("mob") ||
+                livingHurtEvent.getSource().getDamageType().equalsIgnoreCase("player")) && livingHurtEvent.getSource().getTrueSource() != null)
         {
-            Entity entity = event.getEntity();
-            Entity entityGetTrueSource = event.getSource().getTrueSource();
+            Entity entity = livingHurtEvent.getEntity();
+            Entity entityGetTrueSource = livingHurtEvent.getSource().getTrueSource();
 
             if (entityGetTrueSource instanceof EntityZombie)
             {
-                EntityZombie zombie = (EntityZombie)entityGetTrueSource;
+                EntityZombie entityZombie = (EntityZombie)entityGetTrueSource;
 
-                if (Block.getBlockFromItem(zombie.getHeldItemMainhand().getItem()) instanceof BlockTorch)
+                if (Block.getBlockFromItem(entityZombie.getHeldItemMainhand().getItem()) instanceof BlockTorch)
                 {
                     entity.setFire(5);
                 }
             }
             else if (entityGetTrueSource instanceof EntityPlayerMP)
             {
-                EntityPlayerMP player = (EntityPlayerMP)entityGetTrueSource;
+                EntityPlayerMP entityPlayerMP = (EntityPlayerMP)entityGetTrueSource;
 
-                if (Block.getBlockFromItem(player.getHeldItemMainhand().getItem()) instanceof BlockTorch)
+                if (Block.getBlockFromItem(entityPlayerMP.getHeldItemMainhand().getItem()) instanceof BlockTorch)
                 {
                     entity.setFire(5);
                 }
             }
             else if (entityGetTrueSource instanceof EntitySkeleton)
             {
-                EntitySkeleton skeleton = (EntitySkeleton)entityGetTrueSource;
+                EntitySkeleton entitySkeleton = (EntitySkeleton)entityGetTrueSource;
 
-                if (Block.getBlockFromItem(skeleton.getHeldItemMainhand().getItem()) instanceof BlockTorch)
+                if (Block.getBlockFromItem(entitySkeleton.getHeldItemMainhand().getItem()) instanceof BlockTorch)
                 {
                     entity.setFire(5);
                 }

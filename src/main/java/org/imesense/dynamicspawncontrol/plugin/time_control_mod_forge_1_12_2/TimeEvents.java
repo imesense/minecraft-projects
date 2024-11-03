@@ -17,11 +17,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.imesense.dynamicspawncontrol.ProjectStructure;
 import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataPluginWorldTime;
+import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.handler.ITimeHandler;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.handler.TimeHandlerClient;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.handler.TimeHandlerServer;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
+
+import java.util.Objects;
 
 /**
  *
@@ -54,12 +56,12 @@ public final class TimeEvents
 
     /**
      *
-     * @param event
+     * @param chunkDataEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateWorldLoad_0(ChunkDataEvent.Load event)
+    public synchronized void onUpdateWorldLoad_0(ChunkDataEvent.Load chunkDataEvent)
     {
-        World world = event.getWorld();
+        World world = chunkDataEvent.getWorld();
 
         if (world.provider.getDimension() == 0)
         {
@@ -70,7 +72,7 @@ public final class TimeEvents
                 world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", "true");
             }
 
-            if (!world.isRemote && !DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
+            if (!world.isRemote && !DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime())
             {
                 this.serverUpdate(world.getWorldTime());
             }
@@ -79,75 +81,76 @@ public final class TimeEvents
 
     /**
      *
-     * @param event
+     * @param playerLoggedInEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerJoin_1(PlayerEvent.PlayerLoggedInEvent event)
+    public synchronized void onUpdatePlayerJoin_1(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
     {
-        if (event.player instanceof EntityPlayerMP)
+        if (playerLoggedInEvent.player instanceof EntityPlayerMP)
         {
-            MessageHandler.instance.sendTo(new PacketGameRule(event.player.world.getGameRules().getBoolean("doDaylightCycle_tc")),
-                    (EntityPlayerMP)event.player);
+            MessageHandler.Instance.sendTo(new PacketGameRule(playerLoggedInEvent.player.world.getGameRules().getBoolean("doDaylightCycle_tc")),
+                    (EntityPlayerMP)playerLoggedInEvent.player);
         }
     }
 
     /**
      *
-     * @param event
+     * @param playerTickEvent
      */
     @SubscribeEvent
-    public static void onUpdatePlayerTick_2(TickEvent.PlayerTickEvent event)
+    public static void onUpdatePlayerTick_2(TickEvent.PlayerTickEvent playerTickEvent)
     {
-        if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START &&
-                event.player.world.provider.getDimension() == 0 &&
-                event.player.world.getGameRules().getBoolean("doDaylightCycle_tc"))
+        if (playerTickEvent.side == Side.CLIENT && playerTickEvent.phase == TickEvent.Phase.START &&
+                playerTickEvent.player.world.provider.getDimension() == 0 &&
+                playerTickEvent.player.world.getGameRules().getBoolean("doDaylightCycle_tc"))
         {
-            CLIENT_TIME.tick(event.player.world);
+            CLIENT_TIME.tick(playerTickEvent.player.world);
         }
     }
 
     /**
      *
-     * @param event
+     * @param worldTickEvent
      */
     @SubscribeEvent
-    public static void onUpdateWorldTick_4(TickEvent.WorldTickEvent event)
+    public static void onUpdateWorldTick_4(TickEvent.WorldTickEvent worldTickEvent)
     {
-        if (event.world.provider.getDimension() == 0 && event.phase == TickEvent.Phase.START
-                && event.world.getGameRules().getBoolean("doDaylightCycle_tc"))
+        if (worldTickEvent.world.provider.getDimension() == 0 && worldTickEvent.phase == TickEvent.Phase.START
+                && worldTickEvent.world.getGameRules().getBoolean("doDaylightCycle_tc"))
         {
-            SERVER_TIME.tick(event.world);
+            SERVER_TIME.tick(worldTickEvent.world);
         }
     }
 
     /**
      *
-     * @param event
+     * @param commandEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateCommand_5(CommandEvent event)
+    public synchronized void onUpdateCommand_5(CommandEvent commandEvent)
     {
         try
         {
-            if (event.getException() == null)
+            if (commandEvent.getException() == null)
             {
-                if (event.getCommand() instanceof CommandGameRule && event.getParameters().length >= 1 &&
-                        (event.getParameters()[0].equals("doDaylightCycle") ||
-                                event.getParameters()[0].equals("doDaylightCycle_tc")) && event.getSender().getServer() != null)
+                if (commandEvent.getCommand() instanceof CommandGameRule && commandEvent.getParameters().length >= 1 &&
+                        (commandEvent.getParameters()[0].equals("doDaylightCycle") ||
+                                commandEvent.getParameters()[0].equals("doDaylightCycle_tc")) && commandEvent.getSender().getServer() != null)
                 {
-                    event.getParameters()[0] = "doDaylightCycle_tc";
-                    (new CommandGameRule()).execute(event.getSender().getServer(), event.getSender(), event.getParameters());
+                    commandEvent.getParameters()[0] = "doDaylightCycle_tc";
 
-                    if (event.getParameters().length >= 2)
+                    (new CommandGameRule()).execute(commandEvent.getSender().getServer(), commandEvent.getSender(), commandEvent.getParameters());
+
+                    if (commandEvent.getParameters().length >= 2)
                     {
-                        MessageHandler.instance.sendToAll(new PacketGameRule(CommandBase.parseBoolean(event.getParameters()[1])));
+                        MessageHandler.Instance.sendToAll(new PacketGameRule(CommandBase.parseBoolean(commandEvent.getParameters()[1])));
                     }
 
-                    event.setCanceled(true);
+                    commandEvent.setCanceled(true);
                 }
-                else if (event.getCommand() instanceof CommandTime && event.getParameters().length == 2)
+                else if (commandEvent.getCommand() instanceof CommandTime && commandEvent.getParameters().length == 2)
                 {
-                    String[] args = event.getParameters();
+                    String[] args = commandEvent.getParameters();
 
                     if (args[0].equals("set") || args[0].equals("add"))
                     {
@@ -157,7 +160,9 @@ public final class TimeEvents
                         if (args[0].equals("add"))
                         {
                             time = CommandBase.parseLong(arg);
-                            time += event.getSender().getServer().getWorld(0).getWorldTime();
+
+                            time += Objects.requireNonNull(
+                                    commandEvent.getSender().getServer()).getWorld(0).getWorldTime();
                         }
                         else
                         {
@@ -196,11 +201,12 @@ public final class TimeEvents
                             }
                         }
 
-                        if (DataPluginWorldTime.ConfigDataWorldTime.instance.getSyncToSystemTime())
+                        if (DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime())
                         {
-                            event.getSender().sendMessage(new TextComponentString
+                            commandEvent.getSender().sendMessage(new TextComponentString
                                     (TextFormatting.RED + "Disable system time synchronization to " + args[0] + " time!"));
-                            event.setCanceled(true);
+
+                            commandEvent.setCanceled(true);
                         }
                         else
                         {
@@ -212,7 +218,7 @@ public final class TimeEvents
         }
         catch (CommandException exception)
         {
-            event.setException(exception);
+            commandEvent.setException(exception);
         }
     }
 

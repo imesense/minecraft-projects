@@ -13,19 +13,19 @@ public final class WorldProviderHook
 {
     /**
      *
-     * @param provider
+     * @param worldProvider
      * @param angle
      * @param partialTicks
      * @return
      */
-    public static Vec3d onGetFogColor(WorldProvider provider, float angle, float partialTicks)
+    public static Vec3d onGetFogColor(WorldProvider worldProvider, float angle, float partialTicks)
     {
-        if (!DataDarkness.ConfigDataRenderNight.instance.getDarknessEndFog() && provider instanceof WorldProviderEnd)
+        if (!DataDarkness.ConfigDataRenderNight.Instance.getDarknessEndFog() && worldProvider instanceof WorldProviderEnd)
         {
             return null;
         }
 
-        if (!DataDarkness.ConfigDataRenderNight.instance.getDarknessNetherFog() && provider instanceof WorldProviderHell)
+        if (!DataDarkness.ConfigDataRenderNight.Instance.getDarknessNetherFog() && worldProvider instanceof WorldProviderHell)
         {
             return null;
         }

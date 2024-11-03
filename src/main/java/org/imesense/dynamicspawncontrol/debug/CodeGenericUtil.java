@@ -16,21 +16,23 @@ public final class CodeGenericUtil
 {
     /**
      *
-     * @param mobMap
-     * @param parameterName
+     * @param attributeMap
+     * @param attributeKey
      * @param min
      * @param max
      * @param logParameterName
      * @return
      * @param <T>
      */
-    public static <T extends Number> T checkParameter(AttributeMap<?> mobMap, AttributeKey<?> parameterName, T min, T max, String logParameterName)
+    public static <T extends Number> T checkParameter(AttributeMap<?> attributeMap, AttributeKey<?> attributeKey, T min, T max, String logParameterName)
     {
-        Object value = mobMap.get(parameterName);
+        Object object = attributeMap.get(attributeKey);
 
-        if (value == null)
+        if (object == null)
         {
-            Log.writeDataToLogFile(2, "Parameter '" + logParameterName + "' missing or return null");
+            Log.writeDataToLogFile(2,
+                    "Parameter '" + logParameterName + "' missing or return null");
+
             throw new RuntimeException();
         }
 
@@ -38,17 +40,21 @@ public final class CodeGenericUtil
 
         try
         {
-            numericValue = (T) value;
+            numericValue = (T) object;
         }
         catch (ClassCastException exception)
         {
-            Log.writeDataToLogFile(2, "Parameter '" + logParameterName + "' has an invalid type");
+            Log.writeDataToLogFile(2,
+                    "Parameter '" + logParameterName + "' has an invalid type");
+
             throw new RuntimeException(exception);
         }
 
         if (numericValue.doubleValue() < min.doubleValue() || numericValue.doubleValue() > max.doubleValue())
         {
-            Log.writeDataToLogFile(2, "An error was detected in the parameter '" + logParameterName + "': range [" + min + " .. " + max + "]");
+            Log.writeDataToLogFile(2,
+                    "An error was detected in the parameter '" + logParameterName + "': range [" + min + " .. " + max + "]");
+
             throw new RuntimeException();
         }
 
@@ -75,15 +81,17 @@ public final class CodeGenericUtil
 
     /**
      *
-     * @param fileName
-     * @param parser
+     * @param PATH
+     * @param FILE_NAME
+     * @param jsonElementTFunction
      * @param list
-     * @param listType
+     * @param LIST_TYPE
      * @param <T>
      */
-    public static <T> void readAndLogRules(final String path, final String fileName, Function<JsonElement, T> parser, List<T> list, final String listType)
+    public static <T> void readAndLogRules(final String PATH, final String FILE_NAME,
+                                           Function<JsonElement, T> jsonElementTFunction, List<T> list, final String LIST_TYPE)
     {
-        ParserGenericJsonScript.readRules(path, fileName, parser, list, listType);
+        ParserGenericJsonScript.readRules(PATH, FILE_NAME, jsonElementTFunction, list, LIST_TYPE);
 
         if (!list.isEmpty())
         {
@@ -94,23 +102,25 @@ public final class CodeGenericUtil
 
     /**
      *
-     * @param getClass
+     * @param _class
      * @param <T>
      */
-    public static <T> void printInitClassToLog(final Class<T> getClass)
+    public static <T> void printInitClassToLog(final Class<T> _class)
     {
-        Log.writeDataToLogFile(0, String.format("Initializing a class: {%s}", getClass.getName()));
+        Log.writeDataToLogFile(0,
+                String.format("Initializing a class: {%s}", _class.getName()));
     }
 
     /**
      *
-     * @param getObject
-     * @param getClass
+     * @param object
+     * @param _class
      * @return
      * @param <T>
      */
-    public static <T> T as(Object getObject, Class<T> getClass)
+    public static <T> T as(Object object, Class<T> _class)
     {
-        return getClass.isInstance(getObject) ? getClass.cast(getObject) : null;
+        return _class.isInstance(object) ?
+                _class.cast(object) : null;
     }
 }

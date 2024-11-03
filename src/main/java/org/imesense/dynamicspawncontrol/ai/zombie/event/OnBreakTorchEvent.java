@@ -24,15 +24,15 @@ public final class OnBreakTorchEvent
 
     /**
      *
-     * @param event
+     * @param entityJoinWorldEvent
      */
     @SubscribeEvent
-    public synchronized void onSearchToBreakTorch_0(EntityJoinWorldEvent event)
+    public synchronized void onSearchToBreakTorch_0(EntityJoinWorldEvent entityJoinWorldEvent)
     {
-        if (event.getEntity() instanceof EntityZombie)
+        if (entityJoinWorldEvent.getEntity() instanceof EntityZombie)
         {
-            EntityZombie zombie = (EntityZombie) event.getEntity();
-            zombie.tasks.addTask(1, new BreakTorchTask(zombie));
+            EntityZombie eventEntity = (EntityZombie) entityJoinWorldEvent.getEntity();
+            eventEntity.tasks.addTask(1, new BreakTorchTask(eventEntity));
         }
     }
 }

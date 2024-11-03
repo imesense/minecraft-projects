@@ -37,39 +37,39 @@ public final class CmdAdminLaunchFireball extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_lf";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
         if (args.length != 2)
         {
-            sender.sendMessage(new TextComponentString("-: " + getUsage(sender)));
+            iCommandSender.sendMessage(new TextComponentString("-: " + getUsage(iCommandSender)));
             return;
         }
 
-        if (!(sender instanceof EntityPlayerMP))
+        if (!(iCommandSender instanceof EntityPlayerMP))
         {
-            sender.sendMessage(new TextComponentString("This command can only be used by players!"));
+            iCommandSender.sendMessage(new TextComponentString("This command can only be used by players!"));
             return;
         }
 
-        EntityPlayerMP player = (EntityPlayerMP) sender;
-        World world = player.getEntityWorld();
+        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) iCommandSender;
+        World world = entityPlayerMP.getEntityWorld();
         double speed, explosionStrength;
 
         try
@@ -79,25 +79,25 @@ public final class CmdAdminLaunchFireball extends CommandBase
         }
         catch (NumberFormatException exception)
         {
-            sender.sendMessage(new TextComponentString("Incorrect arguments! Enter the numbers for the force of the explosion and the flight speed."));
+            iCommandSender.sendMessage(new TextComponentString("Incorrect arguments! Enter the numbers for the force of the explosion and the flight speed."));
             return;
         }
 
-        if (explosionStrength <= 0 || speed <= 0)
+        if (explosionStrength <= 0.00 || speed <= 0.00)
         {
-            sender.sendMessage(new TextComponentString("The values of the explosion force and flight speed must be positive!"));
+            iCommandSender.sendMessage(new TextComponentString("The values of the explosion force and flight speed must be positive!"));
             return;
         }
 
-        DSCFireball fireball = new DSCFireball(world, player, 0, 0, 0);
+        DSCFireball dscFireball = new DSCFireball(world, entityPlayerMP, 0.00, 0.00, 0.00);
 
-        fireball.setExplosionStrength(explosionStrength);
-        fireball.setPosition(player.posX, player.posY + player.getEyeHeight(), player.posZ);
+        dscFireball.setExplosionStrength(explosionStrength);
+        dscFireball.setPosition(entityPlayerMP.posX, entityPlayerMP.posY + entityPlayerMP.getEyeHeight(), entityPlayerMP.posZ);
 
-        fireball.accelerationX = player.getLookVec().x * speed;
-        fireball.accelerationY = player.getLookVec().y * speed;
-        fireball.accelerationZ = player.getLookVec().z * speed;
+        dscFireball.accelerationX = entityPlayerMP.getLookVec().x * speed;
+        dscFireball.accelerationY = entityPlayerMP.getLookVec().y * speed;
+        dscFireball.accelerationZ = entityPlayerMP.getLookVec().z * speed;
 
-        world.spawnEntity(fireball);
+        world.spawnEntity(dscFireball);
     }
 }

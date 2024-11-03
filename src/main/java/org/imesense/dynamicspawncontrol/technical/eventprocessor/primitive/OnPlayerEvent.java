@@ -54,83 +54,84 @@ public final class OnPlayerEvent
 
     /**
      *
-     * @param event
+     * @param entityJoinWorldEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent event)
+    public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent entityJoinWorldEvent)
     {
-        if (event.getEntity() instanceof EntityPlayerMP && !(event.getEntity() instanceof FakePlayer))
+        if (entityJoinWorldEvent.getEntity() instanceof EntityPlayerMP &&
+                !(entityJoinWorldEvent.getEntity() instanceof FakePlayer))
         {
-            EntityPlayerMP player = (EntityPlayerMP) event.getEntity();
+            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) entityJoinWorldEvent.getEntity();
 
-            if (!PLAYER_LIST.contains(player.getName()))
+            if (!PLAYER_LIST.contains(entityPlayerMP.getName()))
             {
-                PLAYER_LIST.add(player.getName());
-                Log.writeDataToLogFile(0, String.format("Player [%s] has been added to the list", player.getName()));
+                PLAYER_LIST.add(entityPlayerMP.getName());
+                Log.writeDataToLogFile(0, String.format("Player [%s] has been added to the list", entityPlayerMP.getName()));
             }
         }
     }
 
     /**
      *
-     * @param event
+     * @param playerLoggedOutEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLoggedOut_1(PlayerEvent.PlayerLoggedOutEvent event)
+    public synchronized void onUpdatePlayerLoggedOut_1(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
     {
-        EntityPlayerMP player = (EntityPlayerMP) event.player;
-        PLAYER_LIST.remove(player.getName());
-        Log.writeDataToLogFile(0, String.format("Player [%s] has been removed from the list", player.getName()));
+        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerLoggedOutEvent.player;
+        PLAYER_LIST.remove(entityPlayerMP.getName());
+        Log.writeDataToLogFile(0, String.format("Player [%s] has been removed from the list", entityPlayerMP.getName()));
     }
 
     /**
      *
-     * @param event
+     * @param clientConnectedToServerEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLogin_0(FMLNetworkEvent.ClientConnectedToServerEvent event)
+    public synchronized void onUpdatePlayerLogin_0(FMLNetworkEvent.ClientConnectedToServerEvent clientConnectedToServerEvent)
     {
-        Log.writeDataToLogFile(0, "ClientConnectedToServerEvent " + event);
+        Log.writeDataToLogFile(0, "ClientConnectedToServerEvent " + clientConnectedToServerEvent);
     }
 
     /**
      *
-     * @param event
+     * @param playerLoggedInEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLoginServer_0(PlayerEvent.PlayerLoggedInEvent event)
+    public synchronized void onUpdatePlayerLoginServer_0(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
     {
-        Log.writeDataToLogFile(0, "PlayerLoggedInEvent " + event.player.getName() + " logged in.");
+        Log.writeDataToLogFile(0, "PlayerLoggedInEvent " + playerLoggedInEvent.player.getName() + " logged in.");
     }
 
     /**
      *
-     * @param event
+     * @param clientDisconnectionFromServerEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLogout_0(FMLNetworkEvent.ClientDisconnectionFromServerEvent event)
+    public synchronized void onUpdatePlayerLogout_0(FMLNetworkEvent.ClientDisconnectionFromServerEvent clientDisconnectionFromServerEvent)
     {
-        Log.writeDataToLogFile(0, "ClientDisconnectionFromServerEvent " + event);
+        Log.writeDataToLogFile(0, "ClientDisconnectionFromServerEvent " + clientDisconnectionFromServerEvent);
     }
 
     /**
      *
-     * @param event
+     * @param playerRespawnEvent
      */
     @SubscribeEvent
-    public synchronized void onPlayerRespawn_0(PlayerEvent.PlayerRespawnEvent event)
+    public synchronized void onPlayerRespawn_0(PlayerEvent.PlayerRespawnEvent playerRespawnEvent)
     {
-        EntityPlayerMP player = (EntityPlayerMP) event.player;
-        World world = player.world;
-        BlockPos playerPos = player.getPosition();
+        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerRespawnEvent.player;
+        World world = entityPlayerMP.world;
+        BlockPos blockPos = entityPlayerMP.getPosition();
 
-        int radius = DataPlayer.ConfigDataPlayer.instance.getProtectRespawnPlayerRadius();
+        int radius = DataPlayer.ConfigDataPlayer.Instance.getProtectRespawnPlayerRadius();
 
         AxisAlignedBB area = new AxisAlignedBB
-                (
-                        playerPos.add(-radius, -radius, -radius),
-                        playerPos.add(radius, radius, radius)
-                );
+        (
+            blockPos.add(-radius, -radius, -radius),
+            blockPos.add(radius, radius, radius)
+        );
 
         List<Entity> entitiesInArea = world.getEntitiesWithinAABB(Entity.class, area);
 

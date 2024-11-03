@@ -46,41 +46,45 @@ public final class CmdAdminDumpItem extends CommandBase
 
     /**
      *
-     * @param sender
+     * @param iCommandSender
      * @return
      */
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_dump_item";
     }
 
     /**
      *
-     * @param server
-     * @param sender
+     * @param minecraftServer
+     * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
-        if (sender instanceof EntityPlayerMP)
+        if (iCommandSender instanceof EntityPlayerMP)
         {
-            EntityPlayerMP player = (EntityPlayerMP) sender;
-            ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
-            Item item = heldItem.getItem();
-            sender.sendMessage(new TextComponentString(TextFormatting.GOLD + Objects.requireNonNull(item.getRegistryName()).toString()));
+            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) iCommandSender;
+            ItemStack itemStack = entityPlayerMP.getHeldItem(EnumHand.MAIN_HAND);
+
+            Item item = itemStack.getItem();
+            iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD +
+                    Objects.requireNonNull(item.getRegistryName()).toString()));
+
             Log.writeDataToLogFile(0, Objects.requireNonNull(item.getRegistryName()).toString());
-            NBTTagCompound nbt = heldItem.getTagCompound();
-            if (nbt != null)
+
+            NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
+            if (nbtTagCompound != null)
             {
-                dumpNBT(sender, 2, nbt);
+                dumpNBT(iCommandSender, 2, nbtTagCompound);
             }
         }
         else
         {
-            sender.sendMessage(new TextComponentString(TextFormatting.RED + "Эту команду могут использовать только игроки!"));
+            iCommandSender.sendMessage(new TextComponentString(TextFormatting.RED + "Эту команду могут использовать только игроки!"));
         }
     }
 
@@ -94,8 +98,9 @@ public final class CmdAdminDumpItem extends CommandBase
     {
         for (String key : nbt.getKeySet())
         {
-            NBTBase base = nbt.getTag(key);
-            byte id = base.getId();
+            NBTBase nbtBase = nbt.getTag(key);
+            byte id = nbtBase.getId();
+
             switch (id)
             {
                 case Constants.NBT.TAG_INT:
@@ -129,18 +134,22 @@ public final class CmdAdminDumpItem extends CommandBase
                 case Constants.NBT.TAG_LIST:
                     sender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(List) " + key));
                     Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(List) " + key);
-                    NBTBase b = nbt.getTag(key);
+                    NBTBase nbtBase1 = nbt.getTag(key);
 
-                    if (((NBTTagList)b).getTagType() == Constants.NBT.TAG_COMPOUND)
+                    if (((NBTTagList)nbtBase1).getTagType() == Constants.NBT.TAG_COMPOUND)
                     {
-                        NBTTagList list = nbt.getTagList(key, Constants.NBT.TAG_COMPOUND);
                         int idx = 0;
-                        for (NBTBase bs : list)
+
+                        NBTTagList nbtTagList = nbt.getTagList(key, Constants.NBT.TAG_COMPOUND);
+
+                        for (NBTBase nbtBase2 : nbtTagList)
                         {
-                            sender.sendMessage(new TextComponentString(TextFormatting.YELLOW + StringUtils.repeat(' ', indent+2) + "Index " + idx));
+                            sender.sendMessage(new TextComponentString(TextFormatting.YELLOW +
+                                    StringUtils.repeat(' ', indent+2) + "Index " + idx));
+
                             Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent+2) + "Index " + idx);
                             idx++;
-                            dumpNBT(sender, indent + 4, (NBTTagCompound) bs);
+                            dumpNBT(sender, indent + 4, (NBTTagCompound) nbtBase2);
                         }
                     }
                     break;

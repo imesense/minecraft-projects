@@ -11,7 +11,7 @@ public class EntityThingBase implements IThingBase
    /**
     *
     */
-   public Entity owner;
+   public Entity Owner;
 
    /**
     *
@@ -19,7 +19,7 @@ public class EntityThingBase implements IThingBase
     */
    public EntityThingBase(Entity ownerIn)
    {
-      this.owner = ownerIn;
+      this.Owner = ownerIn;
    }
 
    /**
@@ -28,6 +28,6 @@ public class EntityThingBase implements IThingBase
     */
    public ICapabilityProvider capProvider()
    {
-      return this.owner;
+      return this.Owner;
    }
 }

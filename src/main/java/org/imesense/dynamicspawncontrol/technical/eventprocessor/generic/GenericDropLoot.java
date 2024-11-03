@@ -89,57 +89,58 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
 
     /**
      *
-     * @param event
+     * @param livingDropsEvent
      * @return
      */
-    public boolean match(LivingDropsEvent event) { return RULE_EVALUATOR.match(event, EVENT_QUERY); }
+    public boolean match(LivingDropsEvent livingDropsEvent) { return RULE_EVALUATOR.match(livingDropsEvent, EVENT_QUERY); }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private GenericDropLoot(AttributeMap<?> map)
+    private GenericDropLoot(AttributeMap<?> attributeMap)
     {
         super();
 
-        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]", GenericDropLoot.class.getName(), countCreatedMaps++));
+        Log.writeDataToLogFile(0, String.format("Iterator for [%s] number [%d]",
+                GenericDropLoot.class.getName(), countCreatedMaps++));
 
-        this.RULE_EVALUATOR = new ListActionBinary<>(map);
+        this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
-        this.addActions(map);
+        this.addActions(attributeMap);
 
-        if (map.has(ACTION_ITEM))
+        if (attributeMap.has(ACTION_ITEM))
         {
-            this.addItem(map);
+            this.addItem(attributeMap);
         }
 
-        if (map.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE))
+        if (attributeMap.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE))
         {
-            this.removeItem(map);
+            this.removeItem(attributeMap);
         }
 
-        if (map.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL))
+        if (attributeMap.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL))
         {
-            this.removeAll = (Boolean) map.get(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL);
+            this.removeAll = (Boolean) attributeMap.get(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL);
         }
     }
 
     /**
      *
-     * @param element
+     * @param jsonElement
      * @return
      */
-    public static GenericDropLoot parse(JsonElement element)
+    public static GenericDropLoot parse(JsonElement jsonElement)
     {
-        if (element == null)
+        if (jsonElement == null)
         {
             return null;
         }
         else
         {
-            AttributeMap<?> map = FACTORY.parse(element);
+            AttributeMap<?> attributeMap = FACTORY.parse(jsonElement);
 
-            return new GenericDropLoot(map);
+            return new GenericDropLoot(attributeMap);
         }
     }
 
@@ -150,101 +151,101 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
     {
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public World getWorld(LivingDropsEvent data)
+        public World getWorld(LivingDropsEvent livingDropsEvent)
         {
-            return data.getEntity().getEntityWorld();
+            return livingDropsEvent.getEntity().getEntityWorld();
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public BlockPos getPos(LivingDropsEvent data)
+        public BlockPos getPos(LivingDropsEvent livingDropsEvent)
         {
-            return data.getEntity().getPosition();
+            return livingDropsEvent.getEntity().getPosition();
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public BlockPos getValidBlockPos(LivingDropsEvent data)
+        public BlockPos getValidBlockPos(LivingDropsEvent livingDropsEvent)
         {
-            return data.getEntity().getPosition().down();
+            return livingDropsEvent.getEntity().getPosition().down();
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public int getY(LivingDropsEvent data)
+        public int getY(LivingDropsEvent livingDropsEvent)
         {
-            return data.getEntity().getPosition().getY();
+            return livingDropsEvent.getEntity().getPosition().getY();
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public Entity getEntity(LivingDropsEvent data)
+        public Entity getEntity(LivingDropsEvent livingDropsEvent)
         {
-            return data.getEntity();
+            return livingDropsEvent.getEntity();
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public DamageSource getSource(LivingDropsEvent data)
+        public DamageSource getSource(LivingDropsEvent livingDropsEvent)
         {
-            return data.getSource();
+            return livingDropsEvent.getSource();
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public Entity getAttacker(LivingDropsEvent data)
+        public Entity getAttacker(LivingDropsEvent livingDropsEvent)
         {
-            return data.getSource().getTrueSource();
+            return livingDropsEvent.getSource().getTrueSource();
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public EntityPlayerMP getPlayer(LivingDropsEvent data)
+        public EntityPlayerMP getPlayer(LivingDropsEvent livingDropsEvent)
         {
-            Entity entity = data.getSource().getTrueSource();
+            Entity entity = livingDropsEvent.getSource().getTrueSource();
 
             return entity instanceof EntityPlayerMP ? (EntityPlayerMP) entity : null;
         }
 
         /**
          *
-         * @param data
+         * @param livingDropsEvent
          * @return
          */
         @Override
-        public ItemStack getItem(LivingDropsEvent data)
+        public ItemStack getItem(LivingDropsEvent livingDropsEvent)
         {
             return ItemStack.EMPTY;
         }
@@ -423,9 +424,9 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
 
         for (String name : itemNames)
         {
-            ItemStack stack = ItemStackBuilder.parseStack(name);
+            ItemStack itemStack = ItemStackBuilder.parseStack(name);
 
-            if (stack.isEmpty())
+            if (itemStack.isEmpty())
             {
                 Log.writeDataToLogFile(2, "Unknown item '" + name + "'!");
             }
@@ -435,7 +436,7 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
                 {
                     try
                     {
-                        stack.setTagCompound(JsonToNBT.getTagFromJson(nbtJson));
+                        itemStack.setTagCompound(JsonToNBT.getTagFromJson(nbtJson));
                     }
                     catch (NBTException exception)
                     {
@@ -443,7 +444,7 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
                     }
                 }
 
-                items.add(Pair.of(stack, countFunction));
+                items.add(Pair.of(itemStack, countFunction));
             }
         }
 
@@ -452,22 +453,22 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void addItem(AttributeMap<?> map)
+    private void addItem(AttributeMap<?> attributeMap)
     {
-        Object nbt = map.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_NBT);
-        Object itemCount = map.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_COUNT);
+        Object nbt = attributeMap.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_NBT);
+        Object itemCount = attributeMap.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_COUNT);
 
-        this.TO_ADD_ITEMS.addAll(getItems(map.getList(ACTION_ITEM), (String)nbt, (String)itemCount));
+        this.TO_ADD_ITEMS.addAll(getItems(attributeMap.getList(ACTION_ITEM), (String) nbt, (String) itemCount));
     }
 
     /**
      *
-     * @param map
+     * @param attributeMap
      */
-    private void removeItem(AttributeMap<?> map)
+    private void removeItem(AttributeMap<?> attributeMap)
     {
-        this.TO_REMOVE_ITEMS.addAll(AuxFunction.getItems((JsonElement)map.getList(MultipleKeyWord.DroopLoot.ACTION_REMOVE)));
+        this.TO_REMOVE_ITEMS.addAll(AuxFunction.getItems((JsonElement) attributeMap.getList(MultipleKeyWord.DroopLoot.ACTION_REMOVE)));
     }
 }

@@ -30,7 +30,7 @@ public final class CfgStaminaPlayer extends CfgClassAbstract
 
         CodeGenericUtil.printInitClassToLog(this.getClass());
 
-        DataStaminaPlayer.ConfigDataStaminaPlayer.instance =
+        DataStaminaPlayer.ConfigDataStaminaPlayer.Instance =
                 new DataStaminaPlayer.ConfigDataStaminaPlayer("stamina_player");
 
         if (Files.exists(Paths.get(this.nameConfig)))
@@ -49,13 +49,13 @@ public final class CfgStaminaPlayer extends CfgClassAbstract
     @Override
     public void saveToFile()
     {
-        Path configPath = Paths.get(this.nameConfig).getParent();
+        Path path = Paths.get(this.nameConfig).getParent();
 
-        if (Files.notExists(configPath))
+        if (Files.notExists(path))
         {
             try
             {
-                Files.createDirectories(configPath);
+                Files.createDirectories(path);
             }
             catch (IOException exception)
             {
@@ -64,47 +64,46 @@ public final class CfgStaminaPlayer extends CfgClassAbstract
         }
 
         JsonObject recordObject = new JsonObject();
-
         JsonObject jsonObjectStaminaPlayer = new JsonObject();
 
         jsonObjectStaminaPlayer.addProperty("show_bar",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getShowBar());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getShowBar());
 
         jsonObjectStaminaPlayer.addProperty("x_offset",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getXOffset());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getXOffset());
 
         jsonObjectStaminaPlayer.addProperty("y_offset",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getYOffset());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getYOffset());
 
         jsonObjectStaminaPlayer.addProperty("increase_multiplier",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getIncreaseMultiplier());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getIncreaseMultiplier());
 
         jsonObjectStaminaPlayer.addProperty("max_stamina",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getMaxStamina());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getMaxStamina());
 
         jsonObjectStaminaPlayer.addProperty("walking",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getWalking());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getWalking());
 
         jsonObjectStaminaPlayer.addProperty("standing",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getStanding());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getStanding());
 
         jsonObjectStaminaPlayer.addProperty("sprinting",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getSprinting());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getSprinting());
 
         jsonObjectStaminaPlayer.addProperty("sneaking",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getSneaking());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getSneaking());
 
         jsonObjectStaminaPlayer.addProperty("jumping",
-                DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getJumping());
+                DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getJumping());
 
-        recordObject.add(DataStaminaPlayer.ConfigDataStaminaPlayer.instance.
+        recordObject.add(DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.
                 getCategoryObject(), jsonObjectStaminaPlayer);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        try (FileWriter file = new FileWriter(this.nameConfig))
+        try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(recordObject, file);
+            gson.toJson(recordObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -124,68 +123,68 @@ public final class CfgStaminaPlayer extends CfgClassAbstract
 
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getCategoryObject()))
+            if (readableObject.has(DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getCategoryObject()))
             {
                 JsonObject jsonObjectWeb = readableObject.getAsJsonObject(
-                        DataStaminaPlayer.ConfigDataStaminaPlayer.instance.getCategoryObject());
+                        DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.getCategoryObject());
 
                 if (jsonObjectWeb.has("show_bar"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setShowBar(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setShowBar(
                             jsonObjectWeb.get("show_bar").getAsBoolean());
                 }
 
                 if (jsonObjectWeb.has("x_offset"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setXOffset(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setXOffset(
                             jsonObjectWeb.get("x_offset").getAsInt());
                 }
 
                 if (jsonObjectWeb.has("y_offset"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setYOffset(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setYOffset(
                             jsonObjectWeb.get("y_offset").getAsInt());
                 }
 
                 if (jsonObjectWeb.has("increase_multiplier"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setIncreaseMultiplier(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setIncreaseMultiplier(
                             jsonObjectWeb.get("increase_multiplier").getAsDouble());
                 }
 
                 if (jsonObjectWeb.has("max_stamina"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setMaxStamina(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setMaxStamina(
                             jsonObjectWeb.get("max_stamina").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("walking"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setWalking(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setWalking(
                             jsonObjectWeb.get("walking").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("standing"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setStanding(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setStanding(
                             jsonObjectWeb.get("standing").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("sprinting"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setSprinting(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setSprinting(
                             jsonObjectWeb.get("sprinting").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("sneaking"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setSneaking(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setSneaking(
                             jsonObjectWeb.get("sneaking").getAsFloat());
                 }
 
                 if (jsonObjectWeb.has("jumping"))
                 {
-                    DataStaminaPlayer.ConfigDataStaminaPlayer.instance.setJumping(
+                    DataStaminaPlayer.ConfigDataStaminaPlayer.Instance.setJumping(
                             jsonObjectWeb.get("jumping").getAsFloat());
                 }
             }

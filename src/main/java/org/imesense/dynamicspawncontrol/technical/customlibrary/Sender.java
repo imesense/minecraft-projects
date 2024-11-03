@@ -27,17 +27,17 @@ public final class Sender implements ICommandSender
     /**
      *
      */
-    private final EntityPlayerMP PLAYER;
+    private final EntityPlayerMP ENTITY_PLAYER_MP;
 
     /**
      *
      * @param world
-     * @param player
+     * @param entityPlayerMP
      */
-    public Sender(World world, EntityPlayerMP player)
+    public Sender(World world, EntityPlayerMP entityPlayerMP)
     {
         this.WORLD = world;
-        this.PLAYER = player;
+        this.ENTITY_PLAYER_MP = entityPlayerMP;
     }
 
     /**
@@ -64,12 +64,12 @@ public final class Sender implements ICommandSender
 
     /**
      *
-     * @param component
+     * @param iTextComponent
      */
     @Override
-    public void sendMessage(ITextComponent component)
+    public void sendMessage(ITextComponent iTextComponent)
     {
-        System.out.println(component.getFormattedText());
+        System.out.println(iTextComponent.getFormattedText());
     }
 
     /**
@@ -125,7 +125,7 @@ public final class Sender implements ICommandSender
     @Override
     public Entity getCommandSenderEntity()
     {
-        return this.PLAYER;
+        return this.ENTITY_PLAYER_MP;
     }
 
     /**
@@ -140,12 +140,13 @@ public final class Sender implements ICommandSender
 
     /**
      *
-     * @param type
+     * @param TYPE
      * @param amount
      */
     @Override
-    public void setCommandStat(@Nonnull final CommandResultStats.Type type, int amount)
+    public void setCommandStat(@Nonnull final CommandResultStats.Type TYPE, int amount)
     {
+
     }
 
     /**

@@ -34,19 +34,19 @@ public final class Log
 
     /**
      *
-     * @param path
+     * @param PATH
      */
-    public static void createLogFile(final String path, boolean isDebugMode)
+    public static void createLogFile(final String PATH, boolean isDebugMode)
     {
         try
         {
-            File logsDirectory = new File(path, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
+            File file = new File(PATH, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
 
-            if (!logsDirectory.exists())
+            if (!file.exists())
             {
-                if (logsDirectory.mkdirs())
+                if (file.mkdirs())
                 {
-                    System.out.println("The 'logs' folder has been created successfully: " + logsDirectory.getAbsolutePath());
+                    System.out.println("The 'logs' folder has been created successfully: " + file.getAbsolutePath());
                 }
                 else
                 {
@@ -57,24 +57,26 @@ public final class Log
 
             if (isDebugMode)
             {
-                logFile = new File(logsDirectory, "log_debug.txt");
+                logFile = new File(file, "log_debug.txt");
             }
             else
             {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-                String currentDate = dateFormat.format(new Date());
-                String fileName = logsDirectory + "/log_" + currentDate + ProjectStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+
+                String currentDate = simpleDateFormat.format(new Date());
+                String fileName = file + "/log_" + currentDate + ProjectStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+
                 logFile = new File(fileName);
             }
 
-            FileWriter writer = new FileWriter(logFile, !isDebugMode);
+            FileWriter fileWriter = new FileWriter(logFile, !isDebugMode);
 
-            writer.write("*********************************************************************");
-            writer.write("\n** Log file created: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-            writer.write("\n** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
-            writer.write("\n*******************************************************************");
+            fileWriter.write("*********************************************************************");
+            fileWriter.write("\n** Log file created: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            fileWriter.write("\n** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
+            fileWriter.write("\n*******************************************************************");
 
-            writer.close();
+            fileWriter.close();
         }
         catch (IOException exception)
         {
@@ -93,14 +95,14 @@ public final class Log
         {
             String line;
             List<String> lines = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 
-            while ((line = reader.readLine()) != null)
+            while ((line = bufferedReader.readLine()) != null)
             {
                 lines.add(line);
             }
 
-            reader.close();
+            bufferedReader.close();
 
             if (lines.size() >= maxLines)
             {
@@ -111,19 +113,19 @@ public final class Log
 
                 lines.subList(startIndex, endIndex).clear();
 
-                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 
                 for (int i = 0; i < lines.size(); i++)
                 {
-                    writer.write(lines.get(i));
+                    bufferedWriter.write(lines.get(i));
 
                     if (i < lines.size() - 1)
                     {
-                        writer.newLine();
+                        bufferedWriter.newLine();
                     }
                 }
 
-                writer.close();
+                bufferedWriter.close();
             }
             else
             {
@@ -138,30 +140,30 @@ public final class Log
 
     /**
      *
-     * @param levelInfo
+     * @param LEVEL_INFO
      * @param data
      */
-    public static void writeDataToLogFile(final int levelInfo, String data)
+    public static void writeDataToLogFile(final int LEVEL_INFO, String data)
     {
         if (logFile != null)
         {
-            final int[] logLevel = { levelInfo };
+            final int[] LOG_LEVEL = { LEVEL_INFO };
 
             EXECUTOR.submit(() ->
             {
                 try
                 {
-                    if (logLevel[0] < 0 || logLevel[0] >= LEVEL_PREFIXES.length)
+                    if (LOG_LEVEL[0] < 0 || LOG_LEVEL[0] >= LEVEL_PREFIXES.length)
                     {
-                        logLevel[0] = 0;
+                        LOG_LEVEL[0] = 0;
                     }
 
-                    FileWriter writer = new FileWriter(logFile, true);
+                    FileWriter fileWriter = new FileWriter(logFile, true);
 
-                    writer.write("\n" + LEVEL_PREFIXES[logLevel[0]] + data);
-                    writer.close();
+                    fileWriter.write("\n" + LEVEL_PREFIXES[LOG_LEVEL[0]] + data);
+                    fileWriter.close();
 
-                    cleanFile(logFile, DataLogFile.ConfigDataLogFile.instance.getLogMaxLines());
+                    cleanFile(logFile, DataLogFile.ConfigDataLogFile.Instance.getLogMaxLines());
                 }
                 catch (IOException exception)
                 {

@@ -43,44 +43,44 @@ public final class OnBlockBreakEvent
 
     /**
      *
-     * @param event
+     * @param breakEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateBlockBreakEvent_0(BlockEvent.BreakEvent event)
+    public synchronized void onUpdateBlockBreakEvent_0(BlockEvent.BreakEvent breakEvent)
     {
-        if (event.getWorld().isRemote)
+        if (breakEvent.getWorld().isRemote)
         {
             return;
         }
 
-        AtomicInteger i = new AtomicInteger();
+        AtomicInteger atomicInteger = new AtomicInteger();
 
         for (GenericBlockBreakAction rule : ParserGenericJsonScript.GENERIC_BLOCK_BREAK_ACTIONS_LIST)
         {
-            if (rule.match(event))
+            if (rule.match(breakEvent))
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.ConfigDataEvent.instance.getDebugSetting("debug_on_block_break"))
+                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_block_break"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockBreakActions. ID Rule "
-                            + i + ": "
+                            + atomicInteger + ": "
                             + result + " entity: "
-                            + event.getPlayer().getName()
-                            + " y: " + event.getPos().getY()
+                            + breakEvent.getPlayer().getName()
+                            + " y: " + breakEvent.getPos().getY()
                             + " biomes: "
-                            + event.getWorld().getBiome(event.getPos()).getBiomeName());
+                            + breakEvent.getWorld().getBiome(breakEvent.getPos()).getBiomeName());
                 }
 
-                rule.action(event);
+                rule.action(breakEvent);
 
                 if (result == Event.Result.DENY)
                 {
-                    event.setCanceled(true);
+                    breakEvent.setCanceled(true);
                 }
             }
 
-            i.getAndIncrement();
+            atomicInteger.getAndIncrement();
         }
     }
 }

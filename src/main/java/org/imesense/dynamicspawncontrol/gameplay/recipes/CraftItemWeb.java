@@ -18,7 +18,7 @@ public final class CraftItemWeb implements IRecipes
     public void registry()
     {
         GameRegistry.addShapedRecipe(new ResourceLocation("dynamicspawncontrol", "webbing"), null,
-                new ItemStack(ObjectHandlerClient.webbing),
+                new ItemStack(ObjectHandlerClient.Webbing),
                 "SSS",
                 "SWS",
                 "SSS",

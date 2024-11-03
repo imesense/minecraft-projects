@@ -37,22 +37,22 @@ public final class ObjectHandlerClient
     /**
      *
      */
-    public static Item webbing = null;
+    public static Item Webbing = null;
 
     /**
      *
      */
-    public static SoundEvent WEBBING_SHOOT;
+    public static SoundEvent WebbingShoot;
 
     /**
      *
      */
-    public static SoundEvent WEBBING_STICK;
+    public static SoundEvent WebbingStick;
 
     /**
      *
      */
-    public static SoundEvent WEBBING_NONSTICK;
+    public static SoundEvent WebbingNonStick;
 
     /**
      *
@@ -76,7 +76,7 @@ public final class ObjectHandlerClient
         public static void registerItems(Register<Item> event)
         {
             IForgeRegistry<Item> registry = event.getRegistry();
-            ObjectHandlerClient.webbing = regHelper(registry, new ItemWebbing());
+            ObjectHandlerClient.Webbing = regHelper(registry, new ItemWebbing());
         }
 
         /**
@@ -87,10 +87,10 @@ public final class ObjectHandlerClient
         @SideOnly(Side.CLIENT)
         public static void registerRenders(ModelRegistryEvent event)
         {
-            registerRender(ObjectHandlerClient.webbing);
+            registerRender(ObjectHandlerClient.Webbing);
 
             RenderingRegistry.registerEntityRenderingHandler(EntityWebbing.class, (manager) ->
-                    new RenderSnowball<>(manager, ObjectHandlerClient.webbing, UniqueField.CLIENT.getRenderItem()));
+                    new RenderSnowball<>(manager, ObjectHandlerClient.Webbing, UniqueField.CLIENT.getRenderItem()));
         }
 
         /**
@@ -124,9 +124,9 @@ public final class ObjectHandlerClient
         @SubscribeEvent
         public static void soundRegistration(Register<SoundEvent> event)
         {
-            ObjectHandlerClient.WEBBING_SHOOT = SoundEvents.ENTITY_SNOWBALL_THROW;
-            ObjectHandlerClient.WEBBING_STICK = SoundEvents.BLOCK_SNOW_HIT;
-            ObjectHandlerClient.WEBBING_NONSTICK = SoundEvents.BLOCK_SNOW_BREAK;
+            ObjectHandlerClient.WebbingShoot = SoundEvents.ENTITY_SNOWBALL_THROW;
+            ObjectHandlerClient.WebbingStick = SoundEvents.BLOCK_SNOW_HIT;
+            ObjectHandlerClient.WebbingNonStick = SoundEvents.BLOCK_SNOW_BREAK;
         }
     }
 }
