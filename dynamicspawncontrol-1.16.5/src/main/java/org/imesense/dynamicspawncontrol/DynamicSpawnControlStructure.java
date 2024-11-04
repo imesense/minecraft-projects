@@ -29,6 +29,11 @@ public final class DynamicSpawnControlStructure
          *
          */
         public static final String NAME_DIR_PLUGINS = "plugins";
+
+        /**
+         *
+         */
+        public static final String NAME_DIR_CACHE = "cache";
     }
 
     /**
