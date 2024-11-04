@@ -1,10 +1,17 @@
 package org.imesense.dynamicspawncontrol.core.worldcache;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import org.imesense.dynamicspawncontrol.core.LogFile;
 
 import javax.annotation.Nonnull;
@@ -17,107 +24,47 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Cache
 {
-    /**
-     *
-     */
     public static Cache Instance;
 
-    /**
-     *
-     */
     public int TickCounter = 0;
 
-    /**
-     *
-     */
     public final int FIRST_UPDATE_INTERVAL = 1200;
 
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public volatile int _DYNAMIC_UPDATE_INTERVAL = 1200;
 
-    /**
-     *
-     */
     public final int SUBSEQUENT_UPDATE_INTERVAL = 4800;
 
-    /**
-     *
-     */
     public boolean IsFirstUpdate = true;
 
-    /**
-     *
-     */
     public boolean IsPrimaryPlayerLogged = false;
 
-    /**
-     *
-     */
     public final Set<ChunkPos> CACHE_VALID_CHUNKS = new HashSet<>();
 
-    /**
-     *
-     */
-    public final Set<EntityAnimal> CACHED_ACTUAL_ANIMALS = new HashSet<>();
+    public final Set<AnimalEntity> CACHED_ACTUAL_ANIMALS = new HashSet<>();
 
-    /**
-     *
-     */
-    public final Set<EntityAnimal> CACHED_BUFFER_ANIMALS = new HashSet<>();
+    public final Set<AnimalEntity> CACHED_BUFFER_ANIMALS = new HashSet<>();
 
-    /**
-     *
-     */
-    public final Set<IAnimals> CACHED_ACTUAL_HOSTILES = new HashSet<>();
+    public final Set<MobEntity> CACHED_ACTUAL_HOSTILES = new HashSet<>();
 
-    /**
-     *
-     */
-    public final Set<IAnimals> CACHED_BUFFER_HOSTILES = new HashSet<>();
+    public final Set<MobEntity> CACHED_BUFFER_HOSTILES = new HashSet<>();
 
-    /**
-     *
-     */
-    public final Set<EntityLivingBase> CACHED_ACTUAL_ALL = new HashSet<>();
+    public final Set<LivingEntity> CACHED_ACTUAL_ALL = new HashSet<>();
 
-    /**
-     *
-     */
-    public final Set<EntityLivingBase> CACHED_BUFFER_ALL = new HashSet<>();
+    public final Set<LivingEntity> CACHED_BUFFER_ALL = new HashSet<>();
 
-    /**
-     *
-     */
-    public final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_ACTUAL_BY_NAME = new ConcurrentHashMap<>();
+    public final ConcurrentMap<String, Set<LivingEntity>> ENTITIES_ACTUAL_BY_NAME = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
-    public final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_BUFFER_BY_NAME = new ConcurrentHashMap<>();
+    public final ConcurrentMap<String, Set<LivingEntity>> ENTITIES_BUFFER_BY_NAME = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
-    public final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_ACTUAL_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
+    public final ConcurrentMap<ResourceLocation, Set<LivingEntity>> ENTITIES_ACTUAL_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
-    public final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_BUFFER_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
+    public final ConcurrentMap<ResourceLocation, Set<LivingEntity>> ENTITIES_BUFFER_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
     public Cache()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        //CodeGenericUtil.printInitClassToLog(this.getClass());
 
         if (instanceExists)
         {
@@ -130,79 +77,56 @@ public class Cache
         Instance = this;
     }
 
-    /**
-     *
-     * @param world
-     */
-    public void updateCache(@Nonnull World world)
-    {
+    public void updateCache(@Nonnull World world) {
         cleanActualCache();
 
-        if (world instanceof WorldServer)
-        {
-            WorldServer worldServer = (WorldServer) world;
+        if (world instanceof ServerWorld) {
+            ServerWorld serverWorld = (ServerWorld) world;
 
-            for (EntityPlayer entityPlayer : world.playerEntities)
-            {
-                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, (EntityPlayerMP) entityPlayer);
+            for (ServerPlayerEntity playerEntity : serverWorld.getPlayers((player) -> true)) {
+                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(serverWorld, playerEntity);
                 CACHE_VALID_CHUNKS.addAll(validChunks);
             }
         }
 
-        for (Entity entity : world.loadedEntityList)
-        {
-            if (entity instanceof EntityLivingBase)
-            {
-                EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+        for (Entity entity : world.getEntities()) {
+            if (entity instanceof LivingEntity) {
+                LivingEntity livingEntity = (LivingEntity) entity;
 
-                if (CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
-                {
-                    if (entity instanceof IAnimals)
-                    {
-                        if (entity instanceof EntityAnimal)
-                        {
-                            CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
-                        }
-                        else if (entity instanceof EntityMob)
-                        {
-                            CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
+                if (CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.blockPosition()))) {
+                    if (entity instanceof MobEntity) {
+                        if (entity instanceof AnimalEntity) {
+                            CACHED_ACTUAL_ANIMALS.add((AnimalEntity) entity);
+                        } else if (entity instanceof MobEntity) {
+                            CACHED_ACTUAL_HOSTILES.add((MobEntity) entity);
                         }
                     }
 
-                    CACHED_ACTUAL_ALL.add(entityLivingBase);
+                    CACHED_ACTUAL_ALL.add(livingEntity);
 
-                    String entityName = entity.getName();
+                    String entityName = livingEntity.getName().getString();
 
-                    ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
-                            new HashSet<>()).add(entityLivingBase);
+                    ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k -> new HashSet<>()).add(livingEntity);
 
-                    ResourceLocation resourceLocation = EntityList.getKey(entity);
+                    ResourceLocation resourceLocation = EntityType.getKey(entity.getType());
 
-                    if (resourceLocation != null)
-                    {
-                        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k ->
-                                new HashSet<>()).add(entityLivingBase);
+                    if (resourceLocation != null) {
+                        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k -> new HashSet<>()).add(livingEntity);
                     }
                 }
             }
         }
     }
 
-    /**
-     *
-     * @param worldServer
-     * @param entityPlayerMP
-     * @return
-     */
-    private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayerMP entityPlayerMP)
+    private Set<ChunkPos> totalValidChunksSpawnForPlayer(ServerWorld serverWorld, ServerPlayerEntity playerEntity)
     {
         Set<ChunkPos> validChunks = new HashSet<>();
 
         int viewDistance =
-                Objects.requireNonNull(worldServer.getMinecraftServer()).getPlayerList().getViewDistance();
+                Objects.requireNonNull(serverWorld.getServer()).getPlayerList().getViewDistance();
 
-        int playerChunkX = MathHelper.floor(entityPlayerMP.posX) >> 4;
-        int playerChunkZ = MathHelper.floor(entityPlayerMP.posZ) >> 4;
+        int playerChunkX = MathHelper.floor(playerEntity.getX()) >> 4;
+        int playerChunkZ = MathHelper.floor(playerEntity.getZ()) >> 4;
 
         for (int x = playerChunkX - viewDistance; x <= playerChunkX + viewDistance; x++)
         {
@@ -210,7 +134,7 @@ public class Cache
             {
                 ChunkPos chunkPos = new ChunkPos(x, z);
 
-                if (worldServer.getChunkProvider().isChunkGeneratedAt(x, z))
+                if (serverWorld.getChunkSource().hasChunk(x, z))
                 {
                     validChunks.add(chunkPos);
                 }
@@ -220,83 +144,47 @@ public class Cache
         return validChunks;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getActualAnimalCount()
     {
         return CACHED_ACTUAL_ANIMALS.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getActualTotalEntityCount()
     {
         return CACHED_ACTUAL_ALL.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getActualHostileEntityCount()
     {
         return CACHED_ACTUAL_HOSTILES.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getBufferAnimalCount()
     {
         return CACHED_BUFFER_ANIMALS.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getBufferTotalEntityCount()
     {
         return CACHED_BUFFER_ALL.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getBufferHostileEntityCount()
     {
         return CACHED_BUFFER_HOSTILES.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getValidChunkCount()
     {
         return CACHE_VALID_CHUNKS.size();
     }
 
-    /**
-     *
-     * @param resourceLocation
-     * @return
-     */
     @Nonnull
-    public Set<EntityLivingBase> getEntitiesByResourceLocation(@Nonnull ResourceLocation resourceLocation)
+    public Set<LivingEntity> getEntitiesByResourceLocation(@Nonnull ResourceLocation resourceLocation)
     {
         return ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.getOrDefault(resourceLocation, Collections.emptySet());
     }
 
-    /**
-     *
-     */
     public void copyActualToBuffer()
     {
         CACHED_BUFFER_ANIMALS.clear();
@@ -322,9 +210,6 @@ public class Cache
                 ENTITIES_BUFFER_BY_RESOURCE_LOCATION.put(key, new HashSet<>(set)));
     }
 
-    /**
-     *
-     */
     public void cleanActualCache()
     {
         CACHED_ACTUAL_ANIMALS.clear();
@@ -336,9 +221,6 @@ public class Cache
         CACHE_VALID_CHUNKS.clear();
     }
 
-    /**
-     *
-     */
     public void cleanBufferCache()
     {
         CACHED_BUFFER_ANIMALS.clear();

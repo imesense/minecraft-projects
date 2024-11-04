@@ -1,9 +1,14 @@
 package org.imesense.dynamicspawncontrol.core.worldcache;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -17,22 +22,13 @@ import java.util.HashSet;
 
 public class CacheEvent
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     private static CacheMonitor cacheMonitor = null;
 
-    /**
-     *
-     */
     public CacheEvent()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        //CodeGenericUtil.printInitClassToLog(this.getClass());
 
         if (instanceExists)
         {
@@ -45,10 +41,6 @@ public class CacheEvent
         cacheMonitor = new CacheMonitor();
     }
 
-    /**
-     *
-     * @param worldTickEvent
-     */
     @SubscribeEvent
     public synchronized void onWorldTick_0(TickEvent.WorldTickEvent worldTickEvent)
     {
@@ -74,10 +66,6 @@ public class CacheEvent
         }
     }
 
-    /**
-     *
-     * @param playerLoggedInEvent
-     */
     @SubscribeEvent
     public synchronized void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
     {
@@ -92,97 +80,83 @@ public class CacheEvent
         Cache.Instance.copyActualToBuffer();
     }
 
-    /**
-     *
-     * @param playerLoggedOutEvent
-     */
     @SubscribeEvent
     public synchronized void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
     {
         Cache.Instance.copyActualToBuffer();
     }
 
-    /**
-     *
-     * @param post
-     */
     @SubscribeEvent
     public synchronized void onRenderOverlay_3(RenderGameOverlayEvent.Post post)
     {
-        if (!DataGameDebugger.ConfigDataMonitor.Instance.getDebugMonitorCache())
-        {
-            return;
-        }
+        //if (!DataGameDebugger.ConfigDataMonitor.Instance.getDebugMonitorCache())
+        //{
+        //    return;
+        //}
 
         if (post.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
-            cacheMonitor.renderDebugInfo(post.getResolution());
+            cacheMonitor.renderDebugInfo(post.getWindow().getGuiScaledWidth(), post.getWindow().getGuiScaledHeight());
         }
     }
 
-    /**
-     *
-     * @param entityJoinWorldEvent
-     */
     @SubscribeEvent
     public synchronized void onEntityJoinWorld_4(EntityJoinWorldEvent entityJoinWorldEvent)
     {
         World world = entityJoinWorldEvent.getWorld();
         Entity entity = entityJoinWorldEvent.getEntity();
 
-        if (world.isRemote || !(world instanceof WorldServer))
+        if (world.isClientSide() || !(world instanceof ServerWorld))
         {
             return;
         }
 
-        WorldServer worldServer = (WorldServer) world;
+        ServerWorld serverWorld = (ServerWorld) world;
 
-        Cache.Instance.updateCache(worldServer);
+        Cache.Instance.updateCache(serverWorld);
 
-        if (Cache.Instance.CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
+        ChunkPos entityChunkPos = new ChunkPos(entity.blockPosition());
+
+        if (Cache.Instance.CACHE_VALID_CHUNKS.contains(entityChunkPos))
         {
-            if (entity instanceof IAnimals)
+            if (entity instanceof MobEntity)
             {
-                if (entity instanceof EntityAnimal)
+                if (entity instanceof AnimalEntity)
                 {
-                    Cache.Instance.CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
+                    Cache.Instance.CACHED_ACTUAL_ANIMALS.add((AnimalEntity) entity);
                 }
-                else if (entity instanceof EntityMob)
+                else if (entity instanceof MobEntity)
                 {
-                    Cache.Instance.CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
+                    Cache.Instance.CACHED_ACTUAL_HOSTILES.add((MobEntity) entity);
                 }
             }
 
-            if (entity instanceof EntityLivingBase)
+            if (entity instanceof LivingEntity)
             {
-                String entityName = entity.getName();
+                String entityName = entity.getName().getString();
 
-                Cache.Instance.CACHED_ACTUAL_ALL.add((EntityLivingBase) entity);
+                Cache.Instance.CACHED_ACTUAL_ALL.add((LivingEntity) entity);
 
                 Cache.Instance.ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
-                        new HashSet<>()).add((EntityLivingBase) entity);
+                        new HashSet<>()).add((LivingEntity) entity);
 
-                ResourceLocation resourceLocation = EntityList.getKey(entity);
+                ResourceLocation resourceLocation = EntityType.getKey(entity.getType());
 
                 if (resourceLocation != null)
                 {
                     Cache.Instance.ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k ->
-                            new HashSet<>()).add((EntityLivingBase) entity);
+                            new HashSet<>()).add((LivingEntity) entity);
                 }
             }
         }
     }
 
-    /**
-     *
-     * @param event
-     */
     @SubscribeEvent
     public synchronized void updateEntitySpawnEvent_5(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();
 
-        ResourceLocation entityKey = EntityList.getKey(entity);
+        ResourceLocation entityKey = EntityType.getKey(entity.getType());
 
         CacheStorage.EntityData entityData = CacheStorage.Instance.getEntityDataByResourceLocation(entityKey);
 
@@ -200,3 +174,4 @@ public class CacheEvent
         }
     }
 }
+
