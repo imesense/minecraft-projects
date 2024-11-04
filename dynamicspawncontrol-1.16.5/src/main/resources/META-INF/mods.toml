@@ -12,18 +12,18 @@ license="All rights reserved"
 
 [[mods]] #mandatory
 # Mod ID of the modification
-modId="emptymod" #mandatory
+modId="dynamicspawncontrol" #mandatory
 # Version number of the modification
 version="0.1" #mandatory
  # Display name for the modification
-displayName="Empty Mod" #mandatory
+displayName="Dynamic Spawn Control" #mandatory
 # URL to query for updates for this modification
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # URL for the "homepage" for this modification, displayed in the 
 # modification UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # File name (in the root of the modification JAR) containing a logo for display
-logoFile="emptymod.png" #optional
+logoFile="dynamicspawncontrol.png" #optional
 # Text field displayed in the modification UI
 credits="Thanks for this example mod goes to Java" #optional
 # Text field displayed in the modification UI
@@ -34,7 +34,7 @@ Description placeholder
 '''
 
 # Dependency
-[[dependencies.emptymod]] #optional
+[[dependencies.dynamicspawncontrol]] #optional
     # Mod ID of dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below
@@ -49,7 +49,7 @@ Description placeholder
     side="BOTH"
 
 # Another dependency
-[[dependencies.emptymod]]
+[[dependencies.dynamicspawncontrol]]
     modId="minecraft"
     mandatory=true
     # Version range declares a minimum of the current Minecraft version up to
