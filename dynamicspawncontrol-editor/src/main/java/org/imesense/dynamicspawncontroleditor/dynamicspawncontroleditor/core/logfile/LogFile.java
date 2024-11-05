@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ *
+ */
 public final class LogFile
 {
     /**
@@ -18,12 +21,17 @@ public final class LogFile
     /**
      *
      */
-    private static final String[] LEVEL_PREFIXES = { "[INFO]: ", "[WARN]: ", "[ERROR]: ", "[INIT]: " };
+    private static final Short getLogMaxLines = Short.MAX_VALUE;
 
     /**
      *
      */
     private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
+
+    /**
+     *
+     */
+    private static final String[] LEVEL_PREFIXES = { "[INFO]: ", "[WARN]: ", "[ERROR]: ", "[INIT]: " };
 
     /**
      *
@@ -42,7 +50,7 @@ public final class LogFile
     {
         try
         {
-            File file = new File(PATH, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
+            File file = new File(PATH, "\\logs");
 
             if (!file.exists())
             {
@@ -66,7 +74,7 @@ public final class LogFile
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
                 String currentDate = simpleDateFormat.format(new Date());
-                String fileName = file + "/log_" + currentDate + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+                String fileName = file + "/log_" + currentDate + ".txt";
 
                 logFile = new File(fileName);
             }
@@ -75,7 +83,7 @@ public final class LogFile
 
             fileWriter.write("*********************************************************************");
             fileWriter.write("\n** Log file created: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-            fileWriter.write("\n** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
+            fileWriter.write("\n** DynamicsSpawnControlEditor. Authors: OldSerpskiStalker, acidicMercury8");
             fileWriter.write("\n*******************************************************************");
 
             fileWriter.close();
@@ -165,7 +173,7 @@ public final class LogFile
                     fileWriter.write("\n" + LEVEL_PREFIXES[LOG_LEVEL[0]] + data);
                     fileWriter.close();
 
-                    cleanFile(logFile, LogFileData.ConfigDataLogFile.Instance.getLogMaxLines());
+                    cleanFile(logFile, getLogMaxLines);
                 }
                 catch (IOException exception)
                 {
