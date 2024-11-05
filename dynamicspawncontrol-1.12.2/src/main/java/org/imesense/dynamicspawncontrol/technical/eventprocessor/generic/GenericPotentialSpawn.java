@@ -17,7 +17,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
@@ -146,12 +147,12 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
                 throw new RuntimeException();
             }
 
-            int weight = CodeGenericUtil.checkParameter(mobMap, MOB_WEIGHT, 1, 100, "frequency");
-            int groupCountMin = CodeGenericUtil.checkParameter(mobMap, MOB_GROUP_COUNT_MIN, 1, 10, "group_count_min");
-            int groupCountMax = CodeGenericUtil.checkParameter(mobMap, MOB_GROUP_COUNT_MAX, 1, 20, "group_count_max");
-            float spawnChance = CodeGenericUtil.checkParameter(mobMap, MOB_SPAWN_CHANCE, 0.01f, 1.0f, "spawnChanceValue");
-            int maxHeight = CodeGenericUtil.checkParameter(mobMap, MOB_MAX_HEIGHT, 5, 255, "max_height");
-            int minHeight = CodeGenericUtil.checkParameter(mobMap, MOB_MIN_HEIGHT, 5, 255, "min_height");
+            int weight = CodeGeneric.checkParameter(mobMap, MOB_WEIGHT, 1, 100, "frequency");
+            int groupCountMin = CodeGeneric.checkParameter(mobMap, MOB_GROUP_COUNT_MIN, 1, 10, "group_count_min");
+            int groupCountMax = CodeGeneric.checkParameter(mobMap, MOB_GROUP_COUNT_MAX, 1, 20, "group_count_max");
+            float spawnChance = CodeGeneric.checkParameter(mobMap, MOB_SPAWN_CHANCE, 0.01f, 1.0f, "spawnChanceValue");
+            int maxHeight = CodeGeneric.checkParameter(mobMap, MOB_MAX_HEIGHT, 5, 255, "max_height");
+            int minHeight = CodeGeneric.checkParameter(mobMap, MOB_MIN_HEIGHT, 5, 255, "min_height");
 
             Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) typeClass, weight, groupCountMin, groupCountMax);
 

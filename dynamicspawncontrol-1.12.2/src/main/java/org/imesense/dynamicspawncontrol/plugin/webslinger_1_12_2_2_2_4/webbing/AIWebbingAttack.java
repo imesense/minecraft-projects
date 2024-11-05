@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
 
 /**
@@ -28,7 +28,7 @@ public final class AIWebbingAttack extends EntityAIBase
      */
     public AIWebbingAttack(EntityLiving entityLiving)
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
 
         this.parentEntity = entityLiving;
     }

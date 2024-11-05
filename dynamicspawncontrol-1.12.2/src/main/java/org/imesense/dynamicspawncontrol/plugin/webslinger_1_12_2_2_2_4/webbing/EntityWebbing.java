@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.ObjectHandlerClient;
 
@@ -37,7 +37,7 @@ public final class EntityWebbing extends EntityThrowable
     {
         super(worldIn);
 
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     /**
@@ -49,7 +49,7 @@ public final class EntityWebbing extends EntityThrowable
     {
         super(worldIn, throwerIn);
 
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     /**

@@ -8,8 +8,8 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.DataBlockWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.BlockWorldGeneratorData;
 
 import java.util.Objects;
 import java.util.Random;
@@ -29,7 +29,7 @@ public final class BlockMossyCobblestone implements IWorldGenerator
      */
     public BlockMossyCobblestone()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
 
         CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 5);
@@ -81,9 +81,9 @@ public final class BlockMossyCobblestone implements IWorldGenerator
             {
                 run(
                         CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
-                        DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.Instance.getChanceSpawn(),
-                        DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.Instance.getMinHeight(),
-                        DataBlockWorldGenerator.InfoDataBlockMossyCobblestone.Instance.getMaxHeight()
+                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getChanceSpawn(),
+                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getMinHeight(),
+                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getMaxHeight()
                 );
 
                 break;

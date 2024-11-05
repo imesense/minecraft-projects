@@ -8,10 +8,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.container.SimpleCapabilityProvider;
 import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.adapter.EntityThingBase;
 import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.adapter.IThingBase;
@@ -20,7 +19,7 @@ import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.ada
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class EventHandler
 {
     /**
@@ -28,7 +27,7 @@ public final class EventHandler
      */
     public EventHandler()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     /**

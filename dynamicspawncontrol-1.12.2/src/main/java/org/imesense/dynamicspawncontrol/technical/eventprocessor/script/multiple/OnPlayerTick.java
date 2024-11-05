@@ -7,17 +7,17 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMapEffectAction;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnPlayerTick
 {
     /**
@@ -30,7 +30,7 @@ public final class OnPlayerTick
      */
     public OnPlayerTick()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     /**
@@ -58,7 +58,7 @@ public final class OnPlayerTick
         {
             if (tickCounter % rule.getTimeout() == 0 && rule.match(playerTickEvent))
             {
-                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_player_tick"))
+                if (GameDebuggerData.ConfigDataEvent.Instance.getDebugSetting("debug_on_player_tick"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericMapEffectsActions. ID Rule: " + atomicInteger
                             + " entity: " + playerTickEvent.player.getName()

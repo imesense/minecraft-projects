@@ -9,7 +9,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.ObjectHandlerClient;
 
 import javax.annotation.Nonnull;
@@ -25,7 +25,7 @@ public final class ItemWebbing extends Item
      */
     public ItemWebbing()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
 
         this.maxStackSize = 1;
         this.setCreativeTab(CreativeTabs.MISC);

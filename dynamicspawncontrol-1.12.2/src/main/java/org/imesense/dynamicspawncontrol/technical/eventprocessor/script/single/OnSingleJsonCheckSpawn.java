@@ -6,9 +6,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnSingleJsonCheckSpawn
 {
     /**
@@ -29,7 +29,7 @@ public final class OnSingleJsonCheckSpawn
      */
     public OnSingleJsonCheckSpawn()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {

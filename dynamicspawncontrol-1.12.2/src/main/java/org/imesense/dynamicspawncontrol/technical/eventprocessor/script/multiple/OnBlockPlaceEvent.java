@@ -6,18 +6,18 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericBlockPlaceAction;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnBlockPlaceEvent
 {
     /**
@@ -30,7 +30,7 @@ public final class OnBlockPlaceEvent
      */
     public OnBlockPlaceEvent()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -62,7 +62,7 @@ public final class OnBlockPlaceEvent
             {
                 Event.Result result = rule.getResult();
 
-                if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_block_place"))
+                if (GameDebuggerData.ConfigDataEvent.Instance.getDebugSetting("debug_on_block_place"))
                 {
                     Log.writeDataToLogFile(0, "ConfigsParser._GenericBlockPlaceActions. ID Rule "
                             + atomicInteger + ": "

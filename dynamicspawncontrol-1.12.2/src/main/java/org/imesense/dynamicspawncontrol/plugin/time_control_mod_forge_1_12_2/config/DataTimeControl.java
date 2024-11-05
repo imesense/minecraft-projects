@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.annotation.Getter;
+import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -57,7 +57,7 @@ public final class DataTimeControl
          */
         public ConfigDataWorldTime(@Nonnull final String CATEGORY)
         {
-			CodeGenericUtil.printInitClassToLog(this.getClass());
+			CodeGeneric.printInitClassToLog(this.getClass());
 			
             this.CATEGORY = CATEGORY;
         }

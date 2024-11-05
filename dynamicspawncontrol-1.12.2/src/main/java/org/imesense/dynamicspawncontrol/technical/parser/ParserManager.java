@@ -1,9 +1,10 @@
 package org.imesense.dynamicspawncontrol.technical.parser;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.parser.beta.ParserSingleScriptCheckSpawn;
-import org.imesense.dynamicspawncontrol.technical.parser.beta.ParserSingleScriptSettingsCache;
-import org.imesense.dynamicspawncontrol.technical.parser.beta.ParserSingleZombieSummonAID;
+import org.imesense.dynamicspawncontrol.core.api.IParser;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.technical.parser.beta.IParserSingleZombieSummonAID;
+import org.imesense.dynamicspawncontrol.technical.parser.beta.IParserSingleScriptCheckSpawn;
+import org.imesense.dynamicspawncontrol.technical.parser.beta.IParserSingleScriptSettingsCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,14 @@ public final class ParserManager
     /**
      *
      */
-    private static final List<IBetaParser> BETA_PARSER_LIST = new ArrayList<>();
+    private static final List<IParser> BETA_I_PARSER_LIST = new ArrayList<>();
 
     /**
      *
      */
     public ParserManager()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     /**
@@ -31,13 +32,13 @@ public final class ParserManager
      */
     public static void init()
     {
-        BETA_PARSER_LIST.add(new ParserSingleScriptSettingsCache());
-        BETA_PARSER_LIST.add(new ParserSingleZombieSummonAID());
-        BETA_PARSER_LIST.add(new ParserSingleScriptCheckSpawn());
+        BETA_I_PARSER_LIST.add(new IParserSingleScriptSettingsCache());
+        BETA_I_PARSER_LIST.add(new IParserSingleZombieSummonAID());
+        BETA_I_PARSER_LIST.add(new IParserSingleScriptCheckSpawn());
 
-        for (IBetaParser iBetaParser : BETA_PARSER_LIST)
+        for (IParser iBetaIParser : BETA_I_PARSER_LIST)
         {
-            iBetaParser.loadConfig(true);
+            iBetaIParser.loadConfig(true);
         }
     }
 
@@ -46,9 +47,9 @@ public final class ParserManager
      */
     public static void reloadAllConfigs()
     {
-        for (IBetaParser iBetaParser : BETA_PARSER_LIST)
+        for (IParser iBetaIParser : BETA_I_PARSER_LIST)
         {
-            iBetaParser.reloadConfig();
+            iBetaIParser.reloadConfig();
         }
     }
 }

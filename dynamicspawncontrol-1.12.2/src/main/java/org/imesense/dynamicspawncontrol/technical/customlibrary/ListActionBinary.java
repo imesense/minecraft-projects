@@ -18,6 +18,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
@@ -29,7 +30,6 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-import static org.imesense.dynamicspawncontrol.UniqueField.CLIENT;
 import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
 import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.SpawnCondition.*;
 

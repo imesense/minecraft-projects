@@ -15,9 +15,9 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.AIWebbingAttack;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.EntityWebbing;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
 import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.adapter.EntityThingBase;
@@ -26,7 +26,7 @@ import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.ada
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class WebSlingerCapability implements IWebSlinger
 {
     /**
@@ -83,11 +83,11 @@ public final class WebSlingerCapability implements IWebSlinger
     {
         if (this.owner instanceof EntityThingBase)
         {
-            EntityThingBase thing = CodeGenericUtil.as(this.owner, EntityThingBase.class);
+            EntityThingBase thing = CodeGeneric.as(this.owner, EntityThingBase.class);
 
             assert thing != null;
 
-            return CodeGenericUtil.as(thing.Owner, EntityLiving.class);
+            return CodeGeneric.as(thing.Owner, EntityLiving.class);
         }
         else
         {

@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.annotation.Getter;
+import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -92,7 +92,7 @@ public final class DataDarkness
          */
         public ConfigDataRenderNight(@Nonnull final String CATEGORY)
         {
-            CodeGenericUtil.printInitClassToLog(this.getClass());
+            CodeGeneric.printInitClassToLog(this.getClass());
 
             this.CATEGORY = CATEGORY;
         }

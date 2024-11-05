@@ -2,9 +2,9 @@ package org.imesense.dynamicspawncontrol.technical.parser;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.*;
 
 import java.io.*;
@@ -121,43 +121,43 @@ public final class ParserGenericJsonScript
     private static void readAllRules()
     {
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "DropAllItems" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "DropAllItems" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "DropAllExperience" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "DropAllExperience" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "MainPotentialSpawn" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "MainPotentialSpawn" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericPotentialSpawn::parse, GENERIC_POTENTIAL_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "SpawnConditions" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "SpawnConditions" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericSpawnCondition::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "MobTaskManager" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "MobTaskManager" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericMobTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "EventEffects" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "EventEffects" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericMapEffectAction::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "EventBlockPlace" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "EventBlockPlace" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericBlockPlaceAction::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "EventBlockBreak" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "EventBlockBreak" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericBlockBreakAction::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "EventLeftMouseClick" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "EventLeftMouseClick" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericLeftClickAction::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
 
         //
-        CodeGenericUtil.readAndLogRules(_PATH, "EventRightMouseClick" + ProjectStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
+        CodeGeneric.readAndLogRules(_PATH, "EventRightMouseClick" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericRightClickAction::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
     }
 
@@ -220,8 +220,8 @@ public final class ParserGenericJsonScript
         }
         else
         {
-            File infinityForceSpawnConfigsDir = new File(PATH + File.separator + ProjectStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
-            File scriptsDir = new File(infinityForceSpawnConfigsDir, ProjectStructure.STRUCT_FILES_DIRS.NAME_DIR_SCRIPTS + File.separator + getTypeScript);
+            File infinityForceSpawnConfigsDir = new File(PATH + File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
+            File scriptsDir = new File(infinityForceSpawnConfigsDir, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_SCRIPTS + File.separator + getTypeScript);
 
             if (!scriptsDir.exists())
             {
@@ -291,7 +291,7 @@ public final class ParserGenericJsonScript
 
         printWriter.println("[");
         printWriter.println("//-' OldSerpskiStalker, acidicMercury8");
-        printWriter.println("//-' Dynamic Spawn Control for Minecraft: " + ProjectStructure.STRUCT_INFO_MOD.VERSION);
+        printWriter.println("//-' Dynamic Spawn Control for Minecraft: " + DynamicSpawnControlStructure.STRUCT_INFO_MOD.VERSION);
         printWriter.println("//-' Our organization: https://github.com/imesense");
         printWriter.println("]");
 

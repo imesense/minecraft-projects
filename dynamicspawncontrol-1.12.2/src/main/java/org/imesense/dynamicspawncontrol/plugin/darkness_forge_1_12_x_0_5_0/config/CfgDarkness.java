@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.CfgClassAbstract;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.DCSSingleConfig;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.api.AConfig;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,8 +17,8 @@ import java.nio.file.Paths;
 /**
  *
  */
-@DCSSingleConfig(fileName = "cfg_darkness_forge_1_12_x_0_5_0")
-public final class CfgDarkness extends CfgClassAbstract
+@ConceptConfig(fileName = "cfg_darkness_forge_1_12_x_0_5_0")
+public final class CfgDarkness extends AConfig
 {
     /**
      *
@@ -28,7 +28,7 @@ public final class CfgDarkness extends CfgClassAbstract
     {
         super(nameConfigFile, Boolean.FALSE);
 
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 
         DataDarkness.ConfigDataRenderNight.Instance =
                 new DataDarkness.ConfigDataRenderNight("darkness_forge_1_12_x_0_5_0");
