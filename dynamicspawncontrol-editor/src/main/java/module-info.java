@@ -1,4 +1,5 @@
-module org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor {
+module org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor
+{
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -12,4 +13,6 @@ module org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor {
 
     opens org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor to javafx.fxml;
     exports org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor;
+    exports org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor.core.component;
+    opens org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor.core.component to javafx.fxml;
 }

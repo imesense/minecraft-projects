@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane prefHeight="720" prefWidth="1280"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor.core.component.MainWindowApp">
+    <children>
+        <AnchorPane fx:id="innerPane" layoutY="22.0" prefHeight="51.0" prefWidth="1280.0">
+            <children>
+                <Line fx:id="line" startX="0.0" startY="25.0" endY="25.0" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

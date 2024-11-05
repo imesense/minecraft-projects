@@ -129,7 +129,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor/org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor.HelloApplication
+                                org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor/org.imesense.dynamicspawncontroleditor.dynamicspawncontroleditor.StartEditor
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
