@@ -12,17 +12,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericDropLoot;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnLivingDrop
 {
     /**
@@ -35,7 +35,7 @@ public final class OnLivingDrop
      */
     public OnLivingDrop()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -88,7 +88,7 @@ public final class OnLivingDrop
 
                     BlockPos blockPos = livingDropsEvent.getEntity().getPosition();
 
-                    if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_drops"))
+                    if (GameDebuggerData.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_drops"))
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericDropLoot. ID Rule: " + atomicInteger
                                 + " entity: " + livingDropsEvent.getEntity().getName() + " new drop @item: " + itemStack);

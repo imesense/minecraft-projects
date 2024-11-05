@@ -8,8 +8,8 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.DataBlockWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.BlockWorldGeneratorData;
 
 import java.util.Objects;
 import java.util.Random;
@@ -29,7 +29,7 @@ public final class BlockNetherRack implements IWorldGenerator
      */
     public BlockNetherRack()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
 
         CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 5);
@@ -81,9 +81,9 @@ public final class BlockNetherRack implements IWorldGenerator
             {
                 run(
                         CLASS_NETHER_RACK_GENERATOR, world, random, chunkX, chunkZ,
-                        DataBlockWorldGenerator.InfoDataBlockNetherRack.Instance.getChanceSpawn(),
-                        DataBlockWorldGenerator.InfoDataBlockNetherRack.Instance.getMinHeight(),
-                        DataBlockWorldGenerator.InfoDataBlockNetherRack.Instance.getMaxHeight()
+                        BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getChanceSpawn(),
+                        BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getMinHeight(),
+                        BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getMaxHeight()
                 );
 
                 break;

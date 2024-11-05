@@ -16,17 +16,17 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.UniqueField;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.ItemWebbing;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.EntityWebbing;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.misc.RegistrationHelper;
 
 /**
  *
  */
-@GameRegistry.ObjectHolder(ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@GameRegistry.ObjectHolder(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class ObjectHandlerClient
 {
     /**
@@ -57,7 +57,7 @@ public final class ObjectHandlerClient
     /**
      *
      */
-    @Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+    @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
     public static class RegistrationHandler extends RegistrationHelper
     {
         /**
@@ -65,7 +65,7 @@ public final class ObjectHandlerClient
          */
         public RegistrationHandler()
         {
-            CodeGenericUtil.printInitClassToLog(this.getClass());
+            CodeGeneric.printInitClassToLog(this.getClass());
         }
 
         /**

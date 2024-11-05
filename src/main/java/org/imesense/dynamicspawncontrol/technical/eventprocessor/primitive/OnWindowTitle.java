@@ -5,10 +5,10 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.windowtitle.DataWindowTitle;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.WindowTitleData;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.lwjgl.opengl.Display;
 
 import javax.annotation.Nonnull;
@@ -17,7 +17,7 @@ import java.util.Objects;
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnWindowTitle
 {
     /**
@@ -30,7 +30,7 @@ public final class OnWindowTitle
      */
     public OnWindowTitle()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -45,7 +45,7 @@ public final class OnWindowTitle
      *
      */
     @Nonnull
-    private static final String TITLE = DataWindowTitle.ConfigDataWindowTitle.Instance.getWindowTitle();
+    private static final String TITLE = WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle();
 
     /**
      *

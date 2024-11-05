@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.plugin.eyesInthedarkness_1_12_2_0_1_0.config;
 
-import org.imesense.dynamicspawncontrol.technical.config.CfgClassAbstract;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.DCSSingleConfig;
+import org.imesense.dynamicspawncontrol.core.api.AConfig;
+import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
-@DCSSingleConfig(fileName = "cfg_eye_in_the_darkness_1_12_2_0_1_0")
-public final class CfgEyeInTheDarkness extends CfgClassAbstract
+@ConceptConfig(fileName = "cfg_eye_in_the_darkness_1_12_2_0_1_0")
+public final class CfgEyeInTheDarkness extends AConfig
 {
     /**
      *

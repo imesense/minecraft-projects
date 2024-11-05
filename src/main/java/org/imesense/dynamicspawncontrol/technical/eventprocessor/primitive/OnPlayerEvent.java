@@ -12,10 +12,10 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.player.DataPlayer;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.file.PlayerData;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.List;
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnPlayerEvent
 {
     /**
@@ -41,7 +41,7 @@ public final class OnPlayerEvent
      */
     public OnPlayerEvent()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -125,7 +125,7 @@ public final class OnPlayerEvent
         World world = entityPlayerMP.world;
         BlockPos blockPos = entityPlayerMP.getPosition();
 
-        int radius = DataPlayer.ConfigDataPlayer.Instance.getProtectRespawnPlayerRadius();
+        int radius = PlayerData.ConfigDataPlayer.Instance.getProtectRespawnPlayerRadius();
 
         AxisAlignedBB area = new AxisAlignedBB
         (

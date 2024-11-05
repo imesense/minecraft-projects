@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.CfgClassAbstract;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.DCSSingleConfig;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.api.AConfig;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,8 +19,8 @@ import java.util.Map;
 /**
  * 
  */
-@DCSSingleConfig(fileName = "cfg_webslinger_1_12_2_2_2_4")
-public final class CfgWebSlinger extends CfgClassAbstract
+@ConceptConfig(fileName = "cfg_webslinger_1_12_2_2_2_4")
+public final class CfgWebSlinger extends AConfig
 {
     /**
      *
@@ -30,7 +30,7 @@ public final class CfgWebSlinger extends CfgClassAbstract
     {
         super(nameConfigFile, Boolean.FALSE);
 
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
 
         DataWebSlinger.ConfigDataSpiderAttackWeb.Instance =
                 new DataWebSlinger.ConfigDataSpiderAttackWeb("webslinger_1_12_2_2_2_4");

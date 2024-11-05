@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.technical.parser;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public final class GeneralStorageData
      */
     public GeneralStorageData()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 
         Instance = this;
     }

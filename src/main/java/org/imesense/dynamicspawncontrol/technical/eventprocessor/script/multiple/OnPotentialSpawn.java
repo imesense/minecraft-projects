@@ -9,19 +9,19 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
-import org.imesense.dynamicspawncontrol.technical.worldcache.Cache;
-import org.imesense.dynamicspawncontrol.technical.worldcache.CacheStorage;
+import org.imesense.dynamicspawncontrol.core.worldcache.Cache;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
 
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnPotentialSpawn
 {
     /**
@@ -34,7 +34,7 @@ public final class OnPotentialSpawn
      */
     public OnPotentialSpawn()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
 			
@@ -105,7 +105,7 @@ public final class OnPotentialSpawn
                         potentialSpawns.getList().add(entry);
                     }
 
-                    if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_potential_spawn"))
+                    if (GameDebuggerData.ConfigDataEvent.Instance.getDebugSetting("debug_on_potential_spawn"))
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericOverrideSpawn. List: " + potentialSpawns.getList());
                     }

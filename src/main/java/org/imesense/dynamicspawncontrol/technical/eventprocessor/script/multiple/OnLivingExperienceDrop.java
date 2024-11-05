@@ -6,17 +6,17 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import org.imesense.dynamicspawncontrol.ProjectStructure;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.gamedebugger.DataGameDebugger;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericExperience;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
-@Mod.EventBusSubscriber(modid = ProjectStructure.STRUCT_INFO_MOD.MOD_ID)
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnLivingExperienceDrop
 {
     /**
@@ -29,7 +29,7 @@ public final class OnLivingExperienceDrop
      */
     public OnLivingExperienceDrop()
     {
-		CodeGenericUtil.printInitClassToLog(this.getClass());
+		CodeGeneric.printInitClassToLog(this.getClass());
 		
         if (instanceExists)
         {
@@ -60,7 +60,7 @@ public final class OnLivingExperienceDrop
                     int modifyXp = rule.modifyXp(livingExperienceDropEvent.getDroppedExperience());
                     livingExperienceDropEvent.setDroppedExperience(modifyXp);
 
-                    if (DataGameDebugger.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_experience_drop"))
+                    if (GameDebuggerData.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_experience_drop"))
                     {
                         Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + atomicInteger + ": "
                                 + result

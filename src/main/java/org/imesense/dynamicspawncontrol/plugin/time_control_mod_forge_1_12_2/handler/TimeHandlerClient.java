@@ -4,9 +4,7 @@ import net.minecraft.world.World;
 
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.Numbers;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 
-import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

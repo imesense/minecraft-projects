@@ -8,8 +8,8 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.config.blockgenerator.DataBlockWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.config.data.BlockWorldGeneratorData;
 
 import java.util.Objects;
 import java.util.Random;
@@ -29,7 +29,7 @@ public final class BlockMonsterEgg implements IWorldGenerator
      */
     public BlockMonsterEgg()
     {
-        CodeGenericUtil.printInitClassToLog(this.getClass());
+        CodeGeneric.printInitClassToLog(this.getClass());
 
         CLASS_MONSTER_EGG_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("monster_egg")).getDefaultState(), 5);
@@ -81,9 +81,9 @@ public final class BlockMonsterEgg implements IWorldGenerator
             {
                 run(
                         CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
-                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.Instance.getChanceSpawn(),
-                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.Instance.getMinHeight(),
-                        DataBlockWorldGenerator.InfoDataBlockBlockMonsterEgg.Instance.getMaxHeight()
+                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getChanceSpawn(),
+                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getMinHeight(),
+                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getMaxHeight()
                 );
                 
                 break;

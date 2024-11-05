@@ -3,7 +3,6 @@ package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.ha
 import java.util.Calendar;
 import java.lang.reflect.Method;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Objects;
 
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -11,14 +10,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.Numbers;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.DataTimeControl;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Calendar;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

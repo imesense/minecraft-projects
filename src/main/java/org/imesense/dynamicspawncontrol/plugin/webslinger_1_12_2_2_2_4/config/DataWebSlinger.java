@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config;
 
-import org.imesense.dynamicspawncontrol.debug.CodeGenericUtil;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Getter;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.inlineannotation.Setter;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.annotation.Getter;
+import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -91,7 +91,7 @@ public final class DataWebSlinger
          */
         public ConfigDataSpiderAttackWeb(@Nonnull final String CATEGORY)
         {
-            CodeGenericUtil.printInitClassToLog(this.getClass());
+            CodeGeneric.printInitClassToLog(this.getClass());
             this.CATEGORY = CATEGORY;
 
             entityIdPriorityMap = new HashMap<>();
