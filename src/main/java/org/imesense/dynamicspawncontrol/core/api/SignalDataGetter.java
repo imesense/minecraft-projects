@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.signal;
+package org.imesense.dynamicspawncontrol.core.api;
 
 import net.minecraft.world.World;
 import net.minecraft.entity.Entity;

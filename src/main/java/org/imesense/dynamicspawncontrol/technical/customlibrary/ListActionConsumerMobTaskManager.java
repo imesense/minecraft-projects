@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
 import java.util.ArrayList;
 import java.util.HashSet;

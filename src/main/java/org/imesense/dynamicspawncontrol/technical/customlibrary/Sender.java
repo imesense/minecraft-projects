@@ -103,7 +103,7 @@ public final class Sender implements ICommandSender
     @Override
     public Vec3d getPositionVector()
     {
-        return new Vec3d(0, 0, 0);
+        return new Vec3d(0.00, 0.00, 0.00);
     }
 
     /**
