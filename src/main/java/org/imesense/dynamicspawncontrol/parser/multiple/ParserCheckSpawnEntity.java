@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.parser.beta;
+package org.imesense.dynamicspawncontrol.parser.multiple;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -6,7 +6,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
-import org.imesense.dynamicspawncontrol.core.api.IParser;
+import org.imesense.dynamicspawncontrol.core.api.AParser;
 
 import java.io.File;
 import java.io.FileReader;
@@ -18,12 +18,12 @@ import java.util.List;
 /**
  *
  */
-public final class IParserSingleScriptCheckSpawn implements IParser
+public final class ParserCheckSpawnEntity extends AParser
 {
     /**
      *
      */
-    public IParserSingleScriptCheckSpawn()
+    public ParserCheckSpawnEntity()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }
@@ -31,15 +31,17 @@ public final class IParserSingleScriptCheckSpawn implements IParser
     /**
      *
      */
+    @Override
     public void reloadConfig()
     {
-        loadConfig(false);
+        this.loadConfig(false);
     }
 
     /**
      *
      * @param initialization
      */
+    @Override
     public void loadConfig(boolean initialization)
     {
         File file = getConfigFile(initialization, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,

@@ -8,18 +8,23 @@ import java.io.File;
 /**
  *
  */
-public interface IParser
+public abstract class AParser
 {
     /**
      *
      */
-    void reloadConfig();
+    protected String nameFile = null;
+
+    /**
+     *
+     */
+    public abstract void reloadConfig();
 
     /**
      *
      * @param init
      */
-    void loadConfig(boolean init);
+    public abstract void loadConfig(boolean init);
 
     /**
      *
@@ -28,7 +33,7 @@ public interface IParser
      * @param FILE_NAME
      * @return
      */
-    default File getConfigFile(boolean initialization, final String DIRECTORY, final String FILE_NAME)
+    protected File getConfigFile(boolean initialization, final String DIRECTORY, final String FILE_NAME)
     {
         return initialization ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator + DIRECTORY, FILE_NAME) :
