@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
 import net.minecraftforge.common.MinecraftForge;
+import org.imesense.dynamicspawncontrol.OnEventSandBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.OnEventDummy;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.script.single.OnSingleZombieSummonAID;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnPlayerEvent;
@@ -22,7 +22,7 @@ public final class RegisterTechnicalClass
     private static final Class<?>[] EVENT_CLASSES =
     {
         CacheEvent.class,
-        OnEventDummy.class,
+        OnEventSandBox.class,
         OnWindowTitle.class,
         OnBlockBreakEvent.class,
         OnBlockPlaceEvent.class,
