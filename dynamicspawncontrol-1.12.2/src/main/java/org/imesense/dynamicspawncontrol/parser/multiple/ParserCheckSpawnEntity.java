@@ -27,8 +27,7 @@ public final class ParserCheckSpawnEntity extends AParser
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
-        this.nameFile = NAME_FILE +
-                DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
+        this.nameFile = NAME_FILE;
     }
 
     /**
