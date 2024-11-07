@@ -124,6 +124,7 @@ public final class ParserSpecialSpawnEntity extends AParser
                         config.ChestPlates = gson.fromJson(jsonObject2.get("armor_chest"), listType);
                         config.Leggings = gson.fromJson(jsonObject2.get("armor_legs"), listType);
                         config.Boots = gson.fromJson(jsonObject2.get("armor_boots"), listType);
+                        config.HasShield = jsonObject1.has("has_shield") && jsonObject1.get("has_shield").getAsBoolean();
 
                         GeneralStorageData.Instance.EquipmentConfigs.add(config);
 

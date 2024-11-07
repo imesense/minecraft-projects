@@ -67,6 +67,10 @@ public final class OnSingleZombieSummonAID
                 equipZombie(entityZombie, selectedConfig.ChestPlates, EntityEquipmentSlot.CHEST, UniqueField.RANDOM.self());
                 equipZombie(entityZombie, selectedConfig.Leggings, EntityEquipmentSlot.LEGS, UniqueField.RANDOM.self());
                 equipZombie(entityZombie, selectedConfig.Boots, EntityEquipmentSlot.FEET, UniqueField.RANDOM.self());
+
+                if (selectedConfig.HasShield) {
+                    equipZombie(entityZombie, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, UniqueField.RANDOM.self());
+                }
             }
         }
     }
