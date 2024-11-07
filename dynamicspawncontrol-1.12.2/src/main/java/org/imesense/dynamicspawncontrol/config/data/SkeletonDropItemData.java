@@ -1,11 +1,11 @@
 package org.imesense.dynamicspawncontrol.config.data;
 
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.annotation.Getter;
 import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 /**
  *
@@ -65,7 +65,7 @@ public final class SkeletonDropItemData
         /**
          *
          */
-        private Byte arrowsToDrops = (byte)(1 + new Random().nextInt(3));
+        private Byte arrowsToDrops = (byte)(1 + UniqueField.RANDOM.nextInt(3));
 
         /**
          *

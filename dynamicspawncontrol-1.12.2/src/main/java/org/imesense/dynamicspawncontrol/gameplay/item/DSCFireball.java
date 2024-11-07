@@ -6,9 +6,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 
 import javax.annotation.Nonnull;
-import java.util.Random;
 
 /**
  *
@@ -94,18 +94,18 @@ public final class DSCFireball extends EntityFireball
 
             FireSpawnAction fireSpawnAction = (world, explosionPos, radius) ->
             {
-                for (int x = -radius; x <= radius + new Random().nextInt(5); x++)
+                for (int x = -radius; x <= radius + UniqueField.RANDOM.nextInt(5); x++)
                 {
-                    for (int y = -radius; y <= radius + new Random().nextInt(5); y++)
+                    for (int y = -radius; y <= radius + UniqueField.RANDOM.nextInt(5); y++)
                     {
-                        for (int z = -radius; z <= radius + new Random().nextInt(5); z++)
+                        for (int z = -radius; z <= radius + UniqueField.RANDOM.nextInt(5); z++)
                         {
                             BlockPos blockPos = explosionPos.add(x, y, z);
                             double distanceSq = explosionPos.distanceSq(blockPos);
 
                             if (distanceSq <= radius * radius && world.getBlockState(blockPos).getBlock() == Blocks.AIR)
                             {
-                                if (new Random().nextFloat() < 0.1f)
+                                if (UniqueField.RANDOM.nextFloat() < 0.1f)
                                 {
                                     world.setBlockState(blockPos, Blocks.FIRE.getDefaultState());
                                 }

@@ -9,12 +9,12 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.ZombieDropItemData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -84,7 +84,7 @@ public final class OnDropZombieItem
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (new Random().nextDouble() < ZombieDropItemData.ConfigDataZombieDrop.Instance.getBreakItem())
+            if (UniqueField.RANDOM.nextDouble() < ZombieDropItemData.ConfigDataZombieDrop.Instance.getBreakItem())
             {
                 return;
             }
@@ -94,11 +94,10 @@ public final class OnDropZombieItem
 
             if (maxDamage > 0)
             {
-                Random random = new Random();
                 int minDamage = (int) (maxDamage * damageFactor);
 
                 int damageSpread = (int) (maxDamage * ZombieDropItemData.ConfigDataZombieDrop.Instance.getDamageSpreadFactor());
-                int randomDamage = minDamage + random.nextInt(damageSpread);
+                int randomDamage = minDamage + UniqueField.RANDOM.nextInt(damageSpread);
 
                 itemStack.setItemDamage(randomDamage);
             }

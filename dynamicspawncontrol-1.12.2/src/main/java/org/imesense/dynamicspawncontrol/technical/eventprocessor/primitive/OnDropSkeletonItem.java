@@ -9,12 +9,12 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.SkeletonDropItemData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -71,10 +71,9 @@ public final class OnDropSkeletonItem
             addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getHeldItemMainhand(),
                     SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getHandItemDamageFactor());
 
-            Random rand = new Random();
             double arrowDropChance = 0.50;
 
-            if (rand.nextDouble() < arrowDropChance)
+            if (UniqueField.RANDOM.nextDouble() < arrowDropChance)
             {
                 boolean arrowsDropped = false;
 
@@ -112,7 +111,7 @@ public final class OnDropSkeletonItem
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (new Random().nextDouble() < SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getBreakItem())
+            if (UniqueField.RANDOM.nextDouble() < SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getBreakItem())
             {
                 return;
             }
@@ -122,11 +121,10 @@ public final class OnDropSkeletonItem
 
             if (maxDamage > 0)
             {
-                Random random = new Random();
                 int minDamage = (int) (maxDamage * damageFactor);
 
                 int damageSpread = (int) (maxDamage * SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getDamageSpreadFactor());
-                int randomDamage = minDamage + random.nextInt(damageSpread);
+                int randomDamage = minDamage + UniqueField.RANDOM.nextInt(damageSpread);
 
                 itemStack.setItemDamage(randomDamage);
             }

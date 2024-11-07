@@ -30,6 +30,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
@@ -554,10 +555,11 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                 {
                     for (AuxFunction.PotionEffectWithChance effectWithChance : effects)
                     {
-                        if (Math.random() <= effectWithChance.Chance)
+                        if (UniqueField.RANDOM.nextDouble() <= effectWithChance.Chance)
                         {
                             PotionEffect effect = effectWithChance.Effect;
                             PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
+
                             entityLivingBase.addPotionEffect(newEffect);
                         }
                     }
