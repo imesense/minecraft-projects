@@ -8,7 +8,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumCmdCallType;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumTextColor;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumUnicodeCharacter;
-import org.imesense.dynamicspawncontrol.technical.parser.ParserManager;
+import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 
 import javax.annotation.Nonnull;
 
@@ -68,7 +68,7 @@ public final class CmdServerSingleScriptReload extends CommandBase
         }
         else
         {
-            ParserManager.reloadAllConfigs();
+            RegisterParserManager.reloadAllConfigs();
 
             iCommandSender.sendMessage(new TextComponentString(
                     EnumUnicodeCharacter.SECTION.getCharacter() +
