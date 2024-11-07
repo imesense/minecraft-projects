@@ -16,8 +16,8 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionConsum
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionStaticFactoryMouse;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
 import java.util.function.Consumer;
 

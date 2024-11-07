@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.core.raytrace;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

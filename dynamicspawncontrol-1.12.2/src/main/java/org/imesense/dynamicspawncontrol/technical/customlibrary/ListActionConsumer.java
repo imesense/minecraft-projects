@@ -34,7 +34,7 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
 import java.util.*;
 import java.util.function.Consumer;

@@ -15,8 +15,8 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapF
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionBinary;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionConsumer;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
 import java.util.function.Consumer;
 

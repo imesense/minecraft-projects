@@ -15,7 +15,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.RayTrace;
+import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;

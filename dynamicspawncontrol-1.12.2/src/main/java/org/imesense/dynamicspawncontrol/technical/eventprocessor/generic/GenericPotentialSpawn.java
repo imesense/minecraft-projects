@@ -23,8 +23,8 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

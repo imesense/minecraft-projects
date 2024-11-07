@@ -39,8 +39,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.codehaus.plexus.util.StringUtils;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumGameProperty;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
