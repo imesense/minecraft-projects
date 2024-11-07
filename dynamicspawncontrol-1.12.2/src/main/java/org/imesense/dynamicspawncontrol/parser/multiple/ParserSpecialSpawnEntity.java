@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.parser.beta;
+package org.imesense.dynamicspawncontrol.parser.multiple;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -9,7 +9,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
-import org.imesense.dynamicspawncontrol.core.api.IParser;
+import org.imesense.dynamicspawncontrol.core.api.AParser;
 
 import java.io.File;
 import java.io.FileReader;
@@ -22,12 +22,12 @@ import java.util.List;
 /**
  *
  */
-public final class IParserSingleZombieSummonAID implements IParser
+public final class ParserSpecialSpawnEntity extends AParser
 {
     /**
      *
      */
-    public IParserSingleZombieSummonAID()
+    public ParserSpecialSpawnEntity()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }
@@ -35,15 +35,17 @@ public final class IParserSingleZombieSummonAID implements IParser
     /**
      *
      */
+    @Override
     public void reloadConfig()
     {
-        loadConfig(false);
+        this.loadConfig(false);
     }
 
     /**
      *
      * @param initialization
      */
+    @Override
     public void loadConfig(boolean initialization)
     {
         GeneralStorageData.Instance.EquipmentConfigs = new ArrayList<>();

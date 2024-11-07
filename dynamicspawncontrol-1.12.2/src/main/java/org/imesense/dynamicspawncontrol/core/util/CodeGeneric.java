@@ -123,4 +123,25 @@ public final class CodeGeneric
         return _class.isInstance(object) ?
                 _class.cast(object) : null;
     }
+
+    /**
+     *
+     * @param message
+     */
+    public static void logAndThrow(String message)
+    {
+        Log.writeDataToLogFile(2, message);
+        throw new RuntimeException(message);
+    }
+
+    /**
+     *
+     * @param message
+     * @param exception
+     */
+    public static void logAndThrow(String message, Exception exception)
+    {
+        Log.writeDataToLogFile(2, message);
+        throw new RuntimeException(exception);
+    }
 }

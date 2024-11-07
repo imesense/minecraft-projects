@@ -107,6 +107,7 @@ public final class OnUpdateTorchLogic
             if (block == Blocks.TNT)
             {
                 event.setCanceled(true);
+
                 Explosion ex = new Explosion(player.world,
                         player, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100.0F, true, true);
 
