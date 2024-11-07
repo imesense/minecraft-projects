@@ -1,7 +1,6 @@
 package org.imesense.dynamicspawncontrol;
 
 import net.minecraftforge.fml.common.Mod;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.api.IDebug;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -10,7 +9,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventDummy implements IDebug
+public final class OnEventSandBox implements IDebug
 {
     /**
      *
@@ -20,7 +19,7 @@ public final class OnEventDummy implements IDebug
     /**
      *
      */
-    public OnEventDummy()
+    public OnEventSandBox()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 
