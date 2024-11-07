@@ -226,6 +226,7 @@ public final class OnComplexityBiomes
                 return 5;
             case "Extreme Hills+":
             case "Savanna Plateau M":
+            case "Extreme Hills+ M":
                 return 6;
             case "Jungle":
             case "JungleHills":
