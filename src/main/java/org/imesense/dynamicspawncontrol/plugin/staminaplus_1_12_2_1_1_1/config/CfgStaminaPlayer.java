@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.config.staminaplayer;
+package org.imesense.dynamicspawncontrol.plugin.staminaplus_1_12_2_1_1_1.config;
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 /**
  *
  */
-@ConceptConfig(fileName = "cfg_plugin_stamina_player")
+@ConceptConfig(fileName = "cfg_staminaplus_1_12_2_1_1_1")
 public final class CfgStaminaPlayer extends AConfig
 {
     /**
@@ -31,7 +31,7 @@ public final class CfgStaminaPlayer extends AConfig
         CodeGeneric.printInitClassToLog(this.getClass());
 
         DataStaminaPlayer.ConfigDataStaminaPlayer.Instance =
-                new DataStaminaPlayer.ConfigDataStaminaPlayer("stamina_player");
+                new DataStaminaPlayer.ConfigDataStaminaPlayer("staminaplus_1_12_2_1_1_1");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
