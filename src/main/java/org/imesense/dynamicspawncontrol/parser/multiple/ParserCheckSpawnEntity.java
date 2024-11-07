@@ -23,9 +23,12 @@ public final class ParserCheckSpawnEntity extends AParser
     /**
      *
      */
-    public ParserCheckSpawnEntity()
+    public ParserCheckSpawnEntity(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
+
+        this.nameFile = NAME_FILE +
+                DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
     }
 
     /**
@@ -44,8 +47,8 @@ public final class ParserCheckSpawnEntity extends AParser
     @Override
     public void loadConfig(boolean initialization)
     {
-        File file = getConfigFile(initialization, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
-                /*EnumSingleScript.SCRIPT_MOBS_LIST_SEE_SKY.getKeyword()*/"action_mobs_list_see_sky.json");
+        File file = getConfigFile(initialization,
+                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
