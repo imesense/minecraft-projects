@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.single;
+package org.imesense.dynamicspawncontrol.eventprocessor.script.single;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;

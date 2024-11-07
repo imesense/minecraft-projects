@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +18,7 @@ import static net.minecraft.client.gui.Gui.*;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnComplexityBiomes
+public final class OnEventComplexityBiomes
 {
      //* TODO: Реализовать 'высоту' сложности, например 5 черепков от 5 до 20 высота в шахте и так далее
 
@@ -70,7 +70,7 @@ public final class OnComplexityBiomes
     /**
      *
      */
-    public OnComplexityBiomes()
+    public OnEventComplexityBiomes()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -88,7 +88,7 @@ public final class OnComplexityBiomes
      * @param livingUpdateEvent
      */
     @SubscribeEvent
-    public synchronized void onPlayerTick(LivingEvent.LivingUpdateEvent livingUpdateEvent)
+    public void onPlayerTick_0(LivingEvent.LivingUpdateEvent livingUpdateEvent)
     {
         if (livingUpdateEvent.getEntity() instanceof EntityPlayerMP)
         {
@@ -119,7 +119,7 @@ public final class OnComplexityBiomes
      * @param text
      */
     @SubscribeEvent
-    public synchronized void onRenderOverlay(RenderGameOverlayEvent.Text text)
+    public void onRenderOverlay_1(RenderGameOverlayEvent.Text text)
     {
         long currentTime = System.currentTimeMillis();
 

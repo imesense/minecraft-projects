@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
+package org.imesense.dynamicspawncontrol.eventprocessor.script.multiple;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

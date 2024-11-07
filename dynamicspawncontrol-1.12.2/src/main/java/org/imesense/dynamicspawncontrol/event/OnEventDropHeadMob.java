@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -19,7 +19,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnDropHeadMob
+public final class OnEventDropHeadMob
 {
     /**
      *
@@ -29,7 +29,7 @@ public final class OnDropHeadMob
     /**
      *
      */
-    public OnDropHeadMob()
+    public OnEventDropHeadMob()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -47,7 +47,7 @@ public final class OnDropHeadMob
      * @param livingDeathEvent
      */
     @SubscribeEvent
-    public synchronized void onEntityDeath(LivingDeathEvent livingDeathEvent)
+    public void onEntityDeath_0(LivingDeathEvent livingDeathEvent)
     {
         if (livingDeathEvent.getSource().getTrueSource() instanceof EntityLivingBase)
         {

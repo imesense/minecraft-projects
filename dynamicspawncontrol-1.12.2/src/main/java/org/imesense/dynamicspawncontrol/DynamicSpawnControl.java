@@ -19,7 +19,7 @@ import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capabilit
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnBreakTorchEvent;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.OnWindowTitle;
+import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.gamestructure.Structure;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
@@ -119,7 +119,7 @@ public final class DynamicSpawnControl
 
         RegisterTechnicalClass.registerClasses();
 
-        OnWindowTitle.replace();
+        OnEventWindowTitle.replace();
 
         RegisterGameplayClass.registerClasses();
 

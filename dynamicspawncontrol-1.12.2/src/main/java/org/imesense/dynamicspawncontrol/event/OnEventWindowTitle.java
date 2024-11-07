@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
@@ -18,7 +18,7 @@ import java.util.Objects;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnWindowTitle
+public final class OnEventWindowTitle
 {
     /**
      *
@@ -28,7 +28,7 @@ public final class OnWindowTitle
     /**
      *
      */
-    public OnWindowTitle()
+    public OnEventWindowTitle()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		
@@ -52,7 +52,7 @@ public final class OnWindowTitle
      * @param clientTickEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateClientTick_0(TickEvent.ClientTickEvent clientTickEvent)
+    public void onUpdateClientTick_0(TickEvent.ClientTickEvent clientTickEvent)
     {
         replace();
     }
