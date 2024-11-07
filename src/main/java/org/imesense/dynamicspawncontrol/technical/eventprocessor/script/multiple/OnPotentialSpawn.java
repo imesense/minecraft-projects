@@ -10,6 +10,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -100,7 +101,7 @@ public final class OnPotentialSpawn
                     float maxHeight = rule.getMaxHeightChance(entry.entityClass);
                     int eventY = potentialSpawns.getPos().getY();
 
-                    if (Math.random() < spawnChance && eventY >= minHeight && eventY <= maxHeight)
+                    if (UniqueField.RANDOM.nextFloat() < spawnChance && eventY >= minHeight && eventY <= maxHeight)
                     {
                         potentialSpawns.getList().add(entry);
                     }

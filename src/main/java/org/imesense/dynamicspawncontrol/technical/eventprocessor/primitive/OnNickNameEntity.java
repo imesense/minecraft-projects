@@ -14,7 +14,6 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import scala.util.Random;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -30,11 +29,6 @@ public final class OnNickNameEntity
      *
      */
     private static boolean instanceExists = false;
-
-    /**
-     *
-     */
-    private static final Random RANDOM = new Random();
 
     /**
      *
@@ -94,10 +88,10 @@ public final class OnNickNameEntity
         {
             EntityZombie entityZombie = (EntityZombie) specialSpawn.getEntity();
 
-            if (RANDOM.nextFloat() < 0.3f)
+            if (UniqueField.RANDOM.nextFloat() < 0.3f)
             {
                 String randomName =
-                        this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
+                        this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
                 entityZombie.setCustomNameTag(randomName);
                 entityZombie.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
@@ -109,7 +103,7 @@ public final class OnNickNameEntity
             EntityVillager entityVillager = (EntityVillager) specialSpawn.getEntity();
 
             String randomName =
-                    this.RANDOM_NAMES.get(RANDOM.nextInt(this.RANDOM_NAMES.size()));
+                    this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
             entityVillager.setCustomNameTag(randomName);
             entityVillager.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
@@ -138,7 +132,7 @@ public final class OnNickNameEntity
 
                 if (!world.isRemote && world.getMinecraftServer() != null)
                 {
-                    if (RANDOM.nextFloat() < 0.75f)
+                    if (UniqueField.RANDOM.nextFloat() < 0.75f)
                     {
                         world.getMinecraftServer().getPlayerList().sendMessage(new TextComponentString(deathMessage));
                     }

@@ -18,6 +18,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
@@ -1519,7 +1520,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
         Object random = attributeMap.get(RANDOM_KEY_0);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float) random);
+                UniqueField.RANDOM.nextFloat() < (Float) random);
     }
 
     /**
@@ -1531,7 +1532,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
         Object random = attributeMap.get(RANDOM_KEY_1);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float) random);
+                UniqueField.RANDOM.nextFloat() < (Float) random);
     }
 
     /**
@@ -1543,7 +1544,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
         Object random = attributeMap.get(RANDOM_KEY_2);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float) random);
+                UniqueField.RANDOM.nextFloat() < (Float) random);
     }
 
     /**
@@ -1555,7 +1556,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
         Object random = attributeMap.get(RANDOM_KEY_3);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float) random);
+                UniqueField.RANDOM.nextFloat() < (Float) random);
     }
 
     /**
@@ -1567,6 +1568,6 @@ public final class ListActionBinary<T extends SignalDataGetter>
         Object random = attributeMap.get(RANDOM_KEY_4);
 
         this.ARRAY_LIST.add((event, query) ->
-                new Random().nextFloat() < (Float) random);
+                UniqueField.RANDOM.nextFloat() < (Float) random);
     }
 }

@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
@@ -24,7 +25,6 @@ import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDa
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Function;
 
 import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
@@ -49,11 +49,6 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
      *
      */
     private final ListActionBinary RULE_EVALUATOR;
-
-    /**
-     *
-     */
-    private static final Random RANDOM = new Random();
 
     /**
      *
@@ -386,7 +381,7 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
             }
             else
             {
-                return looting -> RANDOM.nextInt(max[0] - min[0] + 1) + min[0];
+                return looting -> UniqueField.RANDOM.nextInt(max[0] - min[0] + 1) + min[0];
             }
         }
         else
@@ -395,15 +390,15 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
             {
                 if (looting >= min.length)
                 {
-                    return RANDOM.nextInt(max[min.length - 1] - min[min.length - 1] + 1) + min[min.length - 1];
+                    return UniqueField.RANDOM.nextInt(max[min.length - 1] - min[min.length - 1] + 1) + min[min.length - 1];
                 }
                 else if (looting >= 0)
                 {
-                    return RANDOM.nextInt(max[looting] - min[looting] + 1) + min[looting];
+                    return UniqueField.RANDOM.nextInt(max[looting] - min[looting] + 1) + min[looting];
                 }
                 else
                 {
-                    return RANDOM.nextInt(max[0] - min[0] + 1) + min[0];
+                    return UniqueField.RANDOM.nextInt(max[0] - min[0] + 1) + min[0];
                 }
             };
         }

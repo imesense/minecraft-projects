@@ -37,6 +37,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.tuple.Pair;
 import org.codehaus.plexus.util.StringUtils;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumGameProperty;
 import org.imesense.dynamicspawncontrol.technical.eventprocessor.signal.SignalDataAccessor;
@@ -939,7 +940,7 @@ public class AuxFunction
      */
     public static ItemStack getRandomItem(List<Pair<Float, ItemStack>> items, float total)
     {
-        float random = new Random().nextFloat() * total;
+        float random = UniqueField.RANDOM.nextFloat() * total;
 
         for (Pair<Float, ItemStack> pair : items)
         {
