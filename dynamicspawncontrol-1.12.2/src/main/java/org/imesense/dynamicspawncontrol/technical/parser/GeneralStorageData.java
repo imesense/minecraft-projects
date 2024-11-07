@@ -72,6 +72,11 @@ public final class GeneralStorageData
          *
          */
         public List<String> Boots;
+
+        /**
+         *
+         */
+        public boolean HasShield;
     }
 
     /**
