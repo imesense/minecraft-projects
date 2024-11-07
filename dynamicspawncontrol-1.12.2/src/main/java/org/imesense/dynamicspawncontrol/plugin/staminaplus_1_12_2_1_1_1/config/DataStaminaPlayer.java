@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.config.staminaplayer;
+package org.imesense.dynamicspawncontrol.plugin.staminaplus_1_12_2_1_1_1.config;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.annotation.Getter;

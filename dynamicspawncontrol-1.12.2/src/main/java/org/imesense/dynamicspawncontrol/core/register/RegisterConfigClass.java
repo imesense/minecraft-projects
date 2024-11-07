@@ -11,7 +11,7 @@ import org.imesense.dynamicspawncontrol.config.data.PlayerAConfig;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
 import org.imesense.dynamicspawncontrol.config.file.SkeletonDropItemAConfig;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.CfgWebSlinger;
-import org.imesense.dynamicspawncontrol.config.staminaplayer.CfgStaminaPlayer;
+import org.imesense.dynamicspawncontrol.plugin.staminaplus_1_12_2_1_1_1.config.CfgStaminaPlayer;
 import org.imesense.dynamicspawncontrol.config.file.WindowTitleAConfig;
 import org.imesense.dynamicspawncontrol.config.file.ZombieDropItemAConfig;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
