@@ -46,22 +46,7 @@ public final class ParserGenericJsonScript
     /**
      *
      */
-    public final static List<GenericLeftClickAction> GENERIC_LEFT_CLICK_ACTIONS_LIST = new ArrayList<>();
-
-    /**
-     *
-     */
     public final static List<GenericMobTaskManager> GENERIC_MOBS_TASK_MANAGER_LIST = new ArrayList<>();
-
-    /**
-     *
-     */
-    public final static List<GenericBlockPlaceAction> GENERIC_BLOCK_PLACE_ACTIONS_LIST = new ArrayList<>();
-
-    /**
-     *
-     */
-    public final static List<GenericBlockBreakAction> GENERIC_BLOCK_BREAK_ACTIONS_LIST = new ArrayList<>();
 
     /**
      *
@@ -71,12 +56,7 @@ public final class ParserGenericJsonScript
     /**
      *
      */
-    public final static List<GenericRightClickAction> GENERIC_RIGHT_CLICK_ACTIONS_LIST = new ArrayList<>();
-
-    /**
-     *
-     */
-    private static final String[] ARRAY_TYPE_SCRIPT = { "Drop", "Block", "Effect", "Mouse", "Spawn", "Zombie" };
+    private static final String[] ARRAY_TYPE_SCRIPT = { "Drop", "Effect", "Spawn" };
 
     /**
      *
@@ -88,11 +68,6 @@ public final class ParserGenericJsonScript
         GENERIC_POTENTIAL_SPAWN_LIST.clear();
         GENERIC_SPAWN_CONDITIONS_LIST.clear();
         GENERIC_MOBS_TASK_MANAGER_LIST.clear();
-
-        GENERIC_LEFT_CLICK_ACTIONS_LIST.clear();
-        GENERIC_RIGHT_CLICK_ACTIONS_LIST.clear();
-        GENERIC_BLOCK_PLACE_ACTIONS_LIST.clear();
-        GENERIC_BLOCK_BREAK_ACTIONS_LIST.clear();
         GENERIC_MAP_EFFECTS_ACTIONS_LIST.clear();
 
         readAllRules();
@@ -120,45 +95,23 @@ public final class ParserGenericJsonScript
      */
     private static void readAllRules()
     {
-        //
         CodeGeneric.readAndLogRules(_PATH, "DropAllItems" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericDropLoot::parse, GENERIC_DROP_LOOT_LIST, ARRAY_TYPE_SCRIPT[0]);
 
-        //
         CodeGeneric.readAndLogRules(_PATH, "DropAllExperience" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
                 GenericExperience::parse, GENERIC_EXPERIENCE_LIST, ARRAY_TYPE_SCRIPT[0]);
 
-        //
         CodeGeneric.readAndLogRules(_PATH, "MainPotentialSpawn" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericPotentialSpawn::parse, GENERIC_POTENTIAL_SPAWN_LIST, ARRAY_TYPE_SCRIPT[4]);
+                GenericPotentialSpawn::parse, GENERIC_POTENTIAL_SPAWN_LIST, ARRAY_TYPE_SCRIPT[2]);
 
-        //
         CodeGeneric.readAndLogRules(_PATH, "SpawnConditions" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericSpawnCondition::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[4]);
+                GenericSpawnCondition::parse, GENERIC_SPAWN_CONDITIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
 
-        //
         CodeGeneric.readAndLogRules(_PATH, "MobTaskManager" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericMobTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[4]);
+                GenericMobTaskManager::parse, GENERIC_MOBS_TASK_MANAGER_LIST, ARRAY_TYPE_SCRIPT[2]);
 
-        //
         CodeGeneric.readAndLogRules(_PATH, "EventEffects" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericMapEffectAction::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[2]);
-
-        //
-        CodeGeneric.readAndLogRules(_PATH, "EventBlockPlace" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericBlockPlaceAction::parse, GENERIC_BLOCK_PLACE_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
-
-        //
-        CodeGeneric.readAndLogRules(_PATH, "EventBlockBreak" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericBlockBreakAction::parse, GENERIC_BLOCK_BREAK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
-
-        //
-        CodeGeneric.readAndLogRules(_PATH, "EventLeftMouseClick" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericLeftClickAction::parse, GENERIC_LEFT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
-
-        //
-        CodeGeneric.readAndLogRules(_PATH, "EventRightMouseClick" + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION,
-                GenericRightClickAction::parse, GENERIC_RIGHT_CLICK_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[3]);
+                GenericMapEffectAction::parse, GENERIC_MAP_EFFECTS_ACTIONS_LIST, ARRAY_TYPE_SCRIPT[1]);
     }
 
     /**

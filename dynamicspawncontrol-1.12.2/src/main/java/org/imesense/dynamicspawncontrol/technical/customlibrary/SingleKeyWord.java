@@ -25,18 +25,6 @@ public final class SingleKeyWord
     /**
      *
      */
-    public static final class EVENT_RESULTS
-    {
-        public static final String SUPER = "super";
-
-        public static final String TRUE = "true";
-
-        public static final String FALSE = "false";
-    }
-
-    /**
-     *
-     */
     public static final class DROP_ALL_EXPERIENCE
     {
         public static final String SET_XP = "set_xp";

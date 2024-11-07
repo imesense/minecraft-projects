@@ -53,24 +53,14 @@ public final class OnLivingExperienceDrop
         {
             if (rule.match(livingExperienceDropEvent))
             {
-                Event.Result result = rule.getResult();
+                int modifyXp = rule.modifyXp(livingExperienceDropEvent.getDroppedExperience());
+                livingExperienceDropEvent.setDroppedExperience(modifyXp);
 
-                if (result != Event.Result.DENY)
+                if (GameDebuggerData.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_experience_drop"))
                 {
-                    int modifyXp = rule.modifyXp(livingExperienceDropEvent.getDroppedExperience());
-                    livingExperienceDropEvent.setDroppedExperience(modifyXp);
-
-                    if (GameDebuggerData.ConfigDataEvent.Instance.getDebugSetting("debug_on_living_experience_drop"))
-                    {
-                        Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + atomicInteger + ": "
-                                + result
-                                + " entity: " + livingExperienceDropEvent.getEntity().getName()
-                                + " y: " + livingExperienceDropEvent.getEntity().getPosition().getY() + " new xp: " + modifyXp);
-                    }
-                }
-                else
-                {
-                    livingExperienceDropEvent.setCanceled(true);
+                    Log.writeDataToLogFile(0, "ConfigsParser._GenericExperience. ID Rule: " + atomicInteger
+                            + " entity: " + livingExperienceDropEvent.getEntity().getName()
+                            + " y: " + livingExperienceDropEvent.getEntity().getPosition().getY() + " new xp: " + modifyXp);
                 }
 
                 return;

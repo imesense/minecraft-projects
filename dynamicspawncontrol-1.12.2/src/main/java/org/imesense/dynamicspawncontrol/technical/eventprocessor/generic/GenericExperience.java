@@ -14,7 +14,6 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.ResultEvents;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
@@ -43,29 +42,12 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
     /**
      *
      */
-    private final Event.Result RESULT;
-
-    /**
-     *
-     */
     private static int countCreatedMaps = 0;
 
     /**
      *
      */
     private final ListActionBinary RULE_EVALUATOR;
-
-    /**
-     *
-     * @return
-     */
-    public Event.Result getResult() { return this.RESULT; }
-
-    /**
-     *
-     */
-    /* TODO: удалить этот код в будущем */
-    private static final ResultEvents RESULT_EVENTS = new ResultEvents();
 
     /**
      *
@@ -99,8 +81,6 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
         this.RULE_EVALUATOR = new ListActionBinary<>(attributeMap);
 
         this.addActions(attributeMap);
-
-        this.RESULT = RESULT_EVENTS.getResult(attributeMap);
 
         this.XP = xp;
         this.MULTI_XP = multiXp;

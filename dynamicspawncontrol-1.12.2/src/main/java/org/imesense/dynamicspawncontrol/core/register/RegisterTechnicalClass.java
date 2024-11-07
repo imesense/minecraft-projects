@@ -24,16 +24,12 @@ public final class RegisterTechnicalClass
         CacheEvent.class,
         OnEventSandBox.class,
         OnWindowTitle.class,
-        OnBlockBreakEvent.class,
-        OnBlockPlaceEvent.class,
         OnEntitySpawnEvent.class,
-        OnLeftClickEvent.class,
         OnLivingDrop.class,
         OnLivingExperienceDrop.class,
         OnMobTaskManager.class,
         OnPlayerEvent.class,
         OnPotentialSpawn.class,
-        OnRightClickEvent.class,
         OnSingleJsonCheckSpawn.class,
         OnSingleZombieSummonAID.class
     };
