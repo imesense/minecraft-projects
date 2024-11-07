@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -82,6 +83,6 @@ public final class RegisterParserManager
     {
         return parserClass.getSimpleName()
                 .replaceAll("([a-z])([A-Z]+)", "$1_$2")
-                .toLowerCase();
+                    .toLowerCase() + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
     }
 }
