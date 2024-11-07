@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.field;
 
 import net.minecraft.client.Minecraft;
 import org.imesense.dynamicspawncontrol.core.annotation.UniqueObject;
+import scala.util.Random;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -12,6 +13,12 @@ import java.util.Set;
  */
 public final class UniqueField
 {
+    /**
+     *
+     */
+    @UniqueObject
+    public static final Random RANDOM = new Random();
+
     /**
      *
      */
