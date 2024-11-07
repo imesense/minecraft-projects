@@ -4,8 +4,8 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.gameplay.worldgenerator.*;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.worldgenerator.*;
 
 /**
  *
