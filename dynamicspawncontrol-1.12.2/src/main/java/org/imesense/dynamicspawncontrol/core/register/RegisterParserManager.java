@@ -80,6 +80,8 @@ public final class RegisterParserManager
      */
     private static String getParserName(Class<?> parserClass)
     {
-        return parserClass.getSimpleName().toLowerCase();
+        return parserClass.getSimpleName()
+                .replaceAll("([a-z])([A-Z]+)", "$1_$2")
+                .toLowerCase();
     }
 }
