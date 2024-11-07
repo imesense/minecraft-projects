@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.gameplay.item;
+package org.imesense.dynamicspawncontrol.item;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityFireball;

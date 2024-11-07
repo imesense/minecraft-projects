@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.gameplay.event;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTorch;
@@ -24,7 +24,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnUpdateTorchLogic
+public final class OnEventUpdateTorch
 {
     /**
      *
@@ -34,7 +34,7 @@ public final class OnUpdateTorchLogic
     /**
      *
      */
-    public OnUpdateTorchLogic()
+    public OnEventUpdateTorch()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		
@@ -52,7 +52,7 @@ public final class OnUpdateTorchLogic
      * @param livingHurtEvent
      */
     @SubscribeEvent
-    public synchronized void onHit_0(LivingHurtEvent livingHurtEvent)
+    public void onHit_0(LivingHurtEvent livingHurtEvent)
     {
         if ((livingHurtEvent.getSource().getDamageType().equalsIgnoreCase("mob") ||
                 livingHurtEvent.getSource().getDamageType().equalsIgnoreCase("player")) && livingHurtEvent.getSource().getTrueSource() != null)
@@ -92,26 +92,26 @@ public final class OnUpdateTorchLogic
 
     /**
      *
-     * @param event
+     * @param breakEvent
      */
     @SubscribeEvent
-    public synchronized void onBreak_1(BlockEvent.BreakEvent event)
+    public void onBreak_1(BlockEvent.BreakEvent breakEvent)
     {
-        EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
+        EntityPlayerMP player = (EntityPlayerMP) breakEvent.getPlayer();
 
         if (Block.getBlockFromItem(player.getHeldItemMainhand().getItem()) instanceof BlockTorch)
         {
-            BlockPos blockPos = event.getPos();
-            Block block = event.getState().getBlock();
+            BlockPos blockPos = breakEvent.getPos();
+            Block block = breakEvent.getState().getBlock();
 
             if (block == Blocks.TNT)
             {
-                event.setCanceled(true);
+                breakEvent.setCanceled(true);
 
                 Explosion ex = new Explosion(player.world,
                         player, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100.0F, true, true);
 
-                event.getState().getBlock().onBlockExploded(player.world, blockPos, ex);
+                breakEvent.getState().getBlock().onBlockExploded(player.world, blockPos, ex);
 
                 if (!player.capabilities.isCreativeMode)
                 {

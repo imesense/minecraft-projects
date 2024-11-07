@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -20,7 +20,7 @@ import java.util.List;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnDropSkeletonItem
+public final class OnEventDropSkeletonItem
 {
     /**
      *
@@ -30,7 +30,7 @@ public final class OnDropSkeletonItem
     /**
      *
      */
-    public OnDropSkeletonItem()
+    public OnEventDropSkeletonItem()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -48,7 +48,7 @@ public final class OnDropSkeletonItem
      * @param livingDropsEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
+    public void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
     {
         if (livingDropsEvent.getEntity() instanceof EntitySkeleton)
         {

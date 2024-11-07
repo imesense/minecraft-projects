@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityZombie;
@@ -23,7 +23,7 @@ import java.util.List;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnNickNameEntity
+public final class OnEventNickNameEntity
 {
     /**
      *
@@ -38,7 +38,7 @@ public final class OnNickNameEntity
     /**
      *
      */
-    public OnNickNameEntity()
+    public OnEventNickNameEntity()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 

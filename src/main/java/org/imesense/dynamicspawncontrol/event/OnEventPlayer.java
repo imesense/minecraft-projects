@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.IMob;
@@ -24,7 +24,7 @@ import java.util.List;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnPlayerEvent
+public final class OnEventPlayer
 {
     /**
      *
@@ -39,7 +39,7 @@ public final class OnPlayerEvent
     /**
      *
      */
-    public OnPlayerEvent()
+    public OnEventPlayer()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		
@@ -57,7 +57,7 @@ public final class OnPlayerEvent
      * @param entityJoinWorldEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent entityJoinWorldEvent)
+    public void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent entityJoinWorldEvent)
     {
         if (entityJoinWorldEvent.getEntity() instanceof EntityPlayerMP &&
                 !(entityJoinWorldEvent.getEntity() instanceof FakePlayer))
@@ -77,7 +77,7 @@ public final class OnPlayerEvent
      * @param playerLoggedOutEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLoggedOut_1(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
+    public void onUpdatePlayerLoggedOut_1(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
     {
         EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerLoggedOutEvent.player;
         PLAYER_LIST.remove(entityPlayerMP.getName());
@@ -89,7 +89,7 @@ public final class OnPlayerEvent
      * @param clientConnectedToServerEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLogin_0(FMLNetworkEvent.ClientConnectedToServerEvent clientConnectedToServerEvent)
+    public void onUpdatePlayerLogin_2(FMLNetworkEvent.ClientConnectedToServerEvent clientConnectedToServerEvent)
     {
         Log.writeDataToLogFile(0, "ClientConnectedToServerEvent " + clientConnectedToServerEvent);
     }
@@ -99,7 +99,7 @@ public final class OnPlayerEvent
      * @param playerLoggedInEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLoginServer_0(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
+    public void onUpdatePlayerLoginServer_3(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
     {
         Log.writeDataToLogFile(0, "PlayerLoggedInEvent " + playerLoggedInEvent.player.getName() + " logged in.");
     }
@@ -109,7 +109,7 @@ public final class OnPlayerEvent
      * @param clientDisconnectionFromServerEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerLogout_0(FMLNetworkEvent.ClientDisconnectionFromServerEvent clientDisconnectionFromServerEvent)
+    public void onUpdatePlayerLogout_4(FMLNetworkEvent.ClientDisconnectionFromServerEvent clientDisconnectionFromServerEvent)
     {
         Log.writeDataToLogFile(0, "ClientDisconnectionFromServerEvent " + clientDisconnectionFromServerEvent);
     }
@@ -119,7 +119,7 @@ public final class OnPlayerEvent
      * @param playerRespawnEvent
      */
     @SubscribeEvent
-    public synchronized void onPlayerRespawn_0(PlayerEvent.PlayerRespawnEvent playerRespawnEvent)
+    public synchronized void onPlayerRespawn_5(PlayerEvent.PlayerRespawnEvent playerRespawnEvent)
     {
         EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerRespawnEvent.player;
         World world = entityPlayerMP.world;

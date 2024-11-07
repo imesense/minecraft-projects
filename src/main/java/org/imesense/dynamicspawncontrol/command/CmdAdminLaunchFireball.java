@@ -7,7 +7,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.gameplay.item.DSCFireball;
+import org.imesense.dynamicspawncontrol.item.DSCFireball;
 
 import javax.annotation.Nonnull;
 

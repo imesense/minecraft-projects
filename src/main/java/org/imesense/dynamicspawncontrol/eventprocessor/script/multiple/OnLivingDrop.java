@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.script.multiple;
+package org.imesense.dynamicspawncontrol.eventprocessor.script.multiple;
 
 import java.util.function.Function;
 import java.util.function.Predicate;

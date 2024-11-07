@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive;
+package org.imesense.dynamicspawncontrol.event;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
@@ -20,7 +20,7 @@ import java.util.List;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnDropZombieItem
+public final class OnEventDropZombieItem
 {
     /**
      *
@@ -30,7 +30,7 @@ public final class OnDropZombieItem
     /**
      *
      */
-    public OnDropZombieItem()
+    public OnEventDropZombieItem()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		
@@ -48,7 +48,7 @@ public final class OnDropZombieItem
      * @param livingDropsEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
+    public void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
     {
         if (livingDropsEvent.getEntity() instanceof EntityZombie)
         {
@@ -102,9 +102,9 @@ public final class OnDropZombieItem
                 itemStack.setItemDamage(randomDamage);
             }
 
-            for (EntityItem item : drops)
+            for (EntityItem entityItem : drops)
             {
-                ItemStack itemStack1 = item.getItem();
+                ItemStack itemStack1 = entityItem.getItem();
 
                 if (itemStack1.isItemEqualIgnoreDurability(itemStack))
                 {

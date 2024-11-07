@@ -2,9 +2,9 @@ package org.imesense.dynamicspawncontrol.core.register;
 
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.gameplay.event.OnUpdateTorchLogic;
+import org.imesense.dynamicspawncontrol.event.*;
+import org.imesense.dynamicspawncontrol.event.OnEventUpdateTorch;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.primitive.*;
 
 /**
  *
@@ -16,12 +16,13 @@ public final class RegisterGameplayClass
      */
     private static final Class<?>[] EVENT_CLASSES =
     {
-        OnUpdateTorchLogic.class,
-        OnDropZombieItem.class,
-        OnDropSkeletonItem.class,
-        OnComplexityBiomes.class,
-        OnDropHeadMob.class,
-        OnNickNameEntity.class
+        OnEventUpdateTorch.class,
+        OnEventDropZombieItem.class,
+        OnEventDropSkeletonItem.class,
+        OnEventComplexityBiomes.class,
+        OnEventDropHeadMob.class,
+        OnEventNickNameEntity.class,
+        OnEventUpdateFire.class
     };
 
     /**
