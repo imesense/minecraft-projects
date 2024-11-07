@@ -1,6 +1,9 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraft.init.Biomes;
+import net.minecraftforge.event.terraingen.BiomeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.api.IDebug;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -47,4 +50,31 @@ public final class OnEventSandBox implements IDebug
    //     event.setGreen(0.2f); // Зеленый оттенок
    //     event.setBlue(0.2f);  // Синий оттенок
    // }
+
+    //@SubscribeEvent
+    //public void onGetGrassColor(BiomeEvent.GetGrassColor event) {
+    //    // Проверяем, что это болото (Swampland)
+    //    if (event.getBiome() == Biomes.SWAMPLAND) {
+    //        // Устанавливаем зеленоватый оттенок для травы
+    //        event.setNewColor(0x013220);  // Зеленоватый цвет (RGB)
+    //    }
+    //}
+//
+    //@SubscribeEvent
+    //public void onGetFoliageColor(BiomeEvent.GetFoliageColor event) {
+    //    // Проверяем, что это болото (Swampland)
+    //    if (event.getBiome() == Biomes.SWAMPLAND) {
+    //        // Устанавливаем зеленоватый оттенок для листвы
+    //        event.setNewColor(0x013220);  // Зеленоватый цвет (RGB)
+    //    }
+    //}
+//
+    //@SubscribeEvent
+    //public void onGetWaterColor(BiomeEvent.GetWaterColor event) {
+    //    // Проверяем, что это болото (Swampland)
+    //    if (event.getBiome() == Biomes.SWAMPLAND) {
+    //        // Устанавливаем зеленоватый оттенок для воды
+    //        event.setNewColor(0x013220);  // Темно-зеленоватый цвет воды (RGB)
+    //    }
+    //}
 }
