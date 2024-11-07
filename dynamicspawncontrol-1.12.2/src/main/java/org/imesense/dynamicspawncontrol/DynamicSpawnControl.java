@@ -26,7 +26,7 @@ import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.net
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
-import org.imesense.dynamicspawncontrol.technical.parser.ParserManager;
+import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 import org.imesense.dynamicspawncontrol.core.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
 
@@ -161,7 +161,7 @@ public final class DynamicSpawnControl
     {
         ParserGenericJsonScript.readRules();
 
-        ParserManager.init();
+        RegisterParserManager.init();
     }
 
     /**
