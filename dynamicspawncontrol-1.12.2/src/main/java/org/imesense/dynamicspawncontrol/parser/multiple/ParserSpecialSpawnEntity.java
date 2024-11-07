@@ -27,9 +27,12 @@ public final class ParserSpecialSpawnEntity extends AParser
     /**
      *
      */
-    public ParserSpecialSpawnEntity()
+    public ParserSpecialSpawnEntity(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
+
+        this.nameFile = NAME_FILE +
+                DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
     }
 
     /**
@@ -50,8 +53,8 @@ public final class ParserSpecialSpawnEntity extends AParser
     {
         GeneralStorageData.Instance.EquipmentConfigs = new ArrayList<>();
 
-        File file = getConfigFile(initialization, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS,
-                /*EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword()*/ "action_zombie_summon_aid.json");
+        File file = getConfigFile(initialization,
+                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {

@@ -27,7 +27,8 @@ public final class ParserWorldCacheMobs extends AParser
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
-        this.nameFile = NAME_FILE;
+        this.nameFile = NAME_FILE +
+                DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
     }
 
     /**

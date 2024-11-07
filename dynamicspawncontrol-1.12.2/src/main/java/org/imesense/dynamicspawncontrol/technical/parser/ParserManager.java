@@ -33,11 +33,9 @@ public final class ParserManager
      */
     public static void init()
     {
-        PARSER_LIST.add(new ParserWorldCacheMobs("world_cache_mobs" +
-                DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION));
-
-        PARSER_LIST.add(new ParserSpecialSpawnEntity());
-        PARSER_LIST.add(new ParserCheckSpawnEntity());
+        PARSER_LIST.add(new ParserWorldCacheMobs("world_cache_mobs"));
+        PARSER_LIST.add(new ParserSpecialSpawnEntity("parser_special_spawn_entity"));
+        PARSER_LIST.add(new ParserCheckSpawnEntity("parser_check_spawn_entity"));
 
         for (AParser parser : PARSER_LIST)
         {
