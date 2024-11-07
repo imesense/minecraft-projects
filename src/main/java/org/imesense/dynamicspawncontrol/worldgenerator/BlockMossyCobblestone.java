@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.gameplay.worldgenerator;
+package org.imesense.dynamicspawncontrol.worldgenerator;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -17,22 +17,22 @@ import java.util.Random;
 /**
  *
  */
-public final class BlockMonsterEgg implements IWorldGenerator
+public final class BlockMossyCobblestone implements IWorldGenerator
 {
     /**
      *
      */
-    private final WorldGenerator CLASS_MONSTER_EGG_GENERATOR;
+    private final WorldGenerator CLASS_MOSSY_COBBLESTONE_GENERATOR;
 
     /**
      *
      */
-    public BlockMonsterEgg()
+    public BlockMossyCobblestone()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
-        CLASS_MONSTER_EGG_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("monster_egg")).getDefaultState(), 5);
+        CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
+                Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 5);
     }
 
     /**
@@ -80,12 +80,12 @@ public final class BlockMonsterEgg implements IWorldGenerator
             case 0:
             {
                 run(
-                        CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getChanceSpawn(),
-                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getMinHeight(),
-                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getMaxHeight()
+                        CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
+                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getChanceSpawn(),
+                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getMinHeight(),
+                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getMaxHeight()
                 );
-                
+
                 break;
             }
 

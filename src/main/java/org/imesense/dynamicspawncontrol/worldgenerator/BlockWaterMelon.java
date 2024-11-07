@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.gameplay.worldgenerator;
+package org.imesense.dynamicspawncontrol.worldgenerator;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
