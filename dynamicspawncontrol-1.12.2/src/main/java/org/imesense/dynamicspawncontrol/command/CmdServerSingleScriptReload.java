@@ -5,7 +5,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumCmdCallType;
+import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumTextColor;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumUnicodeCharacter;
 import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
@@ -62,7 +62,7 @@ public final class CmdServerSingleScriptReload extends CommandBase
             iCommandSender.sendMessage(new TextComponentString(
                     EnumUnicodeCharacter.SECTION.getCharacter() +
                             EnumTextColor.RED.getCode() +
-                            EnumCmdCallType.CMD.getDescription() +
+                            CmdCallTypeCollection.instance.getDescription(1) +
                             EnumUnicodeCharacter.WHITE_SPACE.getCharacter() +
                             "The command does not accept arguments"));
         }
@@ -73,7 +73,7 @@ public final class CmdServerSingleScriptReload extends CommandBase
             iCommandSender.sendMessage(new TextComponentString(
                     EnumUnicodeCharacter.SECTION.getCharacter() +
                             EnumTextColor.GREEN.getCode() +
-                            EnumCmdCallType.CMD.getDescription() +
+                            CmdCallTypeCollection.instance.getDescription(1) +
                             EnumUnicodeCharacter.WHITE_SPACE.getCharacter() +
                             "Configurations have been reloaded"));
         }

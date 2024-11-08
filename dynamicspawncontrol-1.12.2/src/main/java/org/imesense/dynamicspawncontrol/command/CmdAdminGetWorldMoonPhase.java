@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumCmdCallType;
+import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumTextColor;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumUnicodeCharacter;
 
@@ -63,7 +63,7 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
         iCommandSender.sendMessage(new TextComponentString(
                    EnumUnicodeCharacter.SECTION.getCharacter() +
                         EnumTextColor.AQUA.getCode() +
-                        EnumCmdCallType.CMD.getDescription() +
+                        CmdCallTypeCollection.instance.getDescription(1) +
                         EnumUnicodeCharacter.WHITE_SPACE.getCharacter() +
                         "-> The current phase of the moon: " +
                         moonPhase));
