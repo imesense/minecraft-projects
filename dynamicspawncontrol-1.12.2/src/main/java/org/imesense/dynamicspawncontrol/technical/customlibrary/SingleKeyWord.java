@@ -1,9 +1,5 @@
 package org.imesense.dynamicspawncontrol.technical.customlibrary;
 
-/**
- *
- * TODO: rework later
- */
 public final class SingleKeyWord
 {
     /**

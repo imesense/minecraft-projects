@@ -8,6 +8,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.api.IRecipes;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
+import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
+import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
@@ -122,6 +124,8 @@ public final class DynamicSpawnControl
         RegisterOreGenerator.init(fmlPreInitializationEvent);
 
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
+        TextColorCollection.instance = new TextColorCollection();
+        UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
     }
 
     /**

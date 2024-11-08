@@ -4,10 +4,10 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
+import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumTextColor;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumUnicodeCharacter;
 import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 
 import javax.annotation.Nonnull;
@@ -60,10 +60,10 @@ public final class CmdServerSingleScriptReload extends CommandBase
         if (args.length > 0)
         {
             iCommandSender.sendMessage(new TextComponentString(
-                    EnumUnicodeCharacter.SECTION.getCharacter() +
-                            EnumTextColor.RED.getCode() +
+                       UnicodeCharacterCollection.instance.getDescription('\u00A7') +
+                            TextColorCollection.instance.getCode("RED") +
                             CmdCallTypeCollection.instance.getDescription(1) +
-                            EnumUnicodeCharacter.WHITE_SPACE.getCharacter() +
+                            UnicodeCharacterCollection.instance.getDescription(' ') +
                             "The command does not accept arguments"));
         }
         else
@@ -71,10 +71,10 @@ public final class CmdServerSingleScriptReload extends CommandBase
             RegisterParserManager.reloadAllConfigs();
 
             iCommandSender.sendMessage(new TextComponentString(
-                    EnumUnicodeCharacter.SECTION.getCharacter() +
-                            EnumTextColor.GREEN.getCode() +
+                       UnicodeCharacterCollection.instance.getDescription('\u00A7') +
+                            TextColorCollection.instance.getCode("GREEN") +
                             CmdCallTypeCollection.instance.getDescription(1) +
-                            EnumUnicodeCharacter.WHITE_SPACE.getCharacter() +
+                            UnicodeCharacterCollection.instance.getDescription(' ') +
                             "Configurations have been reloaded"));
         }
     }

@@ -6,9 +6,9 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.GameType;
+import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
+import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumTextColor;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumUnicodeCharacter;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import javax.annotation.Nonnull;
@@ -74,8 +74,8 @@ public final class CmdAdminGameMode extends CommandBase
         {
             Log.writeDataToLogFile(2, String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
 
-            iCommandSender.sendMessage(new TextComponentString(EnumUnicodeCharacter.SECTION.getCharacter() +
-                    EnumTextColor.RED.getCode() +
+            iCommandSender.sendMessage(new TextComponentString(UnicodeCharacterCollection.instance.getDescription('\u00A7') +
+                    TextColorCollection.instance.getCode("RED") +
                     "Invalid game mode: " + args[0]));
 
             return;

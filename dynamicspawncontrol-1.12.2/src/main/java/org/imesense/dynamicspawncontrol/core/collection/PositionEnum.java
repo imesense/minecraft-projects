@@ -1,9 +1,9 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration;
+package org.imesense.dynamicspawncontrol.core.collection;
 
 /**
  *
  */
-public class EnumGameProperty
+public class PositionEnum
 {
     /**
      *
