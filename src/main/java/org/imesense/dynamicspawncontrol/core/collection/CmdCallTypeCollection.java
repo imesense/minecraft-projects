@@ -48,15 +48,6 @@ public final class CmdCallTypeCollection
 
     /**
      *
-     * @return
-     */
-    public List<String> getCmdCallTypes()
-    {
-        return CMD_CALL_TYPES;
-    }
-
-    /**
-     *
      * @param index
      * @return
      */

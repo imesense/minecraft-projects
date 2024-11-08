@@ -41,7 +41,7 @@ import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.enumeration.EnumGameProperty;
+import org.imesense.dynamicspawncontrol.core.collection.PositionEnum;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 
 import javax.annotation.Nonnull;
@@ -181,19 +181,19 @@ public class AuxFunction
         JsonElement jsonElement = jsonParser.parse(json);
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        if (jsonObject.has(EnumGameProperty.BlockProperties.OFFSET.getValue()))
+        if (jsonObject.has(PositionEnum.BlockProperties.OFFSET.getValue()))
         {
             JsonObject jsonObject1 =
-                    jsonObject.getAsJsonObject(EnumGameProperty.BlockProperties.OFFSET.getValue());
+                    jsonObject.getAsJsonObject(PositionEnum.BlockProperties.OFFSET.getValue());
 
-            offsetX = jsonObject1.has(EnumGameProperty.Coordinates.X.getValue()) ?
-                    jsonObject1.get(EnumGameProperty.Coordinates.X.getValue()).getAsInt() : 0;
+            offsetX = jsonObject1.has(PositionEnum.Coordinates.X.getValue()) ?
+                    jsonObject1.get(PositionEnum.Coordinates.X.getValue()).getAsInt() : 0;
 
-            offsetY = jsonObject1.has(EnumGameProperty.Coordinates.Y.getValue()) ?
-                    jsonObject1.get(EnumGameProperty.Coordinates.Y.getValue()).getAsInt() : 0;
+            offsetY = jsonObject1.has(PositionEnum.Coordinates.Y.getValue()) ?
+                    jsonObject1.get(PositionEnum.Coordinates.Y.getValue()).getAsInt() : 0;
 
-            offsetZ = jsonObject1.has(EnumGameProperty.Coordinates.Z.getValue()) ?
-                    jsonObject1.get(EnumGameProperty.Coordinates.Z.getValue()).getAsInt() : 0;
+            offsetZ = jsonObject1.has(PositionEnum.Coordinates.Z.getValue()) ?
+                    jsonObject1.get(PositionEnum.Coordinates.Z.getValue()).getAsInt() : 0;
         }
         else
         {
@@ -202,7 +202,7 @@ public class AuxFunction
             offsetZ = 0;
         }
 
-        if (jsonObject.has(EnumGameProperty.BlockProperties.STEP.getValue()))
+        if (jsonObject.has(PositionEnum.BlockProperties.STEP.getValue()))
         {
             return (event, query) ->
             {
@@ -220,7 +220,7 @@ public class AuxFunction
             };
         }
 
-        if (jsonObject.has(EnumGameProperty.BlockProperties.LOOK.getValue()))
+        if (jsonObject.has(PositionEnum.BlockProperties.LOOK.getValue()))
         {
             return (event, query) ->
             {
