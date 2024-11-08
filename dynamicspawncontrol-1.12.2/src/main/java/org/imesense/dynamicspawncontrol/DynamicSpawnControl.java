@@ -9,8 +9,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.api.IRecipes;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
-import org.imesense.dynamicspawncontrol.plugin.realisticexplosionphysics_1_12_2_1_0_0.RealisticExplosionPhysics;
-import org.imesense.dynamicspawncontrol.plugin.realisticexplosionphysics_1_12_2_1_0_0.event.OnEventWorld;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnBreakTorchEvent;
@@ -147,9 +145,6 @@ public final class DynamicSpawnControl
         //-' TODO: перенести это в отдельную инициализацию
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new OnBreakTorchEvent());
-        MinecraftForge.EVENT_BUS.register(new OnEventWorld());
-
-        RealisticExplosionPhysics.postInit(fmlPostInitializationEvent);
     }
 
     /**
@@ -194,6 +189,6 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public static void onServerShutdown(FMLServerStoppingEvent fmlServerStoppingEvent)
     {
-        RealisticExplosionPhysics.onServerShutdown(fmlServerStoppingEvent);
+
     }
 }
