@@ -2,18 +2,15 @@ package org.imesense.dynamicspawncontrol;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
+import net.minecraftforge.fml.common.event.*;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.api.IRecipes;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
+import org.imesense.dynamicspawncontrol.plugin.realisticexplosionphysics_1_12_2_1_0_0.RealisticExplosionPhysics;
+import org.imesense.dynamicspawncontrol.plugin.realisticexplosionphysics_1_12_2_1_0_0.event.OnEventWorld;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnBreakTorchEvent;
@@ -91,7 +88,7 @@ public final class DynamicSpawnControl
      * @throws IllegalAccessException
      */
     @Mod.EventHandler
-    public synchronized void preInit(FMLPreInitializationEvent fmlPreInitializationEvent) throws IllegalAccessException
+    public void preInit(FMLPreInitializationEvent fmlPreInitializationEvent) throws IllegalAccessException
     {
         globalDirectory = fmlPreInitializationEvent.getModConfigurationDirectory();
 
@@ -131,7 +128,7 @@ public final class DynamicSpawnControl
      * @param fmlInitializationEvent
      */
     @Mod.EventHandler
-    public synchronized void init(FMLInitializationEvent fmlInitializationEvent)
+    public void init(FMLInitializationEvent fmlInitializationEvent)
     {
         IRecipes = new CraftItemWeb();
 
@@ -145,11 +142,14 @@ public final class DynamicSpawnControl
      * @param fmlPostInitializationEvent
      */
     @Mod.EventHandler
-    public synchronized void postInit(FMLPostInitializationEvent fmlPostInitializationEvent)
+    public void postInit(FMLPostInitializationEvent fmlPostInitializationEvent)
     {
         //-' TODO: перенести это в отдельную инициализацию
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new OnBreakTorchEvent());
+        MinecraftForge.EVENT_BUS.register(new OnEventWorld());
+
+        RealisticExplosionPhysics.postInit(fmlPostInitializationEvent);
     }
 
     /**
@@ -157,7 +157,7 @@ public final class DynamicSpawnControl
      * @param fmlLoadCompleteEvent
      */
     @Mod.EventHandler
-    public synchronized void onLoadComplete(FMLLoadCompleteEvent fmlLoadCompleteEvent)
+    public void onLoadComplete(FMLLoadCompleteEvent fmlLoadCompleteEvent)
     {
         ParserGenericJsonScript.readRules();
 
@@ -169,7 +169,7 @@ public final class DynamicSpawnControl
      * @param fmlServerStartingEvent
      */
     @Mod.EventHandler
-    public synchronized void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
+    public void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
     {
         RegisterCommandClass.registerCommands(fmlServerStartingEvent);
     }
@@ -179,11 +179,21 @@ public final class DynamicSpawnControl
      * @param fmlServerStoppedEvent
      */
     @Mod.EventHandler
-    public synchronized void serverStopped(FMLServerStoppedEvent fmlServerStoppedEvent)
+    public void serverStopped(FMLServerStoppedEvent fmlServerStoppedEvent)
     {
         Cache.Instance.cleanActualCache();
         Cache.Instance.cleanBufferCache();
 
         Structure.STRUCTURES_CACHE.clean();
+    }
+
+    /**
+     *
+     * @param fmlServerStoppingEvent
+     */
+    @Mod.EventHandler
+    public static void onServerShutdown(FMLServerStoppingEvent fmlServerStoppingEvent)
+    {
+        RealisticExplosionPhysics.onServerShutdown(fmlServerStoppingEvent);
     }
 }
