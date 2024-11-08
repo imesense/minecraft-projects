@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.eventprocessor.listaction;
 
 import com.google.common.base.Predicate;
 import net.minecraft.entity.Entity;
@@ -24,15 +24,16 @@ import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericPotentialSpawn;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunction;
 import org.imesense.dynamicspawncontrol.technical.gamestructure.Structure;
 
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.SpawnCondition.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.SpawnCondition.*;
 
 /**
  *

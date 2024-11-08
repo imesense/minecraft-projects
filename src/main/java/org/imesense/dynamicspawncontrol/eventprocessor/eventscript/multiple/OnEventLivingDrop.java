@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.script.multiple;
+package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple;
 
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -16,14 +16,14 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericDropLoot;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericDropLoot;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnLivingDrop
+public final class OnEventLivingDrop
 {
     /**
      *
@@ -33,7 +33,7 @@ public final class OnLivingDrop
     /**
      *
      */
-    public OnLivingDrop()
+    public OnEventLivingDrop()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.eventprocessor.listaction;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -35,12 +35,15 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunction;
+import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
+import org.imesense.dynamicspawncontrol.technical.customlibrary.Sender;
 
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
 
 /**
  *

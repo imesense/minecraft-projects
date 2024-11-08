@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.script.multiple;
+package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -14,7 +14,7 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 import org.imesense.dynamicspawncontrol.core.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
@@ -23,7 +23,7 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnPotentialSpawn
+public final class OnEventPotentialSpawn
 {
     /**
      *
@@ -33,7 +33,7 @@ public final class OnPotentialSpawn
     /**
      *
      */
-    public OnPotentialSpawn()
+    public OnEventPotentialSpawn()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		

@@ -5,7 +5,7 @@ import com.google.gson.JsonParser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.*;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.*;
 
 import java.io.*;
 import java.util.ArrayList;

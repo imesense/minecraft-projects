@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
+package org.imesense.dynamicspawncontrol.eventprocessor.generic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionBinary;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionConsumer;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
@@ -30,8 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.PotentialSpawn.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.PotentialSpawn.*;
 
 /**
  *
@@ -333,7 +335,7 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
                 {
                     AttributeMap<?> attributeMap1 = FACTORY.parse(jsonElement1);
 
-                    attributeMap.addList(MultipleKeyWord.PotentialSpawn.MOB_STRUCT, attributeMap1);
+                    attributeMap.addList(MOB_STRUCT, attributeMap1);
                 }
             }
 

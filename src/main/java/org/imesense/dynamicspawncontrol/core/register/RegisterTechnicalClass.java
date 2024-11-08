@@ -4,9 +4,9 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.OnEventSandBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.eventprocessor.script.multiple.*;
-import org.imesense.dynamicspawncontrol.eventprocessor.script.single.OnSingleJsonCheckSpawn;
-import org.imesense.dynamicspawncontrol.eventprocessor.script.single.OnSingleZombieSummonAID;
+import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple.*;
+import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEventSingleJsonCheckSpawn;
+import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEventSingleZombieSummonAID;
 import org.imesense.dynamicspawncontrol.event.OnEventPlayer;
 import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEvent;
@@ -24,14 +24,14 @@ public final class RegisterTechnicalClass
         CacheEvent.class,
         OnEventSandBox.class,
         OnEventWindowTitle.class,
-        OnEntitySpawnEvent.class,
-        OnLivingDrop.class,
-        OnLivingExperienceDrop.class,
-        OnMobTaskManager.class,
+        OnEventEntitySpawn.class,
+        OnEventLivingDrop.class,
+        OnEventLivingExperienceDrop.class,
+        OnEventMobTaskManager.class,
         OnEventPlayer.class,
-        OnPotentialSpawn.class,
-        OnSingleJsonCheckSpawn.class,
-        OnSingleZombieSummonAID.class
+        OnEventPotentialSpawn.class,
+        OnEventSingleJsonCheckSpawn.class,
+        OnEventSingleZombieSummonAID.class
     };
 
     /**

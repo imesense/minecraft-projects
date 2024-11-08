@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.script.multiple;
+package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,14 +11,14 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMapEffectAction;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericMapEffectAction;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnPlayerTick
+public final class OnEventPlayerTick
 {
     /**
      *
@@ -28,7 +28,7 @@ public final class OnPlayerTick
     /**
      *
      */
-    public OnPlayerTick()
+    public OnEventPlayerTick()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }

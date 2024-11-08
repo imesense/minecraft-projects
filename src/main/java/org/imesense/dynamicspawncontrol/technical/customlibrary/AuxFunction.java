@@ -37,6 +37,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.lang3.tuple.Pair;
 import org.codehaus.plexus.util.StringUtils;
+import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
@@ -857,17 +858,17 @@ public class AuxFunction
             return true;
         }
 
-        // Если этот метод возвращает false, всё ещё возможно, что это фальшивый игрок. Попробуем найти игрока в списке онлайн-игроков
+        // If this method returns false, it is still possible that it is a fake player. Let's try to find a player in the list of online players
         PlayerList playerList = Objects.requireNonNull(DimensionManager.getWorld(0).getMinecraftServer()).getPlayerList();
         EntityPlayerMP playerByUUID = playerList.getPlayerByUUID(((EntityPlayerMP) entity).getGameProfile().getId());
 
         if (playerByUUID == null)
         {
-            // Игрок не в сети. Значит, это не может быть реальный игрок
+            // The player is offline. So it can't be a real player
             return true;
         }
 
-        // Игрок в списке. Но это ли тот игрок?
+        // The player in the list. But is this the right player?
         return entity != playerByUUID;
     }
 

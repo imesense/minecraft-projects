@@ -1,23 +1,22 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.script.multiple;
+package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericExperience;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericExperience;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnLivingExperienceDrop
+public final class OnEventLivingExperienceDrop
 {
     /**
      *
@@ -27,7 +26,7 @@ public final class OnLivingExperienceDrop
     /**
      *
      */
-    public OnLivingExperienceDrop()
+    public OnEventLivingExperienceDrop()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		

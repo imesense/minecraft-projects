@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.eventprocessor.listaction;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericPotentialSpawn;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.MobTaskManager.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.MobTaskManager.*;
 
 /**
  *

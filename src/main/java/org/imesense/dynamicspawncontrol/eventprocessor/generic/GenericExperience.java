@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
+package org.imesense.dynamicspawncontrol.eventprocessor.generic;
 
 import com.google.gson.JsonElement;
 import net.minecraft.entity.Entity;
@@ -8,8 +8,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import org.imesense.dynamicspawncontrol.core.json.Service;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionBinary;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionConsumer;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
@@ -17,7 +19,7 @@ import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
 
 /**
  *
@@ -102,7 +104,7 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
         {
             AttributeMap<?> attributeMap = FACTORY.parse(jsonElement);
 
-            int localSetXp = InlineJsonService.getValueFromJson(
+            int localSetXp = Service.getValueFromJson(
                     jsonElement.getAsJsonObject(),
                     SingleKeyWord.DROP_ALL_EXPERIENCE.SET_XP,
                     0,
@@ -110,7 +112,7 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
                             element.getAsJsonPrimitive().isNumber() ? element.getAsInt() : defaultValue
             );
 
-            float localMultiXp = InlineJsonService.getValueFromJson(
+            float localMultiXp = Service.getValueFromJson(
                     jsonElement.getAsJsonObject(),
                     SingleKeyWord.DROP_ALL_EXPERIENCE.MULTI_XP,
                     0.f,
@@ -118,7 +120,7 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
                             element.getAsJsonPrimitive().isNumber() ? element.getAsFloat() : defaultValue
             );
 
-            float localAddXp = InlineJsonService.getValueFromJson(
+            float localAddXp = Service.getValueFromJson(
                     jsonElement.getAsJsonObject(),
                     SingleKeyWord.DROP_ALL_EXPERIENCE.ADD_XP,
                     0.f,

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.core.json;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 /**
  *
  */
-public final class InlineJsonService
+public final class Service
 {
     /**
      *
