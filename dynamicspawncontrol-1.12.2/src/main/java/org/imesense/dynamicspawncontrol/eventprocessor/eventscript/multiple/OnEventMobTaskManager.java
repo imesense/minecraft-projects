@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.script.multiple;
+package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -9,14 +9,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.eventprocessor.generic.GenericMobTaskManager;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericMobTaskManager;
 import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
 
 /**
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnMobTaskManager
+public final class OnEventMobTaskManager
 {
     /**
      *
@@ -26,7 +26,7 @@ public final class OnMobTaskManager
     /**
      *
      */
-    public OnMobTaskManager()
+    public OnEventMobTaskManager()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		

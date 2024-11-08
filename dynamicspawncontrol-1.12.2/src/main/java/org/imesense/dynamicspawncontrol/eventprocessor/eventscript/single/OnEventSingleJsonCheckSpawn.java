@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.script.single;
+package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -17,7 +17,7 @@ import java.util.List;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnSingleJsonCheckSpawn
+public final class OnEventSingleJsonCheckSpawn
 {
     /**
      *
@@ -27,7 +27,7 @@ public final class OnSingleJsonCheckSpawn
     /**
      *
      */
-    public OnSingleJsonCheckSpawn()
+    public OnEventSingleJsonCheckSpawn()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.script.single;
+package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
@@ -20,14 +20,14 @@ import java.util.*;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnSingleZombieSummonAID
+public final class OnEventSingleZombieSummonAID
 {
     /**
      *
      */
     private static boolean instanceExists = false;
 
-    public OnSingleZombieSummonAID()
+    public OnEventSingleZombieSummonAID()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 

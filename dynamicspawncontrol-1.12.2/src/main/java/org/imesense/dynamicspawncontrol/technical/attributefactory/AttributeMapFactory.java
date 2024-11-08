@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.technical.attributefactory;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.InlineJsonService;
+import org.imesense.dynamicspawncontrol.core.json.Service;
 
 import java.util.*;
 import javax.annotation.Nonnull;
@@ -56,9 +56,9 @@ public final class AttributeMapFactory<T>
                 transformers.put((AttributeType<T>)AttributeType.STRING, JsonElement::getAsString);
                 transformers.put((AttributeType<T>)AttributeType.JSON, JsonElement::toString);
 
-                InlineJsonService.getElement(jsonObject, attributeKey.getName())
+                Service.getElement(jsonObject, attributeKey.getName())
                         .ifPresent(e ->
-                                InlineJsonService.asArrayOrSingle(e)
+                                Service.asArrayOrSingle(e)
                                         .map(transformers.getOrDefault(attributeType, x -> "INVALID"))
                                         .forEach(s -> attributeMap.addListNonnull(attributeKey, (T) s)));
             }
@@ -66,15 +66,15 @@ public final class AttributeMapFactory<T>
             {
                 if (attributeType == AttributeType.INTEGER)
                 {
-                    attributeMap.setNonnull(attributeKey, (T) InlineJsonService.parseInt(jsonObject, attributeKey.getName()));
+                    attributeMap.setNonnull(attributeKey, (T) Service.parseInt(jsonObject, attributeKey.getName()));
                 }
                 else if (attributeType == AttributeType.FLOAT)
                 {
-                    attributeMap.setNonnull(attributeKey, (T) InlineJsonService.parseFloat(jsonObject, attributeKey.getName()));
+                    attributeMap.setNonnull(attributeKey, (T) Service.parseFloat(jsonObject, attributeKey.getName()));
                 }
                 else if (attributeType == AttributeType.BOOLEAN)
                 {
-                    attributeMap.setNonnull(attributeKey, (T) InlineJsonService.parseBool(jsonObject, attributeKey.getName()));
+                    attributeMap.setNonnull(attributeKey, (T) Service.parseBool(jsonObject, attributeKey.getName()));
                 }
                 else if (attributeType == AttributeType.STRING)
                 {

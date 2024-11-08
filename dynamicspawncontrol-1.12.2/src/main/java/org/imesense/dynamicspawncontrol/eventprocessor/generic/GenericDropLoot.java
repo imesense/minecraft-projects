@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
+package org.imesense.dynamicspawncontrol.eventprocessor.generic;
 
 import com.google.common.base.Predicate;
 import com.google.gson.JsonElement;
@@ -13,8 +13,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionBinary;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionConsumer;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
@@ -27,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.DroopLoot.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.DropLoot.*;
 
 /**
  *
@@ -110,14 +113,14 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
             this.addItem(attributeMap);
         }
 
-        if (attributeMap.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE))
+        if (attributeMap.has(ACTION_REMOVE))
         {
             this.removeItem(attributeMap);
         }
 
-        if (attributeMap.has(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL))
+        if (attributeMap.has(ACTION_REMOVE_ALL))
         {
-            this.removeAll = (Boolean) attributeMap.get(MultipleKeyWord.DroopLoot.ACTION_REMOVE_ALL);
+            this.removeAll = (Boolean) attributeMap.get(ACTION_REMOVE_ALL);
         }
     }
 
@@ -453,8 +456,8 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
      */
     private void addItem(AttributeMap<?> attributeMap)
     {
-        Object nbt = attributeMap.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_NBT);
-        Object itemCount = attributeMap.get(MultipleKeyWord.DroopLoot.ACTION_ITEM_COUNT);
+        Object nbt = attributeMap.get(ACTION_ITEM_NBT);
+        Object itemCount = attributeMap.get(ACTION_ITEM_COUNT);
 
         this.TO_ADD_ITEMS.addAll(getItems(attributeMap.getList(ACTION_ITEM), (String) nbt, (String) itemCount));
     }
@@ -465,6 +468,6 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
      */
     private void removeItem(AttributeMap<?> attributeMap)
     {
-        this.TO_REMOVE_ITEMS.addAll(AuxFunction.getItems((JsonElement) attributeMap.getList(MultipleKeyWord.DroopLoot.ACTION_REMOVE)));
+        this.TO_REMOVE_ITEMS.addAll(AuxFunction.getItems((JsonElement) attributeMap.getList(ACTION_REMOVE)));
     }
 }

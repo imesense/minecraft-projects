@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.core.builder;
 
 import com.google.gson.JsonObject;
 import net.minecraft.item.Item;

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.eventprocessor.generic;
+package org.imesense.dynamicspawncontrol.eventprocessor.generic;
 
 import com.google.gson.JsonElement;
 import net.minecraft.entity.Entity;
@@ -12,16 +12,16 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionBinary;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.ListActionConsumerMobTaskManager;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionBinary;
+import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionConsumerMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
 import java.util.function.Consumer;
 
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.CommonKeyWorlds.*;
-import static org.imesense.dynamicspawncontrol.technical.customlibrary.MultipleKeyWord.MobTaskManager.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
+import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.MobTaskManager.*;
 
 /**
  *
