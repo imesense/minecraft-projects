@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.gamestructure;
+package org.imesense.dynamicspawncontrol.core.worldstructure;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;

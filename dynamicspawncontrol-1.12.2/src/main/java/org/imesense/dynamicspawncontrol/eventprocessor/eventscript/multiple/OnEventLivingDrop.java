@@ -17,7 +17,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericDropLoot;
-import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
+import org.imesense.dynamicspawncontrol.parser.algo.ParserGenericJsonScript;
 
 /**
  *

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.gamestructure;
+package org.imesense.dynamicspawncontrol.core.worldstructure;
 
 import javax.annotation.Nonnull;
 

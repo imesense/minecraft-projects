@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.parser;
+package org.imesense.dynamicspawncontrol.parser.algo;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;

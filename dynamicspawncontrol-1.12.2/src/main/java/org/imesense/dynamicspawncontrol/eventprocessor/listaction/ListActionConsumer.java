@@ -32,12 +32,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunction;
 import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.Sender;
+import org.imesense.dynamicspawncontrol.core.sender.Sender;
 
 import java.util.*;
 import java.util.function.Consumer;

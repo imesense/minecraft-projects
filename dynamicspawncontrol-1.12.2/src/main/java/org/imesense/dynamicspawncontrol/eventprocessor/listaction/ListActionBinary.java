@@ -20,18 +20,20 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunction;
-import org.imesense.dynamicspawncontrol.technical.gamestructure.Structure;
+import org.imesense.dynamicspawncontrol.core.worldstructure.Structure;
 
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Player.isFakePlayer;
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Player.isRealPlayer;
 import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
 import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.SpawnCondition.*;
 
@@ -1262,13 +1264,13 @@ public final class ListActionBinary<T extends SignalDataGetter>
         {
             this.ARRAY_LIST.add((event, query) ->
                     query.getAttacker(event) == null ? false :
-                            AuxFunction.isFakePlayer(query.getAttacker(event)));
+                        isFakePlayer(query.getAttacker(event)));
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
                     query.getAttacker(event) == null ? true :
-                            !AuxFunction.isFakePlayer(query.getAttacker(event)));
+                        !isFakePlayer(query.getAttacker(event)));
         }
     }
 
@@ -1284,13 +1286,13 @@ public final class ListActionBinary<T extends SignalDataGetter>
         {
             this.ARRAY_LIST.add((event, query) ->
                     query.getAttacker(event) == null ? false :
-                            AuxFunction.isRealPlayer(query.getAttacker(event)));
+                            isRealPlayer(query.getAttacker(event)));
         }
         else
         {
             this.ARRAY_LIST.add((event, query) ->
                     query.getAttacker(event) == null ? true :
-                            !AuxFunction.isRealPlayer(query.getAttacker(event)));
+                            !isRealPlayer(query.getAttacker(event)));
         }
     }
 

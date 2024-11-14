@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.parser.GeneralStorageData;
+import org.imesense.dynamicspawncontrol.parser.algo.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.core.api.AParser;
 
 import java.io.File;

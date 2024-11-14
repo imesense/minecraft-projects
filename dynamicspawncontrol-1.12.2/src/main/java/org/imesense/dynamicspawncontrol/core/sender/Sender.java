@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.core.sender;
 
 import net.minecraft.command.CommandResultStats;
 import net.minecraft.command.ICommandSender;

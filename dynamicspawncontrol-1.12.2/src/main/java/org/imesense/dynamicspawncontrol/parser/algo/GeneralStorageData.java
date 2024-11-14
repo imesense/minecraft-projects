@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.parser;
+package org.imesense.dynamicspawncontrol.parser.algo;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
