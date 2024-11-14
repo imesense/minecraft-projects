@@ -43,6 +43,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Potion.*;
 import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
 
 /**
@@ -502,7 +503,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
      */
     private void addPotionsAction(AttributeMap<?> attributeMap)
     {
-        List<AuxFunction.PotionEffectWithChance> effects = new ArrayList<>();
+        List<PotionEffectWithChance> effects = new ArrayList<>();
 
         for (String actionPotion : attributeMap.getList(ACTION_POTION))
         {
@@ -545,7 +546,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                 continue;
             }
 
-            effects.add(new AuxFunction.PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
+            effects.add(new PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
         }
 
         if (!effects.isEmpty())
@@ -556,7 +557,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
                 if (entityLivingBase != null)
                 {
-                    for (AuxFunction.PotionEffectWithChance effectWithChance : effects)
+                    for (PotionEffectWithChance effectWithChance : effects)
                     {
                         if (UniqueField.RANDOM.nextDouble() <= effectWithChance.Chance)
                         {
