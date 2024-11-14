@@ -58,33 +58,6 @@ public class AuxFunction
     /**
      *
      */
-    public static class PotionEffectWithChance
-    {
-        /**
-         *
-         */
-        public double Chance;
-
-        /**
-         *
-         */
-        public PotionEffect Effect;
-
-        /**
-         *
-         * @param effect
-         * @param chance
-         */
-        public PotionEffectWithChance(PotionEffect effect, double chance)
-        {
-            this.Effect = effect;
-            this.Chance = chance;
-        }
-    }
-
-    /**
-     *
-     */
     public static final Map<String, DamageSource> DAMAGE_MAP = new HashMap<>();
 
     /**
