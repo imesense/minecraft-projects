@@ -1,7 +1,11 @@
 package org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword;
 
-import org.imesense.dynamicspawncontrol.technical.attributefactory.*;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeType;
 
+/**
+ *
+ */
 public final class SpawnCondition extends CommonKeyWord
 {
     public static final AttributeKey<Boolean> CAN_SPAWN_HERE = AttributeKey.create(AttributeType.BOOLEAN, "can_spawn_here");

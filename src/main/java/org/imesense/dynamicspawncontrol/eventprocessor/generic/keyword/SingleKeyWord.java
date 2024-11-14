@@ -1,5 +1,8 @@
-package org.imesense.dynamicspawncontrol.technical.customlibrary;
+package org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword;
 
+/**
+ *
+ */
 public final class SingleKeyWord
 {
     /**

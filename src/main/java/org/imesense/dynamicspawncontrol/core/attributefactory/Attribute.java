@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.technical.attributefactory;
+package org.imesense.dynamicspawncontrol.core.attributefactory;
 
 /**
  *

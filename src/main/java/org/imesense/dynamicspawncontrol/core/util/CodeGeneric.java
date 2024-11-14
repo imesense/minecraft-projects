@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.core.util;
 
 import com.google.gson.JsonElement;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeKey;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
+import org.imesense.dynamicspawncontrol.parser.algo.ParserGenericJsonScript;
 
 import java.util.List;
 import java.util.function.Function;

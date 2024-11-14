@@ -10,7 +10,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericMobTaskManager;
-import org.imesense.dynamicspawncontrol.technical.parser.ParserGenericJsonScript;
+import org.imesense.dynamicspawncontrol.parser.algo.ParserGenericJsonScript;
 
 /**
  *

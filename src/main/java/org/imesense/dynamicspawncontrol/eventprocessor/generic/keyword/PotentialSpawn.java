@@ -1,7 +1,11 @@
 package org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword;
 
-import org.imesense.dynamicspawncontrol.technical.attributefactory.*;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeType;
 
+/**
+ *
+ */
 public final class PotentialSpawn extends CommonKeyWord
 {
     public static AttributeKey<?> MOB_STRUCT = AttributeKey.create(AttributeType.MAP, "struct");

@@ -1,7 +1,11 @@
 package org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword;
 
-import org.imesense.dynamicspawncontrol.technical.attributefactory.*;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeType;
 
+/**
+ *
+ */
 public class CommonKeyWord
 {
     public static final AttributeKey<Integer> ID_RULE = AttributeKey.create(AttributeType.INTEGER, "id_rule");

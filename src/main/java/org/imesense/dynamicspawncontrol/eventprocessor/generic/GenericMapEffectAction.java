@@ -9,13 +9,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.Attribute;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.technical.attributefactory.AttributeMapFactory;
+import org.imesense.dynamicspawncontrol.core.attributefactory.Attribute;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMapFactory;
 import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionBinary;
 import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionConsumer;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.SingleKeyWord;
+import org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.SingleKeyWord;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 

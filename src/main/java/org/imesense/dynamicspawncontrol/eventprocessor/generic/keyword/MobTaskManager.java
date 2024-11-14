@@ -1,7 +1,11 @@
 package org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword;
 
-import org.imesense.dynamicspawncontrol.technical.attributefactory.*;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
+import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeType;
 
+/**
+ *
+ */
 public final class MobTaskManager extends CommonKeyWord
 {
     public static final AttributeKey<String> ENEMIES_TO = AttributeKey.create(AttributeType.STRING, "enemies_to");
