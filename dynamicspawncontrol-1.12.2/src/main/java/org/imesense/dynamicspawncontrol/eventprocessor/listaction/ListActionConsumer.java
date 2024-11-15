@@ -35,7 +35,6 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunction;
 import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
 import org.imesense.dynamicspawncontrol.core.sender.Sender;
 
@@ -43,6 +42,10 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import static org.imesense.dynamicspawncontrol.core.auxsolid.AuxSolidItem.*;
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Block.*;
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Damage.*;
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Math.*;
 import static org.imesense.dynamicspawncontrol.core.auxsolid.Potion.*;
 import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
 
@@ -254,7 +257,8 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
      */
     private void addHeldItem(AttributeMap<?> attributeMap)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(attributeMap.getList(ACTION_HELD_ITEM));
+        List<Pair<Float, ItemStack>> items =
+                getItemsWeighted(attributeMap.getList(ACTION_HELD_ITEM));
 
         if (items.isEmpty())
         {
@@ -290,7 +294,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         }
         else
         {
-            float total = AuxFunction.getTotal(items);
+            float total = getTotal(items);
 
             this.ACTIONS.add(event ->
             {
@@ -298,7 +302,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
                 if (entityLivingBase != null)
                 {
-                    ItemStack itemStack = AuxFunction.getRandomItem(items, total);
+                    ItemStack itemStack = getRandomItem(items, total);
 
                     if (entityLivingBase instanceof EntityEnderman)
                     {
@@ -328,7 +332,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
     private void addArmorItem(AttributeMap<?> attributeMap, AttributeKey<String> stringAttributeKey, EntityEquipmentSlot entityEquipmentSlot)
     {
         List<Pair<Float, ItemStack>> items =
-                AuxFunction.getItemsWeighted(attributeMap.getList(stringAttributeKey));
+                getItemsWeighted(attributeMap.getList(stringAttributeKey));
 
         if (items.isEmpty())
         {
@@ -351,7 +355,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         }
         else
         {
-            float total = AuxFunction.getTotal(items);
+            float total = getTotal(items);
 
             this.ACTIONS.add(event ->
             {
@@ -359,7 +363,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
                 if (entityLivingBase != null)
                 {
-                    entityLivingBase.setItemStackToSlot(entityEquipmentSlot, AuxFunction.getRandomItem(items, total));
+                    entityLivingBase.setItemStackToSlot(entityEquipmentSlot, getRandomItem(items, total));
                 }
             });
         }
@@ -578,7 +582,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
      */
     private void addGiveAction(AttributeMap<?> attributeMap)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(attributeMap.getList(ACTION_GIVE));
+        List<Pair<Float, ItemStack>> items = getItemsWeighted(attributeMap.getList(ACTION_GIVE));
 
         if (items.isEmpty())
         {
@@ -604,7 +608,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         }
         else
         {
-            float total = AuxFunction.getTotal(items);
+            float total = getTotal(items);
 
             this.ACTIONS.add(event ->
             {
@@ -612,7 +616,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
 
                 if (entityPlayerMP != null)
                 {
-                    ItemStack itemStack = AuxFunction.getRandomItem(items, total);
+                    ItemStack itemStack = getRandomItem(items, total);
 
                     if (!entityPlayerMP.inventory.addItemStackToInventory(itemStack.copy()))
                     {
@@ -629,7 +633,8 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
      */
     private void addDropAction(AttributeMap<?> attributeMap)
     {
-        List<Pair<Float, ItemStack>> items = AuxFunction.getItemsWeighted(attributeMap.getList(ACTION_DROP));
+        List<Pair<Float, ItemStack>> items =
+                getItemsWeighted(attributeMap.getList(ACTION_DROP));
 
         if (items.isEmpty())
         {
@@ -649,12 +654,12 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         }
         else
         {
-            float total = AuxFunction.getTotal(items);
+            float total = getTotal(items);
 
             this.ACTIONS.add(event ->
             {
                 BlockPos blockPos = event.getPosition();
-                ItemStack itemStack = AuxFunction.getRandomItem(items, total);
+                ItemStack itemStack = getRandomItem(items, total);
                 EntityItem entityItem = new EntityItem(event.getWorld(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack.copy());
                 event.getWorld().spawnEntity(entityItem);
             });
@@ -773,7 +778,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
     {
         String damage = (String) attributeMap.get(ACTION_DAMAGE);
         String[] split = StringUtils.split(damage, "=");
-        DamageSource damageSource = AuxFunction.DAMAGE_MAP.get(split[0]);
+        DamageSource damageSource = DAMAGE_MAP.get(split[0]);
 
         if (damageSource == null)
         {
@@ -805,7 +810,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
         if (attributeMap.has(BLOCK_OFFSET))
         {
             signalDataGetterBlockPosFunction = (Function<SignalDataGetter, BlockPos>)
-                    AuxFunction.parseOffset((String) attributeMap.get(BLOCK_OFFSET));
+                    parseOffset((String) attributeMap.get(BLOCK_OFFSET));
         }
         else
         {
@@ -875,7 +880,7 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
                     {
                         if (name.equals(iProperty.getName()))
                         {
-                            iBlockState = AuxFunction.set(iBlockState, iProperty, value);
+                            iBlockState = set(iBlockState, iProperty, value);
                         }
                     }
                 }

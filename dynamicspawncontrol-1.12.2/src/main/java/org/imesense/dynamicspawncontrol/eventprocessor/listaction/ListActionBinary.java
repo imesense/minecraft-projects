@@ -25,15 +25,15 @@ import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericPotentialSpawn;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.AuxFunction;
 import org.imesense.dynamicspawncontrol.core.worldstructure.Structure;
 
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 
-import static org.imesense.dynamicspawncontrol.core.auxsolid.Player.isFakePlayer;
-import static org.imesense.dynamicspawncontrol.core.auxsolid.Player.isRealPlayer;
+import static org.imesense.dynamicspawncontrol.core.auxsolid.AuxSolidItem.*;
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Block.*;
+import static org.imesense.dynamicspawncontrol.core.auxsolid.Player.*;
 import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
 import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.SpawnCondition.*;
 
@@ -632,7 +632,8 @@ public final class ListActionBinary<T extends SignalDataGetter>
      */
     public void addHelmetCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> predicateList = AuxFunction.getItems(attributeMap.getList(HELMET));
+        List<Predicate<ItemStack>> predicateList =
+                getItems(attributeMap.getList(HELMET));
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -660,7 +661,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
     public void addChestPlateCheck(AttributeMap<?> attributeMap)
     {
         List<Predicate<ItemStack>> predicateList =
-                AuxFunction.getItems(attributeMap.getList(CHEST_PLATE));
+                getItems(attributeMap.getList(CHEST_PLATE));
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -687,7 +688,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
      */
     public void addLeggingsCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> predicateList = AuxFunction.getItems(attributeMap.getList(LEGGINGS));
+        List<Predicate<ItemStack>> predicateList = getItems(attributeMap.getList(LEGGINGS));
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -714,7 +715,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
      */
     public void addBootsCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> predicateList = AuxFunction.getItems(attributeMap.getList(BOOTS));
+        List<Predicate<ItemStack>> predicateList = getItems(attributeMap.getList(BOOTS));
 
         this.ARRAY_LIST.add((event, query) ->
         {
@@ -925,7 +926,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
         if (attributeMap.has(BLOCK_OFFSET))
         {
             posFunction =
-                    AuxFunction.parseOffset((String)attributeMap.get(BLOCK_OFFSET));
+                    parseOffset((String)attributeMap.get(BLOCK_OFFSET));
         }
         else
         {
@@ -938,7 +939,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
         if (blocks.size() == 1)
         {
             String json = blocks.get(0);
-            BiPredicate<World, BlockPos> blockPosBiPredicate = AuxFunction.parseBlock(json);
+            BiPredicate<World, BlockPos> blockPosBiPredicate = parseBlock(json);
 
             if (blockPosBiPredicate != null)
             {
@@ -956,7 +957,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
 
             for (String block : blocks)
             {
-                BiPredicate<World, BlockPos> blockMatcher = AuxFunction.parseBlock(block);
+                BiPredicate<World, BlockPos> blockMatcher = parseBlock(block);
 
                 if (blockMatcher == null)
                 {
@@ -1303,7 +1304,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
      */
     public void addHeldItemCheck(AttributeMap<?> attributeMap, AttributeKey<String> attributeKey)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(attributeMap.getList(attributeKey));
+        List<Predicate<ItemStack>> items = getItems(attributeMap.getList(attributeKey));
 
         this.ARRAY_LIST.add((event,query) ->
         {
@@ -1335,7 +1336,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
      */
     public void addOffHandItemCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(attributeMap.getList(OFF_HAND_ITEM));
+        List<Predicate<ItemStack>> items = getItems(attributeMap.getList(OFF_HAND_ITEM));
 
         this.ARRAY_LIST.add((event,query) ->
         {
@@ -1475,7 +1476,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
      */
     public void addBothHandsItemCheck(AttributeMap<?> attributeMap)
     {
-        List<Predicate<ItemStack>> items = AuxFunction.getItems(attributeMap.getList(BOTH_HANDS_ITEM));
+        List<Predicate<ItemStack>> items = getItems(attributeMap.getList(BOTH_HANDS_ITEM));
 
         this.ARRAY_LIST.add((event,query) ->
         {
