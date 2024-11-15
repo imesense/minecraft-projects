@@ -126,10 +126,10 @@ public final class BlockWorldGeneratorAConfig extends AConfig
         saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
                 BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance);
 
-        saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
+        saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getCategoryObject(),
                 BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance);
 
-        saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
+        saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getCategoryObject(),
                 BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -158,10 +158,10 @@ public final class BlockWorldGeneratorAConfig extends AConfig
             loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
                     BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance);
 
-            loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
+            loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getCategoryObject(),
                     BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance);
 
-            loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
+            loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getCategoryObject(),
                     BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance);
         }
         catch (FileNotFoundException exception)
