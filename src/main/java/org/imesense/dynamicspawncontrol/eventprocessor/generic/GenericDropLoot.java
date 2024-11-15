@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.imesense.dynamicspawncontrol.core.auxsolid.AuxSolidItem;
 import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -21,7 +22,6 @@ import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionCons
 import org.imesense.dynamicspawncontrol.core.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMapFactory;
-import org.imesense.dynamicspawncontrol.technical.customlibrary.*;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
 
@@ -468,6 +468,6 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
      */
     private void removeItem(AttributeMap<?> attributeMap)
     {
-        this.TO_REMOVE_ITEMS.addAll(AuxFunction.getItems((JsonElement) attributeMap.getList(ACTION_REMOVE)));
+        this.TO_REMOVE_ITEMS.addAll(AuxSolidItem.getItems((JsonElement) attributeMap.getList(ACTION_REMOVE)));
     }
 }
