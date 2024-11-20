@@ -271,6 +271,7 @@ public final class OnEventComplexityBiomes
             case "Sunflower Plains":
             case "Birch Forest":
             case "Cold Taiga":
+            case "Flower Forest":
                 return this.MIN;
             case "TaigaHills":
             case "Swampland":
@@ -300,6 +301,7 @@ public final class OnEventComplexityBiomes
             case "Plains":
             case "Taiga M":
             case "Sunflower Plains":
+            case "Flower Forest":
                 return this.MIN;
             default:
                 return this.NULL;
