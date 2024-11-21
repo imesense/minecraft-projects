@@ -5,7 +5,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.ai.zombie.entityaibase.BreakTorchTask;
+import org.imesense.dynamicspawncontrol.ai.zombie.action.BreakTorchTask;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 /**
@@ -27,7 +27,7 @@ public final class OnBreakTorchEvent
      * @param entityJoinWorldEvent
      */
     @SubscribeEvent
-    public synchronized void onSearchToBreakTorch_0(EntityJoinWorldEvent entityJoinWorldEvent)
+    public static void onSearchToBreakTorch_0(EntityJoinWorldEvent entityJoinWorldEvent)
     {
         if (entityJoinWorldEvent.getEntity() instanceof EntityZombie)
         {

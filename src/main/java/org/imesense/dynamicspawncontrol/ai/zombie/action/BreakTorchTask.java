@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.entityaibase;
+package org.imesense.dynamicspawncontrol.ai.zombie.action;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;

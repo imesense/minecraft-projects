@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.event.*;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import org.imesense.dynamicspawncontrol.ai.spider.event.OnSearchEnemyAttack;
 import org.imesense.dynamicspawncontrol.core.api.IRecipes;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
@@ -152,6 +153,7 @@ public final class DynamicSpawnControl
         //-' TODO: перенести это в отдельную инициализацию
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new OnBreakTorchEvent());
+        MinecraftForge.EVENT_BUS.register(new OnSearchEnemyAttack());
     }
 
     /**
