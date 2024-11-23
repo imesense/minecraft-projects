@@ -21,92 +21,71 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         this.spider = spider;
         this.speed = speed;
         this.lightThreshold = lightThreshold;
-        this.setMutexBits(1); //-' Только движение
+        this.setMutexBits(1);
+
+        Log.writeDataToLogFile(0, "EntityAISpiderAvoidLight initialized with speed: " + speed + " and lightThreshold: " + lightThreshold);
     }
 
     @Override
     public boolean shouldExecute()
     {
+        Log.writeDataToLogFile(1, "shouldExecute called");
         if (spider.getAttackTarget() != null)
         {
-            return false; //-' Не пугаемся, если есть цель
-        }
-
-        World world = spider.world;
-        BlockPos pos = spider.getPosition();
-
-        // Проверяем освещение
-        if (pos.getY() >= 50 || world.getLight(pos) <= lightThreshold)
-        {
-            Log.writeDataToLogFile(0, "shouldExecute == false");
-            return false; //-' Условия не выполнены
-        }
-
-        //-' Ищем менее освещённое место
-        this.targetPosition = findDarkerSpot(pos, world);
-        return true; //-' Всегда пытаемся что-то сделать
-    }
-
-    /*
-    @Override
-    public boolean shouldExecute()
-    {
-        if (spider.getAttackTarget() != null)
-        {
+            Log.writeDataToLogFile(1, "shouldExecute: Spider has an attack target, execution aborted.");
             return false;
         }
 
         World world = spider.world;
         BlockPos pos = spider.getPosition();
 
-        // Проверяем, готов ли уровень света
-        if (!world.isAreaLoaded(pos, 1))
-        {
-            return false; // Область ещё не загружена
-        }
-
         if (pos.getY() >= 50 || world.getLight(pos) <= lightThreshold)
         {
+            Log.writeDataToLogFile(1, "shouldExecute: Position too high or light level acceptable. Execution aborted.");
             return false;
         }
 
         this.targetPosition = findDarkerSpot(pos, world);
+        Log.writeDataToLogFile(1, "shouldExecute: Darker spot found at " + targetPosition);
         return true;
     }
-     */
 
     @Override
     public boolean shouldContinueExecuting()
     {
+        Log.writeDataToLogFile(2, "shouldContinueExecuting called");
         if (spider.getAttackTarget() != null)
         {
-            return false; //-' Прекращаем, если появилась цель
+            Log.writeDataToLogFile(2, "shouldContinueExecuting: Spider has an attack target, execution aborted.");
+            return false;
         }
 
         World world = spider.world;
         BlockPos pos = spider.getPosition();
 
-        //-' Проверяем текущий свет
-        return pos.getY() < 50 && world.getLight(pos) > lightThreshold;
+        boolean continueExecuting = pos.getY() < 50 && world.getLight(pos) > lightThreshold;
+        Log.writeDataToLogFile(2, "shouldContinueExecuting: Continue executing: " + continueExecuting);
+        return continueExecuting;
     }
 
     @Override
     public void startExecuting()
     {
+        Log.writeDataToLogFile(3, "startExecuting called");
         if (this.targetPosition != null)
         {
-            Log.writeDataToLogFile(0, "0");
+            Log.writeDataToLogFile(3, "startExecuting: Moving towards " + targetPosition);
             moveAwayFromLight();
         }
         else
         {
-            Log.writeDataToLogFile(0, "1");
-            moveRandomly(); //-' Если нет цели, двигаемся случайно
+            Log.writeDataToLogFile(3, "startExecuting: No target position found.");
         }
     }
 
     private void moveAwayFromLight()
     {
+        Log.writeDataToLogFile(4, "moveAwayFromLight called");
         if (this.targetPosition != null)
         {
             spider.getNavigator().tryMoveToXYZ(
@@ -115,39 +94,44 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
                     this.targetPosition.getZ(),
                     speed
             );
+            Log.writeDataToLogFile(4, "moveAwayFromLight: Attempting to move to " + targetPosition);
         }
-    }
-
-    private void moveRandomly()
-    {
-        double randomX = spider.posX + (spider.getRNG().nextDouble() - 0.5) * 10;
-        double randomZ = spider.posZ + (spider.getRNG().nextDouble() - 0.5) * 10;
-        spider.getNavigator().tryMoveToXYZ(randomX, spider.posY, randomZ, speed);
     }
 
     private BlockPos findDarkerSpot(BlockPos pos, World world)
     {
+        Log.writeDataToLogFile(5, "findDarkerSpot called");
         BlockPos darkerSpot = null;
+
         int lowestLight = Integer.MAX_VALUE;
 
-        // Проверяем более широкий радиус
-        for (int dx = -15; dx <= 15; dx++)
+        for (int dy = -1; dy <= 1; dy++) //-' Проверка уровня выше и ниже
         {
-            for (int dz = -15; dz <= 15; dz++)
+            for (int dx = -7; dx <= 7; dx++) //-' Сокращенный радиус
             {
-                BlockPos newPos = pos.add(dx, 0, dz);
-                int lightLevel = world.getLight(newPos);
-
-                // Ищем место с минимальным светом
-                if (lightLevel < lowestLight && world.isAirBlock(newPos))
+                for (int dz = -7; dz <= 7; dz++) //-' Сокращенный радиус
                 {
-                    lowestLight = lightLevel;
-                    darkerSpot = newPos;
+                    BlockPos newPos = pos.add(dx, dy, dz);
+                    int lightLevel = world.getLight(newPos);
+
+                    if (lightLevel < lowestLight && isNavigable(newPos, world))
+                    {
+                        lowestLight = lightLevel;
+                        darkerSpot = newPos;
+                    }
                 }
             }
         }
 
+        Log.writeDataToLogFile(5, "findDarkerSpot: Darker spot found at " + darkerSpot + " with light level " + lowestLight);
         return darkerSpot;
     }
+
+    // Проверяем, может ли паук пройти через точку
+    private boolean isNavigable(BlockPos pos, World world)
+    {
+        return world.isAirBlock(pos) || world.getBlockState(pos).getMaterial().isReplaceable();
+    }
 }
+
 
