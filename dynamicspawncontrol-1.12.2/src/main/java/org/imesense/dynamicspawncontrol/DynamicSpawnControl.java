@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.event.*;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.ai.spider.event.OnSearchEnemyAttack;
+import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
 import org.imesense.dynamicspawncontrol.core.api.IRecipes;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
@@ -15,7 +15,7 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
-import org.imesense.dynamicspawncontrol.ai.zombie.event.OnBreakTorchEvent;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
 import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
@@ -152,8 +152,8 @@ public final class DynamicSpawnControl
     {
         //-' TODO: перенести это в отдельную инициализацию
         MinecraftForge.EVENT_BUS.register(new EventHandler());
-        MinecraftForge.EVENT_BUS.register(new OnBreakTorchEvent());
-        MinecraftForge.EVENT_BUS.register(new OnSearchEnemyAttack());
+        MinecraftForge.EVENT_BUS.register(new OnEventBreakTorch());
+        MinecraftForge.EVENT_BUS.register(new OnEventAvoidLight());
     }
 
     /**
