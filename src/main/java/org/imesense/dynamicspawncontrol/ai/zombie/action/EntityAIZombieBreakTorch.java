@@ -12,7 +12,7 @@ import java.util.List;
 /**
  *
  */
-public class BreakTorchTask extends EntityAIBase
+public class EntityAIZombieBreakTorch extends EntityAIBase
 {
     /**
      *
@@ -28,7 +28,7 @@ public class BreakTorchTask extends EntityAIBase
      *
      * @param entityZombie
      */
-    public BreakTorchTask(EntityZombie entityZombie)
+    public EntityAIZombieBreakTorch(EntityZombie entityZombie)
     {
         this.ZOMBIE = entityZombie;
         this.setMutexBits(3);

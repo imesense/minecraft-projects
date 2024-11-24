@@ -5,19 +5,19 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.ai.zombie.action.BreakTorchTask;
+import org.imesense.dynamicspawncontrol.ai.zombie.action.EntityAIZombieBreakTorch;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 /**
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnBreakTorchEvent
+public final class OnEventBreakTorch
 {
     /**
      *
      */
-    public OnBreakTorchEvent()
+    public OnEventBreakTorch()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }
@@ -32,7 +32,7 @@ public final class OnBreakTorchEvent
         if (entityJoinWorldEvent.getEntity() instanceof EntityZombie)
         {
             EntityZombie eventEntity = (EntityZombie) entityJoinWorldEvent.getEntity();
-            eventEntity.tasks.addTask(1, new BreakTorchTask(eventEntity));
+            eventEntity.tasks.addTask(1, new EntityAIZombieBreakTorch(eventEntity));
         }
     }
 }

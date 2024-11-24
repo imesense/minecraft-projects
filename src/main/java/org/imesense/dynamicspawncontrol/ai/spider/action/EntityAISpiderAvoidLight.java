@@ -11,126 +11,153 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
  */
 public class EntityAISpiderAvoidLight extends EntityAIBase
 {
-    private final EntityCreature spider;
-    private final double speed;
-    private final int lightThreshold;
+    /**
+     *
+     */
+    private final double SPEED;
+
+    /**
+     *
+     */
     private BlockPos targetPosition;
 
+    /**
+     *
+     */
+    private final int LIGHT_THRESHOLD;
+
+    /**
+     *
+     */
+    private final EntityCreature SPIDER;
+
+    /**
+     *
+     * @param spider
+     * @param speed
+     * @param lightThreshold
+     */
     public EntityAISpiderAvoidLight(EntityCreature spider, double speed, int lightThreshold)
     {
-        this.spider = spider;
-        this.speed = speed;
-        this.lightThreshold = lightThreshold;
+        this.SPIDER = spider;
+        this.SPEED = speed;
+        this.LIGHT_THRESHOLD = lightThreshold;
         this.setMutexBits(1);
-
-        Log.writeDataToLogFile(0, "EntityAISpiderAvoidLight initialized with speed: " + speed + " and lightThreshold: " + lightThreshold);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean shouldExecute()
     {
-        Log.writeDataToLogFile(1, "shouldExecute called");
-        if (spider.getAttackTarget() != null)
+        if (SPIDER.getAttackTarget() != null)
         {
-            Log.writeDataToLogFile(1, "shouldExecute: Spider has an attack target, execution aborted.");
             return false;
         }
 
-        World world = spider.world;
-        BlockPos pos = spider.getPosition();
+        World world = SPIDER.world;
+        BlockPos blockPos = SPIDER.getPosition();
 
-        if (pos.getY() >= 50 || world.getLight(pos) <= lightThreshold)
+        if (blockPos.getY() >= 50 || world.getLight(blockPos) <= LIGHT_THRESHOLD)
         {
-            Log.writeDataToLogFile(1, "shouldExecute: Position too high or light level acceptable. Execution aborted.");
             return false;
         }
 
-        this.targetPosition = findDarkerSpot(pos, world);
-        Log.writeDataToLogFile(1, "shouldExecute: Darker spot found at " + targetPosition);
+        this.targetPosition = findDarkerSpot(blockPos, world);
+
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean shouldContinueExecuting()
     {
-        Log.writeDataToLogFile(2, "shouldContinueExecuting called");
-        if (spider.getAttackTarget() != null)
+        if (SPIDER.getAttackTarget() != null)
         {
-            Log.writeDataToLogFile(2, "shouldContinueExecuting: Spider has an attack target, execution aborted.");
             return false;
         }
 
-        World world = spider.world;
-        BlockPos pos = spider.getPosition();
+        World world = SPIDER.world;
+        BlockPos blockPos = SPIDER.getPosition();
 
-        boolean continueExecuting = pos.getY() < 50 && world.getLight(pos) > lightThreshold;
-        Log.writeDataToLogFile(2, "shouldContinueExecuting: Continue executing: " + continueExecuting);
-        return continueExecuting;
+        return blockPos.getY() < 50 && world.getLight(blockPos) > LIGHT_THRESHOLD;
     }
 
+    /**
+     *
+     */
     @Override
     public void startExecuting()
     {
-        Log.writeDataToLogFile(3, "startExecuting called");
         if (this.targetPosition != null)
         {
-            Log.writeDataToLogFile(3, "startExecuting: Moving towards " + targetPosition);
             moveAwayFromLight();
-        }
-        else
-        {
-            Log.writeDataToLogFile(3, "startExecuting: No target position found.");
         }
     }
 
+    /**
+     *
+     */
     private void moveAwayFromLight()
     {
-        Log.writeDataToLogFile(4, "moveAwayFromLight called");
         if (this.targetPosition != null)
         {
-            spider.getNavigator().tryMoveToXYZ(
+            SPIDER.getNavigator().tryMoveToXYZ(
                     this.targetPosition.getX(),
                     this.targetPosition.getY(),
                     this.targetPosition.getZ(),
-                    speed
+                    SPEED
             );
-            Log.writeDataToLogFile(4, "moveAwayFromLight: Attempting to move to " + targetPosition);
         }
     }
 
-    private BlockPos findDarkerSpot(BlockPos pos, World world)
+    /**
+     *
+     * @param blockPos
+     * @param world
+     * @return
+     */
+    private BlockPos findDarkerSpot(BlockPos blockPos, World world)
     {
-        Log.writeDataToLogFile(5, "findDarkerSpot called");
         BlockPos darkerSpot = null;
 
         int lowestLight = Integer.MAX_VALUE;
 
-        for (int dy = -1; dy <= 1; dy++) //-' Проверка уровня выше и ниже
+        for (int dy = -1; dy <= 1; dy++)
         {
-            for (int dx = -7; dx <= 7; dx++) //-' Сокращенный радиус
+            for (int dx = -7; dx <= 7; dx++)
             {
-                for (int dz = -7; dz <= 7; dz++) //-' Сокращенный радиус
+                for (int dz = -7; dz <= 7; dz++)
                 {
-                    BlockPos newPos = pos.add(dx, dy, dz);
-                    int lightLevel = world.getLight(newPos);
+                    BlockPos newBlockPos = blockPos.add(dx, dy, dz);
+                    int lightLevel = world.getLight(newBlockPos);
 
-                    if (lightLevel < lowestLight && isNavigable(newPos, world))
+                    if (lightLevel < lowestLight && isNavigable(newBlockPos, world))
                     {
                         lowestLight = lightLevel;
-                        darkerSpot = newPos;
+                        darkerSpot = newBlockPos;
                     }
                 }
             }
         }
 
-        Log.writeDataToLogFile(5, "findDarkerSpot: Darker spot found at " + darkerSpot + " with light level " + lowestLight);
         return darkerSpot;
     }
 
-    // Проверяем, может ли паук пройти через точку
-    private boolean isNavigable(BlockPos pos, World world)
+    /**
+     *
+     * @param blockPos
+     * @param world
+     * @return
+     */
+    private boolean isNavigable(BlockPos blockPos, World world)
     {
-        return world.isAirBlock(pos) || world.getBlockState(pos).getMaterial().isReplaceable();
+        return world.isAirBlock(blockPos) || world.getBlockState(blockPos).getMaterial().isReplaceable();
     }
 }
 
