@@ -16,32 +16,49 @@ public final class UniqueField
     /**
      *
      */
+    private static volatile UniqueField instance;
+
+    /**
+     *
+     */
     @UniqueObject
     public static final Random RANDOM = new Random();
 
-    /**
-     *
-     */
     @UniqueObject
     public static final Minecraft CLIENT = Minecraft.getMinecraft();
 
-    /**
-     *
-     */
     @UniqueObject
     public static final Boolean IDEA_RT = System.getProperty("java.class.path").toLowerCase().contains("idea_rt.jar");
 
     /**
      *
      */
-    public UniqueField() throws IllegalAccessException
+    private UniqueField() throws IllegalAccessException
     {
         this.validateUniqueFields(this);
     }
 
     /**
      *
-     * @param object
+     */
+    public static UniqueField getInstance() throws IllegalAccessException
+    {
+        if (instance == null)
+        {
+            synchronized (UniqueField.class)
+            {
+                if (instance == null)
+                {
+                    instance = new UniqueField();
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    /**
+     *
      */
     private void validateUniqueFields(Object object) throws IllegalAccessException
     {
@@ -64,3 +81,4 @@ public final class UniqueField
         }
     }
 }
+

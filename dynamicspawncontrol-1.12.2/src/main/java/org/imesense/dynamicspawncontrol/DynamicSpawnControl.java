@@ -94,11 +94,9 @@ public final class DynamicSpawnControl
     {
         globalDirectory = fmlPreInitializationEvent.getModConfigurationDirectory();
 
-        UniqueField uniqueField = new UniqueField();
-
         Log.createLogFile(globalDirectory.getPath() + File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY, UniqueField.IDEA_RT);
         Log.writeDataToLogFile(1, "Launching from Intellij Idea: " + (UniqueField.IDEA_RT ? "true" : "false"));
-        Log.writeDataToLogFile(0, "Object create [UniqueField]: " + uniqueField.hashCode());
+        Log.writeDataToLogFile(0, "Object create [UniqueField]: " + UniqueField.getInstance().hashCode());
 
         MessageHandler.init();
 
