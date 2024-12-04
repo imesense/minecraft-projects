@@ -1,6 +1,9 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.init.Biomes;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.terraingen.BiomeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
