@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.OnEventSandBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.event.OnEventRenderFPS;
 import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple.*;
 import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEventSingleJsonCheckSpawn;
 import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEventSingleZombieSummonAID;
@@ -31,7 +32,8 @@ public final class RegisterTechnicalClass
         OnEventPlayer.class,
         OnEventPotentialSpawn.class,
         OnEventSingleJsonCheckSpawn.class,
-        OnEventSingleZombieSummonAID.class
+        OnEventSingleZombieSummonAID.class,
+        OnEventRenderFPS.class
     };
 
     /**
