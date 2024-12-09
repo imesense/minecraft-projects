@@ -125,6 +125,8 @@ public final class DynamicSpawnControl
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
         TextColorCollection.instance = new TextColorCollection();
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
+
+        RegisterAIClass.registerClasses();
     }
 
     /**
@@ -148,10 +150,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent fmlPostInitializationEvent)
     {
-        //-' TODO: перенести это в отдельную инициализацию
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
-        MinecraftForge.EVENT_BUS.register(new OnEventBreakTorch());
-        MinecraftForge.EVENT_BUS.register(new OnEventAvoidLight());
+
     }
 
     /**

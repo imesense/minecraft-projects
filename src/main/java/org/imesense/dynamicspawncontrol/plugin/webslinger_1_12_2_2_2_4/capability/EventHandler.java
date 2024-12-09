@@ -125,17 +125,20 @@ public final class EventHandler
      * @param entity
      * @return
      */
-    private static int getEntityPriority(Object entity) {
-        if (entity instanceof EntityLivingBase) {
-
+    private static int getEntityPriority(Object entity)
+    {
+        if (entity instanceof EntityLivingBase)
+        {
             ResourceLocation entityId = EntityList.getKey((EntityLivingBase) entity);
 
-            if (entityId != null) {
+            if (entityId != null)
+            {
                 //Log.writeDataToLogFile(0, "entity 1: " + entityId.toString());
 
                 int priority = DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getEntityPriority(entityId.toString());
 
-                if (priority > 0) {
+                if (priority > 0)
+                {
                    // Log.writeDataToLogFile(0, "entity 2: " + priority);
                     return priority;
                 }
