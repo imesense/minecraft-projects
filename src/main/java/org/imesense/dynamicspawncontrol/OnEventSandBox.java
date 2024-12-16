@@ -6,6 +6,7 @@ import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -52,54 +53,72 @@ public final class OnEventSandBox implements IDebug
     // убрать это
     private static final Random random = new Random();
 
+    private static int tickCounter = 0;
+
     @SubscribeEvent
     public static void onWorldTick_0(TickEvent.WorldTickEvent event)
     {
         //-' не трогаем сервер и тип мира конец края
         if (event.phase == TickEvent.Phase.END || event.world.isRemote)
+        {
             return;
+        }
+
+        if (++tickCounter < 20)
+        {
+            return;
+        }
+
+        tickCounter = 0;
 
         World world = event.world;
 
-        //-' Получаем случайные координаты вокруг точки спавна
-        int x = random.nextInt(16) + event.world.getSpawnPoint().getX() - 8;
-        int z = random.nextInt(16) + event.world.getSpawnPoint().getZ() - 8;
-        int y = world.getHeight(x, z) - 1;
-
-        BlockPos pos = new BlockPos(x, y, z);
-        Block block = world.getBlockState(pos).getBlock();
-
-        //-' Проверяем, является ли блок дерном
-        if (block == Blocks.GRASS)
+        //-' для всех игроков включаем рост травы в их округе
+        for (EntityPlayer player : world.playerEntities)
         {
-            //-' Проверяем, есть ли сверху воздух
-            BlockPos abovePos = pos.up();
-            if (world.isAirBlock(abovePos))
+            //-' случайные координаты вокруг игрока
+            BlockPos playerPos = player.getPosition();
+            int x = random.nextInt(16) + playerPos.getX() - 8;
+            int z = random.nextInt(16) + playerPos.getZ() - 8;
+            int y = world.getHeight(x, z) - 1;
+
+            BlockPos pos = new BlockPos(x, y, z);
+            Block block = world.getBlockState(pos).getBlock();
+
+            //-' Проверяем, является ли блок дерном
+            if (block == Blocks.GRASS)
             {
-                //-' Шанс роста травы
-                if (random.nextInt(100) < 20)
+                //-' Проверяем, есть ли сверху воздух
+                BlockPos abovePos = pos.up();
+
+                if (world.isAirBlock(abovePos))
                 {
-                    IBlockState smallGrass = Blocks.TALLGRASS.getDefaultState()
-                            .withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
-
-                    //-' Проверяем, есть ли на дерне уже малая трава
-                    if (world.getBlockState(abovePos).getBlock() == Blocks.TALLGRASS)
+                    //-' Шанс роста травы
+                    if (random.nextInt(100) < 20)
                     {
-                        //-' Заменяем малую траву на высокую траву
-                        IBlockState doubleTallGrassLower = Blocks.DOUBLE_PLANT.getDefaultState()
-                                .withProperty(BlockDoublePlant.VARIANT, BlockDoublePlant.EnumPlantType.GRASS)
-                                .withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER);
-                        IBlockState doubleTallGrassUpper = Blocks.DOUBLE_PLANT.getDefaultState()
-                                .withProperty(BlockDoublePlant.VARIANT, BlockDoublePlant.EnumPlantType.GRASS)
-                                .withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER);
+                        IBlockState smallGrass = Blocks.TALLGRASS.getDefaultState()
+                                .withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
 
-                        world.setBlockState(abovePos, doubleTallGrassLower, 2);
-                        world.setBlockState(abovePos.up(), doubleTallGrassUpper, 2);
-                    }
-                    else
-                    {
-                        //-' Устанавливаем малую траву
-                        world.setBlockState(abovePos, smallGrass, 2);
+                        //-' Проверяем, есть ли на дерне уже малая трава
+                        if (world.getBlockState(abovePos).getBlock() == Blocks.TALLGRASS)
+                        {
+                            //-' Заменяем малую траву на высокую траву
+                            IBlockState doubleTallGrassLower = Blocks.DOUBLE_PLANT.getDefaultState()
+                                    .withProperty(BlockDoublePlant.VARIANT, BlockDoublePlant.EnumPlantType.GRASS)
+                                    .withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER);
+
+                            IBlockState doubleTallGrassUpper = Blocks.DOUBLE_PLANT.getDefaultState()
+                                    .withProperty(BlockDoublePlant.VARIANT, BlockDoublePlant.EnumPlantType.GRASS)
+                                    .withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER);
+
+                            world.setBlockState(abovePos, doubleTallGrassLower, 2);
+                            world.setBlockState(abovePos.up(), doubleTallGrassUpper, 2);
+                        }
+                        else
+                        {
+                            //-' Устанавливаем малую траву
+                            world.setBlockState(abovePos, smallGrass, 2);
+                        }
                     }
                 }
             }
