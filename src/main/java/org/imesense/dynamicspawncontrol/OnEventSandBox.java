@@ -21,6 +21,7 @@ import org.imesense.dynamicspawncontrol.core.api.IDebug;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.Random;
+import net.minecraft.block.BlockTallGrass;
 
 /**
  *
@@ -73,36 +74,30 @@ public final class OnEventSandBox implements IDebug
 
         World world = event.world;
 
-        //-' для всех игроков включаем рост травы в их округе
         for (EntityPlayer player : world.playerEntities)
         {
-            //-' случайные координаты вокруг игрока
             BlockPos playerPos = player.getPosition();
             int x = random.nextInt(16) + playerPos.getX() - 8;
             int z = random.nextInt(16) + playerPos.getZ() - 8;
             int y = world.getHeight(x, z) - 1;
 
-            BlockPos pos = new BlockPos(x, y, z);
-            Block block = world.getBlockState(pos).getBlock();
+            BlockPos groundPos = new BlockPos(x, y, z);
+            Block block = world.getBlockState(groundPos).getBlock();
 
-            //-' Проверяем, является ли блок дерном
             if (block == Blocks.GRASS)
             {
-                //-' Проверяем, есть ли сверху воздух
-                BlockPos abovePos = pos.up();
+                BlockPos abovePos = groundPos.up();
 
-                if (world.isAirBlock(abovePos))
+                IBlockState stateAbove = world.getBlockState(abovePos);
+
+                if (stateAbove.getBlock() == Blocks.TALLGRASS)
                 {
-                    //-' Шанс роста травы
-                    if (random.nextInt(100) < 20)
+                    if (stateAbove.getValue(BlockTallGrass.TYPE) == BlockTallGrass.EnumType.GRASS)
                     {
-                        IBlockState smallGrass = Blocks.TALLGRASS.getDefaultState()
-                                .withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
-
-                        //-' Проверяем, есть ли на дерне уже малая трава
-                        if (world.getBlockState(abovePos).getBlock() == Blocks.TALLGRASS)
+                        BlockPos upperPos = abovePos.up();
+                        
+                        if (world.isAirBlock(upperPos) && random.nextInt(100) < 95)
                         {
-                            //-' Заменяем малую траву на высокую траву
                             IBlockState doubleTallGrassLower = Blocks.DOUBLE_PLANT.getDefaultState()
                                     .withProperty(BlockDoublePlant.VARIANT, BlockDoublePlant.EnumPlantType.GRASS)
                                     .withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.LOWER);
@@ -111,14 +106,19 @@ public final class OnEventSandBox implements IDebug
                                     .withProperty(BlockDoublePlant.VARIANT, BlockDoublePlant.EnumPlantType.GRASS)
                                     .withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER);
 
-                            world.setBlockState(abovePos, doubleTallGrassLower, 2);
-                            world.setBlockState(abovePos.up(), doubleTallGrassUpper, 2);
+                            world.setBlockState(abovePos, doubleTallGrassLower, 3);
+                            world.setBlockState(upperPos, doubleTallGrassUpper, 3);
                         }
-                        else
-                        {
-                            //-' Устанавливаем малую траву
-                            world.setBlockState(abovePos, smallGrass, 2);
-                        }
+                    }
+                }
+                else if (world.isAirBlock(abovePos))
+                {
+                    if (random.nextInt(100) < 95)
+                    {
+                        IBlockState smallGrassState = Blocks.TALLGRASS.getDefaultState()
+                                .withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS);
+
+                        world.setBlockState(abovePos, smallGrassState, 3);
                     }
                 }
             }
