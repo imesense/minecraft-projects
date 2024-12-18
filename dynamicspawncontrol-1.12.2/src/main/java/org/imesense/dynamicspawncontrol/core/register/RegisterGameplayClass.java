@@ -22,7 +22,8 @@ public final class RegisterGameplayClass
         OnEventComplexityBiomes.class,
         OnEventDropHeadMob.class,
         OnEventNickNameEntity.class,
-        OnEventUpdateFire.class
+        OnEventUpdateFire.class,
+        OnEventOvergrowingGrass.class
     };
 
     /**
