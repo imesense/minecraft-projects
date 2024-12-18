@@ -16,6 +16,8 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  *
  */
@@ -25,12 +27,12 @@ public final class OnEventOvergrowingGrass
     /**
      *
      */
-    private static volatile int _TICK_COUNTER = 0;
+    private static boolean instanceExists = false;
 
     /**
      *
      */
-    private static boolean instanceExists = false;
+    private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
 
     /**
      *
@@ -60,12 +62,12 @@ public final class OnEventOvergrowingGrass
             return;
         }
 
-        if (++_TICK_COUNTER < 20)
+        if (TICK_COUNTER.incrementAndGet() < 20)
         {
             return;
         }
 
-        _TICK_COUNTER = 0;
+        TICK_COUNTER.set(0);
 
         World world = worldTickEvent.world;
 
