@@ -28,7 +28,7 @@ public final class UniqueField
     public static final Minecraft CLIENT = Minecraft.getMinecraft();
 
     @UniqueObject
-    public static final Boolean IDEA_RT = System.getProperty("java.class.path").toLowerCase().contains("idea_rt.jar");
+    public static final Boolean LOGGING_CONSOLE_LEVEL_DEBUG = "debug".equalsIgnoreCase(System.getProperty("forge.logging.console.level"));
 
     /**
      *
