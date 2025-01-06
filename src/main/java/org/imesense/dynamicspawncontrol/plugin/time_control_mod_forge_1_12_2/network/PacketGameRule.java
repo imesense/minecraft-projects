@@ -11,13 +11,13 @@ import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.con
 /**
  *
  */
-public class PacketGamerule implements IMessage {
+public class PacketGameRule implements IMessage {
     private boolean doDaylightCycle_tc;
 
-    public PacketGamerule() {
+    public PacketGameRule() {
     }
 
-    public PacketGamerule(boolean doDaylightCycle_tc) {
+    public PacketGameRule(boolean doDaylightCycle_tc) {
         this.doDaylightCycle_tc = doDaylightCycle_tc;
     }
 
@@ -29,8 +29,8 @@ public class PacketGamerule implements IMessage {
         this.doDaylightCycle_tc = buf.readBoolean();
     }
 
-    public static class Handler implements IMessageHandler<PacketGamerule, IMessage> {
-        public IMessage onMessage(PacketGamerule message, MessageContext ctx) {
+    public static class Handler implements IMessageHandler<PacketGameRule, IMessage> {
+        public IMessage onMessage(PacketGameRule message, MessageContext ctx) {
             Minecraft.getMinecraft().addScheduledTask(() -> {
                 Minecraft.getMinecraft().world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", Boolean.toString(message.doDaylightCycle_tc));
                 if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug()) {

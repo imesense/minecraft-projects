@@ -9,7 +9,7 @@ public class MessageHandler {
 
     public static void init() {
         INSTANCE.registerMessage(PacketTime.Handler.class, PacketTime.class, 0, Side.CLIENT);
-        INSTANCE.registerMessage(PacketGamerule.Handler.class, PacketGamerule.class, 1, Side.CLIENT);
+        INSTANCE.registerMessage(PacketGameRule.Handler.class, PacketGameRule.class, 1, Side.CLIENT);
     }
 
     static {

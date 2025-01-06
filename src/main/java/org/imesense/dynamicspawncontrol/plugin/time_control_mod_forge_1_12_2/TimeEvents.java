@@ -56,7 +56,7 @@ public class TimeEvents {
     @SubscribeEvent
     public void onPlayerJoin(PlayerLoggedInEvent event) {
         if (event.player instanceof EntityPlayerMP) {
-            MessageHandler.INSTANCE.sendTo(new PacketGamerule(event.player.world.getGameRules().getBoolean("doDaylightCycle_tc")), (EntityPlayerMP)event.player);
+            MessageHandler.INSTANCE.sendTo(new PacketGameRule(event.player.world.getGameRules().getBoolean("doDaylightCycle_tc")), (EntityPlayerMP)event.player);
         }
 
     }
@@ -85,7 +85,7 @@ public class TimeEvents {
                     event.getParameters()[0] = "doDaylightCycle_tc";
                     (new CommandGameRule()).execute(event.getSender().getServer(), event.getSender(), event.getParameters());
                     if (event.getParameters().length >= 2) {
-                        MessageHandler.INSTANCE.sendToAll(new PacketGamerule(CommandBase.parseBoolean(event.getParameters()[1])));
+                        MessageHandler.INSTANCE.sendToAll(new PacketGameRule(CommandBase.parseBoolean(event.getParameters()[1])));
                     }
 
                     event.setCanceled(true);
