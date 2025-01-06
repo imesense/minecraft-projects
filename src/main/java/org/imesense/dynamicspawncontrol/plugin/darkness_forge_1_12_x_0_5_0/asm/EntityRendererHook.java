@@ -70,7 +70,7 @@ public final class EntityRendererHook
 
         boolean lightmapUpdateNeededValue;
         {
-            lightmapUpdateNeededField = _class.getDeclaredField(UniqueField.IDEA_RT ? "lightmapUpdateNeeded" : "field_78536_aa");
+            lightmapUpdateNeededField = _class.getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "lightmapUpdateNeeded" : "field_78536_aa");
             lightmapUpdateNeededField.setAccessible(true);
             lightmapUpdateNeededValue = lightmapUpdateNeededField.getBoolean(entityRenderer);
         }
@@ -82,7 +82,9 @@ public final class EntityRendererHook
 
         Minecraft mc;
         {
-            mcField = _class.getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
+            mcField = _class.getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ?
+                    "mc" : "field_78531_r");
+
             mcField.setAccessible(true);
             mc = (Minecraft) mcField.get(entityRenderer);
         }
@@ -304,7 +306,7 @@ public final class EntityRendererHook
             float bossColorModifier;
             {
                 bossColorModifierField =
-                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifier" : "field_82831_U");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "bossColorModifier" : "field_82831_U");
 
                 bossColorModifierField.setAccessible(true);
                 bossColorModifier = bossColorModifierField.getFloat(entityRenderer);
@@ -313,7 +315,8 @@ public final class EntityRendererHook
             float bossColorModifierPrev;
             {
                 bossColorModifierPrevField =
-                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "bossColorModifierPrev" : "field_82832_V");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ?
+                                "bossColorModifierPrev" : "field_82832_V");
 
                 bossColorModifierPrevField.setAccessible(true);
                 bossColorModifierPrev = bossColorModifierPrevField.getFloat(entityRenderer);
@@ -322,7 +325,8 @@ public final class EntityRendererHook
             float torchFlickerX;
             {
                 torchFlickerXField =
-                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "torchFlickerX" : "field_78514_e");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ?
+                                "torchFlickerX" : "field_78514_e");
 
                 torchFlickerXField.setAccessible(true);
                 torchFlickerX = torchFlickerXField.getFloat(entityRenderer);
@@ -331,7 +335,8 @@ public final class EntityRendererHook
             Object mcObject;
             {
                 mcField =
-                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "mc" : "field_78531_r");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ?
+                                "mc" : "field_78531_r");
 
                 mcField.setAccessible(true);
                 mcObject = mcField.get(entityRenderer);
@@ -340,7 +345,8 @@ public final class EntityRendererHook
             Object gameSettingsObject;
             {
                 gameSettingsField =
-                        mcObject.getClass().getDeclaredField(UniqueField.IDEA_RT ? "gameSettings" : "field_71474_y");
+                        mcObject.getClass().getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ?
+                                "gameSettings" : "field_71474_y");
 
                 gameSettingsField.setAccessible(true);
                 gameSettingsObject = gameSettingsField.get(mcObject);
@@ -349,7 +355,8 @@ public final class EntityRendererHook
             float gammaSetting;
             {
                 gammaSettingField =
-                        gameSettingsObject.getClass().getDeclaredField(UniqueField.IDEA_RT ? "gammaSetting" : "field_74333_Y");
+                        gameSettingsObject.getClass().getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ?
+                                "gammaSetting" : "field_74333_Y");
 
                 gammaSettingField.setAccessible(true);
                 gammaSetting = gammaSettingField.getFloat(gameSettingsObject);
@@ -358,7 +365,8 @@ public final class EntityRendererHook
             int[] lightmapColors;
             {
                 lightmapColorsField =
-                        entityRenderer.getClass().getDeclaredField(UniqueField.IDEA_RT ? "lightmapColors" : "field_78504_Q");
+                        entityRenderer.getClass().getDeclaredField(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ?
+                                "lightmapColors" : "field_78504_Q");
 
                 lightmapColorsField.setAccessible(true);
                 lightmapColors = (int[]) lightmapColorsField.get(entityRenderer);

@@ -94,7 +94,7 @@ public final class OnEventNickNameEntity
                         this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
                 entityZombie.setCustomNameTag(randomName);
-                entityZombie.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
+                entityZombie.setAlwaysRenderNameTag(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
             }
         }
 
@@ -106,7 +106,7 @@ public final class OnEventNickNameEntity
                     this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
 
             entityVillager.setCustomNameTag(randomName);
-            entityVillager.setAlwaysRenderNameTag(UniqueField.IDEA_RT);
+            entityVillager.setAlwaysRenderNameTag(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
         }
     }
 
