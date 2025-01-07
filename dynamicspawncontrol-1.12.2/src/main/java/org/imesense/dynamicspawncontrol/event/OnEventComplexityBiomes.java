@@ -128,6 +128,8 @@ public final class OnEventComplexityBiomes
             int boxWidth = 148;
             int boxHeight = 50;
 
+            //-' TODO: Ошибка с графической опцией: Интерфейс
+            //-' Происходит деление на ноль, если выбрать "авто"
             int screenWidth = UniqueField.CLIENT.displayWidth / UniqueField.CLIENT.gameSettings.guiScale;
 
             int xPos = (screenWidth - boxWidth) / 2;
