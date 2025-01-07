@@ -44,9 +44,12 @@ public final class OnEventRenderFPS
     @SubscribeEvent
     public static void onRenderGameOverlay_0(RenderGameOverlayEvent.Text event)
     {
-        ScaledResolution scaled = new ScaledResolution(UniqueField.CLIENT);
+        if (!(UniqueField.CLIENT.currentScreen instanceof net.minecraft.client.gui.GuiChat))
+        {
+            ScaledResolution scaled = new ScaledResolution(UniqueField.CLIENT);
 
-        UniqueField.CLIENT.fontRenderer.drawString("FPS: " + Minecraft.getDebugFPS(),
-                2, scaled.getScaledHeight() - 10, 0x80FFFFFF);
+            UniqueField.CLIENT.fontRenderer.drawString("FPS: " + Minecraft.getDebugFPS(),
+                    2, scaled.getScaledHeight() - 10, 0x80FFFFFF);
+        }
     }
 }
