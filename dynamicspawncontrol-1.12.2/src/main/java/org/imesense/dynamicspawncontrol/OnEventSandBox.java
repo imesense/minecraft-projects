@@ -173,7 +173,9 @@ public final class OnEventSandBox implements IDebug
     {
         try (Writer writer = new FileWriter(SAVE_FILE))
         {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonArray jsonArray = new JsonArray();
+
             for (Map.Entry<UUID, EntityData> entry : ENTITY_DATA_MAP.entrySet())
             {
                 JsonObject jsonEntity = new JsonObject();
@@ -184,7 +186,10 @@ public final class OnEventSandBox implements IDebug
                 jsonEntity.add("nbt", JsonUtils.convertNBTToJson(entry.getValue().nbt));
                 jsonArray.add(jsonEntity);
             }
-            writer.write(jsonArray.toString());
+
+            String jsonOutput = gson.toJson(jsonArray);
+
+            writer.write(jsonOutput);
         }
         catch (IOException e)
         {
