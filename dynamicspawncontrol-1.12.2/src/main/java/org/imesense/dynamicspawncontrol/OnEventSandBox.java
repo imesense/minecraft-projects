@@ -61,6 +61,8 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventSandBox implements IDebug
 {
+    // TODO: сущность запоминается, но не удалятеся из списка при повторной подгрузке чанка
+    
     private static final File SAVE_FILE = new File(
             DimensionManager.getCurrentSaveRootDirectory(), "entity_registry.json");
 
