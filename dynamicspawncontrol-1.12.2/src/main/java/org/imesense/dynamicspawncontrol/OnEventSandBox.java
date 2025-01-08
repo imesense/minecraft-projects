@@ -61,7 +61,18 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventSandBox implements IDebug
 {
-    // TODO: сущность запоминается, но не удалятеся из списка при повторной подгрузке чанка
+    //-' TODO: одновременное удаление и запись в файл, ломает основной поток программы и вызывает исключение
+    /**
+     * java.util.ConcurrentModificationException
+     * 	at java.util.HashMap$HashIterator.nextNode(HashMap.java:1469)
+     * 	at java.util.HashMap$KeyIterator.next(HashMap.java:1493)
+     * 	at net.minecraft.entity.EntityTracker.tick(EntityTracker.java:309)
+     * 	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:779)
+     * 	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:668)
+     * 	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:185)
+     * 	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:526)
+     * 	at java.lang.Thread.run(Thread.java:750)
+     */
     
     private static final File SAVE_FILE = new File(
             DimensionManager.getCurrentSaveRootDirectory(), "entity_registry.json");
@@ -106,6 +117,8 @@ public final class OnEventSandBox implements IDebug
                     {
                         Log.writeDataToLogFile(0,"Spawning entity: " + recreatedEntity.getName() + " at " + recreatedEntity.getPosition());
                         world.spawnEntity(recreatedEntity);
+
+                        ENTITY_DATA_MAP.remove(key);
                     }
                 }
             }
@@ -174,6 +187,8 @@ public final class OnEventSandBox implements IDebug
                 {
                     Log.writeDataToLogFile(0,"Spawning entity: " + recreatedEntity.getName() + " at " + recreatedEntity.getPosition());
                     world.spawnEntity(recreatedEntity);
+
+                    ENTITY_DATA_MAP.remove(key);
                 }
                 else
                 {
