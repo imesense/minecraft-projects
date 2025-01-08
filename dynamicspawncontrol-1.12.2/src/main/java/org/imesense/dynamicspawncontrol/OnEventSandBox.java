@@ -25,8 +25,12 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.ClassInheritanceMultiMap;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -60,15 +64,17 @@ public final class OnEventSandBox implements IDebug
     private static final File SAVE_FILE = new File(
             DimensionManager.getCurrentSaveRootDirectory(), "entity_registry.json");
 
-    private static final Map<UUID, EntityData> ENTITY_DATA_MAP = new HashMap<>();
+    private static final Map<String, EntityData> ENTITY_DATA_MAP = new HashMap<>();
 
     @SubscribeEvent
-    public void onWorldLoad(WorldEvent.Load event) {
+    public void onWorldLoad(WorldEvent.Load event)
+    {
         loadEntityData();
     }
 
     @SubscribeEvent
-    public void onWorldSave(WorldEvent.Save event) {
+    public void onWorldSave(WorldEvent.Save event)
+    {
         saveEntityData();
     }
 
@@ -83,14 +89,21 @@ public final class OnEventSandBox implements IDebug
             {
                 for (Entity entity : entityList)
                 {
-                    if (!(entity instanceof EntityPlayer))
+                    String key = getEntityKey(entity);
+                    ENTITY_DATA_MAP.remove(key);
+                }
+            }
+
+            DimensionType dimensionType = DimensionManager.getProviderType(world.provider.getDimension());
+            for (String key : ENTITY_DATA_MAP.keySet())
+            {
+                if (key.startsWith(dimensionType.getName()))
+                {
+                    Entity recreatedEntity = recreateEntity(world, key);
+                    if (recreatedEntity != null)
                     {
-                        UUID entityId = entity.getUniqueID();
-                        if (!ENTITY_DATA_MAP.containsKey(entityId))
-                        {
-                            saveEntityState(entity);
-                            entity.setDead();
-                        }
+                        Log.writeDataToLogFile(0,"Spawning entity: " + recreatedEntity.getName() + " at " + recreatedEntity.getPosition());
+                        world.spawnEntity(recreatedEntity);
                     }
                 }
             }
@@ -111,10 +124,37 @@ public final class OnEventSandBox implements IDebug
                     if (!(entity instanceof EntityPlayer))
                     {
                         saveEntityState(entity);
+                        if (isOutsideRenderDistance(entity))
+                        {
+                            entity.setDead();
+                        }
                     }
                 }
             }
         }
+    }
+
+    private boolean isOutsideRenderDistance(Entity entity)
+    {
+        MinecraftServer server = entity.getServer();
+        if (server == null) return false;
+
+        PlayerList playerList = server.getPlayerList();
+        int renderDistance = playerList.getViewDistance();
+
+        BlockPos pos = entity.getPosition();
+
+        for (EntityPlayer player : entity.world.playerEntities)
+        {
+            BlockPos playerPos = player.getPosition();
+
+            if (Math.abs(playerPos.getX() - pos.getX()) <= renderDistance * 16 &&
+                    Math.abs(playerPos.getZ() - pos.getZ()) <= renderDistance * 16)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     @SubscribeEvent
@@ -126,16 +166,16 @@ public final class OnEventSandBox implements IDebug
             World world = entity.world;
             if (!world.isRemote)
             {
-                UUID entityId = entity.getUniqueID();
-                Entity recreatedEntity = recreateEntity(world, entityId);
+                String key = getEntityKey(entity);
+                Entity recreatedEntity = recreateEntity(world, key);
                 if (recreatedEntity != null)
                 {
-                    LogHelper.logInfo("Spawning entity: " + recreatedEntity.getName() + " at " + recreatedEntity.getPosition());
+                    Log.writeDataToLogFile(0,"Spawning entity: " + recreatedEntity.getName() + " at " + recreatedEntity.getPosition());
                     world.spawnEntity(recreatedEntity);
                 }
                 else
                 {
-                    LogHelper.logInfo("Entity not found in saved data: " + entityId);
+                    Log.writeDataToLogFile(0,"Entity not found in saved data: " + key);
                 }
             }
         }
@@ -143,11 +183,49 @@ public final class OnEventSandBox implements IDebug
 
     private void saveEntityState(Entity entity)
     {
-        UUID entityId = entity.getUniqueID();
+        String key = getEntityKey(entity);
+        if (key.equals("unknown")) return;
+
         BlockPos pos = entity.getPosition();
         NBTTagCompound nbt = new NBTTagCompound();
         entity.writeToNBT(nbt);
-        ENTITY_DATA_MAP.put(entityId, new EntityData(pos, nbt));
+        ENTITY_DATA_MAP.put(key, new EntityData(pos, nbt));
+    }
+
+    private Entity recreateEntity(World world, String key)
+    {
+        EntityData data = ENTITY_DATA_MAP.get(key);
+        if (data != null)
+        {
+            String entityTypeKey = key.split("_")[0];
+            Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(entityTypeKey), world);
+            if (entity != null)
+            {
+                entity.readFromNBT(data.nbt);
+                entity.setPosition(data.pos.getX() + 0.5, data.pos.getY(), data.pos.getZ() + 0.5);
+                return entity;
+            }
+            else
+            {
+                Log.writeDataToLogFile(0,"Failed to recreate entity of type: " + entityTypeKey);
+            }
+        }
+        return null;
+    }
+
+    private String getEntityKey(Entity entity)
+    {
+        ResourceLocation entityType = EntityList.getKey(entity.getClass());
+        if (entityType != null)
+        {
+            BlockPos pos = entity.getPosition();
+            return entityType.toString();
+        }
+        else
+        {
+            Log.writeDataToLogFile(0,"Entity type not found for: " + entity);
+            return "unknown";
+        }
     }
 
     private Entity recreateEntity(World world, UUID entityId)
@@ -163,7 +241,7 @@ public final class OnEventSandBox implements IDebug
             }
             else
             {
-                LogHelper.logError("Failed to recreate entity from NBT: " + entityId);
+                Log.writeDataToLogFile(0,"Failed to recreate entity from NBT: " + entityId);
             }
         }
         return null;
@@ -176,10 +254,10 @@ public final class OnEventSandBox implements IDebug
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonArray jsonArray = new JsonArray();
 
-            for (Map.Entry<UUID, EntityData> entry : ENTITY_DATA_MAP.entrySet())
+            for (Map.Entry<String, EntityData> entry : ENTITY_DATA_MAP.entrySet())
             {
                 JsonObject jsonEntity = new JsonObject();
-                jsonEntity.addProperty("uuid", entry.getKey().toString());
+                jsonEntity.addProperty("key", entry.getKey());
                 jsonEntity.addProperty("x", entry.getValue().pos.getX());
                 jsonEntity.addProperty("y", entry.getValue().pos.getY());
                 jsonEntity.addProperty("z", entry.getValue().pos.getZ());
@@ -188,7 +266,6 @@ public final class OnEventSandBox implements IDebug
             }
 
             String jsonOutput = gson.toJson(jsonArray);
-
             writer.write(jsonOutput);
         }
         catch (IOException e)
@@ -213,7 +290,7 @@ public final class OnEventSandBox implements IDebug
                         if (element.isJsonObject())
                         {
                             JsonObject jsonEntity = element.getAsJsonObject();
-                            UUID entityId = UUID.fromString(jsonEntity.get("uuid").getAsString());
+                            String key = jsonEntity.get("key").getAsString();
                             BlockPos pos = new BlockPos(
                                     jsonEntity.get("x").getAsInt(),
                                     jsonEntity.get("y").getAsInt(),
@@ -221,7 +298,7 @@ public final class OnEventSandBox implements IDebug
                             );
                             JsonObject nbtObject = jsonEntity.getAsJsonObject("nbt");
                             NBTTagCompound nbt = JsonUtils.convertJsonToNBT(nbtObject);
-                            ENTITY_DATA_MAP.put(entityId, new EntityData(pos, nbt));
+                            ENTITY_DATA_MAP.put(key, new EntityData(pos, nbt));
                         }
                     }
                 }
@@ -242,19 +319,6 @@ public final class OnEventSandBox implements IDebug
         {
             this.pos = pos;
             this.nbt = nbt;
-        }
-    }
-
-    private static class LogHelper
-    {
-        public static void logInfo(String message)
-        {
-            Log.writeDataToLogFile(1,"[INFO] " + message);
-        }
-
-        public static void logError(String message)
-        {
-            Log.writeDataToLogFile(2,"[ERROR] " + message);
         }
     }
 
