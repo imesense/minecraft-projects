@@ -1,4 +1,4 @@
 package org.imesense.dynamicspawncontrol.core.worldmemoryregistry;
 
-public final class datafile {
+public final class Datafile {
 }
