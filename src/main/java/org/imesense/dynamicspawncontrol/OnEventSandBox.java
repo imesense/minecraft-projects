@@ -41,15 +41,21 @@ import java.util.*;
 public final class OnEventSandBox implements IDebug
 {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final File ENTITY_FILE = new File("./entity_registry.json");
+    //private static final File ENTITY_FILE = new File("./entity_registry.json");
     private static final List<EntityData> ENTITY_LIST = new ArrayList<>();
     private static final double TRACK_RADIUS = 64.0;
+
+    private static File getEntityFile(World world) {
+        File worldDir = world.getSaveHandler().getWorldDirectory();
+        return new File(worldDir, "entity_registry.json");
+    }
 
     @Mod.EventHandler
     public void onServerStart(FMLServerStartingEvent event)
     {
+        World world = event.getServer().getEntityWorld();
         Log.writeDataToLogFile(2, "[OnEventSandBox] Server started, loading entities from file.");
-        loadEntitiesFromFile();
+        loadEntitiesFromFile(world);
     }
 
     @SubscribeEvent
@@ -85,7 +91,7 @@ public final class OnEventSandBox implements IDebug
             if (player.getDistance(data.x, data.y, data.z) > TRACK_RADIUS)
             {
                 Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Entity left visible range, saving to file: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
-                saveEntitiesToFile();
+                saveEntitiesToFile(world);
             }
         }
 
@@ -107,7 +113,7 @@ public final class OnEventSandBox implements IDebug
             }
         }
 
-        saveEntitiesToFile();
+        saveEntitiesToFile(world);
     }
 
     private void checkAndRespawnEntities(World world, EntityPlayer player)
@@ -129,7 +135,7 @@ public final class OnEventSandBox implements IDebug
 
                     Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Respawned entity: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
                     iterator.remove();
-                    saveEntitiesToFile();
+                    saveEntitiesToFile(world);
                 }
                 else
                 {
@@ -139,34 +145,28 @@ public final class OnEventSandBox implements IDebug
         }
     }
 
-    private void saveEntitiesToFile()
-    {
-        try (FileWriter writer = new FileWriter(ENTITY_FILE))
-        {
+    private void saveEntitiesToFile(World world) {
+        File file = getEntityFile(world);
+        try (FileWriter writer = new FileWriter(file)) {
             GSON.toJson(ENTITY_LIST, writer);
-        }
-        catch (IOException exception)
-        {
+            Log.writeDataToLogFile(2, "[OnEventSandBox] Saved entity data to: " + file.getAbsolutePath());
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
     }
 
-    private void loadEntitiesFromFile()
-    {
-        if (ENTITY_FILE.exists())
-        {
-            try (FileReader reader = new FileReader(ENTITY_FILE))
-            {
+    private void loadEntitiesFromFile(World world) {
+        File file = getEntityFile(world);
+        if (file.exists()) {
+            try (FileReader reader = new FileReader(file)) {
                 Type listType = new TypeToken<List<EntityData>>() {}.getType();
                 List<EntityData> loadedList = GSON.fromJson(reader, listType);
-                if (loadedList != null)
-                {
+                if (loadedList != null) {
+                    ENTITY_LIST.clear();
                     ENTITY_LIST.addAll(loadedList);
                 }
-                Log.writeDataToLogFile(2, "[OnEventSandBox] Loaded entities from file.");
-            }
-            catch (IOException exception)
-            {
+                Log.writeDataToLogFile(2, "[OnEventSandBox] Loaded entities from: " + file.getAbsolutePath());
+            } catch (IOException exception) {
                 exception.printStackTrace();
             }
         }
