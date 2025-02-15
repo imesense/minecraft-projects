@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.ResourceLocation;
@@ -39,7 +40,7 @@ public final class OnEventSandBox implements IDebug
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final File ENTITY_FILE = new File("./entity_registry.json");
     private static final List<EntityData> ENTITY_LIST = new ArrayList<>();
-    private static final double TRACK_RADIUS = 64.0; // Радиус отслеживания вокруг игрока
+    private static final double TRACK_RADIUS = 64.0;
 
     @Mod.EventHandler
     public void onServerStart(FMLServerStartingEvent event)
@@ -49,8 +50,8 @@ public final class OnEventSandBox implements IDebug
     }
 
     @SubscribeEvent
-    public void onEntityJoin(EntityJoinWorldEvent event)
-    {
+    public void onEntityJoin(EntityJoinWorldEvent event) {
+
         if (event.getEntity() instanceof EntityPlayer)
         {
             Log.writeDataToLogFile(2, "[OnEventSandBox] Player joined, checking and respawning entities.");
@@ -71,19 +72,14 @@ public final class OnEventSandBox implements IDebug
         }
     }
 
-    private void trackAndSaveEntities(World world, EntityPlayer player)
-    {
+    private void trackAndSaveEntities(World world, EntityPlayer player) {
         Iterator<EntityData> iterator = ENTITY_LIST.iterator();
 
         while (iterator.hasNext())
         {
             EntityData data = iterator.next();
 
-            if (player.getDistance(data.x, data.y, data.z) <= TRACK_RADIUS)
-            {
-                Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Player is near entity location: %s at [%f, %f, %f], keeping it in memory.", data.entityId, data.x, data.y, data.z));
-            }
-            else
+            if (player.getDistance(data.x, data.y, data.z) > TRACK_RADIUS)
             {
                 Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Entity left visible range, saving to file: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
                 saveEntitiesToFile();
@@ -119,18 +115,16 @@ public final class OnEventSandBox implements IDebug
         while (iterator.hasNext())
         {
             EntityData data = iterator.next();
-
             if (player.getDistance(data.x, data.y, data.z) <= TRACK_RADIUS)
             {
                 Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(data.entityId), world);
-
                 if (entity != null)
                 {
                     entity.setPosition(data.x, data.y, data.z);
+                    entity.readFromNBT(data.nbtData);
                     world.spawnEntity(entity);
 
                     Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Respawned entity: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
-
                     iterator.remove();
                     saveEntitiesToFile();
                 }
@@ -162,7 +156,6 @@ public final class OnEventSandBox implements IDebug
             {
                 Type listType = new TypeToken<List<EntityData>>() {}.getType();
                 List<EntityData> loadedList = GSON.fromJson(reader, listType);
-
                 if (loadedList != null)
                 {
                     ENTITY_LIST.addAll(loadedList);
@@ -180,6 +173,7 @@ public final class OnEventSandBox implements IDebug
     {
         String entityId;
         double x, y, z;
+        NBTTagCompound nbtData;
 
         EntityData(Entity entity)
         {
@@ -187,6 +181,8 @@ public final class OnEventSandBox implements IDebug
             this.x = entity.posX;
             this.y = entity.posY;
             this.z = entity.posZ;
+            this.nbtData = new NBTTagCompound();
+            entity.writeToNBT(this.nbtData);
         }
 
         boolean matches(Entity entity)
@@ -200,13 +196,11 @@ public final class OnEventSandBox implements IDebug
     public OnEventSandBox()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
         if (instanceExists)
         {
             Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
             throw new RuntimeException();
         }
-
         instanceExists = true;
     }
 }
