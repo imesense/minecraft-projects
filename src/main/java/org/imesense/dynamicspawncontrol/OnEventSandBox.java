@@ -3,6 +3,8 @@ package org.imesense.dynamicspawncontrol;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleSmokeNormal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -202,5 +205,50 @@ public final class OnEventSandBox implements IDebug
             throw new RuntimeException();
         }
         instanceExists = true;
+    }
+
+    private static final int RADIUS = 25;
+    private static final int PARTICLE_INTERVAL = 10;
+    private static final int MAX_PARTICLES_PER_BLOCK = 1;
+
+    private static int tickCounter = 0;
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        Minecraft mc = Minecraft.getMinecraft();
+        if (mc.world == null || mc.player == null) return;
+
+        World world = mc.world;
+        BlockPos playerPos = mc.player.getPosition();
+        Random rand = new Random();
+
+        tickCounter++;
+
+        if (tickCounter % PARTICLE_INTERVAL != 0)
+            return;
+
+        for (int i = 0; i < RADIUS * 2; i++)
+        {
+            int dx = rand.nextInt(RADIUS * 2) - RADIUS;
+            int dz = rand.nextInt(RADIUS * 2) - RADIUS;
+            BlockPos pos = playerPos.add(dx, -1, dz);
+
+            if (world.getBlockState(pos).getBlock() == net.minecraft.init.Blocks.GRASS)
+            {
+                for (int j = 0; j < MAX_PARTICLES_PER_BLOCK; j++)
+                {
+                    double x = pos.getX() + 0.5 + (rand.nextDouble() - 0.5);
+                    double y = pos.getY() + 1.5 + rand.nextDouble() * 0.5;
+                    double z = pos.getZ() + 0.5 + (rand.nextDouble() - 0.5);
+
+                    mc.world.spawnParticle(
+                            EnumParticleTypes.END_ROD,
+                            x, y, z,
+                            0.0, 0.002, 0.0
+                    );
+                }
+            }
+        }
     }
 }
