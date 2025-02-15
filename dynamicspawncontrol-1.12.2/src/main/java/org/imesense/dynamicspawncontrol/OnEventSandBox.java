@@ -40,12 +40,15 @@ import java.util.*;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventSandBox implements IDebug
 {
+    // todo есть баг, который тащит общую память по файлам в новый мир, даже если файла там еще не было
+    // исправить
+    
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    //private static final File ENTITY_FILE = new File("./entity_registry.json");
     private static final List<EntityData> ENTITY_LIST = new ArrayList<>();
     private static final double TRACK_RADIUS = 64.0;
 
-    private static File getEntityFile(World world) {
+    private static File getEntityFile(World world)
+    {
         File worldDir = world.getSaveHandler().getWorldDirectory();
         return new File(worldDir, "entity_registry.json");
     }
@@ -59,8 +62,8 @@ public final class OnEventSandBox implements IDebug
     }
 
     @SubscribeEvent
-    public void onEntityJoin(EntityJoinWorldEvent event) {
-
+    public void onEntityJoin(EntityJoinWorldEvent event)
+    {
         if (event.getEntity() instanceof EntityPlayer)
         {
             Log.writeDataToLogFile(2, "[OnEventSandBox] Player joined, checking and respawning entities.");
@@ -81,7 +84,8 @@ public final class OnEventSandBox implements IDebug
         }
     }
 
-    private void trackAndSaveEntities(World world, EntityPlayer player) {
+    private void trackAndSaveEntities(World world, EntityPlayer player)
+    {
         Iterator<EntityData> iterator = ENTITY_LIST.iterator();
 
         while (iterator.hasNext())
@@ -145,28 +149,38 @@ public final class OnEventSandBox implements IDebug
         }
     }
 
-    private void saveEntitiesToFile(World world) {
+    private void saveEntitiesToFile(World world)
+    {
         File file = getEntityFile(world);
-        try (FileWriter writer = new FileWriter(file)) {
+        try (FileWriter writer = new FileWriter(file))
+        {
             GSON.toJson(ENTITY_LIST, writer);
             Log.writeDataToLogFile(2, "[OnEventSandBox] Saved entity data to: " + file.getAbsolutePath());
-        } catch (IOException exception) {
+        }
+        catch (IOException exception)
+        {
             exception.printStackTrace();
         }
     }
 
-    private void loadEntitiesFromFile(World world) {
+    private void loadEntitiesFromFile(World world)
+    {
         File file = getEntityFile(world);
-        if (file.exists()) {
-            try (FileReader reader = new FileReader(file)) {
+        if (file.exists())
+        {
+            try (FileReader reader = new FileReader(file))
+            {
                 Type listType = new TypeToken<List<EntityData>>() {}.getType();
                 List<EntityData> loadedList = GSON.fromJson(reader, listType);
-                if (loadedList != null) {
+                if (loadedList != null)
+                {
                     ENTITY_LIST.clear();
                     ENTITY_LIST.addAll(loadedList);
                 }
                 Log.writeDataToLogFile(2, "[OnEventSandBox] Loaded entities from: " + file.getAbsolutePath());
-            } catch (IOException exception) {
+            }
+            catch (IOException exception)
+            {
                 exception.printStackTrace();
             }
         }
