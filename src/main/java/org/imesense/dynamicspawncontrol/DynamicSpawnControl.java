@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
@@ -134,6 +135,8 @@ public final class DynamicSpawnControl
 
         RegisterAIClass.registerClasses();
     }
+
+    public static final DamageSource DAMAGEFOG = new DamageSource("fog");
 
     /**
      *

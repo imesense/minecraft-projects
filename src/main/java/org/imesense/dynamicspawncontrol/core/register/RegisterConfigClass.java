@@ -5,6 +5,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.config.file.BlockWorldGeneratorAConfig;
 import org.imesense.dynamicspawncontrol.config.file.CacheWorldGameAConfig;
 import org.imesense.dynamicspawncontrol.config.file.GameDebuggerAConfig;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgTimeControl;
 import org.imesense.dynamicspawncontrol.config.file.LogFileAConfig;
 import org.imesense.dynamicspawncontrol.config.data.PlayerAConfig;
@@ -40,7 +41,8 @@ public final class RegisterConfigClass
         ZombieDropItemAConfig.class,
         SkeletonDropItemAConfig.class,
         CfgWebSlinger.class,
-        CfgStaminaPlayer.class
+        CfgStaminaPlayer.class,
+        CfgFogWorld.class
     };
 
     /**

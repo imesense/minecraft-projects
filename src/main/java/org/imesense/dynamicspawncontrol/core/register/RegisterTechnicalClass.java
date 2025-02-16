@@ -11,6 +11,7 @@ import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEven
 import org.imesense.dynamicspawncontrol.event.OnEventPlayer;
 import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEvent;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler;
 
 /**
  *
@@ -33,7 +34,8 @@ public final class RegisterTechnicalClass
         OnEventPotentialSpawn.class,
         OnEventSingleJsonCheckSpawn.class,
         OnEventSingleZombieSummonAID.class,
-        OnEventRenderFPS.class
+        OnEventRenderFPS.class,
+            FogEventHandler.class
     };
 
     /**
