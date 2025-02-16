@@ -44,7 +44,9 @@ import org.lwjgl.opengl.GL11;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class FogEventHandler
 {
-
+//todo, избавиться от тупых интерфейсов, переделать логику спавна тумана нахер
+    // писали блять ногами код походу дела
+    
     private static boolean instanceExists = false;
 
     public FogEventHandler()
