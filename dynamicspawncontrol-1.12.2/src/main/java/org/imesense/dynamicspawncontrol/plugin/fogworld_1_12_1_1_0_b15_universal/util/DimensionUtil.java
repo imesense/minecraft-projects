@@ -1,9 +1,14 @@
 package org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.util;
 
+import net.minecraft.world.DimensionType;
+import net.minecraftforge.common.DimensionManager;
+
+import java.util.List;
+
 public class DimensionUtil {
     public static String getDimensionName(DimensionType dimension) {
-        if (dimension != null && dimension.func_186065_b() != null) {
-            return dimension.func_186065_b();
+        if (dimension != null && dimension.getName() != null) {
+            return dimension.getName();
         }
         return "";
     }
@@ -14,6 +19,6 @@ public class DimensionUtil {
 
     public static boolean isDimensionBlacklisted(DimensionType dimension) {
         List<String> dimensionBlacklist = FogWorldConfig.getFogDimensionBlacklist();
-        return dimensionBlacklist.contains(String.valueOf(dimension.func_186068_a())) || dimensionBlacklist.contains(getDimensionName(dimension)) || dimensionBlacklist.contains(dimension.func_186065_b());
+        return dimensionBlacklist.contains(String.valueOf(dimension.getId())) || dimensionBlacklist.contains(getDimensionName(dimension)) || dimensionBlacklist.contains(dimension.getName());
     }
 }

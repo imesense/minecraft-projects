@@ -1,5 +1,7 @@
 package org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces;
 
+import net.minecraft.world.DimensionType;
+
 public interface IDimensionFog {
     float getFogDensity(int i, int i2, int i3);
 
@@ -8,4 +10,6 @@ public interface IDimensionFog {
     default boolean getFogEnabled() {
         return true;
     }
+
+    DimensionType getDimensionType();
 }

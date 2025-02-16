@@ -30,6 +30,10 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces.IBiomeFog;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces.IDimensionFog;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.util.BiomeUtil;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.util.DimensionUtil;
 import org.lwjgl.opengl.GL11;
 
 public class FogEventHandler
@@ -43,23 +47,23 @@ public class FogEventHandler
     public static void onGetFogColor(EntityViewRenderEvent.FogColors event) {
         Vec3d mixedColor;
         if (event.getEntity() instanceof EntityPlayer) {
-            EntityPlayer player = event.getEntity();
-            World world = player.field_70170_p;
-            int x = MathHelper.func_76128_c(player.field_70165_t);
-            int y = MathHelper.func_76128_c(player.field_70163_u);
-            int z = MathHelper.func_76128_c(player.field_70161_v);
-            IBlockState blockStateAtEyes = ActiveRenderInfo.func_186703_a(world, event.getEntity(), (float) event.getRenderPartialTicks());
-            if (blockStateAtEyes.func_185904_a() == Material.field_151587_i) {
+            EntityPlayer player = (EntityPlayer) event.getEntity();
+            World world = player.world;
+            int x = MathHelper.floor(player.posX);
+            int y = MathHelper.floor(player.posY);
+            int z = MathHelper.floor(player.posZ);
+            IBlockState blockStateAtEyes = ActiveRenderInfo.getBlockStateAtEntityViewpoint(world, event.getEntity(), (float) event.getRenderPartialTicks());
+            if (blockStateAtEyes.getMaterial() == Material.LAVA) {
                 return;
             }
-            if (blockStateAtEyes.func_185904_a() == Material.field_151586_h) {
+            if (blockStateAtEyes.getMaterial() == Material.WATER) {
                 mixedColor = getFogBlendColorWater(world, player, x, y, z, event.getRenderPartialTicks());
             } else {
                 mixedColor = getFogBlendColor(world, player, x, y, z, event.getRed(), event.getGreen(), event.getBlue(), event.getRenderPartialTicks());
             }
-            event.setRed((float) mixedColor.field_72450_a);
-            event.setGreen((float) mixedColor.field_72448_b);
-            event.setBlue((float) mixedColor.field_72449_c);
+            event.setRed((float) mixedColor.x);
+            event.setGreen((float) mixedColor.y);
+            event.setBlue((float) mixedColor.z);
         }
     }
 
@@ -67,10 +71,10 @@ public class FogEventHandler
     public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
         float farPlaneDistance;
         Entity entity = event.getEntity();
-        World world = entity.field_70170_p;
-        int playerX = MathHelper.func_76128_c(entity.field_70165_t);
-        int playerY = MathHelper.func_76128_c(entity.field_70163_u);
-        int playerZ = MathHelper.func_76128_c(entity.field_70161_v);
+        World world = entity.world;
+        int playerX = MathHelper.floor(entity.posX);
+        int playerY = MathHelper.floor(entity.posY);
+        int playerZ = MathHelper.floor(entity.posZ);
         if (playerX == fogX && playerZ == fogZ && fogInit) {
             renderFog(event.getFogMode(), fogFarPlaneDistance, 0.75f);
             return;
@@ -80,9 +84,10 @@ public class FogEventHandler
         float weightBiomeFog = 0.0f;
         for (int weightMixed = -20; weightMixed <= 20; weightMixed++) {
             for (int weightDefault = -20; weightDefault <= 20; weightDefault++) {
-                IBiomeFog biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + weightMixed, playerZ + weightDefault, playerY + weightDefault));
-                IDimensionFog iDimensionFog = world.field_73011_w;
-                if ((!(iDimensionFog instanceof IDimensionFog) || iDimensionFog.getFogEnabled()) && ((!(biomeForCoordsBody instanceof IBiomeFog) || biomeForCoordsBody.getFogEnabled()) && !DimensionUtil.isDimensionBlacklisted(iDimensionFog.func_186058_p()) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody))) {
+                IBiomeFog biomeForCoordsBody = (IBiomeFog) world.getBiomeForCoordsBody(new BlockPos(playerX + weightMixed, playerZ + weightDefault, playerY + weightDefault));
+                IDimensionFog iDimensionFog = (IDimensionFog) world.provider;
+                if ((!(iDimensionFog instanceof IDimensionFog) || iDimensionFog.getFogEnabled()) &&
+                        ((!(biomeForCoordsBody instanceof IBiomeFog) || biomeForCoordsBody.getFogEnabled()) && !DimensionUtil.isDimensionBlacklisted(iDimensionFog.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody))) {
                     if (iDimensionFog instanceof IDimensionFog) {
                         farPlaneDistance = iDimensionFog.getFogDensity(playerX + weightMixed, playerY, playerZ + weightDefault);
                     } else if (biomeForCoordsBody instanceof IBiomeFog) {
@@ -93,23 +98,23 @@ public class FogEventHandler
                     float farPlaneDistanceScaleBiome = 1.0f;
                     if (weightMixed != (-20)) {
                         if (weightMixed == 20) {
-                            double farPlaneDistanceScale = entity.field_70165_t - playerX;
+                            double farPlaneDistanceScale = entity.posX - playerX;
                             farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale);
                             farPlaneDistanceScaleBiome = (float) (1.0f * farPlaneDistanceScale);
                         }
                     } else {
-                        double farPlaneDistanceScale2 = 1.0d - (entity.field_70165_t - playerX);
+                        double farPlaneDistanceScale2 = 1.0d - (entity.posX - playerX);
                         farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale2);
                         farPlaneDistanceScaleBiome = (float) (1.0f * farPlaneDistanceScale2);
                     }
                     if (weightDefault != (-20)) {
                         if (weightDefault == 20) {
-                            double farPlaneDistanceScale3 = entity.field_70161_v - playerZ;
+                            double farPlaneDistanceScale3 = entity.posZ - playerZ;
                             farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale3);
                             farPlaneDistanceScaleBiome = (float) (farPlaneDistanceScaleBiome * farPlaneDistanceScale3);
                         }
                     } else {
-                        double farPlaneDistanceScale4 = 1.0d - (entity.field_70161_v - playerZ);
+                        double farPlaneDistanceScale4 = 1.0d - (entity.posZ - playerZ);
                         farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale4);
                         farPlaneDistanceScaleBiome = (float) (farPlaneDistanceScaleBiome * farPlaneDistanceScale4);
                     }
@@ -124,8 +129,8 @@ public class FogEventHandler
         float farPlaneDistance2 = ((fpDistanceBiomeFog * 240.0f) + (event.getFarPlaneDistance() * var18)) / var17;
         float farPlaneDistanceScaleBiome2 = (0.1f * (1.0f - var19)) + (0.75f * var19);
         float var20 = ((farPlaneDistanceScaleBiome2 * weightBiomeFog) + (0.75f * var18)) / var17;
-        fogX = entity.field_70165_t;
-        fogZ = entity.field_70161_v;
+        fogX = entity.posX;
+        fogZ = entity.posZ;
         fogFarPlaneDistance = Math.min(farPlaneDistance2, event.getFarPlaneDistance());
         renderFog(event.getFogMode(), fogFarPlaneDistance, var20);
     }
@@ -142,9 +147,9 @@ public class FogEventHandler
 
     @Nullable
     private static Vec3d postProcessColor(World world, EntityLivingBase player, double r, double g, double b, double renderPartialTicks) {
-        double darkScale = (player.field_70137_T + ((player.field_70163_u - player.field_70137_T) * renderPartialTicks)) * world.field_73011_w.func_76565_k();
-        if (player.func_70644_a(MobEffects.field_76440_q)) {
-            int duration = player.func_70660_b(MobEffects.field_76440_q).func_76459_b();
+        double darkScale = (player.lastTickPosY + ((player.posY - player.lastTickPosY) * renderPartialTicks)) * world.provider.getVoidFogYFactor();
+        if (player.isPotionActive(MobEffects.BLINDNESS)) {
+            int duration = player.getActivePotionEffect(MobEffects.BLINDNESS).getDuration();
             darkScale *= duration < 20 ? 1.0f - (duration / 20.0f) : 0.0d;
         }
         if (darkScale < 1.0d) {
@@ -153,15 +158,15 @@ public class FogEventHandler
             g *= darkScale2;
             b *= darkScale2;
         }
-        if (player.func_70644_a(MobEffects.field_76439_r)) {
-            int duration2 = player.func_70660_b(MobEffects.field_76439_r).func_76459_b();
-            float brightness = duration2 > 200 ? 1.0f : 0.7f + (MathHelper.func_76126_a((float) ((duration2 - renderPartialTicks) * 3.141592653589793d * 0.20000000298023224d)) * 0.3f);
+        if (player.isPotionActive(MobEffects.NIGHT_VISION)) {
+            int duration2 = player.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
+            float brightness = duration2 > 200 ? 1.0f : 0.7f + (MathHelper.sin((float) ((duration2 - renderPartialTicks) * 3.141592653589793d * 0.20000000298023224d)) * 0.3f);
             double scale = Math.min(Math.min(1.0d / r, 1.0d / g), 1.0d / b);
             r = (r * (1.0f - brightness)) + (r * scale * brightness);
             g = (g * (1.0f - brightness)) + (g * scale * brightness);
             b = (b * (1.0f - brightness)) + (b * scale * brightness);
         }
-        if (Minecraft.func_71410_x().field_71474_y.field_74337_g) {
+        if (Minecraft.getMinecraft().gameSettings.anaglyph) {
             double aR = (((r * 30.0d) + (g * 59.0d)) + (b * 11.0d)) / 100.0d;
             double aG = ((r * 30.0d) + (g * 70.0d)) / 100.0d;
             double aB = ((r * 30.0d) + (b * 70.0d)) / 100.0d;
@@ -185,26 +190,26 @@ public class FogEventHandler
                 float bPart = gMixed & 255;
                 if (weight != (-2)) {
                     if (weight == 2) {
-                        double zDiff = playerEntity.field_70165_t - playerX;
+                        double zDiff = playerEntity.posX - playerX;
                         bMixed = (float) (bMixed * zDiff);
                         gPart = (float) (gPart * zDiff);
                         bPart = (float) (bPart * zDiff);
                     }
                 } else {
-                    double zDiff2 = 1.0d - (playerEntity.field_70165_t - playerX);
+                    double zDiff2 = 1.0d - (playerEntity.posX - playerX);
                     bMixed = (float) (bMixed * zDiff2);
                     gPart = (float) (gPart * zDiff2);
                     bPart = (float) (bPart * zDiff2);
                 }
                 if (respirationLevel != (-2)) {
                     if (respirationLevel == 2) {
-                        double zDiff3 = playerEntity.field_70161_v - playerZ;
+                        double zDiff3 = playerEntity.posZ - playerZ;
                         bMixed = (float) (bMixed * zDiff3);
                         gPart = (float) (gPart * zDiff3);
                         bPart = (float) (bPart * zDiff3);
                     }
                 } else {
-                    double zDiff4 = 1.0d - (playerEntity.field_70161_v - playerZ);
+                    double zDiff4 = 1.0d - (playerEntity.posZ - playerZ);
                     bMixed = (float) (bMixed * zDiff4);
                     gPart = (float) (gPart * zDiff4);
                     bPart = (float) (bPart * zDiff4);
@@ -216,7 +221,7 @@ public class FogEventHandler
         }
         float bBiomeFog2 = bBiomeFog / 255.0f;
         float var20 = 2 * 2 * 2 * 2;
-        float var21 = EnchantmentHelper.func_185292_c(playerEntity) * 0.2f;
+        float var21 = EnchantmentHelper.getRespirationModifier(playerEntity) * 0.2f;
         float var22 = (((rBiomeFog / 255.0f) * 0.02f) + var21) / var20;
         float var23 = (((gBiomeFog / 255.0f) * 0.02f) + var21) / var20;
         return postProcessColor(world, playerEntity, var22, var23, ((bBiomeFog2 * 0.2f) + var21) / var20, renderPartialTicks);
@@ -224,11 +229,11 @@ public class FogEventHandler
 
     private static Vec3d getFogBlendColor(World world, EntityLivingBase playerEntity, int playerX, int playerY, int playerZ, float defR, float defG, float defB, double renderPartialTicks) {
         int bScale;
-        GameSettings settings = Minecraft.func_71410_x().field_71474_y;
+        GameSettings settings = Minecraft.getMinecraft().gameSettings;
         int[] ranges = ForgeModContainer.blendRanges;
         int distance = 0;
-        if (settings.field_74347_j && settings.field_151451_c >= 0 && settings.field_151451_c < ranges.length) {
-            distance = ranges[settings.field_151451_c];
+        if (settings.fancyGraphics && settings.renderDistanceChunks >= 0 && settings.renderDistanceChunks < ranges.length) {
+            distance = ranges[settings.renderDistanceChunks];
         }
         float rBiomeFog = 0.0f;
         float gBiomeFog = 0.0f;
@@ -236,9 +241,9 @@ public class FogEventHandler
         float weightBiomeFog = 0.0f;
         for (int celestialAngle = -distance; celestialAngle <= distance; celestialAngle++) {
             for (int baseScale = -distance; baseScale <= distance; baseScale++) {
-                IBiomeFog biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + celestialAngle, playerY + celestialAngle, playerZ + baseScale));
-                IDimensionFog iDimensionFog = world.field_73011_w;
-                if (!DimensionUtil.isDimensionBlacklisted(iDimensionFog.func_186058_p()) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody)) {
+                IBiomeFog biomeForCoordsBody = (IBiomeFog) world.getBiomeForCoordsBody(new BlockPos(playerX + celestialAngle, playerY + celestialAngle, playerZ + baseScale));
+                IDimensionFog iDimensionFog = (IDimensionFog) world.provider;
+                if (!DimensionUtil.isDimensionBlacklisted(iDimensionFog.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody)) {
                     if (iDimensionFog instanceof IDimensionFog) {
                         bScale = iDimensionFog.getFogColor(playerX + celestialAngle, playerY, playerZ + baseScale);
                     } else if (biomeForCoordsBody instanceof IBiomeFog) {
@@ -251,26 +256,26 @@ public class FogEventHandler
                     float processedColor = bScale & 255;
                     float weightMixed = 1.0f;
                     if (celestialAngle == (-distance)) {
-                        double weightDefault = 1.0d - (playerEntity.field_70165_t - playerX);
+                        double weightDefault = 1.0d - (playerEntity.posX - playerX);
                         rainStrength = (float) (rainStrength * weightDefault);
                         thunderStrength = (float) (thunderStrength * weightDefault);
                         processedColor = (float) (processedColor * weightDefault);
                         weightMixed = (float) (1.0f * weightDefault);
                     } else if (celestialAngle == distance) {
-                        double weightDefault2 = playerEntity.field_70165_t - playerX;
+                        double weightDefault2 = playerEntity.posX - playerX;
                         rainStrength = (float) (rainStrength * weightDefault2);
                         thunderStrength = (float) (thunderStrength * weightDefault2);
                         processedColor = (float) (processedColor * weightDefault2);
                         weightMixed = (float) (1.0f * weightDefault2);
                     }
                     if (baseScale == (-distance)) {
-                        double weightDefault3 = 1.0d - (playerEntity.field_70161_v - playerZ);
+                        double weightDefault3 = 1.0d - (playerEntity.posZ - playerZ);
                         rainStrength = (float) (rainStrength * weightDefault3);
                         thunderStrength = (float) (thunderStrength * weightDefault3);
                         processedColor = (float) (processedColor * weightDefault3);
                         weightMixed = (float) (weightMixed * weightDefault3);
                     } else if (baseScale == distance) {
-                        double weightDefault4 = playerEntity.field_70161_v - playerZ;
+                        double weightDefault4 = playerEntity.posZ - playerZ;
                         rainStrength = (float) (rainStrength * weightDefault4);
                         thunderStrength = (float) (thunderStrength * weightDefault4);
                         processedColor = (float) (processedColor * weightDefault4);
@@ -289,27 +294,27 @@ public class FogEventHandler
         float rBiomeFog2 = rBiomeFog / 255.0f;
         float gBiomeFog2 = gBiomeFog / 255.0f;
         float bBiomeFog2 = bBiomeFog / 255.0f;
-        float var28 = world.func_72826_c((float) renderPartialTicks);
-        float var29 = MathHelper.func_76131_a((MathHelper.func_76134_b(var28 * 3.1415927f * 2.0f) * 2.0f) + 0.5f, 0.0f, 1.0f);
+        float var28 = world.getCelestialAngle((float) renderPartialTicks);
+        float var29 = MathHelper.clamp((MathHelper.cos(var28 * 3.1415927f * 2.0f) * 2.0f) + 0.5f, 0.0f, 1.0f);
         float var30 = (var29 * 0.94f) + 0.06f;
         float var31 = (var29 * 0.94f) + 0.06f;
         float var32 = (var29 * 0.91f) + 0.09f;
-        float rainStrength2 = world.func_72867_j((float) renderPartialTicks);
+        float rainStrength2 = world.getRainStrength((float) renderPartialTicks);
         if (rainStrength2 > 0.0f) {
             var30 *= 1.0f - (rainStrength2 * 0.5f);
             var31 *= 1.0f - (rainStrength2 * 0.5f);
             var32 *= 1.0f - (rainStrength2 * 0.4f);
         }
-        float thunderStrength2 = world.func_72819_i((float) renderPartialTicks);
+        float thunderStrength2 = world.getThunderStrength((float) renderPartialTicks);
         if (thunderStrength2 > 0.0f) {
             var30 *= 1.0f - (thunderStrength2 * 0.5f);
             var31 *= 1.0f - (thunderStrength2 * 0.5f);
             var32 *= 1.0f - (thunderStrength2 * 0.5f);
         }
         Vec3d var33 = postProcessColor(world, playerEntity, rBiomeFog2 * (var30 / weightBiomeFog), gBiomeFog2 * (var31 / weightBiomeFog), bBiomeFog2 * (var32 / weightBiomeFog), renderPartialTicks);
-        float rBiomeFog3 = (float) var33.field_72450_a;
-        float gBiomeFog3 = (float) var33.field_72448_b;
-        float bBiomeFog3 = (float) var33.field_72449_c;
+        float rBiomeFog3 = (float) var33.x;
+        float gBiomeFog3 = (float) var33.y;
+        float bBiomeFog3 = (float) var33.z;
         float weightMixed2 = distance * 2 * distance * 2;
         float var34 = weightMixed2 - weightBiomeFog;
         double rFinal = ((rBiomeFog3 * weightBiomeFog) + (defR * var34)) / weightMixed2;
@@ -321,9 +326,9 @@ public class FogEventHandler
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
         EntityPlayer entityLiving = event.getEntityLiving();
-        World world = ((EntityLivingBase) entityLiving).field_70170_p;
-        if (FogWorldConfig.poisonousFog && (entityLiving instanceof EntityPlayer) && !entityLiving.func_184812_l_() && !DimensionUtil.isDimensionBlacklisted(world.field_73011_w.func_186058_p()) && !BiomeUtil.isBiomeBlacklisted(world.func_180494_b(new BlockPos(entityLiving.field_70165_t, entityLiving.field_70163_u, entityLiving.field_70161_v))) && entityLiving.field_70173_aa > FogWorldConfig.posionTicks && !(world.field_73011_w instanceof IDimensionFog) && !(world.func_180494_b(new BlockPos(entityLiving.field_70165_t, entityLiving.field_70163_u, entityLiving.field_70161_v)) instanceof IBiomeFog) && world.func_175642_b(EnumSkyBlock.SKY, entityLiving.func_180425_c()) > 10) {
-            entityLiving.func_70097_a(FogWorld.DAMAGEFOG, FogWorldConfig.poisonDamage);
+        World world = ((EntityLivingBase) entityLiving).world;
+        if (FogWorldConfig.poisonousFog && (entityLiving instanceof EntityPlayer) && !entityLiving.isCreative() && !DimensionUtil.isDimensionBlacklisted(world.provider.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted((IBiomeFog) world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ))) && entityLiving.ticksExisted > FogWorldConfig.posionTicks && !(world.provider instanceof IDimensionFog) && !(world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ)) instanceof IBiomeFog) && world.getLightFor(EnumSkyBlock.SKY, entityLiving.getPosition()) > 10) {
+            entityLiving.attackEntityFrom(FogWorld.DAMAGEFOG, FogWorldConfig.poisonDamage);
         }
     }
 }
