@@ -5,6 +5,7 @@ import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
 
 /**
@@ -19,7 +20,8 @@ public final class RegisterAIClass
     {
         EventHandler.class,
         OnEventBreakTorch.class,
-        OnEventAvoidLight.class
+        OnEventAvoidLight.class//,
+           // FogEventHandler.class
     };
 
     /**

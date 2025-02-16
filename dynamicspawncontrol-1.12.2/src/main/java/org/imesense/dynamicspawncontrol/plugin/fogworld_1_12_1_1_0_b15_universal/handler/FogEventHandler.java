@@ -30,14 +30,34 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces.IBiomeFog;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces.IDimensionFog;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.DataFogWorld;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.util.BiomeUtil;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.util.DimensionUtil;
 import org.lwjgl.opengl.GL11;
 
+@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class FogEventHandler
 {
+
+    private static boolean instanceExists = false;
+
+    public FogEventHandler()
+    {
+        CodeGeneric.printInitClassToLog(this.getClass());
+        if (instanceExists)
+        {
+            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            throw new RuntimeException();
+        }
+        instanceExists = true;
+    }
+
     private static double fogX;
     private static double fogZ;
     private static boolean fogInit;
@@ -45,6 +65,8 @@ public class FogEventHandler
 
     @SubscribeEvent
     public static void onGetFogColor(EntityViewRenderEvent.FogColors event) {
+        Log.writeDataToLogFile(0, "onGetFogColor");
+
         Vec3d mixedColor;
         if (event.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
@@ -69,6 +91,7 @@ public class FogEventHandler
 
     @SubscribeEvent
     public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
+        Log.writeDataToLogFile(0, "onRenderFog");
         float farPlaneDistance;
         Entity entity = event.getEntity();
         World world = entity.world;
@@ -93,7 +116,7 @@ public class FogEventHandler
                     } else if (biomeForCoordsBody instanceof IBiomeFog) {
                         farPlaneDistance = biomeForCoordsBody.getFogDensity(playerX + weightMixed, playerY, playerZ + weightDefault);
                     } else {
-                        farPlaneDistance = FogWorldConfig.getFogDensity(playerX + weightMixed, playerY, playerZ + weightDefault);
+                        farPlaneDistance = DataFogWorld.ConfigDataFogWorld.Instance.getFogDensity(/*)playerX + weightMixed, playerY, playerZ + weightDefault*/);
                     }
                     float farPlaneDistanceScaleBiome = 1.0f;
                     if (weightMixed != (-20)) {
@@ -136,6 +159,7 @@ public class FogEventHandler
     }
 
     private static void renderFog(int fogMode, float farPlaneDistance, float farPlaneDistanceScale) {
+        Log.writeDataToLogFile(0, "render_fog " + fogMode);
         if (fogMode < 0) {
             GL11.glFogf(2915, 0.0f);
             GL11.glFogf(2916, farPlaneDistance);
@@ -249,7 +273,7 @@ public class FogEventHandler
                     } else if (biomeForCoordsBody instanceof IBiomeFog) {
                         bScale = biomeForCoordsBody.getFogColor(playerX + celestialAngle, playerY, playerZ + baseScale);
                     } else {
-                        bScale = FogWorldConfig.getFogColor(playerX + celestialAngle, playerY, playerZ + baseScale);
+                        bScale = DataFogWorld.ConfigDataFogWorld.Instance.getFogColor(/*playerX + celestialAngle, playerY, playerZ + baseScale*/);
                     }
                     float rainStrength = (bScale & 16711680) >> 16;
                     float thunderStrength = (bScale & 65280) >> 8;
@@ -325,10 +349,11 @@ public class FogEventHandler
 
     @SubscribeEvent
     public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
-        EntityPlayer entityLiving = event.getEntityLiving();
+        Log.writeDataToLogFile(0, "onPlayerUpdate");
+        EntityPlayer entityLiving = (EntityPlayer) event.getEntityLiving();
         World world = ((EntityLivingBase) entityLiving).world;
-        if (FogWorldConfig.poisonousFog && (entityLiving instanceof EntityPlayer) && !entityLiving.isCreative() && !DimensionUtil.isDimensionBlacklisted(world.provider.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted((IBiomeFog) world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ))) && entityLiving.ticksExisted > FogWorldConfig.posionTicks && !(world.provider instanceof IDimensionFog) && !(world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ)) instanceof IBiomeFog) && world.getLightFor(EnumSkyBlock.SKY, entityLiving.getPosition()) > 10) {
-            entityLiving.attackEntityFrom(FogWorld.DAMAGEFOG, FogWorldConfig.poisonDamage);
+        if (DataFogWorld.ConfigDataFogWorld.Instance.isPoisonousFog() && (entityLiving instanceof EntityPlayer) && !entityLiving.isCreative() && !DimensionUtil.isDimensionBlacklisted(world.provider.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted((IBiomeFog) world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ))) && entityLiving.ticksExisted > DataFogWorld.ConfigDataFogWorld.Instance.getPosionTicks() && !(world.provider instanceof IDimensionFog) && !(world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ)) instanceof IBiomeFog) && world.getLightFor(EnumSkyBlock.SKY, entityLiving.getPosition()) > 10) {
+            entityLiving.attackEntityFrom(DynamicSpawnControl.DAMAGEFOG, DataFogWorld.ConfigDataFogWorld.Instance.getPoisonDamage());
         }
     }
 }

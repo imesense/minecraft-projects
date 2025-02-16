@@ -2,7 +2,9 @@ package org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universa
 
 import net.minecraft.world.biome.Biome;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces.IBiomeFog;
+import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.DataFogWorld;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BiomeUtil {
@@ -18,7 +20,13 @@ public class BiomeUtil {
     }
 
     public static boolean isBiomeBlacklisted(IBiomeFog biome) {
-        List<String> biomeBlacklist = FogWorldConfig.getFogBiomeBlacklist();
-        return biomeBlacklist.contains(String.valueOf(Biome.getIdForBiome((Biome) biome))) || biomeBlacklist.contains(getBiomeName((Biome) biome)) || biomeBlacklist.contains(((Biome) biome).getBiomeName());
+
+        List<String> biomeBlacklist = Arrays.asList(DataFogWorld.ConfigDataFogWorld.Instance.getFogBiomeBlacklist());
+
+
+        return biomeBlacklist.contains(String.valueOf(Biome.getIdForBiome((Biome) biome))) ||
+                biomeBlacklist.contains(getBiomeName((Biome) biome)) ||
+                biomeBlacklist.contains(((Biome) biome).getBiomeName());
     }
+
 }
