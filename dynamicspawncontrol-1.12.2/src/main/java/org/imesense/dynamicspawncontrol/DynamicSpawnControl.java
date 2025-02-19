@@ -136,8 +136,6 @@ public final class DynamicSpawnControl
         RegisterAIClass.registerClasses();
     }
 
-    public static final DamageSource DAMAGEFOG = new DamageSource("fog");
-
     /**
      *
      * @param fmlInitializationEvent
