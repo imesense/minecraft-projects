@@ -77,15 +77,6 @@ public class CfgFogWorld extends AConfig
         jsonObjectWorldTime.addProperty("Fog_Color",
                 DataFogWorld.ConfigDataFogWorld.Instance.getFogColor());
 
-        jsonObjectWorldTime.addProperty("Poison_Fog",
-                DataFogWorld.ConfigDataFogWorld.Instance.isPoisonousFog());
-
-        jsonObjectWorldTime.addProperty("Poison_Fog_Delay",
-                DataFogWorld.ConfigDataFogWorld.Instance.getPosionTicks());
-
-        jsonObjectWorldTime.addProperty("Poison_Fog_Damage",
-                DataFogWorld.ConfigDataFogWorld.Instance.getPoisonDamage());
-
         // Создаем JSON-массив для биомов
         JsonArray disabledBiomes = new JsonArray();
         for (String biome : DataFogWorld.ConfigDataFogWorld.Instance.getFogBiomeBlacklist()) {
@@ -123,21 +114,6 @@ public class CfgFogWorld extends AConfig
                 if (jsonObjectWorldTime.has("Fog_Color")) {
                     DataFogWorld.ConfigDataFogWorld.Instance
                             .setFogColor(jsonObjectWorldTime.get("Fog_Color").getAsInt());
-                }
-
-                if (jsonObjectWorldTime.has("Poison_Fog")) {
-                    DataFogWorld.ConfigDataFogWorld.Instance
-                            .setPoisonousFog(jsonObjectWorldTime.get("Poison_Fog").getAsBoolean());
-                }
-
-                if (jsonObjectWorldTime.has("Poison_Fog_Delay")) {
-                    DataFogWorld.ConfigDataFogWorld.Instance
-                            .setPosionTicks(jsonObjectWorldTime.get("Poison_Fog_Delay").getAsInt());
-                }
-
-                if (jsonObjectWorldTime.has("Poison_Fog_Damage")) {
-                    DataFogWorld.ConfigDataFogWorld.Instance
-                            .setPoisonDamage(jsonObjectWorldTime.get("Poison_Fog_Damage").getAsInt());
                 }
 
                 if (jsonObjectWorldTime.has("Disabled_Biomes")) {

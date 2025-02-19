@@ -348,14 +348,4 @@ public class FogEventHandler
         double bFinal = ((bBiomeFog3 * weightBiomeFog) + (defB * var34)) / weightMixed2;
         return new Vec3d(rFinal, gFinal, bFinal);
     }
-
-    @SubscribeEvent
-    public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
-        Log.writeDataToLogFile(0, "onPlayerUpdate");
-        EntityPlayer entityLiving = (EntityPlayer) event.getEntityLiving();
-        World world = ((EntityLivingBase) entityLiving).world;
-        if (DataFogWorld.ConfigDataFogWorld.Instance.isPoisonousFog() && (entityLiving instanceof EntityPlayer) && !entityLiving.isCreative() && !DimensionUtil.isDimensionBlacklisted(world.provider.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted((IBiomeFog) world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ))) && entityLiving.ticksExisted > DataFogWorld.ConfigDataFogWorld.Instance.getPosionTicks() && !(world.provider instanceof IDimensionFog) && !(world.getBiome(new BlockPos(entityLiving.posX, entityLiving.posY, entityLiving.posZ)) instanceof IBiomeFog) && world.getLightFor(EnumSkyBlock.SKY, entityLiving.getPosition()) > 10) {
-            entityLiving.attackEntityFrom(DynamicSpawnControl.DAMAGEFOG, DataFogWorld.ConfigDataFogWorld.Instance.getPoisonDamage());
-        }
-    }
 }

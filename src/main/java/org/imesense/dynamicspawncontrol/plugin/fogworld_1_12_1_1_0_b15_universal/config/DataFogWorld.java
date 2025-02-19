@@ -14,9 +14,6 @@ public class DataFogWorld
 
         private float fogDensity = 0.1f;
         private int fogColor = 16777215;
-        private boolean poisonousFog = false;
-        private int posionTicks = 1200;
-        private int poisonDamage = 1;
         private String[] fogBiomeBlacklist = new String[0];
         private String[] fogDimensionBlacklist = new String[0];
 
@@ -35,21 +32,6 @@ public class DataFogWorld
         public int getFogColor()
         {
             return fogColor;
-        }
-
-        public boolean isPoisonousFog()
-        {
-            return poisonousFog;
-        }
-
-        public int getPosionTicks()
-        {
-            return posionTicks;
-        }
-
-        public int getPoisonDamage()
-        {
-            return poisonDamage;
         }
 
         public String[] getFogBiomeBlacklist()
@@ -71,21 +53,6 @@ public class DataFogWorld
         public void setFogColor(int fogColor)
         {
             this.fogColor = fogColor;
-        }
-
-        public void setPoisonousFog(boolean poisonousFog)
-        {
-            this.poisonousFog = poisonousFog;
-        }
-
-        public void setPosionTicks(int posionTicks)
-        {
-            this.posionTicks = posionTicks;
-        }
-
-        public void setPoisonDamage(int poisonDamage)
-        {
-            this.poisonDamage = poisonDamage;
         }
 
         public void setFogBiomeBlacklist(String[] fogBiomeBlacklist)
