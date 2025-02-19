@@ -19,7 +19,7 @@ public class BiomeUtil {
         return getBiomeName(Biome.getBiomeForId(biomeID));
     }
 
-    public static boolean isBiomeBlacklisted(IBiomeFog biome) {
+    public static boolean isBiomeBlacklisted(Biome biome) {
 
         List<String> biomeBlacklist = Arrays.asList(DataFogWorld.ConfigDataFogWorld.Instance.getFogBiomeBlacklist());
 

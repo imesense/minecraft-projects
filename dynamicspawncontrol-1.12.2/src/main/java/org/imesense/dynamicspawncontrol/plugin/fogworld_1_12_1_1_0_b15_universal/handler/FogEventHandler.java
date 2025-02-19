@@ -21,6 +21,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -100,27 +101,25 @@ public class FogEventHandler
         int playerX = MathHelper.floor(entity.posX);
         int playerY = MathHelper.floor(entity.posY);
         int playerZ = MathHelper.floor(entity.posZ);
+
         if (playerX == fogX && playerZ == fogZ && fogInit) {
             renderFog(event.getFogMode(), fogFarPlaneDistance, 0.75f);
             return;
         }
+
         fogInit = true;
         float fpDistanceBiomeFog = 0.0f;
         float weightBiomeFog = 0.0f;
+
         for (int weightMixed = -20; weightMixed <= 20; weightMixed++) {
             for (int weightDefault = -20; weightDefault <= 20; weightDefault++) {
-                IBiomeFog biomeForCoordsBody = (IBiomeFog) world.getBiomeForCoordsBody(new BlockPos(playerX + weightMixed, playerZ + weightDefault, playerY + weightDefault));
-                IDimensionFog iDimensionFog = (IDimensionFog) world.provider;
-                if ((!(iDimensionFog instanceof IDimensionFog) || iDimensionFog.getFogEnabled()) &&
-                        ((!(biomeForCoordsBody instanceof IBiomeFog) || biomeForCoordsBody.getFogEnabled()) && !DimensionUtil.isDimensionBlacklisted(iDimensionFog.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody))) {
-                    if (iDimensionFog instanceof IDimensionFog) {
-                        farPlaneDistance = iDimensionFog.getFogDensity(playerX + weightMixed, playerY, playerZ + weightDefault);
-                    } else if (biomeForCoordsBody instanceof IBiomeFog) {
-                        farPlaneDistance = biomeForCoordsBody.getFogDensity(playerX + weightMixed, playerY, playerZ + weightDefault);
-                    } else {
-                        farPlaneDistance = DataFogWorld.ConfigDataFogWorld.Instance.getFogDensity(/*)playerX + weightMixed, playerY, playerZ + weightDefault*/);
-                    }
+                Biome biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + weightMixed, playerY, playerZ + weightDefault));
+                DimensionType dimensionType = world.provider.getDimensionType();
+
+                if (!DimensionUtil.isDimensionBlacklisted(dimensionType) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody)) {
+                    farPlaneDistance = 0.1f;
                     float farPlaneDistanceScaleBiome = 1.0f;
+
                     if (weightMixed != (-20)) {
                         if (weightMixed == 20) {
                             double farPlaneDistanceScale = entity.posX - playerX;
@@ -132,6 +131,7 @@ public class FogEventHandler
                         farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale2);
                         farPlaneDistanceScaleBiome = (float) (1.0f * farPlaneDistanceScale2);
                     }
+
                     if (weightDefault != (-20)) {
                         if (weightDefault == 20) {
                             double farPlaneDistanceScale3 = entity.posZ - playerZ;
@@ -143,17 +143,20 @@ public class FogEventHandler
                         farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale4);
                         farPlaneDistanceScaleBiome = (float) (farPlaneDistanceScaleBiome * farPlaneDistanceScale4);
                     }
+
                     fpDistanceBiomeFog += farPlaneDistance;
                     weightBiomeFog += farPlaneDistanceScaleBiome;
                 }
             }
         }
+
         float var17 = 20 * 2 * 20 * 2;
         float var18 = var17 - weightBiomeFog;
         float var19 = weightBiomeFog == 0.0f ? 0.0f : fpDistanceBiomeFog / weightBiomeFog;
         float farPlaneDistance2 = ((fpDistanceBiomeFog * 240.0f) + (event.getFarPlaneDistance() * var18)) / var17;
         float farPlaneDistanceScaleBiome2 = (0.1f * (1.0f - var19)) + (0.75f * var19);
         float var20 = ((farPlaneDistanceScaleBiome2 * weightBiomeFog) + (0.75f * var18)) / var17;
+
         fogX = entity.posX;
         fogZ = entity.posZ;
         fogFarPlaneDistance = Math.min(farPlaneDistance2, event.getFarPlaneDistance());
@@ -267,20 +270,16 @@ public class FogEventHandler
         float weightBiomeFog = 0.0f;
         for (int celestialAngle = -distance; celestialAngle <= distance; celestialAngle++) {
             for (int baseScale = -distance; baseScale <= distance; baseScale++) {
-                IBiomeFog biomeForCoordsBody = (IBiomeFog) world.getBiomeForCoordsBody(new BlockPos(playerX + celestialAngle, playerY + celestialAngle, playerZ + baseScale));
-                IDimensionFog iDimensionFog = (IDimensionFog) world.provider;
-                if (!DimensionUtil.isDimensionBlacklisted(iDimensionFog.getDimensionType()) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody)) {
-                    if (iDimensionFog instanceof IDimensionFog) {
-                        bScale = iDimensionFog.getFogColor(playerX + celestialAngle, playerY, playerZ + baseScale);
-                    } else if (biomeForCoordsBody instanceof IBiomeFog) {
-                        bScale = biomeForCoordsBody.getFogColor(playerX + celestialAngle, playerY, playerZ + baseScale);
-                    } else {
-                        bScale = DataFogWorld.ConfigDataFogWorld.Instance.getFogColor(/*playerX + celestialAngle, playerY, playerZ + baseScale*/);
-                    }
+                Biome biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + celestialAngle, playerY, playerZ + baseScale));
+                DimensionType dimensionType = world.provider.getDimensionType();
+
+                if (!DimensionUtil.isDimensionBlacklisted(dimensionType) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody)) {
+                    bScale = 0xFFFFFF;
                     float rainStrength = (bScale & 16711680) >> 16;
                     float thunderStrength = (bScale & 65280) >> 8;
                     float processedColor = bScale & 255;
                     float weightMixed = 1.0f;
+
                     if (celestialAngle == (-distance)) {
                         double weightDefault = 1.0d - (playerEntity.posX - playerX);
                         rainStrength = (float) (rainStrength * weightDefault);
