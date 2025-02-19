@@ -78,11 +78,9 @@ dependencies
     // Specify the version of Minecraft to use
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
-    // Optional dependencies that exist at compile-time but might not at runtime
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-
-    // Dependencies to get remapped to current MCP mappings
-    //deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
+    // Use lombok lib
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
 }
 
 // Get properties into the manifest for reading by the runtime
