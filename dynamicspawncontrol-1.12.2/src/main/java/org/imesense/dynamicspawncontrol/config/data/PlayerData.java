@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.config.file;
+package org.imesense.dynamicspawncontrol.config.data;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

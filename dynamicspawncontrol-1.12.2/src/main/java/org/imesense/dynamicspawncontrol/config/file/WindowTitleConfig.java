@@ -1,9 +1,9 @@
-package org.imesense.dynamicspawncontrol.config.data;
+package org.imesense.dynamicspawncontrol.config.file;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.config.file.PlayerData;
+import org.imesense.dynamicspawncontrol.config.data.WindowTitleData;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -18,21 +18,21 @@ import java.nio.file.Paths;
 /**
  *
  */
-@ConceptConfig(fileName = "cfg_player")
-public final class PlayerAConfig extends AConfig
+@ConceptConfig(fileName = "cfg_window_title")
+public final class WindowTitleConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public PlayerAConfig(String nameConfigFile)
+    public WindowTitleConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
 		CodeGeneric.printInitClassToLog(this.getClass());
 
-        PlayerData.ConfigDataPlayer.Instance =
-                new PlayerData.ConfigDataPlayer("player");
+        WindowTitleData.ConfigDataWindowTitle.Instance =
+                new WindowTitleData.ConfigDataWindowTitle("window_title");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,12 +65,13 @@ public final class PlayerAConfig extends AConfig
         }
 
         JsonObject recordObject = new JsonObject();
-        JsonObject jsonObjectPlayer = new JsonObject();
+        JsonObject jsonObjectWindowTitle = new JsonObject();
 
-        jsonObjectPlayer.addProperty("protected_respawn_player_radius",
-                PlayerData.ConfigDataPlayer.Instance.getProtectRespawnPlayerRadius());
+        jsonObjectWindowTitle.addProperty("title",
+                WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle());
 
-        recordObject.add(PlayerData.ConfigDataPlayer.Instance.getCategoryObject(), jsonObjectPlayer);
+        recordObject.add(WindowTitleData.ConfigDataWindowTitle.Instance.
+                getCategoryObject(), jsonObjectWindowTitle);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -95,15 +96,16 @@ public final class PlayerAConfig extends AConfig
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(PlayerData.ConfigDataPlayer.Instance.getCategoryObject()))
+            if (readableObject.has(WindowTitleData.ConfigDataWindowTitle.Instance.getCategoryObject()))
             {
-                JsonObject jsonObjectPlayer =
-                        readableObject.getAsJsonObject(PlayerData.ConfigDataPlayer.Instance.getCategoryObject());
+                JsonObject jsonObjectWindowTitle =
+                        readableObject.getAsJsonObject(WindowTitleData.ConfigDataWindowTitle.
+                                Instance.getCategoryObject());
 
-                if (jsonObjectPlayer.has("protected_respawn_player_radius"))
+                if (jsonObjectWindowTitle.has("title"))
                 {
-                    PlayerData.ConfigDataPlayer.Instance.
-                            setProtectRespawnPlayerRadius(jsonObjectPlayer.get("protected_respawn_player_radius").getAsShort());
+                    WindowTitleData.ConfigDataWindowTitle.Instance.
+                            setWindowTitle(jsonObjectWindowTitle.get("title").getAsString());
                 }
             }
             else

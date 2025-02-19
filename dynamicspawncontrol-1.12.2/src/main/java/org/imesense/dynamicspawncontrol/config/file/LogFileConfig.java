@@ -1,9 +1,9 @@
 package org.imesense.dynamicspawncontrol.config.file;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.config.data.WindowTitleData;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
+
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -18,21 +18,21 @@ import java.nio.file.Paths;
 /**
  *
  */
-@ConceptConfig(fileName = "cfg_window_title")
-public final class WindowTitleAConfig extends AConfig
+@ConceptConfig(fileName = "cfg_log_file")
+public final class LogFileConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public WindowTitleAConfig(String nameConfigFile)
+    public LogFileConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
 		CodeGeneric.printInitClassToLog(this.getClass());
 
-        WindowTitleData.ConfigDataWindowTitle.Instance =
-                new WindowTitleData.ConfigDataWindowTitle("window_title");
+        org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance =
+                new org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile("log_file");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,13 +65,12 @@ public final class WindowTitleAConfig extends AConfig
         }
 
         JsonObject recordObject = new JsonObject();
-        JsonObject jsonObjectWindowTitle = new JsonObject();
+        JsonObject jsonObjectLogFile = new JsonObject();
 
-        jsonObjectWindowTitle.addProperty("title",
-                WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle());
+        jsonObjectLogFile.addProperty("max_lines",
+                org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.getLogMaxLines());
 
-        recordObject.add(WindowTitleData.ConfigDataWindowTitle.Instance.
-                getCategoryObject(), jsonObjectWindowTitle);
+        recordObject.add(org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.getCategoryObject(), jsonObjectLogFile);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -96,21 +95,21 @@ public final class WindowTitleAConfig extends AConfig
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(WindowTitleData.ConfigDataWindowTitle.Instance.getCategoryObject()))
+            if (readableObject.has(org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.getCategoryObject()))
             {
-                JsonObject jsonObjectWindowTitle =
-                        readableObject.getAsJsonObject(WindowTitleData.ConfigDataWindowTitle.
-                                Instance.getCategoryObject());
+                JsonObject jsonObjectLogFile =
+                        readableObject.getAsJsonObject(org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.
+                                getCategoryObject());
 
-                if (jsonObjectWindowTitle.has("title"))
+                if (jsonObjectLogFile.has("max_lines"))
                 {
-                    WindowTitleData.ConfigDataWindowTitle.Instance.
-                            setWindowTitle(jsonObjectWindowTitle.get("title").getAsString());
+                    org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.
+                            setLogMaxLines(jsonObjectLogFile.get("max_lines").getAsShort());
                 }
             }
             else
             {
-                Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
+                Log.writeDataToLogFile(2, "'log_file' is missing in the config file.");
             }
         }
         catch (FileNotFoundException exception)
