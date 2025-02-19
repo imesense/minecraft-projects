@@ -22,8 +22,8 @@ import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionCons
 import org.imesense.dynamicspawncontrol.core.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMapFactory;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataGetter;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.Dr
 /**
  *
  */
-public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
+public final class GenericDropLoot extends ListActionConsumer<AbstractSignalDataGetter>
 {
     /**
      *
@@ -146,7 +146,7 @@ public final class GenericDropLoot extends ListActionConsumer<SignalDataGetter>
     /**
      *
      */
-    private static final SignalDataAccessor<LivingDropsEvent> EVENT_QUERY = new SignalDataAccessor<LivingDropsEvent>()
+    private static final AbstractSignalDataAccessor<LivingDropsEvent> EVENT_QUERY = new AbstractSignalDataAccessor<LivingDropsEvent>()
     {
         /**
          *

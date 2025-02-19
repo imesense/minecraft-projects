@@ -6,7 +6,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.parser.algo.GeneralStorageData;
-import org.imesense.dynamicspawncontrol.core.api.AParser;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 
 import java.io.File;
 import java.io.FileReader;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  *
  */
-public final class ParserCheckSpawnEntity extends AParser
+public final class ParserCheckSpawnEntity extends AbstractConceptParser
 {
     /**
      *

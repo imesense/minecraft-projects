@@ -7,9 +7,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
- *
+ * TODO: Legacy code
  */
-public abstract class SignalDataGetter
+public abstract class AbstractSignalDataGetter
 {
     /**
      *

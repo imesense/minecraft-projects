@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.api.AParser;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.parser.single.ParserWorldCacheMobs;
@@ -29,7 +29,7 @@ public final class RegisterParserManager
     /**
      *
      */
-    private static final List<AParser> PARSER_LIST = new ArrayList<>();
+    private static final List<AbstractConceptParser> PARSER_LIST = new ArrayList<>();
 
     /**
      *
@@ -48,7 +48,7 @@ public final class RegisterParserManager
         {
             try
             {
-                AParser parser = (AParser) parserClass.getConstructor(String.class)
+                AbstractConceptParser parser = (AbstractConceptParser) parserClass.getConstructor(String.class)
                         .newInstance(getParserName(parserClass));
 
                 PARSER_LIST.add(parser);
@@ -68,7 +68,7 @@ public final class RegisterParserManager
      */
     public static void reloadAllConfigs()
     {
-        for (AParser parser : PARSER_LIST)
+        for (AbstractConceptParser parser : PARSER_LIST)
         {
             parser.reloadConfig();
         }

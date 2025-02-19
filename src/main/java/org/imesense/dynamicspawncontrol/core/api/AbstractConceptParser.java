@@ -8,7 +8,7 @@ import java.io.File;
 /**
  *
  */
-public abstract class AParser
+public abstract class AbstractConceptParser
 {
     /**
      *

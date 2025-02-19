@@ -22,8 +22,8 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataGetter;
 import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericPotentialSpawn;
 import org.imesense.dynamicspawncontrol.core.worldstructure.Structure;
 
@@ -41,12 +41,12 @@ import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.Sp
  *
  * @param <T>
  */
-public final class ListActionBinary<T extends SignalDataGetter>
+public final class ListActionBinary<T extends AbstractSignalDataGetter>
 {
     /**
      *
      */
-    public final List<BiFunction<Event, SignalDataAccessor, Boolean>> ARRAY_LIST = new ArrayList<>();
+    public final List<BiFunction<Event, AbstractSignalDataAccessor, Boolean>> ARRAY_LIST = new ArrayList<>();
 
     /**
      *
@@ -63,9 +63,9 @@ public final class ListActionBinary<T extends SignalDataGetter>
      * @param signalDataAccessor
      * @return
      */
-    public boolean match(Event event, SignalDataAccessor<T> signalDataAccessor)
+    public boolean match(Event event, AbstractSignalDataAccessor<T> signalDataAccessor)
     {
-        for (BiFunction<Event, SignalDataAccessor, Boolean> rule : this.ARRAY_LIST)
+        for (BiFunction<Event, AbstractSignalDataAccessor, Boolean> rule : this.ARRAY_LIST)
         {
             if (!rule.apply(event, signalDataAccessor))
             {
@@ -921,7 +921,7 @@ public final class ListActionBinary<T extends SignalDataGetter>
      */
     private void addBlocksCheck(AttributeMap<?> attributeMap)
     {
-        BiFunction<Event, SignalDataAccessor, BlockPos> posFunction;
+        BiFunction<Event, AbstractSignalDataAccessor, BlockPos> posFunction;
 
         if (attributeMap.has(BLOCK_OFFSET))
         {

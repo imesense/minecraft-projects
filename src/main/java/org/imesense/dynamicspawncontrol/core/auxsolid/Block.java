@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataAccessor;
 import org.imesense.dynamicspawncontrol.core.collection.PositionEnum;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
@@ -258,7 +258,7 @@ public final class Block
      * @return
      */
     @Nonnull
-    public static BiFunction<Event, SignalDataAccessor, BlockPos> parseOffset(String json)
+    public static BiFunction<Event, AbstractSignalDataAccessor, BlockPos> parseOffset(String json)
     {
         int offsetX, offsetY, offsetZ;
 

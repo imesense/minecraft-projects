@@ -34,7 +34,7 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeKey;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataGetter;
 import org.imesense.dynamicspawncontrol.core.builder.ItemStackBuilder;
 import org.imesense.dynamicspawncontrol.core.sender.Sender;
 
@@ -53,7 +53,7 @@ import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.Co
  *
  * @param <T>
  */
-public abstract class ListActionConsumer<T extends SignalDataGetter>
+public abstract class ListActionConsumer<T extends AbstractSignalDataGetter>
 {
     /**
      *
@@ -805,11 +805,11 @@ public abstract class ListActionConsumer<T extends SignalDataGetter>
      */
     private void addSetBlockAction(AttributeMap<?> attributeMap)
     {
-        Function<SignalDataGetter, BlockPos> signalDataGetterBlockPosFunction;
+        Function<AbstractSignalDataGetter, BlockPos> signalDataGetterBlockPosFunction;
 
         if (attributeMap.has(BLOCK_OFFSET))
         {
-            signalDataGetterBlockPosFunction = (Function<SignalDataGetter, BlockPos>)
+            signalDataGetterBlockPosFunction = (Function<AbstractSignalDataGetter, BlockPos>)
                     parseOffset((String) attributeMap.get(BLOCK_OFFSET));
         }
         else

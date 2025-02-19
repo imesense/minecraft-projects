@@ -16,15 +16,15 @@ import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionCons
 import org.imesense.dynamicspawncontrol.core.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMapFactory;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataGetter;
 
 import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.CommonKeyWord.*;
 
 /**
  *
  */
-public final class GenericExperience extends ListActionConsumer<SignalDataGetter>
+public final class GenericExperience extends ListActionConsumer<AbstractSignalDataGetter>
 {
     /**
      *
@@ -135,7 +135,7 @@ public final class GenericExperience extends ListActionConsumer<SignalDataGetter
     /**
      *
      */
-    private static final SignalDataAccessor<LivingExperienceDropEvent> EVENT_QUERY = new SignalDataAccessor<LivingExperienceDropEvent>()
+    private static final AbstractSignalDataAccessor<LivingExperienceDropEvent> EVENT_QUERY = new AbstractSignalDataAccessor<LivingExperienceDropEvent>()
     {
         /**
          *
