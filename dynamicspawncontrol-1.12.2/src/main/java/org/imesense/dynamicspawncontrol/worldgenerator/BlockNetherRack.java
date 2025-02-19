@@ -37,6 +37,7 @@ public final class BlockNetherRack implements IWorldGenerator
 
     /**
      *
+     *
      * @param worldGenerator
      * @param world
      * @param random
@@ -65,6 +66,7 @@ public final class BlockNetherRack implements IWorldGenerator
 
     /**
      *
+     *
      * @param random
      * @param chunkX
      * @param chunkZ
@@ -78,16 +80,14 @@ public final class BlockNetherRack implements IWorldGenerator
         switch (world.provider.getDimension())
         {
             case 0:
-            {
                 run(
                         CLASS_NETHER_RACK_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getChanceSpawn(),
-                        BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getMinHeight(),
-                        BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getMaxHeight()
+                        BlockWorldGeneratorData.NETHER_RACK.getChanceSpawn(),
+                        BlockWorldGeneratorData.NETHER_RACK.getMinHeight(),
+                        BlockWorldGeneratorData.NETHER_RACK.getMaxHeight()
                 );
 
                 break;
-            }
 
             case 1: case -1: default: break;
         }

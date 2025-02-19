@@ -37,6 +37,7 @@ public final class BlockMossyCobblestone implements IWorldGenerator
 
     /**
      *
+     *
      * @param worldGenerator
      * @param world
      * @param random
@@ -65,6 +66,7 @@ public final class BlockMossyCobblestone implements IWorldGenerator
 
     /**
      *
+     *
      * @param random
      * @param chunkX
      * @param chunkZ
@@ -78,16 +80,13 @@ public final class BlockMossyCobblestone implements IWorldGenerator
         switch (world.provider.getDimension())
         {
             case 0:
-            {
                 run(
                         CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getChanceSpawn(),
-                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getMinHeight(),
-                        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getMaxHeight()
+                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getChanceSpawn(),
+                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMinHeight(),
+                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMaxHeight()
                 );
-
                 break;
-            }
 
             case 1: case -1: default: break;
         }
