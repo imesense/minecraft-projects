@@ -3,8 +3,8 @@ package org.imesense.dynamicspawncontrol.config.file;
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.config.data.BlockWorldGeneratorDataAbstract;
 import org.imesense.dynamicspawncontrol.config.data.BlockWorldGeneratorData;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -20,26 +20,16 @@ import java.nio.file.Paths;
  *
  */
 @ConceptConfig(fileName = "cfg_block_world_generator")
-public final class BlockWorldGeneratorAConfig extends AConfig
+public final class BlockWorldGeneratorConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public BlockWorldGeneratorAConfig(String nameConfigFile)
+    public BlockWorldGeneratorConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
-
-		CodeGeneric.printInitClassToLog(this.getClass());
-
-        BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance =
-                new BlockWorldGeneratorData.InfoDataBlockNetherRack("settings_block_nether_rack");
-
-        BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance =
-                new BlockWorldGeneratorData.InfoDataBlockMossyCobblestone("settings_block_mossy_cobblestone");
-
-        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance =
-                new BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg("settings_block_monster_egg");
+        CodeGeneric.printInitClassToLog(this.getClass());
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -60,11 +50,9 @@ public final class BlockWorldGeneratorAConfig extends AConfig
     public void saveBlockSettings(JsonObject jsonObject, String blockName, BlockWorldGeneratorDataAbstract block)
     {
         JsonObject jsonObjectBlockInfo = new JsonObject();
-
         jsonObjectBlockInfo.addProperty("chance_spawn", block.getChanceSpawn());
         jsonObjectBlockInfo.addProperty("min_height", block.getMinHeight());
         jsonObjectBlockInfo.addProperty("max_height", block.getMaxHeight());
-
         jsonObject.add(blockName, jsonObjectBlockInfo);
     }
 
@@ -79,21 +67,9 @@ public final class BlockWorldGeneratorAConfig extends AConfig
         if (jsonObject.has(blockName))
         {
             JsonObject jsonObjectBlockInfo = jsonObject.getAsJsonObject(blockName);
-
-            if (jsonObjectBlockInfo.has("chance_spawn"))
-            {
-                block.setChanceSpawn(jsonObjectBlockInfo.get("chance_spawn").getAsInt());
-            }
-
-            if (jsonObjectBlockInfo.has("min_height"))
-            {
-                block.setMinHeight(jsonObjectBlockInfo.get("min_height").getAsInt());
-            }
-
-            if (jsonObjectBlockInfo.has("max_height"))
-            {
-                block.setMaxHeight(jsonObjectBlockInfo.get("max_height").getAsInt());
-            }
+            block.setChanceSpawn(jsonObjectBlockInfo.get("chance_spawn").getAsInt());
+            block.setMinHeight(jsonObjectBlockInfo.get("min_height").getAsInt());
+            block.setMaxHeight(jsonObjectBlockInfo.get("max_height").getAsInt());
         }
         else
         {
@@ -122,18 +98,11 @@ public final class BlockWorldGeneratorAConfig extends AConfig
         }
 
         JsonObject recordObject = new JsonObject();
-
-        saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
-                BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance);
-
-        saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getCategoryObject(),
-                BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance);
-
-        saveBlockSettings(recordObject, BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getCategoryObject(),
-                BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance);
+        saveBlockSettings(recordObject, BlockWorldGeneratorData.NETHER_RACK.getCategory(), BlockWorldGeneratorData.NETHER_RACK);
+        saveBlockSettings(recordObject, BlockWorldGeneratorData.MOSSY_COBBLESTONE.getCategory(), BlockWorldGeneratorData.MOSSY_COBBLESTONE);
+        saveBlockSettings(recordObject, BlockWorldGeneratorData.MONSTER_EGG.getCategory(), BlockWorldGeneratorData.MONSTER_EGG);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
         try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
             gson.toJson(recordObject, fileWriter);
@@ -155,14 +124,9 @@ public final class BlockWorldGeneratorAConfig extends AConfig
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance.getCategoryObject(),
-                    BlockWorldGeneratorData.InfoDataBlockNetherRack.Instance);
-
-            loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance.getCategoryObject(),
-                    BlockWorldGeneratorData.InfoDataBlockMossyCobblestone.Instance);
-
-            loadBlockSettings(readableObject, BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getCategoryObject(),
-                    BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance);
+            loadBlockSettings(readableObject, BlockWorldGeneratorData.NETHER_RACK.getCategory(), BlockWorldGeneratorData.NETHER_RACK);
+            loadBlockSettings(readableObject, BlockWorldGeneratorData.MOSSY_COBBLESTONE.getCategory(), BlockWorldGeneratorData.MOSSY_COBBLESTONE);
+            loadBlockSettings(readableObject, BlockWorldGeneratorData.MONSTER_EGG.getCategory(), BlockWorldGeneratorData.MONSTER_EGG);
         }
         catch (FileNotFoundException exception)
         {

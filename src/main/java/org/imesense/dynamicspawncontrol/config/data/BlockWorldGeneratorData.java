@@ -1,69 +1,42 @@
 package org.imesense.dynamicspawncontrol.config.data;
 
+import lombok.Generated;
+import lombok.Getter;
+import lombok.experimental.Accessors;
+
 import javax.annotation.Nonnull;
 
 /**
  *
  */
+@Getter
+@Accessors(fluent = true)
 public final class BlockWorldGeneratorData
 {
     /**
      *
      */
-    public static final class InfoDataBlockNetherRack extends BlockWorldGeneratorDataAbstract
-    {
-        /**
-         *
-         */
-        public static InfoDataBlockNetherRack Instance;
+    public static final BlockWorldGeneratorDataAbstract NETHER_RACK =
+            new BlockWorldGeneratorDataAbstract("settings_block_nether_rack", 20, 5, 20)
+            {
 
-        /**
-         *
-         * @param CATEGORY
-         */
-        public InfoDataBlockNetherRack(@Nonnull final String CATEGORY)
-        {
-            super(CATEGORY, 20, 5, 20);
-        }
-    }
+            };
 
     /**
      *
      */
-    public static final class InfoDataBlockMossyCobblestone extends BlockWorldGeneratorDataAbstract
-    {
-        /**
-         *
-         */
-        public static InfoDataBlockMossyCobblestone Instance;
+    public static final BlockWorldGeneratorDataAbstract MOSSY_COBBLESTONE =
+            new BlockWorldGeneratorDataAbstract("settings_block_mossy_cobblestone", 35, 10, 45)
+            {
 
-        /**
-         *
-         * @param CATEGORY
-         */
-        public InfoDataBlockMossyCobblestone(@Nonnull final String CATEGORY)
-        {
-            super(CATEGORY, 35, 10, 45);
-        }
-    }
+            };
 
     /**
      *
      */
-    public static final class InfoDataBlockBlockMonsterEgg extends BlockWorldGeneratorDataAbstract
-    {
-        /**
-         *
-         */
-        public static InfoDataBlockBlockMonsterEgg Instance;
+    public static final BlockWorldGeneratorDataAbstract MONSTER_EGG =
+            new BlockWorldGeneratorDataAbstract("settings_block_monster_egg", 10, 7, 40)
+            {
 
-        /**
-         *
-         * @param CATEGORY
-         */
-        public InfoDataBlockBlockMonsterEgg(@Nonnull final String CATEGORY)
-        {
-            super(CATEGORY, 10, 7, 40);
-        }
-    }
+            };
 }

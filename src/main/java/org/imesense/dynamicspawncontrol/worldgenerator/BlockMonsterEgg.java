@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.worldgenerator;
 
+import lombok.Generated;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -37,6 +38,7 @@ public final class BlockMonsterEgg implements IWorldGenerator
 
     /**
      *
+     *
      * @param worldGenerator
      * @param world
      * @param random
@@ -65,6 +67,7 @@ public final class BlockMonsterEgg implements IWorldGenerator
 
     /**
      *
+     *
      * @param random
      * @param chunkX
      * @param chunkZ
@@ -73,21 +76,17 @@ public final class BlockMonsterEgg implements IWorldGenerator
      * @param iChunkProvider
      */
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
-    {
+    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider) {
         switch (world.provider.getDimension())
         {
             case 0:
-            {
                 run(
                         CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getChanceSpawn(),
-                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getMinHeight(),
-                        BlockWorldGeneratorData.InfoDataBlockBlockMonsterEgg.Instance.getMaxHeight()
+                        BlockWorldGeneratorData.MONSTER_EGG.getChanceSpawn(),
+                        BlockWorldGeneratorData.MONSTER_EGG.getMinHeight(),
+                        BlockWorldGeneratorData.MONSTER_EGG.getMaxHeight()
                 );
-                
                 break;
-            }
 
             case 1: case -1: default: break;
         }
