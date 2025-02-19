@@ -1,8 +1,6 @@
 package org.imesense.dynamicspawncontrol.config.data;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -46,7 +44,6 @@ public final class LogFileData
          *
          * @return
          */
-        @Getter
         public Short getLogMaxLines()
         {
             return this.logMaxLines;
@@ -56,7 +53,6 @@ public final class LogFileData
          *
          * @param value
          */
-        @Setter
         public void setLogMaxLines(Short value)
         {
             this.logMaxLines = value;
@@ -66,7 +62,6 @@ public final class LogFileData
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

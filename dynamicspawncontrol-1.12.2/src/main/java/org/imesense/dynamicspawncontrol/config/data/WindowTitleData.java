@@ -2,8 +2,6 @@ package org.imesense.dynamicspawncontrol.config.data;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -49,7 +47,6 @@ public final class WindowTitleData
          *
          * @return
          */
-        @Getter
         public String getWindowTitle()
         {
             return this.windowTitle;
@@ -59,7 +56,6 @@ public final class WindowTitleData
          *
          * @param value
          */
-        @Setter
         public void setWindowTitle(String value)
         {
             this.windowTitle = value;
@@ -69,7 +65,6 @@ public final class WindowTitleData
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

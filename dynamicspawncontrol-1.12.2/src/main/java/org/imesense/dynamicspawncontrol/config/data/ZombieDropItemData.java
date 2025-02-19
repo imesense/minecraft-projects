@@ -1,8 +1,6 @@
 package org.imesense.dynamicspawncontrol.config.data;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -75,7 +73,6 @@ public final class ZombieDropItemData
          *
          * @param value
          */
-        @Setter
         public void setBreakItem(Float value)
         {
             this.breakItem = value;
@@ -85,7 +82,6 @@ public final class ZombieDropItemData
          *
          * @param value
          */
-        @Setter
         public void setHandItemDamageFactor(Float value)
         {
             this.handItemDamageFactor = value;
@@ -95,7 +91,6 @@ public final class ZombieDropItemData
          *
          * @param value
          */
-        @Setter
         public void setHeadDamageFactor(Float value)
         {
             this.headDamageFactor = value;
@@ -105,7 +100,6 @@ public final class ZombieDropItemData
          *
          * @param value
          */
-        @Setter
         public void setChestDamageFactor(Float value)
         {
             this.chestDamageFactor = value;
@@ -115,7 +109,6 @@ public final class ZombieDropItemData
          *
          * @param value
          */
-        @Setter
         public void setLegsDamageFactor(Float value)
         {
             this.legsDamageFactor = value;
@@ -125,7 +118,6 @@ public final class ZombieDropItemData
          *
          * @param value
          */
-        @Setter
         public void setFeetDamageFactor(Float value)
         {
             this.feetDamageFactor = value;
@@ -135,7 +127,6 @@ public final class ZombieDropItemData
          *
          * @param value
          */
-        @Setter
         public void setDamageSpreadFactor(Float value)
         {
             this.damageSpreadFactor = value;
@@ -145,7 +136,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public Float getBreakItem()
         {
             return this.breakItem;
@@ -155,7 +145,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public Float getHandItemDamageFactor()
         {
             return this.handItemDamageFactor;
@@ -165,7 +154,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public Float getHeadDamageFactor()
         {
             return this.headDamageFactor;
@@ -175,7 +163,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public Float getChestDamageFactor()
         {
             return this.chestDamageFactor;
@@ -185,7 +172,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public Float getLegsDamageFactor()
         {
             return this.legsDamageFactor;
@@ -195,7 +181,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public Float getFeetDamageFactor()
         {
             return this.feetDamageFactor;
@@ -205,7 +190,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public Float getDamageSpreadFactor()
         {
             return this.damageSpreadFactor;
@@ -215,7 +199,6 @@ public final class ZombieDropItemData
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

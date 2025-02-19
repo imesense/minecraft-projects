@@ -1,8 +1,6 @@
 package org.imesense.dynamicspawncontrol.config.file;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -46,7 +44,6 @@ public final class PlayerData
          *
          * @param value
          */
-        @Setter
         public void setProtectRespawnPlayerRadius(Short value)
         {
             this.protectRespawnPlayerRadius = value;
@@ -56,7 +53,6 @@ public final class PlayerData
          *
          * @return
          */
-        @Getter
         public Short getProtectRespawnPlayerRadius()
         {
             return this.protectRespawnPlayerRadius;
@@ -66,7 +62,6 @@ public final class PlayerData
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;
