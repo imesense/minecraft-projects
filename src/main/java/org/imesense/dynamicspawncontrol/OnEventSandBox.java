@@ -223,7 +223,7 @@ public final class OnEventSandBox implements IDebug
 
     private static final int RADIUS = 25;
     private static final int PARTICLE_INTERVAL = 10;
-    private static final int MAX_PARTICLES_PER_BLOCK = 1;
+    private static final int MAX_PARTICLES_PER_BLOCK = 3;
 
     private static int tickCounter = 0;
 
