@@ -1,8 +1,6 @@
 package org.imesense.dynamicspawncontrol.config.data;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 /**
  *
@@ -50,7 +48,6 @@ public abstract class BlockWorldGeneratorDataAbstract
      *
      * @param value
      */
-    @Setter
     public void setChanceSpawn(Integer value)
     {
         this.chanceSpawn = value;
@@ -60,7 +57,6 @@ public abstract class BlockWorldGeneratorDataAbstract
      *
      * @param value
      */
-    @Setter
     public void setMinHeight(Integer value)
     {
         this.minHeight = value;
@@ -70,7 +66,6 @@ public abstract class BlockWorldGeneratorDataAbstract
      *
      * @param value
      */
-    @Setter
     public void setMaxHeight(Integer value)
     {
         this.maxHeight = value;
@@ -80,7 +75,6 @@ public abstract class BlockWorldGeneratorDataAbstract
      *
      * @return
      */
-    @Getter
     public Integer getChanceSpawn()
     {
         return this.chanceSpawn;
@@ -90,7 +84,6 @@ public abstract class BlockWorldGeneratorDataAbstract
      *
      * @return
      */
-    @Getter
     public Integer getMinHeight()
     {
         return this.minHeight;
@@ -100,7 +93,6 @@ public abstract class BlockWorldGeneratorDataAbstract
      *
      * @return
      */
-    @Getter
     public Integer getMaxHeight()
     {
         return this.maxHeight;
@@ -110,7 +102,6 @@ public abstract class BlockWorldGeneratorDataAbstract
      *
      * @return
      */
-    @Getter
     public String getCategoryObject()
     {
         return this.CATEGORY;

@@ -1,8 +1,6 @@
 package org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -111,7 +109,6 @@ public final class DataWebSlinger
          *
          * @param value
          */
-        @Setter
         public void setWebMeleeChance(Float value)
         {
             this.webMeleeChance = value;
@@ -121,7 +118,6 @@ public final class DataWebSlinger
          *
          * @param value
          */
-        @Setter
         public void setSlingCoolDown(Double value)
         {
             this.slingCoolDown = value;
@@ -131,7 +127,6 @@ public final class DataWebSlinger
          *
          * @param value
          */
-        @Setter
         public void setSlingInaccuracy(Float value)
         {
             this.slingInaccuracy = value;
@@ -141,7 +136,6 @@ public final class DataWebSlinger
          *
          * @param value
          */
-        @Setter
         public void setSlingVariance(Float value)
         {
             this.slingVariance = value;
@@ -151,7 +145,6 @@ public final class DataWebSlinger
          *
          * @param value
          */
-        @Setter
         public void setSlingWebbing(Boolean value)
         {
             this.slingWebbing = value;
@@ -161,7 +154,6 @@ public final class DataWebSlinger
          *
          * @param value
          */
-        @Setter
         public void setSlingWebbingOnWeb(Boolean value)
         {
             this.slingWebbingOnWeb = value;
@@ -171,7 +163,6 @@ public final class DataWebSlinger
          *
          * @param value
          */
-        @Setter
         public void setAIPrioritySlingWebs(Integer value)
         {
             this.AIPrioritySlingWebs = value;
@@ -180,7 +171,6 @@ public final class DataWebSlinger
         /**
          *
          */
-        @Setter
         public void setEntityIds(String[] value)
         {
             this.entityIds = value;
@@ -190,7 +180,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Boolean getBlockWebReplacement()
         {
             return this.blockWebReplacement;
@@ -200,7 +189,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Float getWebMeleeChance()
         {
             return this.webMeleeChance;
@@ -210,7 +198,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Double getSlingCoolDown()
         {
             return this.slingCoolDown;
@@ -220,7 +207,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Float getSlingInaccuracy()
         {
             return this.slingInaccuracy;
@@ -230,7 +216,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Float getSlingVariance()
         {
             return this.slingVariance;
@@ -240,7 +225,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Boolean getSlingWebbing()
         {
             return this.slingWebbing;
@@ -250,7 +234,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Boolean getSlingWebbingOnWeb()
         {
             return this.slingWebbingOnWeb;
@@ -260,7 +243,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public Integer getAIPrioritySlingWebs()
         {
             return this.AIPrioritySlingWebs;
@@ -270,7 +252,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public String[] getEntityIds()
         {
             return this.entityIds;
@@ -280,7 +261,6 @@ public final class DataWebSlinger
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

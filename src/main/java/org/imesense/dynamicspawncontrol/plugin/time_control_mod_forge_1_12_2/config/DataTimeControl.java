@@ -1,8 +1,6 @@
 package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 
@@ -66,7 +64,6 @@ public final class DataTimeControl
          *
          * @return
          */
-        @Getter
         public Integer getDayLengthMinutes()
         {
             return this.dayLengthMinutes;
@@ -76,7 +73,6 @@ public final class DataTimeControl
          *
          * @return
          */
-        @Getter
         public Integer getNightLengthMinutes()
         {
             return this.nightLengthMinutes;
@@ -86,7 +82,6 @@ public final class DataTimeControl
          *
          * @return
          */
-        @Getter
         public Integer getSyncToSystemTimeRate()
         {
             return this.syncToSystemTimeRate;
@@ -96,7 +91,6 @@ public final class DataTimeControl
          *
          * @return
          */
-        @Getter
         public Boolean getTimeControlDebug()
         {
             return this.timeControlDebug;
@@ -106,7 +100,6 @@ public final class DataTimeControl
          *
          * @return
          */
-        @Getter
         public Boolean getSyncToSystemTime()
         {
             return this.SyncToSystemTime;
@@ -116,7 +109,6 @@ public final class DataTimeControl
          *
          * @param value
          */
-        @Setter
         public void setDayLengthMinutes(Integer value)
         {
             this.dayLengthMinutes = value;
@@ -126,7 +118,6 @@ public final class DataTimeControl
          *
          * @param value
          */
-        @Setter
         public void setNightLengthMinutes(Integer value)
         {
             this.nightLengthMinutes = value;
@@ -136,7 +127,6 @@ public final class DataTimeControl
          *
          * @param value
          */
-        @Setter
         public void setSyncToSystemTimeRate(Integer value)
         {
             this.syncToSystemTimeRate = value;
@@ -146,7 +136,6 @@ public final class DataTimeControl
          *
          * @param value
          */
-        @Setter
         public void setTimeControlDebug(Boolean value)
         {
             this.timeControlDebug = value;
@@ -156,7 +145,6 @@ public final class DataTimeControl
          *
          * @param value
          */
-        @Setter
         public void setSyncToSystemTime(Boolean value)
         {
             this.SyncToSystemTime = value;
@@ -166,7 +154,6 @@ public final class DataTimeControl
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;

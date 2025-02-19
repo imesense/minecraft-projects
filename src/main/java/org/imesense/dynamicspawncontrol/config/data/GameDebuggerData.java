@@ -1,8 +1,6 @@
 package org.imesense.dynamicspawncontrol.config.data;
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.annotation.Getter;
-import org.imesense.dynamicspawncontrol.core.annotation.Setter;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -48,7 +46,6 @@ public final class GameDebuggerData
          *
          * @return
          */
-        @Getter
         public Boolean getDebugMonitorCache()
         {
             return this.debugMonitorCache;
@@ -58,7 +55,6 @@ public final class GameDebuggerData
          *
          * @param value
          */
-        @Setter
         public void setDebugMonitorCache(Boolean value)
         {
             this.debugMonitorCache = value;
@@ -68,7 +64,6 @@ public final class GameDebuggerData
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;
@@ -122,7 +117,6 @@ public final class GameDebuggerData
          * @param key
          * @return
          */
-        @Getter
         public Boolean getDebugSetting(String key)
         {
             return DEBUG_SETTINGS.getOrDefault(key, false);
@@ -132,7 +126,6 @@ public final class GameDebuggerData
          *
          * @return
          */
-        @Getter
         public Map<String, Boolean> getDebugSettings()
         {
             return this.DEBUG_SETTINGS;
@@ -143,7 +136,6 @@ public final class GameDebuggerData
          * @param key
          * @param value
          */
-        @Setter
         public void setDebugSetting(String key, Boolean value)
         {
             if (DEBUG_SETTINGS.containsKey(key))
@@ -160,7 +152,6 @@ public final class GameDebuggerData
          *
          * @return
          */
-        @Getter
         public String getCategoryObject()
         {
             return this.CATEGORY;
