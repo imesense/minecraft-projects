@@ -15,8 +15,8 @@ import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMapFactor
 import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionBinary;
 import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionConsumerMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataGetter;
 
 import java.util.function.Consumer;
 
@@ -26,7 +26,7 @@ import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.Mo
 /**
  *
  */
-public final class GenericMobTaskManager extends ListActionConsumerMobTaskManager<SignalDataGetter>
+public final class GenericMobTaskManager extends ListActionConsumerMobTaskManager<AbstractSignalDataGetter>
 {
     /**
      *
@@ -88,7 +88,7 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
     /**
      *
      */
-    public static final SignalDataAccessor<EntityJoinWorldEvent> EVENT_QUERY_JOIN = new SignalDataAccessor<EntityJoinWorldEvent>()
+    public static final AbstractSignalDataAccessor<EntityJoinWorldEvent> EVENT_QUERY_JOIN = new AbstractSignalDataAccessor<EntityJoinWorldEvent>()
     {
         /**
          *
@@ -238,7 +238,7 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
         /**
          *
          */
-        SignalDataGetter signalDataGetter = new SignalDataGetter()
+        AbstractSignalDataGetter signalDataGetter = new AbstractSignalDataGetter()
         {
             /**
              *
@@ -294,7 +294,7 @@ public final class GenericMobTaskManager extends ListActionConsumerMobTaskManage
         /**
          *
          */
-        for (Consumer<SignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
+        for (Consumer<AbstractSignalDataGetter> signalDataGetterConsumer : this.ACTIONS)
         {
             signalDataGetterConsumer.accept(signalDataGetter);
         }

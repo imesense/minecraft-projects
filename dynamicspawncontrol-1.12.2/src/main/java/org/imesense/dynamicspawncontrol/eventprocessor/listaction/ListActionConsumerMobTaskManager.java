@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.eventprocessor.generic.GenericPotentialSpawn;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataGetter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.Mo
  *
  * @param <T>
  */
-public abstract class ListActionConsumerMobTaskManager<T extends SignalDataGetter>
+public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalDataGetter>
 {
     /**
      *

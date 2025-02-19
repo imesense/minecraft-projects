@@ -25,8 +25,8 @@ import org.imesense.dynamicspawncontrol.eventprocessor.listaction.ListActionCons
 import org.imesense.dynamicspawncontrol.core.attributefactory.Attribute;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMap;
 import org.imesense.dynamicspawncontrol.core.attributefactory.AttributeMapFactory;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataAccessor;
-import org.imesense.dynamicspawncontrol.core.api.SignalDataGetter;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataAccessor;
+import org.imesense.dynamicspawncontrol.core.api.AbstractSignalDataGetter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ import static org.imesense.dynamicspawncontrol.eventprocessor.generic.keyword.Po
 /**
  *
  */
-public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGetter>
+public final class GenericPotentialSpawn extends ListActionConsumer<AbstractSignalDataGetter>
 {
     /**
      *
@@ -178,7 +178,7 @@ public final class GenericPotentialSpawn extends ListActionConsumer<SignalDataGe
     /**
      *
      */
-    private static final SignalDataAccessor<WorldEvent.PotentialSpawns> EVENT_QUERY = new SignalDataAccessor<WorldEvent.PotentialSpawns>()
+    private static final AbstractSignalDataAccessor<WorldEvent.PotentialSpawns> EVENT_QUERY = new AbstractSignalDataAccessor<WorldEvent.PotentialSpawns>()
     {
         /**
          *

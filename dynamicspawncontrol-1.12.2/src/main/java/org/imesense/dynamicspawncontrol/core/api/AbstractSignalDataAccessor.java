@@ -8,10 +8,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 /**
- *
+ * TODO: Legacy code
  * @param <ClassEvent>
  */
-public abstract class SignalDataAccessor<ClassEvent>
+public abstract class AbstractSignalDataAccessor<ClassEvent>
 {
     /**
      *
