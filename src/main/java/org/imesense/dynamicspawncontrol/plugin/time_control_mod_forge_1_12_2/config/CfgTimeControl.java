@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.co
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -18,7 +18,7 @@ import java.nio.file.Paths;
  *
  */
 @ConceptConfig(fileName = "cfg_time_control_mod_forge_1_12_2")
-public final class CfgTimeControl extends AConfig
+public final class CfgTimeControl extends AbstractConceptConfig
 {
     /**
      *

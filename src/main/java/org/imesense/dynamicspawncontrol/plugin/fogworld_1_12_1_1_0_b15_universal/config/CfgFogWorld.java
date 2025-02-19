@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universa
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @ConceptConfig(fileName = "cfg_fog_world_1_12_1_1_0_b15_universal")
-public class CfgFogWorld extends AConfig
+public class CfgFogWorld extends AbstractConceptConfig
 {
     public CfgFogWorld(String nameConfigFile)
     {

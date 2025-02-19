@@ -1,20 +1,15 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.config.file.PlayerConceptConfig;
+import org.imesense.dynamicspawncontrol.config.file.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.config.file.BlockWorldGeneratorAConfig;
-import org.imesense.dynamicspawncontrol.config.file.CacheWorldGameAConfig;
-import org.imesense.dynamicspawncontrol.config.file.GameDebuggerAConfig;
+import org.imesense.dynamicspawncontrol.config.file.CacheWorldGameConfig;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgTimeControl;
-import org.imesense.dynamicspawncontrol.config.file.LogFileAConfig;
-import org.imesense.dynamicspawncontrol.config.data.PlayerAConfig;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
-import org.imesense.dynamicspawncontrol.config.file.SkeletonDropItemAConfig;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.CfgWebSlinger;
 import org.imesense.dynamicspawncontrol.plugin.staminaplus_1_12_2_1_1_1.config.CfgStaminaPlayer;
-import org.imesense.dynamicspawncontrol.config.file.WindowTitleAConfig;
-import org.imesense.dynamicspawncontrol.config.file.ZombieDropItemAConfig;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
@@ -30,16 +25,16 @@ public final class RegisterConfigClass
      */
     private static final Class<?>[] CONFIG_CLASSES =
     {
-        CacheWorldGameAConfig.class,
-        GameDebuggerAConfig.class,
-        LogFileAConfig.class,
-        PlayerAConfig.class,
+        CacheWorldGameConfig.class,
+        GameDebuggerConfig.class,
+        LogFileConfig.class,
+        PlayerConceptConfig.class,
         CfgDarkness.class,
-        WindowTitleAConfig.class,
-        BlockWorldGeneratorAConfig.class,
+        WindowTitleConfig.class,
+        BlockWorldGeneratorConfig.class,
         CfgTimeControl.class,
-        ZombieDropItemAConfig.class,
-        SkeletonDropItemAConfig.class,
+        ZombieDropItemConfig.class,
+        SkeletonDropItemConfig.class,
         CfgWebSlinger.class,
         CfgStaminaPlayer.class,
         CfgFogWorld.class

@@ -2,8 +2,8 @@ package org.imesense.dynamicspawncontrol.config.file;
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
@@ -17,13 +17,13 @@ import java.util.Map;
  *
  */
 @ConceptConfig(fileName = "cfg_game_debugger")
-public final class GameDebuggerAConfig extends AConfig
+public final class GameDebuggerConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public GameDebuggerAConfig(String nameConfigFile)
+    public GameDebuggerConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 

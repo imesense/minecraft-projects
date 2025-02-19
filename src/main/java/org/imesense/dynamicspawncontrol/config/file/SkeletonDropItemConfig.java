@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.config.file;
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.config.data.SkeletonDropItemData;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -19,13 +19,13 @@ import java.nio.file.Paths;
  *
  */
 @ConceptConfig(fileName = "cfg_skeleton_drop_item")
-public final class SkeletonDropItemAConfig extends AConfig
+public final class SkeletonDropItemConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public SkeletonDropItemAConfig(String nameConfigFile)
+    public SkeletonDropItemConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 

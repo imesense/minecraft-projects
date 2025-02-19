@@ -2,8 +2,8 @@ package org.imesense.dynamicspawncontrol.config.file;
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.config.data.ZombieDropItemData;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -19,13 +19,13 @@ import java.nio.file.Paths;
  *
  */
 @ConceptConfig(fileName = "cfg_zombie_drop_item")
-public final class ZombieDropItemAConfig extends AConfig
+public final class ZombieDropItemConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public ZombieDropItemAConfig(String nameConfigFile)
+    public ZombieDropItemConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
