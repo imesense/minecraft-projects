@@ -1,12 +1,5 @@
 package org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.handler;
 
-//import com.henrikstabell.fogworld.FogWorld;
-//import com.henrikstabell.fogworld.api.interfaces.IBiomeFog;
-//import com.henrikstabell.fogworld.api.interfaces.IDimensionFog;
-//import com.henrikstabell.fogworld.config.FogWorldConfig;
-//import com.henrikstabell.fogworld.util.BiomeUtil;
-//import com.henrikstabell.fogworld.util.DimensionUtil;
-
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -27,27 +20,16 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.ForgeModContainer;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces.IBiomeFog;
-import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.api.interfaces.IDimensionFog;
-import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.DataFogWorld;
-import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.util.BiomeUtil;
-import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.util.DimensionUtil;
 import org.lwjgl.opengl.GL11;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class FogEventHandler
 {
-//todo, избавиться от тупых интерфейсов, переделать логику спавна тумана нахер
-    // писали блять ногами код походу дела
-    
     private static boolean instanceExists = false;
 
     public FogEventHandler()
@@ -68,8 +50,6 @@ public class FogEventHandler
 
     @SubscribeEvent
     public static void onGetFogColor(EntityViewRenderEvent.FogColors event) {
-        Log.writeDataToLogFile(0, "onGetFogColor");
-
         Vec3d mixedColor;
         if (event.getEntity() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
@@ -94,7 +74,6 @@ public class FogEventHandler
 
     @SubscribeEvent
     public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
-        Log.writeDataToLogFile(0, "onRenderFog");
         float farPlaneDistance;
         Entity entity = event.getEntity();
         World world = entity.world;
@@ -116,7 +95,6 @@ public class FogEventHandler
                 Biome biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + weightMixed, playerY, playerZ + weightDefault));
                 DimensionType dimensionType = world.provider.getDimensionType();
 
-                if (!DimensionUtil.isDimensionBlacklisted(dimensionType) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody)) {
                     farPlaneDistance = 0.1f;
                     float farPlaneDistanceScaleBiome = 1.0f;
 
@@ -146,7 +124,6 @@ public class FogEventHandler
 
                     fpDistanceBiomeFog += farPlaneDistance;
                     weightBiomeFog += farPlaneDistanceScaleBiome;
-                }
             }
         }
 
@@ -164,7 +141,6 @@ public class FogEventHandler
     }
 
     private static void renderFog(int fogMode, float farPlaneDistance, float farPlaneDistanceScale) {
-        Log.writeDataToLogFile(0, "render_fog " + fogMode);
         if (fogMode < 0) {
             GL11.glFogf(2915, 0.0f);
             GL11.glFogf(2916, farPlaneDistance);
@@ -273,7 +249,6 @@ public class FogEventHandler
                 Biome biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + celestialAngle, playerY, playerZ + baseScale));
                 DimensionType dimensionType = world.provider.getDimensionType();
 
-                if (!DimensionUtil.isDimensionBlacklisted(dimensionType) && !BiomeUtil.isBiomeBlacklisted(biomeForCoordsBody)) {
                     bScale = 0xFFFFFF;
                     float rainStrength = (bScale & 16711680) >> 16;
                     float thunderStrength = (bScale & 65280) >> 8;
@@ -310,7 +285,6 @@ public class FogEventHandler
                     gBiomeFog += thunderStrength;
                     bBiomeFog += processedColor;
                     weightBiomeFog += weightMixed;
-                }
             }
         }
         if (weightBiomeFog == 0.0f) {

@@ -77,20 +77,6 @@ public class CfgFogWorld extends AConfig
         jsonObjectWorldTime.addProperty("Fog_Color",
                 DataFogWorld.ConfigDataFogWorld.Instance.getFogColor());
 
-        // Создаем JSON-массив для биомов
-        JsonArray disabledBiomes = new JsonArray();
-        for (String biome : DataFogWorld.ConfigDataFogWorld.Instance.getFogBiomeBlacklist()) {
-            disabledBiomes.add(biome);
-        }
-        jsonObjectWorldTime.add("Disabled_Biomes", disabledBiomes);
-
-        // Создаем JSON-массив для измерений
-        JsonArray disabledDimensions = new JsonArray();
-        for (String dimension : DataFogWorld.ConfigDataFogWorld.Instance.getFogDimensionBlacklist()) {
-            disabledDimensions.add(dimension);
-        }
-        jsonObjectWorldTime.add("Disabled_Dimensions", disabledDimensions);
-
         recordObject.add(DataFogWorld.ConfigDataFogWorld.Instance.getCategoryObject(), jsonObjectWorldTime);
 
         return recordObject;
@@ -114,28 +100,6 @@ public class CfgFogWorld extends AConfig
                 if (jsonObjectWorldTime.has("Fog_Color")) {
                     DataFogWorld.ConfigDataFogWorld.Instance
                             .setFogColor(jsonObjectWorldTime.get("Fog_Color").getAsInt());
-                }
-
-                if (jsonObjectWorldTime.has("Disabled_Biomes")) {
-                    JsonArray disabledBiomesArray = jsonObjectWorldTime.getAsJsonArray("Disabled_Biomes");
-                    String[] disabledBiomes = new String[disabledBiomesArray.size()];
-
-                    for (int i = 0; i < disabledBiomesArray.size(); i++) {
-                        disabledBiomes[i] = disabledBiomesArray.get(i).getAsString();
-                    }
-
-                    DataFogWorld.ConfigDataFogWorld.Instance.setFogBiomeBlacklist(disabledBiomes);
-                }
-
-                if (jsonObjectWorldTime.has("Disabled_Dimensions")) {
-                    JsonArray disabledDimensionsArray = jsonObjectWorldTime.getAsJsonArray("Disabled_Dimensions");
-                    String[] disabledDimensions = new String[disabledDimensionsArray.size()];
-
-                    for (int i = 0; i < disabledDimensionsArray.size(); i++) {
-                        disabledDimensions[i] = disabledDimensionsArray.get(i).getAsString();
-                    }
-
-                    DataFogWorld.ConfigDataFogWorld.Instance.setFogDimensionBlacklist(disabledDimensions);
                 }
             } else {
                 Log.writeDataToLogFile(2, "Fog world settings are missing in the config file.");

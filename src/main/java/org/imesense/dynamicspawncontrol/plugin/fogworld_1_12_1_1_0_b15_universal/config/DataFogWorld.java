@@ -14,8 +14,6 @@ public class DataFogWorld
 
         private float fogDensity = 0.1f;
         private int fogColor = 16777215;
-        private String[] fogBiomeBlacklist = new String[0];
-        private String[] fogDimensionBlacklist = new String[0];
 
         public ConfigDataFogWorld(@Nonnull final String CATEGORY)
         {
@@ -23,7 +21,6 @@ public class DataFogWorld
             this.CATEGORY = CATEGORY;
         }
 
-        // Getters
         public float getFogDensity()
         {
             return fogDensity;
@@ -34,17 +31,6 @@ public class DataFogWorld
             return fogColor;
         }
 
-        public String[] getFogBiomeBlacklist()
-        {
-            return fogBiomeBlacklist;
-        }
-
-        public String[] getFogDimensionBlacklist()
-        {
-            return fogDimensionBlacklist;
-        }
-
-        // Setters
         public void setFogDensity(float fogDensity)
         {
             this.fogDensity = fogDensity;
@@ -53,16 +39,6 @@ public class DataFogWorld
         public void setFogColor(int fogColor)
         {
             this.fogColor = fogColor;
-        }
-
-        public void setFogBiomeBlacklist(String[] fogBiomeBlacklist)
-        {
-            this.fogBiomeBlacklist = fogBiomeBlacklist;
-        }
-
-        public void setFogDimensionBlacklist(String[] fogDimensionBlacklist)
-        {
-            this.fogDimensionBlacklist = fogDimensionBlacklist;
         }
 
         public String getCategoryObject()
