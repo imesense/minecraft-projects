@@ -5,7 +5,6 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.event.*;
 import org.imesense.dynamicspawncontrol.event.OnEventUpdateTorch;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler;
 
 /**
  *
