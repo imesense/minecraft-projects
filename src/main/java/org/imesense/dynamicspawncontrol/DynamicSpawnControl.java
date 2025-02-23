@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol;
 
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 
@@ -96,18 +97,19 @@ public final class DynamicSpawnControl
         globalDirectory = fmlPreInitializationEvent.getModConfigurationDirectory();
 
         Log.createLogFile(globalDirectory.getPath() +
-                File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
+                        File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
-        //todo: потом допилить запрет на переименования файла мода
-        if (false) {
-            File modFile = fmlPreInitializationEvent.getSourceFile();
-            String expectedName = "DynamicSpawnControl-1.0.jar";
+        File modFile = fmlPreInitializationEvent.getSourceFile();
+        String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID + "-0.1";
 
-            if (!modFile.getName().equals(expectedName)) {
-                throw new RuntimeException("The mod file name has been changed! Please rename it back to '"
-                        + expectedName + "' and restart the game.");
-            }
+        if (!modFile.getName().equals(expectedName) && !UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
+        {
+            Log.writeDataToLogFile(2, "Renaming a mod is prohibited.");
+            Log.writeDataToLogFile(2, "You can make an official fork and rename it in its original form:");
+            Log.writeDataToLogFile(2, "https://github.com/imesense/minecraft-projects");
+
+            FMLCommonHandler.instance().exitJava(1, false);
         }
 
         Log.writeDataToLogFile(1, "Is running in IDE (based on logging level): " +
