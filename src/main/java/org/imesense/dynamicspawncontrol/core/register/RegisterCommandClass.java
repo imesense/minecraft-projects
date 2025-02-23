@@ -29,7 +29,8 @@ public final class RegisterCommandClass
         CmdAdminSwitchVanish.class,
         CmdServerJsonScriptReload.class,
         CmdServerMobsKiller.class,
-        CmdServerSingleScriptReload.class
+        CmdServerSingleScriptReload.class,
+        CmdAdminGetDimension.class
     };
 
     /**
