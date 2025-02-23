@@ -34,8 +34,7 @@ public final class RegisterTechnicalClass
         OnEventPotentialSpawn.class,
         OnEventSingleJsonCheckSpawn.class,
         OnEventSingleZombieSummonAID.class,
-        OnEventRenderFPS.class,
-            FogEventHandler.class
+        OnEventRenderFPS.class
     };
 
     /**

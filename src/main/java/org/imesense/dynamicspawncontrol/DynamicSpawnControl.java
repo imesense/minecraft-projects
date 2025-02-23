@@ -99,6 +99,17 @@ public final class DynamicSpawnControl
                 File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
+        //todo: потом допилить запрет на переименования файла мода
+        if (false) {
+            File modFile = fmlPreInitializationEvent.getSourceFile();
+            String expectedName = "DynamicSpawnControl-1.0.jar";
+
+            if (!modFile.getName().equals(expectedName)) {
+                throw new RuntimeException("The mod file name has been changed! Please rename it back to '"
+                        + expectedName + "' and restart the game.");
+            }
+        }
+
         Log.writeDataToLogFile(1, "Is running in IDE (based on logging level): " +
                 (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "true" : "false"));
 
@@ -134,6 +145,8 @@ public final class DynamicSpawnControl
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
 
         RegisterAIClass.registerClasses();
+
+        RegisterRenderClass.registerClasses();
     }
 
     /**

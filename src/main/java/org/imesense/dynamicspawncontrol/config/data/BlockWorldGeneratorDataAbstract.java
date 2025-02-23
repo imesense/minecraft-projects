@@ -9,7 +9,6 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
  */
 import lombok.Getter;
 import lombok.Setter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @Setter
