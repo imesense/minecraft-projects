@@ -1,31 +1,25 @@
-package org.imesense.dynamicspawncontrol;
+package org.imesense.dynamicspawncontrol.develop;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleSmokeNormal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.api.IDebug;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.worldmemoryregistry.Option;
 
 import java.io.File;
 import java.io.FileReader;
@@ -57,7 +51,7 @@ public final class OnEventSandBox implements IDebug
     public void onServerStart(FMLServerStartingEvent event)
     {
         World world = event.getServer().getEntityWorld();
-        Log.writeDataToLogFile(2, "[OnEventSandBox] Server started, loading entities from file.");
+        //Log.writeDataToLogFile(2, "[OnEventSandBox] Server started, loading entities from file.");
         loadEntitiesFromFile(world);
     }
 
@@ -66,7 +60,7 @@ public final class OnEventSandBox implements IDebug
     {
         if (event.getEntity() instanceof EntityPlayer)
         {
-            Log.writeDataToLogFile(2, "[OnEventSandBox] Player joined, checking and respawning entities.");
+            //Log.writeDataToLogFile(2, "[OnEventSandBox] Player joined, checking and respawning entities.");
             checkAndRespawnEntities(event.getWorld(), (EntityPlayer) event.getEntity());
         }
     }
@@ -94,7 +88,7 @@ public final class OnEventSandBox implements IDebug
 
             if (player.getDistance(data.x, data.y, data.z) > TRACK_RADIUS)
             {
-                Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Entity left visible range, saving to file: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
+                //Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Entity left visible range, saving to file: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
                 saveEntitiesToFile(world);
             }
         }
@@ -111,7 +105,7 @@ public final class OnEventSandBox implements IDebug
                     if (!isTracked)
                     {
                         ENTITY_LIST.add(new EntityData(entity));
-                        Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Added entity to registry: %s at [%f, %f, %f]", entityKey, entity.posX, entity.posY, entity.posZ));
+                        //Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Added entity to registry: %s at [%f, %f, %f]", entityKey, entity.posX, entity.posY, entity.posZ));
                     }
                 }
             }
@@ -122,7 +116,7 @@ public final class OnEventSandBox implements IDebug
 
     private void checkAndRespawnEntities(World world, EntityPlayer player)
     {
-        Log.writeDataToLogFile(2, "[OnEventSandBox] Checking for entities to respawn.");
+        //Log.writeDataToLogFile(2, "[OnEventSandBox] Checking for entities to respawn.");
         Iterator<EntityData> iterator = ENTITY_LIST.iterator();
 
         while (iterator.hasNext())
@@ -137,13 +131,13 @@ public final class OnEventSandBox implements IDebug
                     entity.readFromNBT(data.nbtData);
                     world.spawnEntity(entity);
 
-                    Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Respawned entity: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
+                    //Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Respawned entity: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
                     iterator.remove();
                     saveEntitiesToFile(world);
                 }
                 else
                 {
-                    Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Failed to respawn entity: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
+                    //Log.writeDataToLogFile(2, String.format("[OnEventSandBox] Failed to respawn entity: %s at [%f, %f, %f]", data.entityId, data.x, data.y, data.z));
                 }
             }
         }
@@ -155,7 +149,7 @@ public final class OnEventSandBox implements IDebug
         try (FileWriter writer = new FileWriter(file))
         {
             GSON.toJson(ENTITY_LIST, writer);
-            Log.writeDataToLogFile(2, "[OnEventSandBox] Saved entity data to: " + file.getAbsolutePath());
+            //Log.writeDataToLogFile(2, "[OnEventSandBox] Saved entity data to: " + file.getAbsolutePath());
         }
         catch (IOException exception)
         {
@@ -177,7 +171,7 @@ public final class OnEventSandBox implements IDebug
                     ENTITY_LIST.clear();
                     ENTITY_LIST.addAll(loadedList);
                 }
-                Log.writeDataToLogFile(2, "[OnEventSandBox] Loaded entities from: " + file.getAbsolutePath());
+                //Log.writeDataToLogFile(2, "[OnEventSandBox] Loaded entities from: " + file.getAbsolutePath());
             }
             catch (IOException exception)
             {
@@ -215,7 +209,7 @@ public final class OnEventSandBox implements IDebug
         CodeGeneric.printInitClassToLog(this.getClass());
         if (instanceExists)
         {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            //Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
             throw new RuntimeException();
         }
         instanceExists = true;
