@@ -1,23 +1,22 @@
-package org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0;
-
-import java.io.File;
-import java.util.Map;
+package org.imesense.dynamicspawncontrol.core.plugin;
 
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.asm.EntityRendererTransformer;
-import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.asm.WorldProviderTransformer;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.bloodmoon_mc1_12_2_1_5_3.ClassTransformer;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.EntityRendererTransformer;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.WorldProviderTransformer;
+
+import java.io.File;
+import java.util.Map;
 
 /**
  *
- * OldSerpskiStalker:
- * -Dfml.coreMods.load=org.imesense.dynamicspawncontrol.technical.plugins.LoadingPluginNight
  */
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 @IFMLLoadingPlugin.Name(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-@IFMLLoadingPlugin.SortingIndex(LoadingPlugin.AFTER_DEOBFUSCATION)
-public final class LoadingPlugin implements IFMLLoadingPlugin
+@IFMLLoadingPlugin.SortingIndex(LoadingPluginCore.AFTER_DEOBFUSCATION)
+public final class LoadingPluginCore implements IFMLLoadingPlugin
 {
     /**
      *
@@ -45,6 +44,7 @@ public final class LoadingPlugin implements IFMLLoadingPlugin
         {
             WorldProviderTransformer.class.getName(),
             EntityRendererTransformer.class.getName(),
+            ClassTransformer.class.getName()
         };
     }
 
