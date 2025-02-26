@@ -1,7 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
 import net.minecraftforge.common.MinecraftForge;
-import org.imesense.dynamicspawncontrol.OnEventSandBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.event.OnEventRenderFPS;
@@ -11,7 +10,6 @@ import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEven
 import org.imesense.dynamicspawncontrol.event.OnEventPlayer;
 import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEvent;
-import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler;
 
 /**
  *
