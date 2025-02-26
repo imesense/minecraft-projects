@@ -125,15 +125,15 @@ public final class OnEventComplexityBiomes
 
         if (confirmedBiome != null && currentTime - lastBiomesChangeTime < 5000)
         {
-            int boxWidth = 148;
-            int boxHeight = 50;
+            int boxWidth = 140;
+            int boxHeight = 40;
 
             //-' TODO: Ошибка с графической опцией: Интерфейс
             //-' Происходит деление на ноль, если выбрать "авто"
             int screenWidth = UniqueField.CLIENT.displayWidth / UniqueField.CLIENT.gameSettings.guiScale;
 
             int xPos = (screenWidth - boxWidth) / 2;
-            int yPos = 20;
+            int yPos = 35;
 
             int backgroundColor = 0x80000000;
 
@@ -141,7 +141,7 @@ public final class OnEventComplexityBiomes
 
             int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(biomesText);
             int textXPos = xPos + (boxWidth - textWidth) / 2;
-            int textYPos = yPos + 10;
+            int textYPos = yPos + 5;
 
             UniqueField.CLIENT.fontRenderer.drawString(biomesText, textXPos, textYPos, 0xFFFFFF);
 
@@ -169,11 +169,11 @@ public final class OnEventComplexityBiomes
             };
 
             int totalSkulls = skullCounts[0] + skullCounts[1] + skullCounts[2] + skullCounts[3];
-            int skullWidth = 16, skullHeight = 16, skullSpacing = 2;
+            int skullWidth = 12, skullHeight = 12, skullSpacing = 2;
             int totalSkullWidth = (skullWidth * totalSkulls) + (skullSpacing * (totalSkulls - 1));
 
             int skullXPos = xPos + (boxWidth - totalSkullWidth) / 2;
-            int skullYPos = textYPos + 20;
+            int skullYPos = yPos + boxHeight - skullHeight - 5;
 
             for (int i = 0; i < skullCounts.length; i++)
             {
