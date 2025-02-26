@@ -1,5 +1,8 @@
-package org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.asm;
+package org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;

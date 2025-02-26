@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.asm;
+package org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;

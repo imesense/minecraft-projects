@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.plugin.bloodmoon_mc1_12_2_1_5_3.asm;
+package org.imesense.dynamicspawncontrol.core.plugin.mod.bloodmoon_mc1_12_2_1_5_3;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.apache.logging.log4j.Level;
@@ -16,11 +16,6 @@ import org.objectweb.asm.tree.MethodNode;
  */
 public final class ClassTransformer implements IClassTransformer
 {
-    /**
-     *
-     */
-    Logger logger = LogManager.getLogger("BloodMoon");
-
     /**
      *
      * @param name
@@ -51,8 +46,6 @@ public final class ClassTransformer implements IClassTransformer
         ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
 
-        this.logger.log(Level.DEBUG, "Found World Class: " + classNode.name);
-
         MethodNode getSkyColor = null;
         MethodNode getMoonPhase = null;
 
@@ -73,8 +66,6 @@ public final class ClassTransformer implements IClassTransformer
 
         if (getSkyColor != null)
         {
-            this.logger.log(Level.DEBUG, " - Found getSkyColor");
-
             /*
             for (int i = 0; i < getSkyColor.instructions.size(); ++i) {
                 ain = getSkyColor.instructions.get(i);
@@ -91,7 +82,6 @@ public final class ClassTransformer implements IClassTransformer
 
         if (getMoonPhase != null)
         {
-            this.logger.log(Level.DEBUG, " - Found getMoonPhase");
 /*
             for (int i = 0; i < getMoonPhase.instructions.size(); ++i) {
                 ain = getMoonPhase.instructions.get(i);
@@ -123,8 +113,6 @@ public final class ClassTransformer implements IClassTransformer
 
         classReader.accept(classNode, 0);
 
-        this.logger.log(Level.DEBUG, "Found EntityRenderer Class: " + classNode.name);
-
         MethodNode updateLightmap = null;
 
         for (MethodNode mn : classNode.methods)
@@ -137,8 +125,6 @@ public final class ClassTransformer implements IClassTransformer
 
         if (updateLightmap != null)
         {
-            this.logger.log(Level.DEBUG, " - Found updateLightmap");
-
             /*
             boolean insertedHook = false;
 
