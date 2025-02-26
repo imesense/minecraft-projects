@@ -112,11 +112,17 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
             String fixedEnemyToId = GenericPotentialSpawn.fixEntityId(enemyToId);
             String fixedTargetId = GenericPotentialSpawn.fixEntityId(targetId);
 
-            EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
-            EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
+            EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.
+                    getValue(new ResourceLocation(fixedEnemyToId));
 
-            Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
-            Class<? extends Entity> targetEntityClass = targetEntityEntry == null ? null : targetEntityEntry.getEntityClass();
+            EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.
+                    getValue(new ResourceLocation(fixedTargetId));
+
+            Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ?
+                    null : enemyToEntityEntry.getEntityClass();
+
+            Class<? extends Entity> targetEntityClass = targetEntityEntry == null ?
+                    null : targetEntityEntry.getEntityClass();
 
             if (enemyToEntityClass != null && targetEntityClass != null)
             {
@@ -124,17 +130,20 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
                 {
                     EntityLiving currentEntity = (EntityLiving) event.getEntityLiving();
 
-                    if (enemyToEntityClass.isInstance(currentEntity))
+                    if (currentEntity instanceof EntityCreature)
                     {
-                        currentEntity.targetTasks.addTask(5,
-                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                        targetEntityClass.asSubclass(EntityLiving.class), true));
-                    }
-                    else if (targetEntityClass.isInstance(currentEntity))
-                    {
-                        currentEntity.targetTasks.addTask(5,
-                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                        enemyToEntityClass.asSubclass(EntityLiving.class), true));
+                        if (enemyToEntityClass.isInstance(currentEntity))
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetEntityClass.asSubclass(EntityLiving.class), true));
+                        }
+                        else if (targetEntityClass.isInstance(currentEntity))
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            enemyToEntityClass.asSubclass(EntityLiving.class), true));
+                        }
                     }
                 });
             }
@@ -149,7 +158,9 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
                 String fixedEnemyToId = GenericPotentialSpawn.fixEntityId(enemyToId);
 
                 EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
-                Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
+
+                Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ?
+                        null : enemyToEntityEntry.getEntityClass();
 
                 if (enemyToEntityClass != null)
                 {
@@ -162,7 +173,9 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
                 String fixedTargetId = GenericPotentialSpawn.fixEntityId(targetId);
 
                 EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
-                Class<? extends Entity> targetEntityClass = targetEntityEntry == null ? null : targetEntityEntry.getEntityClass();
+
+                Class<? extends Entity> targetEntityClass = targetEntityEntry == null ?
+                        null : targetEntityEntry.getEntityClass();
 
                 if (targetEntityClass != null)
                 {
@@ -177,22 +190,25 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
                     EntityLiving currentEntity = (EntityLiving) event.getEntityLiving();
                     Class<? extends EntityLiving> entityClass = currentEntity.getClass();
 
-                    if (enemyClassesSet.contains(entityClass))
+                    if (currentEntity instanceof EntityCreature)
                     {
-                        for (Class<? extends EntityLiving> targetClass : targetClassesSet)
+                        if (enemyClassesSet.contains(entityClass))
                         {
-                            currentEntity.targetTasks.addTask(5,
-                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                            targetClass, true));
+                            for (Class<? extends EntityLiving> targetClass : targetClassesSet)
+                            {
+                                currentEntity.targetTasks.addTask(5,
+                                        new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                                targetClass, true));
+                            }
                         }
-                    }
-                    else if (targetClassesSet.contains(entityClass))
-                    {
-                        for (Class<? extends EntityLiving> enemyClass : enemyClassesSet)
+                        else if (targetClassesSet.contains(entityClass))
                         {
-                            currentEntity.targetTasks.addTask(5,
-                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                            enemyClass, true));
+                            for (Class<? extends EntityLiving> enemyClass : enemyClassesSet)
+                            {
+                                currentEntity.targetTasks.addTask(5,
+                                        new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                                enemyClass, true));
+                            }
                         }
                     }
                 });
@@ -216,7 +232,9 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
         {
             String fixedEnemyToId = GenericPotentialSpawn.fixEntityId(enemyToId);
             EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
-            Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
+
+            Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ?
+                    null : enemyToEntityEntry.getEntityClass();
 
             if (enemyToEntityClass != null && EntityLiving.class.isAssignableFrom(enemyToEntityClass))
             {
@@ -247,22 +265,25 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
                 EntityLiving currentEntity = (EntityLiving) event.getEntityLiving();
                 Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
 
-                if (enemyClassesSet.contains(currentEntityClass))
+                if (currentEntity instanceof EntityCreature)
                 {
-                    for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
+                    if (enemyClassesSet.contains(currentEntityClass))
                     {
-                        currentEntity.targetTasks.addTask(5,
-                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                        targetClass, true));
+                        for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
+                        }
                     }
-                }
-                else if (enemyIdClassesSet.contains(currentEntityClass))
-                {
-                    for (Class<? extends EntityLiving> targetClass : enemyClassesSet)
+                    else if (enemyIdClassesSet.contains(currentEntityClass))
                     {
-                        currentEntity.targetTasks.addTask(5,
-                                new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                        targetClass, true));
+                        for (Class<? extends EntityLiving> targetClass : enemyClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
+                        }
                     }
                 }
             });
@@ -287,7 +308,8 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
 
             EntityEntry panicToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedPanicToId));
 
-            Class<? extends Entity> panicToEntityClass = panicToEntityEntry == null ? null : panicToEntityEntry.getEntityClass();
+            Class<? extends Entity> panicToEntityClass = panicToEntityEntry == null ?
+                    null : panicToEntityEntry.getEntityClass();
 
             if (panicToEntityClass != null && EntityLiving.class.isAssignableFrom(panicToEntityClass))
             {
@@ -322,7 +344,9 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
                 {
                     for (Class<? extends EntityLiving> panicClass : panicIdClassesSet)
                     {
-                        currentEntity.tasks.addTask(1, new EntityAIAvoidEntity<>((EntityCreature) currentEntity, panicClass, 16.0F, 1.5D, 2.0D));
+                        currentEntity.tasks.addTask(1,
+                                new EntityAIAvoidEntity<>((EntityCreature) currentEntity,
+                                        panicClass, 16.0F, 1.5D, 2.0D));
                     }
                 }
             });
@@ -380,18 +404,25 @@ public abstract class ListActionConsumerMobTaskManager<T extends AbstractSignalD
                 EntityLiving currentEntity = (EntityLiving) event.getEntityLiving();
                 Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
 
-                if (enemyIdClassesSet.contains(currentEntityClass))
+                if (currentEntity instanceof EntityCreature)
                 {
-                    for (Class<? extends EntityLiving> targetClass : themIdClassesSet)
+                    if (enemyIdClassesSet.contains(currentEntityClass))
                     {
-                        currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, targetClass, true));
+                        for (Class<? extends EntityLiving> targetClass : themIdClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
+                        }
                     }
-                }
-                else if (themIdClassesSet.contains(currentEntityClass))
-                {
-                    for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
+                    else if (themIdClassesSet.contains(currentEntityClass))
                     {
-                        currentEntity.targetTasks.addTask(5, new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity, targetClass, true));
+                        for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
+                        }
                     }
                 }
             });

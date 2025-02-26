@@ -47,7 +47,8 @@ public final class OnEventSingleZombieSummonAID
     @SubscribeEvent
     public synchronized void onZombieSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
     {
-        if (!(event.getEntityLiving() instanceof EntityZombie)) {
+        if (!(event.getEntityLiving() instanceof EntityZombie))
+        {
             return;
         }
 
@@ -68,7 +69,8 @@ public final class OnEventSingleZombieSummonAID
                 equipZombie(entityZombie, selectedConfig.Leggings, EntityEquipmentSlot.LEGS, UniqueField.RANDOM.self());
                 equipZombie(entityZombie, selectedConfig.Boots, EntityEquipmentSlot.FEET, UniqueField.RANDOM.self());
 
-                if (selectedConfig.HasShield) {
+                if (selectedConfig.HasShield)
+                {
                     equipZombie(entityZombie, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, UniqueField.RANDOM.self());
                 }
             }
