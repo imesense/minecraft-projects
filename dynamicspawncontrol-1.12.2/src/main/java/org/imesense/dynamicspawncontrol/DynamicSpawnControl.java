@@ -103,7 +103,7 @@ public final class DynamicSpawnControl
         File modFile = fmlPreInitializationEvent.getSourceFile();
         String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID + "-0.1.jar";
 
-        Log.writeDataToLogFile(2, "Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
+        Log.writeDataToLogFile(3, "Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
 
         if (!modFile.getName().equals(expectedName) && !UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
