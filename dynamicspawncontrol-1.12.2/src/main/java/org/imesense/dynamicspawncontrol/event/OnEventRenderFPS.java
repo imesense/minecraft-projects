@@ -48,8 +48,13 @@ public final class OnEventRenderFPS
         {
             ScaledResolution scaled = new ScaledResolution(UniqueField.CLIENT);
 
-            UniqueField.CLIENT.fontRenderer.drawString("FPS: " + Minecraft.getDebugFPS(),
-                    2, scaled.getScaledHeight() - 10, 0x80FFFFFF);
+            String fpsText = "FPS: " + Minecraft.getDebugFPS();
+
+            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(fpsText);
+
+            int x = scaled.getScaledWidth() - textWidth - 2;
+
+            UniqueField.CLIENT.fontRenderer.drawString(fpsText, x, scaled.getScaledHeight() - 10, 0x80FFFFFF);
         }
     }
 }
