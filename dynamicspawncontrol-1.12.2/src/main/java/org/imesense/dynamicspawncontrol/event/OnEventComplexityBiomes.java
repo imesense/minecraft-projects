@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.event;
 
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
@@ -128,9 +129,8 @@ public final class OnEventComplexityBiomes
             int boxWidth = 140;
             int boxHeight = 40;
 
-            //-' TODO: Ошибка с графической опцией: Интерфейс
-            //-' Происходит деление на ноль, если выбрать "авто"
-            int screenWidth = UniqueField.CLIENT.displayWidth / UniqueField.CLIENT.gameSettings.guiScale;
+            ScaledResolution scaledResolution = new ScaledResolution(UniqueField.CLIENT);
+            int screenWidth = scaledResolution.getScaledWidth();
 
             int xPos = (screenWidth - boxWidth) / 2;
             int yPos = 35;
