@@ -64,7 +64,7 @@ public final class CacheEvent
      * @param worldTickEvent
      */
     @SubscribeEvent
-    public synchronized void onWorldTick_0(TickEvent.WorldTickEvent worldTickEvent)
+    public void onWorldTick_0(TickEvent.WorldTickEvent worldTickEvent)
     {
         if (worldTickEvent.phase == TickEvent.Phase.END)
         {
@@ -93,7 +93,7 @@ public final class CacheEvent
      * @param playerLoggedInEvent
      */
     @SubscribeEvent
-    public synchronized void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
+    public void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
     {
         if (!Cache.Instance.IsPrimaryPlayerLogged)
         {
@@ -111,7 +111,7 @@ public final class CacheEvent
      * @param playerLoggedOutEvent
      */
     @SubscribeEvent
-    public synchronized void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
+    public void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
     {
         Cache.Instance.copyActualToBuffer();
     }
@@ -121,7 +121,7 @@ public final class CacheEvent
      * @param post
      */
     @SubscribeEvent
-    public synchronized void onRenderOverlay_3(RenderGameOverlayEvent.Post post)
+    public void onRenderOverlay_3(RenderGameOverlayEvent.Post post)
     {
         if (!GameDebuggerData.ConfigDataMonitor.Instance.getDebugMonitorCache())
         {
@@ -139,7 +139,7 @@ public final class CacheEvent
      * @param entityJoinWorldEvent
      */
     @SubscribeEvent
-    public synchronized void onEntityJoinWorld_4(EntityJoinWorldEvent entityJoinWorldEvent)
+    public void onEntityJoinWorld_4(EntityJoinWorldEvent entityJoinWorldEvent)
     {
         World world = entityJoinWorldEvent.getWorld();
         Entity entity = entityJoinWorldEvent.getEntity();
@@ -192,7 +192,7 @@ public final class CacheEvent
      * @param event
      */
     @SubscribeEvent
-    public synchronized void updateEntitySpawnEvent_5(LivingSpawnEvent.CheckSpawn event)
+    public void updateEntitySpawnEvent_5(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();
 

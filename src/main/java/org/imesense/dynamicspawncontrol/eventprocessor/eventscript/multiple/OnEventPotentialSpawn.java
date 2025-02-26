@@ -52,7 +52,7 @@ public final class OnEventPotentialSpawn
      * @param potentialSpawns
      */
     @SubscribeEvent
-    public synchronized void onUpdatePotentialSpawns_0(WorldEvent.PotentialSpawns potentialSpawns)
+    public void onUpdatePotentialSpawns_0(WorldEvent.PotentialSpawns potentialSpawns)
     {
         if (potentialSpawns.getWorld().isRemote)
         {

@@ -38,7 +38,7 @@ public final class OnEventPlayerTick
      * @param playerTickEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdatePlayerTick_0(TickEvent.PlayerTickEvent playerTickEvent)
+    public void onUpdatePlayerTick_0(TickEvent.PlayerTickEvent playerTickEvent)
     {
         if (playerTickEvent.phase != TickEvent.Phase.END || playerTickEvent.side != Side.SERVER)
         {

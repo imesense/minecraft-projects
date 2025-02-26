@@ -119,7 +119,7 @@ public final class OnEventPlayer
      * @param playerRespawnEvent
      */
     @SubscribeEvent
-    public synchronized void onPlayerRespawn_5(PlayerEvent.PlayerRespawnEvent playerRespawnEvent)
+    public void onPlayerRespawn_5(PlayerEvent.PlayerRespawnEvent playerRespawnEvent)
     {
         EntityPlayerMP entityPlayerMP = (EntityPlayerMP) playerRespawnEvent.player;
         World world = entityPlayerMP.world;

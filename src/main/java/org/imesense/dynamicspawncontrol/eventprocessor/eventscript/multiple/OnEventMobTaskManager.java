@@ -44,7 +44,7 @@ public final class OnEventMobTaskManager
      * @param entityJoinWorldEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent entityJoinWorldEvent)
+    public void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent entityJoinWorldEvent)
     {
         if (!(entityJoinWorldEvent.getEntity() instanceof EntityLiving))
         {

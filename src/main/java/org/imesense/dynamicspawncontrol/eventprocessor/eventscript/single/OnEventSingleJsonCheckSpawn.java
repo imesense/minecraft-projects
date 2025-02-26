@@ -45,7 +45,7 @@ public final class OnEventSingleJsonCheckSpawn
      * @param checkSpawn
      */
     @SubscribeEvent
-    public synchronized void onCheckSpawn_0(LivingSpawnEvent.CheckSpawn checkSpawn)
+    public void onCheckSpawn_0(LivingSpawnEvent.CheckSpawn checkSpawn)
     {
         if (checkSpawn.getWorld().isRemote)
         {
