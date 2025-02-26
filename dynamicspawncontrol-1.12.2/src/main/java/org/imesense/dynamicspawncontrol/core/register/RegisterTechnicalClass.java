@@ -24,7 +24,7 @@ public final class RegisterTechnicalClass
     private static final Class<?>[] EVENT_CLASSES =
     {
         CacheEvent.class,
-        OnEventSandBox.class,
+        //OnEventSandBox.class, //-' TODO: Перенести девелоп класс в отдельный регистр, положил половину игры на релизу
         OnEventWindowTitle.class,
         OnEventEntitySpawn.class,
         OnEventLivingDrop.class,
