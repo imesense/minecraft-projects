@@ -51,7 +51,7 @@ public final class OnEventLivingDrop
      * @param livingDropsEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingDrops_0(LivingDropsEvent livingDropsEvent)
+    public void onUpdateLivingDrops_0(LivingDropsEvent livingDropsEvent)
     {
         AtomicInteger atomicInteger = new AtomicInteger();
 

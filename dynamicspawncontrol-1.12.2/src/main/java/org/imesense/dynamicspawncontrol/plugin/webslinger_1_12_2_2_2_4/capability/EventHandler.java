@@ -35,7 +35,7 @@ public final class EventHandler
      * @param attachCapabilitiesEvent
      */
     @SubscribeEvent
-    public synchronized void onAttachCapabilitiesTileEntity_0(AttachCapabilitiesEvent<TileEntity> attachCapabilitiesEvent)
+    public void onAttachCapabilitiesTileEntity_0(AttachCapabilitiesEvent<TileEntity> attachCapabilitiesEvent)
     {
         TileEntity entity = attachCapabilitiesEvent.getObject();
 
@@ -80,7 +80,7 @@ public final class EventHandler
      * @param attachCapabilitiesEvent
      */
     @SubscribeEvent
-    public synchronized void onAttachCapabilitiesEntity_1(AttachCapabilitiesEvent<Entity> attachCapabilitiesEvent)
+    public void onAttachCapabilitiesEntity_1(AttachCapabilitiesEvent<Entity> attachCapabilitiesEvent)
     {
         Entity entity = attachCapabilitiesEvent.getObject();
 

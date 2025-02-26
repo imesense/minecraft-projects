@@ -45,7 +45,7 @@ public final class OnEventSingleZombieSummonAID
      * @param event
      */
     @SubscribeEvent
-    public synchronized void onZombieSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
+    public void onZombieSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
     {
         if (!(event.getEntityLiving() instanceof EntityZombie))
         {

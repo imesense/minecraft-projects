@@ -156,7 +156,7 @@ public final class WebSlingerCapability implements IWebSlinger
      * @param livingAttackEvent
      */
     @SubscribeEvent
-    public synchronized void onLivingAttack(LivingAttackEvent livingAttackEvent)
+    public void onLivingAttack(LivingAttackEvent livingAttackEvent)
     {
         Entity targetEntity = livingAttackEvent.getEntity();
         EntityLiving ownerEntity = this.getOwner();

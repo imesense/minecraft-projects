@@ -44,7 +44,7 @@ public final class OnEventLivingExperienceDrop
      * @param livingExperienceDropEvent
      */
     @SubscribeEvent
-    public synchronized void onUpdateLivingExperienceDrop_0(LivingExperienceDropEvent livingExperienceDropEvent)
+    public void onUpdateLivingExperienceDrop_0(LivingExperienceDropEvent livingExperienceDropEvent)
     {
         AtomicInteger atomicInteger = new AtomicInteger();
 

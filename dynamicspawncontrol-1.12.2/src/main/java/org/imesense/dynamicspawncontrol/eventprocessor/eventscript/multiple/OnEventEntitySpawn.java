@@ -45,7 +45,7 @@ public final class OnEventEntitySpawn
      * @param checkSpawn
      */
     @SubscribeEvent
-    public synchronized void onUpdateEntitySpawnEvent_0(LivingSpawnEvent.CheckSpawn checkSpawn)
+    public void onUpdateEntitySpawnEvent_0(LivingSpawnEvent.CheckSpawn checkSpawn)
     {
         if (checkSpawn.getWorld().isRemote)
         {
