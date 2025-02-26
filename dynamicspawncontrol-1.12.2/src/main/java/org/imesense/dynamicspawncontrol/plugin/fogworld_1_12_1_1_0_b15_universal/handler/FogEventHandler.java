@@ -48,7 +48,7 @@ public class FogEventHandler
     private static boolean fogInit;
     private static float fogFarPlaneDistance;
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public static void onGetFogColor(EntityViewRenderEvent.FogColors event) {
         Vec3d mixedColor;
         if (event.getEntity() instanceof EntityPlayer) {
@@ -72,7 +72,7 @@ public class FogEventHandler
         }
     }
 
-    @SubscribeEvent
+   // @SubscribeEvent
     public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
         float farPlaneDistance;
         Entity entity = event.getEntity();
@@ -150,7 +150,7 @@ public class FogEventHandler
         GL11.glFogf(2916, farPlaneDistance);
     }
 
-    @Nullable
+    //@Nullable
     private static Vec3d postProcessColor(World world, EntityLivingBase player, double r, double g, double b, double renderPartialTicks) {
         double darkScale = (player.lastTickPosY + ((player.posY - player.lastTickPosY) * renderPartialTicks)) * world.provider.getVoidFogYFactor();
         if (player.isPotionActive(MobEffects.BLINDNESS)) {

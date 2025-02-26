@@ -227,7 +227,7 @@ public final class OnEventSandBox implements IDebug
 
     private static int tickCounter = 0;
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event)
     {
         Minecraft mc = Minecraft.getMinecraft();
