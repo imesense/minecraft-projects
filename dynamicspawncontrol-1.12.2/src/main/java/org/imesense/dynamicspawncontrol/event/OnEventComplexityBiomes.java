@@ -232,6 +232,7 @@ public final class OnEventComplexityBiomes
                 return 6;
             case "Jungle":
             case "JungleHills":
+            case "Jungle M":
                 return this.MAX;
             default:
                 return this.NULL;
