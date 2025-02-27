@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.config.data;
+package org.imesense.dynamicspawncontrol.core.config.data;
 
 import lombok.*;
 import lombok.experimental.Accessors;

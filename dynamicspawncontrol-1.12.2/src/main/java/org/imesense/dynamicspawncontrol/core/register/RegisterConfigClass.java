@@ -1,10 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.config.file.PlayerConceptConfig;
-import org.imesense.dynamicspawncontrol.config.file.*;
+import org.imesense.dynamicspawncontrol.core.config.file.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.config.file.CacheWorldGameConfig;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgTimeControl;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;

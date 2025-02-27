@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.config.data.WindowTitleData;
+import org.imesense.dynamicspawncontrol.core.config.data.WindowTitleData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.lwjgl.opengl.Display;
 

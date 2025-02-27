@@ -1,7 +1,7 @@
-package org.imesense.dynamicspawncontrol.config.file;
+package org.imesense.dynamicspawncontrol.core.config.file;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.config.data.SkeletonDropItemData;
+import org.imesense.dynamicspawncontrol.core.config.data.SkeletonDropItemData;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;

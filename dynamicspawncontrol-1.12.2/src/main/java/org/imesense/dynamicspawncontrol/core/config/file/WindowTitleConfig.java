@@ -1,9 +1,9 @@
-package org.imesense.dynamicspawncontrol.config.file;
+package org.imesense.dynamicspawncontrol.core.config.file;
 
 import com.google.gson.*;
+import org.imesense.dynamicspawncontrol.core.config.data.WindowTitleData;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -18,21 +18,21 @@ import java.nio.file.Paths;
 /**
  *
  */
-@ConceptConfig(fileName = "cfg_log_file")
-public final class LogFileConfig extends AbstractConceptConfig
+@ConceptConfig(fileName = "cfg_window_title")
+public final class WindowTitleConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public LogFileConfig(String nameConfigFile)
+    public WindowTitleConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
 		CodeGeneric.printInitClassToLog(this.getClass());
 
-        org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance =
-                new org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile("log_file");
+        WindowTitleData.ConfigDataWindowTitle.Instance =
+                new WindowTitleData.ConfigDataWindowTitle("window_title");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,12 +65,13 @@ public final class LogFileConfig extends AbstractConceptConfig
         }
 
         JsonObject recordObject = new JsonObject();
-        JsonObject jsonObjectLogFile = new JsonObject();
+        JsonObject jsonObjectWindowTitle = new JsonObject();
 
-        jsonObjectLogFile.addProperty("max_lines",
-                org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.getLogMaxLines());
+        jsonObjectWindowTitle.addProperty("title",
+                WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle());
 
-        recordObject.add(org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.getCategoryObject(), jsonObjectLogFile);
+        recordObject.add(WindowTitleData.ConfigDataWindowTitle.Instance.
+                getCategoryObject(), jsonObjectWindowTitle);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -95,21 +96,21 @@ public final class LogFileConfig extends AbstractConceptConfig
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.getCategoryObject()))
+            if (readableObject.has(WindowTitleData.ConfigDataWindowTitle.Instance.getCategoryObject()))
             {
-                JsonObject jsonObjectLogFile =
-                        readableObject.getAsJsonObject(org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.
-                                getCategoryObject());
+                JsonObject jsonObjectWindowTitle =
+                        readableObject.getAsJsonObject(WindowTitleData.ConfigDataWindowTitle.
+                                Instance.getCategoryObject());
 
-                if (jsonObjectLogFile.has("max_lines"))
+                if (jsonObjectWindowTitle.has("title"))
                 {
-                    org.imesense.dynamicspawncontrol.config.data.LogFileData.ConfigDataLogFile.Instance.
-                            setLogMaxLines(jsonObjectLogFile.get("max_lines").getAsShort());
+                    WindowTitleData.ConfigDataWindowTitle.Instance.
+                            setWindowTitle(jsonObjectWindowTitle.get("title").getAsString());
                 }
             }
             else
             {
-                Log.writeDataToLogFile(2, "'log_file' is missing in the config file.");
+                Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
             }
         }
         catch (FileNotFoundException exception)

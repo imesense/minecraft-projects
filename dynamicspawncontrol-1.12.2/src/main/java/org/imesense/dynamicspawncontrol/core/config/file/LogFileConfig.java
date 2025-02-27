@@ -1,9 +1,10 @@
-package org.imesense.dynamicspawncontrol.config.file;
+package org.imesense.dynamicspawncontrol.core.config.file;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.config.data.WindowTitleData;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
+import org.imesense.dynamicspawncontrol.core.config.data.LogFileData;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -18,21 +19,21 @@ import java.nio.file.Paths;
 /**
  *
  */
-@ConceptConfig(fileName = "cfg_window_title")
-public final class WindowTitleConfig extends AbstractConceptConfig
+@ConceptConfig(fileName = "cfg_log_file")
+public final class LogFileConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public WindowTitleConfig(String nameConfigFile)
+    public LogFileConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
 		CodeGeneric.printInitClassToLog(this.getClass());
 
-        WindowTitleData.ConfigDataWindowTitle.Instance =
-                new WindowTitleData.ConfigDataWindowTitle("window_title");
+        LogFileData.ConfigDataLogFile.Instance =
+                new LogFileData.ConfigDataLogFile("log_file");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -65,13 +66,12 @@ public final class WindowTitleConfig extends AbstractConceptConfig
         }
 
         JsonObject recordObject = new JsonObject();
-        JsonObject jsonObjectWindowTitle = new JsonObject();
+        JsonObject jsonObjectLogFile = new JsonObject();
 
-        jsonObjectWindowTitle.addProperty("title",
-                WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle());
+        jsonObjectLogFile.addProperty("max_lines",
+                LogFileData.ConfigDataLogFile.Instance.getLogMaxLines());
 
-        recordObject.add(WindowTitleData.ConfigDataWindowTitle.Instance.
-                getCategoryObject(), jsonObjectWindowTitle);
+        recordObject.add(LogFileData.ConfigDataLogFile.Instance.getCategoryObject(), jsonObjectLogFile);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -96,21 +96,21 @@ public final class WindowTitleConfig extends AbstractConceptConfig
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(WindowTitleData.ConfigDataWindowTitle.Instance.getCategoryObject()))
+            if (readableObject.has(LogFileData.ConfigDataLogFile.Instance.getCategoryObject()))
             {
-                JsonObject jsonObjectWindowTitle =
-                        readableObject.getAsJsonObject(WindowTitleData.ConfigDataWindowTitle.
-                                Instance.getCategoryObject());
+                JsonObject jsonObjectLogFile =
+                        readableObject.getAsJsonObject(LogFileData.ConfigDataLogFile.Instance.
+                                getCategoryObject());
 
-                if (jsonObjectWindowTitle.has("title"))
+                if (jsonObjectLogFile.has("max_lines"))
                 {
-                    WindowTitleData.ConfigDataWindowTitle.Instance.
-                            setWindowTitle(jsonObjectWindowTitle.get("title").getAsString());
+                    LogFileData.ConfigDataLogFile.Instance.
+                            setLogMaxLines(jsonObjectLogFile.get("max_lines").getAsShort());
                 }
             }
             else
             {
-                Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
+                Log.writeDataToLogFile(2, "'log_file' is missing in the config file.");
             }
         }
         catch (FileNotFoundException exception)

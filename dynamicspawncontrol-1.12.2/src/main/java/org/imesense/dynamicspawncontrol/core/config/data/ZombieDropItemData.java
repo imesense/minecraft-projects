@@ -1,6 +1,5 @@
-package org.imesense.dynamicspawncontrol.config.data;
+package org.imesense.dynamicspawncontrol.core.config.data;
 
-import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import javax.annotation.Nonnull;
@@ -8,12 +7,12 @@ import javax.annotation.Nonnull;
 /**
  *
  */
-public final class SkeletonDropItemData
+public final class ZombieDropItemData
 {
     /**
      *
      */
-    public static final class ConfigDataSkeletonDrop
+    public static final class ConfigDataZombieDrop
     {
         /**
          *
@@ -23,7 +22,7 @@ public final class SkeletonDropItemData
         /**
          *
          */
-        public static SkeletonDropItemData.ConfigDataSkeletonDrop Instance;
+        public static ConfigDataZombieDrop Instance;
 
         /**
          *
@@ -62,14 +61,9 @@ public final class SkeletonDropItemData
 
         /**
          *
-         */
-        private Byte arrowsToDrops = (byte)(1 + UniqueField.RANDOM.nextInt(3));
-
-        /**
-         *
          * @param CATEGORY
          */
-        public ConfigDataSkeletonDrop(@Nonnull final String CATEGORY)
+        public ConfigDataZombieDrop(@Nonnull final String CATEGORY)
         {
             CodeGeneric.printInitClassToLog(this.getClass());
             this.CATEGORY = CATEGORY;
@@ -140,15 +134,6 @@ public final class SkeletonDropItemData
 
         /**
          *
-         * @param value
-         */
-        public void setArrowsToDrops(Byte value)
-        {
-            this.arrowsToDrops = value;
-        }
-
-        /**
-         *
          * @return
          */
         public Float getBreakItem()
@@ -214,18 +199,10 @@ public final class SkeletonDropItemData
          *
          * @return
          */
-        public Byte getArrowsToDrops()
-        {
-            return this.arrowsToDrops;
-        }
-
-        /**
-         *
-         * @return
-         */
         public String getCategoryObject()
         {
             return this.CATEGORY;
         }
     }
 }
+

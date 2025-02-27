@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.config.data.ZombieDropItemData;
+import org.imesense.dynamicspawncontrol.core.config.data.ZombieDropItemData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.List;
