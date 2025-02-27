@@ -1,11 +1,11 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single;
+package org.imesense.dynamicspawncontrol.eventprocessor;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
@@ -20,14 +20,14 @@ import java.util.*;
  *
  */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventSingleZombieSummonAID
+public final class OnEventEntityJoinWorld
 {
     /**
      *
      */
     private static boolean instanceExists = false;
 
-    public OnEventSingleZombieSummonAID()
+    public OnEventEntityJoinWorld()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -45,14 +45,14 @@ public final class OnEventSingleZombieSummonAID
      * @param event
      */
     @SubscribeEvent
-    public void onZombieSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
+    public void onZombieSpecialSpawn(EntityJoinWorldEvent event)
     {
-        if (!(event.getEntityLiving() instanceof EntityZombie))
+        if (!(event.getEntity() instanceof EntityZombie))
         {
             return;
         }
 
-        EntityZombie entityZombie = (EntityZombie) event.getEntityLiving();
+        EntityZombie entityZombie = (EntityZombie) event.getEntity();
 
         GeneralStorageData generalStorageData = GeneralStorageData.Instance;
         if (generalStorageData != null)
@@ -129,5 +129,3 @@ public final class OnEventSingleZombieSummonAID
         return equipmentList.get(equipmentList.size() - 1);
     }
 }
-
-

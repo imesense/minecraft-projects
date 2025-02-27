@@ -26,7 +26,6 @@ import org.imesense.dynamicspawncontrol.core.worldstructure.Structure;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.parser.algo.GeneralStorageData;
-import org.imesense.dynamicspawncontrol.parser.algo.ParserGenericJsonScript;
 import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 import org.imesense.dynamicspawncontrol.core.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
@@ -134,8 +133,6 @@ public final class DynamicSpawnControl
 
         Cache.Instance = new Cache();
 
-        ParserGenericJsonScript.setRulePath(fmlPreInitializationEvent.getModConfigurationDirectory());
-
         RegisterTechnicalClass.registerClasses();
 
         OnEventWindowTitle.replace();
@@ -184,8 +181,6 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent fmlLoadCompleteEvent)
     {
-        ParserGenericJsonScript.readRules();
-
         RegisterParserManager.init();
     }
 
@@ -208,8 +203,6 @@ public final class DynamicSpawnControl
     {
         Cache.Instance.cleanActualCache();
         Cache.Instance.cleanBufferCache();
-
-        Structure.STRUCTURES_CACHE.clean();
     }
 
     /**

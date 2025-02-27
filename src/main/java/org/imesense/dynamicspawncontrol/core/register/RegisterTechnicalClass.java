@@ -4,9 +4,8 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.event.OnEventRenderFPS;
-import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.multiple.*;
-import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEventSingleJsonCheckSpawn;
-import org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single.OnEventSingleZombieSummonAID;
+import org.imesense.dynamicspawncontrol.eventprocessor.OnEventSingleJsonCheckSpawn;
+import org.imesense.dynamicspawncontrol.eventprocessor.OnEventEntityJoinWorld;
 import org.imesense.dynamicspawncontrol.event.OnEventPlayer;
 import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEvent;
@@ -24,14 +23,9 @@ public final class RegisterTechnicalClass
         CacheEvent.class,
         //OnEventSandBox.class, //-' TODO: Перенести девелоп класс в отдельный регистр, положил половину игры на релизу
         OnEventWindowTitle.class,
-        OnEventEntitySpawn.class,
-        OnEventLivingDrop.class,
-        OnEventLivingExperienceDrop.class,
-        OnEventMobTaskManager.class,
         OnEventPlayer.class,
-        OnEventPotentialSpawn.class,
         OnEventSingleJsonCheckSpawn.class,
-        OnEventSingleZombieSummonAID.class,
+        OnEventEntityJoinWorld.class,
         OnEventRenderFPS.class
     };
 

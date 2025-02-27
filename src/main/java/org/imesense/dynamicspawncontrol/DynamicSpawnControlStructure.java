@@ -49,12 +49,12 @@ public final class DynamicSpawnControlStructure
         /**
          *
          */
-        public static final String NAME_DIR_SCRIPTS = "scripts";
+        public static final String NAME_DIR_SCRIPTS = "scripts_old";
 
         /**
          *
          */
-        public static final String NAME_DIR_SINGLE_SCRIPTS = "single_scripts";
+        public static final String NAME_DIR_SINGLE_SCRIPTS = "scripts";
 
         /**
          *

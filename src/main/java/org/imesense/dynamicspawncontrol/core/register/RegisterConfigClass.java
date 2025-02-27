@@ -26,7 +26,6 @@ public final class RegisterConfigClass
     private static final Class<?>[] CONFIG_CLASSES =
     {
         CacheWorldGameConfig.class,
-        GameDebuggerConfig.class,
         LogFileConfig.class,
         PlayerConceptConfig.class,
         CfgDarkness.class,

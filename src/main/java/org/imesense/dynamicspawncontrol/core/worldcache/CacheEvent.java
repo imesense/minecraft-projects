@@ -20,7 +20,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.config.data.GameDebuggerData;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.HashSet;
@@ -123,10 +122,10 @@ public final class CacheEvent
     @SubscribeEvent
     public void onRenderOverlay_3(RenderGameOverlayEvent.Post post)
     {
-        if (!GameDebuggerData.ConfigDataMonitor.Instance.getDebugMonitorCache())
-        {
-            return;
-        }
+       // if (!GameDebuggerData.ConfigDataMonitor.Instance.getDebugMonitorCache())
+        //{
+        //    return;
+        //}
 
         if (post.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
