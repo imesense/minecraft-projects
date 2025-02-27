@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
+import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
@@ -64,7 +65,16 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                 if (dataObject != null)
                 {
+                    if (!dataObject.has("profile") || !dataObject.has("description"))
+                    {
+                        throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' are required in the 'data' section.");
+                    }
+
                     StoringScriptData.Equipment config = new StoringScriptData.Equipment();
+
+                    config.profile = dataObject.get("profile").getAsString();
+                    config.description = dataObject.get("description").getAsString();
+
                     config.entityType = dataObject.get("entity_type").getAsString();
                     config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
                     config.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
@@ -132,6 +142,11 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
         {
             Log.writeDataToLogFile(0, "Error loading script file: " + exception.getMessage());
             throw new RuntimeException("Error loading script file", exception);
+        }
+        catch (CheckScript.MissingRequiredFieldException exception)
+        {
+            Log.writeDataToLogFile(0, exception.getMessage());
+            throw new RuntimeException(exception.getMessage(), exception);
         }
     }
 }
