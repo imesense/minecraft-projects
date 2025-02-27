@@ -59,6 +59,11 @@ public final class Equip
         {
             EntityLivingBase livingEntity = (EntityLivingBase) entity;
 
+            if (config.commandNbt != null)
+            {
+                CommandNBT.getInstance().applyNbt(livingEntity, config.commandNbt);
+            }
+
             if (!config.isArcher)
             {
                 equipEntityWithItems(livingEntity, config.HeldItems, EntityEquipmentSlot.MAINHAND, random);
@@ -71,14 +76,10 @@ public final class Equip
 
             if (config.HasShield)
             {
-                if (config.HeldItems != null && !config.HeldItems.isEmpty())
-                {
-                    equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
-                }
+                equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
             }
 
             List<StoringScriptData.PotionEffectWithChance> potions = StoringScriptData.Instance.getPotions();
-
             if (potions != null)
             {
                 Potion.getInstance().applyPotionEffects(livingEntity, potions, random);
