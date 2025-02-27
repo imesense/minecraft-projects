@@ -1,10 +1,15 @@
 package org.imesense.dynamicspawncontrol.eventprocessor;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -15,76 +20,81 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.parser.algo.GeneralStorageData;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-/**
- *
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventEntityJoinWorld
 {
-    /**
-     *
-     */
-    private static boolean instanceExists = false;
-
-    public OnEventEntityJoinWorld()
-    {
-        CodeGeneric.printInitClassToLog(this.getClass());
-
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
-    }
-
-    /**
-     *
-     * @param event
-     */
     @SubscribeEvent
-    public void onZombieSpecialSpawn(EntityJoinWorldEvent event)
+    public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
-        if (!(event.getEntity() instanceof EntityZombie))
+        String entityType = EntityList.getEntityString(event.getEntity());
+
+        if (entityType == null)
         {
+            Log.writeDataToLogFile(0, "entityType is null");
             return;
         }
 
-        EntityZombie entityZombie = (EntityZombie) event.getEntity();
+        String fullEntityType = entityType.contains(":") ? entityType : "minecraft:" + entityType.toLowerCase();
 
         GeneralStorageData generalStorageData = GeneralStorageData.Instance;
+
         if (generalStorageData != null)
         {
             List<GeneralStorageData.Equipment> configs = generalStorageData.getEquipmentConfigs();
 
             if (configs != null && !configs.isEmpty())
             {
-                GeneralStorageData.Equipment selectedConfig = getConfigByPriority(configs, UniqueField.RANDOM.self());
+                List<GeneralStorageData.Equipment> filteredConfigs = configs.stream()
+                        .filter(config -> config.entityType.equals(fullEntityType))
+                        .collect(Collectors.toList());
 
-                equipZombie(entityZombie, selectedConfig.HeldItems, EntityEquipmentSlot.MAINHAND, UniqueField.RANDOM.self());
-                equipZombie(entityZombie, selectedConfig.Helmets, EntityEquipmentSlot.HEAD, UniqueField.RANDOM.self());
-                equipZombie(entityZombie, selectedConfig.ChestPlates, EntityEquipmentSlot.CHEST, UniqueField.RANDOM.self());
-                equipZombie(entityZombie, selectedConfig.Leggings, EntityEquipmentSlot.LEGS, UniqueField.RANDOM.self());
-                equipZombie(entityZombie, selectedConfig.Boots, EntityEquipmentSlot.FEET, UniqueField.RANDOM.self());
-
-                if (selectedConfig.HasShield)
+                if (!filteredConfigs.isEmpty())
                 {
-                    equipZombie(entityZombie, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, UniqueField.RANDOM.self());
+                    GeneralStorageData.Equipment selectedConfig = getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
+                    equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
                 }
             }
         }
     }
 
-    /**
-     *
-     * @param entityZombie
-     * @param items
-     * @param equipmentSlot
-     * @param random
-     */
-    private void equipZombie(EntityZombie entityZombie, List<String> items, EntityEquipmentSlot equipmentSlot, Random random)
+    private void equipEntity(Entity entity, GeneralStorageData.Equipment config, Random random)
+    {
+        if (entity instanceof EntityLivingBase)
+        {
+            EntityLivingBase livingEntity = (EntityLivingBase) entity;
+
+            boolean isArcher = false;
+
+            if (!isArcher)
+            {
+                equipEntityWithItems(livingEntity, config.HeldItems, EntityEquipmentSlot.MAINHAND, random);
+            }
+
+            equipEntityWithItems(livingEntity, config.Helmets, EntityEquipmentSlot.HEAD, random);
+            equipEntityWithItems(livingEntity, config.ChestPlates, EntityEquipmentSlot.CHEST, random);
+            equipEntityWithItems(livingEntity, config.Leggings, EntityEquipmentSlot.LEGS, random);
+            equipEntityWithItems(livingEntity, config.Boots, EntityEquipmentSlot.FEET, random);
+
+            if (config.HasShield)
+            {
+                if (config.HeldItems != null && !config.HeldItems.isEmpty())
+                {
+                    equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
+                }
+            }
+
+            List<GeneralStorageData.PotionEffectWithChance> potions = GeneralStorageData.Instance.getPotions();
+
+            if (potions != null)
+            {
+                applyPotionEffects(livingEntity, potions, random);
+            }
+        }
+    }
+
+    private void equipEntityWithItems(EntityLivingBase entity, List<String> items, EntityEquipmentSlot equipmentSlot, Random random)
     {
         if (items != null && !items.isEmpty())
         {
@@ -93,7 +103,7 @@ public final class OnEventEntityJoinWorld
 
             if (itemStack.getItem() != Items.AIR)
             {
-                entityZombie.setItemStackToSlot(equipmentSlot, itemStack);
+                entity.setItemStackToSlot(equipmentSlot, itemStack);
             }
             else
             {
@@ -103,12 +113,6 @@ public final class OnEventEntityJoinWorld
         }
     }
 
-    /**
-     *
-     * @param equipmentList
-     * @param random
-     * @return
-     */
     private GeneralStorageData.Equipment getConfigByPriority(List<GeneralStorageData.Equipment> equipmentList, Random random)
     {
         int totalPriority = equipmentList.stream().mapToInt(config -> config.Priority).sum();
@@ -127,5 +131,21 @@ public final class OnEventEntityJoinWorld
         }
 
         return equipmentList.get(equipmentList.size() - 1);
+    }
+
+    private void applyPotionEffects(EntityLivingBase entity, List<GeneralStorageData.PotionEffectWithChance> potions, Random random)
+    {
+        if (potions != null && !potions.isEmpty())
+        {
+            for (GeneralStorageData.PotionEffectWithChance effectWithChance : potions)
+            {
+                if (random.nextDouble() <= effectWithChance.Chance)
+                {
+                    PotionEffect effect = effectWithChance.Effect;
+                    PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
+                    entity.addPotionEffect(newEffect);
+                }
+            }
+        }
     }
 }

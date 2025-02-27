@@ -15,14 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public final class ParserWorldCacheMobs extends AbstractConceptParser
 {
-    /**
-     *
-     */
     public ParserWorldCacheMobs(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -30,19 +24,12 @@ public final class ParserWorldCacheMobs extends AbstractConceptParser
         this.nameFile = NAME_FILE;
     }
 
-    /**
-     *
-     */
     @Override
     public void reloadConfig()
     {
         this.loadConfig(false);
     }
 
-    /**
-     *
-     * @param initialization
-     */
     @Override
     public void loadConfig(boolean initialization)
     {
@@ -93,10 +80,6 @@ public final class ParserWorldCacheMobs extends AbstractConceptParser
         }
     }
 
-    /**
-     *
-     * @param file
-     */
     private void createNewConfigFile(File file)
     {
         try
@@ -128,10 +111,6 @@ public final class ParserWorldCacheMobs extends AbstractConceptParser
         }
     }
 
-    /**
-     *
-     * @return
-     */
     private static JsonArray getJsonElements()
     {
         JsonArray jsonArray = new JsonArray();
@@ -145,12 +124,6 @@ public final class ParserWorldCacheMobs extends AbstractConceptParser
         return jsonArray;
     }
 
-    /**
-     *
-     * @param entity
-     * @param maxCount
-     * @return
-     */
     private static JsonObject createEntityJson(String entity, int maxCount)
     {
         JsonObject jsonObject = new JsonObject();

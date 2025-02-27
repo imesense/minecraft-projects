@@ -1,10 +1,11 @@
 package org.imesense.dynamicspawncontrol.parser.multiple;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -19,75 +20,32 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 {
-    /**
-     *
-     */
     public ParserSpecialSpawnEntity(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
         this.nameFile = NAME_FILE;
     }
 
-    /**
-     *
-     */
     @Override
     public void reloadConfig()
     {
         this.loadConfig(false);
     }
 
-    /**
-     *
-     * @param initialization
-     */
     @Override
     public void loadConfig(boolean initialization)
     {
         GeneralStorageData.Instance.EquipmentConfigs = new ArrayList<>();
+        GeneralStorageData.Instance.Potions = new ArrayList<>();
 
         File file = getConfigFile(initialization,
-                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_SINGLE_SCRIPTS, this.nameFile);
+                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
-            try
-            {
-                File file1 = file.getParentFile();
 
-                if (!file1.exists() && !file1.mkdirs())
-                {
-                    Log.writeDataToLogFile(0, "Failed to create directories for script file: " + file1.getAbsolutePath());
-                    throw new RuntimeException("Failed to create directories for script file: " + file1.getAbsolutePath());
-                }
-
-                if (file.createNewFile())
-                {
-                    Log.writeDataToLogFile(0, "Created new script file: " + file.getAbsolutePath());
-
-                    try (FileWriter fileWriter = new FileWriter(file))
-                    {
-                        fileWriter.write("[]");
-                        Log.writeDataToLogFile(0, "Initialized new script file with empty JSON array: " + file.getAbsolutePath());
-                    }
-                }
-                else
-                {
-                    Log.writeDataToLogFile(0, "Failed to create new script file: " + file.getAbsolutePath());
-                    throw new RuntimeException("Failed to create new script file: " + file.getAbsolutePath());
-                }
-            }
-            catch (IOException exception)
-            {
-                Log.writeDataToLogFile(0, "Error creating new script file: " + exception.getMessage());
-                throw new RuntimeException("Error creating new script file", exception);
-            }
         }
 
         try (FileReader fileReader = new FileReader(file))
@@ -97,67 +55,79 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
             if (jsonArray.size() == 0)
             {
-                //Log.writeDataToLogFile(0, "Script: " +
-               //         EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() + " data is empty.");
-
                 return;
             }
 
-            for (int i = 0; i < jsonArray.size(); i++)
+            for (JsonElement element : jsonArray)
             {
-                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                JsonObject jsonObject1 = jsonObject.getAsJsonObject("data");
+                JsonObject jsonObject = element.getAsJsonObject();
+                JsonObject dataObject = jsonObject.getAsJsonObject("data");
 
-                if (jsonObject1 != null)
+                if (dataObject != null)
                 {
                     GeneralStorageData.Equipment config = new GeneralStorageData.Equipment();
-                    config.Priority = jsonObject1.has("priority") ? jsonObject1.get("priority").getAsInt() : 0;
+                    config.entityType = dataObject.get("entity_type").getAsString();
+                    config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
 
-                    JsonObject jsonObject2 = jsonObject1.getAsJsonObject("equipment");
+                    JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
 
-                    if (jsonObject2 != null)
+                    if (equipmentObject != null)
                     {
                         Type listType = new TypeToken<List<String>>() {}.getType();
 
-                        config.HeldItems = gson.fromJson(jsonObject2.get("held_item"), listType);
-                        config.Helmets = gson.fromJson(jsonObject2.get("armor_helmet"), listType);
-                        config.ChestPlates = gson.fromJson(jsonObject2.get("armor_chest"), listType);
-                        config.Leggings = gson.fromJson(jsonObject2.get("armor_legs"), listType);
-                        config.Boots = gson.fromJson(jsonObject2.get("armor_boots"), listType);
-                        config.HasShield = jsonObject1.has("has_shield") && jsonObject1.get("has_shield").getAsBoolean();
+                        config.HeldItems = gson.fromJson(equipmentObject.get("held_item"), listType);
+                        config.Helmets = gson.fromJson(equipmentObject.get("armor_helmet"), listType);
+                        config.ChestPlates = gson.fromJson(equipmentObject.get("armor_chest"), listType);
+                        config.Leggings = gson.fromJson(equipmentObject.get("armor_legs"), listType);
+                        config.Boots = gson.fromJson(equipmentObject.get("armor_boots"), listType);
+                        config.HasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
 
                         GeneralStorageData.Instance.EquipmentConfigs.add(config);
-
-                        //Log.writeDataToLogFile(0, "Script: " +
-                        //        EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() + " data loaded.");
                     }
                     else
                     {
-                        //Log.writeDataToLogFile(0,
-                        //        "Script: " +
-                        //                EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() +
-                        //                " not found key 'equipment'");
-
                         throw new RuntimeException("Key 'equipment' not found in JSON file.");
+                    }
+
+                    if (dataObject.has("potion"))
+                    {
+                        JsonArray potionArray = dataObject.getAsJsonArray("potion");
+
+                        for (JsonElement potionElement : potionArray)
+                        {
+                            String potionString = potionElement.getAsString();
+                            String[] split = potionString.split(",");
+
+                            if (split.length < 3 || split.length > 4)
+                            {
+                                Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                                continue;
+                            }
+
+                            ResourceLocation potionId = new ResourceLocation(split[0].trim());
+                            Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
+
+                            if (potion == null)
+                            {
+                                Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
+                                continue;
+                            }
+
+                            int duration = Integer.parseInt(split[1].trim());
+                            int amplifier = Integer.parseInt(split[2].trim());
+                            double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
+
+                            GeneralStorageData.Instance.Potions.add(new GeneralStorageData.PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
+                        }
                     }
                 }
                 else
                 {
-                    //Log.writeDataToLogFile(0,
-                   //         "Script: " +
-                    //                EnumSingleScript.SCRIPT_ZOMBIE_SUMMON_AID.getKeyword() +
-                    //                " not found key 'data'");
-
                     throw new RuntimeException("Key 'data' not found in JSON file.");
                 }
             }
         }
-        catch (JsonSyntaxException exception)
-        {
-            Log.writeDataToLogFile(0, "JSON syntax error in configuration file: " + exception.getMessage());
-            throw new RuntimeException("JSON syntax error in configuration file", exception);
-        }
-        catch (IOException exception)
+        catch (JsonSyntaxException | IOException exception)
         {
             Log.writeDataToLogFile(0, "Error loading script file: " + exception.getMessage());
             throw new RuntimeException("Error loading script file", exception);
