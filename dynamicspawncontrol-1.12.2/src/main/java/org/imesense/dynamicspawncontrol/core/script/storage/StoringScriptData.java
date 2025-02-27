@@ -26,6 +26,8 @@ public final class StoringScriptData
         public List<String> Leggings;
         public List<String> Boots;
         public boolean HasShield;
+        public boolean isArcher;
+        public Boolean seeSky;
     }
 
     public List<Equipment> EquipmentConfigs;
