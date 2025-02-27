@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.logfile;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.config.data.LogFileData;
+import org.imesense.dynamicspawncontrol.core.config.data.LogFileData;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -14,15 +14,8 @@ import java.util.concurrent.Executors;
 /**
  *
  */
-import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  *

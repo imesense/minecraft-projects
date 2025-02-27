@@ -4,7 +4,6 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.event.OnEventRenderFPS;
-import org.imesense.dynamicspawncontrol.eventprocessor.OnEventSingleJsonCheckSpawn;
 import org.imesense.dynamicspawncontrol.eventprocessor.OnEventEntityJoinWorld;
 import org.imesense.dynamicspawncontrol.event.OnEventPlayer;
 import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
@@ -24,7 +23,6 @@ public final class RegisterTechnicalClass
         //OnEventSandBox.class, //-' TODO: Перенести девелоп класс в отдельный регистр, положил половину игры на релизу
         OnEventWindowTitle.class,
         OnEventPlayer.class,
-        OnEventSingleJsonCheckSpawn.class,
         OnEventEntityJoinWorld.class,
         OnEventRenderFPS.class
     };

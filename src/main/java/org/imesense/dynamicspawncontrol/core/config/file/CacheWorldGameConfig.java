@@ -1,7 +1,6 @@
-package org.imesense.dynamicspawncontrol.config.file;
+package org.imesense.dynamicspawncontrol.core.config.file;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.config.data.PlayerData;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -18,21 +17,18 @@ import java.nio.file.Paths;
 /**
  *
  */
-@ConceptConfig(fileName = "cfg_player")
-public final class PlayerConceptConfig extends AbstractConceptConfig
+@ConceptConfig(fileName = "cfg_cache_world_game")
+public final class CacheWorldGameConfig extends AbstractConceptConfig
 {
     /**
      *
      * @param nameConfigFile
      */
-    public PlayerConceptConfig(String nameConfigFile)
+    public CacheWorldGameConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
 		CodeGeneric.printInitClassToLog(this.getClass());
-
-        PlayerData.ConfigDataPlayer.Instance =
-                new PlayerData.ConfigDataPlayer("player");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -64,19 +60,13 @@ public final class PlayerConceptConfig extends AbstractConceptConfig
             }
         }
 
-        JsonObject recordObject = new JsonObject();
-        JsonObject jsonObjectPlayer = new JsonObject();
-
-        jsonObjectPlayer.addProperty("protected_respawn_player_radius",
-                PlayerData.ConfigDataPlayer.Instance.getProtectRespawnPlayerRadius());
-
-        recordObject.add(PlayerData.ConfigDataPlayer.Instance.getCategoryObject(), jsonObjectPlayer);
+        JsonObject jsonObject = new JsonObject();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(recordObject, fileWriter);
+            gson.toJson(jsonObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -92,24 +82,8 @@ public final class PlayerConceptConfig extends AbstractConceptConfig
     {
         try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
-            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
-
-            if (readableObject.has(PlayerData.ConfigDataPlayer.Instance.getCategoryObject()))
-            {
-                JsonObject jsonObjectPlayer =
-                        readableObject.getAsJsonObject(PlayerData.ConfigDataPlayer.Instance.getCategoryObject());
-
-                if (jsonObjectPlayer.has("protected_respawn_player_radius"))
-                {
-                    PlayerData.ConfigDataPlayer.Instance.
-                            setProtectRespawnPlayerRadius(jsonObjectPlayer.get("protected_respawn_player_radius").getAsShort());
-                }
-            }
-            else
-            {
-                Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
-            }
+            JsonElement jsonElement = new JsonParser().parse(fileReader);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
         }
         catch (FileNotFoundException exception)
         {

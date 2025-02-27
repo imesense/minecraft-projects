@@ -1,10 +1,7 @@
-package org.imesense.dynamicspawncontrol.config.data;
+package org.imesense.dynamicspawncontrol.core.config.data;
 
-import lombok.Generated;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-
-import javax.annotation.Nonnull;
 
 /**
  *

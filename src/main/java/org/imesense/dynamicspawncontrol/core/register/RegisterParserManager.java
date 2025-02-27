@@ -5,7 +5,6 @@ import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.parser.single.ParserWorldCacheMobs;
-import org.imesense.dynamicspawncontrol.parser.multiple.ParserCheckSpawnEntity;
 import org.imesense.dynamicspawncontrol.parser.multiple.ParserSpecialSpawnEntity;
 
 import java.util.ArrayList;
@@ -22,8 +21,7 @@ public final class RegisterParserManager
     private static final Class<?>[] PARSER_CLASSES =
     {
         ParserWorldCacheMobs.class,
-        ParserSpecialSpawnEntity.class,
-        ParserCheckSpawnEntity.class
+        ParserSpecialSpawnEntity.class
     };
 
     /**
