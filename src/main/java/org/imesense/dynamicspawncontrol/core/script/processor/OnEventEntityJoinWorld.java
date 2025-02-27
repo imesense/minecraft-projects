@@ -55,6 +55,11 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                 {
                     StoringScriptData.Equipment selectedConfig = Priority.getInstance().getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
 
+                    if (!World.getInstance().checkHeight(event.getEntity(), selectedConfig.minHeight, selectedConfig.maxHeight))
+                    {
+                        return;
+                    }
+
                     if (selectedConfig.seeSky != null)
                     {
                         boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
