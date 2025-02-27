@@ -1,4 +1,45 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
-public class Potion {
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.potion.PotionEffect;
+import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
+
+import java.util.List;
+import java.util.Random;
+
+public final class Potion
+{
+    private static volatile Potion _INSTANCE;
+
+    public static Potion getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (Potion.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new Potion();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
+
+    public void applyPotionEffects(EntityLivingBase entity, List<StoringScriptData.PotionEffectWithChance> potions, Random random)
+    {
+        if (potions != null && !potions.isEmpty())
+        {
+            for (StoringScriptData.PotionEffectWithChance effectWithChance : potions)
+            {
+                if (random.nextDouble() <= effectWithChance.Chance)
+                {
+                    PotionEffect effect = effectWithChance.Effect;
+                    PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
+                    entity.addPotionEffect(newEffect);
+                }
+            }
+        }
+    }
 }

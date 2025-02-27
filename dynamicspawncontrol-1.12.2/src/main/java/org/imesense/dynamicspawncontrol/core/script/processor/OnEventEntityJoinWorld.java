@@ -5,23 +5,27 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
+import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.initializer.ConceptScriptProcessor;
 import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventEntityJoinWorld
+public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 {
+    public OnEventEntityJoinWorld()
+    {
+        super();
+    }
+
     @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent event)
     {
@@ -49,7 +53,7 @@ public final class OnEventEntityJoinWorld
 
                 if (!filteredConfigs.isEmpty())
                 {
-                    StoringScriptData.Equipment selectedConfig = getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
+                    StoringScriptData.Equipment selectedConfig = Priority.getInstance().getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
 
                     if (selectedConfig.seeSky != null)
                     {
@@ -60,7 +64,7 @@ public final class OnEventEntityJoinWorld
                             return;
                         }
                     }
-                    
+
                     equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
                 }
             }
@@ -75,19 +79,19 @@ public final class OnEventEntityJoinWorld
 
             if (!config.isArcher)
             {
-                equipEntityWithItems(livingEntity, config.HeldItems, EntityEquipmentSlot.MAINHAND, random);
+                Equip.getInstance().equipEntityWithItems(livingEntity, config.HeldItems, EntityEquipmentSlot.MAINHAND, random);
             }
 
-            equipEntityWithItems(livingEntity, config.Helmets, EntityEquipmentSlot.HEAD, random);
-            equipEntityWithItems(livingEntity, config.ChestPlates, EntityEquipmentSlot.CHEST, random);
-            equipEntityWithItems(livingEntity, config.Leggings, EntityEquipmentSlot.LEGS, random);
-            equipEntityWithItems(livingEntity, config.Boots, EntityEquipmentSlot.FEET, random);
+            Equip.getInstance().equipEntityWithItems(livingEntity, config.Helmets, EntityEquipmentSlot.HEAD, random);
+            Equip.getInstance().equipEntityWithItems(livingEntity, config.ChestPlates, EntityEquipmentSlot.CHEST, random);
+            Equip.getInstance().equipEntityWithItems(livingEntity, config.Leggings, EntityEquipmentSlot.LEGS, random);
+            Equip.getInstance().equipEntityWithItems(livingEntity, config.Boots, EntityEquipmentSlot.FEET, random);
 
             if (config.HasShield)
             {
                 if (config.HeldItems != null && !config.HeldItems.isEmpty())
                 {
-                    equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
+                    Equip.getInstance().equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
                 }
             }
 
@@ -95,62 +99,7 @@ public final class OnEventEntityJoinWorld
 
             if (potions != null)
             {
-                applyPotionEffects(livingEntity, potions, random);
-            }
-        }
-    }
-
-    private void equipEntityWithItems(EntityLivingBase entity, List<String> items, EntityEquipmentSlot equipmentSlot, Random random)
-    {
-        if (items != null && !items.isEmpty())
-        {
-            String item = items.get(random.nextInt(items.size()));
-            ItemStack itemStack = new ItemStack(Objects.requireNonNull(Item.getByNameOrId(item)));
-
-            if (itemStack.getItem() != Items.AIR)
-            {
-                entity.setItemStackToSlot(equipmentSlot, itemStack);
-            }
-            else
-            {
-                Log.writeDataToLogFile(1, "Item not found: " + item);
-                throw new RuntimeException("Item not found: " + item);
-            }
-        }
-    }
-
-    private StoringScriptData.Equipment getConfigByPriority(List<StoringScriptData.Equipment> equipmentList, Random random)
-    {
-        int totalPriority = equipmentList.stream().mapToInt(config -> config.Priority).sum();
-        int randomValue = random.nextInt(totalPriority);
-
-        int cumulativePriority = 0;
-
-        for (StoringScriptData.Equipment config : equipmentList)
-        {
-            cumulativePriority += config.Priority;
-
-            if (randomValue < cumulativePriority)
-            {
-                return config;
-            }
-        }
-
-        return equipmentList.get(equipmentList.size() - 1);
-    }
-
-    private void applyPotionEffects(EntityLivingBase entity, List<StoringScriptData.PotionEffectWithChance> potions, Random random)
-    {
-        if (potions != null && !potions.isEmpty())
-        {
-            for (StoringScriptData.PotionEffectWithChance effectWithChance : potions)
-            {
-                if (random.nextDouble() <= effectWithChance.Chance)
-                {
-                    PotionEffect effect = effectWithChance.Effect;
-                    PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
-                    entity.addPotionEffect(newEffect);
-                }
+                Potion.getInstance().applyPotionEffects(livingEntity, potions, random);
             }
         }
     }
