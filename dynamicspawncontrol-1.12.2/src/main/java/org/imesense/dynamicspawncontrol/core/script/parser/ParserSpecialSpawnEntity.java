@@ -71,7 +71,6 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     }
 
                     StoringScriptData.Equipment config = new StoringScriptData.Equipment();
-
                     config.profile = dataObject.get("profile").getAsString();
                     config.description = dataObject.get("description").getAsString();
 
@@ -79,6 +78,11 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
                     config.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
                     config.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
+
+                    if (dataObject.has("command_nbt"))
+                    {
+                        config.commandNbt = dataObject.get("command_nbt").toString();
+                    }
 
                     JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
 

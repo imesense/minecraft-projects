@@ -24,5 +24,10 @@ public class ConceptScriptProcessor
         Priority priority = Priority.getInstance();
         double priorityTime = timer.stop();
         Log.writeDataToLogFile(0, "Create Action Collector object 'Priority': " + priority.hashCode() + " (Time: " + priorityTime + " ms)");
+
+        timer.start();
+        CommandNBT commandNBT = CommandNBT.getInstance();
+        double commandNBTTime = timer.stop();
+        Log.writeDataToLogFile(0, "Create Action Collector object 'CommandNBT': " + commandNBT.hashCode() + " (Time: " + commandNBTTime + " ms)");
     }
 }

@@ -31,6 +31,7 @@ public final class StoringScriptData
         public boolean HasShield;
         public boolean isArcher;
         public Boolean seeSky;
+        public String commandNbt;
     }
 
     public List<Equipment> EquipmentConfigs;
