@@ -4,7 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.event.OnEventRenderFPS;
-import org.imesense.dynamicspawncontrol.eventprocessor.OnEventEntityJoinWorld;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventEntityJoinWorld;
 import org.imesense.dynamicspawncontrol.event.OnEventPlayer;
 import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEvent;

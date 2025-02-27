@@ -27,9 +27,8 @@ public final class RegisterCommandClass
         CmdAdminLaunchFireball.class,
         CmdAdminScanEntities.class,
         CmdAdminSwitchVanish.class,
-        CmdServerJsonScriptReload.class,
         CmdServerMobsKiller.class,
-        CmdServerSingleScriptReload.class,
+        CmdServerScriptReload.class,
         CmdAdminGetDimension.class
     };
 

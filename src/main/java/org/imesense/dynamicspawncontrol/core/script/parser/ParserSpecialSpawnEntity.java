@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.parser.multiple;
+package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -7,14 +7,13 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.parser.algo.GeneralStorageData;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -37,8 +36,8 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
     @Override
     public void loadConfig(boolean initialization)
     {
-        GeneralStorageData.Instance.EquipmentConfigs = new ArrayList<>();
-        GeneralStorageData.Instance.Potions = new ArrayList<>();
+        StoringScriptData.Instance.EquipmentConfigs = new ArrayList<>();
+        StoringScriptData.Instance.Potions = new ArrayList<>();
 
         File file = getConfigFile(initialization,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
@@ -65,7 +64,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                 if (dataObject != null)
                 {
-                    GeneralStorageData.Equipment config = new GeneralStorageData.Equipment();
+                    StoringScriptData.Equipment config = new StoringScriptData.Equipment();
                     config.entityType = dataObject.get("entity_type").getAsString();
                     config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
 
@@ -82,7 +81,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         config.Boots = gson.fromJson(equipmentObject.get("armor_boots"), listType);
                         config.HasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
 
-                        GeneralStorageData.Instance.EquipmentConfigs.add(config);
+                        StoringScriptData.Instance.EquipmentConfigs.add(config);
                     }
                     else
                     {
@@ -117,7 +116,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                             int amplifier = Integer.parseInt(split[2].trim());
                             double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
-                            GeneralStorageData.Instance.Potions.add(new GeneralStorageData.PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
+                            StoringScriptData.Instance.Potions.add(new StoringScriptData.PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
                         }
                     }
                 }

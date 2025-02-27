@@ -1,23 +1,20 @@
-package org.imesense.dynamicspawncontrol.eventprocessor;
+package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.parser.algo.GeneralStorageData;
+import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,28 +35,28 @@ public final class OnEventEntityJoinWorld
 
         String fullEntityType = entityType.contains(":") ? entityType : "minecraft:" + entityType.toLowerCase();
 
-        GeneralStorageData generalStorageData = GeneralStorageData.Instance;
+        StoringScriptData generalStorageData = StoringScriptData.Instance;
 
         if (generalStorageData != null)
         {
-            List<GeneralStorageData.Equipment> configs = generalStorageData.getEquipmentConfigs();
+            List<StoringScriptData.Equipment> configs = generalStorageData.getEquipmentConfigs();
 
             if (configs != null && !configs.isEmpty())
             {
-                List<GeneralStorageData.Equipment> filteredConfigs = configs.stream()
+                List<StoringScriptData.Equipment> filteredConfigs = configs.stream()
                         .filter(config -> config.entityType.equals(fullEntityType))
                         .collect(Collectors.toList());
 
                 if (!filteredConfigs.isEmpty())
                 {
-                    GeneralStorageData.Equipment selectedConfig = getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
+                    StoringScriptData.Equipment selectedConfig = getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
                     equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
                 }
             }
         }
     }
 
-    private void equipEntity(Entity entity, GeneralStorageData.Equipment config, Random random)
+    private void equipEntity(Entity entity, StoringScriptData.Equipment config, Random random)
     {
         if (entity instanceof EntityLivingBase)
         {
@@ -85,7 +82,7 @@ public final class OnEventEntityJoinWorld
                 }
             }
 
-            List<GeneralStorageData.PotionEffectWithChance> potions = GeneralStorageData.Instance.getPotions();
+            List<StoringScriptData.PotionEffectWithChance> potions = StoringScriptData.Instance.getPotions();
 
             if (potions != null)
             {
@@ -113,14 +110,14 @@ public final class OnEventEntityJoinWorld
         }
     }
 
-    private GeneralStorageData.Equipment getConfigByPriority(List<GeneralStorageData.Equipment> equipmentList, Random random)
+    private StoringScriptData.Equipment getConfigByPriority(List<StoringScriptData.Equipment> equipmentList, Random random)
     {
         int totalPriority = equipmentList.stream().mapToInt(config -> config.Priority).sum();
         int randomValue = random.nextInt(totalPriority);
 
         int cumulativePriority = 0;
 
-        for (GeneralStorageData.Equipment config : equipmentList)
+        for (StoringScriptData.Equipment config : equipmentList)
         {
             cumulativePriority += config.Priority;
 
@@ -133,11 +130,11 @@ public final class OnEventEntityJoinWorld
         return equipmentList.get(equipmentList.size() - 1);
     }
 
-    private void applyPotionEffects(EntityLivingBase entity, List<GeneralStorageData.PotionEffectWithChance> potions, Random random)
+    private void applyPotionEffects(EntityLivingBase entity, List<StoringScriptData.PotionEffectWithChance> potions, Random random)
     {
         if (potions != null && !potions.isEmpty())
         {
-            for (GeneralStorageData.PotionEffectWithChance effectWithChance : potions)
+            for (StoringScriptData.PotionEffectWithChance effectWithChance : potions)
             {
                 if (random.nextDouble() <= effectWithChance.Chance)
                 {

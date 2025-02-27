@@ -1,16 +1,15 @@
-package org.imesense.dynamicspawncontrol.parser.algo;
+package org.imesense.dynamicspawncontrol.core.script.storage;
 
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 
-public final class GeneralStorageData
+public final class StoringScriptData
 {
-    public static GeneralStorageData Instance;
+    public static StoringScriptData Instance;
 
-    public GeneralStorageData()
+    public StoringScriptData()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         Instance = this;
