@@ -20,6 +20,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.imesense.dynamicspawncontrol.core.script.AuxScript.Util.*;
+
 public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 {
     public ParserSpecialSpawnEntity(final String NAME_FILE)
@@ -45,23 +47,25 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
         if (!file.exists())
         {
-
+            return;
         }
 
         try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
+            JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
 
-            if (jsonArray.size() == 0)
+            if (!jsonObject.has("configs"))
             {
-                return;
+                throw new RuntimeException("Key 'configs' not found in JSON file.");
             }
 
-            for (JsonElement element : jsonArray)
+            JsonObject templates = jsonObject.has("templates") ? jsonObject.getAsJsonObject("templates") : new JsonObject();
+            JsonArray configs = jsonObject.getAsJsonArray("configs");
+
+            for (JsonElement element : configs)
             {
-                JsonObject jsonObject = element.getAsJsonObject();
-                JsonObject dataObject = jsonObject.getAsJsonObject("data");
+                JsonObject dataObject = element.getAsJsonObject().getAsJsonObject("data");
 
                 if (dataObject != null)
                 {
@@ -70,20 +74,24 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' are required in the 'data' section.");
                     }
 
+                    if (dataObject.has("potion"))
+                    {
+                        dataObject.add("potion", resolveTemplate(dataObject.get("potion"), templates));
+                    }
+
+                    if (dataObject.has("command_nbt"))
+                    {
+                        dataObject.add("command_nbt", resolveTemplate(dataObject.get("command_nbt"), templates));
+                    }
+
                     StoringScriptData.Equipment config = new StoringScriptData.Equipment();
                     config.profile = dataObject.get("profile").getAsString();
                     config.description = dataObject.get("description").getAsString();
-
                     config.entityType = dataObject.get("entity_type").getAsString();
                     config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
                     config.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
                     config.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
-
-                    if (dataObject.has("command_nbt"))
-                    {
-                        config.commandNbt = dataObject.get("command_nbt").toString();
-                    }
-
+                    config.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
                     config.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
                     config.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
 
