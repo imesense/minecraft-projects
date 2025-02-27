@@ -65,41 +65,8 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                         }
                     }
 
-                    equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
+                    Equip.getInstance().equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
                 }
-            }
-        }
-    }
-
-    private void equipEntity(Entity entity, StoringScriptData.Equipment config, Random random)
-    {
-        if (entity instanceof EntityLivingBase)
-        {
-            EntityLivingBase livingEntity = (EntityLivingBase) entity;
-
-            if (!config.isArcher)
-            {
-                Equip.getInstance().equipEntityWithItems(livingEntity, config.HeldItems, EntityEquipmentSlot.MAINHAND, random);
-            }
-
-            Equip.getInstance().equipEntityWithItems(livingEntity, config.Helmets, EntityEquipmentSlot.HEAD, random);
-            Equip.getInstance().equipEntityWithItems(livingEntity, config.ChestPlates, EntityEquipmentSlot.CHEST, random);
-            Equip.getInstance().equipEntityWithItems(livingEntity, config.Leggings, EntityEquipmentSlot.LEGS, random);
-            Equip.getInstance().equipEntityWithItems(livingEntity, config.Boots, EntityEquipmentSlot.FEET, random);
-
-            if (config.HasShield)
-            {
-                if (config.HeldItems != null && !config.HeldItems.isEmpty())
-                {
-                    Equip.getInstance().equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
-                }
-            }
-
-            List<StoringScriptData.PotionEffectWithChance> potions = StoringScriptData.Instance.getPotions();
-
-            if (potions != null)
-            {
-                Potion.getInstance().applyPotionEffects(livingEntity, potions, random);
             }
         }
     }

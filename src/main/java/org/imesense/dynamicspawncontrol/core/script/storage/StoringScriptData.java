@@ -17,6 +17,9 @@ public final class StoringScriptData
 
     public static class Equipment
     {
+        public String profile;
+        public String description;
+
         public String entityType;
         public int Priority;
 
