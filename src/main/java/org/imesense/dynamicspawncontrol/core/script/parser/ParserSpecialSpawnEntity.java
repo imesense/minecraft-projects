@@ -67,6 +67,8 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     StoringScriptData.Equipment config = new StoringScriptData.Equipment();
                     config.entityType = dataObject.get("entity_type").getAsString();
                     config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
+                    config.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
+                    config.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
 
                     JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
 

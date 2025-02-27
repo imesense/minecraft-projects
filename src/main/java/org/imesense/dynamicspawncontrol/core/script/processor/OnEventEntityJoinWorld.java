@@ -50,6 +50,17 @@ public final class OnEventEntityJoinWorld
                 if (!filteredConfigs.isEmpty())
                 {
                     StoringScriptData.Equipment selectedConfig = getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
+
+                    if (selectedConfig.seeSky != null)
+                    {
+                        boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
+
+                        if ((selectedConfig.seeSky && !canSeeSky) || (!selectedConfig.seeSky && canSeeSky))
+                        {
+                            return;
+                        }
+                    }
+                    
                     equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
                 }
             }
@@ -62,9 +73,7 @@ public final class OnEventEntityJoinWorld
         {
             EntityLivingBase livingEntity = (EntityLivingBase) entity;
 
-            boolean isArcher = false;
-
-            if (!isArcher)
+            if (!config.isArcher)
             {
                 equipEntityWithItems(livingEntity, config.HeldItems, EntityEquipmentSlot.MAINHAND, random);
             }
