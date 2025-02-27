@@ -4,8 +4,8 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.parser.single.ParserWorldCacheMobs;
-import org.imesense.dynamicspawncontrol.parser.multiple.ParserSpecialSpawnEntity;
+import org.imesense.dynamicspawncontrol.core.script.parser.ParserWorldCacheMobs;
+import org.imesense.dynamicspawncontrol.core.script.parser.ParserSpecialSpawnEntity;
 
 import java.util.ArrayList;
 import java.util.List;

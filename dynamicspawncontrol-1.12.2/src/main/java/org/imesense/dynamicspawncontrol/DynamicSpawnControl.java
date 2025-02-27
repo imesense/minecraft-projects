@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol;
 
-import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +20,7 @@ import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
-import org.imesense.dynamicspawncontrol.parser.algo.GeneralStorageData;
+import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 import org.imesense.dynamicspawncontrol.core.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
@@ -74,7 +73,7 @@ public final class DynamicSpawnControl
     /**
      *
      */
-    public GeneralStorageData GeneralStorageData = null;
+    public StoringScriptData GeneralStorageData = null;
 
     /**
      *
@@ -123,7 +122,7 @@ public final class DynamicSpawnControl
 
         RegisterConfigClass.initializeConfigs();
 
-        GeneralStorageData = new GeneralStorageData();
+        GeneralStorageData = new StoringScriptData();
 
         CacheStorage.Instance = new CacheStorage();
 

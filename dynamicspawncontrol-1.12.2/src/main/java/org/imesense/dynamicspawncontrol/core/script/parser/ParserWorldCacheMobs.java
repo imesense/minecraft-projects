@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.parser.single;
+package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
