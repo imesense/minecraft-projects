@@ -29,5 +29,10 @@ public class ConceptScriptProcessor
         CommandNBT commandNBT = CommandNBT.getInstance();
         double commandNBTTime = timer.stop();
         Log.writeDataToLogFile(0, "Create Action Collector object 'CommandNBT': " + commandNBT.hashCode() + " (Time: " + commandNBTTime + " ms)");
+
+        timer.start();
+        World world = World.getInstance();
+        double worldTime = timer.stop();
+        Log.writeDataToLogFile(0, "Create Action Collector object 'World': " + world.hashCode() + " (Time: " + worldTime + " ms)");
     }
 }

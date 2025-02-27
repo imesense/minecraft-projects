@@ -84,6 +84,9 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         config.commandNbt = dataObject.get("command_nbt").toString();
                     }
 
+                    config.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
+                    config.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
+
                     JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
 
                     if (equipmentObject != null)

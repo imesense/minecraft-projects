@@ -32,6 +32,8 @@ public final class StoringScriptData
         public boolean isArcher;
         public Boolean seeSky;
         public String commandNbt;
+        public Integer maxHeight;
+        public Integer minHeight;
     }
 
     public List<Equipment> EquipmentConfigs;
