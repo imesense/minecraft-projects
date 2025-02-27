@@ -24,9 +24,15 @@ public final class UniqueField
     @UniqueObject
     public static final Random RANDOM = new Random();
 
+    /**
+     *
+     */
     @UniqueObject
     public static final Minecraft CLIENT = Minecraft.getMinecraft();
 
+    /**
+     *
+     */
     @UniqueObject
     public static final Boolean LOGGING_CONSOLE_LEVEL_DEBUG = "debug".equalsIgnoreCase(System.getProperty("forge.logging.console.level"));
 
