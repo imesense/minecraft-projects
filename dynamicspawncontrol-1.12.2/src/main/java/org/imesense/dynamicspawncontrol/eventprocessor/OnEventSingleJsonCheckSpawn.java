@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.eventprocessor.eventscript.single;
+package org.imesense.dynamicspawncontrol.eventprocessor;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
