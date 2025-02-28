@@ -64,6 +64,16 @@ public final class CommandNBT
                 int id = enchObject.get("id").getAsInt();
                 String lvl = enchObject.get("lvl").getAsString();
 
+                if (enchObject.has("chance"))
+                {
+                    int chance = enchObject.get("chance").getAsInt();
+
+                    if (random.nextInt(100) >= chance)
+                    {
+                        continue;
+                    }
+                }
+
                 int level;
                 if (lvl.contains(":"))
                 {
