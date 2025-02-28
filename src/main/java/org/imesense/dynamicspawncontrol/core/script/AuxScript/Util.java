@@ -6,7 +6,8 @@ import com.google.gson.JsonObject;
 
 public final class Util
 {
-    public static JsonElement resolveTemplate(JsonElement element, JsonObject templates) {
+    public static JsonElement resolveTemplate(JsonElement element, JsonObject templates)
+    {
         if (element.isJsonPrimitive())
         {
             String elementStr = element.getAsString();
