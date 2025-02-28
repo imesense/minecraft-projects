@@ -81,7 +81,7 @@ public final class OnEventNickNameEntity
      *
      * @param specialSpawn
      */
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onEntitySpawn_0(LivingSpawnEvent.SpecialSpawn specialSpawn)
     {
         if (specialSpawn.getEntity() instanceof EntityZombie)
@@ -114,7 +114,7 @@ public final class OnEventNickNameEntity
      *
      * @param livingDeathEvent
      */
-    @SubscribeEvent
+   // @SubscribeEvent
     public void onEntityDeath_1(LivingDeathEvent livingDeathEvent)
     {
         if (livingDeathEvent.getEntity() instanceof EntityZombie)
