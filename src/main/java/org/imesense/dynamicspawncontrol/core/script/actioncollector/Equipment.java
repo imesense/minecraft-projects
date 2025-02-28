@@ -15,19 +15,19 @@ import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 
 import java.util.*;
 
-public final class Equip
+public final class Equipment
 {
-    private static volatile Equip _INSTANCE;
+    private static volatile Equipment _INSTANCE;
 
-    public static Equip getInstance()
+    public static Equipment getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (Equip.class)
+            synchronized (Equipment.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new Equip();
+                    _INSTANCE = new Equipment();
                 }
             }
         }
@@ -35,7 +35,8 @@ public final class Equip
         return _INSTANCE;
     }
 
-    private void equipEntityWithItems(EntityLivingBase entity, List<?> items, EntityEquipmentSlot equipmentSlot, Random random) {
+    private void equipEntityWithItems(EntityLivingBase entity, List<?> items, EntityEquipmentSlot equipmentSlot, Random random)
+    {
         if (items != null && !items.isEmpty())
         {
             Object item = items.get(random.nextInt(items.size()));
@@ -100,6 +101,7 @@ public final class Equip
             }
 
             List<StoringScriptData.PotionEffectWithChance> potions = StoringScriptData.Instance.getPotions();
+
             if (potions != null)
             {
                 Potion.getInstance().applyPotionEffects(livingEntity, potions, random);

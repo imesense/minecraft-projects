@@ -1,13 +1,12 @@
 package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equip;
+import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
 import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -17,9 +16,7 @@ import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.imesense.dynamicspawncontrol.core.script.AuxScript.Util.*;
 
@@ -100,11 +97,11 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     if (equipmentObject != null)
                     {
-                        config.HeldItems = Equip.getInstance().parseItemList(equipmentObject.get("held_item"));
-                        config.Helmets = Equip.getInstance().parseItemList(equipmentObject.get("armor_helmet"));
-                        config.ChestPlates = Equip.getInstance().parseItemList(equipmentObject.get("armor_chest"));
-                        config.Leggings = Equip.getInstance().parseItemList(equipmentObject.get("armor_legs"));
-                        config.Boots = Equip.getInstance().parseItemList(equipmentObject.get("armor_boots"));
+                        config.HeldItems = Equipment.getInstance().parseItemList(equipmentObject.get("held_item"));
+                        config.Helmets = Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"));
+                        config.ChestPlates = Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"));
+                        config.Leggings = Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"));
+                        config.Boots = Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"));
                         config.HasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
 
                         StoringScriptData.Instance.EquipmentConfigs.add(config);

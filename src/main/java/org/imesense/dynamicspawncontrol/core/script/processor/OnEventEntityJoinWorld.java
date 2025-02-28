@@ -1,10 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -70,7 +66,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                         }
                     }
 
-                    Equip.getInstance().equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
+                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
                 }
             }
         }
