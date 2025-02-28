@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.AuxScript;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class Util
+public final class Util
 {
     public static JsonElement resolveTemplate(JsonElement element, JsonObject templates)
     {

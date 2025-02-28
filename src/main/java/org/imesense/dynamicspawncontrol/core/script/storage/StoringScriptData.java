@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage;
 
+import com.google.gson.JsonObject;
 import net.minecraft.potion.PotionEffect;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -23,17 +24,23 @@ public final class StoringScriptData
         public String entityType;
         public int Priority;
 
-        public List<String> HeldItems;
-        public List<String> Helmets;
-        public List<String> ChestPlates;
-        public List<String> Leggings;
-        public List<String> Boots;
+        public List<ItemData> HeldItems;
+        public List<ItemData> Helmets;
+        public List<ItemData> ChestPlates;
+        public List<ItemData> Leggings;
+        public List<ItemData> Boots;
         public boolean HasShield;
         public boolean isArcher;
         public Boolean seeSky;
         public String commandNbt;
         public Integer maxHeight;
         public Integer minHeight;
+    }
+
+    public static class ItemData
+    {
+        public String item;
+        public JsonObject nbt;
     }
 
     public List<Equipment> EquipmentConfigs;
