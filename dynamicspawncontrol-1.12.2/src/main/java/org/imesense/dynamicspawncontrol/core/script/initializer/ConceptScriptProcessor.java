@@ -11,7 +11,7 @@ public class ConceptScriptProcessor
         Timer timer = new Timer();
 
         timer.start();
-        Equip equip = Equip.getInstance();
+        Equipment equip = Equipment.getInstance();
         double equipTime = timer.stop();
         Log.writeDataToLogFile(0, "Create Action Collector object 'Equip': " + equip.hashCode() + " (Time: " + equipTime + " ms)");
 
