@@ -53,9 +53,9 @@ public final class CommandNBT
     {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
 
-        if (nbtObject.has("enchantments"))
+        if (nbtObject.has("ench"))
         {
-            JsonArray enchantmentsArray = nbtObject.getAsJsonArray("enchantments");
+            JsonArray enchantmentsArray = nbtObject.getAsJsonArray("ench");
             NBTTagList enchantmentsList = new NBTTagList();
 
             for (JsonElement enchantmentsElement : enchantmentsArray)
@@ -94,7 +94,7 @@ public final class CommandNBT
                 enchantmentsList.appendTag(enchantmentsTag);
             }
 
-            nbtTagCompound.setTag("enchantments", enchantmentsList);
+            nbtTagCompound.setTag("ench", enchantmentsList);
         }
 
         return nbtTagCompound;
