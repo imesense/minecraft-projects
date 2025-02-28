@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.EntityList;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +24,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
     }
 
     @SubscribeEvent
-    public void onEntityJoinWorld(EntityJoinWorldEvent event)
+    public void onEntityJoinWorld(LivingSpawnEvent.CheckSpawn event)
     {
         String entityType = EntityList.getEntityString(event.getEntity());
 
@@ -64,6 +65,12 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                         {
                             return;
                         }
+                    }
+
+                    if (selectedConfig.name != null)
+                    {
+                        event.getEntity().setCustomNameTag(selectedConfig.name);
+                        event.getEntity().setAlwaysRenderNameTag(true);
                     }
 
                     Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());

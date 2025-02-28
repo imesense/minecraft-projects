@@ -94,16 +94,57 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     config.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
                     config.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
                     config.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
+                    config.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
 
                     JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
 
                     if (equipmentObject != null)
                     {
-                        config.HeldItems = Equipment.getInstance().parseItemList(equipmentObject.get("held_item"));
-                        config.Helmets = Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"));
-                        config.ChestPlates = Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"));
-                        config.Leggings = Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"));
-                        config.Boots = Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"));
+                        if (equipmentObject.has("held_item"))
+                        {
+                            config.HeldItems = Equipment.getInstance().parseItemList(equipmentObject.get("held_item"));
+                        }
+                        else
+                        {
+                            config.HeldItems = null;
+                        }
+
+                        if (equipmentObject.has("armor_helmet"))
+                        {
+                            config.Helmets = Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"));
+                        }
+                        else
+                        {
+                            config.Helmets = null;
+                        }
+
+                        if (equipmentObject.has("armor_chest"))
+                        {
+                            config.ChestPlates = Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"));
+                        }
+                        else
+                        {
+                            config.ChestPlates = null;
+                        }
+
+                        if (equipmentObject.has("armor_legs"))
+                        {
+                            config.Leggings = Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"));
+                        }
+                        else
+                        {
+                            config.Leggings = null;
+                        }
+
+                        if (equipmentObject.has("armor_boots"))
+                        {
+                            config.Boots = Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"));
+                        }
+                        else
+                        {
+                            config.Boots = null;
+                        }
+
                         config.HasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
 
                         if (dataObject.has("potion"))

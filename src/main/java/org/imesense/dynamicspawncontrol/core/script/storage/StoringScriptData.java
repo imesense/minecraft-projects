@@ -37,6 +37,7 @@ public final class StoringScriptData
         public Integer maxHeight;
         public Integer minHeight;
         public List<PotionEffectWithChance> potions;
+        public String name;
     }
 
     public static class ItemData
