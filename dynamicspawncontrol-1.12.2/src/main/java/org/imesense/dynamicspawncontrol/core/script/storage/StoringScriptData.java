@@ -16,6 +16,7 @@ public final class StoringScriptData
         Instance = this;
     }
 
+    //-' TODO: переделать это
     public static class Equipment
     {
         public String profile;
@@ -35,6 +36,7 @@ public final class StoringScriptData
         public String commandNbt;
         public Integer maxHeight;
         public Integer minHeight;
+        public List<PotionEffectWithChance> potions;
     }
 
     public static class ItemData

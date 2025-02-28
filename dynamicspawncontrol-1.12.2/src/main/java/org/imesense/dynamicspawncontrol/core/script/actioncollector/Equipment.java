@@ -100,11 +100,9 @@ public final class Equipment
                 equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
             }
 
-            List<StoringScriptData.PotionEffectWithChance> potions = StoringScriptData.Instance.getPotions();
-
-            if (potions != null)
+            if (config.potions != null)
             {
-                Potion.getInstance().applyPotionEffects(livingEntity, potions, random);
+                Potion.getInstance().applyPotionEffects(livingEntity, config.potions, random);
             }
         }
     }
