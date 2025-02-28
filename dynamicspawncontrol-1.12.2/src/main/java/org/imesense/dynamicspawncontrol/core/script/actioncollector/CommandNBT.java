@@ -53,20 +53,20 @@ public final class CommandNBT
     {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
 
-        if (nbtObject.has("ench"))
+        if (nbtObject.has("enchantments"))
         {
-            JsonArray enchArray = nbtObject.getAsJsonArray("ench");
-            NBTTagList enchList = new NBTTagList();
+            JsonArray enchantmentsArray = nbtObject.getAsJsonArray("enchantments");
+            NBTTagList enchantmentsList = new NBTTagList();
 
-            for (JsonElement enchElement : enchArray)
+            for (JsonElement enchantmentsElement : enchantmentsArray)
             {
-                JsonObject enchObject = enchElement.getAsJsonObject();
-                int id = enchObject.get("id").getAsInt();
-                String lvl = enchObject.get("lvl").getAsString();
+                JsonObject enchantmentsObject = enchantmentsElement.getAsJsonObject();
+                int id = enchantmentsObject.get("id").getAsInt();
+                String lvl = enchantmentsObject.get("lvl").getAsString();
 
-                if (enchObject.has("chance"))
+                if (enchantmentsObject.has("chance"))
                 {
-                    int chance = enchObject.get("chance").getAsInt();
+                    int chance = enchantmentsObject.get("chance").getAsInt();
 
                     if (random.nextInt(100) >= chance)
                     {
@@ -87,13 +87,14 @@ public final class CommandNBT
                     level = Integer.parseInt(lvl);
                 }
 
-                NBTTagCompound enchTag = new NBTTagCompound();
-                enchTag.setShort("id", (short) id);
-                enchTag.setShort("lvl", (short) level);
-                enchList.appendTag(enchTag);
+                NBTTagCompound enchantmentsTag = new NBTTagCompound();
+
+                enchantmentsTag.setShort("id", (short) id);
+                enchantmentsTag.setShort("lvl", (short) level);
+                enchantmentsList.appendTag(enchantmentsTag);
             }
 
-            nbtTagCompound.setTag("ench", enchList);
+            nbtTagCompound.setTag("enchantments", enchantmentsList);
         }
 
         return nbtTagCompound;
