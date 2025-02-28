@@ -7,6 +7,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equip;
 import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -99,13 +100,11 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     if (equipmentObject != null)
                     {
-                        Type listType = new TypeToken<List<String>>() {}.getType();
-
-                        config.HeldItems = gson.fromJson(equipmentObject.get("held_item"), listType);
-                        config.Helmets = gson.fromJson(equipmentObject.get("armor_helmet"), listType);
-                        config.ChestPlates = gson.fromJson(equipmentObject.get("armor_chest"), listType);
-                        config.Leggings = gson.fromJson(equipmentObject.get("armor_legs"), listType);
-                        config.Boots = gson.fromJson(equipmentObject.get("armor_boots"), listType);
+                        config.HeldItems = Equip.getInstance().parseItemList(equipmentObject.get("held_item"));
+                        config.Helmets = Equip.getInstance().parseItemList(equipmentObject.get("armor_helmet"));
+                        config.ChestPlates = Equip.getInstance().parseItemList(equipmentObject.get("armor_chest"));
+                        config.Leggings = Equip.getInstance().parseItemList(equipmentObject.get("armor_legs"));
+                        config.Boots = Equip.getInstance().parseItemList(equipmentObject.get("armor_boots"));
                         config.HasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
 
                         StoringScriptData.Instance.EquipmentConfigs.add(config);
