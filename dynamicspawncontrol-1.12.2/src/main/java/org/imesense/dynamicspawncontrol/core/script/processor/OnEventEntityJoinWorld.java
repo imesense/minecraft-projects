@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 {
+    private final Random random = new Random();
+
     public OnEventEntityJoinWorld()
     {
         super();
@@ -74,6 +78,36 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                     }
 
                     Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
+                }
+            }
+
+            List<StoringScriptData.DataSupport> dataSupports = generalStorageData.DataSupports;
+
+            if (dataSupports != null && !dataSupports.isEmpty())
+            {
+                List<StoringScriptData.DataSupport> filteredDataSupports = dataSupports.stream()
+                        .filter(dataSupport -> dataSupport.entityType.equals(fullEntityType))
+                        .collect(Collectors.toList());
+
+                if (!filteredDataSupports.isEmpty())
+                {
+                    for (StoringScriptData.DataSupport dataSupport : filteredDataSupports)
+                    {
+                        if (dataSupport.seeSky != null)
+                        {
+                            boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
+
+                            if ((dataSupport.seeSky && !canSeeSky) || (!dataSupport.seeSky && canSeeSky))
+                            {
+                                continue;
+                            }
+                        }
+
+                        if (dataSupport.potions != null && !dataSupport.potions.isEmpty())
+                        {
+                            Potion.getInstance().applyPotionEffects((EntityLivingBase) event.getEntity(), dataSupport.potions, random);
+                        }
+                    }
                 }
             }
         }

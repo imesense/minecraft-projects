@@ -192,6 +192,54 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     throw new RuntimeException("Key 'data' not found in JSON file.");
                 }
             }
+
+            if (jsonObject.has("data_support"))
+            {
+                JsonArray dataSupportArray = jsonObject.getAsJsonArray("data_support");
+                for (JsonElement element : dataSupportArray)
+                {
+                    JsonObject dataSupportObject = element.getAsJsonObject();
+
+                    StoringScriptData.DataSupport dataSupport = new StoringScriptData.DataSupport();
+                    dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
+                    dataSupport.entityType = dataSupportObject.get("entity_type").getAsString();
+
+                    if (dataSupportObject.has("potion"))
+                    {
+                        JsonArray potionArray = dataSupportObject.getAsJsonArray("potion");
+                        dataSupport.potions = new ArrayList<>();
+
+                        for (JsonElement potionElement : potionArray)
+                        {
+                            String potionString = potionElement.getAsString();
+                            String[] split = potionString.split(",");
+
+                            if (split.length < 3 || split.length > 4)
+                            {
+                                Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                                continue;
+                            }
+
+                            ResourceLocation potionId = new ResourceLocation(split[0].trim());
+                            Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
+
+                            if (potion == null)
+                            {
+                                Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
+                                continue;
+                            }
+
+                            int duration = Integer.parseInt(split[1].trim());
+                            int amplifier = Integer.parseInt(split[2].trim());
+                            double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
+
+                            dataSupport.potions.add(new StoringScriptData.PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
+                        }
+                    }
+
+                    StoringScriptData.Instance.DataSupports.add(dataSupport);
+                }
+            }
         }
         catch (JsonSyntaxException | IOException exception)
         {

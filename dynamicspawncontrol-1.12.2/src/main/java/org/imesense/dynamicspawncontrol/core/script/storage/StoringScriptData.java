@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.potion.PotionEffect;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class StoringScriptData
@@ -13,7 +14,7 @@ public final class StoringScriptData
     public StoringScriptData()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-        Instance = this;
+        Instance = this;this.DataSupports = new ArrayList<>();
     }
 
     //-' TODO: переделать это
@@ -40,6 +41,15 @@ public final class StoringScriptData
         public String name;
     }
 
+    public static class DataSupport
+    {
+        public Boolean seeSky;
+        public String entityType;
+        public List<PotionEffectWithChance> potions;
+    }
+
+    public List<DataSupport> DataSupports;
+
     public static class ItemData
     {
         public String item;
@@ -52,11 +62,6 @@ public final class StoringScriptData
     public List<Equipment> getEquipmentConfigs()
     {
         return this.EquipmentConfigs;
-    }
-
-    public List<PotionEffectWithChance> getPotions()
-    {
-        return this.Potions;
     }
 
     public static class PotionEffectWithChance
