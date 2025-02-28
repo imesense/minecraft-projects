@@ -58,7 +58,9 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                 throw new RuntimeException("Key 'configs' not found in JSON file.");
             }
 
-            JsonObject templates = jsonObject.has("templates") ? jsonObject.getAsJsonObject("templates") : new JsonObject();
+            JsonObject templates = jsonObject.has("templates") ?
+                    jsonObject.getAsJsonObject("templates") : new JsonObject();
+
             JsonArray configs = jsonObject.getAsJsonArray("configs");
 
             for (JsonElement element : configs)

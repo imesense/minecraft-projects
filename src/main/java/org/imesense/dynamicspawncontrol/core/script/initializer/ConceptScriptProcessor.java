@@ -13,7 +13,7 @@ public class ConceptScriptProcessor
         timer.start();
         Equipment equip = Equipment.getInstance();
         double equipTime = timer.stop();
-        Log.writeDataToLogFile(0, "Create Action Collector object 'Equip': " + equip.hashCode() + " (Time: " + equipTime + " ms)");
+        Log.writeDataToLogFile(0, "Create Action Collector object 'Equipment': " + equip.hashCode() + " (Time: " + equipTime + " ms)");
 
         timer.start();
         Potion potion = Potion.getInstance();
