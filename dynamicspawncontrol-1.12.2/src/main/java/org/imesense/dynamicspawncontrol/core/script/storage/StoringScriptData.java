@@ -33,6 +33,7 @@ public final class StoringScriptData
         this.equipmentList = new ArrayList<>();;
         this.entityDescriptionsList = new ArrayList<>();
         this.potionList = new ArrayList<>();;
+        this.randomDataList = new ArrayList<>();
         this.dataSupportList = new ArrayList<>();;
     }
 
@@ -44,10 +45,13 @@ public final class StoringScriptData
         public String description;
     }
 
-    public static class Equipment
+    public static class RandomData
     {
         public Integer Priority;
+    }
 
+    public static class Equipment
+    {
         public List<ItemData> HeldItems;
         public List<ItemData> Helmets;
         public List<ItemData> ChestPlates;
@@ -78,6 +82,7 @@ public final class StoringScriptData
     }
 
     public List<Equipment> equipmentList;
+    public List<RandomData> randomDataList;
     public List<EntityDescription> entityDescriptionsList;
     public List<AbstractPotionEffect.Data> potionList;
 

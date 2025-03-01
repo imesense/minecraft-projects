@@ -46,19 +46,24 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
         if (generalStorageData != null)
         {
             List<StoringScriptData.Equipment> configs = generalStorageData.equipmentList;
+            List<StoringScriptData.RandomData> randomDataList = generalStorageData.randomDataList;
 
-            if (configs != null && !configs.isEmpty())
+            if (configs != null && !configs.isEmpty() && randomDataList != null && !randomDataList.isEmpty())
             {
-                List<StoringScriptData.Equipment> filteredConfigs = IntStream.range(0, configs.size())
+                List<StoringScriptData.RandomData> filteredRandomData = IntStream.range(0, configs.size())
                         .filter(i -> i < generalStorageData.entityDescriptionsList.size())
                         .filter(i -> generalStorageData.entityDescriptionsList.get(i) != null &&
                                 fullEntityType.equals(generalStorageData.entityDescriptionsList.get(i).entityType))
-                        .mapToObj(configs::get)
+                        .mapToObj(randomDataList::get)
                         .collect(Collectors.toList());
 
-                if (!filteredConfigs.isEmpty())
+                if (!filteredRandomData.isEmpty())
                 {
-                    StoringScriptData.Equipment selectedConfig = Priority.getInstance().getConfigByPriority(filteredConfigs, UniqueField.RANDOM.self());
+                    StoringScriptData.RandomData selectedRandomData = Priority.getInstance()
+                            .getConfigByPriority(filteredRandomData, UniqueField.RANDOM.self());
+
+                    int selectedIndex = randomDataList.indexOf(selectedRandomData);
+                    StoringScriptData.Equipment selectedConfig = configs.get(selectedIndex);
 
                     if (!World.getInstance().checkHeight(event.getEntity(), selectedConfig.minHeight, selectedConfig.maxHeight))
                     {
