@@ -36,6 +36,7 @@ public final class StoringScriptData
         this.randomDataList = new ArrayList<>();
         this.dataSupportList = new ArrayList<>();;
         this.worldDataList = new ArrayList<>();
+        this.entityAttributesList = new ArrayList<>();
     }
 
     public static class EntityDescription
@@ -59,6 +60,12 @@ public final class StoringScriptData
         public Integer minHeight;
     }
 
+    public static class EntityAttributes
+    {
+        public String commandNbt;
+        public List<AbstractPotionEffect.Data> potions;
+    }
+
     public static class Equipment
     {
         public List<ItemData> HeldItems;
@@ -68,11 +75,6 @@ public final class StoringScriptData
         public List<ItemData> Boots;
 
         public Boolean HasShield;
-
-        public String commandNbt;
-
-
-        public List<AbstractPotionEffect.Data> potions;
     }
 
     public static class DataSupport
@@ -93,6 +95,7 @@ public final class StoringScriptData
     public List<WorldData> worldDataList;
     public List<EntityDescription> entityDescriptionsList;
     public List<AbstractPotionEffect.Data> potionList;
+    public List<EntityAttributes> entityAttributesList;
 
     public List<DataSupport> dataSupportList;
 }

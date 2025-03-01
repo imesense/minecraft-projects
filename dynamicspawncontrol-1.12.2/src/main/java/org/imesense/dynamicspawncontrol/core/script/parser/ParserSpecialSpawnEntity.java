@@ -89,6 +89,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     StoringScriptData.EntityDescription entityDescription = new StoringScriptData.EntityDescription();
                     StoringScriptData.RandomData randomData = new StoringScriptData.RandomData();
                     StoringScriptData.WorldData worldData = new StoringScriptData.WorldData();
+                    StoringScriptData.EntityAttributes entityAttributes = new StoringScriptData.EntityAttributes();
 
                     entityDescription.profile = dataObject.get("profile").getAsString();
                     entityDescription.description = dataObject.get("description").getAsString();
@@ -106,7 +107,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     worldData.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
 
-                    config.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
+                    entityAttributes.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
 
                     worldData.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
                     worldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
@@ -142,7 +143,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         if (dataObject.has("potion"))
                         {
                             JsonArray potionArray = dataObject.getAsJsonArray("potion");
-                            config.potions = new ArrayList<>();
+                            entityAttributes.potions = new ArrayList<>();
 
                             for (JsonElement potionElement : potionArray)
                             {
@@ -168,7 +169,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                                 int amplifier = Integer.parseInt(split[2].trim());
                                 double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
-                                config.potions.add(new AbstractPotionEffect.Data(new PotionEffect(potion, duration, amplifier), chance));
+                                entityAttributes.potions.add(new AbstractPotionEffect.Data(new PotionEffect(potion, duration, amplifier), chance));
                             }
                         }
 
@@ -176,6 +177,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         StoringScriptData.getInstance().randomDataList.add(randomData);
                         StoringScriptData.getInstance().worldDataList.add(worldData);
                         StoringScriptData.getInstance().entityDescriptionsList.add(entityDescription);
+                        StoringScriptData.getInstance().entityAttributesList.add(entityAttributes);
                     }
                     else
                     {

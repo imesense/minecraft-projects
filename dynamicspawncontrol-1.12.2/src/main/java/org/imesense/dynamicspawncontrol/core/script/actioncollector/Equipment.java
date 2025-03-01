@@ -74,15 +74,17 @@ public final class Equipment
         }
     }
 
-    public void equipEntity(Entity entity, StoringScriptData.Equipment equipment, StoringScriptData.EntityDescription entityDescription, Random random)
+    public void equipEntity(Entity entity, StoringScriptData.Equipment equipment,
+                            StoringScriptData.EntityDescription entityDescription,
+                            StoringScriptData.EntityAttributes entityAttributes, Random random)
     {
         if (entity instanceof EntityLivingBase)
         {
             EntityLivingBase livingEntity = (EntityLivingBase) entity;
 
-            if (equipment.commandNbt != null)
+            if (entityAttributes.commandNbt != null)
             {
-                CommandNBT.getInstance().applyNbt(livingEntity, equipment.commandNbt);
+                CommandNBT.getInstance().applyNbt(livingEntity, entityAttributes.commandNbt);
             }
 
             if (!entityDescription.isArcher)
@@ -100,9 +102,9 @@ public final class Equipment
                 equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
             }
 
-            if (equipment.potions != null)
+            if (entityAttributes.potions != null)
             {
-                Potion.getInstance().applyPotionEffects(livingEntity, equipment.potions, random);
+                Potion.getInstance().applyPotionEffects(livingEntity, entityAttributes.potions, random);
             }
         }
     }

@@ -48,6 +48,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
             List<StoringScriptData.Equipment> configs = generalStorageData.equipmentList;
             List<StoringScriptData.RandomData> randomDataList = generalStorageData.randomDataList;
             List<StoringScriptData.WorldData> worldDataList = generalStorageData.worldDataList;
+            List<StoringScriptData.EntityAttributes> entityAttributesList = generalStorageData.entityAttributesList;
 
             if (configs != null && !configs.isEmpty() && randomDataList != null && !randomDataList.isEmpty() && worldDataList != null && !worldDataList.isEmpty())
             {
@@ -67,7 +68,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 
                     StoringScriptData.Equipment selectedConfig = configs.get(selectedIndex);
                     StoringScriptData.WorldData selectedWorldData = worldDataList.get(selectedIndex);
-
+                    StoringScriptData.EntityAttributes entityAttributes = generalStorageData.entityAttributesList.get(selectedIndex);
                     StoringScriptData.EntityDescription entityDescription = generalStorageData.entityDescriptionsList.get(selectedIndex);
 
                     if (!World.getInstance().checkHeight(event.getEntity(), selectedWorldData.minHeight, selectedWorldData.maxHeight))
@@ -91,7 +92,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                         event.getEntity().setAlwaysRenderNameTag(true);
                     }
 
-                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, entityDescription, UniqueField.RANDOM.self());
+                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, entityDescription, entityAttributes, UniqueField.RANDOM.self());
                 }
             }
 
