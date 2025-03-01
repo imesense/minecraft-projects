@@ -3,7 +3,10 @@ package org.imesense.dynamicspawncontrol.command;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
@@ -66,14 +69,55 @@ public final class CmdAdminDumpEntity extends CommandBase
             if (rayTraceResult != null && rayTraceResult.typeOfHit == RayTraceResult.Type.ENTITY)
             {
                 Entity entityHit = rayTraceResult.entityHit;
-                String entityInfo = "Entity Info: ";
+                StringBuilder entityInfo = new StringBuilder("Entity Info: ");
 
-                entityInfo += "Name: " + entityHit.getName() + ", ";
-                entityInfo += "ID: " + entityHit.getEntityId() + ", ";
-                entityInfo += "Class: " + entityHit.getClass().getSimpleName();
+                entityInfo.append("Name: ").append(entityHit.getName()).append(", ");
+                entityInfo.append("ID: ").append(entityHit.getEntityId()).append(", ");
+                entityInfo.append("Class: ").append(entityHit.getClass().getSimpleName()).append("\n");
 
-                iCommandSender.sendMessage(new TextComponentString(entityInfo));
-                Log.writeDataToLogFile(0, entityInfo);
+                if (entityHit instanceof EntityLivingBase)
+                {
+                    EntityLivingBase livingEntity = (EntityLivingBase) entityHit;
+
+                    entityInfo.append("Armor: ");
+
+                    for (ItemStack armorPiece : livingEntity.getArmorInventoryList())
+                    {
+                        if (!armorPiece.isEmpty())
+                        {
+                            entityInfo.append(armorPiece.getDisplayName()).append(" ");
+                        }
+                    }
+                    entityInfo.append("\n");
+
+                    ItemStack heldItem = livingEntity.getHeldItemMainhand();
+                    entityInfo.append("Held Item: ")
+                            .append(heldItem.isEmpty() ? "None" : heldItem.getDisplayName())
+                            .append("\n");
+
+                    entityInfo.append("Active Effects: ");
+
+                    if (livingEntity.getActivePotionEffects().isEmpty())
+                    {
+                        entityInfo.append("None\n");
+                    }
+                    else
+                    {
+                        for (PotionEffect effect : livingEntity.getActivePotionEffects())
+                        {
+                            entityInfo.append(effect.getEffectName()).append(" (")
+                                    .append(effect.getAmplifier()).append("), ");
+                        }
+                        entityInfo.append("\n");
+                    }
+                }
+                else
+                {
+                    entityInfo.append("This entity is not living (no armor or effects).\n");
+                }
+
+                iCommandSender.sendMessage(new TextComponentString(entityInfo.toString()));
+                Log.writeDataToLogFile(0, entityInfo.toString());
             }
             else
             {
