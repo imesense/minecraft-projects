@@ -86,16 +86,25 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     }
 
                     StoringScriptData.Equipment config = new StoringScriptData.Equipment();
-                    config.profile = dataObject.get("profile").getAsString();
-                    config.description = dataObject.get("description").getAsString();
-                    config.entityType = dataObject.get("entity_type").getAsString();
+                    StoringScriptData.EntityDescription entityDescription = new StoringScriptData.EntityDescription();
+
+                    entityDescription.profile = dataObject.get("profile").getAsString();
+                    entityDescription.description = dataObject.get("description").getAsString();
+
+                    if (entityDescription.profile.isEmpty() || entityDescription.description.isEmpty())
+                    {
+                        throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' must not be empty in the 'data' section.");
+                    }
+
+                    entityDescription.entityType = dataObject.get("entity_type").getAsString();
+
                     config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
                     config.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
                     config.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
                     config.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
                     config.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
                     config.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
-                    config.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
+                    entityDescription.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
 
                     JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
 
@@ -157,6 +166,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         }
 
                         StoringScriptData.getInstance().equipmentList.add(config);
+                        StoringScriptData.getInstance().entityDescriptionsList.add(entityDescription);
                     }
                     else
                     {
