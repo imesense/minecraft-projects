@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
+import org.imesense.dynamicspawncontrol.core.script.storage.AbstractPotionEffect;
 import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -37,8 +38,8 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
     @Override
     public void loadConfig(boolean initialization)
     {
-        StoringScriptData.Instance.EquipmentConfigs = new ArrayList<>();
-        StoringScriptData.Instance.Potions = new ArrayList<>();
+        StoringScriptData.getInstance().EquipmentConfigs = new ArrayList<>();
+        StoringScriptData.getInstance().Potions = new ArrayList<>();
 
         File file = getConfigFile(initialization,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
@@ -100,50 +101,25 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     if (equipmentObject != null)
                     {
-                        if (equipmentObject.has("held_item"))
-                        {
-                            config.HeldItems = Equipment.getInstance().parseItemList(equipmentObject.get("held_item"));
-                        }
-                        else
-                        {
-                            config.HeldItems = null;
-                        }
+                        config.HeldItems = equipmentObject.has("held_item")
+                                ? Equipment.getInstance().parseItemList(equipmentObject.get("held_item"))
+                                : null;
 
-                        if (equipmentObject.has("armor_helmet"))
-                        {
-                            config.Helmets = Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"));
-                        }
-                        else
-                        {
-                            config.Helmets = null;
-                        }
+                        config.Helmets = equipmentObject.has("armor_helmet")
+                                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"))
+                                : null;
 
-                        if (equipmentObject.has("armor_chest"))
-                        {
-                            config.ChestPlates = Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"));
-                        }
-                        else
-                        {
-                            config.ChestPlates = null;
-                        }
+                        config.ChestPlates = equipmentObject.has("armor_chest")
+                                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"))
+                                : null;
 
-                        if (equipmentObject.has("armor_legs"))
-                        {
-                            config.Leggings = Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"));
-                        }
-                        else
-                        {
-                            config.Leggings = null;
-                        }
+                        config.Leggings = equipmentObject.has("armor_legs")
+                                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"))
+                                : null;
 
-                        if (equipmentObject.has("armor_boots"))
-                        {
-                            config.Boots = Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"));
-                        }
-                        else
-                        {
-                            config.Boots = null;
-                        }
+                        config.Boots = equipmentObject.has("armor_boots")
+                                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"))
+                                : null;
 
                         config.HasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
 
@@ -176,11 +152,11 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                                 int amplifier = Integer.parseInt(split[2].trim());
                                 double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
-                                config.potions.add(new StoringScriptData.PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
+                                config.potions.add(new AbstractPotionEffect.Data(new PotionEffect(potion, duration, amplifier), chance));
                             }
                         }
 
-                        StoringScriptData.Instance.EquipmentConfigs.add(config);
+                        StoringScriptData.getInstance().EquipmentConfigs.add(config);
                     }
                     else
                     {
@@ -233,11 +209,11 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                             int amplifier = Integer.parseInt(split[2].trim());
                             double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
-                            dataSupport.potions.add(new StoringScriptData.PotionEffectWithChance(new PotionEffect(potion, duration, amplifier), chance));
+                            dataSupport.potions.add(new AbstractPotionEffect.Data(new PotionEffect(potion, duration, amplifier), chance));
                         }
                     }
 
-                    StoringScriptData.Instance.DataSupports.add(dataSupport);
+                    StoringScriptData.getInstance().DataSupports.add(dataSupport);
                 }
             }
         }

@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.storage;
 
 import com.google.gson.JsonObject;
-import net.minecraft.potion.PotionEffect;
+import lombok.Getter;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -9,15 +9,30 @@ import java.util.List;
 
 public final class StoringScriptData
 {
-    public static StoringScriptData Instance;
+    private static volatile StoringScriptData _INSTANCE;
+
+    public static StoringScriptData getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (StoringScriptData.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new StoringScriptData();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
 
     public StoringScriptData()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-        Instance = this;this.DataSupports = new ArrayList<>();
+        this.DataSupports = new ArrayList<>();
     }
 
-    //-' TODO: переделать это
     public static class Equipment
     {
         public String profile;
@@ -37,7 +52,7 @@ public final class StoringScriptData
         public String commandNbt;
         public Integer maxHeight;
         public Integer minHeight;
-        public List<PotionEffectWithChance> potions;
+        public List<AbstractPotionEffect.Data> potions;
         public String name;
     }
 
@@ -45,10 +60,8 @@ public final class StoringScriptData
     {
         public Boolean seeSky;
         public String entityType;
-        public List<PotionEffectWithChance> potions;
+        public List<AbstractPotionEffect.Data> potions;
     }
-
-    public List<DataSupport> DataSupports;
 
     public static class ItemData
     {
@@ -56,23 +69,12 @@ public final class StoringScriptData
         public JsonObject nbt;
     }
 
+    @Getter
     public List<Equipment> EquipmentConfigs;
-    public List<PotionEffectWithChance> Potions;
 
-    public List<Equipment> getEquipmentConfigs()
-    {
-        return this.EquipmentConfigs;
-    }
+    @Getter
+    public List<AbstractPotionEffect.Data> Potions;
 
-    public static class PotionEffectWithChance
-    {
-        public double Chance;
-        public PotionEffect Effect;
-
-        public PotionEffectWithChance(PotionEffect effect, double chance)
-        {
-            this.Effect = effect;
-            this.Chance = chance;
-        }
-    }
+    @Getter
+    public List<DataSupport> DataSupports;
 }
