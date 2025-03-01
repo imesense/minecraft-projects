@@ -47,8 +47,9 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
         {
             List<StoringScriptData.Equipment> configs = generalStorageData.equipmentList;
             List<StoringScriptData.RandomData> randomDataList = generalStorageData.randomDataList;
+            List<StoringScriptData.WorldData> worldDataList = generalStorageData.worldDataList;
 
-            if (configs != null && !configs.isEmpty() && randomDataList != null && !randomDataList.isEmpty())
+            if (configs != null && !configs.isEmpty() && randomDataList != null && !randomDataList.isEmpty() && worldDataList != null && !worldDataList.isEmpty())
             {
                 List<StoringScriptData.RandomData> filteredRandomData = IntStream.range(0, configs.size())
                         .filter(i -> i < generalStorageData.entityDescriptionsList.size())
@@ -62,28 +63,27 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                     StoringScriptData.RandomData selectedRandomData = Priority.getInstance()
                             .getConfigByPriority(filteredRandomData, UniqueField.RANDOM.self());
 
-                    int selectedIndex = randomDataList.indexOf(selectedRandomData);
-                    StoringScriptData.Equipment selectedConfig = configs.get(selectedIndex);
+                    Integer selectedIndex = randomDataList.indexOf(selectedRandomData);
 
-                    if (!World.getInstance().checkHeight(event.getEntity(), selectedConfig.minHeight, selectedConfig.maxHeight))
+                    StoringScriptData.Equipment selectedConfig = configs.get(selectedIndex);
+                    StoringScriptData.WorldData selectedWorldData = worldDataList.get(selectedIndex);
+
+                    StoringScriptData.EntityDescription entityDescription = generalStorageData.entityDescriptionsList.get(selectedIndex);
+
+                    if (!World.getInstance().checkHeight(event.getEntity(), selectedWorldData.minHeight, selectedWorldData.maxHeight))
                     {
                         return;
                     }
 
-                    if (selectedConfig.seeSky != null)
+                    if (selectedWorldData.seeSky != null)
                     {
-                        boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
+                        Boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
 
-                        if ((selectedConfig.seeSky && !canSeeSky) || (!selectedConfig.seeSky && canSeeSky))
+                        if ((selectedWorldData.seeSky && !canSeeSky) || (!selectedWorldData.seeSky && canSeeSky))
                         {
                             return;
                         }
                     }
-
-                    StoringScriptData.EntityDescription entityDescription = generalStorageData.entityDescriptionsList.stream()
-                            .filter(desc -> desc.entityType.equals(fullEntityType))
-                            .findFirst()
-                            .orElse(null);
 
                     if (entityDescription != null && entityDescription.name != null)
                     {
@@ -109,7 +109,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                     {
                         if (dataSupport.seeSky != null)
                         {
-                            boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
+                            Boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
 
                             if ((dataSupport.seeSky && !canSeeSky) || (!dataSupport.seeSky && canSeeSky))
                             {
