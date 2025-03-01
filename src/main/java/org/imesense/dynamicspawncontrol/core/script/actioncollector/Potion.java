@@ -34,9 +34,9 @@ public final class Potion
         {
             for (AbstractPotionEffect.Data effectWithChance : potions)
             {
-                if (random.nextDouble() <= effectWithChance.Chance)
+                if (random.nextDouble() <= effectWithChance.chance)
                 {
-                    PotionEffect effect = effectWithChance.Effect;
+                    PotionEffect effect = effectWithChance.effect;
                     PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
                     entity.addPotionEffect(newEffect);
                 }

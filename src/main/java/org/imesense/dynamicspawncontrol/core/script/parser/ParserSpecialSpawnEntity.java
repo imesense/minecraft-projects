@@ -38,8 +38,8 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
     @Override
     public void loadConfig(boolean initialization)
     {
-        StoringScriptData.getInstance().EquipmentConfigs = new ArrayList<>();
-        StoringScriptData.getInstance().Potions = new ArrayList<>();
+        StoringScriptData.getInstance().equipmentList = new ArrayList<>();
+        StoringScriptData.getInstance().potionList = new ArrayList<>();
 
         File file = getConfigFile(initialization,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
@@ -156,7 +156,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                             }
                         }
 
-                        StoringScriptData.getInstance().EquipmentConfigs.add(config);
+                        StoringScriptData.getInstance().equipmentList.add(config);
                     }
                     else
                     {
@@ -213,7 +213,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         }
                     }
 
-                    StoringScriptData.getInstance().DataSupports.add(dataSupport);
+                    StoringScriptData.getInstance().dataSupportList.add(dataSupport);
                 }
             }
         }

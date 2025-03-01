@@ -44,7 +44,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 
         if (generalStorageData != null)
         {
-            List<StoringScriptData.Equipment> configs = generalStorageData.getEquipmentConfigs();
+            List<StoringScriptData.Equipment> configs = generalStorageData.equipmentList;
 
             if (configs != null && !configs.isEmpty())
             {
@@ -81,7 +81,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                 }
             }
 
-            List<StoringScriptData.DataSupport> dataSupports = generalStorageData.DataSupports;
+            List<StoringScriptData.DataSupport> dataSupports = generalStorageData.dataSupportList;
 
             if (dataSupports != null && !dataSupports.isEmpty())
             {
