@@ -28,8 +28,6 @@ public final class AIWebbingAttack extends EntityAIBase
      */
     public AIWebbingAttack(EntityLiving entityLiving)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
-
         this.parentEntity = entityLiving;
     }
 
