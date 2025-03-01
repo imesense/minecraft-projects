@@ -88,6 +88,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                     StoringScriptData.Equipment config = new StoringScriptData.Equipment();
                     StoringScriptData.EntityDescription entityDescription = new StoringScriptData.EntityDescription();
                     StoringScriptData.RandomData randomData = new StoringScriptData.RandomData();
+                    StoringScriptData.WorldData worldData = new StoringScriptData.WorldData();
 
                     entityDescription.profile = dataObject.get("profile").getAsString();
                     entityDescription.description = dataObject.get("description").getAsString();
@@ -103,10 +104,13 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     entityDescription.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
 
-                    config.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
+                    worldData.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
+
                     config.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
-                    config.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
-                    config.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
+
+                    worldData.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
+                    worldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
+
                     entityDescription.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
 
                     JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
@@ -170,6 +174,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                         StoringScriptData.getInstance().equipmentList.add(config);
                         StoringScriptData.getInstance().randomDataList.add(randomData);
+                        StoringScriptData.getInstance().worldDataList.add(worldData);
                         StoringScriptData.getInstance().entityDescriptionsList.add(entityDescription);
                     }
                     else
