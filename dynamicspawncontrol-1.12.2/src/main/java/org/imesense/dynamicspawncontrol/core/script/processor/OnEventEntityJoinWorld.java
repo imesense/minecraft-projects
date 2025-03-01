@@ -40,7 +40,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 
         String fullEntityType = entityType.contains(":") ? entityType : "minecraft:" + entityType.toLowerCase();
 
-        StoringScriptData generalStorageData = StoringScriptData.Instance;
+        StoringScriptData generalStorageData = StoringScriptData.getInstance();
 
         if (generalStorageData != null)
         {

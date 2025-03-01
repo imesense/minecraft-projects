@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
+import org.imesense.dynamicspawncontrol.core.script.storage.AbstractPotionEffect;
 import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 
 import java.util.List;
@@ -27,11 +28,11 @@ public final class Potion
         return _INSTANCE;
     }
 
-    public void applyPotionEffects(EntityLivingBase entity, List<StoringScriptData.PotionEffectWithChance> potions, Random random)
+    public void applyPotionEffects(EntityLivingBase entity, List<AbstractPotionEffect.Data> potions, Random random)
     {
         if (potions != null && !potions.isEmpty())
         {
-            for (StoringScriptData.PotionEffectWithChance effectWithChance : potions)
+            for (AbstractPotionEffect.Data effectWithChance : potions)
             {
                 if (random.nextDouble() <= effectWithChance.Chance)
                 {
