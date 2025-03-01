@@ -87,6 +87,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     StoringScriptData.Equipment config = new StoringScriptData.Equipment();
                     StoringScriptData.EntityDescription entityDescription = new StoringScriptData.EntityDescription();
+                    StoringScriptData.RandomData randomData = new StoringScriptData.RandomData();
 
                     entityDescription.profile = dataObject.get("profile").getAsString();
                     entityDescription.description = dataObject.get("description").getAsString();
@@ -98,7 +99,8 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     entityDescription.entityType = dataObject.get("entity_type").getAsString();
 
-                    config.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
+                    randomData.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
+
                     config.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
                     config.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
                     config.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
@@ -166,6 +168,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         }
 
                         StoringScriptData.getInstance().equipmentList.add(config);
+                        StoringScriptData.getInstance().randomDataList.add(randomData);
                         StoringScriptData.getInstance().entityDescriptionsList.add(entityDescription);
                     }
                     else

@@ -25,23 +25,22 @@ public final class Priority
         return _INSTANCE;
     }
 
-    public StoringScriptData.Equipment getConfigByPriority(List<StoringScriptData.Equipment> equipmentList, Random random)
+    public StoringScriptData.RandomData getConfigByPriority(List<StoringScriptData.RandomData> index, Random random)
     {
-        int totalPriority = equipmentList.stream().mapToInt(config -> config.Priority).sum();
-        int randomValue = random.nextInt(totalPriority);
+        int randomPriorityValue =
+                random.nextInt(index.stream().mapToInt(config -> config.Priority).sum()),
+                cumulativePrioritySum = 0;
 
-        int cumulativePriority = 0;
-
-        for (StoringScriptData.Equipment config : equipmentList)
+        for (StoringScriptData.RandomData randomData : index)
         {
-            cumulativePriority += config.Priority;
+            cumulativePrioritySum += randomData.Priority;
 
-            if (randomValue < cumulativePriority)
+            if (randomPriorityValue < cumulativePrioritySum)
             {
-                return config;
+                return randomData;
             }
         }
 
-        return equipmentList.get(equipmentList.size() - 1);
+        return index.get(index.size() - 1);
     }
 }
