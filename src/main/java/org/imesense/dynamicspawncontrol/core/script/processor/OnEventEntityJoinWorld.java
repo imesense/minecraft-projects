@@ -91,7 +91,7 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                         event.getEntity().setAlwaysRenderNameTag(true);
                     }
 
-                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, UniqueField.RANDOM.self());
+                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, entityDescription, UniqueField.RANDOM.self());
                 }
             }
 
