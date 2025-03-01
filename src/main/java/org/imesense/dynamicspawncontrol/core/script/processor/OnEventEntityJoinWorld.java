@@ -16,6 +16,7 @@ import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
@@ -48,8 +49,11 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 
             if (configs != null && !configs.isEmpty())
             {
-                List<StoringScriptData.Equipment> filteredConfigs = configs.stream()
-                        .filter(config -> config.entityType.equals(fullEntityType))
+                List<StoringScriptData.Equipment> filteredConfigs = IntStream.range(0, configs.size())
+                        .filter(i -> i < generalStorageData.entityDescriptionsList.size())
+                        .filter(i -> generalStorageData.entityDescriptionsList.get(i) != null &&
+                                fullEntityType.equals(generalStorageData.entityDescriptionsList.get(i).entityType))
+                        .mapToObj(configs::get)
                         .collect(Collectors.toList());
 
                 if (!filteredConfigs.isEmpty())
@@ -71,9 +75,14 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                         }
                     }
 
-                    if (selectedConfig.name != null)
+                    StoringScriptData.EntityDescription entityDescription = generalStorageData.entityDescriptionsList.stream()
+                            .filter(desc -> desc.entityType.equals(fullEntityType))
+                            .findFirst()
+                            .orElse(null);
+
+                    if (entityDescription != null && entityDescription.name != null)
                     {
-                        event.getEntity().setCustomNameTag(selectedConfig.name);
+                        event.getEntity().setCustomNameTag(entityDescription.name);
                         event.getEntity().setAlwaysRenderNameTag(true);
                     }
 

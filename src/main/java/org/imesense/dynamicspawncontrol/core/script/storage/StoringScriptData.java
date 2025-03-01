@@ -31,16 +31,21 @@ public final class StoringScriptData
         CodeGeneric.printInitClassToLog(this.getClass());
 
         this.equipmentList = new ArrayList<>();;
+        this.entityDescriptionsList = new ArrayList<>();
         this.potionList = new ArrayList<>();;
         this.dataSupportList = new ArrayList<>();;
     }
 
+    public static class EntityDescription
+    {
+        public String name;
+        public String profile;
+        public String entityType;
+        public String description;
+    }
+
     public static class Equipment
     {
-        public String profile;
-        public String description;
-
-        public String entityType;
         public Integer Priority;
 
         public List<ItemData> HeldItems;
@@ -57,7 +62,6 @@ public final class StoringScriptData
         public Integer minHeight;
 
         public List<AbstractPotionEffect.Data> potions;
-        public String name;
     }
 
     public static class DataSupport
@@ -74,6 +78,7 @@ public final class StoringScriptData
     }
 
     public List<Equipment> equipmentList;
+    public List<EntityDescription> entityDescriptionsList;
     public List<AbstractPotionEffect.Data> potionList;
 
     public List<DataSupport> dataSupportList;
