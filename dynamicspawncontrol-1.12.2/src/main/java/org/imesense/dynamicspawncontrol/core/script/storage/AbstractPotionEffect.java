@@ -6,13 +6,13 @@ public class AbstractPotionEffect
 {
     public static class Data
     {
-        public double Chance;
-        public PotionEffect Effect;
+        public Double chance;
+        public PotionEffect effect;
 
-        public Data(PotionEffect effect, double chance)
+        public Data(PotionEffect effect, Double chance)
         {
-            this.Effect = effect;
-            this.Chance = chance;
+            this.effect = effect;
+            this.chance = chance;
         }
     }
 }

@@ -1,7 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage;
 
 import com.google.gson.JsonObject;
-import lombok.Getter;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -30,7 +29,10 @@ public final class StoringScriptData
     public StoringScriptData()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-        this.DataSupports = new ArrayList<>();
+
+        this.equipmentList = new ArrayList<>();;
+        this.potionList = new ArrayList<>();;
+        this.dataSupportList = new ArrayList<>();;
     }
 
     public static class Equipment
@@ -39,19 +41,21 @@ public final class StoringScriptData
         public String description;
 
         public String entityType;
-        public int Priority;
+        public Integer Priority;
 
         public List<ItemData> HeldItems;
         public List<ItemData> Helmets;
         public List<ItemData> ChestPlates;
         public List<ItemData> Leggings;
         public List<ItemData> Boots;
-        public boolean HasShield;
-        public boolean isArcher;
+
+        public Boolean HasShield;
+        public Boolean isArcher;
         public Boolean seeSky;
         public String commandNbt;
         public Integer maxHeight;
         public Integer minHeight;
+
         public List<AbstractPotionEffect.Data> potions;
         public String name;
     }
@@ -69,12 +73,8 @@ public final class StoringScriptData
         public JsonObject nbt;
     }
 
-    @Getter
-    public List<Equipment> EquipmentConfigs;
+    public List<Equipment> equipmentList;
+    public List<AbstractPotionEffect.Data> potionList;
 
-    @Getter
-    public List<AbstractPotionEffect.Data> Potions;
-
-    @Getter
-    public List<DataSupport> DataSupports;
+    public List<DataSupport> dataSupportList;
 }
