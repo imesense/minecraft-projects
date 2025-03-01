@@ -74,35 +74,35 @@ public final class Equipment
         }
     }
 
-    public void equipEntity(Entity entity, StoringScriptData.Equipment config, Random random)
+    public void equipEntity(Entity entity, StoringScriptData.Equipment equipment, StoringScriptData.EntityDescription entityDescription, Random random)
     {
         if (entity instanceof EntityLivingBase)
         {
             EntityLivingBase livingEntity = (EntityLivingBase) entity;
 
-            if (config.commandNbt != null)
+            if (equipment.commandNbt != null)
             {
-                CommandNBT.getInstance().applyNbt(livingEntity, config.commandNbt);
+                CommandNBT.getInstance().applyNbt(livingEntity, equipment.commandNbt);
             }
 
-            if (!config.isArcher)
+            if (!entityDescription.isArcher)
             {
-                equipEntityWithItems(livingEntity, config.HeldItems, EntityEquipmentSlot.MAINHAND, random);
+                equipEntityWithItems(livingEntity, equipment.HeldItems, EntityEquipmentSlot.MAINHAND, random);
             }
 
-            equipEntityWithItems(livingEntity, config.Helmets, EntityEquipmentSlot.HEAD, random);
-            equipEntityWithItems(livingEntity, config.ChestPlates, EntityEquipmentSlot.CHEST, random);
-            equipEntityWithItems(livingEntity, config.Leggings, EntityEquipmentSlot.LEGS, random);
-            equipEntityWithItems(livingEntity, config.Boots, EntityEquipmentSlot.FEET, random);
+            equipEntityWithItems(livingEntity, equipment.Helmets, EntityEquipmentSlot.HEAD, random);
+            equipEntityWithItems(livingEntity, equipment.ChestPlates, EntityEquipmentSlot.CHEST, random);
+            equipEntityWithItems(livingEntity, equipment.Leggings, EntityEquipmentSlot.LEGS, random);
+            equipEntityWithItems(livingEntity, equipment.Boots, EntityEquipmentSlot.FEET, random);
 
-            if (config.HasShield)
+            if (equipment.HasShield)
             {
                 equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
             }
 
-            if (config.potions != null)
+            if (equipment.potions != null)
             {
-                Potion.getInstance().applyPotionEffects(livingEntity, config.potions, random);
+                Potion.getInstance().applyPotionEffects(livingEntity, equipment.potions, random);
             }
         }
     }

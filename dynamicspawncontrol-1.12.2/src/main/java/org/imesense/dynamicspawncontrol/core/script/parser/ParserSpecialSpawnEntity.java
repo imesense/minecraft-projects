@@ -101,7 +101,8 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
                     randomData.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
 
-                    config.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
+                    entityDescription.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
+
                     config.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
                     config.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
                     config.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;

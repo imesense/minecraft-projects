@@ -41,6 +41,7 @@ public final class StoringScriptData
     {
         public String name;
         public String profile;
+        public Boolean isArcher;
         public String entityType;
         public String description;
     }
@@ -59,7 +60,6 @@ public final class StoringScriptData
         public List<ItemData> Boots;
 
         public Boolean HasShield;
-        public Boolean isArcher;
         public Boolean seeSky;
         public String commandNbt;
         public Integer maxHeight;
