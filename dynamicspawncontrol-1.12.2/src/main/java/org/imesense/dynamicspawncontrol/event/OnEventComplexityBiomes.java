@@ -225,10 +225,12 @@ public final class OnEventComplexityBiomes
             case "DesertHills":
             case "Extreme Hills M":
             case "Cold Taiga Hills":
+            case "Mesa":
                 return 5;
             case "Extreme Hills+":
             case "Savanna Plateau M":
             case "Extreme Hills+ M":
+            case "Mesa Plateau F":
                 return 6;
             case "Jungle":
             case "JungleHills":
@@ -275,6 +277,8 @@ public final class OnEventComplexityBiomes
             case "Birch Forest":
             case "Cold Taiga":
             case "Flower Forest":
+            case "Mesa":
+            case "Mesa Plateau F":
                 return this.MIN;
             case "TaigaHills":
             case "Swampland":
