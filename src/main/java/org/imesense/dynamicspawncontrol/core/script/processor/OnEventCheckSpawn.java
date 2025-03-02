@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.initializer.ConceptScriptProcessor;
 import org.imesense.dynamicspawncontrol.core.script.storage.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.*;
 
@@ -18,15 +17,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
+public final class OnEventCheckSpawn
 {
-    public OnEventEntityJoinWorld()
-    {
-        super();
-    }
-
     @SubscribeEvent
-    public void onEntityJoinWorld(LivingSpawnEvent.CheckSpawn event)
+    public void onLivingSpawnCheckSpawn_0(LivingSpawnEvent.CheckSpawn event)
     {
         String entityType = EntityList.getEntityString(event.getEntity());
 

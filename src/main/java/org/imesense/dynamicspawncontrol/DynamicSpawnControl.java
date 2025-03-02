@@ -13,6 +13,7 @@ import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.GeneralObjectStorageScriptData;
 import org.imesense.dynamicspawncontrol.core.script.storage.GeneralStorageScriptData;
 import org.imesense.dynamicspawncontrol.core.script.storage.SupportStorageScriptData;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
@@ -84,6 +85,11 @@ public final class DynamicSpawnControl
     /**
      *
      */
+    public GeneralObjectStorageScriptData generalObjectStorageScriptData = null;
+
+    /**
+     *
+     */
     public static SimpleNetworkWrapper networkWrapper = null;
 
     /**
@@ -130,6 +136,7 @@ public final class DynamicSpawnControl
 
         generalStorageScriptData = new GeneralStorageScriptData();
         supportStorageScriptData = new SupportStorageScriptData();
+        generalObjectStorageScriptData = new GeneralObjectStorageScriptData();
 
         CacheStorage.Instance = new CacheStorage();
 

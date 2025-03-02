@@ -1,12 +1,12 @@
-package org.imesense.dynamicspawncontrol.core.script.initializer;
+package org.imesense.dynamicspawncontrol.core.script.storage;
 
 import org.imesense.dynamicspawncontrol.core.debug.Timer;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 
-public class ConceptScriptProcessor
+public class GeneralObjectStorageScriptData
 {
-    public ConceptScriptProcessor()
+    public GeneralObjectStorageScriptData()
     {
         Timer timer = new Timer();
 
