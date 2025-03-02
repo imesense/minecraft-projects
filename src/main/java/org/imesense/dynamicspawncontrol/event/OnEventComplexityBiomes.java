@@ -220,6 +220,7 @@ public final class OnEventComplexityBiomes
             case "Desert":
             case "Cold Taiga":
             case "Ice Mountains":
+            case "Roofed Forest M":
                 return 4;
             case "Mega Spruce Taiga":
             case "DesertHills":
