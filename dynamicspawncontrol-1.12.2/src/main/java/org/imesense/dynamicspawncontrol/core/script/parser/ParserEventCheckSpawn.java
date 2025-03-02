@@ -49,10 +49,7 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
-        if (!file.exists())
-        {
-            return;
-        }
+        //-' TODO исправить создание файла
 
         try (FileReader fileReader = new FileReader(file))
         {
