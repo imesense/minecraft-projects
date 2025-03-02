@@ -21,7 +21,7 @@ public final class RegisterParserManager
      */
     private static final Class<?>[] PARSER_CLASSES =
     {
-        //CacheSettings.class, -' TODO - переместить это в отдельный класс
+        CacheSettings.class, //-' TODO - переместить это в отдельный класс
         ParserEventCheckSpawn.class,
         ParserEventPotentialSpawn.class
     };

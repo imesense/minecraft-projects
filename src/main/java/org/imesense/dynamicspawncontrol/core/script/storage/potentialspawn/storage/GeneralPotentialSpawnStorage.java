@@ -34,13 +34,13 @@ public final class GeneralPotentialSpawnStorage
 
     public static class SpawnParameters
     {
-        String entityType;
-        Integer frequency;
-        Integer groupCountMin;
-        Integer groupCountMax;
-        Float spawnChance;
-        Integer maxHeight;
-        Integer minHeight;
+        public String entityType;
+        public Integer frequency;
+        public Integer groupCountMin;
+        public Integer groupCountMax;
+        public Float spawnChance;
+        public Integer maxHeight;
+        public Integer minHeight;
     }
 
     public List<SpawnParameters> spawnParametersList = null;
