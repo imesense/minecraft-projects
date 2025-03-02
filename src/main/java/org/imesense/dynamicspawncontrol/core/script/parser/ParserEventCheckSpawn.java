@@ -116,10 +116,10 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
 
                     entityDescriptionData.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
 
-                    JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
-
-                    if (equipmentObject != null)
+                    if (dataObject.has("equipment"))
                     {
+                        JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
+
                         entityEquipmentData.heldItem = equipmentObject.has("held_item")
                                 ? Equipment.getInstance().parseItemList(equipmentObject.get("held_item"))
                                 : null;
@@ -141,50 +141,46 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
                                 : null;
 
                         entityEquipmentData.hasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
-
-                        if (dataObject.has("potion"))
-                        {
-                            JsonArray potionArray = dataObject.getAsJsonArray("potion");
-                            entityAttributesData.potion = new ArrayList<>();
-
-                            for (JsonElement potionElement : potionArray)
-                            {
-                                String potionString = potionElement.getAsString();
-                                String[] split = potionString.split(",");
-
-                                if (split.length < 3 || split.length > 4)
-                                {
-                                    Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
-                                    continue;
-                                }
-
-                                ResourceLocation potionId = new ResourceLocation(split[0].trim());
-                                Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
-
-                                if (potion == null)
-                                {
-                                    Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
-                                    continue;
-                                }
-
-                                Integer duration = Integer.parseInt(split[1].trim());
-                                Integer amplifier = Integer.parseInt(split[2].trim());
-                                Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
-
-                                entityAttributesData.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
-                            }
-                        }
-
-                        GeneralCheckSpawnStorage.getInstance().entityEquipmentList.add(entityEquipmentData);
-                        GeneralCheckSpawnStorage.getInstance().profilePriorityList.add(profilePriorityData);
-                        GeneralCheckSpawnStorage.getInstance().gameWorldList.add(gameWorldData);
-                        GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.add(entityDescriptionData);
-                        GeneralCheckSpawnStorage.getInstance().entityAttributesList.add(entityAttributesData);
                     }
-                    else
+
+                    if (dataObject.has("potion"))
                     {
-                        throw new RuntimeException("Key 'equipment' not found in JSON file.");
+                        JsonArray potionArray = dataObject.getAsJsonArray("potion");
+                        entityAttributesData.potion = new ArrayList<>();
+
+                        for (JsonElement potionElement : potionArray)
+                        {
+                            String potionString = potionElement.getAsString();
+                            String[] split = potionString.split(",");
+
+                            if (split.length < 3 || split.length > 4)
+                            {
+                                Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                                continue;
+                            }
+
+                            ResourceLocation potionId = new ResourceLocation(split[0].trim());
+                            Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
+
+                            if (potion == null)
+                            {
+                                Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
+                                continue;
+                            }
+
+                            Integer duration = Integer.parseInt(split[1].trim());
+                            Integer amplifier = Integer.parseInt(split[2].trim());
+                            Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
+
+                            entityAttributesData.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
+                        }
                     }
+
+                    GeneralCheckSpawnStorage.getInstance().entityEquipmentList.add(entityEquipmentData);
+                    GeneralCheckSpawnStorage.getInstance().profilePriorityList.add(profilePriorityData);
+                    GeneralCheckSpawnStorage.getInstance().gameWorldList.add(gameWorldData);
+                    GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.add(entityDescriptionData);
+                    GeneralCheckSpawnStorage.getInstance().entityAttributesList.add(entityAttributesData);
                 }
                 else
                 {
