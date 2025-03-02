@@ -1,24 +1,24 @@
-package org.imesense.dynamicspawncontrol.core.script.storage;
+package org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage;
 
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class GeneralStorageScriptData
+public final class GeneralCheckSpawnStorage
 {
-    private static volatile GeneralStorageScriptData _INSTANCE;
+    private static volatile GeneralCheckSpawnStorage _INSTANCE;
 
-    public static GeneralStorageScriptData getInstance()
+    public static GeneralCheckSpawnStorage getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (GeneralStorageScriptData.class)
+            synchronized (GeneralCheckSpawnStorage.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new GeneralStorageScriptData();
+                    _INSTANCE = new GeneralCheckSpawnStorage();
                 }
             }
         }
@@ -26,7 +26,7 @@ public final class GeneralStorageScriptData
         return _INSTANCE;
     }
 
-    public GeneralStorageScriptData()
+    public GeneralCheckSpawnStorage()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 

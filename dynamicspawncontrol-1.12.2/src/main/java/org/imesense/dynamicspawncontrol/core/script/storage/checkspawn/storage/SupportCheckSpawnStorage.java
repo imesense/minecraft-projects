@@ -1,24 +1,24 @@
-package org.imesense.dynamicspawncontrol.core.script.storage;
+package org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage;
 
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.PotionEffect;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.PotionEffect;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupportStorageScriptData
+public class SupportCheckSpawnStorage
 {
-    private static volatile SupportStorageScriptData _INSTANCE;
+    private static volatile SupportCheckSpawnStorage _INSTANCE;
 
-    public static SupportStorageScriptData getInstance()
+    public static SupportCheckSpawnStorage getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (SupportStorageScriptData.class)
+            synchronized (SupportCheckSpawnStorage.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new SupportStorageScriptData();
+                    _INSTANCE = new SupportCheckSpawnStorage();
                 }
             }
         }
@@ -26,7 +26,7 @@ public class SupportStorageScriptData
         return _INSTANCE;
     }
 
-    public SupportStorageScriptData()
+    public SupportCheckSpawnStorage()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 

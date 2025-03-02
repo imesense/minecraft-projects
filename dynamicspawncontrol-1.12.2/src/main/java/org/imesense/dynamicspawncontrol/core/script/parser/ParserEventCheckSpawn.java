@@ -6,8 +6,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
-import org.imesense.dynamicspawncontrol.core.script.storage.*;
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 
 import static org.imesense.dynamicspawncontrol.core.script.AuxScript.Util.*;
 
-public final class ParserSpecialSpawnEntity extends AbstractConceptParser
+public final class ParserEventCheckSpawn extends AbstractConceptParser
 {
-    public ParserSpecialSpawnEntity(final String NAME_FILE)
+    public ParserEventCheckSpawn(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         this.nameFile = NAME_FILE;
@@ -31,21 +32,21 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
     @Override
     public void reloadConfig()
     {
-        GeneralStorageScriptData.getInstance().entityEquipmentList.clear();
-        GeneralStorageScriptData.getInstance().profilePriorityList.clear();
-        GeneralStorageScriptData.getInstance().gameWorldList.clear();
-        GeneralStorageScriptData.getInstance().entityDescriptionsList.clear();
-        GeneralStorageScriptData.getInstance().entityAttributesList.clear();
+        GeneralCheckSpawnStorage.getInstance().entityEquipmentList.clear();
+        GeneralCheckSpawnStorage.getInstance().profilePriorityList.clear();
+        GeneralCheckSpawnStorage.getInstance().gameWorldList.clear();
+        GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.clear();
+        GeneralCheckSpawnStorage.getInstance().entityAttributesList.clear();
 
-        SupportStorageScriptData.getInstance().dataSupportList.clear();
+        SupportCheckSpawnStorage.getInstance().dataSupportList.clear();
 
         this.loadConfig(false);
     }
 
     @Override
-    public void loadConfig(boolean initialization)
+    public void loadConfig(boolean init)
     {
-        File file = getConfigFile(initialization,
+        File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
@@ -177,11 +178,11 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                             }
                         }
 
-                        GeneralStorageScriptData.getInstance().entityEquipmentList.add(entityEquipmentData);
-                        GeneralStorageScriptData.getInstance().profilePriorityList.add(profilePriorityData);
-                        GeneralStorageScriptData.getInstance().gameWorldList.add(gameWorldData);
-                        GeneralStorageScriptData.getInstance().entityDescriptionsList.add(entityDescriptionData);
-                        GeneralStorageScriptData.getInstance().entityAttributesList.add(entityAttributesData);
+                        GeneralCheckSpawnStorage.getInstance().entityEquipmentList.add(entityEquipmentData);
+                        GeneralCheckSpawnStorage.getInstance().profilePriorityList.add(profilePriorityData);
+                        GeneralCheckSpawnStorage.getInstance().gameWorldList.add(gameWorldData);
+                        GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.add(entityDescriptionData);
+                        GeneralCheckSpawnStorage.getInstance().entityAttributesList.add(entityAttributesData);
                     }
                     else
                     {
@@ -202,7 +203,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                 {
                     JsonObject dataSupportObject = element.getAsJsonObject();
 
-                    SupportStorageScriptData.DataSupport dataSupport = new SupportStorageScriptData.DataSupport();
+                    SupportCheckSpawnStorage.DataSupport dataSupport = new SupportCheckSpawnStorage.DataSupport();
 
                     dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
                     dataSupport.entityType = dataSupportObject.get("entity_type").getAsString();
@@ -240,7 +241,7 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         }
                     }
 
-                    SupportStorageScriptData.getInstance().dataSupportList.add(dataSupport);
+                    SupportCheckSpawnStorage.getInstance().dataSupportList.add(dataSupport);
                 }
             }
         }

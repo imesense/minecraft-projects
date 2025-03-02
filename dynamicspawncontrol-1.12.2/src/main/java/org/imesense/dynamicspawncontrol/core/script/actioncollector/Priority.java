@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.ProfilePriority;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.ProfilePriority;
 
 import java.util.List;
 import java.util.Random;

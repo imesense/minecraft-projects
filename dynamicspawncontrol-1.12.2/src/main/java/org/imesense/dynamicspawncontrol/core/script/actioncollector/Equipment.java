@@ -11,10 +11,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.EntityAttributes;
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.EntityDescription;
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.EntityEquipment;
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.ItemDescription;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityAttributes;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityDescription;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityEquipment;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.ItemDescription;
 
 import java.util.*;
 

@@ -9,8 +9,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.*;
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -20,9 +21,9 @@ import java.util.stream.IntStream;
 public final class OnEventCheckSpawn
 {
     @SubscribeEvent
-    public void onLivingSpawnCheckSpawn_0(LivingSpawnEvent.CheckSpawn event)
+    public void onLivingSpawnCheckSpawn_0(LivingSpawnEvent.CheckSpawn checkSpawn)
     {
-        String entityType = EntityList.getEntityString(event.getEntity());
+        String entityType = EntityList.getEntityString(checkSpawn.getEntity());
 
         if (entityType == null)
         {
@@ -32,8 +33,8 @@ public final class OnEventCheckSpawn
 
         String fullEntityType = entityType.contains(":") ? entityType : "minecraft:" + entityType.toLowerCase();
 
-        GeneralStorageScriptData generalStorageData = GeneralStorageScriptData.getInstance();
-        SupportStorageScriptData supportStorageScriptData = SupportStorageScriptData.getInstance();
+        GeneralCheckSpawnStorage generalStorageData = GeneralCheckSpawnStorage.getInstance();
+        SupportCheckSpawnStorage supportStorageScriptData = SupportCheckSpawnStorage.getInstance();
 
         if (generalStorageData != null)
         {
@@ -62,14 +63,14 @@ public final class OnEventCheckSpawn
                     EntityAttributes.Data entityAttributes = generalStorageData.entityAttributesList.get(selectedIndex);
                     EntityDescription.Data entityDescription = generalStorageData.entityDescriptionsList.get(selectedIndex);
 
-                    if (!World.getInstance().checkHeight(event.getEntity(), selectedWorldData.minHeight, selectedWorldData.maxHeight))
+                    if (!World.getInstance().checkHeight(checkSpawn.getEntity(), selectedWorldData.minHeight, selectedWorldData.maxHeight))
                     {
                         return;
                     }
 
                     if (selectedWorldData.seeSky != null)
                     {
-                        Boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
+                        Boolean canSeeSky = checkSpawn.getWorld().canBlockSeeSky(checkSpawn.getEntity().getPosition());
 
                         if ((selectedWorldData.seeSky && !canSeeSky) || (!selectedWorldData.seeSky && canSeeSky))
                         {
@@ -79,29 +80,29 @@ public final class OnEventCheckSpawn
 
                     if (entityDescription != null && entityDescription.name != null)
                     {
-                        event.getEntity().setCustomNameTag(entityDescription.name);
-                        event.getEntity().setAlwaysRenderNameTag(true);
+                        checkSpawn.getEntity().setCustomNameTag(entityDescription.name);
+                        checkSpawn.getEntity().setAlwaysRenderNameTag(true);
                     }
 
-                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, entityDescription, entityAttributes, UniqueField.RANDOM.self());
+                    Equipment.getInstance().equipEntity(checkSpawn.getEntity(), selectedConfig, entityDescription, entityAttributes, UniqueField.RANDOM.self());
                 }
             }
 
-            List<SupportStorageScriptData.DataSupport> dataSupports = supportStorageScriptData.dataSupportList;
+            List<SupportCheckSpawnStorage.DataSupport> dataSupports = supportStorageScriptData.dataSupportList;
 
             if (dataSupports != null && !dataSupports.isEmpty())
             {
-                List<SupportStorageScriptData.DataSupport> filteredDataSupports = dataSupports.stream()
+                List<SupportCheckSpawnStorage.DataSupport> filteredDataSupports = dataSupports.stream()
                         .filter(dataSupport -> dataSupport.entityType.equals(fullEntityType))
                         .collect(Collectors.toList());
 
                 if (!filteredDataSupports.isEmpty())
                 {
-                    for (SupportStorageScriptData.DataSupport dataSupport : filteredDataSupports)
+                    for (SupportCheckSpawnStorage.DataSupport dataSupport : filteredDataSupports)
                     {
                         if (dataSupport.seeSky != null)
                         {
-                            Boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
+                            Boolean canSeeSky = checkSpawn.getWorld().canBlockSeeSky(checkSpawn.getEntity().getPosition());
 
                             if ((dataSupport.seeSky && !canSeeSky) || (!dataSupport.seeSky && canSeeSky))
                             {
@@ -111,7 +112,7 @@ public final class OnEventCheckSpawn
 
                         if (dataSupport.potion != null && !dataSupport.potion.isEmpty())
                         {
-                            Potion.getInstance().applyPotionEffects((EntityLivingBase) event.getEntity(), dataSupport.potion, UniqueField.RANDOM.self());
+                            Potion.getInstance().applyPotionEffects((EntityLivingBase) checkSpawn.getEntity(), dataSupport.potion, UniqueField.RANDOM.self());
                         }
                     }
                 }
