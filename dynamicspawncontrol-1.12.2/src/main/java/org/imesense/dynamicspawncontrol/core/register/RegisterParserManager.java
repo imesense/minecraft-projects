@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.register;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventPotentialSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheSettings;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventCheckSpawn;
@@ -20,8 +21,9 @@ public final class RegisterParserManager
      */
     private static final Class<?>[] PARSER_CLASSES =
     {
-        CacheSettings.class,
-        ParserEventCheckSpawn.class
+        //CacheSettings.class, -' TODO - переместить это в отдельный класс
+        ParserEventCheckSpawn.class,
+        ParserEventPotentialSpawn.class
     };
 
     /**
