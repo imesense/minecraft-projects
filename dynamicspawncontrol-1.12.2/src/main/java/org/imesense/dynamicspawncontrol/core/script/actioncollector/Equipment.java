@@ -11,7 +11,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.EntityAttributes;
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.EntityDescription;
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.EntityEquipment;
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.ItemDescription;
 
 import java.util.*;
 
@@ -35,16 +38,17 @@ public final class Equipment
         return _INSTANCE;
     }
 
-    private void equipEntityWithItems(EntityLivingBase entity, List<?> items, EntityEquipmentSlot equipmentSlot, Random random)
+    private void equipEntityWithItems(EntityLivingBase entityLivingBase,
+                                      List<?> listItem, EntityEquipmentSlot entityEquipmentSlot, Random random)
     {
-        if (items != null && !items.isEmpty())
+        if (listItem != null && !listItem.isEmpty())
         {
-            Object item = items.get(random.nextInt(items.size()));
+            Object item = listItem.get(random.nextInt(listItem.size()));
             ItemStack itemStack;
 
-            if (item instanceof StoringScriptData.ItemData)
+            if (item instanceof ItemDescription.Data)
             {
-                StoringScriptData.ItemData itemData = (StoringScriptData.ItemData) item;
+                ItemDescription.Data itemData = (ItemDescription.Data) item;
                 itemStack = new ItemStack(Objects.requireNonNull(Item.getByNameOrId(itemData.item)));
 
                 if (itemData.nbt != null)
@@ -64,7 +68,7 @@ public final class Equipment
 
             if (itemStack.getItem() != Items.AIR)
             {
-                entity.setItemStackToSlot(equipmentSlot, itemStack);
+                entityLivingBase.setItemStackToSlot(entityEquipmentSlot, itemStack);
             }
             else
             {
@@ -74,44 +78,44 @@ public final class Equipment
         }
     }
 
-    public void equipEntity(Entity entity, StoringScriptData.Equipment equipment,
-                            StoringScriptData.EntityDescription entityDescription,
-                            StoringScriptData.EntityAttributes entityAttributes, Random random)
+    public void equipEntity(Entity entity, EntityEquipment.Data entityEquipmentData,
+                            EntityDescription.Data entityDescriptionData,
+                            EntityAttributes.Data entityAttributesData, Random random)
     {
         if (entity instanceof EntityLivingBase)
         {
             EntityLivingBase livingEntity = (EntityLivingBase) entity;
 
-            if (entityAttributes.commandNbt != null)
+            if (entityAttributesData.commandNbt != null)
             {
-                CommandNBT.getInstance().applyNbt(livingEntity, entityAttributes.commandNbt);
+                CommandNBT.getInstance().applyNbt(livingEntity, entityAttributesData.commandNbt);
             }
 
-            if (!entityDescription.isArcher)
+            if (!entityDescriptionData.isArcher)
             {
-                equipEntityWithItems(livingEntity, equipment.HeldItems, EntityEquipmentSlot.MAINHAND, random);
+                equipEntityWithItems(livingEntity, entityEquipmentData.heldItem, EntityEquipmentSlot.MAINHAND, random);
             }
 
-            equipEntityWithItems(livingEntity, equipment.Helmets, EntityEquipmentSlot.HEAD, random);
-            equipEntityWithItems(livingEntity, equipment.ChestPlates, EntityEquipmentSlot.CHEST, random);
-            equipEntityWithItems(livingEntity, equipment.Leggings, EntityEquipmentSlot.LEGS, random);
-            equipEntityWithItems(livingEntity, equipment.Boots, EntityEquipmentSlot.FEET, random);
+            equipEntityWithItems(livingEntity, entityEquipmentData.helmet, EntityEquipmentSlot.HEAD, random);
+            equipEntityWithItems(livingEntity, entityEquipmentData.chestPlate, EntityEquipmentSlot.CHEST, random);
+            equipEntityWithItems(livingEntity, entityEquipmentData.legging, EntityEquipmentSlot.LEGS, random);
+            equipEntityWithItems(livingEntity, entityEquipmentData.boots, EntityEquipmentSlot.FEET, random);
 
-            if (equipment.HasShield)
+            if (entityEquipmentData.hasShield)
             {
                 equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
             }
 
-            if (entityAttributes.potions != null)
+            if (entityAttributesData.potion != null)
             {
-                Potion.getInstance().applyPotionEffects(livingEntity, entityAttributes.potions, random);
+                Potion.getInstance().applyPotionEffects(livingEntity, entityAttributesData.potion, random);
             }
         }
     }
 
-    public List<StoringScriptData.ItemData> parseItemList(JsonElement element)
+    public List<ItemDescription.Data> parseItemList(JsonElement element)
     {
-        List<StoringScriptData.ItemData> items = new ArrayList<>();
+        List<ItemDescription.Data> items = new ArrayList<>();
 
         if (element.isJsonArray())
         {
@@ -119,7 +123,7 @@ public final class Equipment
 
             for (JsonElement itemElement : itemArray)
             {
-                StoringScriptData.ItemData itemData = new StoringScriptData.ItemData();
+                ItemDescription.Data itemData = new ItemDescription.Data();
 
                 if (itemElement.isJsonObject())
                 {

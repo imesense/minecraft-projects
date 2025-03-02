@@ -13,6 +13,8 @@ import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.GeneralStorageScriptData;
+import org.imesense.dynamicspawncontrol.core.script.storage.SupportStorageScriptData;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
@@ -20,7 +22,6 @@ import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
-import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
 import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 import org.imesense.dynamicspawncontrol.core.worldcache.Cache;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
@@ -73,7 +74,12 @@ public final class DynamicSpawnControl
     /**
      *
      */
-    public StoringScriptData GeneralStorageData = null;
+    public GeneralStorageScriptData generalStorageScriptData = null;
+
+    /**
+     *
+     */
+    public SupportStorageScriptData supportStorageScriptData = null;
 
     /**
      *
@@ -122,7 +128,8 @@ public final class DynamicSpawnControl
 
         RegisterConfigClass.initializeConfigs();
 
-        GeneralStorageData = new StoringScriptData();
+        generalStorageScriptData = new GeneralStorageScriptData();
+        supportStorageScriptData = new SupportStorageScriptData();
 
         CacheStorage.Instance = new CacheStorage();
 

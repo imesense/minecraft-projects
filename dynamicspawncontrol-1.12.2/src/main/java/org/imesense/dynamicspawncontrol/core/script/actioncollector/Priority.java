@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
-import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.ProfilePriority;
 
 import java.util.List;
 import java.util.Random;
@@ -25,15 +25,15 @@ public final class Priority
         return _INSTANCE;
     }
 
-    public StoringScriptData.RandomData getConfigByPriority(List<StoringScriptData.RandomData> index, Random random)
+    public ProfilePriority.Data getConfigByPriority(List<ProfilePriority.Data> listProfilePriorityData, Random random)
     {
         int randomPriorityValue =
-                random.nextInt(index.stream().mapToInt(config -> config.Priority).sum()),
+                random.nextInt(listProfilePriorityData.stream().mapToInt(config -> config.priority).sum()),
                 cumulativePrioritySum = 0;
 
-        for (StoringScriptData.RandomData randomData : index)
+        for (ProfilePriority.Data randomData : listProfilePriorityData)
         {
-            cumulativePrioritySum += randomData.Priority;
+            cumulativePrioritySum += randomData.priority;
 
             if (randomPriorityValue < cumulativePrioritySum)
             {
@@ -41,6 +41,6 @@ public final class Priority
             }
         }
 
-        return index.get(index.size() - 1);
+        return listProfilePriorityData.get(listProfilePriorityData.size() - 1);
     }
 }

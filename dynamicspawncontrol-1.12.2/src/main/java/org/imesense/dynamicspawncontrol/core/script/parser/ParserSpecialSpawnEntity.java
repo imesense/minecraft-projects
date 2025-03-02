@@ -2,13 +2,12 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
-import org.imesense.dynamicspawncontrol.core.script.storage.AbstractPotionEffect;
-import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
+import org.imesense.dynamicspawncontrol.core.script.storage.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.*;
 import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -38,9 +37,6 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
     @Override
     public void loadConfig(boolean initialization)
     {
-        StoringScriptData.getInstance().equipmentList = new ArrayList<>();
-        StoringScriptData.getInstance().potionList = new ArrayList<>();
-
         File file = getConfigFile(initialization,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
@@ -64,9 +60,9 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
             JsonArray configs = jsonObject.getAsJsonArray("configs");
 
-            for (JsonElement element : configs)
+            for (JsonElement jsonElement : configs)
             {
-                JsonObject dataObject = element.getAsJsonObject().getAsJsonObject("data");
+                JsonObject dataObject = jsonElement.getAsJsonObject().getAsJsonObject("data");
 
                 if (dataObject != null)
                 {
@@ -85,65 +81,65 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                         dataObject.add("command_nbt", resolveTemplate(dataObject.get("command_nbt"), templates));
                     }
 
-                    StoringScriptData.Equipment config = new StoringScriptData.Equipment();
-                    StoringScriptData.EntityDescription entityDescription = new StoringScriptData.EntityDescription();
-                    StoringScriptData.RandomData randomData = new StoringScriptData.RandomData();
-                    StoringScriptData.WorldData worldData = new StoringScriptData.WorldData();
-                    StoringScriptData.EntityAttributes entityAttributes = new StoringScriptData.EntityAttributes();
+                    EntityEquipment.Data entityEquipmentData = new EntityEquipment.Data();
+                    EntityDescription.Data entityDescriptionData = new EntityDescription.Data();
+                    ProfilePriority.Data profilePriorityData = new ProfilePriority.Data();
+                    GameWorld.Data gameWorldData = new GameWorld.Data();
+                    EntityAttributes.Data entityAttributesData = new EntityAttributes.Data();
 
-                    entityDescription.profile = dataObject.get("profile").getAsString();
-                    entityDescription.description = dataObject.get("description").getAsString();
+                    entityDescriptionData.profile = dataObject.get("profile").getAsString();
+                    entityDescriptionData.description = dataObject.get("description").getAsString();
 
-                    if (entityDescription.profile.isEmpty() || entityDescription.description.isEmpty())
+                    if (entityDescriptionData.profile.isEmpty() || entityDescriptionData.description.isEmpty())
                     {
                         throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' must not be empty in the 'data' section.");
                     }
 
-                    entityDescription.entityType = dataObject.get("entity_type").getAsString();
+                    entityDescriptionData.entityType = dataObject.get("entity_type").getAsString();
 
-                    randomData.Priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
+                    profilePriorityData.priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
 
-                    entityDescription.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
+                    entityDescriptionData.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
 
-                    worldData.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
+                    gameWorldData.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
 
-                    entityAttributes.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
+                    entityAttributesData.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
 
-                    worldData.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
-                    worldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
+                    gameWorldData.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
+                    gameWorldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
 
-                    entityDescription.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
+                    entityDescriptionData.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
 
                     JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
 
                     if (equipmentObject != null)
                     {
-                        config.HeldItems = equipmentObject.has("held_item")
+                        entityEquipmentData.heldItem = equipmentObject.has("held_item")
                                 ? Equipment.getInstance().parseItemList(equipmentObject.get("held_item"))
                                 : null;
 
-                        config.Helmets = equipmentObject.has("armor_helmet")
+                        entityEquipmentData.helmet = equipmentObject.has("armor_helmet")
                                 ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"))
                                 : null;
 
-                        config.ChestPlates = equipmentObject.has("armor_chest")
+                        entityEquipmentData.chestPlate = equipmentObject.has("armor_chest")
                                 ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"))
                                 : null;
 
-                        config.Leggings = equipmentObject.has("armor_legs")
+                        entityEquipmentData.legging = equipmentObject.has("armor_legs")
                                 ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"))
                                 : null;
 
-                        config.Boots = equipmentObject.has("armor_boots")
+                        entityEquipmentData.boots = equipmentObject.has("armor_boots")
                                 ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"))
                                 : null;
 
-                        config.HasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
+                        entityEquipmentData.hasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
 
                         if (dataObject.has("potion"))
                         {
                             JsonArray potionArray = dataObject.getAsJsonArray("potion");
-                            entityAttributes.potions = new ArrayList<>();
+                            entityAttributesData.potion = new ArrayList<>();
 
                             for (JsonElement potionElement : potionArray)
                             {
@@ -165,19 +161,19 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                                     continue;
                                 }
 
-                                int duration = Integer.parseInt(split[1].trim());
-                                int amplifier = Integer.parseInt(split[2].trim());
-                                double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
+                                Integer duration = Integer.parseInt(split[1].trim());
+                                Integer amplifier = Integer.parseInt(split[2].trim());
+                                Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
-                                entityAttributes.potions.add(new AbstractPotionEffect.Data(new PotionEffect(potion, duration, amplifier), chance));
+                                entityAttributesData.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
                             }
                         }
 
-                        StoringScriptData.getInstance().equipmentList.add(config);
-                        StoringScriptData.getInstance().randomDataList.add(randomData);
-                        StoringScriptData.getInstance().worldDataList.add(worldData);
-                        StoringScriptData.getInstance().entityDescriptionsList.add(entityDescription);
-                        StoringScriptData.getInstance().entityAttributesList.add(entityAttributes);
+                        GeneralStorageScriptData.getInstance().entityEquipmentList.add(entityEquipmentData);
+                        GeneralStorageScriptData.getInstance().profilePriorityList.add(profilePriorityData);
+                        GeneralStorageScriptData.getInstance().gameWorldList.add(gameWorldData);
+                        GeneralStorageScriptData.getInstance().entityDescriptionsList.add(entityDescriptionData);
+                        GeneralStorageScriptData.getInstance().entityAttributesList.add(entityAttributesData);
                     }
                     else
                     {
@@ -192,19 +188,21 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
 
             if (jsonObject.has("data_support"))
             {
-                JsonArray dataSupportArray = jsonObject.getAsJsonArray("data_support");
-                for (JsonElement element : dataSupportArray)
+                JsonArray jsonArray = jsonObject.getAsJsonArray("data_support");
+
+                for (JsonElement element : jsonArray)
                 {
                     JsonObject dataSupportObject = element.getAsJsonObject();
 
-                    StoringScriptData.DataSupport dataSupport = new StoringScriptData.DataSupport();
+                    SupportStorageScriptData.DataSupport dataSupport = new SupportStorageScriptData.DataSupport();
+
                     dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
                     dataSupport.entityType = dataSupportObject.get("entity_type").getAsString();
 
                     if (dataSupportObject.has("potion"))
                     {
                         JsonArray potionArray = dataSupportObject.getAsJsonArray("potion");
-                        dataSupport.potions = new ArrayList<>();
+                        dataSupport.potion = new ArrayList<>();
 
                         for (JsonElement potionElement : potionArray)
                         {
@@ -226,15 +224,15 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
                                 continue;
                             }
 
-                            int duration = Integer.parseInt(split[1].trim());
-                            int amplifier = Integer.parseInt(split[2].trim());
-                            double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
+                            Integer duration = Integer.parseInt(split[1].trim());
+                            Integer amplifier = Integer.parseInt(split[2].trim());
+                            Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
-                            dataSupport.potions.add(new AbstractPotionEffect.Data(new PotionEffect(potion, duration, amplifier), chance));
+                            dataSupport.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
                         }
                     }
 
-                    StoringScriptData.getInstance().dataSupportList.add(dataSupport);
+                    SupportStorageScriptData.getInstance().dataSupportList.add(dataSupport);
                 }
             }
         }

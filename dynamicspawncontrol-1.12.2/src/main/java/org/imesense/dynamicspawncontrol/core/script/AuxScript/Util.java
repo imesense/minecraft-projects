@@ -6,11 +6,11 @@ import com.google.gson.JsonObject;
 
 public final class Util
 {
-    public static JsonElement resolveTemplate(JsonElement element, JsonObject templates)
+    public static JsonElement resolveTemplate(JsonElement jsonElement, JsonObject jsonObject)
     {
-        if (element.isJsonPrimitive())
+        if (jsonElement.isJsonPrimitive())
         {
-            String elementStr = element.getAsString();
+            String elementStr = jsonElement.getAsString();
 
             if (elementStr.startsWith("@") && elementStr.contains(","))
             {
@@ -26,7 +26,7 @@ public final class Util
                         templateKey = templateKey.substring(1);
                     }
 
-                    JsonElement templateValue = templates.get(templateKey);
+                    JsonElement templateValue = jsonObject.get(templateKey);
 
                     if (templateValue != null)
                     {
@@ -55,18 +55,18 @@ public final class Util
             else if (elementStr.startsWith("@"))
             {
                 String templateKey = elementStr.substring(1);
-                return templates.get(templateKey);
+                return jsonObject.get(templateKey);
             }
         }
 
-        return element;
+        return jsonElement;
     }
 
-    private static boolean containsElement(JsonArray array, JsonElement element)
+    private static boolean containsElement(JsonArray jsonArray, JsonElement jsonElement)
     {
-        for (JsonElement item : array)
+        for (JsonElement item : jsonArray)
         {
-            if (item.equals(element))
+            if (item.equals(jsonElement))
             {
                 return true;
             }
