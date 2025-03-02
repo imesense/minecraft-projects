@@ -27,6 +27,8 @@ public final class ParserWorldCacheMobs extends AbstractConceptParser
     @Override
     public void reloadConfig()
     {
+        CacheStorage.Instance.EntityCacheMobs.clear();
+
         this.loadConfig(false);
     }
 

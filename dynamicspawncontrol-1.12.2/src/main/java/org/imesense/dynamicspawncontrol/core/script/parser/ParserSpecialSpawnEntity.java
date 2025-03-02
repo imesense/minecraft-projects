@@ -31,6 +31,14 @@ public final class ParserSpecialSpawnEntity extends AbstractConceptParser
     @Override
     public void reloadConfig()
     {
+        GeneralStorageScriptData.getInstance().entityEquipmentList.clear();
+        GeneralStorageScriptData.getInstance().profilePriorityList.clear();
+        GeneralStorageScriptData.getInstance().gameWorldList.clear();
+        GeneralStorageScriptData.getInstance().entityDescriptionsList.clear();
+        GeneralStorageScriptData.getInstance().entityAttributesList.clear();
+
+        SupportStorageScriptData.getInstance().dataSupportList.clear();
+
         this.loadConfig(false);
     }
 
