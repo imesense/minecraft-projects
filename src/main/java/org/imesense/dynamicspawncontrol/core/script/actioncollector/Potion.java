@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
 import net.minecraft.entity.EntityLivingBase;
-import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.PotionEffect;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.PotionEffect;
 
 import java.util.List;
 import java.util.Random;

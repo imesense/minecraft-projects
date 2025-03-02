@@ -13,9 +13,9 @@ import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
-import org.imesense.dynamicspawncontrol.core.script.storage.GeneralObjectStorageScriptData;
-import org.imesense.dynamicspawncontrol.core.script.storage.GeneralStorageScriptData;
-import org.imesense.dynamicspawncontrol.core.script.storage.SupportStorageScriptData;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.script.storage.ObjectStorageScriptData;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
@@ -75,17 +75,17 @@ public final class DynamicSpawnControl
     /**
      *
      */
-    public GeneralStorageScriptData generalStorageScriptData = null;
+    public GeneralCheckSpawnStorage generalStorageScriptData = null;
 
     /**
      *
      */
-    public SupportStorageScriptData supportStorageScriptData = null;
+    public SupportCheckSpawnStorage supportStorageScriptData = null;
 
     /**
      *
      */
-    public GeneralObjectStorageScriptData generalObjectStorageScriptData = null;
+    public ObjectStorageScriptData generalObjectStorageScriptData = null;
 
     /**
      *
@@ -134,9 +134,9 @@ public final class DynamicSpawnControl
 
         RegisterConfigClass.initializeConfigs();
 
-        generalStorageScriptData = new GeneralStorageScriptData();
-        supportStorageScriptData = new SupportStorageScriptData();
-        generalObjectStorageScriptData = new GeneralObjectStorageScriptData();
+        generalStorageScriptData = new GeneralCheckSpawnStorage();
+        supportStorageScriptData = new SupportCheckSpawnStorage();
+        generalObjectStorageScriptData = new ObjectStorageScriptData();
 
         CacheStorage.Instance = new CacheStorage();
 

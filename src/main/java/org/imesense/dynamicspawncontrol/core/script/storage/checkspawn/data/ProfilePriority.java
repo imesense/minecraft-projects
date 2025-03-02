@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.script.storage.datadescription;
+package org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data;
 
 public final class ProfilePriority
 {

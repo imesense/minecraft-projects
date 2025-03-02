@@ -4,9 +4,9 @@ import org.imesense.dynamicspawncontrol.core.debug.Timer;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 
-public class GeneralObjectStorageScriptData
+public class ObjectStorageScriptData
 {
-    public GeneralObjectStorageScriptData()
+    public ObjectStorageScriptData()
     {
         Timer timer = new Timer();
 

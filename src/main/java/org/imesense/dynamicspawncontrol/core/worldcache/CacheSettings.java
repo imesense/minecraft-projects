@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.script.parser;
+package org.imesense.dynamicspawncontrol.core.worldcache;
 
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
@@ -6,7 +6,6 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
 
 import java.io.File;
 import java.io.FileReader;
@@ -15,9 +14,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ParserWorldCacheMobs extends AbstractConceptParser
+public final class CacheSettings extends AbstractConceptParser
 {
-    public ParserWorldCacheMobs(final String NAME_FILE)
+    public CacheSettings(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
