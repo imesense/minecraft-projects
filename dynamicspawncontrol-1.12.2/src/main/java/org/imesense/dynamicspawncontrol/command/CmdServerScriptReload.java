@@ -33,7 +33,7 @@ public final class CmdServerScriptReload extends CommandBase
     @Override
     public String getName()
     {
-        return "dsc_single_scripts_reload";
+        return "dsc_reload_scripts";
     }
 
     /**
@@ -45,7 +45,7 @@ public final class CmdServerScriptReload extends CommandBase
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
-        return "/dsc_single_scripts_reload";
+        return "/dsc_reload_scripts";
     }
 
     /**
