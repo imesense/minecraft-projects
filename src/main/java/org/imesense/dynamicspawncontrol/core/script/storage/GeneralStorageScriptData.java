@@ -1,0 +1,47 @@
+package org.imesense.dynamicspawncontrol.core.script.storage;
+
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.*;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public final class GeneralStorageScriptData
+{
+    private static volatile GeneralStorageScriptData _INSTANCE;
+
+    public static GeneralStorageScriptData getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (GeneralStorageScriptData.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new GeneralStorageScriptData();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
+
+    public GeneralStorageScriptData()
+    {
+        CodeGeneric.printInitClassToLog(this.getClass());
+
+        this.entityEquipmentList = new ArrayList<>();;
+        this.entityDescriptionsList = new ArrayList<>();
+        this.potionEffectList = new ArrayList<>();;
+        this.profilePriorityList = new ArrayList<>();
+        this.gameWorldList = new ArrayList<>();
+        this.entityAttributesList = new ArrayList<>();
+    }
+
+    public List<EntityEquipment.Data> entityEquipmentList;
+    public List<ProfilePriority.Data> profilePriorityList;
+    public List<GameWorld.Data> gameWorldList;
+    public List<EntityDescription.Data> entityDescriptionsList;
+    public List<PotionEffect.Data> potionEffectList;
+    public List<EntityAttributes.Data> entityAttributesList;
+}

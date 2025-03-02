@@ -2,17 +2,16 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.initializer.ConceptScriptProcessor;
-import org.imesense.dynamicspawncontrol.core.script.storage.StoringScriptData;
+import org.imesense.dynamicspawncontrol.core.script.storage.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.datadescription.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,8 +20,6 @@ import java.util.stream.IntStream;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 {
-    private final Random random = new Random();
-
     public OnEventEntityJoinWorld()
     {
         super();
@@ -41,18 +38,18 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 
         String fullEntityType = entityType.contains(":") ? entityType : "minecraft:" + entityType.toLowerCase();
 
-        StoringScriptData generalStorageData = StoringScriptData.getInstance();
+        GeneralStorageScriptData generalStorageData = GeneralStorageScriptData.getInstance();
+        SupportStorageScriptData supportStorageScriptData = SupportStorageScriptData.getInstance();
 
         if (generalStorageData != null)
         {
-            List<StoringScriptData.Equipment> configs = generalStorageData.equipmentList;
-            List<StoringScriptData.RandomData> randomDataList = generalStorageData.randomDataList;
-            List<StoringScriptData.WorldData> worldDataList = generalStorageData.worldDataList;
-            List<StoringScriptData.EntityAttributes> entityAttributesList = generalStorageData.entityAttributesList;
+            List<EntityEquipment.Data> configs = generalStorageData.entityEquipmentList;
+            List<ProfilePriority.Data> randomDataList = generalStorageData.profilePriorityList;
+            List<GameWorld.Data> worldDataList = generalStorageData.gameWorldList;
 
             if (configs != null && !configs.isEmpty() && randomDataList != null && !randomDataList.isEmpty() && worldDataList != null && !worldDataList.isEmpty())
             {
-                List<StoringScriptData.RandomData> filteredRandomData = IntStream.range(0, configs.size())
+                List<ProfilePriority.Data> filteredRandomData = IntStream.range(0, configs.size())
                         .filter(i -> i < generalStorageData.entityDescriptionsList.size())
                         .filter(i -> generalStorageData.entityDescriptionsList.get(i) != null &&
                                 fullEntityType.equals(generalStorageData.entityDescriptionsList.get(i).entityType))
@@ -61,15 +58,15 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
 
                 if (!filteredRandomData.isEmpty())
                 {
-                    StoringScriptData.RandomData selectedRandomData = Priority.getInstance()
+                    ProfilePriority.Data selectedRandomData = Priority.getInstance()
                             .getConfigByPriority(filteredRandomData, UniqueField.RANDOM.self());
 
                     Integer selectedIndex = randomDataList.indexOf(selectedRandomData);
 
-                    StoringScriptData.Equipment selectedConfig = configs.get(selectedIndex);
-                    StoringScriptData.WorldData selectedWorldData = worldDataList.get(selectedIndex);
-                    StoringScriptData.EntityAttributes entityAttributes = generalStorageData.entityAttributesList.get(selectedIndex);
-                    StoringScriptData.EntityDescription entityDescription = generalStorageData.entityDescriptionsList.get(selectedIndex);
+                    EntityEquipment.Data selectedConfig = configs.get(selectedIndex);
+                    GameWorld.Data selectedWorldData = worldDataList.get(selectedIndex);
+                    EntityAttributes.Data entityAttributes = generalStorageData.entityAttributesList.get(selectedIndex);
+                    EntityDescription.Data entityDescription = generalStorageData.entityDescriptionsList.get(selectedIndex);
 
                     if (!World.getInstance().checkHeight(event.getEntity(), selectedWorldData.minHeight, selectedWorldData.maxHeight))
                     {
@@ -96,17 +93,17 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                 }
             }
 
-            List<StoringScriptData.DataSupport> dataSupports = generalStorageData.dataSupportList;
+            List<SupportStorageScriptData.DataSupport> dataSupports = supportStorageScriptData.dataSupportList;
 
             if (dataSupports != null && !dataSupports.isEmpty())
             {
-                List<StoringScriptData.DataSupport> filteredDataSupports = dataSupports.stream()
+                List<SupportStorageScriptData.DataSupport> filteredDataSupports = dataSupports.stream()
                         .filter(dataSupport -> dataSupport.entityType.equals(fullEntityType))
                         .collect(Collectors.toList());
 
                 if (!filteredDataSupports.isEmpty())
                 {
-                    for (StoringScriptData.DataSupport dataSupport : filteredDataSupports)
+                    for (SupportStorageScriptData.DataSupport dataSupport : filteredDataSupports)
                     {
                         if (dataSupport.seeSky != null)
                         {
@@ -118,9 +115,9 @@ public final class OnEventEntityJoinWorld extends ConceptScriptProcessor
                             }
                         }
 
-                        if (dataSupport.potions != null && !dataSupport.potions.isEmpty())
+                        if (dataSupport.potion != null && !dataSupport.potion.isEmpty())
                         {
-                            Potion.getInstance().applyPotionEffects((EntityLivingBase) event.getEntity(), dataSupport.potions, random);
+                            Potion.getInstance().applyPotionEffects((EntityLivingBase) event.getEntity(), dataSupport.potion, UniqueField.RANDOM.self());
                         }
                     }
                 }
