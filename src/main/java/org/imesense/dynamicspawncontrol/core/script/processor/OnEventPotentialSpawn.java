@@ -1,11 +1,17 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -15,6 +21,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 
 import java.util.List;
+import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPotentialSpawn
@@ -26,6 +33,8 @@ public final class OnEventPotentialSpawn
         {
             return;
         }
+
+        List<Biome.SpawnListEntry> spawnList = potentialSpawns.getList();
 
         List<GeneralPotentialSpawnStorage.SpawnParameters> spawnParametersList = GeneralPotentialSpawnStorage.getInstance().spawnParametersList;
 
@@ -49,7 +58,7 @@ public final class OnEventPotentialSpawn
                         new Biome.SpawnListEntry((Class<? extends EntityLiving>) entityClass,
                                 params.frequency, params.groupCountMin, params.groupCountMax);
 
-                potentialSpawns.getList().add(entry);
+                spawnList.add(entry);
             }
         }
     }
