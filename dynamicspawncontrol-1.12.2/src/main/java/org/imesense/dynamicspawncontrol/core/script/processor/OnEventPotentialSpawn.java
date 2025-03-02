@@ -3,12 +3,14 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -59,6 +61,39 @@ public final class OnEventPotentialSpawn
                                 params.frequency, params.groupCountMin, params.groupCountMax);
 
                 spawnList.add(entry);
+            }
+        }
+    }
+
+    /**
+     * {
+     *     "configs": [
+     *       {
+     *         "structure": {
+     *           "entityType": "minecraft:villager_golem",
+     *           "frequency": 50,
+     *           "groupCountMin": 1,
+     *           "groupCountMax": 1,
+     *           "spawnChance": 0.7,
+     *           "maxHeight": 100,
+     *           "minHeight": 1
+     *         }
+     *       }
+     *     ]
+     *   }
+     *   TODO: попробовать реализовать на PotentialSpawn и CheckSpawn
+     * @param event
+     */
+    @SubscribeEvent
+    public void onPotentialSpawn(PopulateChunkEvent.Pre event)
+    {
+        for (Biome biome : Biome.REGISTRY)
+        {
+            if (event.getWorld().rand.nextFloat() < 0.1F)
+            {
+                biome.getSpawnableList(EnumCreatureType.CREATURE).add(
+                        new Biome.SpawnListEntry(EntityIronGolem.class, 10, 1, 3)
+                );
             }
         }
     }
