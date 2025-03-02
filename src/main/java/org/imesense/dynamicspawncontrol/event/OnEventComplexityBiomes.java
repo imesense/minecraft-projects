@@ -209,6 +209,7 @@ public final class OnEventComplexityBiomes
             case "Taiga M":
             case "Savanna Plateau":
             case "Birch Forest Hills":
+            case "Birch Forest M":
                 return 2;
             case "Roofed Forest":
             case "Mega Taiga Hills":
