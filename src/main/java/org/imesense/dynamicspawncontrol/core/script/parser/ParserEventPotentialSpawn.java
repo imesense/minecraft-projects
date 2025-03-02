@@ -1,6 +1,12 @@
 package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -13,6 +19,9 @@ import java.util.List;
 
 public class ParserEventPotentialSpawn extends AbstractConceptParser
 {
+    //-' todo переделать потом все нахуй
+    private List<Biome.SpawnListEntry> spawnEntries = new ArrayList<>();
+
     public ParserEventPotentialSpawn(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -22,8 +31,6 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     @Override
     public void reloadConfig()
     {
-        GeneralPotentialSpawnStorage.getInstance().spawnParametersList.clear();
-
         this.loadConfig(false);
     }
 
@@ -43,36 +50,41 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
         {
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = parser.parse(fileReader).getAsJsonObject();
+            JsonArray mobsArray = jsonObject.getAsJsonArray("mobs");
 
-            if (jsonObject == null)
+            Log.writeDataToLogFile(0, "Loaded mobs: " + mobsArray.size());
+
+            for (JsonElement mobElement : mobsArray)
             {
-                jsonObject = new JsonObject();
-                jsonObject.add("configs", new JsonArray());
+                JsonObject mobMap = mobElement.getAsJsonObject();
+                String id = mobMap.get("mob").getAsString();
+
+                EntityEntry ee = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+
+                if (ee == null)
+                {
+                    Log.writeDataToLogFile(0, "Mob not found: " + id);
+                    continue;
+                }
+
+                Class<? extends Entity> clazz = ee.getEntityClass();
+                if (clazz == null)
+                {
+                    Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
+                    continue;
+                }
+
+                int weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
+                int groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
+                int groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
+
+                Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
+                        weight, groupCountMin, groupCountMax);
+
+                spawnEntries.add(entry);
             }
 
-            JsonArray configsArray = jsonObject.has("configs") ? jsonObject.getAsJsonArray("configs") : new JsonArray();
-
-            List<GeneralPotentialSpawnStorage.SpawnParameters> spawnParametersList = new ArrayList<>();
-
-            for (JsonElement element : configsArray)
-            {
-                JsonObject config = element.getAsJsonObject();
-                JsonObject structure = config.getAsJsonObject("structure");
-
-                GeneralPotentialSpawnStorage.SpawnParameters params = new GeneralPotentialSpawnStorage.SpawnParameters();
-
-                params.entityType = structure.get("entityType").getAsString();
-                params.frequency = structure.get("frequency").getAsInt();
-                params.groupCountMin = structure.get("groupCountMin").getAsInt();
-                params.groupCountMax = structure.get("groupCountMax").getAsInt();
-                params.spawnChance = structure.get("spawnChance").getAsFloat();
-                params.maxHeight = structure.get("maxHeight").getAsInt();
-                params.minHeight = structure.get("minHeight").getAsInt();
-
-                spawnParametersList.add(params);
-            }
-
-            GeneralPotentialSpawnStorage.getInstance().spawnParametersList = spawnParametersList;
+            GeneralPotentialSpawnStorage.getInstance().setSpawnEntries(spawnEntries);
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -80,11 +92,13 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
         }
     }
 
+    //-' todo эту хуйню вообще нахуй отсюда в абстракт убрать. пиздец
     private void createNewConfigFile(File file)
     {
         try
         {
             File parentDir = file.getParentFile();
+
             if (!parentDir.exists() && !parentDir.mkdirs())
             {
                 Log.writeDataToLogFile(0, "Failed to create directory: " + parentDir.getAbsolutePath());
@@ -96,9 +110,10 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
                 try (FileWriter writer = new FileWriter(file))
                 {
                     JsonObject emptyJson = new JsonObject();
-                    emptyJson.add("configs", new JsonArray());
+                    emptyJson.add("mobs", new JsonArray());
                     writer.write(emptyJson.toString());
                 }
+
                 Log.writeDataToLogFile(0, "Created new config file with empty JSON object: " + file.getAbsolutePath());
             }
         }

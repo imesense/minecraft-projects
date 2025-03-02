@@ -14,6 +14,7 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -28,73 +29,24 @@ import java.util.Random;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPotentialSpawn
 {
-    @SubscribeEvent
-    public void onWorldEventPotentialSpawns_0(WorldEvent.PotentialSpawns potentialSpawns)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onPotentialSpawns(WorldEvent.PotentialSpawns event)
     {
-        if (potentialSpawns.getWorld().isRemote)
+        GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
+        List<Biome.SpawnListEntry> spawnEntries = storage.getSpawnEntries();
+
+        if (spawnEntries.isEmpty())
         {
+            Log.writeDataToLogFile(0, "Spawn entries list is empty!");
             return;
         }
 
-        List<Biome.SpawnListEntry> spawnList = potentialSpawns.getList();
+        Log.writeDataToLogFile(0, "Adding mobs to spawn list. Total entries: " + spawnEntries.size());
 
-        List<GeneralPotentialSpawnStorage.SpawnParameters> spawnParametersList = GeneralPotentialSpawnStorage.getInstance().spawnParametersList;
-
-        for (GeneralPotentialSpawnStorage.SpawnParameters params : spawnParametersList)
+        for (Biome.SpawnListEntry entry : spawnEntries)
         {
-            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(params.entityType));
-
-            if (entityEntry == null)
-            {
-                Log.writeDataToLogFile(2, "Cannot find mob '" + params.entityType + "'");
-                continue;
-            }
-
-            Class<? extends Entity> entityClass = entityEntry.getEntityClass();
-
-            int eventY = potentialSpawns.getPos().getY();
-
-            if (eventY >= params.minHeight && eventY <= params.maxHeight && UniqueField.RANDOM.nextFloat() < params.spawnChance)
-            {
-                Biome.SpawnListEntry entry =
-                        new Biome.SpawnListEntry((Class<? extends EntityLiving>) entityClass,
-                                params.frequency, params.groupCountMin, params.groupCountMax);
-
-                spawnList.add(entry);
-            }
-        }
-    }
-
-    /**
-     * {
-     *     "configs": [
-     *       {
-     *         "structure": {
-     *           "entityType": "minecraft:villager_golem",
-     *           "frequency": 50,
-     *           "groupCountMin": 1,
-     *           "groupCountMax": 1,
-     *           "spawnChance": 0.7,
-     *           "maxHeight": 100,
-     *           "minHeight": 1
-     *         }
-     *       }
-     *     ]
-     *   }
-     *   TODO: попробовать реализовать на PotentialSpawn и CheckSpawn
-     * @param event
-     */
-    @SubscribeEvent
-    public void onPotentialSpawn(PopulateChunkEvent.Pre event)
-    {
-        for (Biome biome : Biome.REGISTRY)
-        {
-            if (event.getWorld().rand.nextFloat() < 0.1F)
-            {
-                biome.getSpawnableList(EnumCreatureType.CREATURE).add(
-                        new Biome.SpawnListEntry(EntityIronGolem.class, 10, 1, 3)
-                );
-            }
+            Log.writeDataToLogFile(0, "Adding mob: " + entry.entityClass.getName());
+            event.getList().add(entry);
         }
     }
 }

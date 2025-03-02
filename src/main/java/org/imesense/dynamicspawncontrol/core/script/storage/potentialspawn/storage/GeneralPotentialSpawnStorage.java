@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage;
 
+import net.minecraft.world.biome.Biome;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 public final class GeneralPotentialSpawnStorage
 {
     private static volatile GeneralPotentialSpawnStorage _INSTANCE;
+    private List<Biome.SpawnListEntry> spawnEntries = new ArrayList<>();
 
     public static GeneralPotentialSpawnStorage getInstance()
     {
@@ -21,27 +23,21 @@ public final class GeneralPotentialSpawnStorage
                 }
             }
         }
-
         return _INSTANCE;
     }
 
     public GeneralPotentialSpawnStorage()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
-        this.spawnParametersList = new ArrayList<>();
     }
 
-    public static class SpawnParameters
+    public void setSpawnEntries(List<Biome.SpawnListEntry> spawnEntries)
     {
-        public String entityType;
-        public Integer frequency;
-        public Integer groupCountMin;
-        public Integer groupCountMax;
-        public Float spawnChance;
-        public Integer maxHeight;
-        public Integer minHeight;
+        this.spawnEntries = spawnEntries;
     }
 
-    public List<SpawnParameters> spawnParametersList = null;
+    public List<Biome.SpawnListEntry> getSpawnEntries()
+    {
+        return spawnEntries;
+    }
 }
