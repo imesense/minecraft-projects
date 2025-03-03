@@ -6,7 +6,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupportCheckSpawnStorage
+public final class SupportCheckSpawnStorage
 {
     private static volatile SupportCheckSpawnStorage _INSTANCE;
 
