@@ -11,6 +11,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.*;
@@ -53,8 +54,7 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
 
             if (!jsonObject.has("mobs"))
             {
-                Log.writeDataToLogFile(0, "No 'mobs' array found in config file. Skipping.");
-                return;
+                throw new CheckScript.MissingRequiredFieldException("No 'mobs' array found in config file.");
             }
 
             JsonArray mobsArray = jsonObject.getAsJsonArray("mobs");
