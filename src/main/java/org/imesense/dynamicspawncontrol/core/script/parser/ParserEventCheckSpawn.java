@@ -31,12 +31,6 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
     }
 
     @Override
-    public void reloadConfig()
-    {
-        this.loadConfig(false);
-    }
-
-    @Override
     public void loadConfig(boolean init)
     {
         File file = getConfigFile(init,
@@ -248,21 +242,6 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         {
             Log.writeDataToLogFile(0, exception.getMessage());
             throw new RuntimeException(exception.getMessage(), exception);
-        }
-    }
-
-    @Override
-    public void createNewConfigFile(final File FILE)
-    {
-        try (FileWriter writer = new FileWriter(FILE))
-        {
-            writer.write("[]");
-            writer.flush();
-        }
-        catch (IOException exception)
-        {
-            Log.writeDataToLogFile(0, "Error creating new config file: " + exception.getMessage());
-            throw new RuntimeException("Failed to create new config file", exception);
         }
     }
 }

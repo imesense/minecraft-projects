@@ -24,7 +24,7 @@ public abstract class AbstractConceptParser
     /**
      *
      */
-    public abstract void reloadConfig();
+    public void reloadConfig() { this.loadConfig(false); }
 
     /**
      *
@@ -36,7 +36,19 @@ public abstract class AbstractConceptParser
      *
      * @param FILE
      */
-    public abstract void createNewConfigFile(final File FILE);
+    public void createNewConfigFile(final File FILE)
+    {
+        try (FileWriter writer = new FileWriter(FILE))
+        {
+            writer.write("[]");
+            writer.flush();
+        }
+        catch (IOException exception)
+        {
+            Log.writeDataToLogFile(0, "Error creating new config file: " + exception.getMessage());
+            throw new RuntimeException("Failed to create new config file", exception);
+        }
+    }
 
     /**
      *

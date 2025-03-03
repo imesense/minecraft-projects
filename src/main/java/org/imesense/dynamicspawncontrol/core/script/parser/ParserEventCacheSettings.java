@@ -25,12 +25,6 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
     }
 
     @Override
-    public void reloadConfig()
-    {
-        this.loadConfig(false);
-    }
-
-    @Override
     public void loadConfig(boolean initialization)
     {
         File file = getConfigFile(initialization,
@@ -38,7 +32,9 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
 
         if (!file.exists())
         {
+            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
             createNewConfigFile(file);
+            return;
         }
 
         try (FileReader fileReader = new FileReader(file))
@@ -78,60 +74,5 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
         {
             CodeGeneric.logAndThrow("Error loading script file: " + exception.getMessage(), exception);
         }
-    }
-
-    @Override
-    public void createNewConfigFile(final File FILE)
-    {
-        try
-        {
-            File parentDir = FILE.getParentFile();
-
-            if (!parentDir.exists() && !parentDir.mkdirs())
-            {
-                CodeGeneric.logAndThrow("Failed to create directories for script file: " + parentDir.getAbsolutePath());
-            }
-
-            if (FILE.createNewFile())
-            {
-                try (FileWriter fileWriter = new FileWriter(FILE))
-                {
-                    new GsonBuilder().setPrettyPrinting().create().toJson(getJsonElements(), fileWriter);
-                    Log.writeDataToLogFile(0, "Initialized new script file with default JSON data: " + FILE.getAbsolutePath());
-                }
-            }
-            else
-            {
-                CodeGeneric.logAndThrow("Failed to create new script file: " + FILE.getAbsolutePath());
-            }
-
-        }
-        catch (IOException exception)
-        {
-            CodeGeneric.logAndThrow("Error creating new script file: " + exception.getMessage(), exception);
-        }
-    }
-
-    private static JsonArray getJsonElements()
-    {
-        JsonArray jsonArray = new JsonArray();
-
-        jsonArray.add(createEntityJson("minecraft:cow", 10));
-        jsonArray.add(createEntityJson("minecraft:pig", 8));
-        jsonArray.add(createEntityJson("minecraft:chicken", 6));
-        jsonArray.add(createEntityJson("minecraft:sheep", 4));
-        jsonArray.add(createEntityJson("minecraft:squid", 5));
-
-        return jsonArray;
-    }
-
-    private static JsonObject createEntityJson(String entity, int maxCount)
-    {
-        JsonObject jsonObject = new JsonObject();
-
-        jsonObject.addProperty("entity", entity);
-        jsonObject.addProperty("max_count", maxCount);
-
-        return jsonObject;
     }
 }
