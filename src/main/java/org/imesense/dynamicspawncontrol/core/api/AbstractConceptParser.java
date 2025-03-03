@@ -10,6 +10,8 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,10 +26,35 @@ public abstract class AbstractConceptParser
     /**
      *
      */
+    protected static final List<AbstractConceptParser> ABSTRACT_CONCEPT_PARSER_LIST = new ArrayList<>();
+
+    /**
+     *
+     */
+    @FunctionalInterface
+    public interface ConfigLoader
+    {
+        void load(boolean init);
+    }
+
+    /**
+     *
+     */
     public void reloadConfig()
     {
-        this.loadConfig(false);
+        ConfigLoader loader = this::loadConfig;
+        loader.load(false);
+
+        for (AbstractConceptParser parser : ABSTRACT_CONCEPT_PARSER_LIST)
+        {
+            parser.eraseData();
+        }
     }
+
+    /**
+     *
+     */
+    public abstract void eraseData();
 
     /**
      *

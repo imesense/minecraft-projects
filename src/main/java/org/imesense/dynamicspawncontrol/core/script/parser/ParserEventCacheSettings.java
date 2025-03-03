@@ -75,4 +75,10 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
             CodeGeneric.logAndThrow("Error loading script file: " + exception.getMessage(), exception);
         }
     }
+
+    @Override
+    public void eraseData()
+    {
+        CacheEntityStorage.Instance.EntityCacheMobs.clear();
+    }
 }

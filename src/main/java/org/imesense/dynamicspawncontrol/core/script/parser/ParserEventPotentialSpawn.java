@@ -95,4 +95,10 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
             Log.writeDataToLogFile(0, "Error loading config file: " + exception.getMessage());
         }
     }
+
+    @Override
+    public void eraseData()
+    {
+
+    }
 }
