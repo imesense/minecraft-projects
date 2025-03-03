@@ -16,7 +16,6 @@ import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -33,8 +32,7 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
     @Override
     public void loadConfig(boolean init)
     {
-        File file = getConfigFile(init,
-                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
+        File file = getConfigFile(init, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
@@ -51,197 +49,222 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
             for (JsonElement jsonElement : jsonArray)
             {
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
-
-                JsonObject templates = jsonObject.has("templates") ?
-                        jsonObject.getAsJsonObject("templates") : new JsonObject();
-
-                if (jsonObject.has("configs"))
-                {
-                    JsonArray configs = jsonObject.getAsJsonArray("configs");
-
-                    for (JsonElement configElement : configs)
-                    {
-                        JsonObject dataObject = configElement.getAsJsonObject().getAsJsonObject("data");
-
-                        if (dataObject != null)
-                        {
-                            if (!dataObject.has("profile") || !dataObject.has("description"))
-                            {
-                                throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' are required in the 'data' section.");
-                            }
-
-                            if (dataObject.has("potion"))
-                            {
-                                dataObject.add("potion", resolveTemplate(dataObject.get("potion"), templates));
-                            }
-
-                            if (dataObject.has("command_nbt"))
-                            {
-                                dataObject.add("command_nbt", resolveTemplate(dataObject.get("command_nbt"), templates));
-                            }
-
-                            EntityEquipment.Data entityEquipmentData = new EntityEquipment.Data();
-                            EntityDescription.Data entityDescriptionData = new EntityDescription.Data();
-                            ProfilePriority.Data profilePriorityData = new ProfilePriority.Data();
-                            GameWorld.Data gameWorldData = new GameWorld.Data();
-                            EntityAttributes.Data entityAttributesData = new EntityAttributes.Data();
-
-                            entityDescriptionData.profile = dataObject.get("profile").getAsString();
-                            entityDescriptionData.description = dataObject.get("description").getAsString();
-
-                            if (entityDescriptionData.profile.isEmpty() || entityDescriptionData.description.isEmpty())
-                            {
-                                throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' must not be empty in the 'data' section.");
-                            }
-
-                            entityDescriptionData.entityType = dataObject.get("entity_type").getAsString();
-
-                            profilePriorityData.priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
-
-                            entityDescriptionData.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
-
-                            gameWorldData.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
-
-                            entityAttributesData.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
-
-                            gameWorldData.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
-                            gameWorldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
-
-                            entityDescriptionData.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
-
-                            if (dataObject.has("equipment"))
-                            {
-                                JsonObject equipmentObject = dataObject.getAsJsonObject("equipment");
-
-                                entityEquipmentData.heldItem = equipmentObject.has("held_item")
-                                        ? Equipment.getInstance().parseItemList(equipmentObject.get("held_item"))
-                                        : null;
-
-                                entityEquipmentData.helmet = equipmentObject.has("armor_helmet")
-                                        ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"))
-                                        : null;
-
-                                entityEquipmentData.chestPlate = equipmentObject.has("armor_chest")
-                                        ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"))
-                                        : null;
-
-                                entityEquipmentData.legging = equipmentObject.has("armor_legs")
-                                        ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"))
-                                        : null;
-
-                                entityEquipmentData.boots = equipmentObject.has("armor_boots")
-                                        ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"))
-                                        : null;
-
-                                entityEquipmentData.hasShield = dataObject.has("has_shield") && dataObject.get("has_shield").getAsBoolean();
-                            }
-
-                            if (dataObject.has("potion"))
-                            {
-                                JsonArray potionArray = dataObject.getAsJsonArray("potion");
-                                entityAttributesData.potion = new ArrayList<>();
-
-                                for (JsonElement potionElement : potionArray)
-                                {
-                                    String potionString = potionElement.getAsString();
-                                    String[] split = potionString.split(",");
-
-                                    if (split.length < 3 || split.length > 4)
-                                    {
-                                        Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
-                                        continue;
-                                    }
-
-                                    ResourceLocation potionId = new ResourceLocation(split[0].trim());
-                                    Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
-
-                                    if (potion == null)
-                                    {
-                                        Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
-                                        continue;
-                                    }
-
-                                    Integer duration = Integer.parseInt(split[1].trim());
-                                    Integer amplifier = Integer.parseInt(split[2].trim());
-                                    Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
-
-                                    entityAttributesData.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
-                                }
-                            }
-
-                            GeneralCheckSpawnStorage.getInstance().entityEquipmentList.add(entityEquipmentData);
-                            GeneralCheckSpawnStorage.getInstance().profilePriorityList.add(profilePriorityData);
-                            GeneralCheckSpawnStorage.getInstance().gameWorldList.add(gameWorldData);
-                            GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.add(entityDescriptionData);
-                            GeneralCheckSpawnStorage.getInstance().entityAttributesList.add(entityAttributesData);
-                        }
-                        else
-                        {
-                            throw new RuntimeException("Key 'data' not found in JSON file.");
-                        }
-                    }
-                }
-
-                if (jsonObject.has("data_support"))
-                {
-                    JsonArray dataSupportArray = jsonObject.getAsJsonArray("data_support");
-
-                    for (JsonElement element : dataSupportArray)
-                    {
-                        JsonObject dataSupportObject = element.getAsJsonObject();
-
-                        SupportCheckSpawnStorage.DataSupport dataSupport = new SupportCheckSpawnStorage.DataSupport();
-
-                        dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
-                        dataSupport.entityType = dataSupportObject.get("entity_type").getAsString();
-
-                        if (dataSupportObject.has("potion"))
-                        {
-                            JsonArray potionArray = dataSupportObject.getAsJsonArray("potion");
-                            dataSupport.potion = new ArrayList<>();
-
-                            for (JsonElement potionElement : potionArray)
-                            {
-                                String potionString = potionElement.getAsString();
-                                String[] split = potionString.split(",");
-
-                                if (split.length < 3 || split.length > 4)
-                                {
-                                    Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
-                                    continue;
-                                }
-
-                                ResourceLocation potionId = new ResourceLocation(split[0].trim());
-                                Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
-
-                                if (potion == null)
-                                {
-                                    Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
-                                    continue;
-                                }
-
-                                Integer duration = Integer.parseInt(split[1].trim());
-                                Integer amplifier = Integer.parseInt(split[2].trim());
-                                Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
-
-                                dataSupport.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
-                            }
-                        }
-
-                        SupportCheckSpawnStorage.getInstance().dataSupportList.add(dataSupport);
-                    }
-                }
+                processJsonObject(jsonObject);
             }
         }
         catch (JsonSyntaxException | IOException exception)
         {
-            Log.writeDataToLogFile(0, "Error loading script file: " + exception.getMessage());
-            throw new RuntimeException("Error loading script file", exception);
+            handleLoadError("Error loading script file: " + exception.getMessage(), exception);
         }
         catch (CheckScript.MissingRequiredFieldException exception)
         {
-            Log.writeDataToLogFile(0, exception.getMessage());
-            throw new RuntimeException(exception.getMessage(), exception);
+            handleLoadError(exception.getMessage(), exception);
         }
+    }
+
+    protected void processJsonObject(JsonObject jsonObject) throws CheckScript.MissingRequiredFieldException
+    {
+        JsonObject templates = jsonObject.has("templates") ? jsonObject.getAsJsonObject("templates") : new JsonObject();
+
+        if (jsonObject.has("configs"))
+        {
+            processConfigs(jsonObject.getAsJsonArray("configs"), templates);
+        }
+
+        if (jsonObject.has("data_support"))
+        {
+            processDataSupport(jsonObject.getAsJsonArray("data_support"));
+        }
+    }
+
+    protected void processConfigs(JsonArray configs, JsonObject templates) throws CheckScript.MissingRequiredFieldException
+    {
+        for (JsonElement configElement : configs)
+        {
+            JsonObject dataObject = configElement.getAsJsonObject().getAsJsonObject("data");
+
+            if (dataObject == null)
+            {
+                throw new RuntimeException("Key 'data' not found in JSON file.");
+            }
+
+            validateRequiredFields(dataObject);
+            processDataObject(dataObject, templates);
+        }
+    }
+
+    protected void validateRequiredFields(JsonObject dataObject) throws CheckScript.MissingRequiredFieldException
+    {
+        if (!dataObject.has("profile") || !dataObject.has("description"))
+        {
+            throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' are required in the 'data' section.");
+        }
+
+        if (dataObject.get("profile").getAsString().isEmpty() || dataObject.get("description").getAsString().isEmpty())
+        {
+            throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' must not be empty in the 'data' section.");
+        }
+    }
+
+    protected void processDataObject(JsonObject dataObject, JsonObject templates)
+    {
+        if (dataObject.has("potion"))
+        {
+            dataObject.add("potion", resolveTemplate(dataObject.get("potion"), templates));
+        }
+
+        if (dataObject.has("command_nbt"))
+        {
+            dataObject.add("command_nbt", resolveTemplate(dataObject.get("command_nbt"), templates));
+        }
+
+        EntityEquipment.Data entityEquipmentData = new EntityEquipment.Data();
+        EntityDescription.Data entityDescriptionData = new EntityDescription.Data();
+        ProfilePriority.Data profilePriorityData = new ProfilePriority.Data();
+        GameWorld.Data gameWorldData = new GameWorld.Data();
+        EntityAttributes.Data entityAttributesData = new EntityAttributes.Data();
+
+        entityDescriptionData.profile = dataObject.get("profile").getAsString();
+        entityDescriptionData.description = dataObject.get("description").getAsString();
+        entityDescriptionData.entityType = dataObject.get("entity_type").getAsString();
+
+        profilePriorityData.priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
+        entityDescriptionData.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
+        gameWorldData.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
+        entityAttributesData.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
+        gameWorldData.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
+        gameWorldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
+        entityDescriptionData.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
+
+        if (dataObject.has("equipment"))
+        {
+            processEquipment(dataObject.getAsJsonObject("equipment"), entityEquipmentData);
+        }
+
+        if (dataObject.has("potion"))
+        {
+            processPotionEffects(dataObject.getAsJsonArray("potion"), entityAttributesData);
+        }
+
+        GeneralCheckSpawnStorage.getInstance().entityEquipmentList.add(entityEquipmentData);
+        GeneralCheckSpawnStorage.getInstance().profilePriorityList.add(profilePriorityData);
+        GeneralCheckSpawnStorage.getInstance().gameWorldList.add(gameWorldData);
+        GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.add(entityDescriptionData);
+        GeneralCheckSpawnStorage.getInstance().entityAttributesList.add(entityAttributesData);
+    }
+
+    protected void processEquipment(JsonObject equipmentObject, EntityEquipment.Data entityEquipmentData)
+    {
+        entityEquipmentData.heldItem = equipmentObject.has("held_item")
+                ? Equipment.getInstance().parseItemList(equipmentObject.get("held_item"))
+                : null;
+
+        entityEquipmentData.helmet = equipmentObject.has("armor_helmet")
+                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_helmet"))
+                : null;
+
+        entityEquipmentData.chestPlate = equipmentObject.has("armor_chest")
+                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_chest"))
+                : null;
+
+        entityEquipmentData.legging = equipmentObject.has("armor_legs")
+                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_legs"))
+                : null;
+
+        entityEquipmentData.boots = equipmentObject.has("armor_boots")
+                ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"))
+                : null;
+
+        entityEquipmentData.hasShield = equipmentObject.has("has_shield") && equipmentObject.get("has_shield").getAsBoolean();
+    }
+
+    protected void processPotionEffects(JsonArray potionArray, EntityAttributes.Data entityAttributesData)
+    {
+        entityAttributesData.potion = new ArrayList<>();
+
+        for (JsonElement potionElement : potionArray)
+        {
+            String potionString = potionElement.getAsString();
+            String[] split = potionString.split(",");
+
+            if (split.length < 3 || split.length > 4)
+            {
+                Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                continue;
+            }
+
+            ResourceLocation potionId = new ResourceLocation(split[0].trim());
+            Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
+
+            if (potion == null)
+            {
+                Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
+                continue;
+            }
+
+            Integer duration = Integer.parseInt(split[1].trim());
+            Integer amplifier = Integer.parseInt(split[2].trim());
+            Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
+
+            entityAttributesData.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
+        }
+    }
+
+    protected void processPotionEffectsForDataSupport(JsonArray potionArray, SupportCheckSpawnStorage.DataSupport dataSupport)
+    {
+        dataSupport.potion = new ArrayList<>();
+
+        for (JsonElement potionElement : potionArray)
+        {
+            String potionString = potionElement.getAsString();
+            String[] split = potionString.split(",");
+
+            if (split.length < 3 || split.length > 4)
+            {
+                Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                continue;
+            }
+
+            ResourceLocation potionId = new ResourceLocation(split[0].trim());
+            Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
+
+            if (potion == null)
+            {
+                Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
+                continue;
+            }
+
+            Integer duration = Integer.parseInt(split[1].trim());
+            Integer amplifier = Integer.parseInt(split[2].trim());
+
+            Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
+
+            dataSupport.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
+        }
+    }
+
+    protected void processDataSupport(JsonArray dataSupportArray)
+    {
+        for (JsonElement element : dataSupportArray)
+        {
+            JsonObject dataSupportObject = element.getAsJsonObject();
+            SupportCheckSpawnStorage.DataSupport dataSupport = new SupportCheckSpawnStorage.DataSupport();
+
+            dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
+            dataSupport.entityType = dataSupportObject.get("entity_type").getAsString();
+
+            if (dataSupportObject.has("potion"))
+            {
+                processPotionEffectsForDataSupport(dataSupportObject.getAsJsonArray("potion"), dataSupport);
+            }
+
+            SupportCheckSpawnStorage.getInstance().dataSupportList.add(dataSupport);
+        }
+    }
+
+    protected void handleLoadError(String message, Exception exception)
+    {
+        Log.writeDataToLogFile(0, message);
+        throw new RuntimeException(message, exception);
     }
 }

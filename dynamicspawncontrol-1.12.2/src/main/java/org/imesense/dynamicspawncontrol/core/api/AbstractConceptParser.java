@@ -24,7 +24,10 @@ public abstract class AbstractConceptParser
     /**
      *
      */
-    public void reloadConfig() { this.loadConfig(false); }
+    public void reloadConfig()
+    {
+        this.loadConfig(false);
+    }
 
     /**
      *
