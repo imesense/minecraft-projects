@@ -19,7 +19,6 @@ import java.util.List;
 
 public class ParserEventPotentialSpawn extends AbstractConceptParser
 {
-    //-' todo переделать потом все нахуй
     private List<Biome.SpawnListEntry> spawnEntries = new ArrayList<>();
 
     public ParserEventPotentialSpawn(final String NAME_FILE)
@@ -44,12 +43,20 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
         {
             Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
             createNewConfigFile(file);
+            return;
         }
 
         try (FileReader fileReader = new FileReader(file))
         {
             JsonParser parser = new JsonParser();
             JsonObject jsonObject = parser.parse(fileReader).getAsJsonObject();
+
+            if (!jsonObject.has("mobs"))
+            {
+                Log.writeDataToLogFile(0, "No 'mobs' array found in config file. Skipping.");
+                return;
+            }
+
             JsonArray mobsArray = jsonObject.getAsJsonArray("mobs");
 
             Log.writeDataToLogFile(0, "Loaded mobs: " + mobsArray.size());
@@ -68,6 +75,7 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
                 }
 
                 Class<? extends Entity> clazz = ee.getEntityClass();
+
                 if (clazz == null)
                 {
                     Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
@@ -92,34 +100,18 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
         }
     }
 
-    //-' todo эту хуйню вообще нахуй отсюда в абстракт убрать. пиздец
-    private void createNewConfigFile(File file)
+    @Override
+    public void createNewConfigFile(final File FILE)
     {
-        try
+        try (FileWriter writer = new FileWriter(FILE))
         {
-            File parentDir = file.getParentFile();
-
-            if (!parentDir.exists() && !parentDir.mkdirs())
-            {
-                Log.writeDataToLogFile(0, "Failed to create directory: " + parentDir.getAbsolutePath());
-                return;
-            }
-
-            if (file.createNewFile())
-            {
-                try (FileWriter writer = new FileWriter(file))
-                {
-                    JsonObject emptyJson = new JsonObject();
-                    emptyJson.add("mobs", new JsonArray());
-                    writer.write(emptyJson.toString());
-                }
-
-                Log.writeDataToLogFile(0, "Created new config file with empty JSON object: " + file.getAbsolutePath());
-            }
+            writer.write("{}");
+            writer.flush();
         }
         catch (IOException exception)
         {
-            Log.writeDataToLogFile(0, "Error creating config file: " + exception.getMessage());
+            Log.writeDataToLogFile(0, "Error creating new config file: " + exception.getMessage());
+            throw new RuntimeException("Failed to create new config file", exception);
         }
     }
 }

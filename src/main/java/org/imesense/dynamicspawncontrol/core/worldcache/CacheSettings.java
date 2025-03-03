@@ -81,28 +81,29 @@ public final class CacheSettings extends AbstractConceptParser
         }
     }
 
-    private void createNewConfigFile(File file)
+    @Override
+    public void createNewConfigFile(final File FILE)
     {
         try
         {
-            File parentDir = file.getParentFile();
+            File parentDir = FILE.getParentFile();
 
             if (!parentDir.exists() && !parentDir.mkdirs())
             {
                 CodeGeneric.logAndThrow("Failed to create directories for script file: " + parentDir.getAbsolutePath());
             }
 
-            if (file.createNewFile())
+            if (FILE.createNewFile())
             {
-                try (FileWriter fileWriter = new FileWriter(file))
+                try (FileWriter fileWriter = new FileWriter(FILE))
                 {
                     new GsonBuilder().setPrettyPrinting().create().toJson(getJsonElements(), fileWriter);
-                    Log.writeDataToLogFile(0, "Initialized new script file with default JSON data: " + file.getAbsolutePath());
+                    Log.writeDataToLogFile(0, "Initialized new script file with default JSON data: " + FILE.getAbsolutePath());
                 }
             }
             else
             {
-                CodeGeneric.logAndThrow("Failed to create new script file: " + file.getAbsolutePath());
+                CodeGeneric.logAndThrow("Failed to create new script file: " + FILE.getAbsolutePath());
             }
 
         }
@@ -135,4 +136,3 @@ public final class CacheSettings extends AbstractConceptParser
         return jsonObject;
     }
 }
-
