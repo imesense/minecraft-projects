@@ -45,6 +45,8 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
             JsonParser parser = new JsonParser();
             JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
 
+            List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
+
             for (JsonElement topLevelElement : jsonArray)
             {
                 JsonObject topLevelObject = topLevelElement.getAsJsonObject();
@@ -83,12 +85,12 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
                         Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
                                 weight, groupCountMin, groupCountMax);
 
-                        spawnEntries.add(entry);
+                        newSpawnEntries.add(entry);
                     }
                 }
             }
 
-            GeneralPotentialSpawnStorage.getInstance().setSpawnEntries(spawnEntries);
+            GeneralPotentialSpawnStorage.getInstance().setSpawnEntries(newSpawnEntries);
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -99,6 +101,6 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     @Override
     public void eraseData()
     {
-
+        spawnEntries.clear();
     }
 }
