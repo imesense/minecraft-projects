@@ -27,12 +27,12 @@ import java.util.concurrent.ConcurrentMap;
 /**
  *
  */
-public final class Cache
+public final class CacheGeneralStorage
 {
     /**
      *
      */
-    public static Cache Instance;
+    public static CacheGeneralStorage Instance;
 
     /**
      *
@@ -127,7 +127,7 @@ public final class Cache
     /**
      *
      */
-    public Cache()
+    public CacheGeneralStorage()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		

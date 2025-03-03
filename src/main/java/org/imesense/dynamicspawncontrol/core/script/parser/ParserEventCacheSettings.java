@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.worldcache;
+package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
@@ -6,6 +6,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,9 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CacheSettings extends AbstractConceptParser
+public final class ParserEventCacheSettings extends AbstractConceptParser
 {
-    public CacheSettings(final String NAME_FILE)
+    public ParserEventCacheSettings(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -26,8 +27,6 @@ public final class CacheSettings extends AbstractConceptParser
     @Override
     public void reloadConfig()
     {
-        CacheStorage.Instance.EntityCacheMobs.clear();
-
         this.loadConfig(false);
     }
 
@@ -52,7 +51,7 @@ public final class CacheSettings extends AbstractConceptParser
                 CodeGeneric.logAndThrow("Script does not contain key 'data'.");
             }
 
-            List<CacheStorage.EntityData> entitiesList = new ArrayList<>();
+            List<CacheEntityStorage.EntityData> entitiesList = new ArrayList<>();
 
             assert jsonArray != null;
 
@@ -67,11 +66,11 @@ public final class CacheSettings extends AbstractConceptParser
                 ResourceLocation resourceLocation =
                         new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
 
-                entitiesList.add(new CacheStorage.EntityData(resourceLocation, maxCount));
+                entitiesList.add(new CacheEntityStorage.EntityData(resourceLocation, maxCount));
                 Log.writeDataToLogFile(0, "Entity Loaded: " + resourceLocation + " Max Count: " + maxCount);
             }
 
-            CacheStorage.Instance.EntityCacheMobs = entitiesList;
+            CacheEntityStorage.Instance.EntityCacheMobs = entitiesList;
             Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
 
         }

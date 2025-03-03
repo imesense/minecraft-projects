@@ -5,7 +5,7 @@ import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventPotentialSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheSettings;
+import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventCacheSettings;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventCheckSpawn;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public final class RegisterParserManager
      */
     private static final Class<?>[] PARSER_CLASSES =
     {
-        CacheSettings.class, //-' TODO - переместить это в отдельный класс
+        ParserEventCacheSettings.class, //-' TODO - переместить это в отдельный класс
         ParserEventCheckSpawn.class,
         ParserEventPotentialSpawn.class
     };
