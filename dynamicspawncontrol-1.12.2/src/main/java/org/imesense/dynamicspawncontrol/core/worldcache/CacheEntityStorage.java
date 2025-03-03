@@ -8,17 +8,17 @@ import java.util.List;
 /**
  *
  */
-public final class CacheStorage
+public final class CacheEntityStorage
 {
     /**
      *
      */
-    public static CacheStorage Instance;
+    public static CacheEntityStorage Instance;
 
     /**
      *
      */
-    public CacheStorage()
+    public CacheEntityStorage()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
 		
@@ -44,9 +44,9 @@ public final class CacheStorage
      * @param resourceLocation
      * @return
      */
-    public CacheStorage.EntityData getEntityDataByResourceLocation(ResourceLocation resourceLocation)
+    public CacheEntityStorage.EntityData getEntityDataByResourceLocation(ResourceLocation resourceLocation)
     {
-        for (CacheStorage.EntityData entityData : getEntityCacheMobs())
+        for (CacheEntityStorage.EntityData entityData : getEntityCacheMobs())
         {
             if (entityData.getEntity().equals(resourceLocation))
             {

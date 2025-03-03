@@ -16,6 +16,7 @@ import org.imesense.dynamicspawncontrol.core.register.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.ObjectStorageScriptData;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
@@ -24,8 +25,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
-import org.imesense.dynamicspawncontrol.core.worldcache.Cache;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheStorage;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 
 import java.io.File;
 
@@ -138,9 +138,9 @@ public final class DynamicSpawnControl
         supportStorageScriptData = new SupportCheckSpawnStorage();
         generalObjectStorageScriptData = new ObjectStorageScriptData();
 
-        CacheStorage.Instance = new CacheStorage();
+        CacheEntityStorage.Instance = new CacheEntityStorage();
 
-        Cache.Instance = new Cache();
+        CacheGeneralStorage.Instance = new CacheGeneralStorage();
 
         RegisterTechnicalClass.registerClasses();
 
@@ -210,8 +210,8 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void serverStopped(FMLServerStoppedEvent fmlServerStoppedEvent)
     {
-        Cache.Instance.cleanActualCache();
-        Cache.Instance.cleanBufferCache();
+        CacheGeneralStorage.Instance.cleanActualCache();
+        CacheGeneralStorage.Instance.cleanBufferCache();
     }
 
     /**

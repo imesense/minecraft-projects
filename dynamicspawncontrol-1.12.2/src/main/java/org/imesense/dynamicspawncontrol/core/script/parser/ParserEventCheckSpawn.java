@@ -33,14 +33,6 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
     @Override
     public void reloadConfig()
     {
-        GeneralCheckSpawnStorage.getInstance().entityEquipmentList.clear();
-        GeneralCheckSpawnStorage.getInstance().profilePriorityList.clear();
-        GeneralCheckSpawnStorage.getInstance().gameWorldList.clear();
-        GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.clear();
-        GeneralCheckSpawnStorage.getInstance().entityAttributesList.clear();
-
-        SupportCheckSpawnStorage.getInstance().dataSupportList.clear();
-
         this.loadConfig(false);
     }
 
