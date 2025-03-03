@@ -267,4 +267,16 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         Log.writeDataToLogFile(0, message);
         throw new RuntimeException(message, exception);
     }
+
+    @Override
+    public void eraseData()
+    {
+        GeneralCheckSpawnStorage.getInstance().entityEquipmentList.clear();
+        GeneralCheckSpawnStorage.getInstance().profilePriorityList.clear();
+        GeneralCheckSpawnStorage.getInstance().gameWorldList.clear();
+        GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.clear();
+        GeneralCheckSpawnStorage.getInstance().entityAttributesList.clear();
+
+        SupportCheckSpawnStorage.getInstance().dataSupportList.clear();
+    }
 }
