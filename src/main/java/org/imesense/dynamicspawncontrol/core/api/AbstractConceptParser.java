@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventCheckSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
@@ -48,6 +49,11 @@ public abstract class AbstractConceptParser
         for (AbstractConceptParser parser : ABSTRACT_CONCEPT_PARSER_LIST)
         {
             parser.eraseData();
+        }
+
+        if (this instanceof ParserEventCheckSpawn)
+        {
+            ((ParserEventCheckSpawn) this).clearCache();
         }
     }
 
