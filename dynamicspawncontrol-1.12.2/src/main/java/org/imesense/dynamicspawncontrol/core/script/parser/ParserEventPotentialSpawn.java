@@ -28,12 +28,6 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     }
 
     @Override
-    public void reloadConfig()
-    {
-        this.loadConfig(false);
-    }
-
-    @Override
     public void loadConfig(boolean init)
     {
         File file = getConfigFile(init,
@@ -99,21 +93,6 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
         catch (IOException | JsonSyntaxException exception)
         {
             Log.writeDataToLogFile(0, "Error loading config file: " + exception.getMessage());
-        }
-    }
-
-    @Override
-    public void createNewConfigFile(final File FILE)
-    {
-        try (FileWriter writer = new FileWriter(FILE))
-        {
-            writer.write("[]");
-            writer.flush();
-        }
-        catch (IOException exception)
-        {
-            Log.writeDataToLogFile(0, "Error creating new config file: " + exception.getMessage());
-            throw new RuntimeException("Failed to create new config file", exception);
         }
     }
 }
