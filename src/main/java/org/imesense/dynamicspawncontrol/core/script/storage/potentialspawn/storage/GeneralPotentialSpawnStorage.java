@@ -31,13 +31,13 @@ public final class GeneralPotentialSpawnStorage
         CodeGeneric.printInitClassToLog(this.getClass());
     }
 
-    public void setSpawnEntries(List<Biome.SpawnListEntry> spawnEntries)
+    public synchronized void setSpawnEntries(List<Biome.SpawnListEntry> spawnEntries)
     {
-        this.spawnEntries = spawnEntries;
+        this.spawnEntries = new ArrayList<>(spawnEntries);
     }
 
     public List<Biome.SpawnListEntry> getSpawnEntries()
     {
-        return spawnEntries;
+        return new ArrayList<>(spawnEntries);
     }
 }
