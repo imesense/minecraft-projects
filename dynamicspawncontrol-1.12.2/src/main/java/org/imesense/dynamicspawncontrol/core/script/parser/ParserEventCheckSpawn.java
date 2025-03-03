@@ -16,6 +16,7 @@ import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -49,7 +50,12 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
-        //-' TODO исправить создание файла
+        if (!file.exists())
+        {
+            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            createNewConfigFile(file);
+            return;
+        }
 
         try (FileReader fileReader = new FileReader(file))
         {
@@ -247,6 +253,21 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         {
             Log.writeDataToLogFile(0, exception.getMessage());
             throw new RuntimeException(exception.getMessage(), exception);
+        }
+    }
+
+    @Override
+    public void createNewConfigFile(final File FILE)
+    {
+        try (FileWriter writer = new FileWriter(FILE))
+        {
+            writer.write("{}");
+            writer.flush();
+        }
+        catch (IOException exception)
+        {
+            Log.writeDataToLogFile(0, "Error creating new config file: " + exception.getMessage());
+            throw new RuntimeException("Failed to create new config file", exception);
         }
     }
 }

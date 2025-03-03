@@ -1,9 +1,15 @@
 package org.imesense.dynamicspawncontrol.core.api;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -25,6 +31,12 @@ public abstract class AbstractConceptParser
      * @param init
      */
     public abstract void loadConfig(boolean init);
+
+    /**
+     *
+     * @param FILE
+     */
+    public abstract void createNewConfigFile(final File FILE);
 
     /**
      *
