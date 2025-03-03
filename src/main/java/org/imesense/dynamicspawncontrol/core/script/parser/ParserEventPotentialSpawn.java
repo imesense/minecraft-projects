@@ -50,46 +50,49 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
         try (FileReader fileReader = new FileReader(file))
         {
             JsonParser parser = new JsonParser();
-            JsonObject jsonObject = parser.parse(fileReader).getAsJsonObject();
+            JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
 
-            if (!jsonObject.has("mobs"))
+            for (JsonElement topLevelElement : jsonArray)
             {
-                throw new CheckScript.MissingRequiredFieldException("No 'mobs' array found in config file.");
-            }
+                JsonObject topLevelObject = topLevelElement.getAsJsonObject();
 
-            JsonArray mobsArray = jsonObject.getAsJsonArray("mobs");
-
-            Log.writeDataToLogFile(0, "Loaded mobs: " + mobsArray.size());
-
-            for (JsonElement mobElement : mobsArray)
-            {
-                JsonObject mobMap = mobElement.getAsJsonObject();
-                String id = mobMap.get("mob").getAsString();
-
-                EntityEntry ee = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
-
-                if (ee == null)
+                if (topLevelObject.has("mobs"))
                 {
-                    Log.writeDataToLogFile(0, "Mob not found: " + id);
-                    continue;
+                    JsonArray mobsArray = topLevelObject.getAsJsonArray("mobs");
+
+                    Log.writeDataToLogFile(0, "Loaded mobs: " + mobsArray.size());
+
+                    for (JsonElement mobElement : mobsArray)
+                    {
+                        JsonObject mobMap = mobElement.getAsJsonObject();
+                        String id = mobMap.get("mob").getAsString();
+
+                        EntityEntry ee = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+
+                        if (ee == null)
+                        {
+                            Log.writeDataToLogFile(0, "Mob not found: " + id);
+                            continue;
+                        }
+
+                        Class<? extends Entity> clazz = ee.getEntityClass();
+
+                        if (clazz == null)
+                        {
+                            Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
+                            continue;
+                        }
+
+                        int weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
+                        int groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
+                        int groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
+
+                        Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
+                                weight, groupCountMin, groupCountMax);
+
+                        spawnEntries.add(entry);
+                    }
                 }
-
-                Class<? extends Entity> clazz = ee.getEntityClass();
-
-                if (clazz == null)
-                {
-                    Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
-                    continue;
-                }
-
-                int weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
-                int groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
-                int groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
-
-                Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
-                        weight, groupCountMin, groupCountMax);
-
-                spawnEntries.add(entry);
             }
 
             GeneralPotentialSpawnStorage.getInstance().setSpawnEntries(spawnEntries);
@@ -105,7 +108,7 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     {
         try (FileWriter writer = new FileWriter(FILE))
         {
-            writer.write("{}");
+            writer.write("[]");
             writer.flush();
         }
         catch (IOException exception)
