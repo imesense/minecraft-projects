@@ -14,7 +14,6 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,9 +23,6 @@ import static org.imesense.dynamicspawncontrol.core.script.AuxScript.Util.*;
 
 public final class ParserEventCheckSpawn extends AbstractConceptParser
 {
-    private static JsonArray cachedConfig = null;
-    private static boolean isConfigLoaded = false;
-
     public ParserEventCheckSpawn(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -36,12 +32,6 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
     @Override
     public void loadConfig(boolean init)
     {
-        if (isConfigLoaded && cachedConfig != null)
-        {
-            processCachedConfig(cachedConfig);
-            return;
-        }
-
         File file = getConfigFile(init, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
@@ -51,15 +41,16 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
             return;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file)))
+        try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(reader, JsonArray.class);
+            JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
-            cachedConfig = jsonArray;
-            isConfigLoaded = true;
-
-            processCachedConfig(jsonArray);
+            for (JsonElement jsonElement : jsonArray)
+            {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                processJsonObject(jsonObject);
+            }
         }
         catch (JsonSyntaxException | IOException exception)
         {
@@ -68,21 +59,6 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         catch (CheckScript.MissingRequiredFieldException exception)
         {
             handleLoadError(exception.getMessage(), exception);
-        }
-    }
-
-    public void clearCache()
-    {
-        cachedConfig = null;
-        isConfigLoaded = false;
-    }
-
-    private void processCachedConfig(JsonArray jsonArray) throws CheckScript.MissingRequiredFieldException
-    {
-        for (JsonElement jsonElement : jsonArray)
-        {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            processJsonObject(jsonObject);
         }
     }
 
