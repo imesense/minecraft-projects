@@ -19,8 +19,6 @@ import java.util.List;
 
 public class ParserEventPotentialSpawn extends AbstractConceptParser
 {
-    private List<Biome.SpawnListEntry> spawnEntries = new ArrayList<>();
-
     public ParserEventPotentialSpawn(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -90,7 +88,7 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
                 }
             }
 
-            GeneralPotentialSpawnStorage.getInstance().setSpawnEntries(newSpawnEntries);
+            GeneralPotentialSpawnStorage.getInstance().spawnEntries = newSpawnEntries;
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -101,6 +99,6 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     @Override
     public void eraseData()
     {
-        spawnEntries.clear();
+        GeneralPotentialSpawnStorage.getInstance().spawnEntries.clear();
     }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 public final class GeneralPotentialSpawnStorage
 {
     private static volatile GeneralPotentialSpawnStorage _INSTANCE;
-    private List<Biome.SpawnListEntry> spawnEntries = new ArrayList<>();
 
     public static GeneralPotentialSpawnStorage getInstance()
     {
@@ -29,15 +28,9 @@ public final class GeneralPotentialSpawnStorage
     public GeneralPotentialSpawnStorage()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
+
+        this.spawnEntries = new ArrayList<>();
     }
 
-    public synchronized void setSpawnEntries(List<Biome.SpawnListEntry> spawnEntries)
-    {
-        this.spawnEntries = new ArrayList<>(spawnEntries);
-    }
-
-    public List<Biome.SpawnListEntry> getSpawnEntries()
-    {
-        return new ArrayList<>(spawnEntries);
-    }
+    public List<Biome.SpawnListEntry> spawnEntries;
 }

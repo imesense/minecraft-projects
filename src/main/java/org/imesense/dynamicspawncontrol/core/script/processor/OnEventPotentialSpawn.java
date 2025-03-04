@@ -17,7 +17,7 @@ public final class OnEventPotentialSpawn
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPotentialSpawns(WorldEvent.PotentialSpawns event)
     {
-        List<Biome.SpawnListEntry> spawnEntries = GeneralPotentialSpawnStorage.getInstance().getSpawnEntries();
+        List<Biome.SpawnListEntry> spawnEntries = GeneralPotentialSpawnStorage.getInstance().spawnEntries;
 
         if (spawnEntries.isEmpty())
         {
