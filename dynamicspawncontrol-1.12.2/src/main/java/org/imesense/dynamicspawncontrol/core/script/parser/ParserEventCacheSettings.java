@@ -20,8 +20,9 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
     public ParserEventCacheSettings(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
         this.nameFile = NAME_FILE;
+
+        ABSTRACT_CONCEPT_PARSER_LIST.add(this);
     }
 
     @Override

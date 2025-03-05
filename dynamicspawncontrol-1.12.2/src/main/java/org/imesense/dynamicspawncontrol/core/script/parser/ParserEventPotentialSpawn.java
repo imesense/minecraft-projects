@@ -23,6 +23,8 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         this.nameFile = NAME_FILE;
+
+        ABSTRACT_CONCEPT_PARSER_LIST.add(this);
     }
 
     @Override
