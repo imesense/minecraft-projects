@@ -6,6 +6,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  */
@@ -66,8 +69,7 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         }
 
         this.targetPosition = findDarkerSpot(blockPos, world);
-
-        return true;
+        return this.targetPosition != null;
     }
 
     /**
@@ -96,21 +98,16 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
     {
         if (this.targetPosition != null)
         {
-            moveAwayFromLight();
-        }
-    }
+            BlockPos adjustedPos = this.targetPosition.add(
+                    SPIDER.world.rand.nextInt(3) - 1,
+                    0,
+                    SPIDER.world.rand.nextInt(3) - 1
+            );
 
-    /**
-     *
-     */
-    private void moveAwayFromLight()
-    {
-        if (this.targetPosition != null)
-        {
             SPIDER.getNavigator().tryMoveToXYZ(
-                    this.targetPosition.getX(),
-                    this.targetPosition.getY(),
-                    this.targetPosition.getZ(),
+                    adjustedPos.getX(),
+                    adjustedPos.getY(),
+                    adjustedPos.getZ(),
                     SPEED
             );
         }
@@ -124,29 +121,31 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
      */
     private BlockPos findDarkerSpot(BlockPos blockPos, World world)
     {
-        BlockPos darkerSpot = null;
-
-        int lowestLight = Integer.MAX_VALUE;
+        List<BlockPos> darkSpots = new ArrayList<>();
 
         for (int dy = -1; dy <= 1; dy++)
         {
-            for (int dx = -7; dx <= 7; dx++)
+            for (int dx = -15; dx <= 15; dx++)
             {
-                for (int dz = -7; dz <= 7; dz++)
+                for (int dz = -15; dz <= 15; dz++)
                 {
                     BlockPos newBlockPos = blockPos.add(dx, dy, dz);
                     int lightLevel = world.getLight(newBlockPos);
 
-                    if (lightLevel < lowestLight && isNavigable(newBlockPos, world))
+                    if (lightLevel < LIGHT_THRESHOLD && isNavigable(newBlockPos, world))
                     {
-                        lowestLight = lightLevel;
-                        darkerSpot = newBlockPos;
+                        darkSpots.add(newBlockPos);
                     }
                 }
             }
         }
 
-        return darkerSpot;
+        if (!darkSpots.isEmpty())
+        {
+            return darkSpots.get(world.rand.nextInt(darkSpots.size()));
+        }
+
+        return null;
     }
 
     /**
@@ -160,5 +159,3 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         return world.isAirBlock(blockPos) || world.getBlockState(blockPos).getMaterial().isReplaceable();
     }
 }
-
-
