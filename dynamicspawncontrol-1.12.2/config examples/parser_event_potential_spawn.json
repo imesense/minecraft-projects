@@ -1,0 +1,12 @@
+[
+  {
+    "mobs": [
+      {
+        "mob": "minecraft:zombie",
+        "weight": 1,
+        "groupcountmin": 1,
+        "groupcountmax": 2
+      }
+    ]
+  }
+]
