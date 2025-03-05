@@ -27,11 +27,6 @@ public abstract class AbstractConceptParser
     /**
      *
      */
-    protected static final List<AbstractConceptParser> ABSTRACT_CONCEPT_PARSER_LIST = new ArrayList<>();
-
-    /**
-     *
-     */
     @FunctionalInterface
     public interface ConfigLoader
     {
@@ -41,12 +36,19 @@ public abstract class AbstractConceptParser
     /**
      *
      */
+    @FunctionalInterface
+    public interface EraseData
+    {
+        void eraseData();
+    }
+
+    /**
+     *
+     */
     public void reloadConfig()
     {
-        for (AbstractConceptParser parser : ABSTRACT_CONCEPT_PARSER_LIST)
-        {
-            parser.eraseData();
-        }
+        EraseData data = this::eraseData;
+        data.eraseData();
 
         ConfigLoader loader = this::loadConfig;
         loader.load(false);
