@@ -24,109 +24,46 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-/**
- *
- */
 public final class CacheGeneralStorage
 {
-    /**
-     *
-     */
     public static CacheGeneralStorage Instance;
 
-    /**
-     *
-     */
     public int TickCounter = 0;
 
-    /**
-     *
-     */
     public final int FIRST_UPDATE_INTERVAL = 1200;
 
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public volatile int _DYNAMIC_UPDATE_INTERVAL = 1200;
 
-    /**
-     *
-     */
     public final int SUBSEQUENT_UPDATE_INTERVAL = 4800;
 
-    /**
-     *
-     */
     public boolean IsFirstUpdate = true;
 
-    /**
-     *
-     */
     public boolean IsPrimaryPlayerLogged = false;
 
-    /**
-     *
-     */
     public final Set<ChunkPos> CACHE_VALID_CHUNKS = new HashSet<>();
 
-    /**
-     *
-     */
     public final Set<EntityAnimal> CACHED_ACTUAL_ANIMALS = new HashSet<>();
 
-    /**
-     *
-     */
     public final Set<EntityAnimal> CACHED_BUFFER_ANIMALS = new HashSet<>();
 
-    /**
-     *
-     */
     public final Set<IAnimals> CACHED_ACTUAL_HOSTILES = new HashSet<>();
 
-    /**
-     *
-     */
     public final Set<IAnimals> CACHED_BUFFER_HOSTILES = new HashSet<>();
 
-    /**
-     *
-     */
     public final Set<EntityLivingBase> CACHED_ACTUAL_ALL = new HashSet<>();
 
-    /**
-     *
-     */
     public final Set<EntityLivingBase> CACHED_BUFFER_ALL = new HashSet<>();
 
-    /**
-     *
-     */
     public final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_ACTUAL_BY_NAME = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
     public final ConcurrentMap<String, Set<EntityLivingBase>> ENTITIES_BUFFER_BY_NAME = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
     public final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_ACTUAL_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
     public final ConcurrentMap<ResourceLocation, Set<EntityLivingBase>> ENTITIES_BUFFER_BY_RESOURCE_LOCATION = new ConcurrentHashMap<>();
 
-    /**
-     *
-     */
     public CacheGeneralStorage()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
@@ -142,10 +79,6 @@ public final class CacheGeneralStorage
         Instance = this;
     }
 
-    /**
-     *
-     * @param world
-     */
     public void updateCache(@Nonnull World world)
     {
         cleanActualCache();
@@ -200,12 +133,6 @@ public final class CacheGeneralStorage
         }
     }
 
-    /**
-     *
-     * @param worldServer
-     * @param entityPlayerMP
-     * @return
-     */
     private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayerMP entityPlayerMP)
     {
         Set<ChunkPos> validChunks = new HashSet<>();
@@ -232,83 +159,47 @@ public final class CacheGeneralStorage
         return validChunks;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getActualAnimalCount()
     {
         return CACHED_ACTUAL_ANIMALS.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getActualTotalEntityCount()
     {
         return CACHED_ACTUAL_ALL.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getActualHostileEntityCount()
     {
         return CACHED_ACTUAL_HOSTILES.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getBufferAnimalCount()
     {
         return CACHED_BUFFER_ANIMALS.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getBufferTotalEntityCount()
     {
         return CACHED_BUFFER_ALL.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getBufferHostileEntityCount()
     {
         return CACHED_BUFFER_HOSTILES.size();
     }
 
-    /**
-     *
-     * @return
-     */
     public int getValidChunkCount()
     {
         return CACHE_VALID_CHUNKS.size();
     }
 
-    /**
-     *
-     * @param resourceLocation
-     * @return
-     */
     @Nonnull
     public Set<EntityLivingBase> getEntitiesByResourceLocation(@Nonnull ResourceLocation resourceLocation)
     {
         return ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.getOrDefault(resourceLocation, Collections.emptySet());
     }
 
-    /**
-     *
-     */
     public void copyActualToBuffer()
     {
         CACHED_BUFFER_ANIMALS.clear();
@@ -334,9 +225,6 @@ public final class CacheGeneralStorage
                 ENTITIES_BUFFER_BY_RESOURCE_LOCATION.put(key, new HashSet<>(set)));
     }
 
-    /**
-     *
-     */
     public void cleanActualCache()
     {
         CACHED_ACTUAL_ANIMALS.clear();
@@ -348,9 +236,6 @@ public final class CacheGeneralStorage
         CACHE_VALID_CHUNKS.clear();
     }
 
-    /**
-     *
-     */
     public void cleanBufferCache()
     {
         CACHED_BUFFER_ANIMALS.clear();

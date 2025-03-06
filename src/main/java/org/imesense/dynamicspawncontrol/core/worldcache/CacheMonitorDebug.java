@@ -7,19 +7,10 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
-/**
- *
- */
 public final class CacheMonitorDebug
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public CacheMonitorDebug()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
@@ -33,10 +24,6 @@ public final class CacheMonitorDebug
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param resolution
-     */
     public void renderDebugInfo(ScaledResolution resolution)
     {
         final FontRenderer FONT_RENDER = UniqueField.CLIENT.fontRenderer;
