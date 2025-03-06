@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.register;
 
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPotentialSpawn;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -25,6 +26,7 @@ public final class RegisterTechnicalClass
         OnEventWindowTitle.class,
         OnEventPlayer.class,
         OnEventCheckSpawn.class,
+        OnEventMobTaskManager.class,
         OnEventPotentialSpawn.class,
         OnEventRenderFPS.class
     };
