@@ -27,25 +27,13 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheMonitorDebug;
 
 import java.util.HashSet;
 
-/**
- *
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventWorldCache
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     private static CacheMonitorDebug cacheMonitor = null;
 
-    /**
-     *
-     */
     public OnEventWorldCache()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
@@ -61,10 +49,6 @@ public final class OnEventWorldCache
         cacheMonitor = new CacheMonitorDebug();
     }
 
-    /**
-     *
-     * @param worldTickEvent
-     */
     @SubscribeEvent
     public void onWorldTick_0(TickEvent.WorldTickEvent worldTickEvent)
     {
@@ -90,10 +74,6 @@ public final class OnEventWorldCache
         }
     }
 
-    /**
-     *
-     * @param playerLoggedInEvent
-     */
     @SubscribeEvent
     public void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
     {
@@ -108,20 +88,12 @@ public final class OnEventWorldCache
         CacheGeneralStorage.Instance.copyActualToBuffer();
     }
 
-    /**
-     *
-     * @param playerLoggedOutEvent
-     */
     @SubscribeEvent
     public void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
     {
         CacheGeneralStorage.Instance.copyActualToBuffer();
     }
 
-    /**
-     *
-     * @param post
-     */
     @SubscribeEvent
     public void onRenderOverlay_3(RenderGameOverlayEvent.Post post)
     {
@@ -136,10 +108,6 @@ public final class OnEventWorldCache
         }
     }
 
-    /**
-     *
-     * @param entityJoinWorldEvent
-     */
     @SubscribeEvent
     public void onEntityJoinWorld_4(EntityJoinWorldEvent entityJoinWorldEvent)
     {
@@ -189,10 +157,6 @@ public final class OnEventWorldCache
         }
     }
 
-    /**
-     *
-     * @param event
-     */
     @SubscribeEvent
     public void updateEntitySpawnEvent_5(LivingSpawnEvent.CheckSpawn event)
     {
