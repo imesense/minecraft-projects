@@ -24,9 +24,9 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
     }
 
     @Override
-    public void loadConfig(boolean initialization)
+    public void loadConfig(boolean init)
     {
-        File file = getConfigFile(initialization,
+        File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE, this.nameFile);
 
         if (!file.exists())
