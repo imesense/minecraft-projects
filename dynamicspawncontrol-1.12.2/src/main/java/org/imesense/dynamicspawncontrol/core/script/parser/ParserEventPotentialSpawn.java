@@ -78,16 +78,16 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
                             continue;
                         }
 
-                        int weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
-                        int groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
-                        int groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
+                        Integer weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
+                        Integer groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
+                        Integer groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
 
                         Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
                                 weight, groupCountMin, groupCountMax);
 
                         SecondaryParameters.Data data = new SecondaryParameters.Data();
 
-                        data.spawnChance = mobMap.has("spawnChanceValue") ? mobMap.get("spawnChanceValue").getAsFloat() : 0.01f;
+                        data.spawnChance = mobMap.has("spawn_chance") ? mobMap.get("spawn_chance").getAsFloat() : 0.01f;
                         data.minHeight = mobMap.has("min_height") ? mobMap.get("min_height").getAsFloat() : 1.0f;
                         data.maxHeight = mobMap.has("max_height") ? mobMap.get("max_height").getAsFloat() : 255.0f;
 
@@ -107,10 +107,8 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
                 }
             }
 
-            GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
-
-            storage.spawnEntries = newSpawnEntries;
-            storage.secondaryParameters = newSecondaryParameters;
+            GeneralPotentialSpawnStorage.getInstance().spawnEntries = newSpawnEntries;
+            GeneralPotentialSpawnStorage.getInstance().secondaryParameters = newSecondaryParameters;
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -121,8 +119,7 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     @Override
     public void eraseData()
     {
-        GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
-        storage.spawnEntries.clear();
-        storage.secondaryParameters.clear();
+        GeneralPotentialSpawnStorage.getInstance().spawnEntries.clear();
+        GeneralPotentialSpawnStorage.getInstance().secondaryParameters.clear();
     }
 }

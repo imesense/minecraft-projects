@@ -10,8 +10,11 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.SecondaryParameters;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
+import scala.Int;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPotentialSpawn
@@ -28,17 +31,15 @@ public final class OnEventPotentialSpawn
             return;
         }
 
-        int eventY = event.getPos().getY();
+        Integer eventY = event.getPos().getY();
 
-        for (int i = 0; i < spawnEntries.size(); i++)
-        {
-            Biome.SpawnListEntry entry = spawnEntries.get(i);
-            SecondaryParameters.Data data = secondaryParameters.get(i);
+        List<Biome.SpawnListEntry> filteredEntries = IntStream.range(0, spawnEntries.size())
+                .filter(i -> UniqueField.RANDOM.nextFloat() < secondaryParameters.get(i).spawnChance &&
+                        eventY >= secondaryParameters.get(i).minHeight &&
+                        eventY <= secondaryParameters.get(i).maxHeight)
+                .mapToObj(spawnEntries::get)
+                .collect(Collectors.toList());
 
-            if (UniqueField.RANDOM.nextFloat() < data.spawnChance && eventY >= data.minHeight && eventY <= data.maxHeight)
-            {
-                event.getList().add(entry);
-            }
-        }
+        event.getList().addAll(filteredEntries);
     }
 }
