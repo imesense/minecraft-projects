@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.SecondaryParameters;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -44,6 +45,7 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
             JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
 
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
+            List<SecondaryParameters.Data> newSecondaryParameters = new ArrayList<>();
 
             for (JsonElement topLevelElement : jsonArray)
             {
@@ -83,12 +85,32 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
                         Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
                                 weight, groupCountMin, groupCountMax);
 
+                        SecondaryParameters.Data data = new SecondaryParameters.Data();
+
+                        data.spawnChance = mobMap.has("spawnChanceValue") ? mobMap.get("spawnChanceValue").getAsFloat() : 0.01f;
+                        data.minHeight = mobMap.has("min_height") ? mobMap.get("min_height").getAsFloat() : 1.0f;
+                        data.maxHeight = mobMap.has("max_height") ? mobMap.get("max_height").getAsFloat() : 255.0f;
+
                         newSpawnEntries.add(entry);
+                        newSecondaryParameters.add(data);
+
+                        Log.writeDataToLogFile(0, String.format(
+                                "Entity [%s:%s] has been added to the spawn list. " +
+                                        "Data -> SpawnChance [%f], " +
+                                        "Weight [%d], " +
+                                        "Group min [%d], " +
+                                        "Group max [%d], " +
+                                        "Max Height [%f] " +
+                                        "Min Height [%f]",
+                                entry, id, data.spawnChance, weight, groupCountMin, groupCountMax, data.maxHeight, data.minHeight));
                     }
                 }
             }
 
-            GeneralPotentialSpawnStorage.getInstance().spawnEntries = newSpawnEntries;
+            GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
+
+            storage.spawnEntries = newSpawnEntries;
+            storage.secondaryParameters = newSecondaryParameters;
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -99,6 +121,8 @@ public class ParserEventPotentialSpawn extends AbstractConceptParser
     @Override
     public void eraseData()
     {
-        GeneralPotentialSpawnStorage.getInstance().spawnEntries.clear();
+        GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
+        storage.spawnEntries.clear();
+        storage.secondaryParameters.clear();
     }
 }
