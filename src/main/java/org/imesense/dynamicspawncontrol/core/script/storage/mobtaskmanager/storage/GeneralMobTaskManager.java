@@ -40,7 +40,17 @@ public final class GeneralMobTaskManager
     private GeneralMobTaskManager()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
+
+        this.addEnemy = new ArrayList<>();
+        this.addEnemyByIdPrefix = new ArrayList<>();
+        this.addPanicByIdPrefix = new ArrayList<>();
+        this.addEnemyToIdThemToId = new ArrayList<>();
     }
+
+    public List<EntityHostilityToThem> addEnemy;
+    public List<EntityHostilityToID> addEnemyByIdPrefix;
+    public List<EntityPanicToID> addPanicByIdPrefix;
+    public List<EntityHostilityToIdThemToId> addEnemyToIdThemToId;
 
     public static final class EntityHostilityToThem
     {
@@ -65,11 +75,6 @@ public final class GeneralMobTaskManager
         public String enemy_id;
         public String[] them_id;
     }
-
-    private List<EntityHostilityToThem> addEnemy = new ArrayList<>();
-    private List<EntityHostilityToID> addEnemyByIdPrefix = new ArrayList<>();
-    private List<EntityPanicToID> addPanicByIdPrefix = new ArrayList<>();
-    private List<EntityHostilityToIdThemToId> addEnemyToIdThemToId = new ArrayList<>();
 
     public void addEnemy(EntityHostilityToThem hostility)
     {
