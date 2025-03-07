@@ -30,7 +30,8 @@ public final class ParserEventMobTaskManager extends AbstractConceptParser
     @Override
     public void loadConfig(boolean init)
     {
-        File file = getConfigFile(init, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
+        File file = getConfigFile(init,
+                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
