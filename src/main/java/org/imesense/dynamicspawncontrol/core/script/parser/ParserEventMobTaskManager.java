@@ -60,11 +60,11 @@ public class ParserEventMobTaskManager extends AbstractConceptParser
                     hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
                     taskManager.addEnemyByIdPrefix(hostility);
                 }
-                else if (topLevelObject.has("panic_id") && topLevelObject.has("to_them"))
+                else if (topLevelObject.has("panic_id") && topLevelObject.has("panic_to"))
                 {
                     GeneralMobTaskManager.EntityPanicToID panic = new GeneralMobTaskManager.EntityPanicToID();
-                    panic.enemy_id = topLevelObject.get("panic_id").getAsString();
-                    panic.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
+                    panic.panic_id = topLevelObject.get("panic_id").getAsString();
+                    panic.panic_to = parseStringArray(topLevelObject.getAsJsonArray("panic_to"));
                     taskManager.addPanicByIdPrefix(panic);
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("them_id"))

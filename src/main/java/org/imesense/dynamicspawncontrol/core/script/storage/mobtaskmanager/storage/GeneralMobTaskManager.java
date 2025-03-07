@@ -56,8 +56,8 @@ public final class GeneralMobTaskManager
 
     public static final class EntityPanicToID
     {
-        public String enemy_id;
-        public String[] to_them;
+        public String panic_id;
+        public String[] panic_to;
     }
 
     public static final class EntityHostilityToIdThemToId
@@ -216,8 +216,8 @@ public final class GeneralMobTaskManager
 
         for (EntityPanicToID panic : addPanicByIdPrefix)
         {
-            String panicIdPrefix = panic.enemy_id;
-            String[] targetIds = panic.to_them;
+            String panicIdPrefix = panic.panic_id;
+            String[] panicToIds = panic.panic_to;
 
             Set<Class<? extends EntityLiving>> panicClassesSet = new HashSet<>();
 
@@ -233,31 +233,30 @@ public final class GeneralMobTaskManager
                 }
             }
 
-            Set<Class<? extends EntityLiving>> targetClassesSet = new HashSet<>();
+            Set<Class<? extends EntityLiving>> panicToClassesSet = new HashSet<>();
 
-            for (String targetId : targetIds)
+            for (String panicToId : panicToIds)
             {
-                String fixedTargetId = fixEntityId(targetId);
-                EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
+                String fixedPanicToId = fixEntityId(panicToId);
+                EntityEntry panicToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedPanicToId));
 
-                if (targetEntityEntry != null)
+                if (panicToEntityEntry != null)
                 {
-                    Class<? extends Entity> targetEntityClass = (Class<? extends Entity>) targetEntityEntry.getEntityClass();
-
-                    if (targetEntityClass != null && EntityLiving.class.isAssignableFrom(targetEntityClass))
+                    Class<? extends Entity> panicToEntityClass = (Class<? extends Entity>) panicToEntityEntry.getEntityClass();
+                    if (panicToEntityClass != null && EntityLiving.class.isAssignableFrom(panicToEntityClass))
                     {
-                        targetClassesSet.add((Class<? extends EntityLiving>) targetEntityClass);
+                        panicToClassesSet.add((Class<? extends EntityLiving>) panicToEntityClass);
                     }
                 }
             }
 
-            if (!panicClassesSet.isEmpty() && !targetClassesSet.isEmpty())
+            if (!panicClassesSet.isEmpty() && !panicToClassesSet.isEmpty())
             {
                 Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
 
                 if (currentEntity instanceof EntityCreature)
                 {
-                    if (targetClassesSet.contains(currentEntityClass))
+                    if (panicToClassesSet.contains(currentEntityClass))
                     {
                         for (Class<? extends EntityLiving> panicClass : panicClassesSet)
                         {
