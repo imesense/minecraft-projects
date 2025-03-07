@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class ParserEventMobTaskManager extends AbstractConceptParser
 {
@@ -101,6 +102,9 @@ public class ParserEventMobTaskManager extends AbstractConceptParser
     @Override
     public void eraseData()
     {
-
+        GeneralMobTaskManager.getInstance().addEnemy.clear();
+        GeneralMobTaskManager.getInstance().addEnemyByIdPrefix.clear();
+        GeneralMobTaskManager.getInstance().addPanicByIdPrefix.clear();
+        GeneralMobTaskManager.getInstance().addEnemyToIdThemToId.clear();
     }
 }
