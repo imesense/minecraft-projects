@@ -14,7 +14,6 @@ import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollecti
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.script.storage.ObjectStorageScriptData;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
@@ -85,11 +84,6 @@ public final class DynamicSpawnControl
     /**
      *
      */
-    public ObjectStorageScriptData generalObjectStorageScriptData = null;
-
-    /**
-     *
-     */
     public static SimpleNetworkWrapper networkWrapper = null;
 
     /**
@@ -136,7 +130,6 @@ public final class DynamicSpawnControl
 
         generalStorageScriptData = new GeneralCheckSpawnStorage();
         supportStorageScriptData = new SupportCheckSpawnStorage();
-        generalObjectStorageScriptData = new ObjectStorageScriptData();
 
         CacheEntityStorage.Instance = new CacheEntityStorage();
 
