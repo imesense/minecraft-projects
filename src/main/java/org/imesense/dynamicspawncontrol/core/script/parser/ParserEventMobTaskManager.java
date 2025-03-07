@@ -60,6 +60,13 @@ public class ParserEventMobTaskManager extends AbstractConceptParser
                     hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
                     taskManager.addEnemyByIdPrefix(hostility);
                 }
+                else if (topLevelObject.has("panic_id") && topLevelObject.has("to_them"))
+                {
+                    GeneralMobTaskManager.EntityPanicToID panic = new GeneralMobTaskManager.EntityPanicToID();
+                    panic.enemy_id = topLevelObject.get("panic_id").getAsString();
+                    panic.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
+                    taskManager.addPanicByIdPrefix(panic);
+                }
             }
         }
         catch (FileNotFoundException exception)

@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.stor
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -27,7 +28,8 @@ public final class GeneralMobTaskManager
         {
             synchronized (GeneralMobTaskManager.class)
             {
-                if (_INSTANCE == null) {
+                if (_INSTANCE == null)
+                {
                     _INSTANCE = new GeneralMobTaskManager();
                 }
             }
@@ -52,8 +54,21 @@ public final class GeneralMobTaskManager
         public String[] to_them;
     }
 
+    public static final class EntityPanicToID
+    {
+        public String enemy_id;
+        public String[] to_them;
+    }
+
+    public static final class EntityHostilityToIdThemToId
+    {
+        public String enemy_id;
+        public String[] them_id;
+    }
+
     private List<EntityHostilityToThem> addEnemy = new ArrayList<>();
     private List<EntityHostilityToID> addEnemyByIdPrefix = new ArrayList<>();
+    private List<EntityPanicToID> addPanicByIdPrefix = new ArrayList<>();
 
     public void addEnemy(EntityHostilityToThem hostility)
     {
@@ -63,6 +78,11 @@ public final class GeneralMobTaskManager
     public void addEnemyByIdPrefix(EntityHostilityToID hostility)
     {
         addEnemyByIdPrefix.add(hostility);
+    }
+
+    public void addPanicByIdPrefix(EntityPanicToID panic)
+    {
+        addPanicByIdPrefix.add(panic);
     }
 
     public void applyHostility(EntityJoinWorldEvent event)
@@ -120,6 +140,7 @@ public final class GeneralMobTaskManager
             String[] targetIds = hostility.to_them;
 
             Set<Class<? extends EntityLiving>> enemyClassesSet = new HashSet<>();
+
             for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
             {
                 if (entityEntry.getRegistryName().toString().startsWith(enemyIdPrefix))
@@ -133,10 +154,12 @@ public final class GeneralMobTaskManager
             }
 
             Set<Class<? extends EntityLiving>> targetClassesSet = new HashSet<>();
+
             for (String targetId : targetIds)
             {
                 String fixedTargetId = fixEntityId(targetId);
                 EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
+
                 if (targetEntityEntry != null)
                 {
                     Class<? extends Entity> targetEntityClass = (Class<? extends Entity>) targetEntityEntry.getEntityClass();
@@ -169,6 +192,72 @@ public final class GeneralMobTaskManager
                             currentEntity.targetTasks.addTask(5,
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             enemyClass, true));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void applyPanicByIdPrefix(EntityJoinWorldEvent event)
+    {
+        if (!(event.getEntity() instanceof EntityLiving))
+        {
+            return;
+        }
+
+        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+
+        for (EntityPanicToID panic : addPanicByIdPrefix)
+        {
+            String panicIdPrefix = panic.enemy_id;
+            String[] targetIds = panic.to_them;
+
+            Set<Class<? extends EntityLiving>> panicClassesSet = new HashSet<>();
+
+            for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
+            {
+                if (entityEntry.getRegistryName().toString().startsWith(panicIdPrefix))
+                {
+                    Class<? extends Entity> entityClass = (Class<? extends Entity>) entityEntry.getEntityClass();
+                    if (entityClass != null && EntityLiving.class.isAssignableFrom(entityClass))
+                    {
+                        panicClassesSet.add((Class<? extends EntityLiving>) entityClass);
+                    }
+                }
+            }
+
+            Set<Class<? extends EntityLiving>> targetClassesSet = new HashSet<>();
+
+            for (String targetId : targetIds)
+            {
+                String fixedTargetId = fixEntityId(targetId);
+                EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
+
+                if (targetEntityEntry != null)
+                {
+                    Class<? extends Entity> targetEntityClass = (Class<? extends Entity>) targetEntityEntry.getEntityClass();
+
+                    if (targetEntityClass != null && EntityLiving.class.isAssignableFrom(targetEntityClass))
+                    {
+                        targetClassesSet.add((Class<? extends EntityLiving>) targetEntityClass);
+                    }
+                }
+            }
+
+            if (!panicClassesSet.isEmpty() && !targetClassesSet.isEmpty())
+            {
+                Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
+
+                if (currentEntity instanceof EntityCreature)
+                {
+                    if (targetClassesSet.contains(currentEntityClass))
+                    {
+                        for (Class<? extends EntityLiving> panicClass : panicClassesSet)
+                        {
+                            currentEntity.tasks.addTask(1,
+                                    new EntityAIAvoidEntity<>((EntityCreature) currentEntity,
+                                            panicClass, 16.0F, 1.5D, 2.0D));
                         }
                     }
                 }
