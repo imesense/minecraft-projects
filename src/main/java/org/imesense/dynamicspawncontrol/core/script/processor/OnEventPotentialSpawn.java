@@ -12,6 +12,7 @@ import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 import scala.Int;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -41,6 +42,16 @@ public final class OnEventPotentialSpawn
                 .mapToObj(spawnEntries::get)
                 .collect(Collectors.toList());
 
-        event.getList().addAll(filteredEntries);
+        /*
+         * Исправлено бесконечное дублирование сущностей в событии WorldEvent.PotentialSpawns.
+         * Проблема: При каждом вызове события список spawnEntries дублировался, что приводило к чрезмерному количеству сущностей и сбоям в игре.
+         * Решение: Добавлен временный список для хранения отфильтрованных записей. Оригинальный список очищается перед добавлением новых данных, что предотвращает дублирование и сохраняет записи, добавленные другими модами.
+         */
+        
+        List<Biome.SpawnListEntry> tempList = new ArrayList<>(event.getList());
+        tempList.addAll(filteredEntries);
+
+        event.getList().clear();
+        event.getList().addAll(tempList);
     }
 }
