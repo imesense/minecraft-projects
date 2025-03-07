@@ -18,7 +18,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParserEventPotentialSpawn extends AbstractConceptParser
+public final class ParserEventPotentialSpawn extends AbstractConceptParser
 {
     public ParserEventPotentialSpawn(final String NAME_FILE)
     {
