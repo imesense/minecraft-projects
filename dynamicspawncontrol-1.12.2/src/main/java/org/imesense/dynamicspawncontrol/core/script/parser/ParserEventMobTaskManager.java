@@ -26,8 +26,7 @@ public class ParserEventMobTaskManager extends AbstractConceptParser
     @Override
     public void loadConfig(boolean init)
     {
-        File file =
-                getConfigFile(init, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
+        File file = getConfigFile(init, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
@@ -47,11 +46,20 @@ public class ParserEventMobTaskManager extends AbstractConceptParser
             {
                 JsonObject topLevelObject = topLevelElement.getAsJsonObject();
 
-                GeneralMobTaskManager.EntityHostilityToThem hostility = new GeneralMobTaskManager.EntityHostilityToThem();
-                hostility.enemies_to = parseStringArray(topLevelObject.getAsJsonArray("enemies_to"));
-                hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
-
-                taskManager.addEnemy(hostility);
+                if (topLevelObject.has("enemies_to") && topLevelObject.has("to_them"))
+                {
+                    GeneralMobTaskManager.EntityHostilityToThem hostility = new GeneralMobTaskManager.EntityHostilityToThem();
+                    hostility.enemies_to = parseStringArray(topLevelObject.getAsJsonArray("enemies_to"));
+                    hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
+                    taskManager.addEnemy(hostility);
+                }
+                else if (topLevelObject.has("enemy_id") && topLevelObject.has("to_them"))
+                {
+                    GeneralMobTaskManager.EntityHostilityToID hostility = new GeneralMobTaskManager.EntityHostilityToID();
+                    hostility.enemy_id = topLevelObject.get("enemy_id").getAsString();
+                    hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
+                    taskManager.addEnemyByIdPrefix(hostility);
+                }
             }
         }
         catch (FileNotFoundException exception)
