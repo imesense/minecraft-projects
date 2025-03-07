@@ -14,37 +14,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public abstract class AbstractConceptParser
 {
-    /**
-     *
-     */
     protected String nameFile = null;
 
-    /**
-     *
-     */
     @FunctionalInterface
     public interface ConfigLoader
     {
         void load(boolean init);
     }
 
-    /**
-     *
-     */
     @FunctionalInterface
     public interface EraseData
     {
         void eraseData();
     }
 
-    /**
-     *
-     */
     public void reloadConfig()
     {
         EraseData data = this::eraseData;
@@ -54,21 +39,10 @@ public abstract class AbstractConceptParser
         loader.load(false);
     }
 
-    /**
-     *
-     */
     public abstract void eraseData();
 
-    /**
-     *
-     * @param init
-     */
     public abstract void loadConfig(boolean init);
 
-    /**
-     *
-     * @param FILE
-     */
     public void createNewConfigFile(final File FILE)
     {
         try (FileWriter writer = new FileWriter(FILE))
@@ -83,13 +57,6 @@ public abstract class AbstractConceptParser
         }
     }
 
-    /**
-     *
-     * @param initialization
-     * @param DIRECTORY
-     * @param FILE_NAME
-     * @return
-     */
     protected File getConfigFile(boolean initialization, final String DIRECTORY, final String FILE_NAME)
     {
         return initialization ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
