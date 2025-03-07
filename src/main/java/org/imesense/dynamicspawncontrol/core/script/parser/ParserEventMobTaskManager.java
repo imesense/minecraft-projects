@@ -7,6 +7,10 @@ import com.google.gson.JsonParser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToID;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToIdThemToId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToThem;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityPanicToID;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -14,9 +18,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
-public class ParserEventMobTaskManager extends AbstractConceptParser
+public final class ParserEventMobTaskManager extends AbstractConceptParser
 {
     public ParserEventMobTaskManager(final String NAME_FILE)
     {
@@ -49,28 +52,28 @@ public class ParserEventMobTaskManager extends AbstractConceptParser
 
                 if (topLevelObject.has("enemies_to") && topLevelObject.has("to_them"))
                 {
-                    GeneralMobTaskManager.EntityHostilityToThem hostility = new GeneralMobTaskManager.EntityHostilityToThem();
+                    EntityHostilityToThem.Data hostility = new EntityHostilityToThem.Data();
                     hostility.enemies_to = parseStringArray(topLevelObject.getAsJsonArray("enemies_to"));
                     hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
                     taskManager.addEnemy(hostility);
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("to_them"))
                 {
-                    GeneralMobTaskManager.EntityHostilityToID hostility = new GeneralMobTaskManager.EntityHostilityToID();
+                    EntityHostilityToID.Data hostility = new EntityHostilityToID.Data();
                     hostility.enemy_id = topLevelObject.get("enemy_id").getAsString();
                     hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
                     taskManager.addEnemyByIdPrefix(hostility);
                 }
                 else if (topLevelObject.has("panic_id") && topLevelObject.has("panic_to"))
                 {
-                    GeneralMobTaskManager.EntityPanicToID panic = new GeneralMobTaskManager.EntityPanicToID();
+                    EntityPanicToID.Data panic = new EntityPanicToID.Data();
                     panic.panic_id = topLevelObject.get("panic_id").getAsString();
                     panic.panic_to = parseStringArray(topLevelObject.getAsJsonArray("panic_to"));
                     taskManager.addPanicByIdPrefix(panic);
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("them_id"))
                 {
-                    GeneralMobTaskManager.EntityHostilityToIdThemToId hostility = new GeneralMobTaskManager.EntityHostilityToIdThemToId();
+                    EntityHostilityToIdThemToId.Data hostility = new EntityHostilityToIdThemToId.Data();
                     hostility.enemy_id = topLevelObject.get("enemy_id").getAsString();
                     hostility.them_id = parseStringArray(topLevelObject.getAsJsonArray("them_id"));
                     taskManager.addEnemyToIdThemToId(hostility);

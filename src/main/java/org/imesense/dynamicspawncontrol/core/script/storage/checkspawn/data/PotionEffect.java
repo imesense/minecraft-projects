@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data;
 
-public class PotionEffect
+public final class PotionEffect
 {
     public static class Data
     {

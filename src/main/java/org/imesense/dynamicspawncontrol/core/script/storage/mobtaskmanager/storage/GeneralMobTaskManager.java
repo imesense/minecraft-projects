@@ -10,6 +10,10 @@ import net.minecraft.util.datafix.fixes.EntityId;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToID;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToIdThemToId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToThem;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityPanicToID;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.w3c.dom.Entity;
 
@@ -47,65 +51,53 @@ public final class GeneralMobTaskManager
         this.addEnemyToIdThemToId = new ArrayList<>();
     }
 
-    public List<EntityHostilityToThem> addEnemy;
-    public List<EntityHostilityToID> addEnemyByIdPrefix;
-    public List<EntityPanicToID> addPanicByIdPrefix;
-    public List<EntityHostilityToIdThemToId> addEnemyToIdThemToId;
+    public List<EntityHostilityToThem.Data> addEnemy;
+    public List<EntityHostilityToID.Data> addEnemyByIdPrefix;
+    public List<EntityPanicToID.Data> addPanicByIdPrefix;
+    public List<EntityHostilityToIdThemToId.Data> addEnemyToIdThemToId;
 
-    public static final class EntityHostilityToThem
+    public static final EntityId FIXER = new EntityId();
+
+    public static String fixEntityId(String id)
     {
-        public String[] enemies_to;
-        public String[] to_them;
+        NBTTagCompound nbtXompound = new NBTTagCompound();
+
+        nbtXompound.setString("id", id);
+        nbtXompound = FIXER.fixTagCompound(nbtXompound);
+
+        return nbtXompound.getString("id");
     }
 
-    public static final class EntityHostilityToID
+    public void addEnemy(EntityHostilityToThem.Data entityHostilityToThemData)
     {
-        public String enemy_id;
-        public String[] to_them;
+        addEnemy.add(entityHostilityToThemData);
     }
 
-    public static final class EntityPanicToID
+    public void addEnemyByIdPrefix(EntityHostilityToID.Data entityHostilityToIDData)
     {
-        public String panic_id;
-        public String[] panic_to;
+        addEnemyByIdPrefix.add(entityHostilityToIDData);
     }
 
-    public static final class EntityHostilityToIdThemToId
+    public void addPanicByIdPrefix(EntityPanicToID.Data entityPanicToIDData)
     {
-        public String enemy_id;
-        public String[] them_id;
+        addPanicByIdPrefix.add(entityPanicToIDData);
     }
 
-    public void addEnemy(EntityHostilityToThem hostility)
+    public void addEnemyToIdThemToId(EntityHostilityToIdThemToId.Data entityHostilityToIdThemToIdData)
     {
-        addEnemy.add(hostility);
+        addEnemyToIdThemToId.add(entityHostilityToIdThemToIdData);
     }
 
-    public void addEnemyByIdPrefix(EntityHostilityToID hostility)
+    public void applyHostility(EntityJoinWorldEvent entityJoinWorldEvent)
     {
-        addEnemyByIdPrefix.add(hostility);
-    }
-
-    public void addPanicByIdPrefix(EntityPanicToID panic)
-    {
-        addPanicByIdPrefix.add(panic);
-    }
-
-    public void addEnemyToIdThemToId(EntityHostilityToIdThemToId hostility)
-    {
-        addEnemyToIdThemToId.add(hostility);
-    }
-
-    public void applyHostility(EntityJoinWorldEvent event)
-    {
-        if (!(event.getEntity() instanceof EntityLiving))
+        if (!(entityJoinWorldEvent.getEntity() instanceof EntityLiving))
         {
             return;
         }
 
-        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        EntityLiving currentEntity = (EntityLiving) entityJoinWorldEvent.getEntity();
 
-        for (EntityHostilityToThem hostility : addEnemy)
+        for (EntityHostilityToThem.Data hostility : addEnemy)
         {
             for (String enemyToId : hostility.enemies_to)
             {
@@ -136,16 +128,16 @@ public final class GeneralMobTaskManager
         }
     }
 
-    public void applyHostilityByIdPrefix(EntityJoinWorldEvent event)
+    public void applyHostilityByIdPrefix(EntityJoinWorldEvent entityJoinWorldEvent)
     {
-        if (!(event.getEntity() instanceof EntityLiving))
+        if (!(entityJoinWorldEvent.getEntity() instanceof EntityLiving))
         {
             return;
         }
 
-        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        EntityLiving currentEntity = (EntityLiving) entityJoinWorldEvent.getEntity();
 
-        for (EntityHostilityToID hostility : addEnemyByIdPrefix)
+        for (EntityHostilityToID.Data hostility : addEnemyByIdPrefix)
         {
             String enemyIdPrefix = hostility.enemy_id;
             String[] targetIds = hostility.to_them;
@@ -210,16 +202,16 @@ public final class GeneralMobTaskManager
         }
     }
 
-    public void applyPanicByIdPrefix(EntityJoinWorldEvent event)
+    public void applyPanicByIdPrefix(EntityJoinWorldEvent entityJoinWorldEvent)
     {
-        if (!(event.getEntity() instanceof EntityLiving))
+        if (!(entityJoinWorldEvent.getEntity() instanceof EntityLiving))
         {
             return;
         }
 
-        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        EntityLiving currentEntity = (EntityLiving) entityJoinWorldEvent.getEntity();
 
-        for (EntityPanicToID panic : addPanicByIdPrefix)
+        for (EntityPanicToID.Data panic : addPanicByIdPrefix)
         {
             String panicIdPrefix = panic.panic_id;
             String[] panicToIds = panic.panic_to;
@@ -275,15 +267,16 @@ public final class GeneralMobTaskManager
         }
     }
 
-    public void applyHostilityToIdThemToId(EntityJoinWorldEvent event)
+    public void applyHostilityToIdThemToId(EntityJoinWorldEvent entityJoinWorldEvent)
     {
-        if (!(event.getEntity() instanceof EntityLiving)) {
+        if (!(entityJoinWorldEvent.getEntity() instanceof EntityLiving))
+        {
             return;
         }
 
-        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        EntityLiving currentEntity = (EntityLiving) entityJoinWorldEvent.getEntity();
 
-        for (EntityHostilityToIdThemToId hostility : addEnemyToIdThemToId)
+        for (EntityHostilityToIdThemToId.Data hostility : addEnemyToIdThemToId)
         {
             String enemyIdPrefix = hostility.enemy_id;
             String[] themIdPrefixes = hostility.them_id;
@@ -346,18 +339,5 @@ public final class GeneralMobTaskManager
                 }
             }
         }
-    }
-
-    public static final EntityId FIXER = new EntityId();
-
-    public static String fixEntityId(String id)
-    {
-        NBTTagCompound nbtXompound = new NBTTagCompound();
-
-        nbtXompound.setString("id", id);
-
-        nbtXompound = FIXER.fixTagCompound(nbtXompound);
-
-        return nbtXompound.getString("id");
     }
 }
