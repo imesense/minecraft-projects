@@ -69,6 +69,7 @@ public final class GeneralMobTaskManager
     private List<EntityHostilityToThem> addEnemy = new ArrayList<>();
     private List<EntityHostilityToID> addEnemyByIdPrefix = new ArrayList<>();
     private List<EntityPanicToID> addPanicByIdPrefix = new ArrayList<>();
+    private List<EntityHostilityToIdThemToId> addEnemyToIdThemToId = new ArrayList<>();
 
     public void addEnemy(EntityHostilityToThem hostility)
     {
@@ -83,6 +84,11 @@ public final class GeneralMobTaskManager
     public void addPanicByIdPrefix(EntityPanicToID panic)
     {
         addPanicByIdPrefix.add(panic);
+    }
+
+    public void addEnemyToIdThemToId(EntityHostilityToIdThemToId hostility)
+    {
+        addEnemyToIdThemToId.add(hostility);
     }
 
     public void applyHostility(EntityJoinWorldEvent event)
@@ -258,6 +264,79 @@ public final class GeneralMobTaskManager
                             currentEntity.tasks.addTask(1,
                                     new EntityAIAvoidEntity<>((EntityCreature) currentEntity,
                                             panicClass, 16.0F, 1.5D, 2.0D));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void applyHostilityToIdThemToId(EntityJoinWorldEvent event)
+    {
+        if (!(event.getEntity() instanceof EntityLiving)) {
+            return;
+        }
+
+        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+
+        for (EntityHostilityToIdThemToId hostility : addEnemyToIdThemToId)
+        {
+            String enemyIdPrefix = hostility.enemy_id;
+            String[] themIdPrefixes = hostility.them_id;
+
+            Set<Class<? extends EntityLiving>> enemyClassesSet = new HashSet<>();
+
+            for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
+            {
+                if (entityEntry.getRegistryName().toString().startsWith(enemyIdPrefix))
+                {
+                    Class<? extends Entity> entityClass = (Class<? extends Entity>) entityEntry.getEntityClass();
+                    if (entityClass != null && EntityLiving.class.isAssignableFrom(entityClass))
+                    {
+                        enemyClassesSet.add((Class<? extends EntityLiving>) entityClass);
+                    }
+                }
+            }
+
+            Set<Class<? extends EntityLiving>> themClassesSet = new HashSet<>();
+
+            for (String themIdPrefix : themIdPrefixes)
+            {
+                for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
+                {
+                    if (entityEntry.getRegistryName().toString().startsWith(themIdPrefix))
+                    {
+                        Class<? extends Entity> entityClass = (Class<? extends Entity>) entityEntry.getEntityClass();
+                        if (entityClass != null && EntityLiving.class.isAssignableFrom(entityClass))
+                        {
+                            themClassesSet.add((Class<? extends EntityLiving>) entityClass);
+                        }
+                    }
+                }
+            }
+
+            if (!enemyClassesSet.isEmpty() && !themClassesSet.isEmpty())
+            {
+                Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
+
+                if (currentEntity instanceof EntityCreature)
+                {
+                    if (enemyClassesSet.contains(currentEntityClass))
+                    {
+                        for (Class<? extends EntityLiving> targetClass : themClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
+                        }
+                    }
+                    else if (themClassesSet.contains(currentEntityClass))
+                    {
+                        for (Class<? extends EntityLiving> targetClass : enemyClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
                         }
                     }
                 }
