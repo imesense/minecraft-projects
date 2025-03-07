@@ -23,6 +23,7 @@ public final class OnEventPotentialSpawn
     public void onPotentialSpawns(WorldEvent.PotentialSpawns event)
     {
         GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
+
         List<Biome.SpawnListEntry> spawnEntries = storage.spawnEntries;
         List<SecondaryParameters.Data> secondaryParameters = storage.secondaryParameters;
 

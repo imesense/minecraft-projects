@@ -22,5 +22,6 @@ public final class OnEventMobTaskManager
 
         GeneralMobTaskManager.getInstance().applyHostility(event);
         GeneralMobTaskManager.getInstance().applyHostilityByIdPrefix(event);
+        GeneralMobTaskManager.getInstance().applyPanicByIdPrefix(event);
     }
 }
