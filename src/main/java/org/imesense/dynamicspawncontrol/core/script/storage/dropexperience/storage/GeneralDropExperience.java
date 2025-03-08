@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage;
 
+import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public final class GeneralDropExperience
 
     public static final class Data
     {
-        public String entity;
+        public ResourceLocation entity;
         public Integer xp;
         public Float multi_xp;
         public Float adding_xp;
