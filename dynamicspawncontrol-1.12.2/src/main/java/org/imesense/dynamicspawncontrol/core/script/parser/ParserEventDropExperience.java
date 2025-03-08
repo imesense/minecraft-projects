@@ -67,7 +67,7 @@ public final class ParserEventDropExperience extends AbstractConceptParser
                 GeneralDropExperience.Data data = new GeneralDropExperience.Data();
 
                 String entityId = jsonObject.get("entity").getAsString();
-                data.entity = entityId;
+                data.entity = new ResourceLocation(entityId);
 
                 EntityEntry ee = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entityId));
 
