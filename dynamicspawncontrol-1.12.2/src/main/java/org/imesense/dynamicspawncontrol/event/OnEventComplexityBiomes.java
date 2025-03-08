@@ -215,6 +215,7 @@ public final class OnEventComplexityBiomes
             case "Mega Taiga Hills":
             case "ForestHills":
             case "Ice Plains":
+            case "JungleEdge":
                 return 3;
             case "Swampland":
             case "Extreme Hills":
@@ -288,6 +289,7 @@ public final class OnEventComplexityBiomes
             case "Mega Spruce Taiga":
             case "ForestHills":
             case "Ice Mountains":
+            case "JungleEdge":
                 return 2;
             case "Savanna":
                 return 3;
