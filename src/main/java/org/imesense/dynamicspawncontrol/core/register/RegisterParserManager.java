@@ -24,6 +24,7 @@ public final class RegisterParserManager
         ParserEventDropExperience.class,
         ParserEventDropItem.class,
         ParserEventPotentialSpawn.class,
+        ParserEventPopulationChunk.class,
         ParserEventMobTaskManager.class
     };
 

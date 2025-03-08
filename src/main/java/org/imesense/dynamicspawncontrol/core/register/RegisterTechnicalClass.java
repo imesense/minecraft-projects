@@ -26,6 +26,7 @@ public final class RegisterTechnicalClass
         OnEventDropExperience.class,
         OnEventDropItem.class,
         OnEventMobTaskManager.class,
+        OnEventPopulationChunk.class,
         OnEventPotentialSpawn.class,
         OnEventRenderFPS.class
     };
