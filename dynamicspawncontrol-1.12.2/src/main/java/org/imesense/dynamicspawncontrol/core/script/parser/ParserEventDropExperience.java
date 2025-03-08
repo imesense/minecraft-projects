@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.data.EntityDropExperience;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -64,7 +65,7 @@ public final class ParserEventDropExperience extends AbstractConceptParser
             for (JsonElement element : jsonArray)
             {
                 JsonObject jsonObject = element.getAsJsonObject();
-                GeneralDropExperience.Data data = new GeneralDropExperience.Data();
+                EntityDropExperience.Data data = new EntityDropExperience.Data();
 
                 String entityId = jsonObject.get("entity").getAsString();
                 data.entity = new ResourceLocation(entityId);
