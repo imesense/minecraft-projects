@@ -9,7 +9,6 @@ import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.script.syntax.CheckScript;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
@@ -57,13 +56,13 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         {
             handleLoadError("Error loading script file: " + exception.getMessage(), exception);
         }
-        catch (CheckScript.MissingRequiredFieldException exception)
+        catch (RuntimeException exception)
         {
             handleLoadError(exception.getMessage(), exception);
         }
     }
 
-    protected void processJsonObject(JsonObject jsonObject) throws CheckScript.MissingRequiredFieldException
+    protected void processJsonObject(JsonObject jsonObject) throws RuntimeException
     {
         JsonObject templates = jsonObject.has("templates") ? jsonObject.getAsJsonObject("templates") : new JsonObject();
 
@@ -78,7 +77,7 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         }
     }
 
-    protected void processConfigs(JsonArray configs, JsonObject templates) throws CheckScript.MissingRequiredFieldException
+    protected void processConfigs(JsonArray configs, JsonObject templates) throws RuntimeException
     {
         for (JsonElement configElement : configs)
         {
@@ -94,16 +93,16 @@ public final class ParserEventCheckSpawn extends AbstractConceptParser
         }
     }
 
-    protected void validateRequiredFields(JsonObject dataObject) throws CheckScript.MissingRequiredFieldException
+    protected void validateRequiredFields(JsonObject dataObject) throws RuntimeException
     {
         if (!dataObject.has("profile") || !dataObject.has("description"))
         {
-            throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' are required in the 'data' section.");
+            throw new RuntimeException("Fields 'profile' and 'description' are required in the 'data' section.");
         }
 
         if (dataObject.get("profile").getAsString().isEmpty() || dataObject.get("description").getAsString().isEmpty())
         {
-            throw new CheckScript.MissingRequiredFieldException("Fields 'profile' and 'description' must not be empty in the 'data' section.");
+            throw new RuntimeException("Fields 'profile' and 'description' must not be empty in the 'data' section.");
         }
     }
 
