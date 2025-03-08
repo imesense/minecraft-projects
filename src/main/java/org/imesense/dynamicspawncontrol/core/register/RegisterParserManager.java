@@ -22,6 +22,7 @@ public final class RegisterParserManager
         ParserEventCacheSettings.class, //-' TODO - переместить это в отдельный класс
         ParserEventCheckSpawn.class,
         ParserEventDropExperience.class,
+        ParserEventDropItem.class,
         ParserEventPotentialSpawn.class,
         ParserEventMobTaskManager.class
     };
