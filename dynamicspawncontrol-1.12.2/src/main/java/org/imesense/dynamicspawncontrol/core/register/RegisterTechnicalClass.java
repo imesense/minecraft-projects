@@ -24,6 +24,7 @@ public final class RegisterTechnicalClass
         OnEventPlayer.class,
         OnEventCheckSpawn.class,
         OnEventDropExperience.class,
+        OnEventDropItem.class,
         OnEventMobTaskManager.class,
         OnEventPotentialSpawn.class,
         OnEventRenderFPS.class

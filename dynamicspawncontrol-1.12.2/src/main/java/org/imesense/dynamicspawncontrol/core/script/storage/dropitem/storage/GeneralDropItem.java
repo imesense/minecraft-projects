@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage;
 
+import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -33,7 +34,14 @@ public class GeneralDropItem
 
     public static final class Data
     {
+        public ResourceLocation entity;
+        public List<ItemDrop> drops;
 
+        public static final class ItemDrop
+        {
+            public ResourceLocation item;
+            public int amount;
+        }
     }
 
     public List<GeneralDropItem.Data> dropItemList;
