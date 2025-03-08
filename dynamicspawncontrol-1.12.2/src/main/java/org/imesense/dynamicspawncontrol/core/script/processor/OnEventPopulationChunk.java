@@ -26,50 +26,19 @@ public class OnEventPopulationChunk
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPopulateChunk(PopulateChunkEvent.Pre event)
     {
-        GeneralPopulationChunkSpawn storage = GeneralPopulationChunkSpawn.getInstance();
 
-        List<Biome.SpawnListEntry> spawnEntries = storage.spawnEntries;
-        List<SecondaryParameters1.Data> secondaryParameters = storage.secondaryParameters1;
+    }
 
-        if (spawnEntries.isEmpty() || secondaryParameters.isEmpty())
+    @SubscribeEvent
+    public void onPotentialSpawn(PopulateChunkEvent.Pre event)
+    {
+        for (Biome biome : Biome.REGISTRY)
         {
-            return;
-        }
-
-        int chunkX = event.getChunkX();
-        int chunkZ = event.getChunkZ();
-        World world = event.getWorld();
-
-        for (int i = 0; i < spawnEntries.size(); i++)
-        {
-            Biome.SpawnListEntry entry = spawnEntries.get(i);
-            SecondaryParameters1.Data data = secondaryParameters.get(i);
-
-            if (world.rand.nextFloat() < data.spawnChance)
+            if (event.getWorld().rand.nextFloat() < 0.1F)
             {
-                int x = chunkX * 16 + world.rand.nextInt(16);
-                int z = chunkZ * 16 + world.rand.nextInt(16);
-                int y = world.getHeight(x, z);
-
-                if (y >= data.minHeight && y <= data.maxHeight)
-                {
-                    for (int j = 0; j < entry.itemWeight; j++)
-                    {
-                        EntityLiving entity;
-                        try
-                        {
-                            entity = entry.entityClass.getConstructor(World.class).newInstance(world);
-                        }
-                        catch (Exception exception)
-                        {
-                            Log.writeDataToLogFile(0, "Failed to spawn entity: " + exception.getMessage());
-                            continue;
-                        }
-
-                        entity.setLocationAndAngles(x + 0.5, y, z + 0.5, world.rand.nextFloat() * 360.0F, 0.0F);
-                        world.spawnEntity(entity);
-                    }
-                }
+                biome.getSpawnableList(EnumCreatureType.CREATURE).add(
+                        new Biome.SpawnListEntry(EntityIronGolem.class, 10, 1, 3)
+                );
             }
         }
     }

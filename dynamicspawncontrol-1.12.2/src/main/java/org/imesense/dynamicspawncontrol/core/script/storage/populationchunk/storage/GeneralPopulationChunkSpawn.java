@@ -31,11 +31,5 @@ public class GeneralPopulationChunkSpawn
     public GeneralPopulationChunkSpawn()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
-        this.spawnEntries = new ArrayList<>();
-        this.secondaryParameters1 = new ArrayList<>();
     }
-
-    public List<Biome.SpawnListEntry> spawnEntries;
-    public List<SecondaryParameters1.Data> secondaryParameters1;
 }
