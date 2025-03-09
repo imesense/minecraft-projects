@@ -8,7 +8,6 @@ import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
-import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 
 import javax.annotation.Nonnull;
 
@@ -68,8 +67,6 @@ public final class CmdServerScriptReload extends CommandBase
         }
         else
         {
-            RegisterParserManager.reloadAllConfigs();
-
             iCommandSender.sendMessage(new TextComponentString(
                        UnicodeCharacterCollection.instance.getDescription('\u00A7') +
                             TextColorCollection.instance.getCode("GREEN") +

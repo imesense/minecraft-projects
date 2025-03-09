@@ -12,7 +12,6 @@ import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.register.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -23,7 +22,6 @@ import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
-import org.imesense.dynamicspawncontrol.core.register.RegisterParserManager;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 
 import java.io.File;
@@ -126,8 +124,6 @@ public final class DynamicSpawnControl
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
         PlayerInWebMessage.register(networkWrapper);
 
-        RegisterConfigClass.initializeConfigs();
-
         generalStorageScriptData = new GeneralCheckSpawnStorage();
         supportStorageScriptData = new SupportCheckSpawnStorage();
 
@@ -135,17 +131,11 @@ public final class DynamicSpawnControl
 
         CacheGeneralStorage.Instance = new CacheGeneralStorage();
 
-        RegisterTechnicalClass.registerClasses();
-
         OnEventWindowTitle.replace();
-
-        RegisterOreGenerator.init(fmlPreInitializationEvent);
 
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
         TextColorCollection.instance = new TextColorCollection();
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
-
-        RegisterRenderClass.registerClasses();
     }
 
     /**
@@ -179,7 +169,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent fmlLoadCompleteEvent)
     {
-        RegisterParserManager.init();
+
     }
 
     /**
@@ -189,7 +179,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
     {
-        RegisterCommandClass.registerCommands(fmlServerStartingEvent);
+
     }
 
     /**
