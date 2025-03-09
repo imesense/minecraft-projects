@@ -23,19 +23,9 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventUpdateTorch
 {
-    private static boolean instanceExists = false;
-
     public OnEventUpdateTorch()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
-		
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
     }
 
     @SubscribeEvent
