@@ -13,6 +13,7 @@ import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
+import org.imesense.dynamicspawncontrol.core.register.command.RegisterCommand;
 import org.imesense.dynamicspawncontrol.core.register.config.RegisterConfig;
 import org.imesense.dynamicspawncontrol.core.register.parser.RegisterParser;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
@@ -174,7 +175,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
     {
-
+        RegisterCommand.getInstance().registerCommands(fmlServerStartingEvent);
     }
 
     /**
