@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
 import net.minecraftforge.common.MinecraftForge;
+import org.imesense.dynamicspawncontrol.core.event.*;
 import org.imesense.dynamicspawncontrol.core.script.processor.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -18,6 +19,27 @@ public final class RegisterTechnicalClass
      */
     private static final Class<?>[] EVENT_CLASSES =
     {
+        OnEventBlockEventBreakEvent.class,
+        OnEventEntityJoinWorldEvent.class,
+        OnEventFMLNetworkEventClientConnectedToServerEvent.class,
+        OnEventFMLNetworkEventClientDisconnectionFromServerEvent.class,
+        OnEventLivingAttackEvent.class,
+        OnEventLivingDeathEvent.class,
+        OnEventLivingDropsEvent.class,
+        OnEventLivingEventLivingUpdateEvent.class,
+        OnEventLivingExperienceDropEvent.class,
+        OnEventLivingHurtEvent.class,
+        OnEventLivingSpawnEventCheckSpawn.class,
+        OnEventLivingSpawnEventSpecialSpawn.class,
+        OnEventPlayerEventPlayerLoggedInEvent.class,
+        OnEventPlayerEventPlayerLoggedOutEvent.class,
+        OnEventPlayerEventPlayerRespawnEvent.class,
+        OnEventPopulateChunkEventPre.class,
+        OnEventRenderGameOverlayEventPost.class,
+        OnEventRenderGameOverlayEventText.class,
+        OnEventTickEventWorldTickEvent.class,
+        OnEventWorldEventPotentialSpawns.class
+
         //OnEventWorldCache.class,
         //OnEventSandBox.class, //-' TODO: Перенести девелоп класс в отдельный регистр, положил половину игры на релизу
         //OnEventWindowTitle.class,
