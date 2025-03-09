@@ -18,17 +18,17 @@ public final class RegisterTechnicalClass
      */
     private static final Class<?>[] EVENT_CLASSES =
     {
-        OnEventWorldCache.class,
+        //OnEventWorldCache.class,
         //OnEventSandBox.class, //-' TODO: Перенести девелоп класс в отдельный регистр, положил половину игры на релизу
-        OnEventWindowTitle.class,
-        OnEventPlayer.class,
-        OnEventCheckSpawn.class,
-        OnEventDropExperience.class,
-        OnEventDropItem.class,
-        OnEventMobTaskManager.class,
-        OnEventPopulationChunk.class,
-        OnEventPotentialSpawn.class,
-        OnEventRenderFPS.class
+        //OnEventWindowTitle.class,
+        //OnEventPlayer.class,
+        //OnEventCheckSpawn.class,
+        //OnEventDropExperience.class,
+        //OnEventDropItem.class,
+        //OnEventMobTaskManager.class,
+        //OnEventPopulationChunk.class,
+        //OnEventPotentialSpawn.class,
+        //OnEventRenderFPS.class
     };
 
     /**

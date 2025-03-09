@@ -17,9 +17,9 @@ public final class RegisterAIClass
      */
     private static final Class<?>[] EVENT_CLASSES =
     {
-        EventHandler.class,
-        OnEventBreakTorch.class,
-        OnEventAvoidLight.class
+        //EventHandler.class,
+        //OnEventBreakTorch.class,
+        //OnEventAvoidLight.class
     };
 
     /**
