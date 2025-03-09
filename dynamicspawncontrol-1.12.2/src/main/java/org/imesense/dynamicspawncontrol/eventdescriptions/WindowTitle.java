@@ -1,11 +1,9 @@
-package org.imesense.dynamicspawncontrol.event;
+package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.config.data.WindowTitleData;
 import org.lwjgl.opengl.Display;
@@ -15,21 +13,32 @@ import java.util.Objects;
 
 public final class WindowTitle
 {
+    private static volatile WindowTitle _INSTANCE;
+
+    public static WindowTitle getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (WindowTitle.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new WindowTitle();
+                }
+            }
+        }
+        return _INSTANCE;
+    }
+
     public WindowTitle()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     @Nonnull
-    private static final String TITLE = WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle();
+    private final String TITLE = WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle();
 
-    @SubscribeEvent
-    public void onUpdateClientTick_0(TickEvent.ClientTickEvent clientTickEvent)
-    {
-        replace();
-    }
-
-    public static String setTextWindowTitle(@Nonnull String formatString)
+    public String setTextWindowTitle(@Nonnull String formatString)
     {
         @Nonnull final String MC_VERSION = Loader.instance().getMinecraftModContainer().getVersion();
         @Nonnull final String MOD_COUNT = Integer.toString(Loader.instance().getModList().size());
@@ -40,7 +49,7 @@ public final class WindowTitle
         return formatString;
     }
 
-    public static void replace()
+    public void replace()
     {
         if (FMLCommonHandler.instance().getSide().isClient())
         {

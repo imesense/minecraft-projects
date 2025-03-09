@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.event;
+package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityZombie;
@@ -8,8 +8,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -20,6 +18,24 @@ import java.util.List;
 public final class NickNameEntity
 {
     private final List<String> RANDOM_NAMES = new ArrayList<>();
+
+    private static volatile NickNameEntity _INSTANCE;
+
+    public static NickNameEntity getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (NickNameEntity.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new NickNameEntity();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
 
     public NickNameEntity()
     {
@@ -49,49 +65,45 @@ public final class NickNameEntity
         }
     }
 
-    //@SubscribeEvent
-    public void onEntitySpawn_0(LivingSpawnEvent.SpecialSpawn specialSpawn)
+    public void handleZombieSpawn(LivingSpawnEvent.SpecialSpawn event)
     {
-        if (specialSpawn.getEntity() instanceof EntityZombie)
+        if (event.getEntity() instanceof EntityZombie)
         {
-            EntityZombie entityZombie = (EntityZombie) specialSpawn.getEntity();
+            EntityZombie zombie = (EntityZombie) event.getEntity();
 
             if (UniqueField.RANDOM.nextFloat() < 0.3f)
             {
-                String randomName =
-                        this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
-
-                entityZombie.setCustomNameTag(randomName);
-                entityZombie.setAlwaysRenderNameTag(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+                String randomName = this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
+                zombie.setCustomNameTag(randomName);
+                zombie.setAlwaysRenderNameTag(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
             }
-        }
-
-        if (specialSpawn.getEntity() instanceof EntityVillager)
-        {
-            EntityVillager entityVillager = (EntityVillager) specialSpawn.getEntity();
-
-            String randomName =
-                    this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
-
-            entityVillager.setCustomNameTag(randomName);
-            entityVillager.setAlwaysRenderNameTag(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
         }
     }
 
-    //@SubscribeEvent
-    public void onEntityDeath_1(LivingDeathEvent livingDeathEvent)
+    public void handleVillagerSpawn(LivingSpawnEvent.SpecialSpawn event)
     {
-        if (livingDeathEvent.getEntity() instanceof EntityZombie)
+        if (event.getEntity() instanceof EntityVillager)
         {
-            EntityZombie entityZombie = (EntityZombie) livingDeathEvent.getEntity();
-            World world = entityZombie.getEntityWorld();
-            DamageSource damageSource = livingDeathEvent.getSource();
+            EntityVillager villager = (EntityVillager) event.getEntity();
+
+            String randomName = this.RANDOM_NAMES.get(UniqueField.RANDOM.nextInt(this.RANDOM_NAMES.size()));
+            villager.setCustomNameTag(randomName);
+            villager.setAlwaysRenderNameTag(UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+        }
+    }
+
+    public void handleZombieDeath(LivingDeathEvent event)
+    {
+        if (event.getEntity() instanceof EntityZombie)
+        {
+            EntityZombie zombie = (EntityZombie) event.getEntity();
+            World world = zombie.getEntityWorld();
+            DamageSource damageSource = event.getSource();
             Entity killer = damageSource.getTrueSource();
 
-            if (entityZombie.hasCustomName())
+            if (zombie.hasCustomName())
             {
-                String zombieName = entityZombie.getCustomNameTag();
-
+                String zombieName = zombie.getCustomNameTag();
                 String deathMessage = this.getDeathMessage(zombieName, damageSource, killer);
 
                 if (!world.isRemote && world.getMinecraftServer() != null)
@@ -103,18 +115,20 @@ public final class NickNameEntity
                 }
             }
         }
+    }
 
-        if (livingDeathEvent.getEntity() instanceof EntityVillager)
+    public void handleVillagerDeath(LivingDeathEvent event)
+    {
+        if (event.getEntity() instanceof EntityVillager)
         {
-            EntityVillager villager = (EntityVillager) livingDeathEvent.getEntity();
+            EntityVillager villager = (EntityVillager) event.getEntity();
             World world = villager.getEntityWorld();
-            DamageSource damageSource = livingDeathEvent.getSource();
+            DamageSource damageSource = event.getSource();
             Entity killer = damageSource.getTrueSource();
 
             if (villager.hasCustomName())
             {
                 String villagerName = villager.getCustomNameTag();
-
                 String deathMessage = this.getDeathMessage(villagerName, damageSource, killer);
 
                 if (!world.isRemote && world.getMinecraftServer() != null)

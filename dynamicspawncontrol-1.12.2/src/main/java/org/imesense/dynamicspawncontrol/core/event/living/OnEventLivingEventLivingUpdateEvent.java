@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.eventdescriptions.ComplexityBiomes;
+import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingEventLivingUpdateEvent extends BaseOnEventInstance
@@ -20,5 +21,7 @@ public final class OnEventLivingEventLivingUpdateEvent extends BaseOnEventInstan
             EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.getEntity();
             ComplexityBiomes.getInstance().handleBiomesChange(entityPlayerMP);
         }
+
+        UpdateFire.getInstance().handleLivingTick(event);
     }
 }
