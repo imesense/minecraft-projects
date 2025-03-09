@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.api.BaseParser;
+import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;

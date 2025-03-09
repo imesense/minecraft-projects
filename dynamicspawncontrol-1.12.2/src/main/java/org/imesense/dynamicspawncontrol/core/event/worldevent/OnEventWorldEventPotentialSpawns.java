@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.event.worldevent;
 
-import org.imesense.dynamicspawncontrol.core.api.BaseCoreEventInstance;
+import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 
-public final class OnEventWorldEventPotentialSpawns extends BaseCoreEventInstance
+public final class OnEventWorldEventPotentialSpawns extends BaseOnEventInstance
 {
 
 }

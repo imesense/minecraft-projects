@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.api;
+package org.imesense.dynamicspawncontrol.core.baseonevent;
 
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -6,11 +6,11 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BaseCoreEventInstance
+public abstract class BaseOnEventInstance
 {
     private static final Map<Class<?>, Boolean> INSTANCE_EXITS_MAP = new HashMap<>();
 
-    protected BaseCoreEventInstance()
+    protected BaseOnEventInstance()
     {
         Class<?> clazz = this.getClass();
         CodeGeneric.printInitClassToLog(clazz);

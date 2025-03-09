@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register.event.rendergame;
 
-import org.imesense.dynamicspawncontrol.core.api.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.rendergame.*;
 
 public final class Register extends BaseEventRegister

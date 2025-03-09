@@ -11,7 +11,7 @@ import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.G
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.api.BaseParser;
+import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 
 import java.io.File;
 import java.io.FileReader;

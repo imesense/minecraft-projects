@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.config.file;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.config.data.LogFileData;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

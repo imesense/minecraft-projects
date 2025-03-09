@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.api;
+package org.imesense.dynamicspawncontrol.core.interfaces;
 
 @FunctionalInterface
 public interface IRecipes

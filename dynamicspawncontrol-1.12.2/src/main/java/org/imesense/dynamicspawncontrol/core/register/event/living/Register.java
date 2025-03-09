@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register.event.living;
 
-import org.imesense.dynamicspawncontrol.core.api.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.living.*;
 
 public final class Register extends BaseEventRegister

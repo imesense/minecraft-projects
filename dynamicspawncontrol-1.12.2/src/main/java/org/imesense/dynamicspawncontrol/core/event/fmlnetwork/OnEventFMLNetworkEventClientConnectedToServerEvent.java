@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.event.fmlnetwork;
 
-import org.imesense.dynamicspawncontrol.core.api.BaseCoreEventInstance;
+import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 
-public final class OnEventFMLNetworkEventClientConnectedToServerEvent extends BaseCoreEventInstance
+public final class OnEventFMLNetworkEventClientConnectedToServerEvent extends BaseOnEventInstance
 {
 
 }

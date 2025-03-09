@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.event.rendergame;
 
-import org.imesense.dynamicspawncontrol.core.api.BaseCoreEventInstance;
+import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 
-public final class OnEventRenderGameOverlayEventPost extends BaseCoreEventInstance
+public final class OnEventRenderGameOverlayEventPost extends BaseOnEventInstance
 {
 
 }
