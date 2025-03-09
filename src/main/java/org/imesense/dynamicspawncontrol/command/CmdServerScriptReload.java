@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
-import org.imesense.dynamicspawncontrol.core.register.parser.Register;
+import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 
@@ -68,7 +68,7 @@ public final class CmdServerScriptReload extends CommandBase
         }
         else
         {
-            Register.getInstance().reloadAllConfigs();
+            ParserRegister.getInstance().reloadAllConfigs();
 
             iCommandSender.sendMessage(new TextComponentString(
                        UnicodeCharacterCollection.instance.getDescription('\u00A7') +

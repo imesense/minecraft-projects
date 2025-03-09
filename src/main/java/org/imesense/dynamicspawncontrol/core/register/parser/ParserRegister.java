@@ -3,19 +3,19 @@ package org.imesense.dynamicspawncontrol.core.register.parser;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseParserRegister;
 import org.imesense.dynamicspawncontrol.core.script.parser.*;
 
-public final class Register extends BaseParserRegister
+public final class ParserRegister extends BaseParserRegister
 {
-    private static volatile Register _INSTANCE;
+    private static volatile ParserRegister _INSTANCE;
 
-    public static Register getInstance()
+    public static ParserRegister getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (Register.class)
+            synchronized (ParserRegister.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new Register();
+                    _INSTANCE = new ParserRegister();
                 }
             }
         }
