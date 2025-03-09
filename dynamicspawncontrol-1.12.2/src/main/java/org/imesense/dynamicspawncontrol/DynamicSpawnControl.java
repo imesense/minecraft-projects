@@ -12,6 +12,7 @@ import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
+import org.imesense.dynamicspawncontrol.core.register.config.RegisterConfig;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -123,6 +124,8 @@ public final class DynamicSpawnControl
         WebSlingerCapability.register();
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
         PlayerInWebMessage.register(networkWrapper);
+
+        RegisterConfig.getInstance().initializeConfigs();
 
         generalStorageScriptData = new GeneralCheckSpawnStorage();
         supportStorageScriptData = new SupportCheckSpawnStorage();
