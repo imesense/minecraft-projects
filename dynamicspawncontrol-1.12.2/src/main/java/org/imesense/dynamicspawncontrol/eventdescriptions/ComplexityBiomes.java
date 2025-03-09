@@ -215,6 +215,7 @@ public final class ComplexityBiomes
             case "Flower Forest":
             case "Mesa":
             case "Mesa Plateau F":
+            case "River":
                 return this.MIN;
             case "TaigaHills":
             case "Swampland":
