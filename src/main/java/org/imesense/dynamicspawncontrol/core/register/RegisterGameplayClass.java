@@ -16,14 +16,14 @@ public final class RegisterGameplayClass
      */
     private static final Class<?>[] EVENT_CLASSES =
     {
-        OnEventUpdateTorch.class,
-        OnEventDropZombieItem.class,
-        OnEventDropSkeletonItem.class,
-        OnEventComplexityBiomes.class,
-        OnEventDropHeadMob.class,
-        OnEventNickNameEntity.class,
-        OnEventUpdateFire.class,
-        OnEventOvergrowingGrass.class
+        //OnEventUpdateTorch.class,
+        //OnEventDropZombieItem.class,
+        //OnEventDropSkeletonItem.class,
+        //OnEventComplexityBiomes.class,
+        //OnEventDropHeadMob.class,
+        //OnEventNickNameEntity.class,
+        //OnEventUpdateFire.class,
+        //OnEventOvergrowingGrass.class
     };
 
     /**
