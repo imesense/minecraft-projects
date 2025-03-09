@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.event;
+package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -13,36 +13,51 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventDropHeadMob
+public final class DropHeadMob
 {
-    public OnEventDropHeadMob()
+    private static volatile DropHeadMob _INSTANCE;
+
+    public static DropHeadMob getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (DropHeadMob.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new DropHeadMob();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
+
+    public DropHeadMob()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }
 
-    @SubscribeEvent
-    public void onEntityDeath_0(LivingDeathEvent livingDeathEvent)
+    public void handleEntityDeath(LivingDeathEvent event)
     {
-        if (livingDeathEvent.getSource().getTrueSource() instanceof EntityLivingBase)
+        if (event.getSource().getTrueSource() instanceof EntityLivingBase)
         {
-            Entity entity = livingDeathEvent.getEntity();
-            EntityLivingBase entityLivingBase = (EntityLivingBase) livingDeathEvent.getSource().getTrueSource();
+            Entity entity = event.getEntity();
+            EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
 
             if (entity instanceof EntitySkeleton ||
                     entity instanceof EntityZombie ||
                     entity instanceof EntityCreeper)
             {
-                float dropChance = calculateDropChance(entityLivingBase);
+                float dropChance = calculateDropChance(attacker);
 
-                if (entityLivingBase.getRNG().nextFloat() < dropChance)
+                if (attacker.getRNG().nextFloat() < dropChance)
                 {
-                    dropHead((EntityLivingBase) entity, entityLivingBase.world);
+                    dropHead((EntityLivingBase) entity, attacker.world);
                 }
             }
         }
