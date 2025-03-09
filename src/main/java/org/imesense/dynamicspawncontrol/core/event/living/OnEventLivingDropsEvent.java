@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.DropZombieItem;
 public final class OnEventLivingDropsEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onLivingDropsEvent(LivingDropsEvent event)
+    public void OnLivingDropsEvent(LivingDropsEvent event)
     {
         DropSkeletonItem.getInstance().handleLivingDrops(event);
         DropZombieItem.getInstance().handleZombieDrops(event);

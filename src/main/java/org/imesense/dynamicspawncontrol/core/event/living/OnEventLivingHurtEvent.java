@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateTorch;
 public final class OnEventLivingHurtEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onLivingHurtEvent(LivingHurtEvent event)
+    public void OnLivingHurtEvent(LivingHurtEvent event)
     {
         UpdateTorch.getInstance().handleEntityHit(event);
     }

@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.NickNameEntity;
 public final class OnEventLivingSpawnEventSpecialSpawn extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onLivingSpawnEventSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
+    public void OnLivingSpawnEventSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
     {
         NickNameEntity.getInstance().handleZombieSpawn(event);
         NickNameEntity.getInstance().handleVillagerSpawn(event);
