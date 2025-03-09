@@ -20,7 +20,6 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class Player
 {
     private static final ArrayList<String> PLAYER_LIST = new ArrayList<>();

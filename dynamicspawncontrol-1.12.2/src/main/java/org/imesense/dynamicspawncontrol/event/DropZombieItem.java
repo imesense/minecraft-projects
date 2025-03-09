@@ -15,7 +15,6 @@ import org.imesense.dynamicspawncontrol.core.config.data.ZombieDropItemData;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class DropZombieItem
 {
     public DropZombieItem()

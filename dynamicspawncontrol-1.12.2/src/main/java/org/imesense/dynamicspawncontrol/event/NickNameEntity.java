@@ -17,7 +17,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class NickNameEntity
 {
     private final List<String> RANDOM_NAMES = new ArrayList<>();

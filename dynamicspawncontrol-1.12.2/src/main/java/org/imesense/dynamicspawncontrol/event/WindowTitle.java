@@ -13,7 +13,6 @@ import org.lwjgl.opengl.Display;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class WindowTitle
 {
     public WindowTitle()
