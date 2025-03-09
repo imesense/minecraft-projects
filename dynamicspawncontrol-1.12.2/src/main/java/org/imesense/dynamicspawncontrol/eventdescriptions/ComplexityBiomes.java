@@ -1,14 +1,9 @@
-package org.imesense.dynamicspawncontrol.event;
+package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -17,8 +12,7 @@ import static net.minecraft.client.gui.Gui.*;
 
 //* TODO: Реализовать 'высоту' сложности, например 5 черепков от 5 до 20 высота в шахте и так далее
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventComplexityBiomes
+public final class ComplexityBiomes
 {
     private String biomesText = "";
 
@@ -38,7 +32,25 @@ public final class OnEventComplexityBiomes
 
     private static boolean instanceExists = false;
 
-    public OnEventComplexityBiomes()
+    private static volatile ComplexityBiomes _INSTANCE;
+
+    public static ComplexityBiomes getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (ComplexityBiomes.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new ComplexityBiomes();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
+
+    public ComplexityBiomes()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -51,35 +63,29 @@ public final class OnEventComplexityBiomes
         instanceExists = true;
     }
 
-    @SubscribeEvent
-    public void onPlayerTick_0(LivingEvent.LivingUpdateEvent livingUpdateEvent)
+    public void handleBiomesChange(EntityPlayerMP player)
     {
-        if (livingUpdateEvent.getEntity() instanceof EntityPlayerMP)
+        Biome biome = player.world.getBiome(player.getPosition());
+
+        if (biome != currentBiome)
         {
-            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) livingUpdateEvent.getEntity();
-            Biome biome = entityPlayerMP.world.getBiome(entityPlayerMP.getPosition());
+            currentBiome = biome;
+            biomesEntryTime = System.currentTimeMillis();
+        }
 
-            if (biome != currentBiome)
-            {
-                currentBiome = biome;
-                biomesEntryTime = System.currentTimeMillis();
-            }
+        long currentTime = System.currentTimeMillis();
 
-            long currentTime = System.currentTimeMillis();
+        long BIOMES_CHANGE_MIN_TIME = 3000;
 
-            long BIOMES_CHANGE_MIN_TIME = 3000;
-
-            if (currentBiome != confirmedBiome && currentTime - biomesEntryTime >= BIOMES_CHANGE_MIN_TIME)
-            {
-                confirmedBiome = currentBiome;
-                lastBiomesChangeTime = currentTime;
-                biomesText = confirmedBiome.getBiomeName();
-            }
+        if (currentBiome != confirmedBiome && currentTime - biomesEntryTime >= BIOMES_CHANGE_MIN_TIME)
+        {
+            confirmedBiome = currentBiome;
+            lastBiomesChangeTime = currentTime;
+            biomesText = confirmedBiome.getBiomeName();
         }
     }
 
-    @SubscribeEvent
-    public void onRenderOverlay_1(RenderGameOverlayEvent.Text text)
+    public void renderBiomesOverlay()
     {
         long currentTime = System.currentTimeMillis();
 
@@ -114,17 +120,10 @@ public final class OnEventComplexityBiomes
 
             ResourceLocation[] skullTextures =
             {
-                new ResourceLocation("dynamicspawncontrol",
-                        "textures/gui/red_skull.png"),
-
-                new ResourceLocation("dynamicspawncontrol",
-                        "textures/gui/orange_skull.png"),
-
-                new ResourceLocation("dynamicspawncontrol",
-                        "textures/gui/red_skull_part.png"),
-
-                new ResourceLocation("dynamicspawncontrol",
-                        "textures/gui/orange_skull_part.png")
+                new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull.png"),
+                new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull.png"),
+                new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull_part.png"),
+                new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull_part.png")
             };
 
             int totalSkulls = skullCounts[0] + skullCounts[1] + skullCounts[2] + skullCounts[3];
