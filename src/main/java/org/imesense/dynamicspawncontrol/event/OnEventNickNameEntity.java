@@ -19,25 +19,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventNickNameEntity
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     private final List<String> RANDOM_NAMES = new ArrayList<>();
 
-    /**
-     *
-     */
     public OnEventNickNameEntity()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -53,9 +41,6 @@ public final class OnEventNickNameEntity
         this.loadNamesFromFile();
     }
 
-    /**
-     *
-     */
     private void loadNamesFromFile()
     {
         InputStream inputStream = getClass().getResourceAsStream("/assets/dynamicspawncontrol/names.txt");
@@ -77,10 +62,6 @@ public final class OnEventNickNameEntity
         }
     }
 
-    /**
-     *
-     * @param specialSpawn
-     */
     //@SubscribeEvent
     public void onEntitySpawn_0(LivingSpawnEvent.SpecialSpawn specialSpawn)
     {
@@ -110,11 +91,7 @@ public final class OnEventNickNameEntity
         }
     }
 
-    /**
-     *
-     * @param livingDeathEvent
-     */
-   // @SubscribeEvent
+    //@SubscribeEvent
     public void onEntityDeath_1(LivingDeathEvent livingDeathEvent)
     {
         if (livingDeathEvent.getEntity() instanceof EntityZombie)
@@ -161,13 +138,6 @@ public final class OnEventNickNameEntity
         }
     }
 
-    /**
-     *
-     * @param entity
-     * @param damageSource
-     * @param killer
-     * @return
-     */
     private String getDeathMessage(String entity, DamageSource damageSource, Entity killer)
     {
         if (damageSource.isFireDamage())

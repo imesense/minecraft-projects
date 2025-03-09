@@ -20,25 +20,13 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPlayer
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     private static final ArrayList<String> PLAYER_LIST = new ArrayList<>();
 
-    /**
-     *
-     */
     public OnEventPlayer()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
@@ -52,10 +40,6 @@ public final class OnEventPlayer
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param entityJoinWorldEvent
-     */
     @SubscribeEvent
     public void onUpdateEntityJoinWorld_0(EntityJoinWorldEvent entityJoinWorldEvent)
     {
@@ -72,10 +56,6 @@ public final class OnEventPlayer
         }
     }
 
-    /**
-     *
-     * @param playerLoggedOutEvent
-     */
     @SubscribeEvent
     public void onUpdatePlayerLoggedOut_1(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
     {
@@ -84,40 +64,24 @@ public final class OnEventPlayer
         Log.writeDataToLogFile(0, String.format("Player [%s] has been removed from the list", entityPlayerMP.getName()));
     }
 
-    /**
-     *
-     * @param clientConnectedToServerEvent
-     */
     @SubscribeEvent
     public void onUpdatePlayerLogin_2(FMLNetworkEvent.ClientConnectedToServerEvent clientConnectedToServerEvent)
     {
         Log.writeDataToLogFile(0, "ClientConnectedToServerEvent " + clientConnectedToServerEvent);
     }
 
-    /**
-     *
-     * @param playerLoggedInEvent
-     */
     @SubscribeEvent
     public void onUpdatePlayerLoginServer_3(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
     {
         Log.writeDataToLogFile(0, "PlayerLoggedInEvent " + playerLoggedInEvent.player.getName() + " logged in.");
     }
 
-    /**
-     *
-     * @param clientDisconnectionFromServerEvent
-     */
     @SubscribeEvent
     public void onUpdatePlayerLogout_4(FMLNetworkEvent.ClientDisconnectionFromServerEvent clientDisconnectionFromServerEvent)
     {
         Log.writeDataToLogFile(0, "ClientDisconnectionFromServerEvent " + clientDisconnectionFromServerEvent);
     }
 
-    /**
-     *
-     * @param playerRespawnEvent
-     */
     @SubscribeEvent
     public void onPlayerRespawn_5(PlayerEvent.PlayerRespawnEvent playerRespawnEvent)
     {
@@ -153,10 +117,6 @@ public final class OnEventPlayer
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public static boolean isNotSingle()
     {
         return PLAYER_LIST.size() > 1;

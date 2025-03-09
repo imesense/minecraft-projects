@@ -15,62 +15,29 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import static net.minecraft.client.gui.Gui.*;
 
-/**
- *
- */
+//* TODO: Реализовать 'высоту' сложности, например 5 черепков от 5 до 20 высота в шахте и так далее
+
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventComplexityBiomes
 {
-     //* TODO: Реализовать 'высоту' сложности, например 5 черепков от 5 до 20 высота в шахте и так далее
-
-    /**
-     *
-     */
     private String biomesText = "";
 
-    /**
-     *
-     */
     private long biomesEntryTime = 0;
 
-    /**
-     *
-     */
     private final byte NULL = 0;
 
-    /**
-     *
-     */
     private final byte MIN = 1;
 
-    /**
-     *
-     */
     private final byte MAX = 7;
 
-    /**
-     *
-     */
     private Biome currentBiome = null;
 
-    /**
-     *
-     */
     private Biome confirmedBiome = null;
 
-    /**
-     *
-     */
     private long lastBiomesChangeTime = 0;
 
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public OnEventComplexityBiomes()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -84,10 +51,6 @@ public final class OnEventComplexityBiomes
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param livingUpdateEvent
-     */
     @SubscribeEvent
     public void onPlayerTick_0(LivingEvent.LivingUpdateEvent livingUpdateEvent)
     {
@@ -115,10 +78,6 @@ public final class OnEventComplexityBiomes
         }
     }
 
-    /**
-     *
-     * @param text
-     */
     @SubscribeEvent
     public void onRenderOverlay_1(RenderGameOverlayEvent.Text text)
     {
@@ -190,11 +149,6 @@ public final class OnEventComplexityBiomes
         }
     }
 
-    /**
-     *
-     * @param biome
-     * @return
-     */
     private int getRedSkullCountForBiomes(Biome biome)
     {
         switch (biome.getBiomeName())
@@ -244,11 +198,6 @@ public final class OnEventComplexityBiomes
         }
     }
 
-    /**
-     *
-     * @param biome
-     * @return
-     */
     private int getRedSkullCountForBiomesPart(Biome biome)
     {
         switch (biome.getBiomeName())
@@ -262,11 +211,6 @@ public final class OnEventComplexityBiomes
         }
     }
 
-    /**
-     *
-     * @param biome
-     * @return
-     */
     private int getOrangeSkullCountForBiomes(Biome biome)
     {
         switch (biome.getBiomeName())
@@ -300,11 +244,6 @@ public final class OnEventComplexityBiomes
         }
     }
 
-    /**
-     *
-     * @param biome
-     * @return
-     */
     private int getOrangeSkullCountForBiomesPart(Biome biome)
     {
         switch (biome.getBiomeName())

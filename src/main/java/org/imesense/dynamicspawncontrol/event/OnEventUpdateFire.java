@@ -20,26 +20,11 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-/**
- *
- * 1) Если сущность умирает от огненного урона, но при этом не горит, она зажигается на 1 секунду
- * 2) Если стрелу выпустил скелет, который горел, в 70% случае она будет горящая на 5 секунд
- * 3) Если сущность горит и имеет активный эффект огнестойкости, то огонь тушиться
- * 4) Если горящая сущность атакует кого-либо есть 30% шанс, что огонь перекинется на цель
- * 5) Если сущность не держит предмет в руке и горит, есть 30% вероятность, что ей атакованная сущность загорится на 2 секунды с ее же уроном
- * 6) Если атаковать зажигалкой сущность, то цель поджигается на 3 секунды с уроном, а зажигался теряет прочность
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventUpdateFire
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public OnEventUpdateFire()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -53,10 +38,6 @@ public final class OnEventUpdateFire
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param livingDeathEvent
-     */
     @SubscribeEvent
     public void onLivingDeath_0(LivingDeathEvent livingDeathEvent)
     {
@@ -68,10 +49,6 @@ public final class OnEventUpdateFire
         }
     }
 
-    /**
-     *
-     * @param entityJoinWorldEvent
-     */
     @SubscribeEvent
     public void onEntityJoinWorld_1(EntityJoinWorldEvent entityJoinWorldEvent)
     {
@@ -88,10 +65,6 @@ public final class OnEventUpdateFire
         }
     }
 
-    /**
-     *
-     * @param livingUpdateEvent
-     */
     @SubscribeEvent
     public void onLivingTick_2(LivingEvent.LivingUpdateEvent livingUpdateEvent)
     {
@@ -103,10 +76,6 @@ public final class OnEventUpdateFire
         }
     }
 
-    /**
-     *
-     * @param livingAttackEvent
-     */
     @SubscribeEvent
     public void onLivingAttack_3(LivingAttackEvent livingAttackEvent)
     {
@@ -136,11 +105,6 @@ public final class OnEventUpdateFire
         }
     }
 
-    /**
-     *
-     * @param chance
-     * @return
-     */
     private boolean tryPercentage(double chance)
     {
         return Math.random() < chance;
