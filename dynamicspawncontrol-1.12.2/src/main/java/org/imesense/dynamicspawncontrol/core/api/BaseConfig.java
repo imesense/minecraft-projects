@@ -5,39 +5,19 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
 import java.io.File;
 
-/**
- *
- */
 public abstract class BaseConfig
 {
-    /**
-     *
-     */
     protected String nameConfig;
 
-    /**
-     *
-     * @param nameConfigFile
-     */
     public BaseConfig(String nameConfigFile, final Boolean IS_CONFIG_FOLDER)
     {
         this.nameConfig = this.constructPathToDirectory(IS_CONFIG_FOLDER) + nameConfigFile;
     }
 
-    /**
-     *
-     */
     public abstract void saveToFile();
 
-    /**
-     *
-     */
     public abstract void loadFromFile();
 
-    /**
-     *
-     * @return
-     */
     protected String constructPathToDirectory(final Boolean IS_CONFIG_FOLDER)
     {
         return DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
