@@ -4,11 +4,11 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-public abstract class AbstractConceptBaseRegister
+public abstract class AbstractConceptBaseEventRegister
 {
     protected abstract Class<?>[] getEventClasses();
 
-    public AbstractConceptBaseRegister()
+    public AbstractConceptBaseEventRegister()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }

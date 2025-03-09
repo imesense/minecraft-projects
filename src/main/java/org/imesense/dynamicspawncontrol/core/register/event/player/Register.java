@@ -1,9 +1,9 @@
-package org.imesense.dynamicspawncontrol.core.registerevent.player;
+package org.imesense.dynamicspawncontrol.core.register.event.player;
 
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptBaseRegister;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptBaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.player.*;
 
-public final class Register extends AbstractConceptBaseRegister
+public final class Register extends AbstractConceptBaseEventRegister
 {
     private static final Class<?>[] EVENT_CLASSES =
     {
