@@ -30,8 +30,6 @@ public final class ComplexityBiomes
 
     private long lastBiomesChangeTime = 0;
 
-    private static boolean instanceExists = false;
-
     private static volatile ComplexityBiomes _INSTANCE;
 
     public static ComplexityBiomes getInstance()
@@ -53,14 +51,6 @@ public final class ComplexityBiomes
     public ComplexityBiomes()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
     }
 
     public void handleBiomesChange(EntityPlayerMP player)

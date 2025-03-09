@@ -21,21 +21,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventOvergrowingGrass
 {
-    private static boolean instanceExists = false;
-
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
 
     public OnEventOvergrowingGrass()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
     }
 
     @SubscribeEvent
