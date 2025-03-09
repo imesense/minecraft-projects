@@ -3,19 +3,19 @@ package org.imesense.dynamicspawncontrol.core.register.worldgenerator;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseWorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.worldgenerator.*;
 
-public class Register extends BaseWorldGeneratorRegister
+public class WorldGeneratorRegister extends BaseWorldGeneratorRegister
 {
-    private static volatile Register _INSTANCE;
+    private static volatile WorldGeneratorRegister _INSTANCE;
 
-    public static Register getInstance()
+    public static WorldGeneratorRegister getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (Register.class)
+            synchronized (WorldGeneratorRegister.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new Register();
+                    _INSTANCE = new WorldGeneratorRegister();
                 }
             }
         }

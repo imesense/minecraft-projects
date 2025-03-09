@@ -2,6 +2,15 @@ package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.register.event.block.EventBlockRegister;
+import org.imesense.dynamicspawncontrol.core.register.event.entity.EventEntityRegister;
+import org.imesense.dynamicspawncontrol.core.register.event.fmlnetwork.EventFMLRegister;
+import org.imesense.dynamicspawncontrol.core.register.event.living.EventLivingRegister;
+import org.imesense.dynamicspawncontrol.core.register.event.player.EventPlayerRegister;
+import org.imesense.dynamicspawncontrol.core.register.event.populatechunk.EventPopulateChunk;
+import org.imesense.dynamicspawncontrol.core.register.event.rendergame.EventRenderGame;
+import org.imesense.dynamicspawncontrol.core.register.event.tickevent.EventTickEventRegister;
+import org.imesense.dynamicspawncontrol.core.register.event.world.EventWorldRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -40,15 +49,15 @@ public abstract class BaseEventRegister
     {
         Log.writeDataToLogFile(0, "Initializing all registers...");
 
-        new org.imesense.dynamicspawncontrol.core.register.event.block.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.entity.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.fmlnetwork.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.living.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.player.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.populatechunk.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.rendergame.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.tickevent.Register();
-        new org.imesense.dynamicspawncontrol.core.register.event.world.Register();
+        new EventBlockRegister();
+        new EventEntityRegister();
+        new EventFMLRegister();
+        new EventLivingRegister();
+        new EventPlayerRegister();
+        new EventPopulateChunk();
+        new EventRenderGame();
+        new EventTickEventRegister();
+        new EventWorldRegister();
 
         Log.writeDataToLogFile(0, "Total registers created: " + REGISTERS.size());
 

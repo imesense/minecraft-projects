@@ -8,19 +8,19 @@ import org.imesense.dynamicspawncontrol.plugin.staminaplus_1_12_2_1_1_1.config.C
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgTimeControl;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.CfgWebSlinger;
 
-public final class Register extends BaseConfigRegister
+public final class ConfigRegister extends BaseConfigRegister
 {
-    private static volatile Register _INSTANCE;
+    private static volatile ConfigRegister _INSTANCE;
 
-    public static Register getInstance()
+    public static ConfigRegister getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (Register.class)
+            synchronized (ConfigRegister.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new Register();
+                    _INSTANCE = new ConfigRegister();
                 }
             }
         }

@@ -13,7 +13,10 @@ import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.register.command.Register;
+import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
+import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
+import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
+import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
@@ -114,14 +117,14 @@ public final class DynamicSpawnControl
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
         PlayerInWebMessage.register(networkWrapper);
 
-        org.imesense.dynamicspawncontrol.core.register.config.Register.getInstance().initializeConfigs();
-        org.imesense.dynamicspawncontrol.core.register.worldgenerator.Register.getInstance().init(fmlPreInitializationEvent);
+        ConfigRegister.getInstance().initializeConfigs();
+        WorldGeneratorRegister.getInstance().init(fmlPreInitializationEvent);
 
         CacheEntityStorage.Instance = new CacheEntityStorage();
 
         CacheGeneralStorage.Instance = new CacheGeneralStorage();
 
-        org.imesense.dynamicspawncontrol.core.register.parser.Register.getInstance().init();
+        ParserRegister.getInstance().init();
         BaseEventRegister.initialize();
 
         OnEventWindowTitle.replace();
@@ -172,7 +175,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
     {
-        Register.getInstance().registerCommands(fmlServerStartingEvent);
+        CommandRegister.getInstance().registerCommands(fmlServerStartingEvent);
     }
 
     /**

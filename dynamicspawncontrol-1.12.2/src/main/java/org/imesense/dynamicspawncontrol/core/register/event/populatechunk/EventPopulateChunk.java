@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.register.event.populatechunk;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.populatechunk.OnEventPopulateChunkEventPre;
 
-public final class Register extends BaseEventRegister
+public final class EventPopulateChunk extends BaseEventRegister
 {
     private static final Class<?>[] EVENT_CLASSES =
     {

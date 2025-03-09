@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.register.event.living;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.living.*;
 
-public final class Register extends BaseEventRegister
+public final class EventLivingRegister extends BaseEventRegister
 {
     private static final Class<?>[] EVENT_CLASSES =
     {
