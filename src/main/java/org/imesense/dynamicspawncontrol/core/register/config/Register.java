@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register.config;
 
-import org.imesense.dynamicspawncontrol.core.api.BaseConfigRegister;
+import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
 import org.imesense.dynamicspawncontrol.core.config.file.*;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
@@ -8,19 +8,19 @@ import org.imesense.dynamicspawncontrol.plugin.staminaplus_1_12_2_1_1_1.config.C
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.config.CfgTimeControl;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.CfgWebSlinger;
 
-public final class RegisterConfig extends BaseConfigRegister
+public final class Register extends BaseConfigRegister
 {
-    private static volatile RegisterConfig _INSTANCE;
+    private static volatile Register _INSTANCE;
 
-    public static RegisterConfig getInstance()
+    public static Register getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (RegisterConfig.class)
+            synchronized (Register.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new RegisterConfig();
+                    _INSTANCE = new Register();
                 }
             }
         }

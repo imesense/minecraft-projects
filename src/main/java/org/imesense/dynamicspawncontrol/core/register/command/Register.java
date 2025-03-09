@@ -1,21 +1,21 @@
 package org.imesense.dynamicspawncontrol.core.register.command;
 
 import org.imesense.dynamicspawncontrol.command.*;
-import org.imesense.dynamicspawncontrol.core.api.BaseCommandRegister;
+import org.imesense.dynamicspawncontrol.core.baseregister.BaseCommandRegister;
 
-public class RegisterCommand extends BaseCommandRegister
+public class Register extends BaseCommandRegister
 {
-    private static volatile RegisterCommand _INSTANCE;
+    private static volatile Register _INSTANCE;
 
-    public static RegisterCommand getInstance()
+    public static Register getInstance()
     {
         if (_INSTANCE == null)
         {
-            synchronized (RegisterCommand.class)
+            synchronized (Register.class)
             {
                 if (_INSTANCE == null)
                 {
-                    _INSTANCE = new RegisterCommand();
+                    _INSTANCE = new Register();
                 }
             }
         }

@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.co
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 

@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.config.file;
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.config.data.WindowTitleData;
-import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;

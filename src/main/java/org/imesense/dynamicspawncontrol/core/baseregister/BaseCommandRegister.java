@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.api;
+package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import net.minecraft.command.ICommand;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;

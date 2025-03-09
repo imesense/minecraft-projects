@@ -7,17 +7,13 @@ import net.minecraftforge.fml.common.event.*;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.core.api.BaseEventRegister;
-import org.imesense.dynamicspawncontrol.core.api.IRecipes;
+import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.register.command.RegisterCommand;
-import org.imesense.dynamicspawncontrol.core.register.config.RegisterConfig;
-import org.imesense.dynamicspawncontrol.core.register.parser.RegisterParser;
-import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.register.command.Register;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
@@ -118,13 +114,13 @@ public final class DynamicSpawnControl
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
         PlayerInWebMessage.register(networkWrapper);
 
-        RegisterConfig.getInstance().initializeConfigs();
+        org.imesense.dynamicspawncontrol.core.register.config.Register.getInstance().initializeConfigs();
 
         CacheEntityStorage.Instance = new CacheEntityStorage();
 
         CacheGeneralStorage.Instance = new CacheGeneralStorage();
 
-        RegisterParser.getInstance().init();
+        org.imesense.dynamicspawncontrol.core.register.parser.Register.getInstance().init();
         BaseEventRegister.initialize();
 
         OnEventWindowTitle.replace();
@@ -175,7 +171,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
     {
-        RegisterCommand.getInstance().registerCommands(fmlServerStartingEvent);
+        Register.getInstance().registerCommands(fmlServerStartingEvent);
     }
 
     /**

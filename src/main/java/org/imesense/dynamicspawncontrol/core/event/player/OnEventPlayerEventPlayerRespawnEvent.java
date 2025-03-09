@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.event.player;
 
-import org.imesense.dynamicspawncontrol.core.api.BaseCoreEventInstance;
+import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 
-public final class OnEventPlayerEventPlayerRespawnEvent extends BaseCoreEventInstance
+public final class OnEventPlayerEventPlayerRespawnEvent extends BaseOnEventInstance
 {
 
 }

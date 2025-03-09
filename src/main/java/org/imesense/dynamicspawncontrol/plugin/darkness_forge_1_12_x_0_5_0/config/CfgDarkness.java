@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.conf
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 

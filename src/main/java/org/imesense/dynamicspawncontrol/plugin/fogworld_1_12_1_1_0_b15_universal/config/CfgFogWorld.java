@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universa
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
-import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
