@@ -4,13 +4,19 @@ import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractConceptBaseEventRegister
 {
     protected abstract Class<?>[] getEventClasses();
 
+    private static final List<AbstractConceptBaseEventRegister> REGISTERS = new ArrayList<>();
+
     public AbstractConceptBaseEventRegister()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
+        REGISTERS.add(this);
     }
 
     public void registerClasses()
@@ -28,5 +34,37 @@ public abstract class AbstractConceptBaseEventRegister
                 throw new RuntimeException(exception);
             }
         }
+    }
+
+    public static void initialize()
+    {
+        Log.writeDataToLogFile(0, "Initializing all registers...");
+
+        new org.imesense.dynamicspawncontrol.core.register.event.block.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.entity.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.fmlnetwork.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.living.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.player.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.populatechunk.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.rendergame.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.tickevent.Register();
+        new org.imesense.dynamicspawncontrol.core.register.event.world.Register();
+
+        Log.writeDataToLogFile(0, "Total registers created: " + REGISTERS.size());
+
+        for (AbstractConceptBaseEventRegister register : REGISTERS)
+        {
+            try
+            {
+                register.registerClasses();
+            }
+            catch (Exception exception)
+            {
+                Log.writeDataToLogFile(2, "Exception while registering events for: " + register.getClass().getSimpleName() + " - " + exception.getMessage());
+                throw new RuntimeException(exception);
+            }
+        }
+
+        Log.writeDataToLogFile(0, "All registers initialized and events registered.");
     }
 }
