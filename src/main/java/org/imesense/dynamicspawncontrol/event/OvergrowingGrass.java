@@ -17,7 +17,6 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OvergrowingGrass
 {
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);

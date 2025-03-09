@@ -16,7 +16,6 @@ import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class DropHeadMob
 {
     private static volatile DropHeadMob _INSTANCE;

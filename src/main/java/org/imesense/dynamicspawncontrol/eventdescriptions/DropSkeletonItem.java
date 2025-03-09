@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.event;
+package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntitySkeleton;
@@ -7,7 +7,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -15,63 +14,79 @@ import org.imesense.dynamicspawncontrol.core.config.data.SkeletonDropItemData;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class DropSkeletonItem
 {
+    private static volatile DropSkeletonItem _INSTANCE;
+
+    public static DropSkeletonItem getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (DropSkeletonItem.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new DropSkeletonItem();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
+
     public DropSkeletonItem()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }
 
-    @SubscribeEvent
-    public void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
+    public void handleLivingDrops(LivingDropsEvent event)
     {
-        if (livingDropsEvent.getEntity() instanceof EntitySkeleton)
+        if (event.getEntity() instanceof EntitySkeleton)
         {
-            EntitySkeleton entitySkeleton = (EntitySkeleton) livingDropsEvent.getEntity();
+            EntitySkeleton skeleton = (EntitySkeleton) event.getEntity();
+            List<EntityItem> drops = event.getDrops();
 
-            List<EntityItem> drops = livingDropsEvent.getDrops();
-
-            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
+            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
                     SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getHeadDamageFactor());
 
-            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
+            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
                     SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getChestDamageFactor());
 
-            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
+            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
                     SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getLegsDamageFactor());
 
-            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET),
+            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET),
                     SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getFeetDamageFactor());
 
-            addDamagedItemToDrops(entitySkeleton, drops, entitySkeleton.getHeldItemMainhand(),
+            addDamagedItemToDrops(skeleton, drops, skeleton.getHeldItemMainhand(),
                     SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getHandItemDamageFactor());
 
-            double arrowDropChance = 0.50;
+            handleArrowDrops(skeleton, drops);
+        }
+    }
 
-            if (UniqueField.RANDOM.nextDouble() < arrowDropChance)
+    private void handleArrowDrops(EntitySkeleton skeleton, List<EntityItem> drops)
+    {
+        double arrowDropChance = 0.50;
+
+        if (UniqueField.RANDOM.nextDouble() < arrowDropChance)
+        {
+            boolean arrowsDropped = false;
+
+            for (EntityItem item : drops)
             {
-                boolean arrowsDropped = false;
-
-                for (EntityItem item : drops)
+                if (item.getItem().getItem() == Items.ARROW)
                 {
-                    if (item.getItem().getItem() == Items.ARROW)
-                    {
-                        int currentCount = item.getItem().getCount();
-
-                        item.getItem().setCount
-                                (currentCount + 1 + SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
-
-                        arrowsDropped = true;
-
-                        break;
-                    }
+                    int currentCount = item.getItem().getCount();
+                    item.getItem().setCount(currentCount + 1 + SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
+                    arrowsDropped = true;
+                    break;
                 }
+            }
 
-                if (!arrowsDropped)
-                {
-                    addArrowsToDrops(entitySkeleton, drops, SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
-                }
+            if (!arrowsDropped)
+            {
+                addArrowsToDrops(skeleton, drops, SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
             }
         }
     }
