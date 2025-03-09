@@ -1,9 +1,9 @@
-package org.imesense.dynamicspawncontrol.core.registerevent.populatechunk;
+package org.imesense.dynamicspawncontrol.core.register.event.populatechunk;
 
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptBaseRegister;
+import org.imesense.dynamicspawncontrol.core.api.AbstractConceptBaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.populatechunk.OnEventPopulateChunkEventPre;
 
-public final class Register extends AbstractConceptBaseRegister
+public final class Register extends AbstractConceptBaseEventRegister
 {
     private static final Class<?>[] EVENT_CLASSES =
     {
