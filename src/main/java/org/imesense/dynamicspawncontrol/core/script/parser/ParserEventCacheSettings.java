@@ -43,7 +43,7 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
 
             if (jsonArray == null)
             {
-                CodeGeneric.logAndThrow("Script does not contain key 'data'.");
+                throw new RuntimeException("Script does not contain key 'data'.");
             }
 
             List<CacheEntityStorage.EntityData> entitiesList = new ArrayList<>();
@@ -71,7 +71,7 @@ public final class ParserEventCacheSettings extends AbstractConceptParser
         }
         catch (IOException | JsonSyntaxException exception)
         {
-            CodeGeneric.logAndThrow("Error loading script file: " + exception.getMessage(), exception);
+            throw new RuntimeException("Error loading script file: " + exception.getMessage(), exception);
         }
     }
 

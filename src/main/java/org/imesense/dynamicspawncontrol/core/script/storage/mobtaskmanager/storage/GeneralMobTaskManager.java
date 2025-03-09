@@ -38,6 +38,7 @@ public final class GeneralMobTaskManager
                 }
             }
         }
+
         return _INSTANCE;
     }
 

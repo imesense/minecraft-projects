@@ -1,6 +1,10 @@
 package org.imesense.dynamicspawncontrol.core.util;
 
 import com.google.gson.JsonElement;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.List;
@@ -13,14 +17,14 @@ public final class CodeGeneric
 {
     /**
      *
-     * @param clazz
+     * @param _clazz
      * @return
      */
-    public static boolean hasDefaultConstructor(Class<?> clazz)
+    public static boolean hasDefaultConstructor(Class<?> _clazz)
     {
         try
         {
-            clazz.getConstructor();
+            _clazz.getConstructor();
             return true;
         }
         catch (NoSuchMethodException exception)
@@ -55,22 +59,39 @@ public final class CodeGeneric
 
     /**
      *
-     * @param message
+     * @param _clazz
+     * @return
      */
-    public static void logAndThrow(String message)
+    public static EnumCreatureType getCreatureType(Class<? extends Entity> _clazz)
     {
-        Log.writeDataToLogFile(2, message);
-        throw new RuntimeException(message);
-    }
+        try
+        {
+            EntityLiving entity =
+                    (EntityLiving) _clazz.getConstructor(World.class).newInstance((World) null);
 
-    /**
-     *
-     * @param message
-     * @param exception
-     */
-    public static void logAndThrow(String message, Exception exception)
-    {
-        Log.writeDataToLogFile(2, message);
-        throw new RuntimeException(exception);
+            if (entity.isCreatureType(EnumCreatureType.MONSTER, false))
+            {
+                return EnumCreatureType.MONSTER;
+            }
+            else if (entity.isCreatureType(EnumCreatureType.CREATURE, false))
+            {
+                return EnumCreatureType.CREATURE;
+            }
+            else if (entity.isCreatureType(EnumCreatureType.AMBIENT, false))
+            {
+                return EnumCreatureType.AMBIENT;
+            }
+            else if (entity.isCreatureType(EnumCreatureType.WATER_CREATURE, false))
+            {
+                return EnumCreatureType.WATER_CREATURE;
+            }
+        }
+        catch (Exception exception)
+        {
+            Log.writeDataToLogFile(0, "Failed to determine creature type for entity: " + _clazz.getName() + ", error: " + exception.getMessage());
+        }
+
+
+        return EnumCreatureType.CREATURE;
     }
 }

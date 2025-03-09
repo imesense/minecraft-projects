@@ -26,6 +26,7 @@ public class GeneralPopulationChunkSpawn
                 }
             }
         }
+
         return _INSTANCE;
     }
 
