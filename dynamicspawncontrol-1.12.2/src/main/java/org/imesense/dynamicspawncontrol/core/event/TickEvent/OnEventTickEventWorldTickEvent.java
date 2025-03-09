@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.event;
+package org.imesense.dynamicspawncontrol.core.event.TickEvent;
 
 import org.imesense.dynamicspawncontrol.core.api.AbstractSingletonCoreEventClass;
 

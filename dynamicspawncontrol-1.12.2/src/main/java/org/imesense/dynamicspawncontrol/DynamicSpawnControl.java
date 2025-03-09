@@ -139,15 +139,11 @@ public final class DynamicSpawnControl
 
         OnEventWindowTitle.replace();
 
-        RegisterGameplayClass.registerClasses();
-
         RegisterOreGenerator.init(fmlPreInitializationEvent);
 
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
         TextColorCollection.instance = new TextColorCollection();
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
-
-        RegisterAIClass.registerClasses();
 
         RegisterRenderClass.registerClasses();
     }
