@@ -11,7 +11,7 @@ import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.G
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
+import org.imesense.dynamicspawncontrol.core.api.BaseParser;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
-public final class ParserEventCheckSpawn extends AbstractConceptParser
+public final class ParserEventCheckSpawn extends BaseParser
 {
     public ParserEventCheckSpawn(final String NAME_FILE)
     {

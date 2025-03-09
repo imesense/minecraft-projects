@@ -1,20 +1,14 @@
 package org.imesense.dynamicspawncontrol.core.api;
 
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-public abstract class AbstractConceptParser
+public abstract class BaseParser
 {
     protected String nameFile = null;
 

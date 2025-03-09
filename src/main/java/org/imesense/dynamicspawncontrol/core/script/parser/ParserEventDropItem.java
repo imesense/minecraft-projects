@@ -1,10 +1,9 @@
 package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
+import org.imesense.dynamicspawncontrol.core.api.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -12,11 +11,10 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParserEventDropItem extends AbstractConceptParser
+public class ParserEventDropItem extends BaseParser
 {
     public ParserEventDropItem(final String NAME_FILE)
     {

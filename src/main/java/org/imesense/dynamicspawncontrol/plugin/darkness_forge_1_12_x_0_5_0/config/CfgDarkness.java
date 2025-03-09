@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.conf
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
+import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -18,7 +18,7 @@ import java.nio.file.Paths;
  *
  */
 @ConceptConfig(fileName = "cfg_darkness_forge_1_12_x_0_5_0")
-public final class CfgDarkness extends AbstractConceptConfig
+public final class CfgDarkness extends BaseConfig
 {
     /**
      *

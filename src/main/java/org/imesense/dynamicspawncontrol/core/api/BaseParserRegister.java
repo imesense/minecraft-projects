@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.api;
 
-public abstract class AbstractConceptBaseParserRegister
+public abstract class BaseParserRegister
 {
 
 }
