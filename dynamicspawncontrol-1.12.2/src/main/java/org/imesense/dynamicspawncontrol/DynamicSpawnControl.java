@@ -115,6 +115,7 @@ public final class DynamicSpawnControl
         PlayerInWebMessage.register(networkWrapper);
 
         org.imesense.dynamicspawncontrol.core.register.config.Register.getInstance().initializeConfigs();
+        org.imesense.dynamicspawncontrol.core.register.worldgenerator.Register.getInstance().init(fmlPreInitializationEvent);
 
         CacheEntityStorage.Instance = new CacheEntityStorage();
 
