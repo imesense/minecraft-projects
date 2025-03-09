@@ -20,20 +20,11 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
-/**
- *
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventUpdateTorch
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public OnEventUpdateTorch()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
@@ -47,10 +38,6 @@ public final class OnEventUpdateTorch
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param livingHurtEvent
-     */
     @SubscribeEvent
     public void onHit_0(LivingHurtEvent livingHurtEvent)
     {
@@ -90,10 +77,6 @@ public final class OnEventUpdateTorch
         }
     }
 
-    /**
-     *
-     * @param breakEvent
-     */
     @SubscribeEvent
     public void onBreak_1(BlockEvent.BreakEvent breakEvent)
     {

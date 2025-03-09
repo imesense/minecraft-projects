@@ -21,14 +21,8 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventDropHeadMob
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public OnEventDropHeadMob()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -42,10 +36,6 @@ public final class OnEventDropHeadMob
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param livingDeathEvent
-     */
     @SubscribeEvent
     public void onEntityDeath_0(LivingDeathEvent livingDeathEvent)
     {
@@ -68,11 +58,6 @@ public final class OnEventDropHeadMob
         }
     }
 
-    /**
-     *
-     * @param entityLivingBase
-     * @return
-     */
     private float calculateDropChance(EntityLivingBase entityLivingBase)
     {
         float baseChance = 0.0f;
@@ -108,11 +93,6 @@ public final class OnEventDropHeadMob
         return MathHelper.clamp(baseChance, 0.0f, 1.0f);
     }
 
-    /**
-     *
-     * @param entityLivingBase
-     * @param world
-     */
     private void dropHead(EntityLivingBase entityLivingBase, World world)
     {
         ItemStack itemStack = ItemStack.EMPTY;

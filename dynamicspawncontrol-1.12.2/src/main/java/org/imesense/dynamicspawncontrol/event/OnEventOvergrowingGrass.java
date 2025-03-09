@@ -18,25 +18,13 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- *
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventOvergrowingGrass
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
 
-    /**
-     *
-     */
     public OnEventOvergrowingGrass()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -50,10 +38,6 @@ public final class OnEventOvergrowingGrass
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param worldTickEvent
-     */
     @SubscribeEvent
     public static void onWorldTick_0(TickEvent.WorldTickEvent worldTickEvent)
     {

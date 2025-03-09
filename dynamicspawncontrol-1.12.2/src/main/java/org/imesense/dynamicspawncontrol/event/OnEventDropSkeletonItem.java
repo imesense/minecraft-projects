@@ -16,20 +16,11 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.List;
 
-/**
- *
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventDropSkeletonItem
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public OnEventDropSkeletonItem()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -43,10 +34,6 @@ public final class OnEventDropSkeletonItem
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param livingDropsEvent
-     */
     @SubscribeEvent
     public void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
     {
@@ -100,13 +87,6 @@ public final class OnEventDropSkeletonItem
         }
     }
 
-    /**
-     *
-     * @param entitySkeleton
-     * @param drops
-     * @param originalItem
-     * @param damageFactor
-     */
     private void addDamagedItemToDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
     {
         if (originalItem.getItem() != Items.AIR)
@@ -144,12 +124,6 @@ public final class OnEventDropSkeletonItem
         }
     }
 
-    /**
-     *
-     * @param entitySkeleton
-     * @param drops
-     * @param arrowCount
-     */
     private void addArrowsToDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops, byte arrowCount)
     {
         ItemStack itemStack = new ItemStack(Items.ARROW, arrowCount);

@@ -10,20 +10,11 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-/**
- * 
- */
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventRenderFPS
 {
-    /**
-     *
-     */
     private static boolean instanceExists = false;
 
-    /**
-     *
-     */
     public OnEventRenderFPS()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -37,10 +28,6 @@ public final class OnEventRenderFPS
         instanceExists = true;
     }
 
-    /**
-     *
-     * @param event
-     */
     @SubscribeEvent
     public static void onRenderGameOverlay_0(RenderGameOverlayEvent.Text event)
     {
