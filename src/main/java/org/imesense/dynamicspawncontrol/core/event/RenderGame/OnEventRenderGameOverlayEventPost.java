@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.event;
+package org.imesense.dynamicspawncontrol.core.event.RenderGame;
 
 import org.imesense.dynamicspawncontrol.core.api.AbstractSingletonCoreEventClass;
 

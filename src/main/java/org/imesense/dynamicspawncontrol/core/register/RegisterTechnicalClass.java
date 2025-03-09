@@ -1,13 +1,21 @@
 package org.imesense.dynamicspawncontrol.core.register;
 
 import net.minecraftforge.common.MinecraftForge;
-import org.imesense.dynamicspawncontrol.core.event.*;
-import org.imesense.dynamicspawncontrol.core.script.processor.*;
+import org.imesense.dynamicspawncontrol.core.event.Block.OnEventBlockEventBreakEvent;
+import org.imesense.dynamicspawncontrol.core.event.Entity.OnEventEntityJoinWorldEvent;
+import org.imesense.dynamicspawncontrol.core.event.FMLNetwork.OnEventFMLNetworkEventClientConnectedToServerEvent;
+import org.imesense.dynamicspawncontrol.core.event.FMLNetwork.OnEventFMLNetworkEventClientDisconnectionFromServerEvent;
+import org.imesense.dynamicspawncontrol.core.event.Living.*;
+import org.imesense.dynamicspawncontrol.core.event.Player.OnEventPlayerEventPlayerLoggedInEvent;
+import org.imesense.dynamicspawncontrol.core.event.Player.OnEventPlayerEventPlayerLoggedOutEvent;
+import org.imesense.dynamicspawncontrol.core.event.Player.OnEventPlayerEventPlayerRespawnEvent;
+import org.imesense.dynamicspawncontrol.core.event.PopulateChunk.OnEventPopulateChunkEventPre;
+import org.imesense.dynamicspawncontrol.core.event.RenderGame.OnEventRenderGameOverlayEventPost;
+import org.imesense.dynamicspawncontrol.core.event.RenderGame.OnEventRenderGameOverlayEventText;
+import org.imesense.dynamicspawncontrol.core.event.TickEvent.OnEventTickEventWorldTickEvent;
+import org.imesense.dynamicspawncontrol.core.event.WorldEvent.OnEventWorldEventPotentialSpawns;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.event.OnEventRenderFPS;
-import org.imesense.dynamicspawncontrol.event.OnEventPlayer;
-import org.imesense.dynamicspawncontrol.event.OnEventWindowTitle;
 
 /**
  *

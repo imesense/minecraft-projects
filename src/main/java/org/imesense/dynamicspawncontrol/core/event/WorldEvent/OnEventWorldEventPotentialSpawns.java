@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.event;
+package org.imesense.dynamicspawncontrol.core.event.WorldEvent;
 
 import org.imesense.dynamicspawncontrol.core.api.AbstractSingletonCoreEventClass;
 
