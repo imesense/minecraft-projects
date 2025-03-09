@@ -13,17 +13,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventOvergrowingGrass
+public final class OvergrowingGrass
 {
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
 
-    public OnEventOvergrowingGrass()
+    public OvergrowingGrass()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }

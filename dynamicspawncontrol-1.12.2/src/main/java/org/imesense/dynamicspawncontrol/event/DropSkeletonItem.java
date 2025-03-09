@@ -12,14 +12,13 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.config.data.SkeletonDropItemData;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventDropSkeletonItem
+public final class DropSkeletonItem
 {
-    public OnEventDropSkeletonItem()
+    public DropSkeletonItem()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }
