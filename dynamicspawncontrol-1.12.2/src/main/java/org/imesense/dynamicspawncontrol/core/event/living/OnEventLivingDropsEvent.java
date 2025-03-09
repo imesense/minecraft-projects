@@ -1,8 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.event.living;
 
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptCoreEventInstance;
+import org.imesense.dynamicspawncontrol.core.api.BaseCoreEventInstance;
 
-public final class OnEventLivingDropsEvent extends AbstractConceptCoreEventInstance
+public final class OnEventLivingDropsEvent extends BaseCoreEventInstance
 {
 
 }

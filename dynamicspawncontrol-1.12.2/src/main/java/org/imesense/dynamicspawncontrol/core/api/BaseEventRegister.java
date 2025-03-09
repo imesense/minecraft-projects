@@ -7,13 +7,13 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractConceptBaseEventRegister
+public abstract class BaseEventRegister
 {
     protected abstract Class<?>[] getEventClasses();
 
-    private static final List<AbstractConceptBaseEventRegister> REGISTERS = new ArrayList<>();
+    private static final List<BaseEventRegister> REGISTERS = new ArrayList<>();
 
-    public AbstractConceptBaseEventRegister()
+    public BaseEventRegister()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         REGISTERS.add(this);
@@ -52,7 +52,7 @@ public abstract class AbstractConceptBaseEventRegister
 
         Log.writeDataToLogFile(0, "Total registers created: " + REGISTERS.size());
 
-        for (AbstractConceptBaseEventRegister register : REGISTERS)
+        for (BaseEventRegister register : REGISTERS)
         {
             try
             {

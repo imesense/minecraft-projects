@@ -6,11 +6,11 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractConceptCoreEventInstance
+public abstract class BaseCoreEventInstance
 {
     private static final Map<Class<?>, Boolean> INSTANCE_EXITS_MAP = new HashMap<>();
 
-    protected AbstractConceptCoreEventInstance()
+    protected BaseCoreEventInstance()
     {
         Class<?> clazz = this.getClass();
         CodeGeneric.printInitClassToLog(clazz);

@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.config.file;
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.config.data.BlockWorldGeneratorDataAbstract;
 import org.imesense.dynamicspawncontrol.core.config.data.BlockWorldGeneratorData;
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
+import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
@@ -20,7 +20,7 @@ import java.nio.file.Paths;
  *
  */
 @ConceptConfig(fileName = "cfg_block_world_generator")
-public final class BlockWorldGeneratorConfig extends AbstractConceptConfig
+public final class BlockWorldGeneratorConfig extends BaseConfig
 {
     /**
      *

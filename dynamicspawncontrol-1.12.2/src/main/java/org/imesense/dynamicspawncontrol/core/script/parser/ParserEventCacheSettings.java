@@ -3,19 +3,18 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptParser;
+import org.imesense.dynamicspawncontrol.core.api.BaseParser;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class ParserEventCacheSettings extends AbstractConceptParser
+public final class ParserEventCacheSettings extends BaseParser
 {
     public ParserEventCacheSettings(final String NAME_FILE)
     {

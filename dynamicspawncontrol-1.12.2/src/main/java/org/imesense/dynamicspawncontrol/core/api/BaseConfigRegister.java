@@ -7,11 +7,11 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.lang.reflect.Constructor;
 
-public abstract class AbstractConceptBaseConfigRegister
+public abstract class BaseConfigRegister
 {
     protected abstract Class<?>[] getConfigClasses();
 
-    public AbstractConceptBaseConfigRegister()
+    public BaseConfigRegister()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }

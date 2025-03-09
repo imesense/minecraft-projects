@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.*;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptBaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.api.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.api.IRecipes;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
@@ -135,7 +135,7 @@ public final class DynamicSpawnControl
 
         CacheGeneralStorage.Instance = new CacheGeneralStorage();
 
-        AbstractConceptBaseEventRegister.initialize();
+        BaseEventRegister.initialize();
 
         OnEventWindowTitle.replace();
 

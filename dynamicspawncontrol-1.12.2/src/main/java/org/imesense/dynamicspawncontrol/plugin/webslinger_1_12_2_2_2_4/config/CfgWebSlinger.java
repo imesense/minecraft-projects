@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.core.api.AbstractConceptConfig;
+import org.imesense.dynamicspawncontrol.core.api.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
@@ -20,7 +20,7 @@ import java.util.Map;
  * 
  */
 @ConceptConfig(fileName = "cfg_webslinger_1_12_2_2_2_4")
-public final class CfgWebSlinger extends AbstractConceptConfig
+public final class CfgWebSlinger extends BaseConfig
 {
     /**
      *

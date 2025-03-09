@@ -8,7 +8,7 @@ import java.io.File;
 /**
  *
  */
-public abstract class AbstractConceptConfig
+public abstract class BaseConfig
 {
     /**
      *
@@ -19,7 +19,7 @@ public abstract class AbstractConceptConfig
      *
      * @param nameConfigFile
      */
-    public AbstractConceptConfig(String nameConfigFile, final Boolean IS_CONFIG_FOLDER)
+    public BaseConfig(String nameConfigFile, final Boolean IS_CONFIG_FOLDER)
     {
         this.nameConfig = this.constructPathToDirectory(IS_CONFIG_FOLDER) + nameConfigFile;
     }
