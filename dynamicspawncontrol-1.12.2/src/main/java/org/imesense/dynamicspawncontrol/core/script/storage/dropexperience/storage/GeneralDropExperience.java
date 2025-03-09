@@ -23,6 +23,7 @@ public final class GeneralDropExperience
                 }
             }
         }
+
         return _INSTANCE;
     }
 

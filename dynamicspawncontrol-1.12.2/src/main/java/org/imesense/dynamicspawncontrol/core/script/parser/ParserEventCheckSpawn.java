@@ -18,7 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.imesense.dynamicspawncontrol.core.script.AuxScript.Util.*;
+import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
 public final class ParserEventCheckSpawn extends AbstractConceptParser
 {

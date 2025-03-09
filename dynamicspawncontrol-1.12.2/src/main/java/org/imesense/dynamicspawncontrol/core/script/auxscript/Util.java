@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.script.AuxScript;
+package org.imesense.dynamicspawncontrol.core.script.auxscript;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

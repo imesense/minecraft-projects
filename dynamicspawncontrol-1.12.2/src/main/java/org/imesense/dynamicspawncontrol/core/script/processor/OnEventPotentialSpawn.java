@@ -42,13 +42,8 @@ public final class OnEventPotentialSpawn
                 .mapToObj(spawnEntries::get)
                 .collect(Collectors.toList());
 
-        /*
-         * Исправлено бесконечное дублирование сущностей в событии WorldEvent.PotentialSpawns.
-         * Проблема: При каждом вызове события список spawnEntries дублировался, что приводило к чрезмерному количеству сущностей и сбоям в игре.
-         * Решение: Добавлен временный список для хранения отфильтрованных записей. Оригинальный список очищается перед добавлением новых данных, что предотвращает дублирование и сохраняет записи, добавленные другими модами.
-         */
-
         List<Biome.SpawnListEntry> tempList = new ArrayList<>(event.getList());
+
         tempList.addAll(filteredEntries);
 
         event.getList().clear();

@@ -23,6 +23,7 @@ public final class GeneralPotentialSpawnStorage
                 }
             }
         }
+
         return _INSTANCE;
     }
 

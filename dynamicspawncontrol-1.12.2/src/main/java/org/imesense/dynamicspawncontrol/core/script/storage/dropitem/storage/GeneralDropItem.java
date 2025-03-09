@@ -22,6 +22,7 @@ public class GeneralDropItem
                 }
             }
         }
+
         return _INSTANCE;
     }
 
