@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.eventdescriptions.DropSkeletonItem;
+import org.imesense.dynamicspawncontrol.eventdescriptions.DropZombieItem;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingDropsEvent extends BaseOnEventInstance
@@ -15,5 +16,6 @@ public final class OnEventLivingDropsEvent extends BaseOnEventInstance
     public void onLivingDropsEvent(LivingDropsEvent event)
     {
         DropSkeletonItem.getInstance().handleLivingDrops(event);
+        DropZombieItem.getInstance().handleZombieDrops(event);
     }
 }

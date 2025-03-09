@@ -7,13 +7,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.eventdescriptions.ComplexityBiomes;
+import org.imesense.dynamicspawncontrol.eventdescriptions.RenderFPS;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventRenderGameOverlayEventText extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onRenderGameOverlayEventText(RenderGameOverlayEvent.Text text)
+    public void onRenderGameOverlayEventText(RenderGameOverlayEvent.Text event)
     {
         ComplexityBiomes.getInstance().renderBiomesOverlay();
+
+        RenderFPS.getInstance().renderFpsOverlay();
     }
 }

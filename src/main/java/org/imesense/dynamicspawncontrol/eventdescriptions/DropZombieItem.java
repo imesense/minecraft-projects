@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.event;
+package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityZombie;
@@ -6,9 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.config.data.ZombieDropItemData;
@@ -22,28 +20,44 @@ public final class DropZombieItem
 		CodeGeneric.printInitClassToLog(this.getClass());
     }
 
-    @SubscribeEvent
-    public void onUpdateLivingDropsEvent_0(LivingDropsEvent livingDropsEvent)
+    private static volatile DropZombieItem _INSTANCE;
+
+    public static DropZombieItem getInstance()
     {
-        if (livingDropsEvent.getEntity() instanceof EntityZombie)
+        if (_INSTANCE == null)
         {
-            EntityZombie entityZombie = (EntityZombie) livingDropsEvent.getEntity();
+            synchronized (DropZombieItem.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new DropZombieItem();
+                }
+            }
+        }
 
-            List<EntityItem> drops = livingDropsEvent.getDrops();
+        return _INSTANCE;
+    }
 
-            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
+    public void handleZombieDrops(LivingDropsEvent event)
+    {
+        if (event.getEntity() instanceof EntityZombie)
+        {
+            EntityZombie zombie = (EntityZombie) event.getEntity();
+            List<EntityItem> drops = event.getDrops();
+
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
                     ZombieDropItemData.ConfigDataZombieDrop.Instance.getHeadDamageFactor());
 
-            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
                     ZombieDropItemData.ConfigDataZombieDrop.Instance.getChestDamageFactor());
 
-            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
                     ZombieDropItemData.ConfigDataZombieDrop.Instance.getLegsDamageFactor());
 
-            addDamagedItemToDrops(entityZombie, drops, entityZombie.getItemStackFromSlot(EntityEquipmentSlot.FEET),
+            addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.FEET),
                     ZombieDropItemData.ConfigDataZombieDrop.Instance.getFeetDamageFactor());
 
-            addDamagedItemToDrops(entityZombie, drops, entityZombie.getHeldItemMainhand(),
+            addDamagedItemToDrops(zombie, drops, zombie.getHeldItemMainhand(),
                     ZombieDropItemData.ConfigDataZombieDrop.Instance.getHandItemDamageFactor());
         }
     }

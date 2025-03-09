@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.event;
+package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
@@ -8,10 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -19,30 +17,33 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class OvergrowingGrass
 {
-    private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
+    public static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
+
+    private static volatile OvergrowingGrass _INSTANCE;
+
+    public static OvergrowingGrass getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (OvergrowingGrass.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new OvergrowingGrass();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
 
     public OvergrowingGrass()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }
 
-    @SubscribeEvent
-    public static void onWorldTick_0(TickEvent.WorldTickEvent worldTickEvent)
+    public void handleWorldTick(World world)
     {
-        if (worldTickEvent.phase == TickEvent.Phase.END || worldTickEvent.world.isRemote)
-        {
-            return;
-        }
-
-        if (TICK_COUNTER.incrementAndGet() < 20)
-        {
-            return;
-        }
-
-        TICK_COUNTER.set(0);
-
-        World world = worldTickEvent.world;
-
         for (EntityPlayer player : world.playerEntities)
         {
             BlockPos playerPos = player.getPosition();
@@ -58,7 +59,6 @@ public final class OvergrowingGrass
             if (block == Blocks.GRASS)
             {
                 BlockPos abovePos = groundPos.up();
-
                 IBlockState stateAbove = world.getBlockState(abovePos);
 
                 if (stateAbove.getBlock() == Blocks.TALLGRASS)

@@ -18,7 +18,7 @@ import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
-import org.imesense.dynamicspawncontrol.event.WindowTitle;
+import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.TimeEvents;
@@ -127,7 +127,7 @@ public final class DynamicSpawnControl
         ParserRegister.getInstance().init();
         BaseEventRegister.initialize();
 
-        WindowTitle.replace();
+        WindowTitle.getInstance().replace();
 
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
         TextColorCollection.instance = new TextColorCollection();
