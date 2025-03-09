@@ -14,6 +14,7 @@ import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.register.config.RegisterConfig;
+import org.imesense.dynamicspawncontrol.core.register.parser.RegisterParser;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -74,16 +75,6 @@ public final class DynamicSpawnControl
     /**
      *
      */
-    public GeneralCheckSpawnStorage generalStorageScriptData = null;
-
-    /**
-     *
-     */
-    public SupportCheckSpawnStorage supportStorageScriptData = null;
-
-    /**
-     *
-     */
     public static SimpleNetworkWrapper networkWrapper = null;
 
     /**
@@ -128,13 +119,11 @@ public final class DynamicSpawnControl
 
         RegisterConfig.getInstance().initializeConfigs();
 
-        generalStorageScriptData = new GeneralCheckSpawnStorage();
-        supportStorageScriptData = new SupportCheckSpawnStorage();
-
         CacheEntityStorage.Instance = new CacheEntityStorage();
 
         CacheGeneralStorage.Instance = new CacheGeneralStorage();
 
+        RegisterParser.getInstance().init();
         BaseEventRegister.initialize();
 
         OnEventWindowTitle.replace();
