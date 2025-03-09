@@ -8,16 +8,15 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.config.data.WindowTitleData;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.lwjgl.opengl.Display;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventWindowTitle
+public final class WindowTitle
 {
-    public OnEventWindowTitle()
+    public WindowTitle()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
     }

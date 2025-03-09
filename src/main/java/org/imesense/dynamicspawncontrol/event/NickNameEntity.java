@@ -9,22 +9,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventNickNameEntity
+public final class NickNameEntity
 {
     private final List<String> RANDOM_NAMES = new ArrayList<>();
 
-    public OnEventNickNameEntity()
+    public NickNameEntity()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 

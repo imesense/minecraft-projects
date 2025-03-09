@@ -21,11 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventPlayer
+public final class Player
 {
     private static final ArrayList<String> PLAYER_LIST = new ArrayList<>();
 
-    public OnEventPlayer()
+    public Player()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
     }
