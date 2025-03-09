@@ -11,7 +11,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 public final class OnEventLivingAttackEvent
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onLivingAttackEvent(LivingAttackEvent event)
+    public void OnLivingAttackEvent(LivingAttackEvent event)
     {
         UpdateFire.getInstance().handleLivingAttack(event);
     }

@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateTorch;
 public final class OnEventBlockEventBreakEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onBlockEventBreakEvent(BlockEvent.BreakEvent event)
+    public void OnBlockEventBreakEvent(BlockEvent.BreakEvent event)
     {
         UpdateTorch.getInstance().handleBlockBreak(event);
     }

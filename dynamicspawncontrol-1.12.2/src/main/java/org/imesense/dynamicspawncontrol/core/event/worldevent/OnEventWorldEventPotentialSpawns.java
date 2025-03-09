@@ -11,7 +11,7 @@ import static org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGras
 public final class OnEventWorldEventPotentialSpawns extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onTickEventWorldTickEvent(TickEvent.WorldTickEvent event)
+    public void OnTickEventWorldTickEvent(TickEvent.WorldTickEvent event)
     {
         if (event.phase == TickEvent.Phase.END || event.world.isRemote)
         {

@@ -6,14 +6,34 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
+import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventFMLNetworkEventClientDisconnectionFromServerEvent extends BaseOnEventInstance
-{
+public final class OnEventFMLNetworkEventClientDisconnectionFromServerEvent extends BaseOnEventInstance {
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnFMLNetworkEventClientDisconnectionFromServerEvent(FMLNetworkEvent.ClientDisconnectionFromServerEvent event)
     {
-        Log.writeDataToLogFile(0, "ClientDisconnectionFromServerEvent " + event);
+        String playerName = "unknown";
+        String disconnectReason = "unknown";
+
+        if (UniqueField.CLIENT.player != null)
+        {
+            playerName = UniqueField.CLIENT.player.getName();
+        }
+
+        if (event.getManager() != null && event.getManager().getExitMessage() != null)
+        {
+            disconnectReason = event.getManager().getExitMessage().getUnformattedText();
+        }
+
+        String logMessage = String.format(
+                "ClientDisconnectionFromServerEvent: Player '%s' disconnected from server. Reason: '%s'",
+                playerName,
+                disconnectReason
+        );
+
+        Log.writeDataToLogFile(0, logMessage);
     }
 }

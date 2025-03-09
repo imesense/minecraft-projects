@@ -14,7 +14,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 public final class OnEventLivingDeathEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onLivingDeathEvent(LivingDeathEvent event)
+    public void OnLivingDeathEvent(LivingDeathEvent event)
     {
         DropHeadMob.getInstance().handleEntityDeath(event);
 

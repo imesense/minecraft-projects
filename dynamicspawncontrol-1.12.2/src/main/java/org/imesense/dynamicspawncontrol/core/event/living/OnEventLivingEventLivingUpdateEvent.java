@@ -14,7 +14,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 public final class OnEventLivingEventLivingUpdateEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onLivingEventLivingUpdateEvent(LivingEvent.LivingUpdateEvent event)
+    public void OnLivingEventLivingUpdateEvent(LivingEvent.LivingUpdateEvent event)
     {
         if (event.getEntity() instanceof EntityPlayerMP)
         {

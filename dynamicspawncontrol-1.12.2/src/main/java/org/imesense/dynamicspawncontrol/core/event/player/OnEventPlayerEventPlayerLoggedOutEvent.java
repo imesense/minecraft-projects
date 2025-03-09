@@ -1,19 +1,40 @@
 package org.imesense.dynamicspawncontrol.core.event.player;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
+
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPlayerEventPlayerLoggedOutEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onPlayerEventPlayerLoggedOutEvent(PlayerEvent.PlayerLoggedOutEvent event)
+    public void OnPlayerEventPlayerLoggedOutEvent(PlayerEvent.PlayerLoggedOutEvent event)
     {
+        EntityPlayer player = event.player;
+        String playerName = player.getName();
+        UUID playerUUID = player.getUniqueID();
+        BlockPos playerPos = player.getPosition();
+
+        String logMessage = String.format(
+                "PlayerLoggedOutEvent: Player '%s' (UUID: %s) logged out at coordinates: X=%d, Y=%d, Z=%d",
+                playerName,
+                playerUUID,
+                playerPos.getX(),
+                playerPos.getY(),
+                playerPos.getZ()
+        );
+
+        Log.writeDataToLogFile(0, logMessage);
+
         PlayerNetwork.getInstance().handlePlayerLoggedOut(event);
     }
 }
