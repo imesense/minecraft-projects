@@ -155,6 +155,7 @@ public final class ComplexityBiomes
             case "Cold Taiga":
             case "Ice Mountains":
             case "Roofed Forest M":
+            case "Ocean":
                 return 4;
             case "Mega Spruce Taiga":
             case "DesertHills":
@@ -170,6 +171,7 @@ public final class ComplexityBiomes
             case "Jungle":
             case "JungleHills":
             case "Jungle M":
+            case "Deep Ocean":
                 return this.MAX;
             default:
                 return this.NULL;
@@ -213,6 +215,7 @@ public final class ComplexityBiomes
             case "ForestHills":
             case "Ice Mountains":
             case "JungleEdge":
+            case "Ocean":
                 return 2;
             case "Savanna":
                 return 3;
