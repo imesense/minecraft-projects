@@ -18,14 +18,14 @@ public final class CodeGeneric
 {
     /**
      *
-     * @param _clazz
+     * @param _class
      * @return
      */
-    public static boolean hasDefaultConstructor(Class<?> _clazz)
+    public static boolean hasDefaultConstructor(Class<?> _class)
     {
         try
         {
-            _clazz.getConstructor();
+            _class.getConstructor();
             return true;
         }
         catch (NoSuchMethodException exception)
@@ -60,15 +60,15 @@ public final class CodeGeneric
 
     /**
      *
-     * @param _clazz
+     * @param _class
      * @return
      */
-    public static EnumCreatureType getCreatureType(Class<? extends Entity> _clazz)
+    public static EnumCreatureType getCreatureType(Class<? extends Entity> _class)
     {
         try
         {
             EntityLiving entity =
-                    (EntityLiving) _clazz.getConstructor(World.class).newInstance((World) null);
+                    (EntityLiving) _class.getConstructor(World.class).newInstance((World) null);
 
             if (entity.isCreatureType(EnumCreatureType.MONSTER, false))
             {
@@ -89,32 +89,32 @@ public final class CodeGeneric
         }
         catch (Exception exception)
         {
-            Log.writeDataToLogFile(0, "Failed to determine creature type for entity: " + _clazz.getName() + ", error: " + exception.getMessage());
+            Log.writeDataToLogFile(0, "Failed to determine creature type for entity: " + _class.getName() + ", error: " + exception.getMessage());
         }
 
 
         return EnumCreatureType.CREATURE;
     }
 
-    public static <T> T getInstance(Class<T> _clazz)
+    public static <T> T getInstance(Class<T> _class)
     {
         try
         {
-            Field instanceField = _clazz.getDeclaredField("_INSTANCE");
+            Field instanceField = _class.getDeclaredField("_INSTANCE");
             instanceField.setAccessible(true);
 
             if (instanceField.get(null) == null)
             {
-                synchronized (_clazz)
+                synchronized (_class)
                 {
                     if (instanceField.get(null) == null)
                     {
-                        Log.writeDataToLogFile(0, "Creating Singleton instance for class: " + _clazz.getName());
+                        Log.writeDataToLogFile(0, "Creating Singleton instance for class: " + _class.getName());
 
-                        T instance = _clazz.getDeclaredConstructor().newInstance();
+                        T instance = _class.getDeclaredConstructor().newInstance();
                         instanceField.set(null, instance);
 
-                        Log.writeDataToLogFile(0, "Singleton instance created for class: " + _clazz.getName());
+                        Log.writeDataToLogFile(0, "Singleton instance created for class: " + _class.getName());
                     }
                 }
             }
@@ -123,8 +123,8 @@ public final class CodeGeneric
         }
         catch (Exception exception)
         {
-            Log.writeDataToLogFile(0, "Failed to create Singleton instance for class: " + _clazz.getName() + ". Error: " + exception.getMessage());
-            throw new RuntimeException("Failed to create Singleton instance for class: " + _clazz.getName(), exception);
+            Log.writeDataToLogFile(0, "Failed to create Singleton instance for class: " + _class.getName() + ". Error: " + exception.getMessage());
+            throw new RuntimeException("Failed to create Singleton instance for class: " + _class.getName(), exception);
         }
     }
 }
