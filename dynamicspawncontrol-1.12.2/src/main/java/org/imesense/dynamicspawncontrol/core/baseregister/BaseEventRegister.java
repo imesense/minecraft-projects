@@ -12,6 +12,7 @@ import org.imesense.dynamicspawncontrol.core.register.event.rendergame.EventRend
 import org.imesense.dynamicspawncontrol.core.register.event.tickevent.EventTickEventRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.world.EventWorldRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,7 @@ public abstract class BaseEventRegister
         new EventRenderGame();
         new EventTickEventRegister();
         new EventWorldRegister();
+        new EventHandler();
 
         Log.writeDataToLogFile(0, "Total registers created: " + REGISTERS.size());
 
