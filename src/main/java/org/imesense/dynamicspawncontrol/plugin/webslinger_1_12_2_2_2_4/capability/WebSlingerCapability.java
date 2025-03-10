@@ -29,6 +29,24 @@ import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.ada
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class WebSlingerCapability implements IWebSlinger
 {
+    private static volatile WebSlingerCapability _INSTANCE;
+
+    public static WebSlingerCapability getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (WebSlingerCapability.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new WebSlingerCapability();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
+
     /**
      *
      */
@@ -58,7 +76,7 @@ public final class WebSlingerCapability implements IWebSlinger
     {
         this.owner = null;
 
-        MinecraftForge.EVENT_BUS.register(this);
+        //MinecraftForge.EVENT_BUS.register(this);
     }
 
     /**
@@ -151,17 +169,12 @@ public final class WebSlingerCapability implements IWebSlinger
         }, WebSlingerCapability::new);
     }
 
-    /**
-     *
-     * @param livingAttackEvent
-     */
-    @SubscribeEvent
-    public void onLivingAttack(LivingAttackEvent livingAttackEvent)
+    public void handleLivingAttack(LivingAttackEvent event)
     {
-        Entity targetEntity = livingAttackEvent.getEntity();
+        Entity targetEntity = event.getEntity();
         EntityLiving ownerEntity = this.getOwner();
-        Entity attackerEntity = livingAttackEvent.getSource().getTrueSource();
-        Entity damageSourceEntity = livingAttackEvent.getSource().getImmediateSource();
+        Entity attackerEntity = event.getSource().getTrueSource();
+        Entity damageSourceEntity = event.getSource().getImmediateSource();
 
         if (ownerEntity != null && damageSourceEntity == ownerEntity && damageSourceEntity == attackerEntity)
         {

@@ -5,6 +5,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
@@ -18,5 +20,9 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
         PlayerNetwork.getInstance().handlePlayerJoinWorld(event);
 
         UpdateFire.getInstance().handleEntityJoinWorld(event);
+
+        OnEventBreakTorch.getInstance().handleSearchToBreakTorch(event);
+
+        OnEventAvoidLight.getInstance().handleSpiderSpawn(event);
     }
 }
