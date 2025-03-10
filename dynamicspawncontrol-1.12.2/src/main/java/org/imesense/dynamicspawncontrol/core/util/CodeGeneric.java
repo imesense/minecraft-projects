@@ -119,8 +119,6 @@ public final class CodeGeneric
                 }
             }
 
-            Log.writeDataToLogFile(0, "Returning existing Singleton instance for class: " + _clazz.getName());
-
             return (T) instanceField.get(null);
         }
         catch (Exception exception)

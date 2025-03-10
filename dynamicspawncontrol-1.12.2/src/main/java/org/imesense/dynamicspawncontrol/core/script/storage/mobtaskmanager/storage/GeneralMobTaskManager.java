@@ -31,7 +31,7 @@ public final class GeneralMobTaskManager
         return CodeGeneric.getInstance(GeneralMobTaskManager.class);
     }
 
-    private GeneralMobTaskManager()
+    public GeneralMobTaskManager()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
 
