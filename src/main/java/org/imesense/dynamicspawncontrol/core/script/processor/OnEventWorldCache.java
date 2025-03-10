@@ -85,16 +85,16 @@ public final class OnEventWorldCache
         CacheGeneralStorage.Instance.copyActualToBuffer();
     }
 
-    public void handleRenderOverlay(RenderGameOverlayEvent.Post post)
+    public void handleRenderOverlay(RenderGameOverlayEvent.Post event)
     {
        // if (!GameDebuggerData.ConfigDataMonitor.Instance.getDebugMonitorCache())
         //{
         //    return;
         //}
 
-        if (post.getType() == RenderGameOverlayEvent.ElementType.TEXT)
+        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
-            cacheMonitor.renderDebugInfo(post.getResolution());
+            cacheMonitor.renderDebugInfo(event.getResolution());
         }
     }
 
