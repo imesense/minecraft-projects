@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.event.attach;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
@@ -11,7 +12,7 @@ import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capabilit
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class OnEventAttachCapabilitiesEvent extends BaseOnEventInstance
 {
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEventAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event)
     {
         EventHandler.getInstance().handleAttachCapabilitiesEntity(event);
