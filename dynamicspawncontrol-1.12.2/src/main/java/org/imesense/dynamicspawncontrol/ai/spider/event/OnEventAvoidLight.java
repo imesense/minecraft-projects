@@ -8,6 +8,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.auxaction.AuxEntityAISpiderAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.spider.action.EntityAISpiderAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 //import org.imesense.dynamicspawncontrol.ai.spider.action.EntityAISpiderFearLight;
 
 
@@ -21,18 +22,19 @@ public final class OnEventAvoidLight
 
     public static OnEventAvoidLight getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (OnEventAvoidLight.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new OnEventAvoidLight();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(OnEventAvoidLight.class);
+        //if (_INSTANCE == null)
+        //{
+        //    synchronized (OnEventAvoidLight.class)
+        //    {
+        //        if (_INSTANCE == null)
+        //        {
+        //            _INSTANCE = new OnEventAvoidLight();
+        //        }
+        //    }
+        //}
+//
+        //return _INSTANCE;
     }
 
     public void handleSpiderSpawn(EntityJoinWorldEvent event)
