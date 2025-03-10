@@ -24,7 +24,7 @@ public class FogEvent
     int dimensionIdVoid = 255;
 
     @SubscribeEvent
-    public void particles(TickEvent.ClientTickEvent e) {
+    public void particles(TickEvent.ClientTickEvent event) {
         if (/*!ConfigHandler.enabled ||*/ Minecraft.getMinecraft().isGamePaused()) {
             return;
         }
@@ -52,17 +52,17 @@ public class FogEvent
     }
 
     @SubscribeEvent
-    public void render(EntityViewRenderEvent.RenderFogEvent e) {
+    public void render(EntityViewRenderEvent.RenderFogEvent event) {
         //if (!ConfigHandler.enabled) {
         //    return;
        // }
-        EntityPlayer entity = (EntityPlayer) e.getEntity();
+        EntityPlayer entity = (EntityPlayer) event.getEntity();
         WorldClient worldclient = Minecraft.getMinecraft().world;
         boolean flag = false;
         if (entity instanceof EntityPlayer) {
             flag = entity.capabilities.isCreativeMode;
         }
-        float f1 = e.getFarPlaneDistance();
+        float f1 = event.getFarPlaneDistance();
         if ((worldclient.getWorldInfo().getTerrainType() != WorldType.FLAT && !worldclient.provider.isNether() && !flag) || (/*C0000VoidFog.voidcraft &&*/ worldclient.provider.getDimension() == /*tamaized.voidcraft.common.handlers.ConfigHandler.*/dimensionIdVoid)) {
             double d0 = (((entity.getBrightnessForRender() & 15728640) >> 20) / 16.0d) + (((/*C0000VoidFog.voidcraft &&*/ worldclient.provider.getDimension() == /*tamaized.voidcraft.common.handlers.ConfigHandler.*/dimensionIdVoid) ? 15.0d : ((Entity) entity).posY + 4.0d) / 32.0d);
             if (d0 < 1.0d) {
@@ -78,7 +78,7 @@ public class FogEvent
                 }
             }
             GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
-            if (e.getFogMode() < 0) {
+            if (event.getFogMode() < 0) {
                 GlStateManager.setFogStart(0.0f);
                 GlStateManager.setFogEnd(f1);
             } else {

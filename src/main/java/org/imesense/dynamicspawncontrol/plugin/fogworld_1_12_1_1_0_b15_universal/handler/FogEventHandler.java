@@ -30,17 +30,16 @@ import org.lwjgl.opengl.GL11;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class FogEventHandler
 {
-    private static boolean instanceExists = false;
+    private static volatile FogEventHandler _INSTANCE;
+
+    public static FogEventHandler getInstance()
+    {
+        return CodeGeneric.getInstance(FogEventHandler.class);
+    }
 
     public FogEventHandler()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-        instanceExists = true;
     }
 
     private static double fogX;
@@ -48,10 +47,13 @@ public class FogEventHandler
     private static boolean fogInit;
     private static float fogFarPlaneDistance;
 
-    //@SubscribeEvent
-    public static void onGetFogColor(EntityViewRenderEvent.FogColors event) {
+    //TODO: оставить это событие для кровавой луны
+    public static void handleGetFogColor(EntityViewRenderEvent.FogColors event)
+    {
+        /*
         Vec3d mixedColor;
-        if (event.getEntity() instanceof EntityPlayer) {
+        if (event.getEntity() instanceof EntityPlayer)
+        {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             World world = player.world;
             int x = MathHelper.floor(player.posX);
@@ -70,10 +72,12 @@ public class FogEventHandler
             event.setGreen((float) mixedColor.y);
             event.setBlue((float) mixedColor.z);
         }
+         */
     }
 
-   // @SubscribeEvent
-    public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
+    //TODO: оставить это событие для кровавой луны
+    public static void handleRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
+        /*
         float farPlaneDistance;
         Entity entity = event.getEntity();
         World world = entity.world;
@@ -148,6 +152,7 @@ public class FogEventHandler
         }
         GL11.glFogf(2915, farPlaneDistance * farPlaneDistanceScale);
         GL11.glFogf(2916, farPlaneDistance);
+        */
     }
 
     //@Nullable

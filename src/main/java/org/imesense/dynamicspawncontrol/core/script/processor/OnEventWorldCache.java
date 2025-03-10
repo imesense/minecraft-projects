@@ -13,12 +13,10 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -27,32 +25,27 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheMonitorDebug;
 
 import java.util.HashSet;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventWorldCache
 {
-    private static boolean instanceExists = false;
+    private static volatile OnEventWorldCache _INSTANCE;
+
+    public static OnEventWorldCache getInstance()
+    {
+        return CodeGeneric.getInstance(OnEventWorldCache.class);
+    }
 
     private static CacheMonitorDebug cacheMonitor = null;
 
     public OnEventWorldCache()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
-		
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
 
         cacheMonitor = new CacheMonitorDebug();
     }
 
-    @SubscribeEvent
-    public void onWorldTick_0(TickEvent.WorldTickEvent worldTickEvent)
+    public void handleWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (worldTickEvent.phase == TickEvent.Phase.END)
+        if (event.phase == TickEvent.Phase.END)
         {
             CacheGeneralStorage.Instance.TickCounter++;
 
@@ -61,7 +54,7 @@ public final class OnEventWorldCache
                 CacheGeneralStorage.Instance.TickCounter = 0;
 
                 CacheGeneralStorage.Instance.copyActualToBuffer();
-                CacheGeneralStorage.Instance.updateCache(worldTickEvent.world);
+                CacheGeneralStorage.Instance.updateCache(event.world);
 
                 if (CacheGeneralStorage.Instance.IsFirstUpdate)
                 {
@@ -74,8 +67,7 @@ public final class OnEventWorldCache
         }
     }
 
-    @SubscribeEvent
-    public void onPlayerLoggedIn_1(PlayerEvent.PlayerLoggedInEvent playerLoggedInEvent)
+    public void handlePlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
     {
         if (!CacheGeneralStorage.Instance.IsPrimaryPlayerLogged)
         {
@@ -88,14 +80,12 @@ public final class OnEventWorldCache
         CacheGeneralStorage.Instance.copyActualToBuffer();
     }
 
-    @SubscribeEvent
-    public void onPlayerLoggedOut_2(PlayerEvent.PlayerLoggedOutEvent playerLoggedOutEvent)
+    public void handlePlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event)
     {
         CacheGeneralStorage.Instance.copyActualToBuffer();
     }
 
-    @SubscribeEvent
-    public void onRenderOverlay_3(RenderGameOverlayEvent.Post post)
+    public void handleRenderOverlay(RenderGameOverlayEvent.Post post)
     {
        // if (!GameDebuggerData.ConfigDataMonitor.Instance.getDebugMonitorCache())
         //{
@@ -108,11 +98,10 @@ public final class OnEventWorldCache
         }
     }
 
-    @SubscribeEvent
-    public void onEntityJoinWorld_4(EntityJoinWorldEvent entityJoinWorldEvent)
+    public void handleEntityJoinWorld(EntityJoinWorldEvent event)
     {
-        World world = entityJoinWorldEvent.getWorld();
-        Entity entity = entityJoinWorldEvent.getEntity();
+        World world = event.getWorld();
+        Entity entity = event.getEntity();
 
         if (world.isRemote || !(world instanceof WorldServer))
         {
@@ -157,8 +146,7 @@ public final class OnEventWorldCache
         }
     }
 
-    @SubscribeEvent
-    public void updateEntitySpawnEvent_5(LivingSpawnEvent.CheckSpawn event)
+    public void handleEntitySpawnEvent(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();
 

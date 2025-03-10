@@ -7,19 +7,23 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class OnEventDropItem
 {
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onUpdateLivingDrops_0(LivingDropsEvent livingDropsEvent)
+    private static volatile OnEventDropItem _INSTANCE;
+
+    public static OnEventDropItem getInstance()
     {
-        Entity entity = livingDropsEvent.getEntity();
+        return CodeGeneric.getInstance(OnEventDropItem.class);
+    }
+
+    public void handleUpdateLivingDrops(LivingDropsEvent event)
+    {
+        Entity entity = event.getEntity();
         ResourceLocation entityResourceLocation = EntityList.getKey(entity);
 
         if (entityResourceLocation == null)
@@ -34,7 +38,7 @@ public class OnEventDropItem
                 for (GeneralDropItem.Data.ItemDrop drop : data.drops)
                 {
                     ItemStack itemStack = new ItemStack(Item.REGISTRY.getObject(drop.item), drop.amount);
-                    livingDropsEvent.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStack));
+                    event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStack));
                 }
             }
         }

@@ -10,6 +10,7 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.SecondaryParameters;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import scala.Int;
 
 import java.util.ArrayList;
@@ -17,11 +18,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPotentialSpawn
 {
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onPotentialSpawns(WorldEvent.PotentialSpawns event)
+    private static volatile OnEventPotentialSpawn _INSTANCE;
+
+    public static OnEventPotentialSpawn getInstance()
+    {
+        return CodeGeneric.getInstance(OnEventPotentialSpawn.class);
+    }
+
+    public void handlePotentialSpawns(WorldEvent.PotentialSpawns event)
     {
         GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
 
