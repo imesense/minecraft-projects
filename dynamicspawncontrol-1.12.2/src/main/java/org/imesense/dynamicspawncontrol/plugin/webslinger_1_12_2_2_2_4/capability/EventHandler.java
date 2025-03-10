@@ -9,6 +9,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
 import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.container.SimpleCapabilityProvider;
@@ -22,6 +23,24 @@ import org.imesense.dynamicspawncontrol.plugin.wumpleutil_1_12_2_2_12_9.util.ada
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class EventHandler
 {
+    private static volatile EventHandler _INSTANCE;
+
+    public static EventHandler getInstance()
+    {
+        if (_INSTANCE == null)
+        {
+            synchronized (EventHandler.class)
+            {
+                if (_INSTANCE == null)
+                {
+                    _INSTANCE = new EventHandler();
+                }
+            }
+        }
+
+        return _INSTANCE;
+    }
+
     /**
      *
      */
@@ -32,18 +51,17 @@ public final class EventHandler
 
     /**
      *
-     * @param attachCapabilitiesEvent
+     * @param event
      */
-    @SubscribeEvent
-    public void onAttachCapabilitiesEntity_1(AttachCapabilitiesEvent<Entity> attachCapabilitiesEvent)
+    public void handleAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event)
     {
-        Entity entity = attachCapabilitiesEvent.getObject();
+        Entity entity = event.getObject();
 
         int priority = getEntityPriority(entity);
 
         if (priority > 0)
         {
-            attachCapabilitiesEvent.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
+            event.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
             (
                 WebSlingerCapability.CAPABILITY,
                 WebSlingerCapability.DEFAULT_FACING,
