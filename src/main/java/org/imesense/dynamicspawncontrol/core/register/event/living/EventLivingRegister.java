@@ -15,8 +15,7 @@ public final class EventLivingRegister extends BaseEventRegister
         OnEventLivingExperienceDropEvent.class,
         OnEventLivingHurtEvent.class,
         OnEventLivingSpawnEventCheckSpawn.class,
-        OnEventLivingSpawnEventSpecialSpawn.class,
-        EventHandler.class
+        OnEventLivingSpawnEventSpecialSpawn.class
     };
 
     @Override
