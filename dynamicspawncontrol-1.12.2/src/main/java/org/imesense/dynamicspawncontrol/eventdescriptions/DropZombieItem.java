@@ -24,18 +24,7 @@ public final class DropZombieItem
 
     public static DropZombieItem getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (DropZombieItem.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new DropZombieItem();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(DropZombieItem.class);
     }
 
     public void handleZombieDrops(LivingDropsEvent event)

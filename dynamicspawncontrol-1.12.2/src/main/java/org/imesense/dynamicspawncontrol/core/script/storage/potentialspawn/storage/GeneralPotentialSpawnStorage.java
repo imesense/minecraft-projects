@@ -13,18 +13,7 @@ public final class GeneralPotentialSpawnStorage
 
     public static GeneralPotentialSpawnStorage getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (GeneralPotentialSpawnStorage.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new GeneralPotentialSpawnStorage();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(GeneralPotentialSpawnStorage.class);
     }
 
     public GeneralPotentialSpawnStorage()

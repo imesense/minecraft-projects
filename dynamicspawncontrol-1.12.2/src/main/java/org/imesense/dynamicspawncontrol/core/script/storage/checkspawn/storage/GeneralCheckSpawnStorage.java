@@ -12,18 +12,7 @@ public final class GeneralCheckSpawnStorage
 
     public static GeneralCheckSpawnStorage getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (GeneralCheckSpawnStorage.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new GeneralCheckSpawnStorage();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(GeneralCheckSpawnStorage.class);
     }
 
     public GeneralCheckSpawnStorage()

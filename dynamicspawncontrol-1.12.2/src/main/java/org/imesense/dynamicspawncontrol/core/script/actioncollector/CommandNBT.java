@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Random;
 
@@ -19,18 +20,7 @@ public final class CommandNBT
 
     public static CommandNBT getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (CommandNBT.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new CommandNBT();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(CommandNBT.class);
     }
 
     public void applyNbt(Entity entity, String nbtString)

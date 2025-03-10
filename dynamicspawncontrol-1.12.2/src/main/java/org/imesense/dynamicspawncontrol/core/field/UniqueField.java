@@ -1,7 +1,9 @@
 package org.imesense.dynamicspawncontrol.core.field;
 
 import net.minecraft.client.Minecraft;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
 import org.imesense.dynamicspawncontrol.core.annotation.UniqueObject;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import scala.util.Random;
 
 import java.lang.reflect.Field;
@@ -16,7 +18,7 @@ public final class UniqueField
     /**
      *
      */
-    private static volatile UniqueField instance;
+    private static volatile UniqueField _INSTANCE;
 
     /**
      *
@@ -47,20 +49,9 @@ public final class UniqueField
     /**
      *
      */
-    public static UniqueField getInstance() throws IllegalAccessException
+    public UniqueField getInstance()
     {
-        if (instance == null)
-        {
-            synchronized (UniqueField.class)
-            {
-                if (instance == null)
-                {
-                    instance = new UniqueField();
-                }
-            }
-        }
-
-        return instance;
+        return CodeGeneric.getInstance(UniqueField.class);
     }
 
     /**

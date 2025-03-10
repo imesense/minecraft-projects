@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.register.config;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
 import org.imesense.dynamicspawncontrol.core.config.file.*;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
 import org.imesense.dynamicspawncontrol.plugin.staminaplus_1_12_2_1_1_1.config.CfgStaminaPlayer;
@@ -14,18 +15,7 @@ public final class ConfigRegister extends BaseConfigRegister
 
     public static ConfigRegister getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (ConfigRegister.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new ConfigRegister();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(ConfigRegister.class);
     }
 
     private static final Class<?>[] CONFIG_CLASSES =

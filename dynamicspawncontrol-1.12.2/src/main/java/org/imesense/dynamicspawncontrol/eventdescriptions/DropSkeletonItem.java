@@ -20,18 +20,7 @@ public final class DropSkeletonItem
 
     public static DropSkeletonItem getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (DropSkeletonItem.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new DropSkeletonItem();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(DropSkeletonItem.class);
     }
 
     public DropSkeletonItem()

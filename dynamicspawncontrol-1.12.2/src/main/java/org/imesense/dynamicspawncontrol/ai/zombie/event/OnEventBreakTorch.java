@@ -5,6 +5,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.zombie.action.EntityAIZombieBreakTorch;
 import org.imesense.dynamicspawncontrol.core.register.attach.AttachRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -19,18 +20,7 @@ public final class OnEventBreakTorch
 
     public static OnEventBreakTorch getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (OnEventBreakTorch.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new OnEventBreakTorch();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(OnEventBreakTorch.class);
     }
 
     /**

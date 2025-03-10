@@ -23,18 +23,7 @@ public final class NickNameEntity
 
     public static NickNameEntity getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (NickNameEntity.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new NickNameEntity();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(NickNameEntity.class);
     }
 
     public NickNameEntity()

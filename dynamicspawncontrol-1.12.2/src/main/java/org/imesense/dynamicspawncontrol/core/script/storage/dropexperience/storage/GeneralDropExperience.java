@@ -13,18 +13,7 @@ public final class GeneralDropExperience
 
     public static GeneralDropExperience getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (GeneralDropExperience.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new GeneralDropExperience();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(GeneralDropExperience.class);
     }
 
     public GeneralDropExperience()

@@ -27,18 +27,7 @@ public final class EventHandler
 
     public static EventHandler getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (EventHandler.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new EventHandler();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(EventHandler.class);
     }
 
     /**

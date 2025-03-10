@@ -26,18 +26,7 @@ public final class PlayerNetwork
 
     public static PlayerNetwork getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (PlayerNetwork.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new PlayerNetwork();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(PlayerNetwork.class);
     }
 
     public PlayerNetwork()

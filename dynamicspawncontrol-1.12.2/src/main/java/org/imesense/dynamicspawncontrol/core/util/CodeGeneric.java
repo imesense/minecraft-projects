@@ -109,17 +109,24 @@ public final class CodeGeneric
                 {
                     if (instanceField.get(null) == null)
                     {
+                        Log.writeDataToLogFile(0, "Creating Singleton instance for class: " + _clazz.getName());
+
                         T instance = _clazz.getDeclaredConstructor().newInstance();
                         instanceField.set(null, instance);
+
+                        Log.writeDataToLogFile(0, "Singleton instance created for class: " + _clazz.getName());
                     }
                 }
             }
 
+            Log.writeDataToLogFile(0, "Returning existing Singleton instance for class: " + _clazz.getName());
+
             return (T) instanceField.get(null);
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            throw new RuntimeException("Failed to create Singleton instance for class: " + _clazz.getName(), e);
+            Log.writeDataToLogFile(0, "Failed to create Singleton instance for class: " + _clazz.getName() + ". Error: " + exception.getMessage());
+            throw new RuntimeException("Failed to create Singleton instance for class: " + _clazz.getName(), exception);
         }
     }
 }

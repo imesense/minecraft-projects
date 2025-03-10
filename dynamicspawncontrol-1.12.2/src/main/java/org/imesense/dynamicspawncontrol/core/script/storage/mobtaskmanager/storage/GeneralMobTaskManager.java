@@ -28,18 +28,7 @@ public final class GeneralMobTaskManager
 
     public static GeneralMobTaskManager getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (GeneralMobTaskManager.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new GeneralMobTaskManager();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(GeneralMobTaskManager.class);
     }
 
     private GeneralMobTaskManager()

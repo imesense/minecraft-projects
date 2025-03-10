@@ -16,18 +16,7 @@ public class GeneralPopulationChunkSpawn
 
     public static GeneralPopulationChunkSpawn getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (GeneralPopulationChunkSpawn.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new GeneralPopulationChunkSpawn();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(GeneralPopulationChunkSpawn.class);
     }
 
     public static final class Data

@@ -13,18 +13,7 @@ public final class RenderFPS
 
     public static RenderFPS getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (RenderFPS.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new RenderFPS();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(RenderFPS.class);
     }
 
     public RenderFPS()
