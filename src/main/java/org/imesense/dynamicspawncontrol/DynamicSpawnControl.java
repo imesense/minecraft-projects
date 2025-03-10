@@ -108,9 +108,6 @@ public final class DynamicSpawnControl
         Log.writeDataToLogFile(1, "Is running in IDE (based on logging level): " +
                 (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "true" : "false"));
 
-        Log.writeDataToLogFile(0, "Object create [UniqueField]: " +
-                UniqueField.getInstance().hashCode());
-
         MessageHandler.init();
 
         WebSlingerCapability.register();

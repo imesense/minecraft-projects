@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
 import net.minecraft.entity.Entity;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 public final class World
 {
@@ -8,18 +9,7 @@ public final class World
 
     public static World getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (World.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new World();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(World.class);
     }
 
     public boolean checkHeight(Entity entity, Integer minHeight, Integer maxHeight)

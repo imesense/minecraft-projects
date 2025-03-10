@@ -12,18 +12,7 @@ public final class SupportCheckSpawnStorage
 
     public static SupportCheckSpawnStorage getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (SupportCheckSpawnStorage.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new SupportCheckSpawnStorage();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(SupportCheckSpawnStorage.class);
     }
 
     public SupportCheckSpawnStorage()

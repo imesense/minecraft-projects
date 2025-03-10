@@ -23,17 +23,7 @@ public final class UpdateFire
 
     public static UpdateFire getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (UpdateFire.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new UpdateFire();
-                }
-            }
-        }
-        return _INSTANCE;
+        return CodeGeneric.getInstance(UpdateFire.class);
     }
 
     public UpdateFire()

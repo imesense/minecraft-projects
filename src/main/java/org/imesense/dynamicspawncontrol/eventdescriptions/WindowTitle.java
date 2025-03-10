@@ -17,17 +17,7 @@ public final class WindowTitle
 
     public static WindowTitle getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (WindowTitle.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new WindowTitle();
-                }
-            }
-        }
-        return _INSTANCE;
+        return CodeGeneric.getInstance(WindowTitle.class);
     }
 
     public WindowTitle()

@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.register.parser;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseParserRegister;
 import org.imesense.dynamicspawncontrol.core.script.parser.*;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 public final class ParserRegister extends BaseParserRegister
 {
@@ -9,18 +10,7 @@ public final class ParserRegister extends BaseParserRegister
 
     public static ParserRegister getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (ParserRegister.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new ParserRegister();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(ParserRegister.class);
     }
 
     private static final Class<?>[] PARSER_CLASSES =

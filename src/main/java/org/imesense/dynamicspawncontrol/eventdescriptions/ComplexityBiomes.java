@@ -34,18 +34,7 @@ public final class ComplexityBiomes
 
     public static ComplexityBiomes getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (ComplexityBiomes.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new ComplexityBiomes();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(ComplexityBiomes.class);
     }
 
     public ComplexityBiomes()

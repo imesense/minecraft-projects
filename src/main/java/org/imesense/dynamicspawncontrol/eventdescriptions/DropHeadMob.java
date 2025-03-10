@@ -22,18 +22,7 @@ public final class DropHeadMob
 
     public static DropHeadMob getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (DropHeadMob.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new DropHeadMob();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(DropHeadMob.class);
     }
 
     public DropHeadMob()

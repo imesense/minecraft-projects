@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
 import net.minecraft.entity.EntityLivingBase;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.PotionEffect;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 import java.util.Random;
@@ -12,18 +13,7 @@ public final class Potion
 
     public static Potion getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (Potion.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new Potion();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(Potion.class);
     }
 
     public void applyPotionEffects(EntityLivingBase entityLivingBase, List<PotionEffect.Data> listPotionEffectData, Random random)

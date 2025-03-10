@@ -23,17 +23,7 @@ public final class UpdateTorch
 
     public static UpdateTorch getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (UpdateTorch.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new UpdateTorch();
-                }
-            }
-        }
-        return _INSTANCE;
+        return CodeGeneric.getInstance(UpdateTorch.class);
     }
 
     public UpdateTorch()

@@ -23,18 +23,7 @@ public final class OvergrowingGrass
 
     public static OvergrowingGrass getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (OvergrowingGrass.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new OvergrowingGrass();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(OvergrowingGrass.class);
     }
 
     public OvergrowingGrass()

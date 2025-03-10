@@ -33,18 +33,7 @@ public final class WebSlingerCapability implements IWebSlinger
 
     public static WebSlingerCapability getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (WebSlingerCapability.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new WebSlingerCapability();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(WebSlingerCapability.class);
     }
 
     /**

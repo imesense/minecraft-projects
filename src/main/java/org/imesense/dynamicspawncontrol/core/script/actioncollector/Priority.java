@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.ProfilePriority;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 import java.util.Random;
@@ -11,18 +12,7 @@ public final class Priority
 
     public static Priority getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (Priority.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new Priority();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(Priority.class);
     }
 
     public ProfilePriority.Data getConfigByPriority(List<ProfilePriority.Data> listProfilePriorityData, Random random)

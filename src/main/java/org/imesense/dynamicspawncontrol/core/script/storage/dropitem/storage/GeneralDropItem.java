@@ -12,18 +12,7 @@ public class GeneralDropItem
 
     public static GeneralDropItem getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (GeneralDropItem.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new GeneralDropItem();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(GeneralDropItem.class);
     }
 
     public GeneralDropItem()

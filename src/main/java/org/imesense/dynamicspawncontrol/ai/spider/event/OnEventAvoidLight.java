@@ -23,18 +23,6 @@ public final class OnEventAvoidLight
     public static OnEventAvoidLight getInstance()
     {
         return CodeGeneric.getInstance(OnEventAvoidLight.class);
-        //if (_INSTANCE == null)
-        //{
-        //    synchronized (OnEventAvoidLight.class)
-        //    {
-        //        if (_INSTANCE == null)
-        //        {
-        //            _INSTANCE = new OnEventAvoidLight();
-        //        }
-        //    }
-        //}
-//
-        //return _INSTANCE;
     }
 
     public void handleSpiderSpawn(EntityJoinWorldEvent event)

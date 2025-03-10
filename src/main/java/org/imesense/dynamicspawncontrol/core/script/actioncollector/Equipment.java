@@ -15,6 +15,7 @@ import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.Enti
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityDescription;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityEquipment;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.ItemDescription;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.*;
 
@@ -24,18 +25,7 @@ public final class Equipment
 
     public static Equipment getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (Equipment.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new Equipment();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(Equipment.class);
     }
 
     private void equipEntityWithItems(EntityLivingBase entityLivingBase,

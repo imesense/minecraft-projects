@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.register.command;
 
 import org.imesense.dynamicspawncontrol.command.*;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseCommandRegister;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 public class CommandRegister extends BaseCommandRegister
 {
@@ -9,18 +10,7 @@ public class CommandRegister extends BaseCommandRegister
 
     public static CommandRegister getInstance()
     {
-        if (_INSTANCE == null)
-        {
-            synchronized (CommandRegister.class)
-            {
-                if (_INSTANCE == null)
-                {
-                    _INSTANCE = new CommandRegister();
-                }
-            }
-        }
-
-        return _INSTANCE;
+        return CodeGeneric.getInstance(CommandRegister.class);
     }
 
     private static final Class<?>[] COMMAND_CLASSES =
