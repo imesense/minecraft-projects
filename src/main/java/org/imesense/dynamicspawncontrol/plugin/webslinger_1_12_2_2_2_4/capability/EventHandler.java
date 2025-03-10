@@ -35,51 +35,6 @@ public final class EventHandler
      * @param attachCapabilitiesEvent
      */
     @SubscribeEvent
-    public void onAttachCapabilitiesTileEntity_0(AttachCapabilitiesEvent<TileEntity> attachCapabilitiesEvent)
-    {
-        TileEntity entity = attachCapabilitiesEvent.getObject();
-
-        int priority = getEntityPriority(entity);
-
-        if (priority > 0)
-        {
-            attachCapabilitiesEvent.addCapability(WebSlingerCapability.ID, new SimpleCapabilityProvider<IWebSlinger>
-            (
-                WebSlingerCapability.CAPABILITY,
-                WebSlingerCapability.DEFAULT_FACING,
-                WebSlingerCapability.CAPABILITY.getDefaultInstance())
-            {
-                /**
-                 *
-                 */
-                private final int TASK_PRIORITY = priority;
-
-                /**
-                 *
-                 */
-                private final IThingBase OWNER = new TileEntityThingBase(entity);
-
-                /**
-                 *
-                 * @return
-                 */
-                @Override
-                public IWebSlinger getInstance()
-                {
-                    IWebSlinger cap = super.getInstance();
-                    cap.checkInit(this.OWNER, this.TASK_PRIORITY);
-
-                    return cap;
-                }
-            });
-        }
-    }
-
-    /**
-     *
-     * @param attachCapabilitiesEvent
-     */
-    @SubscribeEvent
     public void onAttachCapabilitiesEntity_1(AttachCapabilitiesEvent<Entity> attachCapabilitiesEvent)
     {
         Entity entity = attachCapabilitiesEvent.getObject();
