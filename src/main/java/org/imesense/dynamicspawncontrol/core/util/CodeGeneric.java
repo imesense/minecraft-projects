@@ -7,6 +7,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.function.Function;
 
@@ -93,5 +94,32 @@ public final class CodeGeneric
 
 
         return EnumCreatureType.CREATURE;
+    }
+
+    public static <T> T getInstance(Class<T> _clazz)
+    {
+        try
+        {
+            Field instanceField = _clazz.getDeclaredField("_INSTANCE");
+            instanceField.setAccessible(true);
+
+            if (instanceField.get(null) == null)
+            {
+                synchronized (_clazz)
+                {
+                    if (instanceField.get(null) == null)
+                    {
+                        T instance = _clazz.getDeclaredConstructor().newInstance();
+                        instanceField.set(null, instance);
+                    }
+                }
+            }
+
+            return (T) instanceField.get(null);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("Failed to create Singleton instance for class: " + _clazz.getName(), e);
+        }
     }
 }
