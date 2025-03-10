@@ -5,26 +5,30 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventCheckSpawn
 {
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onLivingSpawnCheckSpawn_0(LivingSpawnEvent.CheckSpawn checkSpawn)
+    private static volatile OnEventCheckSpawn _INSTANCE;
+
+    public static OnEventCheckSpawn getInstance()
     {
-        String entityType = EntityList.getEntityString(checkSpawn.getEntity());
+        return CodeGeneric.getInstance(OnEventCheckSpawn.class);
+    }
+
+    public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
+    {
+        String entityType = EntityList.getEntityString(event.getEntity());
 
         if (entityType == null)
         {
@@ -64,14 +68,14 @@ public final class OnEventCheckSpawn
                     EntityAttributes.Data entityAttributes = generalStorageData.entityAttributesList.get(selectedIndex);
                     EntityDescription.Data entityDescription = generalStorageData.entityDescriptionsList.get(selectedIndex);
 
-                    if (!World.getInstance().checkHeight(checkSpawn.getEntity(), selectedWorldData.minHeight, selectedWorldData.maxHeight))
+                    if (!World.getInstance().checkHeight(event.getEntity(), selectedWorldData.minHeight, selectedWorldData.maxHeight))
                     {
                         return;
                     }
 
                     if (selectedWorldData.seeSky != null)
                     {
-                        Boolean canSeeSky = checkSpawn.getWorld().canBlockSeeSky(checkSpawn.getEntity().getPosition());
+                        Boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
 
                         if ((selectedWorldData.seeSky && !canSeeSky) || (!selectedWorldData.seeSky && canSeeSky))
                         {
@@ -81,11 +85,11 @@ public final class OnEventCheckSpawn
 
                     if (entityDescription != null && entityDescription.name != null)
                     {
-                        checkSpawn.getEntity().setCustomNameTag(entityDescription.name);
-                        checkSpawn.getEntity().setAlwaysRenderNameTag(true);
+                        event.getEntity().setCustomNameTag(entityDescription.name);
+                        event.getEntity().setAlwaysRenderNameTag(true);
                     }
 
-                    Equipment.getInstance().equipEntity(checkSpawn.getEntity(), selectedConfig, entityDescription, entityAttributes, UniqueField.RANDOM.self());
+                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, entityDescription, entityAttributes, UniqueField.RANDOM.self());
                 }
             }
 
@@ -103,7 +107,7 @@ public final class OnEventCheckSpawn
                     {
                         if (dataSupport.seeSky != null)
                         {
-                            Boolean canSeeSky = checkSpawn.getWorld().canBlockSeeSky(checkSpawn.getEntity().getPosition());
+                            Boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
 
                             if ((dataSupport.seeSky && !canSeeSky) || (!dataSupport.seeSky && canSeeSky))
                             {
@@ -113,7 +117,7 @@ public final class OnEventCheckSpawn
 
                         if (dataSupport.potion != null && !dataSupport.potion.isEmpty())
                         {
-                            Potion.getInstance().applyPotionEffects((EntityLivingBase) checkSpawn.getEntity(), dataSupport.potion, UniqueField.RANDOM.self());
+                            Potion.getInstance().applyPotionEffects((EntityLivingBase) event.getEntity(), dataSupport.potion, UniqueField.RANDOM.self());
                         }
                     }
                 }

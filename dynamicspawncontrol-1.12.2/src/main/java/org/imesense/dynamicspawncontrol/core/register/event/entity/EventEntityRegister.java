@@ -2,12 +2,16 @@ package org.imesense.dynamicspawncontrol.core.register.event.entity;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.entity.OnEventEntityJoinWorldEvent;
+import org.imesense.dynamicspawncontrol.core.event.entity.OnEventEntityViewRenderEventFogColors;
+import org.imesense.dynamicspawncontrol.core.event.entity.OnEventEntityViewRenderEventRenderFogEvent;
 
 public final class EventEntityRegister extends BaseEventRegister
 {
     private static final Class<?>[] EVENT_CLASSES =
     {
-        OnEventEntityJoinWorldEvent.class
+        OnEventEntityJoinWorldEvent.class,
+        OnEventEntityViewRenderEventFogColors.class,
+        OnEventEntityViewRenderEventRenderFogEvent.class
     };
 
     @Override

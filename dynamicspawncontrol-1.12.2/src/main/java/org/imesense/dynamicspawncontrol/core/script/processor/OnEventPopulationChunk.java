@@ -3,32 +3,27 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.SecondaryParameters1;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn;
-import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.SecondaryParameters;
-import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OnEventPopulationChunk
 {
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void onPotentialSpawn(PopulateChunkEvent.Pre event)
+    private static volatile OnEventPopulationChunk _INSTANCE;
+
+    public static OnEventPopulationChunk getInstance()
+    {
+        return CodeGeneric.getInstance(OnEventPopulationChunk.class);
+    }
+
+    public void handlePotentialSpawn(PopulateChunkEvent.Pre event)
     {
         List<GeneralPopulationChunkSpawn.Data> populationList = GeneralPopulationChunkSpawn.getInstance().populationList;
 
