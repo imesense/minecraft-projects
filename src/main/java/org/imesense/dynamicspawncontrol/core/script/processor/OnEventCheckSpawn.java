@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
@@ -28,16 +29,8 @@ public final class OnEventCheckSpawn
 
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
-        String entityType = EntityList.getEntityString(event.getEntity());
-
-        if (entityType == null)
-        {
-            Log.writeDataToLogFile(0, "entityType is null");
-            return;
-        }
-
-        String fullEntityType = entityType.contains(":") ? entityType : "minecraft:" + entityType.toLowerCase();
-
+        ResourceLocation entityType = EntityList.getKey(event.getEntity());
+        
         GeneralCheckSpawnStorage generalStorageData = GeneralCheckSpawnStorage.getInstance();
         SupportCheckSpawnStorage supportStorageScriptData = SupportCheckSpawnStorage.getInstance();
 
@@ -52,7 +45,7 @@ public final class OnEventCheckSpawn
                 List<ProfilePriority.Data> filteredRandomData = IntStream.range(0, configs.size())
                         .filter(i -> i < generalStorageData.entityDescriptionsList.size())
                         .filter(i -> generalStorageData.entityDescriptionsList.get(i) != null &&
-                                fullEntityType.equals(generalStorageData.entityDescriptionsList.get(i).entityType))
+                                entityType.equals(generalStorageData.entityDescriptionsList.get(i).entityType))
                         .mapToObj(randomDataList::get)
                         .collect(Collectors.toList());
 
@@ -98,7 +91,7 @@ public final class OnEventCheckSpawn
             if (dataSupports != null && !dataSupports.isEmpty())
             {
                 List<SupportCheckSpawnStorage.DataSupport> filteredDataSupports = dataSupports.stream()
-                        .filter(dataSupport -> dataSupport.entityType.equals(fullEntityType))
+                        .filter(dataSupport -> entityType.equals(dataSupport.entityType))
                         .collect(Collectors.toList());
 
                 if (!filteredDataSupports.isEmpty())

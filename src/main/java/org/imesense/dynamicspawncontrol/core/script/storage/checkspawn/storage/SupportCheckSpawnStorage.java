@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage;
 
+import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.PotionEffect;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -25,7 +26,7 @@ public final class SupportCheckSpawnStorage
     public static class DataSupport
     {
         public Boolean seeSky;
-        public String entityType;
+        public ResourceLocation entityType;
         public List<PotionEffect.Data> potion;
     }
 
