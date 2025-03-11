@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import com.google.gson.*;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
@@ -126,7 +127,18 @@ public final class ParserEventCheckSpawn extends BaseParser
 
         entityDescriptionData.profile = dataObject.get("profile").getAsString();
         entityDescriptionData.description = dataObject.get("description").getAsString();
-        entityDescriptionData.entityType = dataObject.get("entity_type").getAsString();
+
+        String entityTypeString = dataObject.get("entity_type").getAsString();
+        ResourceLocation entityType = new ResourceLocation(entityTypeString);
+        EntityEntry ee = ForgeRegistries.ENTITIES.getValue(entityType);
+
+        if (ee == null)
+        {
+            Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
+            return;
+        }
+
+        entityDescriptionData.entityType = entityType;
 
         profilePriorityData.priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
         entityDescriptionData.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
@@ -251,7 +263,18 @@ public final class ParserEventCheckSpawn extends BaseParser
             SupportCheckSpawnStorage.DataSupport dataSupport = new SupportCheckSpawnStorage.DataSupport();
 
             dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
-            dataSupport.entityType = dataSupportObject.get("entity_type").getAsString();
+
+            String entityTypeString = dataSupportObject.get("entity_type").getAsString();
+            ResourceLocation entityType = new ResourceLocation(entityTypeString);
+            EntityEntry ee = ForgeRegistries.ENTITIES.getValue(entityType);
+
+            if (ee == null)
+            {
+                Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
+                return;
+            }
+
+            dataSupport.entityType = entityType;
 
             if (dataSupportObject.has("potion"))
             {
