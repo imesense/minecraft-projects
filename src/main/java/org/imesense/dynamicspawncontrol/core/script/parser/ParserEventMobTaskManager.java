@@ -7,10 +7,10 @@ import com.google.gson.JsonParser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToID;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToIdThemToId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityHostilityToThem;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.EntityPanicToID;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemiesToEnemyId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicListPanicToPanicId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemyIdThemId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemiesToToThem;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public final class ParserEventMobTaskManager extends BaseParser
 {
@@ -53,31 +54,23 @@ public final class ParserEventMobTaskManager extends BaseParser
 
                 if (topLevelObject.has("enemies_to") && topLevelObject.has("to_them"))
                 {
-                    EntityHostilityToThem.Data hostility = new EntityHostilityToThem.Data();
-                    hostility.enemies_to = parseStringArray(topLevelObject.getAsJsonArray("enemies_to"));
-                    hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
-                    taskManager.addEnemy(hostility);
+                    AddEnemyListEnemiesToToThem.Data data = new AddEnemyListEnemiesToToThem.Data();
+                    //taskManager.addEnemy(data);
                 }
-                else if (topLevelObject.has("enemy_id") && topLevelObject.has("to_them"))
+                else if (topLevelObject.has("enemies_to") && topLevelObject.has("enemy_id"))
                 {
-                    EntityHostilityToID.Data hostility = new EntityHostilityToID.Data();
-                    hostility.enemy_id = topLevelObject.get("enemy_id").getAsString();
-                    hostility.to_them = parseStringArray(topLevelObject.getAsJsonArray("to_them"));
-                    taskManager.addEnemyByIdPrefix(hostility);
+                    AddEnemyListEnemiesToEnemyId.Data data = new AddEnemyListEnemiesToEnemyId.Data();
+                    //taskManager.addEnemyId(data);
                 }
-                else if (topLevelObject.has("panic_id") && topLevelObject.has("panic_to"))
+                else if (topLevelObject.has("panic_to") && topLevelObject.has("panic_id"))
                 {
-                    EntityPanicToID.Data panic = new EntityPanicToID.Data();
-                    panic.panic_id = topLevelObject.get("panic_id").getAsString();
-                    panic.panic_to = parseStringArray(topLevelObject.getAsJsonArray("panic_to"));
-                    taskManager.addPanicByIdPrefix(panic);
+                    AddPanicListPanicToPanicId.Data data = new AddPanicListPanicToPanicId.Data();
+                    //taskManager.addPanicToId(data);
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("them_id"))
                 {
-                    EntityHostilityToIdThemToId.Data hostility = new EntityHostilityToIdThemToId.Data();
-                    hostility.enemy_id = topLevelObject.get("enemy_id").getAsString();
-                    hostility.them_id = parseStringArray(topLevelObject.getAsJsonArray("them_id"));
-                    taskManager.addEnemyToIdThemToId(hostility);
+                    AddEnemyListEnemyIdThemId.Data data = new AddEnemyListEnemyIdThemId.Data();
+                    //taskManager.addEnemyToIdThemToId(data);
                 }
             }
         }
@@ -91,24 +84,12 @@ public final class ParserEventMobTaskManager extends BaseParser
         }
     }
 
-    private String[] parseStringArray(JsonArray jsonArray)
-    {
-        String[] array = new String[jsonArray.size()];
-
-        for (int i = 0; i < jsonArray.size(); i++)
-        {
-            array[i] = jsonArray.get(i).getAsString();
-        }
-
-        return array;
-    }
-
     @Override
     public void eraseData()
     {
-        GeneralMobTaskManager.getInstance().addEnemy.clear();
-        GeneralMobTaskManager.getInstance().addEnemyByIdPrefix.clear();
-        GeneralMobTaskManager.getInstance().addPanicByIdPrefix.clear();
-        GeneralMobTaskManager.getInstance().addEnemyToIdThemToId.clear();
+        GeneralMobTaskManager.getInstance().listEnemiesToToThemData.clear();
+        GeneralMobTaskManager.getInstance().listEnemiesToEnemyIdData.clear();;
+        GeneralMobTaskManager.getInstance().listPanicToPanicIdData.clear();;
+        GeneralMobTaskManager.getInstance().listEnemyIdThemIdData.clear();;
     }
 }
