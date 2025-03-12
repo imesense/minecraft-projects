@@ -1,10 +1,10 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data;
 
-public final class EntityHostilityToIdThemToId
+public final class AddEnemyListEnemiesToToThem
 {
     public static final class Data
     {
-        public String enemy_id;
-        public String[] them_id;
+        public String[] enemies_to;
+        public String[] to_them;
     }
 }

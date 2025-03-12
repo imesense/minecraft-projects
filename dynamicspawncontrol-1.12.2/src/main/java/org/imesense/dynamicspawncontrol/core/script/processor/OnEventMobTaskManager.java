@@ -22,10 +22,5 @@ public final class OnEventMobTaskManager
         {
             return;
         }
-
-        GeneralMobTaskManager.getInstance().applyHostility(event);
-        GeneralMobTaskManager.getInstance().applyHostilityByIdPrefix(event);
-        GeneralMobTaskManager.getInstance().applyPanicByIdPrefix(event);
-        GeneralMobTaskManager.getInstance().applyHostilityToIdThemToId(event);
     }
 }
