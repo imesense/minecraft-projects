@@ -156,4 +156,74 @@ public final class GeneralMobTaskManager
             }
         }
     }
+
+    public void processAddEnemyIdData(EntityJoinWorldEvent event)
+    {
+        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+
+        for (AddEnemyId.Data data : addEnemyIdData)
+        {
+            String[] enemiesTo = data.enemies_to;
+            String[] enemyIdPrefixes = data.enemy_id;
+
+            Set<Class<? extends EntityLiving>> enemyClassesSet = new HashSet<>();
+            Set<Class<? extends EntityLiving>> enemyIdClassesSet = new HashSet<>();
+
+            for (String enemyToId : enemiesTo)
+            {
+                String fixedEnemyToId = fixEntityId(enemyToId);
+                EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
+
+                Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
+
+                if (enemyToEntityClass != null && EntityLiving.class.isAssignableFrom(enemyToEntityClass))
+                {
+                    enemyClassesSet.add((Class<? extends EntityLiving>) enemyToEntityClass);
+                }
+            }
+
+            for (String enemyIdPrefix : enemyIdPrefixes)
+            {
+                for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
+                {
+                    if (entityEntry.getRegistryName().toString().startsWith(enemyIdPrefix))
+                    {
+                        Class<? extends Entity> entityClassFromRegistry = entityEntry.getEntityClass();
+
+                        if (entityClassFromRegistry != null && EntityLiving.class.isAssignableFrom(entityClassFromRegistry))
+                        {
+                            enemyIdClassesSet.add((Class<? extends EntityLiving>) entityClassFromRegistry);
+                        }
+                    }
+                }
+            }
+
+            if (!enemyClassesSet.isEmpty() && !enemyIdClassesSet.isEmpty())
+            {
+                if (currentEntity instanceof EntityCreature)
+                {
+                    Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
+
+                    if (enemyClassesSet.contains(currentEntityClass))
+                    {
+                        for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
+                        }
+                    }
+                    else if (enemyIdClassesSet.contains(currentEntityClass))
+                    {
+                        for (Class<? extends EntityLiving> targetClass : enemyClassesSet)
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetClass, true));
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
