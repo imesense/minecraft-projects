@@ -1,15 +1,11 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.datafix.fixes.EntityId;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemiesToEnemyId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicListPanicToPanicId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemyIdThemId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemiesToToThem;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicToId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyToIdThemToId;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class GeneralMobTaskManager
@@ -27,28 +23,8 @@ public final class GeneralMobTaskManager
 
     }
 
-    public List<AddEnemyListEnemiesToToThem.Data> listEnemiesToToThemData;
-    public List<AddEnemyListEnemiesToEnemyId.Data> listEnemiesToEnemyIdData;
-    public List<AddPanicListPanicToPanicId.Data> listPanicToPanicIdData;
-    public List<AddEnemyListEnemyIdThemId.Data> listEnemyIdThemIdData;
-
-    public void addEnemy(EntityJoinWorldEvent event)
-    {
-
-    }
-
-    public void addEnemyId(EntityJoinWorldEvent event)
-    {
-
-    }
-
-    public void addPanicToId(EntityJoinWorldEvent event)
-    {
-
-    }
-
-    public void addEnemyToIdThemToId(EntityJoinWorldEvent event)
-    {
-
-    }
+    public List<AddEnemyToIdThemToId.Data> listEnemiesToToThemData;
+    public List<AddEnemy.Data> listEnemiesToEnemyIdData;
+    public List<AddPanicToId.Data> listPanicToPanicIdData;
+    public List<AddEnemyId.Data> listEnemyIdThemIdData;
 }

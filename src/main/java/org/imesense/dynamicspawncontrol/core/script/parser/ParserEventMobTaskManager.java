@@ -7,10 +7,10 @@ import com.google.gson.JsonParser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemiesToEnemyId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicListPanicToPanicId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemyIdThemId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyListEnemiesToToThem;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicToId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyToIdThemToId;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 public final class ParserEventMobTaskManager extends BaseParser
 {
@@ -54,23 +53,23 @@ public final class ParserEventMobTaskManager extends BaseParser
 
                 if (topLevelObject.has("enemies_to") && topLevelObject.has("to_them"))
                 {
-                    AddEnemyListEnemiesToToThem.Data data = new AddEnemyListEnemiesToToThem.Data();
-                    //taskManager.addEnemy(data);
+                    AddEnemy.Data object = new AddEnemy.Data();
+                    //
                 }
                 else if (topLevelObject.has("enemies_to") && topLevelObject.has("enemy_id"))
                 {
-                    AddEnemyListEnemiesToEnemyId.Data data = new AddEnemyListEnemiesToEnemyId.Data();
-                    //taskManager.addEnemyId(data);
+                    AddEnemyId.Data object = new AddEnemyId.Data();
+                    //
                 }
                 else if (topLevelObject.has("panic_to") && topLevelObject.has("panic_id"))
                 {
-                    AddPanicListPanicToPanicId.Data data = new AddPanicListPanicToPanicId.Data();
-                    //taskManager.addPanicToId(data);
+                    AddPanicToId.Data object = new AddPanicToId.Data();
+                    //
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("them_id"))
                 {
-                    AddEnemyListEnemyIdThemId.Data data = new AddEnemyListEnemyIdThemId.Data();
-                    //taskManager.addEnemyToIdThemToId(data);
+                    AddEnemyToIdThemToId.Data object = new AddEnemyToIdThemToId.Data();
+                    //
                 }
             }
         }
