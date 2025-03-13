@@ -5,12 +5,15 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.fixes.EntityId;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicToId;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyId;
@@ -336,27 +339,39 @@ public final class GeneralMobTaskManager
                 {
                     Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
 
-                    if (enemyIdClassesSet.contains(currentEntityClass))
+                    if (canEntityAttack(currentEntity))
                     {
-                        for (Class<? extends EntityLiving> targetClass : themIdClassesSet)
+                        if (enemyIdClassesSet.contains(currentEntityClass))
                         {
-                            currentEntity.targetTasks.addTask(5,
-                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                            targetClass, true));
+                            for (Class<? extends EntityLiving> targetClass : themIdClassesSet)
+                            {
+                                currentEntity.targetTasks.addTask(5,
+                                        new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                                targetClass, true));
+                            }
+                        }
+
+                        if (themIdClassesSet.contains(currentEntityClass))
+                        {
+                            for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
+                            {
+                                currentEntity.targetTasks.addTask(5,
+                                        new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                                targetClass, true));
+                            }
                         }
                     }
-
-                    if (themIdClassesSet.contains(currentEntityClass))
+                    else
                     {
-                        for (Class<? extends EntityLiving> targetClass : enemyIdClassesSet)
-                        {
-                            currentEntity.targetTasks.addTask(5,
-                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
-                                            targetClass, true));
-                        }
+                        Log.writeDataToLogFile(1, "Entity " + currentEntity.getClass().getSimpleName() + " cannot attack. Skipping task assignment.");
                     }
                 }
             }
         }
+    }
+
+    private boolean canEntityAttack(EntityLiving entity)
+    {
+        return entity instanceof EntityMob || (entity instanceof EntityAnimal && ((EntityAnimal) entity).getAttackTarget() != null);
     }
 }
