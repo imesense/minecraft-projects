@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.stor
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -221,6 +222,64 @@ public final class GeneralMobTaskManager
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             targetClass, true));
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    public void processAddPanicToIdData(EntityJoinWorldEvent event)
+    {
+        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+
+        for (AddPanicToId.Data data : addPanicToIdData)
+        {
+            String[] panicTo = data.panic_to;
+            String[] panicIdPrefixes = data.panic_id;
+
+            Set<Class<? extends EntityLiving>> panicToClassesSet = new HashSet<>();
+            Set<Class<? extends EntityLiving>> panicIdClassesSet = new HashSet<>();
+
+            for (String panicToId : panicTo)
+            {
+                String fixedPanicToId = fixEntityId(panicToId);
+                EntityEntry panicToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedPanicToId));
+
+                Class<? extends Entity> panicToEntityClass = panicToEntityEntry == null ? null : panicToEntityEntry.getEntityClass();
+
+                if (panicToEntityClass != null && EntityLiving.class.isAssignableFrom(panicToEntityClass))
+                {
+                    panicToClassesSet.add((Class<? extends EntityLiving>) panicToEntityClass);
+                }
+            }
+
+            for (String panicIdPrefix : panicIdPrefixes)
+            {
+                for (EntityEntry entityEntry : ForgeRegistries.ENTITIES)
+                {
+                    if (entityEntry.getRegistryName().toString().startsWith(panicIdPrefix))
+                    {
+                        Class<? extends Entity> panicIdEntityClass = entityEntry.getEntityClass();
+
+                        if (panicIdEntityClass != null && EntityLiving.class.isAssignableFrom(panicIdEntityClass))
+                        {
+                            panicIdClassesSet.add((Class<? extends EntityLiving>) panicIdEntityClass);
+                        }
+                    }
+                }
+            }
+
+            if (!panicToClassesSet.isEmpty() && !panicIdClassesSet.isEmpty())
+            {
+                Class<? extends EntityLiving> currentEntityClass = currentEntity.getClass();
+
+                if (panicToClassesSet.contains(currentEntityClass))
+                {
+                    for (Class<? extends EntityLiving> panicClass : panicIdClassesSet)
+                    {
+                        currentEntity.tasks.addTask(1,
+                                new EntityAIAvoidEntity<>((EntityCreature) currentEntity,
+                                        panicClass, 16.0F, 1.5D, 2.0D));
                     }
                 }
             }
