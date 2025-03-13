@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public final class ParserEventMobTaskManager extends BaseParser
@@ -78,7 +79,14 @@ public final class ParserEventMobTaskManager extends BaseParser
                     AddEnemyId.Data data = new AddEnemyId.Data();
                     data.enemies_to = getStringArray(topLevelObject, "enemies_to");
                     data.enemy_id = getStringArray(topLevelObject, "enemy_id");
+                    
+                    Log.writeDataToLogFile(0, "Parsed AddEnemyId.Data:");
+                    Log.writeDataToLogFile(0, "enemies_to: " + Arrays.toString(data.enemies_to));
+                    Log.writeDataToLogFile(0, "enemy_id: " + Arrays.toString(data.enemy_id));
+
                     taskManager.addEnemyIdData.add(data);
+
+                    Log.writeDataToLogFile(0, "AddEnemyId.Data successfully added to addEnemyIdData.");
                 }
                 else if (topLevelObject.has("panic_to") && topLevelObject.has("panic_id"))
                 {

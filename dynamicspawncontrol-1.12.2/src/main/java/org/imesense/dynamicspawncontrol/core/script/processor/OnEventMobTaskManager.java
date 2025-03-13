@@ -24,5 +24,6 @@ public final class OnEventMobTaskManager
         }
 
         GeneralMobTaskManager.getInstance().processAddEnemyData(event);
+        GeneralMobTaskManager.getInstance().processAddEnemyIdData(event);
     }
 }
