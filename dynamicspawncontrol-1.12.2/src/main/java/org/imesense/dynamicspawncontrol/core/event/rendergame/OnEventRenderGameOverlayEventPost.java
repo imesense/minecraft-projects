@@ -14,6 +14,6 @@ public final class OnEventRenderGameOverlayEventPost extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnRenderGameOverlayEventPost(RenderGameOverlayEvent.Post event)
     {
-        OnEventWorldCache.getInstance().handleRenderOverlay(event);
+        //OnEventWorldCache.getInstance().handleRenderOverlay(event);
     }
 }

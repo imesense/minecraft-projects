@@ -15,12 +15,12 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnLivingSpawnEventCheckSpawnHIGHEST(LivingSpawnEvent.CheckSpawn event)
     {
-        OnEventWorldCache.getInstance().handleEntitySpawnEvent(event);
+        //OnEventWorldCache.getInstance().handleEntitySpawnEvent(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void OnLivingSpawnEventCheckSpawnLOW(LivingSpawnEvent.CheckSpawn event)
     {
-        OnEventCheckSpawn.getInstance().handleLivingSpawnEventCheckSpawn(event);
+        //OnEventCheckSpawn.getInstance().handleLivingSpawnEventCheckSpawn(event);
     }
 }

@@ -15,8 +15,8 @@ public final class OnEventRenderGameOverlayEventText extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnRenderGameOverlayEventText(RenderGameOverlayEvent.Text event)
     {
-        ComplexityBiomes.getInstance().renderBiomesOverlay();
+        //ComplexityBiomes.getInstance().renderBiomesOverlay();
 
-        RenderFPS.getInstance().renderFpsOverlay();
+        //RenderFPS.getInstance().renderFpsOverlay();
     }
 }

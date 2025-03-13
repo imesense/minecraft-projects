@@ -14,6 +14,6 @@ public final class OnEventLivingExperienceDropEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingExperienceDropEvent(LivingExperienceDropEvent event)
     {
-        OnEventDropExperience.getInstance().handleUpdateLivingExperienceDrop(event);
+        //OnEventDropExperience.getInstance().handleUpdateLivingExperienceDrop(event);
     }
 }

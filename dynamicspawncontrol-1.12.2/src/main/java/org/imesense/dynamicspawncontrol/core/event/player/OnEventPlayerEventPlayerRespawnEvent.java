@@ -14,6 +14,6 @@ public final class OnEventPlayerEventPlayerRespawnEvent extends BaseOnEventInsta
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnPlayerEventPlayerRespawnEvent(PlayerEvent.PlayerRespawnEvent event)
     {
-        PlayerNetwork.getInstance().handlePlayerRespawn(event);
+        //PlayerNetwork.getInstance().handlePlayerRespawn(event);
     }
 }

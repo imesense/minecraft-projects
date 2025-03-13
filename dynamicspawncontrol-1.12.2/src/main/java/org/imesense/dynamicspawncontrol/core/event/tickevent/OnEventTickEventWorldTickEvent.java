@@ -29,8 +29,8 @@ public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
 
         TICK_COUNTER.set(0);
 
-        OvergrowingGrass.getInstance().handleWorldTick(event.world);
+        //OvergrowingGrass.getInstance().handleWorldTick(event.world);
 
-        OnEventWorldCache.getInstance().handleWorldTick(event);
+        //OnEventWorldCache.getInstance().handleWorldTick(event);
     }
 }

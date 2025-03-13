@@ -19,16 +19,16 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityJoinWorldEvent(EntityJoinWorldEvent event)
     {
-        PlayerNetwork.getInstance().handlePlayerJoinWorld(event);
+        //PlayerNetwork.getInstance().handlePlayerJoinWorld(event);
 
-        UpdateFire.getInstance().handleEntityJoinWorld(event);
+        //UpdateFire.getInstance().handleEntityJoinWorld(event);
 
-        OnEventBreakTorch.getInstance().handleSearchToBreakTorch(event);
+        //OnEventBreakTorch.getInstance().handleSearchToBreakTorch(event);
 
-        OnEventAvoidLight.getInstance().handleSpiderSpawn(event);
+        //OnEventAvoidLight.getInstance().handleSpiderSpawn(event);
 
-        OnEventMobTaskManager.getInstance().handleUpdateEntityJoinWorld(event);
+        //OnEventMobTaskManager.getInstance().handleUpdateEntityJoinWorld(event);
 
-        OnEventWorldCache.getInstance().handleEntityJoinWorld(event);
+        //OnEventWorldCache.getInstance().handleEntityJoinWorld(event);
     }
 }
