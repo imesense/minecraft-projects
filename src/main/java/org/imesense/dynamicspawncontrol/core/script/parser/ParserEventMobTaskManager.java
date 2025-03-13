@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public final class ParserEventMobTaskManager extends BaseParser
 {
@@ -25,6 +26,20 @@ public final class ParserEventMobTaskManager extends BaseParser
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         this.nameFile = NAME_FILE;
+    }
+
+    private String[] getStringArray(JsonObject jsonObject, String key)
+    {
+        JsonArray jsonArray = jsonObject.getAsJsonArray(key);
+
+        String[] array = new String[jsonArray.size()];
+
+        for (int i = 0; i < jsonArray.size(); i++)
+        {
+            array[i] = jsonArray.get(i).getAsString();
+        }
+        
+        return array;
     }
 
     @Override
@@ -53,23 +68,31 @@ public final class ParserEventMobTaskManager extends BaseParser
 
                 if (topLevelObject.has("enemies_to") && topLevelObject.has("to_them"))
                 {
-                    AddEnemy.Data object = new AddEnemy.Data();
-                    //
+                    AddEnemy.Data data = new AddEnemy.Data();
+                    data.enemies_to = getStringArray(topLevelObject, "enemies_to");
+                    data.to_them = getStringArray(topLevelObject, "to_them");
+                    taskManager.addEnemyData.add(data);
                 }
                 else if (topLevelObject.has("enemies_to") && topLevelObject.has("enemy_id"))
                 {
-                    AddEnemyId.Data object = new AddEnemyId.Data();
-                    //
+                    AddEnemyId.Data data = new AddEnemyId.Data();
+                    data.enemies_to = getStringArray(topLevelObject, "enemies_to");
+                    data.enemy_id = getStringArray(topLevelObject, "enemy_id");
+                    taskManager.addEnemyIdData.add(data);
                 }
                 else if (topLevelObject.has("panic_to") && topLevelObject.has("panic_id"))
                 {
-                    AddPanicToId.Data object = new AddPanicToId.Data();
-                    //
+                    AddPanicToId.Data data = new AddPanicToId.Data();
+                    data.panic_to = getStringArray(topLevelObject, "panic_to");
+                    data.panic_id = getStringArray(topLevelObject, "panic_id");
+                    taskManager.addPanicToIdData.add(data);
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("them_id"))
                 {
-                    AddEnemyToIdThemToId.Data object = new AddEnemyToIdThemToId.Data();
-                    //
+                    AddEnemyToIdThemToId.Data data = new AddEnemyToIdThemToId.Data();
+                    data.enemy_id = getStringArray(topLevelObject, "enemy_id");
+                    data.them_id = getStringArray(topLevelObject, "them_id");
+                    taskManager.addEnemyToIdThemToIdData.add(data);
                 }
             }
         }
@@ -86,9 +109,9 @@ public final class ParserEventMobTaskManager extends BaseParser
     @Override
     public void eraseData()
     {
-        GeneralMobTaskManager.getInstance().listEnemiesToToThemData.clear();
-        GeneralMobTaskManager.getInstance().listEnemiesToEnemyIdData.clear();;
-        GeneralMobTaskManager.getInstance().listPanicToPanicIdData.clear();;
-        GeneralMobTaskManager.getInstance().listEnemyIdThemIdData.clear();;
+        GeneralMobTaskManager.getInstance().addEnemyData.clear();
+        GeneralMobTaskManager.getInstance().addEnemyIdData.clear();
+        GeneralMobTaskManager.getInstance().addPanicToIdData.clear();
+        GeneralMobTaskManager.getInstance().addEnemyToIdThemToIdData.clear();
     }
 }
