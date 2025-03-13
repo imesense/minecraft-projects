@@ -26,5 +26,6 @@ public final class OnEventMobTaskManager
         GeneralMobTaskManager.getInstance().processAddEnemyData(event);
         GeneralMobTaskManager.getInstance().processAddEnemyIdData(event);
         GeneralMobTaskManager.getInstance().processAddPanicToIdData(event);
+        GeneralMobTaskManager.getInstance().processAddEnemyToIdThemToIdData(event);
     }
 }
