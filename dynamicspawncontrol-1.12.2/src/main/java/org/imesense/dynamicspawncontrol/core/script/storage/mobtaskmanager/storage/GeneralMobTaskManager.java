@@ -23,8 +23,8 @@ public final class GeneralMobTaskManager
 
     }
 
-    public List<AddEnemyToIdThemToId.Data> listEnemiesToToThemData;
-    public List<AddEnemy.Data> listEnemiesToEnemyIdData;
-    public List<AddPanicToId.Data> listPanicToPanicIdData;
-    public List<AddEnemyId.Data> listEnemyIdThemIdData;
+    public List<AddEnemy.Data> addEnemyData;
+    public List<AddEnemyId.Data> addEnemyIdData;
+    public List<AddPanicToId.Data> addPanicToIdData;
+    public List<AddEnemyToIdThemToId.Data> addEnemyToIdThemToIdData;
 }
