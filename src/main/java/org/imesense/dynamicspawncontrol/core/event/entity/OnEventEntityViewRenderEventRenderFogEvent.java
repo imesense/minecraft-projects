@@ -14,6 +14,6 @@ public class OnEventEntityViewRenderEventRenderFogEvent extends BaseOnEventInsta
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityViewRenderEventRenderFogEvent(EntityViewRenderEvent.RenderFogEvent event)
     {
-        FogEventHandler.getInstance().handleRenderFog(event);
+        //FogEventHandler.getInstance().handleRenderFog(event);
     }
 }

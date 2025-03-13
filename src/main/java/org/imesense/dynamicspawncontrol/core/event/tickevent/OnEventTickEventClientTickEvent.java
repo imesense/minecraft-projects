@@ -14,6 +14,6 @@ public final class OnEventTickEventClientTickEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnTickEventClientTickEvent(TickEvent.ClientTickEvent event)
     {
-        WindowTitle.getInstance().replace();
+        //WindowTitle.getInstance().replace();
     }
 }

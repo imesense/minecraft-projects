@@ -14,6 +14,6 @@ public final class OnEventBlockEventBreakEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnBlockEventBreakEvent(BlockEvent.BreakEvent event)
     {
-        UpdateTorch.getInstance().handleBlockBreak(event);
+        //UpdateTorch.getInstance().handleBlockBreak(event);
     }
 }
