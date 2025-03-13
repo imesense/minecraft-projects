@@ -3,11 +3,13 @@ package org.imesense.dynamicspawncontrol.command;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -71,6 +73,10 @@ public final class CmdAdminDumpEntity extends CommandBase
                 Entity entityHit = rayTraceResult.entityHit;
                 StringBuilder entityInfo = new StringBuilder("Entity Info: ");
 
+                ResourceLocation entityResourceLocation = EntityList.getKey(entityHit);
+                String entityFullName = entityResourceLocation != null ? entityResourceLocation.toString() : "Unknown";
+
+                entityInfo.append("Full Name: ").append(entityFullName).append("\n");
                 entityInfo.append("Name: ").append(entityHit.getName()).append(", ");
                 entityInfo.append("ID: ").append(entityHit.getEntityId()).append(", ");
                 entityInfo.append("Class: ").append(entityHit.getClass().getSimpleName()).append("\n");
