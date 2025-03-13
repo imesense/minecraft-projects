@@ -72,14 +72,21 @@ public final class ParserEventMobTaskManager extends BaseParser
                     AddEnemy.Data data = new AddEnemy.Data();
                     data.enemies_to = getStringArray(topLevelObject, "enemies_to");
                     data.to_them = getStringArray(topLevelObject, "to_them");
+
+                    Log.writeDataToLogFile(0, "Parsed AddEnemy.Data:");
+                    Log.writeDataToLogFile(0, "enemies_to: " + Arrays.toString(data.enemies_to));
+                    Log.writeDataToLogFile(0, "to_them: " + Arrays.toString(data.to_them));
+
                     taskManager.addEnemyData.add(data);
+
+                    Log.writeDataToLogFile(0, "AddEnemy.Data successfully added to addEnemyData.");
                 }
                 else if (topLevelObject.has("enemies_to") && topLevelObject.has("enemy_id"))
                 {
                     AddEnemyId.Data data = new AddEnemyId.Data();
                     data.enemies_to = getStringArray(topLevelObject, "enemies_to");
                     data.enemy_id = getStringArray(topLevelObject, "enemy_id");
-                    
+
                     Log.writeDataToLogFile(0, "Parsed AddEnemyId.Data:");
                     Log.writeDataToLogFile(0, "enemies_to: " + Arrays.toString(data.enemies_to));
                     Log.writeDataToLogFile(0, "enemy_id: " + Arrays.toString(data.enemy_id));
@@ -93,14 +100,28 @@ public final class ParserEventMobTaskManager extends BaseParser
                     AddPanicToId.Data data = new AddPanicToId.Data();
                     data.panic_to = getStringArray(topLevelObject, "panic_to");
                     data.panic_id = getStringArray(topLevelObject, "panic_id");
+
+                    Log.writeDataToLogFile(0, "Parsed AddPanicToId.Data:");
+                    Log.writeDataToLogFile(0, "panic_to: " + Arrays.toString(data.panic_to));
+                    Log.writeDataToLogFile(0, "panic_id: " + Arrays.toString(data.panic_id));
+
                     taskManager.addPanicToIdData.add(data);
+
+                    Log.writeDataToLogFile(0, "AddPanicToId.Data successfully added to addPanicToIdData.");
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("them_id"))
                 {
                     AddEnemyToIdThemToId.Data data = new AddEnemyToIdThemToId.Data();
                     data.enemy_id = getStringArray(topLevelObject, "enemy_id");
                     data.them_id = getStringArray(topLevelObject, "them_id");
+
+                    Log.writeDataToLogFile(0, "Parsed AddEnemyToIdThemToId.Data:");
+                    Log.writeDataToLogFile(0, "enemy_id: " + Arrays.toString(data.enemy_id));
+                    Log.writeDataToLogFile(0, "them_id: " + Arrays.toString(data.them_id));
+
                     taskManager.addEnemyToIdThemToIdData.add(data);
+
+                    Log.writeDataToLogFile(0, "AddEnemyToIdThemToId.Data successfully added to addEnemyToIdThemToIdData.");
                 }
             }
         }
