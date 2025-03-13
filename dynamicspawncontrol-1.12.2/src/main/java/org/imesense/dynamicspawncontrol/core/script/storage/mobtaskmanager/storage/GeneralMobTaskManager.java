@@ -1,12 +1,22 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.datafix.fixes.EntityId;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicToId;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyId;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyToIdThemToId;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import java.util.List;
+import java.util.*;
 
 public final class GeneralMobTaskManager
 {
@@ -20,11 +30,130 @@ public final class GeneralMobTaskManager
     public GeneralMobTaskManager()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
+        this.addEnemyData = new ArrayList<>();
+        this.addEnemyIdData = new ArrayList<>();
+        this.addPanicToIdData = new ArrayList<>();
+        this.addEnemyToIdThemToIdData = new ArrayList<>();
     }
+
+    public static final EntityId FIXER = new EntityId();
 
     public List<AddEnemy.Data> addEnemyData;
     public List<AddEnemyId.Data> addEnemyIdData;
     public List<AddPanicToId.Data> addPanicToIdData;
     public List<AddEnemyToIdThemToId.Data> addEnemyToIdThemToIdData;
+
+    public static String fixEntityId(String id)
+    {
+        NBTTagCompound nbtXompound = new NBTTagCompound();
+
+        nbtXompound.setString("id", id);
+
+        nbtXompound = FIXER.fixTagCompound(nbtXompound);
+
+        return nbtXompound.getString("id");
+    }
+
+    public void processAddEnemyData(EntityJoinWorldEvent event)
+    {
+        EntityLiving currentEntity = (EntityLiving) event.getEntity();
+
+        for (AddEnemy.Data data : addEnemyData)
+        {
+            String[] enemiesTo = data.enemies_to;
+            String[] toThem = data.to_them;
+
+            if (enemiesTo.length == 1 && toThem.length == 1)
+            {
+                String enemyToId = enemiesTo[0];
+                String targetId = toThem[0];
+
+                String fixedEnemyToId = fixEntityId(enemyToId);
+                String fixedTargetId = fixEntityId(targetId);
+
+                EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
+                EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
+
+                Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
+                Class<? extends Entity> targetEntityClass = targetEntityEntry == null ? null : targetEntityEntry.getEntityClass();
+
+                if (enemyToEntityClass != null && targetEntityClass != null)
+                {
+                    if (currentEntity instanceof EntityCreature)
+                    {
+                        if (enemyToEntityClass.isInstance(currentEntity))
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            targetEntityClass.asSubclass(EntityLiving.class), true));
+                        }
+                        else if (targetEntityClass.isInstance(currentEntity))
+                        {
+                            currentEntity.targetTasks.addTask(5,
+                                    new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                            enemyToEntityClass.asSubclass(EntityLiving.class), true));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Set<Class<? extends EntityLiving>> enemyClassesSet = new HashSet<>();
+                Set<Class<? extends EntityLiving>> targetClassesSet = new HashSet<>();
+
+                for (String enemyToId : enemiesTo)
+                {
+                    String fixedEnemyToId = fixEntityId(enemyToId);
+                    EntityEntry enemyToEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedEnemyToId));
+
+                    Class<? extends Entity> enemyToEntityClass = enemyToEntityEntry == null ? null : enemyToEntityEntry.getEntityClass();
+
+                    if (enemyToEntityClass != null)
+                    {
+                        enemyClassesSet.add((Class<? extends EntityLiving>) enemyToEntityClass);
+                    }
+                }
+
+                for (String targetId : toThem)
+                {
+                    String fixedTargetId = fixEntityId(targetId);
+                    EntityEntry targetEntityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(fixedTargetId));
+
+                    Class<? extends Entity> targetEntityClass = targetEntityEntry == null ? null : targetEntityEntry.getEntityClass();
+
+                    if (targetEntityClass != null)
+                    {
+                        targetClassesSet.add((Class<? extends EntityLiving>) targetEntityClass);
+                    }
+                }
+
+                if (!enemyClassesSet.isEmpty() && !targetClassesSet.isEmpty())
+                {
+                    if (currentEntity instanceof EntityCreature)
+                    {
+                        Class<? extends EntityLiving> entityClass = currentEntity.getClass();
+
+                        if (enemyClassesSet.contains(entityClass))
+                        {
+                            for (Class<? extends EntityLiving> targetClass : targetClassesSet)
+                            {
+                                currentEntity.targetTasks.addTask(5,
+                                        new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                                targetClass, true));
+                            }
+                        }
+                        else if (targetClassesSet.contains(entityClass))
+                        {
+                            for (Class<? extends EntityLiving> enemyClass : enemyClassesSet)
+                            {
+                                currentEntity.targetTasks.addTask(5,
+                                        new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
+                                                enemyClass, true));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

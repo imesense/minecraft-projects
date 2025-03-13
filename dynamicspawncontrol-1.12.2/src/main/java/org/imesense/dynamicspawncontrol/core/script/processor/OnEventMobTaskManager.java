@@ -22,5 +22,7 @@ public final class OnEventMobTaskManager
         {
             return;
         }
+
+        GeneralMobTaskManager.getInstance().processAddEnemyData(event);
     }
 }
