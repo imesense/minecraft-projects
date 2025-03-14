@@ -14,6 +14,6 @@ public final class OnEventPopulateChunkEventPre extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnPopulateChunkEventPre(PopulateChunkEvent.Pre event)
     {
-        //OnEventPopulationChunk.getInstance().handlePotentialSpawn(event);
+        OnEventPopulationChunk.getInstance().handlePotentialSpawn(event);
     }
 }

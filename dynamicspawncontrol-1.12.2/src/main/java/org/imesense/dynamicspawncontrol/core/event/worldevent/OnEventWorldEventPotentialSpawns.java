@@ -14,6 +14,6 @@ public final class OnEventWorldEventPotentialSpawns extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPotentialSpawns(WorldEvent.PotentialSpawns event)
     {
-        //OnEventPotentialSpawn.getInstance().handlePotentialSpawns(event);
+        OnEventPotentialSpawn.getInstance().handlePotentialSpawns(event);
     }
 }

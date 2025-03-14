@@ -15,8 +15,8 @@ public final class OnEventLivingAttackEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingAttackEvent(LivingAttackEvent event)
     {
-        //UpdateFire.getInstance().handleLivingAttack(event);
+        UpdateFire.getInstance().handleLivingAttack(event);
 
-        //WebSlingerCapability.getInstance().handleLivingAttack(event);
+        WebSlingerCapability.getInstance().handleLivingAttack(event);
     }
 }
