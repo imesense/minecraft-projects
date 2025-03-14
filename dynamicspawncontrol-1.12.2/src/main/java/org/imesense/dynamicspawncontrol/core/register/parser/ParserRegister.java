@@ -15,7 +15,7 @@ public final class ParserRegister extends BaseParserRegister
 
     private static final Class<?>[] PARSER_CLASSES =
     {
-        ParserEventCacheSettings.class,
+        ParserEventEntityWorldCache.class,
         ParserEventCheckSpawn.class,
         ParserEventDropExperience.class,
         ParserEventDropItem.class,

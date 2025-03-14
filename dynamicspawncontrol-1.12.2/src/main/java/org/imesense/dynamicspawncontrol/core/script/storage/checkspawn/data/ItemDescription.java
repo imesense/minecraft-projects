@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 
 public final class ItemDescription
 {
-    public static class Data
+    public static final class Data
     {
         public String item;
         public JsonObject nbt;

@@ -10,7 +10,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneralPopulationChunkSpawn
+public final class GeneralPopulationChunkSpawn
 {
     private static volatile GeneralPopulationChunkSpawn _INSTANCE;
 

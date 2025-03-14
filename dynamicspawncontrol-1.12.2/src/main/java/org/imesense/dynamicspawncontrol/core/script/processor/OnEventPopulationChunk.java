@@ -14,7 +14,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 
-public class OnEventPopulationChunk
+public final class OnEventPopulationChunk
 {
     private static volatile OnEventPopulationChunk _INSTANCE;
 

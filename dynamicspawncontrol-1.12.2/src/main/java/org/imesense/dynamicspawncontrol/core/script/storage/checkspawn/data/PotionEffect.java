@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data;
 
 public final class PotionEffect
 {
-    public static class Data
+    public static final class Data
     {
         public Double chance;
         public net.minecraft.potion.PotionEffect effect;
