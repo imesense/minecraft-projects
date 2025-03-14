@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventEntityWorldCache;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
@@ -14,7 +15,7 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnLivingSpawnEventCheckSpawnHIGHEST(LivingSpawnEvent.CheckSpawn event)
     {
-
+        OnEventEntityWorldCache.getInstance().handleLivingSpawnEventCheckSpawn(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
