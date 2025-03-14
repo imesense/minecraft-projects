@@ -19,9 +19,9 @@ public final class OnEventLivingEventLivingUpdateEvent extends BaseOnEventInstan
         if (event.getEntity() instanceof EntityPlayerMP)
         {
             EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.getEntity();
-            //ComplexityBiomes.getInstance().handleBiomesChange(entityPlayerMP);
+            ComplexityBiomes.getInstance().handleBiomesChange(entityPlayerMP);
         }
 
-        //UpdateFire.getInstance().handleLivingTick(event);
+        UpdateFire.getInstance().handleLivingTick(event);
     }
 }

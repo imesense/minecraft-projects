@@ -14,6 +14,6 @@ public final class OnEventLivingHurtEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingHurtEvent(LivingHurtEvent event)
     {
-        //UpdateTorch.getInstance().handleEntityHit(event);
+        UpdateTorch.getInstance().handleEntityHit(event);
     }
 }

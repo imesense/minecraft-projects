@@ -16,9 +16,9 @@ public final class OnEventLivingDropsEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingDropsEvent(LivingDropsEvent event)
     {
-        //DropSkeletonItem.getInstance().handleLivingDrops(event);
-        //DropZombieItem.getInstance().handleZombieDrops(event);
+        DropSkeletonItem.getInstance().handleLivingDrops(event);
+        DropZombieItem.getInstance().handleZombieDrops(event);
 
-        //OnEventDropItem.getInstance().handleUpdateLivingDrops(event);
+        OnEventDropItem.getInstance().handleUpdateLivingDrops(event);
     }
 }

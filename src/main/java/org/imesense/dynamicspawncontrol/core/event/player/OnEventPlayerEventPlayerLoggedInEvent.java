@@ -35,6 +35,6 @@ public final class OnEventPlayerEventPlayerLoggedInEvent extends BaseOnEventInst
 
         Log.writeDataToLogFile(0, logMessage);
 
-        //OnEventWorldCache.getInstance().handlePlayerLoggedIn(event);
+        OnEventWorldCache.getInstance().handlePlayerLoggedIn(event);
     }
 }

@@ -36,8 +36,8 @@ public final class OnEventPlayerEventPlayerLoggedOutEvent extends BaseOnEventIns
 
         Log.writeDataToLogFile(0, logMessage);
 
-        //PlayerNetwork.getInstance().handlePlayerLoggedOut(event);
+        PlayerNetwork.getInstance().handlePlayerLoggedOut(event);
 
-        //OnEventWorldCache.getInstance().handlePlayerLoggedOut(event);
+        OnEventWorldCache.getInstance().handlePlayerLoggedOut(event);
     }
 }

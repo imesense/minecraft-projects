@@ -16,11 +16,11 @@ public final class OnEventLivingDeathEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingDeathEvent(LivingDeathEvent event)
     {
-        //DropHeadMob.getInstance().handleEntityDeath(event);
+        DropHeadMob.getInstance().handleEntityDeath(event);
 
-        //NickNameEntity.getInstance().handleZombieDeath(event);
-        //NickNameEntity.getInstance().handleVillagerDeath(event);
+        NickNameEntity.getInstance().handleZombieDeath(event);
+        NickNameEntity.getInstance().handleVillagerDeath(event);
 
-        //UpdateFire.getInstance().handleLivingDeath(event);
+        UpdateFire.getInstance().handleLivingDeath(event);
     }
 }

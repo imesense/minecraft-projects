@@ -15,6 +15,6 @@ public class OnEventEntityViewRenderEventFogColors extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityViewRenderEventFogColors(EntityViewRenderEvent.FogColors event)
     {
-        //FogEventHandler.getInstance().handleGetFogColor(event);
+        FogEventHandler.getInstance().handleGetFogColor(event);
     }
 }

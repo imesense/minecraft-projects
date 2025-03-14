@@ -14,7 +14,7 @@ public final class OnEventLivingSpawnEventSpecialSpawn extends BaseOnEventInstan
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingSpawnEventSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
     {
-        //NickNameEntity.getInstance().handleZombieSpawn(event);
-        //NickNameEntity.getInstance().handleVillagerSpawn(event);
+        NickNameEntity.getInstance().handleZombieSpawn(event);
+        NickNameEntity.getInstance().handleVillagerSpawn(event);
     }
 }
