@@ -20,7 +20,6 @@ public final class ConfigRegister extends BaseConfigRegister
 
     private static final Class<?>[] CONFIG_CLASSES =
     {
-        CacheWorldGameConfig.class,
         LogFileConfig.class,
         PlayerConceptConfig.class,
         CfgDarkness.class,
