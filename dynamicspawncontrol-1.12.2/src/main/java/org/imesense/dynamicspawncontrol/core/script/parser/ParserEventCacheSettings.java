@@ -1,18 +1,11 @@
 package org.imesense.dynamicspawncontrol.core.script.parser;
 
-import com.google.gson.*;
-import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class ParserEventCacheSettings extends BaseParser
 {
@@ -35,48 +28,11 @@ public final class ParserEventCacheSettings extends BaseParser
             return;
         }
 
-        try (FileReader fileReader = new FileReader(file))
-        {
-            Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
-
-            if (jsonArray == null)
-            {
-                throw new RuntimeException("Script does not contain key 'data'.");
-            }
-
-            List<CacheEntityStorage.EntityData> entitiesList = new ArrayList<>();
-
-            assert jsonArray != null;
-
-            for (JsonElement jsonElement : jsonArray)
-            {
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-                String entityName = jsonObject.get("entity").getAsString();
-
-                int maxCount = jsonObject.get("max_count").getAsInt();
-
-                String[] parts = entityName.split(":");
-                ResourceLocation resourceLocation =
-                        new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
-
-                entitiesList.add(new CacheEntityStorage.EntityData(resourceLocation, maxCount));
-                Log.writeDataToLogFile(0, "Entity Loaded: " + resourceLocation + " Max Count: " + maxCount);
-            }
-
-            CacheEntityStorage.Instance.EntityCacheMobs = entitiesList;
-            Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
-
-        }
-        catch (IOException | JsonSyntaxException exception)
-        {
-            throw new RuntimeException("Error loading script file: " + exception.getMessage(), exception);
-        }
     }
 
     @Override
     public void eraseData()
     {
-        CacheEntityStorage.Instance.EntityCacheMobs.clear();
+
     }
 }

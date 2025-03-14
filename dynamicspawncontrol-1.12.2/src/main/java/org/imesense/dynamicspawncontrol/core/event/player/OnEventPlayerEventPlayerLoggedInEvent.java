@@ -9,7 +9,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 
 import java.util.UUID;
 
@@ -34,7 +33,5 @@ public final class OnEventPlayerEventPlayerLoggedInEvent extends BaseOnEventInst
         );
 
         Log.writeDataToLogFile(0, logMessage);
-
-        OnEventWorldCache.getInstance().handlePlayerLoggedIn(event);
     }
 }
