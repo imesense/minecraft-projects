@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParserEventDropItem extends BaseParser
+public final class ParserEventDropItem extends BaseParser
 {
     public ParserEventDropItem(final String NAME_FILE)
     {
@@ -40,13 +41,13 @@ public class ParserEventDropItem extends BaseParser
             JsonParser parser = new JsonParser();
             JsonArray jsonArray = parser.parse(reader).getAsJsonArray();
 
-            List<GeneralDropItem.Data> dataList = new ArrayList<>();
+            List<DropItem.Data> dataList = new ArrayList<>();
 
             for (JsonElement element : jsonArray)
             {
                 JsonObject jsonObject = element.getAsJsonObject();
 
-                GeneralDropItem.Data data = new GeneralDropItem.Data();
+                DropItem.Data data = new DropItem.Data();
                 data.entity = new ResourceLocation(jsonObject.get("entity").getAsString());
 
                 JsonArray dropsArray = jsonObject.getAsJsonArray("drop");
@@ -54,7 +55,7 @@ public class ParserEventDropItem extends BaseParser
 
                 for (int i = 0; i < dropsArray.size(); i += 2)
                 {
-                    GeneralDropItem.Data.ItemDrop itemDrop = new GeneralDropItem.Data.ItemDrop();
+                    DropItem.Data.ItemDrop itemDrop = new DropItem.Data.ItemDrop();
                     itemDrop.item = new ResourceLocation(dropsArray.get(i).getAsString());
                     itemDrop.amount = dropsArray.get(i + 1).getAsInt();
                     data.drops.add(itemDrop);

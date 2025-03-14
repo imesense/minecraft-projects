@@ -23,7 +23,7 @@ public final class SupportCheckSpawnStorage
         this.dataSupportList = new ArrayList<>();;
     }
 
-    public static class DataSupport
+    public static final class DataSupport
     {
         public Boolean seeSky;
         public ResourceLocation entityType;

@@ -7,12 +7,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-public class OnEventDropItem
+public final class OnEventDropItem
 {
     private static volatile OnEventDropItem _INSTANCE;
 
@@ -31,11 +30,11 @@ public class OnEventDropItem
             return;
         }
 
-        for (GeneralDropItem.Data data : GeneralDropItem.getInstance().dropItemList)
+        for (DropItem.Data data : GeneralDropItem.getInstance().dropItemList)
         {
             if (entityResourceLocation.equals(data.entity))
             {
-                for (GeneralDropItem.Data.ItemDrop drop : data.drops)
+                for (DropItem.Data.ItemDrop drop : data.drops)
                 {
                     ItemStack itemStack = new ItemStack(Item.REGISTRY.getObject(drop.item), drop.amount);
                     event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStack));

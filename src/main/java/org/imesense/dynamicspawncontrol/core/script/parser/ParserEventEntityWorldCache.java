@@ -7,9 +7,9 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.io.File;
 
-public final class ParserEventCacheSettings extends BaseParser
+public final class ParserEventEntityWorldCache extends BaseParser
 {
-    public ParserEventCacheSettings(final String NAME_FILE)
+    public ParserEventEntityWorldCache(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         this.nameFile = NAME_FILE;
