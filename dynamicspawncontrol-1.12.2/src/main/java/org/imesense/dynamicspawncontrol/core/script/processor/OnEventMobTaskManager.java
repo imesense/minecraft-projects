@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.functional.FunctionalMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -23,9 +24,9 @@ public final class OnEventMobTaskManager
             return;
         }
 
-        GeneralMobTaskManager.getInstance().processAddEnemyData(event);
-        GeneralMobTaskManager.getInstance().processAddEnemyIdData(event);
-        GeneralMobTaskManager.getInstance().processAddPanicToIdData(event);
-        GeneralMobTaskManager.getInstance().processAddEnemyToIdThemToIdData(event);
+        FunctionalMobTaskManager.getInstance().processAddEnemyData(event);
+        FunctionalMobTaskManager.getInstance().processAddEnemyIdData(event);
+        FunctionalMobTaskManager.getInstance().processAddPanicToIdData(event);
+        FunctionalMobTaskManager.getInstance().processAddEnemyToIdThemToIdData(event);
     }
 }

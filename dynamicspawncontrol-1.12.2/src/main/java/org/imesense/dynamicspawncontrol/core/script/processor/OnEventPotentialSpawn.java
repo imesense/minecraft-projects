@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.world.WorldEvent;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.SecondaryParameters;
+import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.PotentialSpawnStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -26,7 +26,7 @@ public final class OnEventPotentialSpawn
         GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
 
         List<Biome.SpawnListEntry> spawnEntries = storage.spawnEntries;
-        List<SecondaryParameters.Data> secondaryParameters = storage.secondaryParameters;
+        List<PotentialSpawnStruct.Data> secondaryParameters = storage.potentialSpawnStruct;
 
         if (spawnEntries.isEmpty() || secondaryParameters.isEmpty())
         {

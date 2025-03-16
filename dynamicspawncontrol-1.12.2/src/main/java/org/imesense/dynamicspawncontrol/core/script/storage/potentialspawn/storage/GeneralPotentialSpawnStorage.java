@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage;
 
 import net.minecraft.world.biome.Biome;
-import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.SecondaryParameters;
+import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.PotentialSpawnStruct;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ public final class GeneralPotentialSpawnStorage
         CodeGeneric.printInitClassToLog(this.getClass());
 
         this.spawnEntries = new ArrayList<>();
-        this.secondaryParameters = new ArrayList<>();
+        this.potentialSpawnStruct = new ArrayList<>();
     }
 
     public List<Biome.SpawnListEntry> spawnEntries;
-    public List<SecondaryParameters.Data> secondaryParameters;
+    public List<PotentialSpawnStruct.Data> potentialSpawnStruct;
 }

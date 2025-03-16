@@ -8,8 +8,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.datasupport.AdditionalChecks;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storagesupport.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
@@ -222,7 +223,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         }
     }
 
-    protected void processPotionEffectsForDataSupport(JsonArray potionArray, SupportCheckSpawnStorage.DataSupport dataSupport)
+    protected void processPotionEffectsForDataSupport(JsonArray potionArray, AdditionalChecks.Data dataSupport)
     {
         dataSupport.potion = new ArrayList<>();
 
@@ -260,7 +261,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         for (JsonElement element : dataSupportArray)
         {
             JsonObject dataSupportObject = element.getAsJsonObject();
-            SupportCheckSpawnStorage.DataSupport dataSupport = new SupportCheckSpawnStorage.DataSupport();
+            AdditionalChecks.Data dataSupport = new AdditionalChecks.Data();
 
             dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
 

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.SecondaryParameters;
+import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.PotentialSpawnStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -45,7 +45,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
             JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
 
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
-            List<SecondaryParameters.Data> newSecondaryParameters = new ArrayList<>();
+            List<PotentialSpawnStruct.Data> newSecondaryParameters = new ArrayList<>();
 
             for (JsonElement topLevelElement : jsonArray)
             {
@@ -85,7 +85,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
                         Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
                                 weight, groupCountMin, groupCountMax);
 
-                        SecondaryParameters.Data data = new SecondaryParameters.Data();
+                        PotentialSpawnStruct.Data data = new PotentialSpawnStruct.Data();
 
                         data.spawnChance = mobMap.has("spawn_chance") ? mobMap.get("spawn_chance").getAsFloat() : 0.01f;
                         data.minHeight = mobMap.has("min_height") ? mobMap.get("min_height").getAsFloat() : 1.0f;
@@ -108,7 +108,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
             }
 
             GeneralPotentialSpawnStorage.getInstance().spawnEntries = newSpawnEntries;
-            GeneralPotentialSpawnStorage.getInstance().secondaryParameters = newSecondaryParameters;
+            GeneralPotentialSpawnStorage.getInstance().potentialSpawnStruct = newSecondaryParameters;
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -120,6 +120,6 @@ public final class ParserEventPotentialSpawn extends BaseParser
     public void eraseData()
     {
         GeneralPotentialSpawnStorage.getInstance().spawnEntries.clear();
-        GeneralPotentialSpawnStorage.getInstance().secondaryParameters.clear();
+        GeneralPotentialSpawnStorage.getInstance().potentialSpawnStruct.clear();
     }
 }
