@@ -39,10 +39,25 @@ public abstract class BaseParser
 
     public void createNewConfigFile(final File FILE)
     {
-        try (FileWriter writer = new FileWriter(FILE))
+        try
         {
-            writer.write("[]");
-            writer.flush();
+            File parentDir = FILE.getParentFile();
+
+            if (!parentDir.exists())
+            {
+                Log.writeDataToLogFile(0, "Directory does not exist, creating: " + parentDir.getAbsolutePath());
+
+                if (!parentDir.mkdirs())
+                {
+                    throw new IOException("Failed to create directory: " + parentDir.getAbsolutePath());
+                }
+            }
+
+            try (FileWriter writer = new FileWriter(FILE))
+            {
+                writer.write("[]");
+                writer.flush();
+            }
         }
         catch (IOException exception)
         {

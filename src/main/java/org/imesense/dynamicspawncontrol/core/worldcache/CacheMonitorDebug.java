@@ -9,19 +9,9 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 public final class CacheMonitorDebug
 {
-    private static boolean instanceExists = false;
-
     public CacheMonitorDebug()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
-		
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
     }
 
     public void renderDebugInfo(ScaledResolution resolution)

@@ -32,8 +32,6 @@ public final class CacheGeneralStorage
 
     public final int FIRST_UPDATE_INTERVAL = 1200;
 
-    private static boolean instanceExists = false;
-
     public volatile int _DYNAMIC_UPDATE_INTERVAL = 1200;
 
     public final int SUBSEQUENT_UPDATE_INTERVAL = 4800;
@@ -67,14 +65,6 @@ public final class CacheGeneralStorage
     public CacheGeneralStorage()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
-		
-        if (instanceExists)
-        {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
-            throw new RuntimeException();
-        }
-
-        instanceExists = true;
 
         Instance = this;
     }
