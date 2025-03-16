@@ -45,6 +45,8 @@ public final class CacheGeneralStorage
 
     public boolean IsPrimaryPlayerLogged = false;
 
+    private long lastUpdateTime = System.currentTimeMillis();
+
     public final Set<ChunkPos> CACHE_VALID_CHUNKS = new HashSet<>();
 
     public final Set<EntityAnimal> CACHED_ACTUAL_ANIMALS = new HashSet<>();
@@ -74,6 +76,8 @@ public final class CacheGeneralStorage
 
     public void updateCache(@Nonnull World world)
     {
+        this.lastUpdateTime = System.currentTimeMillis();
+
         cleanActualCache();
 
         if (world instanceof WorldServer)
@@ -161,6 +165,11 @@ public final class CacheGeneralStorage
     public int getValidChunkCount()
     {
         return CACHE_VALID_CHUNKS.size();
+    }
+
+    public long getLastUpdateTime()
+    {
+        return this.lastUpdateTime;
     }
 
     @Nonnull
