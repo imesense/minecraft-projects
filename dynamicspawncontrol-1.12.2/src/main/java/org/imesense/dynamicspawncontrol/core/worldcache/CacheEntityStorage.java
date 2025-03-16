@@ -1,19 +1,23 @@
 package org.imesense.dynamicspawncontrol.core.worldcache;
 
 import net.minecraft.util.ResourceLocation;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 
 public final class CacheEntityStorage
 {
-    public static CacheEntityStorage Instance;
+    private static volatile CacheEntityStorage _INSTANCE;
+
+    public static CacheEntityStorage getInstance()
+    {
+        return CodeGeneric.getInstance(CacheEntityStorage.class);
+    }
 
     public CacheEntityStorage()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
-		
-        Instance = this;
     }
 
     public List<EntityData> EntityCacheMobs;

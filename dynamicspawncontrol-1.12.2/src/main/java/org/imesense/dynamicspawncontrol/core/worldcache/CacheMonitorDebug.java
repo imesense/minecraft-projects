@@ -9,6 +9,8 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 public final class CacheMonitorDebug
 {
+    private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
+
     public CacheMonitorDebug()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
@@ -18,11 +20,11 @@ public final class CacheMonitorDebug
     {
         final FontRenderer FONT_RENDER = UniqueField.CLIENT.fontRenderer;
 
-        final String ACTUAL_ANIMALS = TextFormatting.GREEN + "Actual Animals: " + CacheGeneralStorage.Instance.getActualAnimalCount();
-        final String ACTUAL_HOSTILE = TextFormatting.RED + "Actual Hostile Entities: " + CacheGeneralStorage.Instance.getActualHostileEntityCount();
-        final String ACTUAL_TOTAL = TextFormatting.YELLOW + "Actual Total Entities: " + CacheGeneralStorage.Instance.getActualTotalEntityCount();
-        final String UPDATE_TICK = TextFormatting.WHITE + "Tick Counter: " + CacheGeneralStorage.Instance.TickCounter;
-        final String VALID_CHUNKS = TextFormatting.YELLOW + "Valid Chunks: " + CacheGeneralStorage.Instance.getValidChunkCount();
+        final String ACTUAL_ANIMALS = TextFormatting.GREEN + "Actual Animals: " + this.CACHE_GENERAL_STORAGE.getActualAnimalCount();
+        final String ACTUAL_HOSTILE = TextFormatting.RED + "Actual Hostile Entities: " + this.CACHE_GENERAL_STORAGE.getActualHostileEntityCount();
+        final String ACTUAL_TOTAL = TextFormatting.YELLOW + "Actual Total Entities: " + this.CACHE_GENERAL_STORAGE.getActualTotalEntityCount();
+        final String UPDATE_TICK = TextFormatting.WHITE + "Tick Counter: " + this.CACHE_GENERAL_STORAGE.TickCounter;
+        final String VALID_CHUNKS = TextFormatting.YELLOW + "Valid Chunks: " + this.CACHE_GENERAL_STORAGE.getValidChunkCount();
 
         final String SEPARATOR = TextFormatting.WHITE + "--------------------------------------------";
 
@@ -35,9 +37,9 @@ public final class CacheMonitorDebug
         FONT_RENDER.drawString(VALID_CHUNKS, X, Y + 40, 0xFFFFFF);
         FONT_RENDER.drawString(SEPARATOR, X, Y + 50, 0xFFFFFF);
 
-        final String BUFFER_ANIMALS = TextFormatting.GREEN + "Buffer Animals: " + CacheGeneralStorage.Instance.getBufferAnimalCount();
-        final String BUFFER_HOSTILE = TextFormatting.RED + "Buffer Hostile Entities: " + CacheGeneralStorage.Instance.getBufferHostileEntityCount();
-        final String BUFFER_TOTAL = TextFormatting.YELLOW + "Buffer Total Entities: " + CacheGeneralStorage.Instance.getBufferTotalEntityCount();
+        final String BUFFER_ANIMALS = TextFormatting.GREEN + "Buffer Animals: " + this.CACHE_GENERAL_STORAGE.getBufferAnimalCount();
+        final String BUFFER_HOSTILE = TextFormatting.RED + "Buffer Hostile Entities: " + this.CACHE_GENERAL_STORAGE.getBufferHostileEntityCount();
+        final String BUFFER_TOTAL = TextFormatting.YELLOW + "Buffer Total Entities: " + this.CACHE_GENERAL_STORAGE.getBufferTotalEntityCount();
 
         FONT_RENDER.drawString(BUFFER_ANIMALS, X, Y + 60, 0xFFFFFF);
         FONT_RENDER.drawString(BUFFER_HOSTILE, X, Y + 70, 0xFFFFFF);

@@ -36,6 +36,10 @@ public final class OnEventWorldCache
 
     private static CacheMonitorDebug cacheMonitor = null;
 
+    private final CacheEntityStorage CACHE_ENTITY_STORAGE = CacheEntityStorage.getInstance();
+
+    private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
+
     public OnEventWorldCache()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
@@ -47,21 +51,21 @@ public final class OnEventWorldCache
     {
         if (event.phase == TickEvent.Phase.END)
         {
-            CacheGeneralStorage.Instance.TickCounter++;
+            this.CACHE_GENERAL_STORAGE.TickCounter++;
 
-            if (CacheGeneralStorage.Instance.TickCounter >= CacheGeneralStorage.Instance._DYNAMIC_UPDATE_INTERVAL)
+            if (this.CACHE_GENERAL_STORAGE.TickCounter >= this.CACHE_GENERAL_STORAGE._DYNAMIC_UPDATE_INTERVAL)
             {
-                CacheGeneralStorage.Instance.TickCounter = 0;
+                this.CACHE_GENERAL_STORAGE.TickCounter = 0;
 
-                CacheGeneralStorage.Instance.copyActualToBuffer();
-                CacheGeneralStorage.Instance.updateCache(event.world);
+                this.CACHE_GENERAL_STORAGE.copyActualToBuffer();
+                this.CACHE_GENERAL_STORAGE.updateCache(event.world);
 
-                if (CacheGeneralStorage.Instance.IsFirstUpdate)
+                if (this.CACHE_GENERAL_STORAGE.IsFirstUpdate)
                 {
-                    CacheGeneralStorage.Instance._DYNAMIC_UPDATE_INTERVAL =
-                            CacheGeneralStorage.Instance.SUBSEQUENT_UPDATE_INTERVAL;
+                    this.CACHE_GENERAL_STORAGE._DYNAMIC_UPDATE_INTERVAL =
+                            this.CACHE_GENERAL_STORAGE.SUBSEQUENT_UPDATE_INTERVAL;
 
-                    CacheGeneralStorage.Instance.IsFirstUpdate = false;
+                    this.CACHE_GENERAL_STORAGE.IsFirstUpdate = false;
                 }
             }
         }
@@ -69,20 +73,20 @@ public final class OnEventWorldCache
 
     public void handlePlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
     {
-        if (!CacheGeneralStorage.Instance.IsPrimaryPlayerLogged)
+        if (!this.CACHE_GENERAL_STORAGE.IsPrimaryPlayerLogged)
         {
-            CacheGeneralStorage.Instance.IsPrimaryPlayerLogged = true;
-            CacheGeneralStorage.Instance._DYNAMIC_UPDATE_INTERVAL = CacheGeneralStorage.Instance.FIRST_UPDATE_INTERVAL;
-            CacheGeneralStorage.Instance.TickCounter = 0;
-            CacheGeneralStorage.Instance.IsFirstUpdate = true;
+            this.CACHE_GENERAL_STORAGE.IsPrimaryPlayerLogged = true;
+            this.CACHE_GENERAL_STORAGE._DYNAMIC_UPDATE_INTERVAL = this.CACHE_GENERAL_STORAGE.FIRST_UPDATE_INTERVAL;
+            this.CACHE_GENERAL_STORAGE.TickCounter = 0;
+            this.CACHE_GENERAL_STORAGE.IsFirstUpdate = true;
         }
 
-        CacheGeneralStorage.Instance.copyActualToBuffer();
+        this.CACHE_GENERAL_STORAGE.copyActualToBuffer();
     }
 
     public void handlePlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event)
     {
-        CacheGeneralStorage.Instance.copyActualToBuffer();
+        this.CACHE_GENERAL_STORAGE.copyActualToBuffer();
     }
 
     public void handleRenderOverlay(RenderGameOverlayEvent.Post event)
@@ -110,19 +114,19 @@ public final class OnEventWorldCache
 
         WorldServer worldServer = (WorldServer) world;
 
-        CacheGeneralStorage.Instance.updateCache(worldServer);
+        this.CACHE_GENERAL_STORAGE.updateCache(worldServer);
 
-        if (CacheGeneralStorage.Instance.CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
+        if (this.CACHE_GENERAL_STORAGE.CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
         {
             if (entity instanceof IAnimals)
             {
                 if (entity instanceof EntityAnimal)
                 {
-                    CacheGeneralStorage.Instance.CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
+                    this.CACHE_GENERAL_STORAGE.CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
                 }
                 else if (entity instanceof EntityMob)
                 {
-                    CacheGeneralStorage.Instance.CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
+                    this.CACHE_GENERAL_STORAGE.CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
                 }
             }
 
@@ -130,16 +134,16 @@ public final class OnEventWorldCache
             {
                 String entityName = entity.getName();
 
-                CacheGeneralStorage.Instance.CACHED_ACTUAL_ALL.add((EntityLivingBase) entity);
+                this.CACHE_GENERAL_STORAGE.CACHED_ACTUAL_ALL.add((EntityLivingBase) entity);
 
-                CacheGeneralStorage.Instance.ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
+                this.CACHE_GENERAL_STORAGE.ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
                         new HashSet<>()).add((EntityLivingBase) entity);
 
                 ResourceLocation resourceLocation = EntityList.getKey(entity);
 
                 if (resourceLocation != null)
                 {
-                    CacheGeneralStorage.Instance.ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k ->
+                    this.CACHE_GENERAL_STORAGE.ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k ->
                             new HashSet<>()).add((EntityLivingBase) entity);
                 }
             }
@@ -152,14 +156,14 @@ public final class OnEventWorldCache
 
         ResourceLocation entityKey = EntityList.getKey(entity);
 
-        CacheEntityStorage.EntityData entityData = CacheEntityStorage.Instance.getEntityDataByResourceLocation(entityKey);
+        CacheEntityStorage.EntityData entityData = this.CACHE_ENTITY_STORAGE.getEntityDataByResourceLocation(entityKey);
 
         if (entityData != null)
         {
             assert entityKey != null;
 
             int maxCount = entityData.getMaxCount();
-            int currentCount = CacheGeneralStorage.Instance.getEntitiesByResourceLocation(entityKey).size();
+            int currentCount = CacheGeneralStorage.getInstance().getEntitiesByResourceLocation(entityKey).size();
 
             if (currentCount > maxCount)
             {
