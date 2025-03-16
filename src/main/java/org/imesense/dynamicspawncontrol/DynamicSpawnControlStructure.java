@@ -34,7 +34,7 @@ public final class DynamicSpawnControlStructure
         /**
          *
          */
-        public static final String NAME_DIRECTORY = "DynamicSpawnControl";
+        public static final String NAME_DIRECTORY = "dynamicspawncontrol";
 
         /**
          *

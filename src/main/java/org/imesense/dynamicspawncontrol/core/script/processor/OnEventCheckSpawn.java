@@ -4,14 +4,12 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.datasupport.AdditionalChecks;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.SupportCheckSpawnStorage;
+import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storagesupport.SupportCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.*;
@@ -82,21 +80,22 @@ public final class OnEventCheckSpawn
                         event.getEntity().setAlwaysRenderNameTag(true);
                     }
 
-                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, entityDescription, entityAttributes, UniqueField.RANDOM.self());
+                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig,
+                            entityDescription, entityAttributes, UniqueField.RANDOM.self());
                 }
             }
 
-            List<SupportCheckSpawnStorage.DataSupport> dataSupports = supportStorageScriptData.dataSupportList;
+            List<AdditionalChecks.Data> dataSupports = supportStorageScriptData.dataSupportList;
 
             if (dataSupports != null && !dataSupports.isEmpty())
             {
-                List<SupportCheckSpawnStorage.DataSupport> filteredDataSupports = dataSupports.stream()
+                List<AdditionalChecks.Data> filteredDataSupports = dataSupports.stream()
                         .filter(dataSupport -> entityType.equals(dataSupport.entityType))
                         .collect(Collectors.toList());
 
                 if (!filteredDataSupports.isEmpty())
                 {
-                    for (SupportCheckSpawnStorage.DataSupport dataSupport : filteredDataSupports)
+                    for (AdditionalChecks.Data dataSupport : filteredDataSupports)
                     {
                         if (dataSupport.seeSky != null)
                         {
@@ -110,7 +109,8 @@ public final class OnEventCheckSpawn
 
                         if (dataSupport.potion != null && !dataSupport.potion.isEmpty())
                         {
-                            Potion.getInstance().applyPotionEffects((EntityLivingBase) event.getEntity(), dataSupport.potion, UniqueField.RANDOM.self());
+                            Potion.getInstance().applyPotionEffects((EntityLivingBase) event.getEntity(),
+                                    dataSupport.potion, UniqueField.RANDOM.self());
                         }
                     }
                 }

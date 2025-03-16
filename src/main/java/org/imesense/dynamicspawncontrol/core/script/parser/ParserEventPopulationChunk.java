@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -46,7 +47,7 @@ public final class ParserEventPopulationChunk extends BaseParser
             JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
 
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
-            List<GeneralPopulationChunkSpawn.Data> populationList = new ArrayList<>();
+            List<PopulationChunkStruct.Data> populationList = new ArrayList<>();
 
             for (JsonElement topLevelElement : jsonArray)
             {
@@ -86,7 +87,7 @@ public final class ParserEventPopulationChunk extends BaseParser
                         String spawnChancePriority = mobMap.has("spawn_chance_priority") ? mobMap.get("spawn_chance_priority").getAsString() : "medium";
                         Integer maxEntitiesPerChunk = mobMap.has("max_entities_per_chunk") ? mobMap.get("max_entities_per_chunk").getAsInt() : 1;
 
-                        GeneralPopulationChunkSpawn.Data data = new GeneralPopulationChunkSpawn.Data();
+                        PopulationChunkStruct.Data data = new PopulationChunkStruct.Data();
                         data.entity = new ResourceLocation(id);
                         data.weight = weight;
                         data.groupCountMin = groupCountMin;
@@ -101,7 +102,7 @@ public final class ParserEventPopulationChunk extends BaseParser
                 }
             }
 
-            GeneralPopulationChunkSpawn.getInstance().populationList = populationList;
+            GeneralPopulationChunkSpawn.getInstance().populationChunkStruct = populationList;
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -112,6 +113,6 @@ public final class ParserEventPopulationChunk extends BaseParser
     @Override
     public void eraseData()
     {
-        GeneralPopulationChunkSpawn.getInstance().populationList.clear();
+        GeneralPopulationChunkSpawn.getInstance().populationChunkStruct.clear();
     }
 }

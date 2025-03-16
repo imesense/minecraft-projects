@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -25,11 +26,11 @@ public final class OnEventPopulationChunk
 
     public void handlePotentialSpawn(PopulateChunkEvent.Pre event)
     {
-        List<GeneralPopulationChunkSpawn.Data> populationList = GeneralPopulationChunkSpawn.getInstance().populationList;
+        List<PopulationChunkStruct.Data> populationList = GeneralPopulationChunkSpawn.getInstance().populationChunkStruct;
 
         if (populationList != null)
         {
-            for (GeneralPopulationChunkSpawn.Data data : populationList)
+            for (PopulationChunkStruct.Data data : populationList)
             {
                 EntityEntry ee = ForgeRegistries.ENTITIES.getValue(data.entity);
 
