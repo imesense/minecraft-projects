@@ -42,17 +42,11 @@ public final class OnEventWorldCache
         return CodeGeneric.getInstance(OnEventWorldCache.class);
     }
 
-    private static CacheMonitorDebug cacheMonitor = null;
-
-    private final CacheEntityStorage CACHE_ENTITY_STORAGE = CacheEntityStorage.getInstance();
-
     private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
 
     public OnEventWorldCache()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
-
-        cacheMonitor = new CacheMonitorDebug();
     }
 
     public void handleWorldTick(TickEvent.WorldTickEvent event)
@@ -106,7 +100,7 @@ public final class OnEventWorldCache
 
         if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
-            cacheMonitor.renderDebugInfo(event.getResolution());
+            CacheMonitorDebug.getInstance().renderDebugInfo(event.getResolution());
         }
     }
 
@@ -195,8 +189,8 @@ public final class OnEventWorldCache
         int maxEntityCount =
                 CacheFunctional.getInstance().calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
 
-        Log.writeDataToLogFile(0, "Entity: " + entityKey + ", " +
-                "Current Count: " + currentEntityCount + ", Max Count: " + maxEntityCount);
+        //Log.writeDataToLogFile(0, "Entity: " + entityKey + ", " +
+        //        "Current Count: " + currentEntityCount + ", Max Count: " + maxEntityCount);
 
         if (currentEntityCount >= maxEntityCount)
         {
