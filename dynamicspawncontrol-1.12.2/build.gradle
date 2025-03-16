@@ -71,9 +71,14 @@ minecraft
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            // Load LoadingPluginCore
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore'
+
+            // Mixins
             arg '-torg.spongepowered.asm.launch.MixinTweaker'
 
             //org.imesense.dynamicspawncontrol.core.plugin
+            //-Dfml.coreMods.load=org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore
         }
 
         server
@@ -84,9 +89,14 @@ minecraft
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            // Load LoadingPluginCore
+            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore'
+
+            // Mixins
             arg '-torg.spongepowered.asm.launch.MixinTweaker'
 
             //org.imesense.dynamicspawncontrol.core.plugin
+            //-Dfml.coreMods.load=org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore
         }
     }
 }
