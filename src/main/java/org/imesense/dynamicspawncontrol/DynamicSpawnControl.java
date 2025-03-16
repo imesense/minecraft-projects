@@ -25,7 +25,10 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Main class of modification
@@ -101,6 +104,52 @@ public final class DynamicSpawnControl
             Log.writeDataToLogFile(2, "https://github.com/imesense/minecraft-projects");
 
             FMLCommonHandler.instance().exitJava(1, false);
+        }
+
+        try
+        {
+            String configFile = "mixins.dynamicspawncontrol.json";
+            InputStream stream = getClass().getClassLoader().getResourceAsStream(configFile);
+
+            if (stream != null)
+            {
+                Log.writeDataToLogFile(0, "File " + configFile + " found! Loading the mixins...");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                StringBuilder fileContent = new StringBuilder();
+
+                String line;
+                boolean isFirstLine = true;
+
+                while ((line = reader.readLine()) != null)
+                {
+                    if (!isFirstLine)
+                    {
+                        fileContent.append("\n");
+                    }
+                    else
+                    {
+                        isFirstLine = false;
+                    }
+                    fileContent.append(line);
+                }
+
+                reader.close();
+
+                Log.writeDataToLogFile(0, "File Contents " + configFile + ":\n" + fileContent.toString());
+
+                Log.writeDataToLogFile(0, "Mixins uploaded successfully!");
+                Log.writeDataToLogFile(0, "Mixins configuration loaded: " + configFile);
+            }
+            else
+            {
+                Log.writeDataToLogFile(0, "File " + configFile + " not found! Check the path and the name.");
+            }
+        }
+        catch (Exception exception)
+        {
+            Log.writeDataToLogFile(0, "Download error Mixin: " + exception.getMessage());
+            exception.printStackTrace();
         }
 
         Log.writeDataToLogFile(1, "Is running in IDE (based on logging level): " +

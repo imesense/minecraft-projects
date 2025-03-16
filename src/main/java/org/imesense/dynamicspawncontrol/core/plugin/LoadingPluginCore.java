@@ -6,6 +6,8 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.bloodmoon_mc1_12_2_1_5_3.ClassTransformer;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.EntityRendererTransformer;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.WorldProviderTransformer;
+import org.spongepowered.asm.launch.MixinBootstrap;
+import org.spongepowered.asm.mixin.Mixins;
 
 import java.io.File;
 import java.util.Map;
@@ -32,6 +34,12 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
      *
      */
     public static final int AFTER_DEOBFUSCATION = 1001;
+
+    public LoadingPluginCore()
+    {
+        MixinBootstrap.init();
+        Mixins.addConfiguration("mixins.dynamicspawncontrol.json");
+    }
 
     /**
      *

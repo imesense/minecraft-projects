@@ -6,12 +6,31 @@ buildscript
         {
             url = 'https://maven.minecraftforge.net/'
         }
+
+        maven
+        {
+            url = 'https://repo.spongepowered.org/maven'
+        }
+
         mavenCentral()
     }
 
     dependencies
     {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+repositories
+{
+    flatDir
+    {
+        dirs 'libs'
+    }
+    maven
+    {
+        url "https://cursemaven.com"
     }
 }
 
@@ -19,6 +38,8 @@ apply plugin: 'net.minecraftforge.gradle'
 
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+
+apply plugin: 'org.spongepowered.mixin'
 
 // File metadata
 version = '0.1'
@@ -31,6 +52,7 @@ targetCompatibility =
 compileJava.sourceCompatibility =
 compileJava.targetCompatibility =
     '1.8'
+
 minecraft
 {
     // Mappings settings of Minecraft
@@ -48,6 +70,10 @@ minecraft
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            arg '-torg.spongepowered.asm.launch.MixinTweaker'
+
+            //org.imesense.dynamicspawncontrol.core.plugin
         }
 
         server
@@ -57,8 +83,17 @@ minecraft
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            arg '-torg.spongepowered.asm.launch.MixinTweaker'
+
+            //org.imesense.dynamicspawncontrol.core.plugin
         }
     }
+}
+
+mixin
+{
+    add sourceSets.main, 'mixins.dynamicspawncontrol.refmap.json'
 }
 
 dependencies
@@ -69,6 +104,16 @@ dependencies
     // Use lombok lib
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // Use mixins lib
+    implementation 'org.spongepowered:mixin:0.8.5'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    // Use core mod #1 divinerpg
+    implementation fg.deobf("curse.maven:official-divinerpg-363543:2937175")
+
+    // Use core mod #1 SRParasites
+    implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:5370258")
 }
 
 // Get properties into the manifest for reading by the runtime
@@ -85,7 +130,8 @@ jar
             "Implementation-Vendor" :"imesense",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             "FMLCorePlugin": "org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore",
-            "FMLCorePluginContainsFMLMod": "true"
+            "FMLCorePluginContainsFMLMod": "true",
+            "MixinConfigs": "mixins.dynamicspawncontrol.json"
         ])
     }
 }
@@ -119,4 +165,15 @@ sourceSets
     {
         output.resourcesDir = output.classesDir
     }
+}
+
+// Mixins
+compileJava
+{
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.compilerArgs +=
+    [
+        "-AdefaultObfuscationEnv=searge",
+        "-AoutRefMap=mixins.dynamicspawncontrol.refmap.json"
+    ]
 }
