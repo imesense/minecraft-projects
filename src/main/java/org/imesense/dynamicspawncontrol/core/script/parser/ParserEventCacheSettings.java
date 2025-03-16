@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -49,36 +50,65 @@ public final class ParserEventCacheSettings extends BaseParser
 
             List<CacheEntityStorage.EntityData> entitiesList = new ArrayList<>();
 
-            assert jsonArray != null;
-
             for (JsonElement jsonElement : jsonArray)
             {
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
-                String entityName = jsonObject.get("entity").getAsString();
+                JsonObject dataObject = jsonObject.getAsJsonObject("data");
 
-                int maxCount = jsonObject.get("max_count").getAsInt();
+                if (dataObject == null)
+                {
+                    throw new RuntimeException("Script does not contain key 'data'.");
+                }
+
+                String entityName = dataObject.get("entity").getAsString();
+                Boolean perPlayer = dataObject.get("per_player").getAsBoolean();
+                Boolean perChunk = dataObject.get("per_chunk").getAsBoolean();
+                Integer maxEntityCount = dataObject.get("max_entity_count").getAsInt();
+                String resultStr = dataObject.get("result").getAsString();
+
+                Event.Result result;
+
+                try
+                {
+                    result = Event.Result.valueOf(resultStr.toUpperCase());
+                }
+                catch (IllegalArgumentException e)
+                {
+                    throw new RuntimeException("Invalid value for 'result': " + resultStr);
+                }
 
                 String[] parts = entityName.split(":");
+
                 ResourceLocation resourceLocation =
                         new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
 
-                entitiesList.add(new CacheEntityStorage.EntityData(resourceLocation, maxCount));
-                Log.writeDataToLogFile(0, "Entity Loaded: " + resourceLocation + " Max Count: " + maxCount);
+                CacheEntityStorage.EntityData entityData = new CacheEntityStorage.EntityData();
+                entityData.entity = resourceLocation;
+                entityData.per_player = perPlayer;
+                entityData.per_chunk = perChunk;
+                entityData.max_entity_count = maxEntityCount;
+                entityData.result = result;
+
+                entitiesList.add(entityData);
+                Log.writeDataToLogFile(0, "Entity Loaded: " + resourceLocation + " Per Player: " + perPlayer + " Per Chunk: " + perChunk + " Max Count: " + maxEntityCount + " Result: " + result);
             }
 
-            CacheEntityStorage.getInstance().EntityCacheMobs = entitiesList;
+            CacheEntityStorage.getInstance().entityData = entitiesList;
             Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
-
         }
         catch (IOException | JsonSyntaxException exception)
         {
             throw new RuntimeException("Error loading script file: " + exception.getMessage(), exception);
+        }
+        catch (NullPointerException exception)
+        {
+            throw new RuntimeException("Missing required parameter in script file: " + exception.getMessage(), exception);
         }
     }
 
     @Override
     public void eraseData()
     {
-        CacheEntityStorage.getInstance().EntityCacheMobs.clear();
+        CacheEntityStorage.getInstance().entityData.clear();
     }
 }
