@@ -17,6 +17,7 @@ import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
@@ -24,6 +25,7 @@ import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.Tim
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.plugin.time_control_mod_forge_1_12_2.network.*;
 import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -164,6 +166,10 @@ public final class DynamicSpawnControl
         ConfigRegister.getInstance().initializeConfigs();
         WorldGeneratorRegister.getInstance().init(fmlPreInitializationEvent);
 
+        CacheEntityStorage.Instance = new CacheEntityStorage();
+
+        CacheGeneralStorage.Instance = new CacheGeneralStorage();
+
         ParserRegister.getInstance().init();
         BaseEventRegister.initialize();
 
@@ -225,7 +231,8 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void serverStopped(FMLServerStoppedEvent fmlServerStoppedEvent)
     {
-
+        CacheGeneralStorage.Instance.cleanActualCache();
+        CacheGeneralStorage.Instance.cleanBufferCache();
     }
 
     /**

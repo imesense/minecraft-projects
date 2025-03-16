@@ -55,6 +55,6 @@ public abstract class BaseParser
     {
         return initialization ? new File(DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator + DIRECTORY, FILE_NAME) :
-                    new File("config/DynamicSpawnControl/" + DIRECTORY + "/" + FILE_NAME);
+                    new File("config/dynamicspawncontrol/" + DIRECTORY + "/" + FILE_NAME);
     }
 }
