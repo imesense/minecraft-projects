@@ -25,8 +25,17 @@ public final class ParserEventCacheSettings extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
+        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE, this.nameFile);
+
+        if (!file.exists())
+        {
+            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            this.createNewConfigFile(file);
+            return;
+        }
 
         try (FileReader fileReader = new FileReader(file))
         {
@@ -70,6 +79,6 @@ public final class ParserEventCacheSettings extends BaseParser
     @Override
     public void eraseData()
     {
-
+        CacheEntityStorage.Instance.EntityCacheMobs.clear();
     }
 }

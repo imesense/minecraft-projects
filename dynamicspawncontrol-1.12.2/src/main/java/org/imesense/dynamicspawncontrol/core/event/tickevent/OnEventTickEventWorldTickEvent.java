@@ -17,6 +17,8 @@ public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnTickEventWorldTickEvent(TickEvent.WorldTickEvent event)
     {
+        OnEventWorldCache.getInstance().handleWorldTick(event);
+
         if (event.phase == TickEvent.Phase.END || event.world.isRemote)
         {
             return;
@@ -30,7 +32,5 @@ public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
         TICK_COUNTER.set(0);
 
         OvergrowingGrass.getInstance().handleWorldTick(event.world);
-
-        OnEventWorldCache.getInstance().handleWorldTick(event);
     }
 }
