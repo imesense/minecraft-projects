@@ -234,6 +234,7 @@ public final class ComplexityBiomes
             case "Taiga M":
             case "Sunflower Plains":
             case "Flower Forest":
+            case "Stone Beach":
                 return this.MIN;
             default:
                 return this.NULL;
