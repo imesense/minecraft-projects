@@ -2,7 +2,8 @@
   "minVersion": "0.8.5",
   "package": "org.imesense.dynamicspawncontrol.mixins",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-
+  "mixins":
+  [
+    "MixinDivineRPGFixSpawn"
   ]
 }
