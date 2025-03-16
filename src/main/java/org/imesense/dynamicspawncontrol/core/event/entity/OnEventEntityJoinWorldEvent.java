@@ -9,6 +9,7 @@ import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManager;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 
@@ -27,5 +28,7 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
         OnEventAvoidLight.getInstance().handleSpiderSpawn(event);
 
         OnEventMobTaskManager.getInstance().handleUpdateEntityJoinWorld(event);
+
+        OnEventWorldCache.getInstance().handleEntityJoinWorld(event);
     }
 }
