@@ -76,9 +76,6 @@ minecraft
 
             // Mixins
             arg '-torg.spongepowered.asm.launch.MixinTweaker'
-
-            //org.imesense.dynamicspawncontrol.core.plugin
-            //-Dfml.coreMods.load=org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore
         }
 
         server
@@ -94,9 +91,6 @@ minecraft
 
             // Mixins
             arg '-torg.spongepowered.asm.launch.MixinTweaker'
-
-            //org.imesense.dynamicspawncontrol.core.plugin
-            //-Dfml.coreMods.load=org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore
         }
     }
 }
