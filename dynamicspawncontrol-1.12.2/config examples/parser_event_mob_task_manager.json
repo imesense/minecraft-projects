@@ -1,0 +1,88 @@
+[
+  // Блок 1:
+  // Мирные сущности из ванили боятся сущностей типа паразиты
+  {
+    "panic_to":
+    [
+      "minecraft:villager",
+      "minecraft:pig",
+      "minecraft:cow",
+      "minecraft:chicken",
+      "minecraft:sheep",
+      "minecraft:donkey",
+      "minecraft:horse",
+      "minecraft:llama",
+      "minecraft:rabbit",
+      "minecraft:creeper"
+    ],
+    "panic_id": ["srparasites"]
+  },
+  // Блок 2
+  // Ванильные сущности, которые могут атаковать, являются врагами для паразитов
+  {
+    "enemies_to":
+    [
+      "minecraft:villager_golem",
+      "minecraft:zombie",
+      "minecraft:zombie_villager",
+      "minecraft:zombie_pigman",
+      "minecraft:skeleton",
+      "minecraft:spider",
+      "minecraft:enderman",
+      "minecraft:silverfish",
+      "minecraft:cave_spider",
+      "minecraft:wolf",
+      "minecraft:stray",
+      "minecraft:husk",
+      "minecraft:vex",
+      "minecraft:wither_skeleton",
+      "minecraft:blaze",
+      "minecraft:witch",
+      "minecraft:ghast",
+      "minecraft:slime",
+      "minecraft:magma_cube"
+    ],
+    "enemy_id": ["srparasites"]
+  },
+  // Блок 3
+  // Мобы из Дивайн РПГ всегда враждебны к паразитам
+  {
+    "enemy_id": ["divinerpg"],
+    "them_id": ["srparasites"]
+  },
+  // Блок 4
+  // Голем враждебен к ванильным враждебным сущностям для игрока
+  {
+    "enemies_to": ["minecraft:villager_golem"],
+    "to_them":
+    [
+      "minecraft:zombie",
+      "minecraft:zombie_villager",
+      "minecraft:zombie_pigman",
+      "minecraft:skeleton",
+      "minecraft:spider",
+      "minecraft:enderman",
+      "minecraft:silverfish",
+      "minecraft:cave_spider",
+      "minecraft:wolf",
+      "minecraft:stray",
+      "minecraft:husk",
+      "minecraft:vex",
+      "minecraft:wither_skeleton",
+      "minecraft:blaze",
+      "minecraft:witch"
+    ]
+  },
+  // Блок 5
+  // Скелеты нападают на волков
+  {
+    "enemies_to":
+    [
+      "minecraft:wolf"
+    ],
+    "to_them":
+    [
+      "minecraft:skeleton"
+    ]
+  }
+]
