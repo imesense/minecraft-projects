@@ -1,9 +1,11 @@
 package org.imesense.dynamicspawncontrol.core.worldcache;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,27 +21,17 @@ public final class CacheEntityStorage
     public CacheEntityStorage()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
+        this.entityData = new ArrayList<>();
     }
 
-    public List<EntityData> EntityCacheMobs;
-
-    public Optional<EntityData> getEntityDataByResourceLocation(ResourceLocation resourceLocation)
+    public static final class EntityData
     {
-        return EntityCacheMobs.stream()
-                .filter(entityData -> entityData.RESOURCE_LOCATION.equals(resourceLocation))
-                .findFirst();
+        public ResourceLocation entity;
+        public Boolean per_player;
+        public Boolean per_chunk;
+        public Integer max_entity_count;
+        public Event.Result result;
     }
 
-    public static class EntityData
-    {
-        public final int MAX_COUNT;
-
-        public final ResourceLocation RESOURCE_LOCATION;
-
-        public EntityData(ResourceLocation entity, int maxCount)
-        {
-            this.RESOURCE_LOCATION = entity;
-            this.MAX_COUNT = maxCount;
-        }
-    }
+    public List<EntityData> entityData;
 }
