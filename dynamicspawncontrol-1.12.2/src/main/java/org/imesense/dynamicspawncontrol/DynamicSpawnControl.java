@@ -81,19 +81,19 @@ public final class DynamicSpawnControl
 
     /**
      *
-     * @param fmlPreInitializationEvent
+     * @param event
      * @throws IllegalAccessException
      */
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent fmlPreInitializationEvent) throws IllegalAccessException
+    public void preInit(FMLPreInitializationEvent event) throws IllegalAccessException
     {
-        globalDirectory = fmlPreInitializationEvent.getModConfigurationDirectory();
+        globalDirectory = event.getModConfigurationDirectory();
 
         Log.createLogFile(globalDirectory.getPath() +
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
-        File modFile = fmlPreInitializationEvent.getSourceFile();
+        File modFile = event.getSourceFile();
         String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID + "-0.1.jar";
 
         Log.writeDataToLogFile(3, "Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
@@ -163,7 +163,7 @@ public final class DynamicSpawnControl
         PlayerInWebMessage.register(networkWrapper);
 
         ConfigRegister.getInstance().initializeConfigs();
-        WorldGeneratorRegister.getInstance().init(fmlPreInitializationEvent);
+        WorldGeneratorRegister.getInstance().init(event);
 
         ParserRegister.getInstance().init();
         BaseEventRegister.initialize();
@@ -177,10 +177,10 @@ public final class DynamicSpawnControl
 
     /**
      *
-     * @param fmlInitializationEvent
+     * @param event
      */
     @Mod.EventHandler
-    public void init(FMLInitializationEvent fmlInitializationEvent)
+    public void init(FMLInitializationEvent event)
     {
         IRecipes = new CraftItemWeb();
 
@@ -191,51 +191,55 @@ public final class DynamicSpawnControl
 
     /**
      *
-     * @param fmlPostInitializationEvent
+     * @param event
      */
     @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent fmlPostInitializationEvent)
+    public void postInit(FMLPostInitializationEvent event)
     {
 
     }
 
     /**
      *
-     * @param fmlLoadCompleteEvent
+     * @param event
      */
     @Mod.EventHandler
-    public void onLoadComplete(FMLLoadCompleteEvent fmlLoadCompleteEvent)
+    public void onLoadComplete(FMLLoadCompleteEvent event)
     {
 
     }
 
     /**
      *
-     * @param fmlServerStartingEvent
+     * @param event
      */
     @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent fmlServerStartingEvent)
+    public void serverLoad(FMLServerStartingEvent event)
     {
-        CommandRegister.getInstance().registerCommands(fmlServerStartingEvent);
+        CommandRegister.getInstance().registerCommands(event);
     }
 
     /**
      *
-     * @param fmlServerStoppedEvent
+     * @param event
      */
     @Mod.EventHandler
-    public void serverStopped(FMLServerStoppedEvent fmlServerStoppedEvent)
+    public void serverStopped(FMLServerStoppedEvent event)
     {
+        Log.writeDataToLogFile(0, "Cleaning up CacheGeneralStorage on server stop...");
+
         CacheGeneralStorage.getInstance().cleanActualCache();
         CacheGeneralStorage.getInstance().cleanBufferCache();
+
+        Log.writeDataToLogFile(0, "CacheGeneralStorage cleaned up successfully.");
     }
 
     /**
      *
-     * @param fmlServerStoppingEvent
+     * @param event
      */
     @Mod.EventHandler
-    public static void onServerShutdown(FMLServerStoppingEvent fmlServerStoppingEvent)
+    public static void onServerShutdown(FMLServerStoppingEvent event)
     {
 
     }

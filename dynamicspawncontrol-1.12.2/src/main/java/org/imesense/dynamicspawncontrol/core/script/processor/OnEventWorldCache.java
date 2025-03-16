@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheMonitorDebug;
@@ -179,113 +180,27 @@ public final class OnEventWorldCache
 
         CacheEntityStorage.EntityData entityData = optionalEntityData.get();
         WorldServer worldServer = (WorldServer) event.getWorld();
-        EntityPlayerMP nearestPlayer = getNearestPlayer(worldServer, event.getX(), event.getY(), event.getZ());
+
+        EntityPlayerMP nearestPlayer =
+                CacheFunctional.getInstance().getNearestPlayer(worldServer, event.getX(), event.getY(), event.getZ());
 
         if (nearestPlayer == null)
         {
             return;
         }
 
-        int currentEntityCount = getCurrentEntityCount(worldServer, nearestPlayer, entityKey);
-        int maxEntityCount = calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
+        int currentEntityCount =
+                CacheFunctional.getInstance().getCurrentEntityCount(worldServer, nearestPlayer, entityKey);
 
-        Log.writeDataToLogFile(0, "Entity: " + entityKey + ", Current Count: " + currentEntityCount + ", Max Count: " + maxEntityCount);
+        int maxEntityCount =
+                CacheFunctional.getInstance().calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
+
+        Log.writeDataToLogFile(0, "Entity: " + entityKey + ", " +
+                "Current Count: " + currentEntityCount + ", Max Count: " + maxEntityCount);
 
         if (currentEntityCount >= maxEntityCount)
         {
             event.setResult(entityData.result);
         }
-    }
-
-    private int calculateMaxEntityCount(CacheEntityStorage.EntityData entityData, WorldServer worldServer, EntityPlayerMP player)
-    {
-        int maxEntityCount = entityData.max_entity_count;
-
-        if (entityData.per_player)
-        {
-            int playerCount = getPlayerCount(worldServer);
-
-            if (playerCount > 1)
-            {
-                maxEntityCount = (int) (maxEntityCount * (0.5 + 0.5 * playerCount));
-            }
-        }
-
-        if (entityData.per_chunk)
-        {
-            int loadedChunkCount = getLoadedChunkCount(worldServer, player);
-            maxEntityCount = (int) (maxEntityCount * ((double) loadedChunkCount / 289));
-        }
-
-        return maxEntityCount;
-    }
-
-    private EntityPlayerMP getNearestPlayer(WorldServer worldServer, double x, double y, double z)
-    {
-        return (EntityPlayerMP) worldServer.getClosestPlayer(x, y, z, -1, false);
-    }
-
-    private int getLoadedChunkCount(WorldServer worldServer, EntityPlayerMP player)
-    {
-        Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, player);
-        return validChunks.size();
-    }
-
-    private int getPlayerCount(WorldServer worldServer)
-    {
-        return worldServer.getPlayers(EntityPlayerMP.class, player -> true).size();
-    }
-
-    private int getCurrentEntityCount(WorldServer worldServer, EntityPlayerMP player, ResourceLocation entityResource)
-    {
-        int count = 0;
-        Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, player);
-
-        for (ChunkPos chunkPos : validChunks)
-        {
-            Chunk chunk = worldServer.getChunkFromChunkCoords(chunkPos.x, chunkPos.z);
-
-            for (ClassInheritanceMultiMap<Entity> entityList : chunk.getEntityLists())
-            {
-                for (Entity entity : entityList)
-                {
-                    if (entity instanceof EntityLiving)
-                    {
-                        ResourceLocation entityLoc = EntityList.getKey(entity);
-
-                        if (entityLoc != null && entityLoc.equals(entityResource))
-                        {
-                            count++;
-                        }
-                    }
-                }
-            }
-        }
-
-        return count;
-    }
-
-    private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayerMP player)
-    {
-        Set<ChunkPos> validChunks = new HashSet<>();
-        int viewDistance = worldServer.getMinecraftServer().getPlayerList().getViewDistance();
-
-        int playerChunkX = MathHelper.floor(player.posX) >> 4;
-        int playerChunkZ = MathHelper.floor(player.posZ) >> 4;
-
-        for (int x = playerChunkX - viewDistance; x <= playerChunkX + viewDistance; x++)
-        {
-            for (int z = playerChunkZ - viewDistance; z <= playerChunkZ + viewDistance; z++)
-            {
-                ChunkPos chunkPos = new ChunkPos(x, z);
-
-                if (worldServer.getChunkProvider().isChunkGeneratedAt(x, z))
-                {
-                    validChunks.add(chunkPos);
-                }
-            }
-        }
-
-        return validChunks;
     }
 }

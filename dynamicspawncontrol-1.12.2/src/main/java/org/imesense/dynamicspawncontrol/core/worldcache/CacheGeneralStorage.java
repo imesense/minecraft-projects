@@ -82,7 +82,9 @@ public final class CacheGeneralStorage
 
             for (EntityPlayer entityPlayer : world.playerEntities)
             {
-                Set<ChunkPos> validChunks = totalValidChunksSpawnForPlayer(worldServer, (EntityPlayerMP) entityPlayer);
+                Set<ChunkPos> validChunks =
+                        CacheFunctional.getInstance().totalValidChunksSpawnForPlayer(worldServer, (EntityPlayerMP) entityPlayer);
+
                 CACHE_VALID_CHUNKS.addAll(validChunks);
             }
         }
@@ -124,32 +126,6 @@ public final class CacheGeneralStorage
                 }
             }
         }
-    }
-
-    private Set<ChunkPos> totalValidChunksSpawnForPlayer(WorldServer worldServer, EntityPlayerMP entityPlayerMP)
-    {
-        Set<ChunkPos> validChunks = new HashSet<>();
-
-        int viewDistance =
-                Objects.requireNonNull(worldServer.getMinecraftServer()).getPlayerList().getViewDistance();
-
-        int playerChunkX = MathHelper.floor(entityPlayerMP.posX) >> 4;
-        int playerChunkZ = MathHelper.floor(entityPlayerMP.posZ) >> 4;
-
-        for (int x = playerChunkX - viewDistance; x <= playerChunkX + viewDistance; x++)
-        {
-            for (int z = playerChunkZ - viewDistance; z <= playerChunkZ + viewDistance; z++)
-            {
-                ChunkPos chunkPos = new ChunkPos(x, z);
-
-                if (worldServer.getChunkProvider().isChunkGeneratedAt(x, z))
-                {
-                    validChunks.add(chunkPos);
-                }
-            }
-        }
-
-        return validChunks;
     }
 
     public int getActualAnimalCount()
