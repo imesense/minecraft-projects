@@ -153,22 +153,21 @@ public final class OnEventWorldCache
     public void handleEntitySpawnEvent(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();
-
         ResourceLocation entityKey = EntityList.getKey(entity);
 
-        CacheEntityStorage.EntityData entityData = this.CACHE_ENTITY_STORAGE.getEntityDataByResourceLocation(entityKey);
-
-        if (entityData != null)
+        if (entityKey != null)
         {
-            assert entityKey != null;
-
-            int maxCount = entityData.getMaxCount();
-            int currentCount = CacheGeneralStorage.getInstance().getEntitiesByResourceLocation(entityKey).size();
-
-            if (currentCount > maxCount)
+            this.CACHE_ENTITY_STORAGE.getEntityDataByResourceLocation(entityKey)
+                .ifPresent(entityData ->
             {
-                event.setResult(Event.Result.DENY);
-            }
+                int maxCount = entityData.MAX_COUNT;
+                int currentCount = CacheGeneralStorage.getInstance().getEntitiesByResourceLocation(entityKey).size();
+
+                if (currentCount > maxCount)
+                {
+                    event.setResult(Event.Result.DENY);
+                }
+            });
         }
     }
 }

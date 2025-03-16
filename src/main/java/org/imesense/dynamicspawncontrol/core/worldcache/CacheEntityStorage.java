@@ -5,6 +5,7 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
+import java.util.Optional;
 
 public final class CacheEntityStorage
 {
@@ -22,44 +23,23 @@ public final class CacheEntityStorage
 
     public List<EntityData> EntityCacheMobs;
 
-    public List<EntityData> getEntityCacheMobs()
+    public Optional<EntityData> getEntityDataByResourceLocation(ResourceLocation resourceLocation)
     {
-        return this.EntityCacheMobs;
-    }
-
-    public CacheEntityStorage.EntityData getEntityDataByResourceLocation(ResourceLocation resourceLocation)
-    {
-        for (CacheEntityStorage.EntityData entityData : getEntityCacheMobs())
-        {
-            if (entityData.getEntity().equals(resourceLocation))
-            {
-                return entityData;
-            }
-        }
-
-        return null;
+        return EntityCacheMobs.stream()
+                .filter(entityData -> entityData.RESOURCE_LOCATION.equals(resourceLocation))
+                .findFirst();
     }
 
     public static class EntityData
     {
-        private final int MAX_COUNT;
+        public final int MAX_COUNT;
 
-        private final ResourceLocation RESOURCE_LOCATION;
+        public final ResourceLocation RESOURCE_LOCATION;
 
         public EntityData(ResourceLocation entity, int maxCount)
         {
             this.RESOURCE_LOCATION = entity;
             this.MAX_COUNT = maxCount;
-        }
-
-        public ResourceLocation getEntity()
-        {
-            return this.RESOURCE_LOCATION;
-        }
-
-        public int getMaxCount()
-        {
-            return this.MAX_COUNT;
         }
     }
 }
