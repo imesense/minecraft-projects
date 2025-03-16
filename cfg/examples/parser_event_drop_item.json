@@ -1,0 +1,20 @@
+[
+  /*  {
+      "entity": "minecraft:zombie",
+      "drop": [
+        "minecraft:diamond",
+        1,
+        "minecraft:rotten_flesh",
+        3
+      ]
+    },
+    {
+      "entity": "minecraft:skeleton",
+      "drop": [
+        "minecraft:bone",
+        2,
+        "minecraft:arrow",
+        5
+      ]
+    }*/
+]

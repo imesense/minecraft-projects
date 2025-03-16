@@ -1,0 +1,14 @@
+[
+    {
+      "mobs": [
+        {
+          "mob": "minecraft:villager_golem",
+          "weight": 2,
+          "groupcountmin": 1,
+          "groupcountmax": 2,
+          "spawnChancePriority": "low",
+          "max_entities_per_chunk": 2
+        }
+      ]
+    }
+]
