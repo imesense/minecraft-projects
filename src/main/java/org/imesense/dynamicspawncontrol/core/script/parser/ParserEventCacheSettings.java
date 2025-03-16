@@ -66,7 +66,7 @@ public final class ParserEventCacheSettings extends BaseParser
                 Log.writeDataToLogFile(0, "Entity Loaded: " + resourceLocation + " Max Count: " + maxCount);
             }
 
-            CacheEntityStorage.Instance.EntityCacheMobs = entitiesList;
+            CacheEntityStorage.getInstance().EntityCacheMobs = entitiesList;
             Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
 
         }
@@ -79,6 +79,6 @@ public final class ParserEventCacheSettings extends BaseParser
     @Override
     public void eraseData()
     {
-        CacheEntityStorage.Instance.EntityCacheMobs.clear();
+        CacheEntityStorage.getInstance().EntityCacheMobs.clear();
     }
 }

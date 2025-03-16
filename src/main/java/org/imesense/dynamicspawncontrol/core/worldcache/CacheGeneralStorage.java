@@ -26,7 +26,12 @@ import java.util.concurrent.ConcurrentMap;
 
 public final class CacheGeneralStorage
 {
-    public static CacheGeneralStorage Instance;
+    private static volatile CacheGeneralStorage _INSTANCE;
+
+    public static CacheGeneralStorage getInstance()
+    {
+        return CodeGeneric.getInstance(CacheGeneralStorage.class);
+    }
 
     public int TickCounter = 0;
 
@@ -34,7 +39,7 @@ public final class CacheGeneralStorage
 
     public volatile int _DYNAMIC_UPDATE_INTERVAL = 1200;
 
-    public final int SUBSEQUENT_UPDATE_INTERVAL = 4800;
+    public final int SUBSEQUENT_UPDATE_INTERVAL = 2400;
 
     public boolean IsFirstUpdate = true;
 
@@ -65,8 +70,6 @@ public final class CacheGeneralStorage
     public CacheGeneralStorage()
     {
 		CodeGeneric.printInitClassToLog(this.getClass());
-
-        Instance = this;
     }
 
     public void updateCache(@Nonnull World world)
