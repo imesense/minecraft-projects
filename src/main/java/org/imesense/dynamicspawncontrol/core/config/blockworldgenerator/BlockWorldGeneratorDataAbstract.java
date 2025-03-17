@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.config.dataLegacy;
+package org.imesense.dynamicspawncontrol.core.config.blockworldgenerator;
 
 import lombok.*;
 import lombok.experimental.Accessors;

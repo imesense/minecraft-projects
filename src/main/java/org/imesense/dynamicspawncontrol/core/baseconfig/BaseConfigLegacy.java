@@ -5,11 +5,11 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
 import java.io.File;
 
-public abstract class BaseConfig
+public abstract class BaseConfigLegacy
 {
     protected String nameConfig;
 
-    public BaseConfig(String nameConfigFile, final Boolean IS_CONFIG_FOLDER)
+    public BaseConfigLegacy(String nameConfigFile, final Boolean IS_CONFIG_FOLDER)
     {
         this.nameConfig = this.constructPathToDirectory(IS_CONFIG_FOLDER) + nameConfigFile;
     }
