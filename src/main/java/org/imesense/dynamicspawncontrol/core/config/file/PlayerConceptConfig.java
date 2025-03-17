@@ -15,16 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- */
 @ConceptConfig(fileName = "cfg_player")
 public final class PlayerConceptConfig extends BaseConfig
 {
-    /**
-     *
-     * @param nameConfigFile
-     */
     public PlayerConceptConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
@@ -44,9 +37,6 @@ public final class PlayerConceptConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void saveToFile()
     {
@@ -84,9 +74,6 @@ public final class PlayerConceptConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void loadFromFile()
     {

@@ -16,16 +16,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- */
 @ConceptConfig(fileName = "cfg_log_file")
 public final class LogFileConfig extends BaseConfig
 {
-    /**
-     *
-     * @param nameConfigFile
-     */
     public LogFileConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
@@ -45,9 +38,6 @@ public final class LogFileConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void saveToFile()
     {
@@ -85,9 +75,6 @@ public final class LogFileConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void loadFromFile()
     {

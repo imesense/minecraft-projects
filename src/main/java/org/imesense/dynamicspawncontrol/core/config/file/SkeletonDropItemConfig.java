@@ -15,16 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- */
 @ConceptConfig(fileName = "cfg_skeleton_drop_item")
 public final class SkeletonDropItemConfig extends BaseConfig
 {
-    /**
-     *
-     * @param nameConfigFile
-     */
     public SkeletonDropItemConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
@@ -44,9 +37,6 @@ public final class SkeletonDropItemConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void saveToFile()
     {
@@ -82,10 +72,6 @@ public final class SkeletonDropItemConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     * @return
-     */
     private static JsonObject getJsonObject()
     {
         JsonObject recordObject = new JsonObject();
@@ -117,9 +103,6 @@ public final class SkeletonDropItemConfig extends BaseConfig
         return recordObject;
     }
 
-    /**
-     *
-     */
     @Override
     public void loadFromFile()
     {

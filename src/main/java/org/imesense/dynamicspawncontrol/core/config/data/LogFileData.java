@@ -4,35 +4,16 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
 public final class LogFileData
 {
-    /**
-     *
-     */
     public static final class ConfigDataLogFile
     {
-        /**
-         *
-         */
         private final String CATEGORY;
 
-        /**
-         *
-         */
         public static ConfigDataLogFile Instance;
 
-        /**
-         *
-         */
         private Short logMaxLines = Short.MAX_VALUE;
 
-        /**
-         *
-         * @param CATEGORY
-         */
         public ConfigDataLogFile(@Nonnull final String CATEGORY)
         {
 			CodeGeneric.printInitClassToLog(this.getClass());
@@ -40,28 +21,16 @@ public final class LogFileData
             this.CATEGORY = CATEGORY;
         }
 
-        /**
-         *
-         * @return
-         */
         public Short getLogMaxLines()
         {
             return this.logMaxLines;
         }
 
-        /**
-         *
-         * @param value
-         */
         public void setLogMaxLines(Short value)
         {
             this.logMaxLines = value;
         }
 
-        /**
-         *
-         * @return
-         */
         public String getCategoryObject()
         {
             return this.CATEGORY;
