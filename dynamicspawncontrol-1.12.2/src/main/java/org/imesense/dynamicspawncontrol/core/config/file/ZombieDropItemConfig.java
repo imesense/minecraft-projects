@@ -15,16 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- */
 @ConceptConfig(fileName = "cfg_zombie_drop_item")
 public final class ZombieDropItemConfig extends BaseConfig
 {
-    /**
-     *
-     * @param nameConfigFile
-     */
     public ZombieDropItemConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
@@ -44,9 +37,6 @@ public final class ZombieDropItemConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void saveToFile()
     {
@@ -82,10 +72,6 @@ public final class ZombieDropItemConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     * @return
-     */
     private static JsonObject getJsonObject()
     {
         JsonObject recordObject = new JsonObject();
@@ -114,9 +100,6 @@ public final class ZombieDropItemConfig extends BaseConfig
         return recordObject;
     }
 
-    /**
-     *
-     */
     @Override
     public void loadFromFile()
     {

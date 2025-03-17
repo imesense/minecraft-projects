@@ -16,17 +16,11 @@ import lombok.Setter;
 @Accessors(chain = true)
 public abstract class BlockWorldGeneratorDataAbstract
 {
-    /**
-     *
-     */
     private String category;
     private Integer chanceSpawn;
     private Integer minHeight;
     private Integer maxHeight;
 
-    /**
-     *
-     */
     {
         CodeGeneric.printInitClassToLog(this.getClass());
     }

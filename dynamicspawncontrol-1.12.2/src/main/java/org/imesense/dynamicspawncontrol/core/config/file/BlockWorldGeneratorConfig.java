@@ -16,16 +16,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- */
 @ConceptConfig(fileName = "cfg_block_world_generator")
 public final class BlockWorldGeneratorConfig extends BaseConfig
 {
-    /**
-     *
-     * @param nameConfigFile
-     */
     public BlockWorldGeneratorConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
@@ -41,12 +34,6 @@ public final class BlockWorldGeneratorConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     * @param jsonObject
-     * @param blockName
-     * @param block
-     */
     public void saveBlockSettings(JsonObject jsonObject, String blockName, BlockWorldGeneratorDataAbstract block)
     {
         JsonObject jsonObjectBlockInfo = new JsonObject();
@@ -56,12 +43,6 @@ public final class BlockWorldGeneratorConfig extends BaseConfig
         jsonObject.add(blockName, jsonObjectBlockInfo);
     }
 
-    /**
-     *
-     * @param jsonObject
-     * @param blockName
-     * @param block
-     */
     public void loadBlockSettings(JsonObject jsonObject, String blockName, BlockWorldGeneratorDataAbstract block)
     {
         if (jsonObject.has(blockName))
@@ -77,9 +58,6 @@ public final class BlockWorldGeneratorConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void saveToFile()
     {
@@ -113,9 +91,6 @@ public final class BlockWorldGeneratorConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void loadFromFile()
     {

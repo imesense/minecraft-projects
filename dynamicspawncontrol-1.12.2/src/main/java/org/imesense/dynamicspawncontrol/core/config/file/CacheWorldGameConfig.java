@@ -14,16 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- */
 @ConceptConfig(fileName = "cfg_cache_world_game")
 public final class CacheWorldGameConfig extends BaseConfig
 {
-    /**
-     *
-     * @param nameConfigFile
-     */
     public CacheWorldGameConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
@@ -40,9 +33,6 @@ public final class CacheWorldGameConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void saveToFile()
     {
@@ -74,9 +64,6 @@ public final class CacheWorldGameConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void loadFromFile()
     {

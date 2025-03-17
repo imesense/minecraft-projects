@@ -15,16 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- */
 @ConceptConfig(fileName = "cfg_window_title")
 public final class WindowTitleConfig extends BaseConfig
 {
-    /**
-     *
-     * @param nameConfigFile
-     */
     public WindowTitleConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
@@ -44,9 +37,6 @@ public final class WindowTitleConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void saveToFile()
     {
@@ -85,9 +75,6 @@ public final class WindowTitleConfig extends BaseConfig
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void loadFromFile()
     {
