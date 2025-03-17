@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
+import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
@@ -15,5 +16,7 @@ public final class OnEventTickEventClientTickEvent extends BaseOnEventInstance
     public void OnTickEventClientTickEvent(TickEvent.ClientTickEvent event)
     {
         WindowTitle.getInstance().replace();
+
+        MemoryEvents.handleOnClientTick(event);
     }
 }
