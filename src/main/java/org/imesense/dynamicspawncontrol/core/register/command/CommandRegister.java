@@ -25,7 +25,8 @@ public class CommandRegister extends BaseCommandRegister
         CmdAdminSwitchVanish.class,
         CmdServerMobsKiller.class,
         CmdServerScriptReload.class,
-        CmdAdminGetDimension.class
+        CmdAdminGetDimension.class,
+        CmdClientCleanMemory.class
     };
 
     @Override

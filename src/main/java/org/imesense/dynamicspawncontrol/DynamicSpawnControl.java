@@ -13,6 +13,8 @@ import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
+import org.imesense.dynamicspawncontrol.core.memory.Configuration;
+import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
@@ -173,6 +175,11 @@ public final class DynamicSpawnControl
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
         TextColorCollection.instance = new TextColorCollection();
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
+
+        if (Configuration.cleanOnInit)
+        {
+            MemoryManager.cleanMemory();
+        }
     }
 
     /**
@@ -187,6 +194,11 @@ public final class DynamicSpawnControl
         IRecipes.registry();
 
         MinecraftForge.EVENT_BUS.register(TimeEvents.INSTANCE);
+
+        if (Configuration.cleanOnInit)
+        {
+            MemoryManager.cleanMemory();
+        }
     }
 
     /**
@@ -196,7 +208,10 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-
+        if (Configuration.cleanOnInit)
+        {
+            MemoryManager.cleanMemory();
+        }
     }
 
     /**
