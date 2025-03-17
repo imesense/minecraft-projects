@@ -1,9 +1,10 @@
-package org.imesense.dynamicspawncontrol.core.config.file;
+package org.imesense.dynamicspawncontrol.core.config.fileLegacy;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.core.config.data.PlayerData;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.config.dataLegacy.LogFileData;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 
@@ -15,17 +16,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@ConceptConfig(fileName = "cfg_player")
-public final class PlayerConceptConfig extends BaseConfig
+@ConceptConfig(fileName = "cfg_log_file")
+public final class LogFileConfig extends BaseConfig
 {
-    public PlayerConceptConfig(String nameConfigFile)
+    public LogFileConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
 		CodeGeneric.printInitClassToLog(this.getClass());
 
-        PlayerData.ConfigDataPlayer.Instance =
-                new PlayerData.ConfigDataPlayer("player");
+        LogFileData.ConfigDataLogFile.Instance =
+                new LogFileData.ConfigDataLogFile("log_file");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -55,12 +56,12 @@ public final class PlayerConceptConfig extends BaseConfig
         }
 
         JsonObject recordObject = new JsonObject();
-        JsonObject jsonObjectPlayer = new JsonObject();
+        JsonObject jsonObjectLogFile = new JsonObject();
 
-        jsonObjectPlayer.addProperty("protected_respawn_player_radius",
-                PlayerData.ConfigDataPlayer.Instance.getProtectRespawnPlayerRadius());
+        jsonObjectLogFile.addProperty("max_lines",
+                LogFileData.ConfigDataLogFile.Instance.getLogMaxLines());
 
-        recordObject.add(PlayerData.ConfigDataPlayer.Instance.getCategoryObject(), jsonObjectPlayer);
+        recordObject.add(LogFileData.ConfigDataLogFile.Instance.getCategoryObject(), jsonObjectLogFile);
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -82,20 +83,21 @@ public final class PlayerConceptConfig extends BaseConfig
             JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
             JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
 
-            if (readableObject.has(PlayerData.ConfigDataPlayer.Instance.getCategoryObject()))
+            if (readableObject.has(LogFileData.ConfigDataLogFile.Instance.getCategoryObject()))
             {
-                JsonObject jsonObjectPlayer =
-                        readableObject.getAsJsonObject(PlayerData.ConfigDataPlayer.Instance.getCategoryObject());
+                JsonObject jsonObjectLogFile =
+                        readableObject.getAsJsonObject(LogFileData.ConfigDataLogFile.Instance.
+                                getCategoryObject());
 
-                if (jsonObjectPlayer.has("protected_respawn_player_radius"))
+                if (jsonObjectLogFile.has("max_lines"))
                 {
-                    PlayerData.ConfigDataPlayer.Instance.
-                            setProtectRespawnPlayerRadius(jsonObjectPlayer.get("protected_respawn_player_radius").getAsShort());
+                    LogFileData.ConfigDataLogFile.Instance.
+                            setLogMaxLines(jsonObjectLogFile.get("max_lines").getAsShort());
                 }
             }
             else
             {
-                Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
+                Log.writeDataToLogFile(2, "'log_file' is missing in the config file.");
             }
         }
         catch (FileNotFoundException exception)

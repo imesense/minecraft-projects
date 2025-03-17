@@ -1,7 +1,6 @@
-package org.imesense.dynamicspawncontrol.core.config.file;
+package org.imesense.dynamicspawncontrol.core.config.fileLegacy;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.core.config.data.WindowTitleData;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -15,17 +14,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@ConceptConfig(fileName = "cfg_window_title")
-public final class WindowTitleConfig extends BaseConfig
+@ConceptConfig(fileName = "cfg_cache_world_game")
+public final class CacheWorldGameConfig extends BaseConfig
 {
-    public WindowTitleConfig(String nameConfigFile)
+    public CacheWorldGameConfig(String nameConfigFile)
     {
         super(nameConfigFile, Boolean.TRUE);
 
 		CodeGeneric.printInitClassToLog(this.getClass());
-
-        WindowTitleData.ConfigDataWindowTitle.Instance =
-                new WindowTitleData.ConfigDataWindowTitle("window_title");
 
         if (Files.exists(Paths.get(this.nameConfig)))
         {
@@ -54,20 +50,13 @@ public final class WindowTitleConfig extends BaseConfig
             }
         }
 
-        JsonObject recordObject = new JsonObject();
-        JsonObject jsonObjectWindowTitle = new JsonObject();
-
-        jsonObjectWindowTitle.addProperty("title",
-                WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle());
-
-        recordObject.add(WindowTitleData.ConfigDataWindowTitle.Instance.
-                getCategoryObject(), jsonObjectWindowTitle);
+        JsonObject jsonObject = new JsonObject();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try (FileWriter fileWriter = new FileWriter(this.nameConfig))
         {
-            gson.toJson(recordObject, fileWriter);
+            gson.toJson(jsonObject, fileWriter);
         }
         catch (IOException exception)
         {
@@ -80,25 +69,8 @@ public final class WindowTitleConfig extends BaseConfig
     {
         try (FileReader fileReader = new FileReader(this.nameConfig))
         {
-            JsonElement fileReaderJsonElement = new JsonParser().parse(fileReader);
-            JsonObject readableObject = fileReaderJsonElement.getAsJsonObject();
-
-            if (readableObject.has(WindowTitleData.ConfigDataWindowTitle.Instance.getCategoryObject()))
-            {
-                JsonObject jsonObjectWindowTitle =
-                        readableObject.getAsJsonObject(WindowTitleData.ConfigDataWindowTitle.
-                                Instance.getCategoryObject());
-
-                if (jsonObjectWindowTitle.has("title"))
-                {
-                    WindowTitleData.ConfigDataWindowTitle.Instance.
-                            setWindowTitle(jsonObjectWindowTitle.get("title").getAsString());
-                }
-            }
-            else
-            {
-                Log.writeDataToLogFile(2, "settings_block_nether_rack is missing in the config file.");
-            }
+            JsonElement jsonElement = new JsonParser().parse(fileReader);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
         }
         catch (FileNotFoundException exception)
         {

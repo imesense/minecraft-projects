@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register.config;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
-import org.imesense.dynamicspawncontrol.core.config.file.*;
+import org.imesense.dynamicspawncontrol.core.config.fileLegacy.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;

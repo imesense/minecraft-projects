@@ -2,10 +2,8 @@ package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.config.data.WindowTitleData;
+import org.imesense.dynamicspawncontrol.core.config.dataLegacy.WindowTitleData;
 import org.lwjgl.opengl.Display;
 
 import javax.annotation.Nonnull;

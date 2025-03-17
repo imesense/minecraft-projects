@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.logfile;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.config.data.LogFileData;
+import org.imesense.dynamicspawncontrol.core.config.dataLegacy.LogFileData;
 
 import java.io.*;
 import java.text.SimpleDateFormat;

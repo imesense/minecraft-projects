@@ -1,8 +1,8 @@
-package org.imesense.dynamicspawncontrol.core.config.file;
+package org.imesense.dynamicspawncontrol.core.config.fileLegacy;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.core.config.data.BlockWorldGeneratorDataAbstract;
-import org.imesense.dynamicspawncontrol.core.config.data.BlockWorldGeneratorData;
+import org.imesense.dynamicspawncontrol.core.config.dataLegacy.BlockWorldGeneratorDataAbstract;
+import org.imesense.dynamicspawncontrol.core.config.dataLegacy.BlockWorldGeneratorData;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
