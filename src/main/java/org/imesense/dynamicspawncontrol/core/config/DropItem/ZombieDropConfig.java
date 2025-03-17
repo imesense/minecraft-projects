@@ -9,7 +9,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 @Getter
 @Setter
 @ConceptConfig(fileName = "cfg_zombie_drop_item")
-public class ZombieDropConfig extends AbstractConfig
+public final class ZombieDropConfig extends AbstractConfig
 {
     private float breakItem = 0.15f;
     private float handItemDamageFactor = 0.85f;
@@ -18,13 +18,6 @@ public class ZombieDropConfig extends AbstractConfig
     private float legsDamageFactor = 0.9f;
     private float feetDamageFactor = 0.9f;
     private float damageSpreadFactor = 0.2f;
-
-    private static volatile ZombieDropConfig _INSTANCE;
-
-    public static ZombieDropConfig getInstance()
-    {
-        return CodeGeneric.getInstance(ZombieDropConfig.class);
-    }
 
     public ZombieDropConfig(String configPath)
     {

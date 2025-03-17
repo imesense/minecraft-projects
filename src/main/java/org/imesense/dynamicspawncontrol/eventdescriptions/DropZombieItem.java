@@ -34,19 +34,19 @@ public final class DropZombieItem
             List<EntityItem> drops = event.getDrops();
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
-                    ZombieDropConfig.getInstance().getHeadDamageFactor());
+                    ZombieDropConfig.getInstance(ZombieDropConfig.class).getHeadDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
-                    ZombieDropConfig.getInstance().getChestDamageFactor());
+                    ZombieDropConfig.getInstance(ZombieDropConfig.class).getChestDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
-                    ZombieDropConfig.getInstance().getLegsDamageFactor());
+                    ZombieDropConfig.getInstance(ZombieDropConfig.class).getLegsDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.FEET),
-                    ZombieDropConfig.getInstance().getFeetDamageFactor());
+                    ZombieDropConfig.getInstance(ZombieDropConfig.class).getFeetDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getHeldItemMainhand(),
-                    ZombieDropConfig.getInstance().getHandItemDamageFactor());
+                    ZombieDropConfig.getInstance(ZombieDropConfig.class).getHandItemDamageFactor());
         }
     }
 
@@ -54,7 +54,8 @@ public final class DropZombieItem
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (UniqueField.RANDOM.nextDouble() < ZombieDropConfig.getInstance().getBreakItem())
+            if (UniqueField.RANDOM.nextDouble() <
+                    ZombieDropConfig.getInstance(ZombieDropConfig.class).getBreakItem())
             {
                 return;
             }
@@ -66,7 +67,7 @@ public final class DropZombieItem
             {
                 int minDamage = (int) (maxDamage * damageFactor);
 
-                int damageSpread = (int) (maxDamage * ZombieDropConfig.getInstance().getDamageSpreadFactor());
+                int damageSpread = (int) (maxDamage * ZombieDropConfig.getInstance(ZombieDropConfig.class).getDamageSpreadFactor());
                 int randomDamage = minDamage + UniqueField.RANDOM.nextInt(damageSpread);
 
                 itemStack.setItemDamage(randomDamage);

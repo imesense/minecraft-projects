@@ -17,16 +17,27 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
 import java.io.File;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class AbstractConfig
 {
     private final Gson gson;
     private final String configPath;
 
+    protected static final Map<Class<? extends AbstractConfig>, AbstractConfig> INSTANCES = new ConcurrentHashMap<>();
+
     public AbstractConfig(String nameConfigFile, boolean isConfigFolder)
     {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.configPath = constructPathToDirectory(isConfigFolder) + nameConfigFile;
+
+        INSTANCES.put(this.getClass(), this);
+    }
+
+    public static <T extends AbstractConfig> T getInstance(Class<T> _class)
+    {
+        return _class.cast(INSTANCES.get(_class));
     }
 
     public void loadOrCreateConfig()

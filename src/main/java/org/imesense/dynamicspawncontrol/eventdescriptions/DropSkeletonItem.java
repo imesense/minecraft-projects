@@ -34,19 +34,19 @@ public final class DropSkeletonItem
             List<EntityItem> drops = event.getDrops();
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
-                    SkeletonDropConfig.getInstance().getHeadDamageFactor());
+                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getHeadDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
-                    SkeletonDropConfig.getInstance().getChestDamageFactor());
+                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getChestDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
-                    SkeletonDropConfig.getInstance().getLegsDamageFactor());
+                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getLegsDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET),
-                    SkeletonDropConfig.getInstance().getFeetDamageFactor());
+                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getFeetDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getHeldItemMainhand(),
-                    SkeletonDropConfig.getInstance().getHandItemDamageFactor());
+                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getHandItemDamageFactor());
 
             handleArrowDrops(skeleton, drops);
         }
@@ -65,7 +65,10 @@ public final class DropSkeletonItem
                 if (item.getItem().getItem() == Items.ARROW)
                 {
                     int currentCount = item.getItem().getCount();
-                    item.getItem().setCount(currentCount + 1 + SkeletonDropConfig.getInstance().getArrowsToDrops());
+
+                    item.getItem().setCount(currentCount + 1 +
+                            SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getArrowsToDrops());
+
                     arrowsDropped = true;
                     break;
                 }
@@ -73,16 +76,17 @@ public final class DropSkeletonItem
 
             if (!arrowsDropped)
             {
-                addArrowsToDrops(skeleton, drops, SkeletonDropConfig.getInstance().getArrowsToDrops());
+                addArrowsToDrops(skeleton, drops, SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getArrowsToDrops());
             }
         }
     }
 
-    private void addDamagedItemToDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
+    private void addDamagedItemToDrops(EntitySkeleton entitySkeleton,
+                                       List<EntityItem> drops, ItemStack originalItem, double damageFactor)
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (UniqueField.RANDOM.nextDouble() < SkeletonDropConfig.getInstance().getBreakItem())
+            if (UniqueField.RANDOM.nextDouble() < SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getBreakItem())
             {
                 return;
             }
@@ -94,7 +98,7 @@ public final class DropSkeletonItem
             {
                 int minDamage = (int) (maxDamage * damageFactor);
 
-                int damageSpread = (int) (maxDamage * SkeletonDropConfig.getInstance().getDamageSpreadFactor());
+                int damageSpread = (int) (maxDamage * SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getDamageSpreadFactor());
                 int randomDamage = minDamage + UniqueField.RANDOM.nextInt(damageSpread);
 
                 itemStack.setItemDamage(randomDamage);
