@@ -3,56 +3,80 @@ package org.imesense.dynamicspawncontrol.core.config.DropItem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 
-public abstract class AbstractConfig<T> {
+import com.google.gson.JsonObject;
 
-  // private final Class<T> configClass; // Класс конфигурации
-  // private final String filePath;     // Путь к файлу конфигурации
-  // private final Gson gson;           // Объект Gson для работы с JSON
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-  // public AbstractConfig(Class<T> configClass, String filePath) {
-  //     this.configClass = configClass;
-  //     this.filePath = filePath;
-  //     this.gson = new GsonBuilder().setPrettyPrinting().create();
-  // }
+import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
-  // // Метод для загрузки или создания конфига
-  // public T loadOrCreateConfig() {
-  //     File configFile = new File(filePath);
+import java.io.File;
 
-  //     // Если файл не существует, создаем его с дефолтными значениями
-  //     if (!configFile.exists()) {
-  //         System.out.println("Конфиг файл не найден. Создаем новый с дефолтными значениями...");
-  //         T defaultConfig = createDefaultConfig(); // Создаем дефолтный конфиг
-  //         saveConfig(defaultConfig);              // Сохраняем его в файл
-  //         return defaultConfig;
-  //     }
+public abstract class AbstractConfig
+{
+    private final Gson gson;
+    private final String configPath;
 
-  //     // Если файл существует, читаем его
-  //     try (Reader reader = new FileReader(configFile)) {
-  //         return gson.fromJson(reader, configClass); // Преобразуем JSON в объект
-  //     } catch (IOException e) {
-  //         e.printStackTrace();
-  //         return null;
-  //     }
-  // }
+    public AbstractConfig(String nameConfigFile, boolean isConfigFolder)
+    {
+        this.gson = new GsonBuilder().setPrettyPrinting().create();
+        this.configPath = constructPathToDirectory(isConfigFolder) + nameConfigFile;
+    }
 
-  // // Метод для сохранения конфига в файл
-  // public void saveConfig(T config) {
-  //     try (Writer writer = new FileWriter(filePath)) {
-  //         gson.toJson(config, writer); // Сохраняем объект в JSON-файл
-  //         System.out.println("Конфиг файл создан/обновлен: " + filePath);
-  //     } catch (IOException e) {
-  //         e.printStackTrace();
-  //     }
-  // }
+    public void loadOrCreateConfig()
+    {
+        Path path = Paths.get(configPath);
 
-  // // Абстрактный метод для создания дефолтного конфига
-  // protected abstract T createDefaultConfig();
+        if (Files.notExists(path))
+        {
+            saveConfig(createDefaultConfig());
+        }
+        else
+        {
+            loadConfig();
+        }
+    }
+
+    private void loadConfig()
+    {
+        try (FileReader reader = new FileReader(configPath))
+        {
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            applyConfig(jsonObject);
+        }
+        catch (IOException exception)
+        {
+            exception.printStackTrace();
+        }
+    }
+
+    public void saveConfig(JsonObject config)
+    {
+        try (FileWriter writer = new FileWriter(configPath))
+        {
+            gson.toJson(config, writer);
+        }
+        catch (IOException exception)
+        {
+            exception.printStackTrace();
+        }
+    }
+
+    protected String constructPathToDirectory(boolean isConfigFolder)
+    {
+        return DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
+                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator +
+                (isConfigFolder ? DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS :
+                        DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_PLUGINS) + File.separator;
+    }
+
+    protected abstract JsonObject createDefaultConfig();
+
+    protected abstract void applyConfig(JsonObject jsonObject);
 }
