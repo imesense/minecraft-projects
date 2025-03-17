@@ -119,6 +119,9 @@ dependencies
 
     // Use core mod #1 SRParasites
     implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:5370258")
+
+    // Actual version of builder GSON
+    implementation 'com.google.code.gson:gson:2.8.9'
 }
 
 // Get properties into the manifest for reading by the runtime
