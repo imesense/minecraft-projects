@@ -6,9 +6,9 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import org.imesense.dynamicspawncontrol.core.config.DropItem.ZombieDropConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.config.dataLegacy.ZombieDropItemData;
 
 import java.util.List;
 
@@ -34,19 +34,19 @@ public final class DropZombieItem
             List<EntityItem> drops = event.getDrops();
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
-                    ZombieDropItemData.ConfigDataZombieDrop.Instance.getHeadDamageFactor());
+                    ZombieDropConfig.getInstance().getHeadDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
-                    ZombieDropItemData.ConfigDataZombieDrop.Instance.getChestDamageFactor());
+                    ZombieDropConfig.getInstance().getChestDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
-                    ZombieDropItemData.ConfigDataZombieDrop.Instance.getLegsDamageFactor());
+                    ZombieDropConfig.getInstance().getLegsDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getItemStackFromSlot(EntityEquipmentSlot.FEET),
-                    ZombieDropItemData.ConfigDataZombieDrop.Instance.getFeetDamageFactor());
+                    ZombieDropConfig.getInstance().getFeetDamageFactor());
 
             addDamagedItemToDrops(zombie, drops, zombie.getHeldItemMainhand(),
-                    ZombieDropItemData.ConfigDataZombieDrop.Instance.getHandItemDamageFactor());
+                    ZombieDropConfig.getInstance().getHandItemDamageFactor());
         }
     }
 
@@ -54,7 +54,7 @@ public final class DropZombieItem
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (UniqueField.RANDOM.nextDouble() < ZombieDropItemData.ConfigDataZombieDrop.Instance.getBreakItem())
+            if (UniqueField.RANDOM.nextDouble() < ZombieDropConfig.getInstance().getBreakItem())
             {
                 return;
             }
@@ -66,7 +66,7 @@ public final class DropZombieItem
             {
                 int minDamage = (int) (maxDamage * damageFactor);
 
-                int damageSpread = (int) (maxDamage * ZombieDropItemData.ConfigDataZombieDrop.Instance.getDamageSpreadFactor());
+                int damageSpread = (int) (maxDamage * ZombieDropConfig.getInstance().getDamageSpreadFactor());
                 int randomDamage = minDamage + UniqueField.RANDOM.nextInt(damageSpread);
 
                 itemStack.setItemDamage(randomDamage);

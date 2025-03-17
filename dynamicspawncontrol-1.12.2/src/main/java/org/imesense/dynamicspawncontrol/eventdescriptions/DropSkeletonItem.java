@@ -6,9 +6,9 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import org.imesense.dynamicspawncontrol.core.config.DropItem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.config.dataLegacy.SkeletonDropItemData;
 
 import java.util.List;
 
@@ -34,19 +34,19 @@ public final class DropSkeletonItem
             List<EntityItem> drops = event.getDrops();
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
-                    SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getHeadDamageFactor());
+                    SkeletonDropConfig.getInstance().getHeadDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
-                    SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getChestDamageFactor());
+                    SkeletonDropConfig.getInstance().getChestDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
-                    SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getLegsDamageFactor());
+                    SkeletonDropConfig.getInstance().getLegsDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET),
-                    SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getFeetDamageFactor());
+                    SkeletonDropConfig.getInstance().getFeetDamageFactor());
 
             addDamagedItemToDrops(skeleton, drops, skeleton.getHeldItemMainhand(),
-                    SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getHandItemDamageFactor());
+                    SkeletonDropConfig.getInstance().getHandItemDamageFactor());
 
             handleArrowDrops(skeleton, drops);
         }
@@ -65,7 +65,7 @@ public final class DropSkeletonItem
                 if (item.getItem().getItem() == Items.ARROW)
                 {
                     int currentCount = item.getItem().getCount();
-                    item.getItem().setCount(currentCount + 1 + SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
+                    item.getItem().setCount(currentCount + 1 + SkeletonDropConfig.getInstance().getArrowsToDrops());
                     arrowsDropped = true;
                     break;
                 }
@@ -73,7 +73,7 @@ public final class DropSkeletonItem
 
             if (!arrowsDropped)
             {
-                addArrowsToDrops(skeleton, drops, SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getArrowsToDrops());
+                addArrowsToDrops(skeleton, drops, SkeletonDropConfig.getInstance().getArrowsToDrops());
             }
         }
     }
@@ -82,7 +82,7 @@ public final class DropSkeletonItem
     {
         if (originalItem.getItem() != Items.AIR)
         {
-            if (UniqueField.RANDOM.nextDouble() < SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getBreakItem())
+            if (UniqueField.RANDOM.nextDouble() < SkeletonDropConfig.getInstance().getBreakItem())
             {
                 return;
             }
@@ -94,7 +94,7 @@ public final class DropSkeletonItem
             {
                 int minDamage = (int) (maxDamage * damageFactor);
 
-                int damageSpread = (int) (maxDamage * SkeletonDropItemData.ConfigDataSkeletonDrop.Instance.getDamageSpreadFactor());
+                int damageSpread = (int) (maxDamage * SkeletonDropConfig.getInstance().getDamageSpreadFactor());
                 int randomDamage = minDamage + UniqueField.RANDOM.nextInt(damageSpread);
 
                 itemStack.setItemDamage(randomDamage);
