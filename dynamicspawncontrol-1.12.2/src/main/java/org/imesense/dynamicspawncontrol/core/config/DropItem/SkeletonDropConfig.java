@@ -10,7 +10,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 @Getter
 @Setter
 @ConceptConfig(fileName = "cfg_skeleton_drop_item")
-public class SkeletonDropConfig extends AbstractConfig
+public final class SkeletonDropConfig extends AbstractConfig
 {
     private float breakItem = 0.15f;
     private float handItemDamageFactor = 0.85f;
@@ -21,13 +21,6 @@ public class SkeletonDropConfig extends AbstractConfig
     private float damageSpreadFactor = 0.2f;
 
     private byte arrowsToDrops = (byte)(1 + UniqueField.RANDOM.nextInt(3));
-
-    private static volatile SkeletonDropConfig _INSTANCE;
-
-    public static SkeletonDropConfig getInstance()
-    {
-        return CodeGeneric.getInstance(SkeletonDropConfig.class);
-    }
 
     public SkeletonDropConfig(String configPath)
     {
