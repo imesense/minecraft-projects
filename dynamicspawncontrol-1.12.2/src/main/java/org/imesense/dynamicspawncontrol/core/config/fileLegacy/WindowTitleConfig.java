@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.config.fileLegacy;
 
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.core.config.dataLegacy.WindowTitleData;
-import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfigLegacy;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
@@ -16,7 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @ConceptConfig(fileName = "cfg_window_title")
-public final class WindowTitleConfig extends BaseConfig
+public final class WindowTitleConfig extends BaseConfigLegacy
 {
     public WindowTitleConfig(String nameConfigFile)
     {
