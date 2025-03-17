@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.config.DropItem;
+package org.imesense.dynamicspawncontrol.core.baseconfig;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,14 +20,14 @@ import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class AbstractConfig
+public abstract class BaseJsonConfig
 {
     private final Gson gson;
     private final String configPath;
 
-    protected static final Map<Class<? extends AbstractConfig>, AbstractConfig> INSTANCES = new ConcurrentHashMap<>();
+    protected static final Map<Class<? extends BaseJsonConfig>, BaseJsonConfig> INSTANCES = new ConcurrentHashMap<>();
 
-    public AbstractConfig(String nameConfigFile, boolean isConfigFolder)
+    public BaseJsonConfig(String nameConfigFile, boolean isConfigFolder)
     {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.configPath = constructPathToDirectory(isConfigFolder) + nameConfigFile;
@@ -35,7 +35,7 @@ public abstract class AbstractConfig
         INSTANCES.put(this.getClass(), this);
     }
 
-    public static <T extends AbstractConfig> T getInstance(Class<T> _class)
+    public static <T extends BaseJsonConfig> T getInstance(Class<T> _class)
     {
         return _class.cast(INSTANCES.get(_class));
     }
