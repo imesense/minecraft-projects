@@ -1,17 +1,16 @@
-package org.imesense.dynamicspawncontrol.core.config.DropItem;
+package org.imesense.dynamicspawncontrol.core.config.dropitem;
 
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
-import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @Getter
 @Setter
-@ConceptConfig(fileName = "cfg_skeleton_drop_item")
-public final class SkeletonDropConfig extends BaseJsonConfig
+@ConceptConfig(fileName = "cfg_zombie_drop_item")
+public final class ZombieDropConfig extends BaseJsonConfig
 {
     private float breakItem = 0.15f;
     private float handItemDamageFactor = 0.85f;
@@ -21,9 +20,7 @@ public final class SkeletonDropConfig extends BaseJsonConfig
     private float feetDamageFactor = 0.9f;
     private float damageSpreadFactor = 0.2f;
 
-    private byte arrowsToDrops = (byte)(1 + UniqueField.RANDOM.nextInt(3));
-
-    public SkeletonDropConfig(String configPath)
+    public ZombieDropConfig(String configPath)
     {
         super(configPath, true);
 
@@ -44,7 +41,6 @@ public final class SkeletonDropConfig extends BaseJsonConfig
         config.addProperty("legs_damage_factor", legsDamageFactor);
         config.addProperty("feet_damage_factor", feetDamageFactor);
         config.addProperty("damage_spread_factor", damageSpreadFactor);
-        config.addProperty("arrows_to_drops", arrowsToDrops);
 
         return config;
     }
@@ -85,11 +81,6 @@ public final class SkeletonDropConfig extends BaseJsonConfig
         if (jsonObject.has("damage_spread_factor"))
         {
             damageSpreadFactor = jsonObject.get("damage_spread_factor").getAsFloat();
-        }
-
-        if (jsonObject.has("arrows_to_drops"))
-        {
-            arrowsToDrops = jsonObject.get("arrows_to_drops").getAsByte();
         }
     }
 }
