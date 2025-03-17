@@ -2,8 +2,8 @@ package org.imesense.dynamicspawncontrol.core.register.config;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
 import org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorConfig;
-import org.imesense.dynamicspawncontrol.core.config.DropItem.SkeletonDropConfig;
-import org.imesense.dynamicspawncontrol.core.config.DropItem.ZombieDropConfig;
+import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;
+import org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.fileLegacy.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;

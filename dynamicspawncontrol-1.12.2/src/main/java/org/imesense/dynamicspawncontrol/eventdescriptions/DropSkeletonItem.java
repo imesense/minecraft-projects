@@ -6,7 +6,7 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import org.imesense.dynamicspawncontrol.core.config.DropItem.SkeletonDropConfig;
+import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
