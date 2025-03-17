@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.config.fileLegacy;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfigLegacy;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @ConceptConfig(fileName = "cfg_cache_world_game")
-public final class CacheWorldGameConfig extends BaseConfig
+public final class CacheWorldGameConfig extends BaseConfigLegacy
 {
     public CacheWorldGameConfig(String nameConfigFile)
     {

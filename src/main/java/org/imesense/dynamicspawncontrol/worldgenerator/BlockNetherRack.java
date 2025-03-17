@@ -9,7 +9,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.config.dataLegacy.BlockWorldGeneratorData;
+import org.imesense.dynamicspawncontrol.core.config.BlockWorldGenerator.BlockWorldGeneratorData;
 
 import java.util.Objects;
 import java.util.Random;

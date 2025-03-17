@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.config.fileLegacy;
 
 import com.google.gson.*;
-import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfig;
+import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfigLegacy;
 import org.imesense.dynamicspawncontrol.core.config.dataLegacy.LogFileData;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @ConceptConfig(fileName = "cfg_log_file")
-public final class LogFileConfig extends BaseConfig
+public final class LogFileConfig extends BaseConfigLegacy
 {
     public LogFileConfig(String nameConfigFile)
     {

@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register.config;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
+import org.imesense.dynamicspawncontrol.core.config.BlockWorldGenerator.BlockWorldGeneratorConfig;
 import org.imesense.dynamicspawncontrol.core.config.DropItem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.DropItem.ZombieDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.fileLegacy.*;
