@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2;
 
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.config.DataTimeControl;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -11,8 +11,8 @@ import java.util.Collections;
  */
 public class Numbers {
     static final long night_start = 12000L;
-    private static final double day_multiplier = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getDayLengthMinutes());
-    private static final double night_multiplier = multiplier(DataTimeControl.ConfigDataWorldTime.Instance.getNightLengthMinutes());
+    private static final double day_multiplier = multiplier(PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).getDayLengthMinutes());
+    private static final double night_multiplier = multiplier(PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).getNightLengthMinutes());
     private static final int irl_hour_offset = 6;
     private static final double irl_minute_multiplier = 16.94D;
 

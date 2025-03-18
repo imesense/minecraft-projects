@@ -15,7 +15,7 @@ import java.util.Map;
 @Getter
 @Setter
 @ConceptConfig(fileName = "plugin_cfg_webslinger_1_12_2_2_2_4")
-public class PluginWebslingerConfig extends BaseJsonConfig
+public final class PluginWebslingerConfig extends BaseJsonConfig
 {
     private boolean blockWebReplacement = true;
     private float webMeleeChance = 0.15f;
@@ -33,9 +33,9 @@ public class PluginWebslingerConfig extends BaseJsonConfig
         return entityIdPriorityMap.getOrDefault(entityId, -1);
     }
 
-    public PluginWebslingerConfig(String nameConfigFile)
+    public PluginWebslingerConfig(String configPath)
     {
-        super(nameConfigFile, false);
+        super(configPath, false);
 
         CodeGeneric.printInitClassToLog(this.getClass());
 

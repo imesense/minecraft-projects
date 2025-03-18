@@ -10,7 +10,6 @@ import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.config.CfgTimeControl;
 
 public final class ConfigRegister extends BaseConfigRegister
 {
@@ -28,7 +27,6 @@ public final class ConfigRegister extends BaseConfigRegister
         PlayerConfig.class,
         MainWindowTitleConfig.class,
         BlockWorldGeneratorConfig.class,
-        CfgTimeControl.class,
         ZombieDropConfig.class,
         SkeletonDropConfig.class,
         CfgFogWorld.class

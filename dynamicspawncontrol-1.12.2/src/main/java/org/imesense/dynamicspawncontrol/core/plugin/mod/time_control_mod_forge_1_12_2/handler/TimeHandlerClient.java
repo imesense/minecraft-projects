@@ -3,10 +3,10 @@ package org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_
 import net.minecraft.world.World;
 
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.Numbers;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.config.DataTimeControl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
 public class TimeHandlerClient implements ITimeHandler {
     private static final Logger log = LogManager.getLogger(TimeHandlerClient.class.getSimpleName());
@@ -15,7 +15,7 @@ public class TimeHandlerClient implements ITimeHandler {
     private double multiplier = 0.0D;
 
     public void tick(World world) {
-        if (!DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime()) {
+        if (!PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isSyncToSystemTime()) {
             ++this.debugLogDelay;
             if (this.multiplier == 0.0D && this.debugLogDelay % 20 == 0) {
                 log.info("Waiting for server time packet...");
@@ -24,7 +24,7 @@ public class TimeHandlerClient implements ITimeHandler {
 
             ++this.customtime;
             Numbers.setWorldtime(world, this.customtime, this.multiplier);
-            if (DataTimeControl.ConfigDataWorldTime.Instance.getTimeControlDebug() && this.debugLogDelay % 20 == 0) {
+            if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug() && this.debugLogDelay % 20 == 0) {
                 long worldtime = world.getWorldTime();
                 log.info(String.format("Client time: %s | multiplier: %s | gamerules: %s, %s", worldtime, this.multiplier, world.getGameRules().getBoolean("doDaylightCycle"), world.getGameRules().getBoolean("doDaylightCycle_tc")));
             }
