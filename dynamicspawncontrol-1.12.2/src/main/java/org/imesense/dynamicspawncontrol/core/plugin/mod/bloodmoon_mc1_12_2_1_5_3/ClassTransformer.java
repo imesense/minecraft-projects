@@ -11,18 +11,8 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;
 
-/**
- *
- */
 public final class ClassTransformer implements IClassTransformer
 {
-    /**
-     *
-     * @param name
-     * @param transformedName
-     * @param basicClass
-     * @return
-     */
     public byte[] transform(String name, String transformedName, byte... basicClass)
     {
         if (transformedName.equals("net.minecraft.client.renderer.EntityRenderer"))
@@ -35,11 +25,6 @@ public final class ClassTransformer implements IClassTransformer
         }
     }
 
-    /**
-     *
-     * @param basicClass
-     * @return
-     */
     private byte[] patchWorld(byte... basicClass)
     {
         ClassNode classNode = new ClassNode();

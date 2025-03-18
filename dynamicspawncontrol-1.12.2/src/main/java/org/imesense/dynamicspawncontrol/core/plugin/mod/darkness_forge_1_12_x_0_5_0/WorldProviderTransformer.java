@@ -16,73 +16,36 @@ import org.objectweb.asm.commons.GeneratorAdapter;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 
-/**
- *
- */
 public final class WorldProviderTransformer implements IClassTransformer
 {
-    /**
-     *
-     */
     private static final String WORLD_PROVIDER =
             "net.minecraft.world.WorldProvider";
 
-    /**
-     *
-     */
     private static final String WORLD_PROVIDER_END =
             "net.minecraft.world.WorldProviderEnd";
 
-    /**
-     *
-     */
     private static final String WORLD_PROVIDER_HELL =
             "net.minecraft.world.WorldProviderHell";
 
-    /**
-     *
-     */
     private static final String GET_FOG_COLOR_OWNER =
             WORLD_PROVIDER.replace('.', '/');
 
-    /**
-     *
-     */
     private static final String GET_FOG_COLOR_DESC =
             "(FF)Lnet/minecraft/util/math/Vec3d;";
 
-    /**
-     *
-     */
     private static final String GET_FOG_COLOR_NAME =
             FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(
                     GET_FOG_COLOR_OWNER, "func_76562_b", GET_FOG_COLOR_DESC);
 
-    /**
-     *
-     */
     private static final String WORLD_PROVIDER_HOOKS =
             WorldProviderHook.class.getName().replace('.', '/');
 
-    /**
-     *
-     */
     private static final String ON_GET_FOG_COLOR_DESC =
             "(Lnet/minecraft/world/WorldProvider;FF)Lnet/minecraft/util/math/Vec3d;";
 
-    /**
-     *
-     */
     private static final String ON_GET_FOG_COLOR_NAME =
             "onGetFogColor";
 
-    /**
-     *
-     * @param name
-     * @param transformedName
-     * @param basicClass
-     * @return
-     */
     @Override
     public byte[] transform(String name, String transformedName, byte... basicClass)
     {
