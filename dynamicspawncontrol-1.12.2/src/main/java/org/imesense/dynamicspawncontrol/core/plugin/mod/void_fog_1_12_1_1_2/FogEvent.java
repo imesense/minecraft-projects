@@ -15,16 +15,23 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.lwjgl.opengl.GLContext;
 
 public class FogEvent
 {
     int dimensionIdVoid = 255;
 
-    @SubscribeEvent
-    public void particles(TickEvent.ClientTickEvent event) {
+    private static volatile FogEvent _INSTANCE;
+
+    public static FogEvent getInstance()
+    {
+        return CodeGeneric.getInstance(FogEvent.class);
+    }
+
+    //@SubscribeEvent
+    public void handleFogVoidParticles(TickEvent.ClientTickEvent event) {
         if (/*!ConfigHandler.enabled ||*/ Minecraft.getMinecraft().isGamePaused()) {
             return;
         }
@@ -51,8 +58,8 @@ public class FogEvent
         }
     }
 
-    @SubscribeEvent
-    public void render(EntityViewRenderEvent.RenderFogEvent event) {
+    //@SubscribeEvent
+    public void handleFogVoidRender(EntityViewRenderEvent.RenderFogEvent event) {
         //if (!ConfigHandler.enabled) {
         //    return;
        // }
@@ -95,8 +102,8 @@ public class FogEvent
         }
     }
 
-    @SubscribeEvent
-    public void color(EntityViewRenderEvent.FogColors e) {
+    //@SubscribeEvent
+    public void handleFogVoidColor(EntityViewRenderEvent.FogColors e) {
         /*if (!ConfigHandler.enabled) {
             return;
         }*/
