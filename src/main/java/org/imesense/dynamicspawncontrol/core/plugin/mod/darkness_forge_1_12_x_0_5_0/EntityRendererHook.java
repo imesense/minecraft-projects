@@ -8,63 +8,30 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.DataDarkness;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.config.DataDarkness;
 
 import java.lang.reflect.Field;
 
-/**
- *
- */
 public final class EntityRendererHook
 {
-    /**
-     *
-     */
-    static Field mcField;
+    private static Field mcField;
 
-    /**
-     *
-     */
-    static Field gameSettingsField;
+    private static Field gameSettingsField;
 
-    /**
-     *
-     */
-    static Field gammaSettingField;
+    private static Field gammaSettingField;
 
-    /**
-     *
-     */
-    static Field torchFlickerXField;
+    private static Field torchFlickerXField;
 
-    /**
-     *
-     */
-    static Field lightmapColorsField;
+    private static Field lightmapColorsField;
 
-    /**
-     *
-     */
-    static Field bossColorModifierField;
+    private static Field bossColorModifierField;
 
-    /**
-     *
-     */
-    static Field lightmapUpdateNeededField;
+    private static Field lightmapUpdateNeededField;
 
-    /**
-     *
-     */
-    static Field bossColorModifierPrevField;
+    private static Field bossColorModifierPrevField;
 
-    /**
-     *
-     * @param entityRenderer
-     * @param partialTicks
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
-     */
-    public static void onUpdateLightmap(EntityRenderer entityRenderer, float partialTicks) throws NoSuchFieldException, IllegalAccessException
+    public static void onUpdateLightmap(EntityRenderer entityRenderer,
+                                        float partialTicks) throws NoSuchFieldException, IllegalAccessException
     {
         Class<?> _class = entityRenderer.getClass();
 
@@ -114,11 +81,6 @@ public final class EntityRendererHook
         updateLuminance(entityRenderer, partialTicks, world);
     }
 
-    /**
-     *
-     * @param worldProvider
-     * @return
-     */
     private static boolean blacklistDim(WorldProvider worldProvider)
     {
         DimensionType dimensionType = worldProvider.getDimensionType();
@@ -132,13 +94,8 @@ public final class EntityRendererHook
         return blacklistContains(worldProvider, dimensionType) ^ DataDarkness.ConfigDataRenderNight.Instance.getInvertBlacklist();
     }
 
-    /**
-     *
-     * @param worldProvider
-     * @param dimensionType
-     * @return
-     */
-    private static boolean blacklistContains(WorldProvider worldProvider, DimensionType dimensionType)
+    private static boolean blacklistContains(WorldProvider worldProvider,
+                                             DimensionType dimensionType)
     {
         String dimensionTypeName = dimensionType.getName();
 
@@ -168,13 +125,8 @@ public final class EntityRendererHook
         return false;
     }
 
-    /**
-     *
-     * @param worldProvider
-     * @param dimensionType
-     * @return
-     */
-    private static boolean isDark(WorldProvider worldProvider, DimensionType dimensionType)
+    private static boolean isDark(WorldProvider worldProvider,
+                                  DimensionType dimensionType)
     {
         if (dimensionType == DimensionType.OVERWORLD)
         {
@@ -198,12 +150,6 @@ public final class EntityRendererHook
         }
     }
 
-    /**
-     *
-     * @param partialTicks
-     * @param world
-     * @return
-     */
     private static float getMoonBrightness(float partialTicks, World world)
     {
         WorldProvider worldProvider = world.provider;
@@ -262,15 +208,9 @@ public final class EntityRendererHook
         return linear(w * w, (float) moon, 1.f);
     }
 
-    /**
-     *
-     * @param entityRenderer
-     * @param partialTicks
-     * @param world
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
-     */
-    private static void updateLuminance(EntityRenderer entityRenderer, float partialTicks, World world) throws NoSuchFieldException, IllegalAccessException
+    private static void updateLuminance(EntityRenderer entityRenderer,
+                                        float partialTicks,
+                                        World world) throws NoSuchFieldException, IllegalAccessException
     {
         WorldProvider worldProvider = world.provider;
         DimensionType dimensionType = worldProvider.getDimensionType();
@@ -449,12 +389,6 @@ public final class EntityRendererHook
         }
     }
 
-    /**
-     *
-     * @param color
-     * @param lightTarget
-     * @return
-     */
     private static int darken(int color, float lightTarget)
     {
         float r = (color & 0xFF) / 255.f;
@@ -482,25 +416,11 @@ public final class EntityRendererHook
         return color;
     }
 
-    /**
-     *
-     * @param red
-     * @param green
-     * @param blue
-     * @return
-     */
     private static float luminance(float red, float green, float blue)
     {
         return red * 0.2126f + green * 0.7152f + blue * 0.0722f;
     }
 
-    /**
-     *
-     * @param t
-     * @param start
-     * @param end
-     * @return
-     */
     private static float linear(float t, float start, float end)
     {
         return start + t * (end - start);

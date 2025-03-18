@@ -15,87 +15,44 @@ import org.objectweb.asm.commons.GeneratorAdapter;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 
-/**
- *
- */
 public final class EntityRendererTransformer implements IClassTransformer
 {
-    /**
-     *
-     */
     private static final String ENTITY_RENDERER =
             "net.minecraft.client.renderer.EntityRenderer";
 
-    /**
-     *
-     */
     private static final String UPDATE_LIGHTMAP_OWNER =
             ENTITY_RENDERER.replace(".", "/");
 
-    /**
-     *
-     */
     private static final String UPDATE_LIGHTMAP_DESC =
             "(F)V";
 
-    /**
-     *
-     */
     private static final String UPDATE_LIGHTMAP_NAME =
             FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(
                     UPDATE_LIGHTMAP_OWNER, "func_78472_g", UPDATE_LIGHTMAP_DESC);
 
-    /**
-     *
-     */
     private static final String DYNAMIC_TEXTURE =
             "net.minecraft.client.renderer.texture.DynamicTexture";
 
-    /**
-     *
-     */
     private static final String UPDATE_DYNAMIC_TEXTURE_OWNER =
             DYNAMIC_TEXTURE.replace(".", "/");
 
-    /**
-     *
-     */
     private static final String UPDATE_DYNAMIC_TEXTURE_DESC =
             "()V";
 
-    /**
-     *
-     */
     private static final String UPDATE_DYNAMIC_TEXTURE_NAME =
             FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(
                     UPDATE_DYNAMIC_TEXTURE_OWNER, "func_110564_a",
                         UPDATE_DYNAMIC_TEXTURE_DESC);
 
-    /**
-     *
-     */
     private static final String ENTITY_RENDERER_HOOKS =
             EntityRendererHook.class.getName().replace('.', '/');
 
-    /**
-     *
-     */
     private static final String ON_UPDATE_LIGHTMAP_DESC =
             "(Lnet/minecraft/client/renderer/EntityRenderer;F)V";
 
-    /**
-     *
-     */
     private static final String ON_UPDATE_LIGHTMAP_NAME =
             "onUpdateLightmap";
 
-    /**
-     *
-     * @param name
-     * @param transformedName
-     * @param basicClass
-     * @return
-     */
     @Override
     public byte[] transform(String name, String transformedName, byte... basicClass)
     {

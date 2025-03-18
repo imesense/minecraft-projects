@@ -2,7 +2,6 @@ package org.imesense.dynamicspawncontrol.core.register.event.living;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.living.*;
-import org.imesense.dynamicspawncontrol.plugin.webslinger_1_12_2_2_2_4.capability.EventHandler;
 
 public final class EventLivingRegister extends BaseEventRegister
 {
