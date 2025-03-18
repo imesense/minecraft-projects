@@ -43,17 +43,17 @@ public final class PluginDarknessConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        config.addProperty("darknessOverWorld", darknessOverWorld);
-        config.addProperty("darknessNether", darknessNether);
-        config.addProperty("darknessEnd", darknessEnd);
-        config.addProperty("darknessDefault", darknessDefault);
-        config.addProperty("darknessSkyLess", darknessSkyLess);
-        config.addProperty("darknessNetherFog", darknessNetherFog);
-        config.addProperty("darknessEndFog", darknessEndFog);
-        config.addProperty("ignoreMoonLight", ignoreMoonLight);
-        config.addProperty("invertBlacklist", invertBlacklist);
+        jsonObject.addProperty("darknessOverWorld", darknessOverWorld);
+        jsonObject.addProperty("darknessNether", darknessNether);
+        jsonObject.addProperty("darknessEnd", darknessEnd);
+        jsonObject.addProperty("darknessDefault", darknessDefault);
+        jsonObject.addProperty("darknessSkyLess", darknessSkyLess);
+        jsonObject.addProperty("darknessNetherFog", darknessNetherFog);
+        jsonObject.addProperty("darknessEndFog", darknessEndFog);
+        jsonObject.addProperty("ignoreMoonLight", ignoreMoonLight);
+        jsonObject.addProperty("invertBlacklist", invertBlacklist);
 
         JsonArray blacklistByIDArray = new JsonArray();
 
@@ -62,7 +62,7 @@ public final class PluginDarknessConfig extends BaseJsonConfig
             blacklistByIDArray.add(id);
         }
 
-        config.add("blacklistByID", blacklistByIDArray);
+        jsonObject.add("blacklistByID", blacklistByIDArray);
 
         JsonArray moonPhaseFactorsArray = new JsonArray();
 
@@ -71,7 +71,7 @@ public final class PluginDarknessConfig extends BaseJsonConfig
             moonPhaseFactorsArray.add(factor);
         }
 
-        config.add("moonPhaseFactors", moonPhaseFactorsArray);
+        jsonObject.add("moonPhaseFactors", moonPhaseFactorsArray);
 
         JsonArray blacklistByNameArray = new JsonArray();
 
@@ -80,9 +80,9 @@ public final class PluginDarknessConfig extends BaseJsonConfig
             blacklistByNameArray.add(name);
         }
 
-        config.add("blacklistByName", blacklistByNameArray);
+        jsonObject.add("blacklistByName", blacklistByNameArray);
 
-        return config;
+        return jsonObject;
     }
 
     @Override

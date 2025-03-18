@@ -14,9 +14,9 @@ public final class PlayerConfig extends BaseJsonConfig
 {
     private short protectRespawnPlayerRadius = 15;
 
-    public PlayerConfig(String nameConfigFile)
+    public PlayerConfig(String configPath)
     {
-        super(nameConfigFile, true);
+        super(configPath, true);
 
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -26,11 +26,11 @@ public final class PlayerConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        config.addProperty("protected_respawn_player_radius", protectRespawnPlayerRadius);
+        jsonObject.addProperty("protected_respawn_player_radius", protectRespawnPlayerRadius);
 
-        return config;
+        return jsonObject;
     }
 
     @Override

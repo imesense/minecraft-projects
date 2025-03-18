@@ -9,9 +9,9 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 @ConceptConfig(fileName = "cfg_block_world_generator")
 public final class BlockWorldGeneratorConfig extends BaseJsonConfig
 {
-    public BlockWorldGeneratorConfig(String nameConfigFile)
+    public BlockWorldGeneratorConfig(String configPath)
     {
-        super(nameConfigFile, true);
+        super(configPath, true);
 
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -21,13 +21,13 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        saveBlockSettings(config, BlockWorldGeneratorData.NETHER_RACK);
-        saveBlockSettings(config, BlockWorldGeneratorData.MOSSY_COBBLESTONE);
-        saveBlockSettings(config, BlockWorldGeneratorData.MONSTER_EGG);
+        saveBlockSettings(jsonObject, BlockWorldGeneratorData.NETHER_RACK);
+        saveBlockSettings(jsonObject, BlockWorldGeneratorData.MOSSY_COBBLESTONE);
+        saveBlockSettings(jsonObject, BlockWorldGeneratorData.MONSTER_EGG);
 
-        return config;
+        return jsonObject;
     }
 
     @Override
@@ -38,30 +38,43 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
         loadBlockSettings(jsonObject, BlockWorldGeneratorData.MONSTER_EGG);
     }
 
-    private void saveBlockSettings(JsonObject jsonObject, BlockWorldGeneratorDataAbstract block)
+    private void saveBlockSettings(JsonObject jsonObject, BlockWorldGeneratorDataAbstract blockWorldGeneratorDataAbstract)
     {
         JsonObject blockSettings = new JsonObject();
 
-        blockSettings.addProperty("chance_spawn", block.getChanceSpawn());
-        blockSettings.addProperty("min_height", block.getMinHeight());
-        blockSettings.addProperty("max_height", block.getMaxHeight());
+        blockSettings.addProperty("chance_spawn",
+                blockWorldGeneratorDataAbstract.getChanceSpawn());
 
-        jsonObject.add(block.getCategory(), blockSettings);
+        blockSettings.addProperty("min_height",
+                blockWorldGeneratorDataAbstract.getMinHeight());
+
+        blockSettings.addProperty("max_height",
+                blockWorldGeneratorDataAbstract.getMaxHeight());
+
+        jsonObject.add(blockWorldGeneratorDataAbstract.getCategory(),
+                blockSettings);
     }
 
-    private void loadBlockSettings(JsonObject jsonObject, BlockWorldGeneratorDataAbstract block)
+    private void loadBlockSettings(JsonObject jsonObject, BlockWorldGeneratorDataAbstract blockWorldGeneratorDataAbstract)
     {
-        if (jsonObject.has(block.getCategory()))
+        if (jsonObject.has(blockWorldGeneratorDataAbstract.getCategory()))
         {
-            JsonObject blockSettings = jsonObject.getAsJsonObject(block.getCategory());
+            JsonObject blockSettings =
+                    jsonObject.getAsJsonObject(blockWorldGeneratorDataAbstract.getCategory());
 
-            block.setChanceSpawn(blockSettings.get("chance_spawn").getAsInt());
-            block.setMinHeight(blockSettings.get("min_height").getAsInt());
-            block.setMaxHeight(blockSettings.get("max_height").getAsInt());
+            blockWorldGeneratorDataAbstract.
+                    setChanceSpawn(blockSettings.get("chance_spawn").getAsInt());
+
+            blockWorldGeneratorDataAbstract.
+                    setMinHeight(blockSettings.get("min_height").getAsInt());
+
+            blockWorldGeneratorDataAbstract.
+                    setMaxHeight(blockSettings.get("max_height").getAsInt());
         }
         else
         {
-            Log.writeDataToLogFile(2, block.getCategory() + " is missing in the config file.");
+            Log.writeDataToLogFile(2,
+                    blockWorldGeneratorDataAbstract.getCategory() + " is missing in the config file.");
         }
     }
 }

@@ -11,7 +11,6 @@ import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.config.CfgTimeControl;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.config.CfgWebSlinger;
 
 public final class ConfigRegister extends BaseConfigRegister
 {
@@ -32,7 +31,6 @@ public final class ConfigRegister extends BaseConfigRegister
         CfgTimeControl.class,
         ZombieDropConfig.class,
         SkeletonDropConfig.class,
-        CfgWebSlinger.class,
         CfgFogWorld.class
     };
 

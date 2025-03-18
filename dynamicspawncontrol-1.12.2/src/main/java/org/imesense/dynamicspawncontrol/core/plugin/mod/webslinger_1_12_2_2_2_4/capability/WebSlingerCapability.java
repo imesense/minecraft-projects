@@ -13,9 +13,9 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.AIWebbingAttack;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.EntityWebbing;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.wumpleutil_1_12_2_2_12_9.util.adapter.EntityThingBase;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.wumpleutil_1_12_2_2_12_9.util.adapter.IThingBase;
 
@@ -69,7 +69,7 @@ public final class WebSlingerCapability implements IWebSlinger
 
     private void initialize(int taskPriority)
     {
-        if (DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingWebbing())
+        if (PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).isSlingWebbing())
         {
             EntityLiving entityLiving = this.getOwner();
 
@@ -116,7 +116,7 @@ public final class WebSlingerCapability implements IWebSlinger
     {
         World world = target.world;
 
-        if (!(DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getWebMeleeChance() <= world.rand.nextDouble()))
+        if (!(PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).getWebMeleeChance() <= world.rand.nextDouble()))
         {
             if (immediateSource != null)
             {

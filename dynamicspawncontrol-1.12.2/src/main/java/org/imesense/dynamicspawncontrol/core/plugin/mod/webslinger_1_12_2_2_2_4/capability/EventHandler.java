@@ -5,8 +5,8 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.wumpleutil_1_12_2_2_12_9.util.container.SimpleCapabilityProvider;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.wumpleutil_1_12_2_2_12_9.util.adapter.EntityThingBase;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.wumpleutil_1_12_2_2_12_9.util.adapter.IThingBase;
@@ -64,7 +64,7 @@ public final class EventHandler
             if (resourceLocation != null)
             {
                 int priority =
-                        DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getEntityPriority(resourceLocation.toString());
+                        PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).searchEntityPriority(resourceLocation.toString());
 
                 if (priority > 0)
                 {
