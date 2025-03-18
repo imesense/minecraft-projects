@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.logfile;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.config.dataLegacy.LogFileData;
+import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -97,7 +97,7 @@ public final class Log
                     int logLevel = (LEVEL_INFO < 0 || LEVEL_INFO >= LEVEL_PREFIXES.length) ? 0 : LEVEL_INFO;
 
                     Files.write(logFile.toPath(), ("\n" + LEVEL_PREFIXES[logLevel] + data).getBytes(), StandardOpenOption.APPEND);
-                    cleanFile(logFile, LogFileData.ConfigDataLogFile.Instance.getLogMaxLines());
+                    cleanFile(logFile, LogFileConfig.getInstance(LogFileConfig.class).getLogMaxLines());
                 } catch (IOException ignored) {}
             });
         }
