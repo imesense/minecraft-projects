@@ -7,6 +7,7 @@ import org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.fileLegacy.*;
 import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
 import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig;
+import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
 import org.imesense.dynamicspawncontrol.plugin.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
@@ -25,7 +26,7 @@ public final class ConfigRegister extends BaseConfigRegister
 
     private static final Class<?>[] CONFIG_CLASSES =
     {
-        CacheWorldGameConfig.class,
+        WorldCacheConfig.class,
         LogFileConfig.class,
         PlayerConceptConfig.class,
         CfgDarkness.class,
