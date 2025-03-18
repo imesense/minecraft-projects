@@ -9,7 +9,6 @@ import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleCo
 import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
 
 public final class ConfigRegister extends BaseConfigRegister
 {
@@ -28,8 +27,7 @@ public final class ConfigRegister extends BaseConfigRegister
         MainWindowTitleConfig.class,
         BlockWorldGeneratorConfig.class,
         ZombieDropConfig.class,
-        SkeletonDropConfig.class,
-        CfgFogWorld.class
+        SkeletonDropConfig.class
     };
 
     @Override
