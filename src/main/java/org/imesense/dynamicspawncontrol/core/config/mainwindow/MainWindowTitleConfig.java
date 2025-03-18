@@ -30,11 +30,11 @@ public final class MainWindowTitleConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        config.addProperty("main_window_title", windowTitle);
+        jsonObject.addProperty("main_window_title", windowTitle);
 
-        return config;
+        return jsonObject;
     }
 
     @Override

@@ -15,8 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.ObjectHandlerClient;
 
 public final class EntityWebbing extends EntityThrowable
@@ -56,7 +56,7 @@ public final class EntityWebbing extends EntityThrowable
 
             if (result.typeOfHit == RayTraceResult.Type.BLOCK)
             {
-                if (!DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingWebbingOnWeb())
+                if (!PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).isSlingWebbingOnWeb())
                 {
                     IBlockState state = this.world.getBlockState(result.getBlockPos());
                     Block oldBlock = state.getBlock();
@@ -98,7 +98,8 @@ public final class EntityWebbing extends EntityThrowable
         if (!worldIn.isRemote)
         {
             entity = new EntityWebbing(worldIn, entityIn);
-            Float inaccuracy = DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingInaccuracy();
+            float inaccuracy = PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).getSlingInaccuracy();
+
             entity.shoot(entityIn, entityIn.rotationPitch, entityIn.rotationYaw, 0.0f, 1.1f, inaccuracy);
             worldIn.spawnEntity(entity);
         }
@@ -112,7 +113,8 @@ public final class EntityWebbing extends EntityThrowable
         Block oldBlock = state.getBlock();
 
         boolean stick = oldBlock.isReplaceable(world, pos) &&
-                (DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getBlockWebReplacement() || oldBlock.isAir(state, world, pos));
+                (PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).isBlockWebReplacement() ||
+                        oldBlock.isAir(state, world, pos));
 
         if (!stick)
         {

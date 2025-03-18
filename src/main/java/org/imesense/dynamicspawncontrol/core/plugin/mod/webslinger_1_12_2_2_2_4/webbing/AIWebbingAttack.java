@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.config.DataWebSlinger;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig;
 
 public final class AIWebbingAttack extends EntityAIBase
 {
@@ -53,14 +53,14 @@ public final class AIWebbingAttack extends EntityAIBase
 
             ++this.attackTimer;
 
-            if (this.attackTimer >= DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingCoolDown())
+            if (this.attackTimer >= PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).getSlingCoolDown())
             {
                 EntityWebbing.sling(world, this.entityLiving);
 
                 double coolDown =
-                        DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingCoolDown() +
-                                (DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingCoolDown() *
-                                        world.rand.nextDouble()) * DataWebSlinger.ConfigDataSpiderAttackWeb.Instance.getSlingVariance();
+                        PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).getSlingCoolDown() +
+                                (PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).getSlingCoolDown() *
+                                        world.rand.nextDouble()) * PluginWebslingerConfig.getInstance(PluginWebslingerConfig.class).getSlingVariance();
 
                 this.attackTimer = this.attackTimer - coolDown;
             }

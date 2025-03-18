@@ -15,9 +15,9 @@ public final class LogFileConfig extends BaseJsonConfig
 {
     private short logMaxLines = Short.MAX_VALUE;
 
-    public LogFileConfig(String nameConfigFile)
+    public LogFileConfig(String configPath)
     {
-        super(nameConfigFile, true);
+        super(configPath, true);
 
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -28,11 +28,11 @@ public final class LogFileConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        config.addProperty("log_max_lines", logMaxLines);
+        jsonObject.addProperty("log_max_lines", logMaxLines);
 
-        return config;
+        return jsonObject;
     }
 
     @Override

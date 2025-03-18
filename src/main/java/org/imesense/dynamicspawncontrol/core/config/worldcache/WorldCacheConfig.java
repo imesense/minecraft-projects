@@ -12,9 +12,9 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 @ConceptConfig(fileName = "cfg_cache_world")
 public final class WorldCacheConfig extends BaseJsonConfig
 {
-    public WorldCacheConfig(String nameConfigFile)
+    public WorldCacheConfig(String configPath)
     {
-        super(nameConfigFile, true);
+        super(configPath, true);
 
         CodeGeneric.printInitClassToLog(this.getClass());
 
@@ -24,9 +24,9 @@ public final class WorldCacheConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        return config;
+        return jsonObject;
     }
 
     @Override
