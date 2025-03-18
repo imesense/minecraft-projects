@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import org.imesense.dynamicspawncontrol.core.config.dataLegacy.PlayerData;
+import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
@@ -59,7 +59,8 @@ public final class PlayerNetwork
         World world = player.world;
         BlockPos playerPos = player.getPosition();
 
-        int radius = PlayerData.ConfigDataPlayer.Instance.getProtectRespawnPlayerRadius();
+        int radius =
+                PlayerConfig.getInstance(PlayerConfig.class).getProtectRespawnPlayerRadius();
 
         AxisAlignedBB area = new AxisAlignedBB(
                 playerPos.add(-radius, -radius, -radius),
