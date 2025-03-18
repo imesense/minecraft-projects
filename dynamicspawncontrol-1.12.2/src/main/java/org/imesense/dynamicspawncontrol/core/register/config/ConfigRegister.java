@@ -9,7 +9,6 @@ import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleCo
 import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.config.CfgFogWorld;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.config.CfgTimeControl;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.config.CfgWebSlinger;
@@ -28,7 +27,6 @@ public final class ConfigRegister extends BaseConfigRegister
         WorldCacheConfig.class,
         LogFileConfig.class,
         PlayerConfig.class,
-        CfgDarkness.class,
         MainWindowTitleConfig.class,
         BlockWorldGeneratorConfig.class,
         CfgTimeControl.class,

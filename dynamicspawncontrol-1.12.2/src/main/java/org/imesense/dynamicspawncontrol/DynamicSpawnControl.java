@@ -19,6 +19,7 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
+import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
@@ -165,6 +166,8 @@ public final class DynamicSpawnControl
         PlayerInWebMessage.register(networkWrapper);
 
         ConfigRegister.getInstance().initializeConfigs();
+        PluginConfigRegister.getInstance().initializeConfigs();
+
         WorldGeneratorRegister.getInstance().init(event);
 
         ParserRegister.getInstance().init();
