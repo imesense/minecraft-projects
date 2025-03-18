@@ -8,27 +8,27 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.config.DataDarkness;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig;
 
 import java.lang.reflect.Field;
 
 public final class EntityRendererHook
 {
-    private static Field mcField;
+    static Field mcField;
 
-    private static Field gameSettingsField;
+    static Field gameSettingsField;
 
-    private static Field gammaSettingField;
+    static Field gammaSettingField;
 
-    private static Field torchFlickerXField;
+    static Field torchFlickerXField;
 
-    private static Field lightmapColorsField;
+    static Field lightmapColorsField;
 
-    private static Field bossColorModifierField;
+    static Field bossColorModifierField;
 
-    private static Field lightmapUpdateNeededField;
+    static Field lightmapUpdateNeededField;
 
-    private static Field bossColorModifierPrevField;
+    static Field bossColorModifierPrevField;
 
     public static void onUpdateLightmap(EntityRenderer entityRenderer,
                                         float partialTicks) throws NoSuchFieldException, IllegalAccessException
@@ -86,12 +86,12 @@ public final class EntityRendererHook
         DimensionType dimensionType = worldProvider.getDimensionType();
 
         if (dimensionType == DimensionType.THE_END &&
-                !DataDarkness.ConfigDataRenderNight.Instance.getDarknessEnd())
+                !PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessEnd())
         {
             return true;
         }
 
-        return blacklistContains(worldProvider, dimensionType) ^ DataDarkness.ConfigDataRenderNight.Instance.getInvertBlacklist();
+        return blacklistContains(worldProvider, dimensionType) ^ PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isInvertBlacklist();
     }
 
     private static boolean blacklistContains(WorldProvider worldProvider,
@@ -100,7 +100,7 @@ public final class EntityRendererHook
         String dimensionTypeName = dimensionType.getName();
 
         for (String blacklistName :
-                DataDarkness.ConfigDataRenderNight.Instance.getBlacklistByName())
+                PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByName())
         {
             if (!blacklistName.equals(dimensionTypeName))
             {
@@ -112,7 +112,7 @@ public final class EntityRendererHook
 
         int dimID = worldProvider.getDimension();
 
-        for (int blacklistID : DataDarkness.ConfigDataRenderNight.Instance.getBlacklistByID())
+        for (int blacklistID : PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByID())
         {
             if (dimID != blacklistID)
             {
@@ -130,23 +130,23 @@ public final class EntityRendererHook
     {
         if (dimensionType == DimensionType.OVERWORLD)
         {
-            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessOverWorld();
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessOverWorld();
         }
         else if (dimensionType == DimensionType.NETHER)
         {
-            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessNether();
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessNether();
         }
         else if (dimensionType == DimensionType.THE_END)
         {
-            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessEnd();
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessEnd();
         }
         else if (worldProvider.hasSkyLight())
         {
-            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessDefault();
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessDefault();
         }
         else
         {
-            return DataDarkness.ConfigDataRenderNight.Instance.getDarknessSkyLess();
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessSkyLess();
         }
     }
 
@@ -174,9 +174,9 @@ public final class EntityRendererHook
 
         final double moon;
 
-        if (!DataDarkness.ConfigDataRenderNight.Instance.getIgnoreMoonLight())
+        if (!PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isIgnoreMoonLight())
         {
-            Double[] phaseFactors = DataDarkness.ConfigDataRenderNight.Instance.getMoonPhaseFactors();
+            double[] phaseFactors = PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getMoonPhaseFactors();
 
             int moonPhase = worldProvider.getMoonPhase(world.getWorldTime());
 
