@@ -31,9 +31,9 @@ public final class PluginDarknessConfig extends BaseJsonConfig
     private double[] moonPhaseFactors = {0.6, 0.4, 0.3, 0.2, 0.0, 0.1, 0.2, 0.4};
     private String[] blacklistByName = {};
 
-    public PluginDarknessConfig(String nameConfigFile)
+    public PluginDarknessConfig(String configPath)
     {
-        super(nameConfigFile, false);
+        super(configPath, false);
 
         CodeGeneric.printInitClassToLog(this.getClass());
 

@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.config.DataTimeControl;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.handler.ITimeHandler;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.handler.TimeHandlerClient;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.handler.TimeHandlerServer;
@@ -23,6 +22,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
 /**
  *
@@ -47,7 +47,7 @@ public class TimeEvents {
                 world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", "true");
             }
 
-            if (!world.isRemote && !DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime()) {
+            if (!world.isRemote && !PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isSyncToSystemTime()) {
                 this.serverUpdate(world.getWorldTime());
             }
         }
@@ -124,7 +124,7 @@ public class TimeEvents {
                             }
                         }
 
-                        if (DataTimeControl.ConfigDataWorldTime.Instance.getSyncToSystemTime()) {
+                        if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isSyncToSystemTime()) {
                             event.getSender().sendMessage(new TextComponentString(TextFormatting.RED + "Disable system time synchronization to " + args[0] + " time!"));
                             event.setCanceled(true);
                         } else {
