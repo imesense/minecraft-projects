@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
-import org.imesense.dynamicspawncontrol.core.baseconfig.BaseConfigLegacy;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

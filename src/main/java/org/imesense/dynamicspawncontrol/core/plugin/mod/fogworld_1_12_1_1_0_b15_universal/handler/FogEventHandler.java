@@ -22,6 +22,10 @@ public class FogEventHandler
 {
     private static volatile FogEventHandler _INSTANCE;
 
+    // старые данные без конфига:
+//private float fogDensity = 0.1f;
+//        private int fogColor = 16777215;
+
     public static FogEventHandler getInstance()
     {
         return CodeGeneric.getInstance(FogEventHandler.class);
