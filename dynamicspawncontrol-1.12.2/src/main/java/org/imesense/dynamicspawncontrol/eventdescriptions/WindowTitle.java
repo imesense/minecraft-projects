@@ -2,8 +2,8 @@ package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
+import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.config.dataLegacy.WindowTitleData;
 import org.lwjgl.opengl.Display;
 
 import javax.annotation.Nonnull;
@@ -23,8 +23,8 @@ public final class WindowTitle
 		CodeGeneric.printInitClassToLog(this.getClass());
     }
 
-    @Nonnull
-    private final String TITLE = WindowTitleData.ConfigDataWindowTitle.Instance.getWindowTitle();
+    private final String TITLE =
+            MainWindowTitleConfig.getInstance(MainWindowTitleConfig.class).getWindowTitle();
 
     public String setTextWindowTitle(@Nonnull String formatString)
     {
