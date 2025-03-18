@@ -4,9 +4,9 @@ import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
 import org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorConfig;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig;
-import org.imesense.dynamicspawncontrol.core.config.fileLegacy.*;
 import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
 import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig;
+import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.plugin.darkness_forge_1_12_x_0_5_0.config.CfgDarkness;
@@ -28,7 +28,7 @@ public final class ConfigRegister extends BaseConfigRegister
     {
         WorldCacheConfig.class,
         LogFileConfig.class,
-        PlayerConceptConfig.class,
+        PlayerConfig.class,
         CfgDarkness.class,
         MainWindowTitleConfig.class,
         BlockWorldGeneratorConfig.class,
