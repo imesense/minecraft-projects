@@ -6,10 +6,7 @@ import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTime
 import java.math.BigDecimal;
 import java.util.Collections;
 
-/**
- *
- */
-public class Numbers
+public final class Numbers
 {
     static final long night_start = 12000L;
     private static final double day_multiplier = multiplier(PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).getDayLengthMinutes());
@@ -17,24 +14,24 @@ public class Numbers
     private static final int irl_hour_offset = 6;
     private static final double irl_minute_multiplier = 16.94D;
 
-    public static double multiplier(long worldtime)
+    public static double multiplier(long worldTime)
     {
-        return isDaytime(worldtime) ? day_multiplier : night_multiplier;
+        return isDaytime(worldTime) ? day_multiplier : night_multiplier;
     }
 
-    public static long customtime(long worldtime)
+    public static long customtime(long worldTime)
     {
-        return (long)((double)worldtime * multiplier(worldtime));
+        return (long)((double)worldTime * multiplier(worldTime));
     }
 
-    private static long worldtime(long customtime, double multiplier)
+    private static long worldtime(long customTime, double multiplier)
     {
-        return (long)((double)customtime / multiplier);
+        return (long)((double)customTime / multiplier);
     }
 
-    public static void setWorldtime(World world, long customtime, double multiplier)
+    public static void setWorldtime(World world, long customTime, double multiplier)
     {
-        world.provider.setWorldTime(worldtime(customtime, multiplier));
+        world.provider.setWorldTime(worldtime(customTime, multiplier));
     }
 
     public static long systemtime(int hour, int minute, int day)
@@ -45,9 +42,9 @@ public class Numbers
         return (long)(hour + minute) + (long)day * 24000L;
     }
 
-    public static long day(long worldtime)
+    public static long day(long worldTime)
     {
-        return worldtime / 24000L;
+        return worldTime / 24000L;
     }
 
     public static String progressString(long item, String addition)
@@ -65,8 +62,8 @@ public class Numbers
         return (new BigDecimal(String.valueOf((double)length / 10.0D))).setScale(2, 6).doubleValue();
     }
 
-    public static boolean isDaytime(long worldtime)
+    public static boolean isDaytime(long worldTime)
     {
-        return worldtime % 24000L >= 0L && worldtime % 24000L < 12000L;
+        return worldTime % 24000L >= 0L && worldTime % 24000L < 12000L;
     }
 }

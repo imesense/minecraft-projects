@@ -15,12 +15,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
-public class TimeHandlerServer implements ITimeHandler
+public final class TimeHandlerServer implements ITimeHandler
 {
     private static final Logger log = LogManager.getLogger(TimeHandlerServer.class.getSimpleName());
     private static final Method wakeAllPlayers = ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
     private int lastMinute = 0;
-    private long customtime;
+    private long customTime;
     private double multiplier;
     private boolean wasDaytime = true;
 
@@ -34,11 +34,12 @@ public class TimeHandlerServer implements ITimeHandler
         }
         else
         {
-            long worldtime = world.getWorldTime();
-            boolean isDaytime = Numbers.isDaytime(worldtime);
+            long worldTime = world.getWorldTime();
+            boolean isDaytime = Numbers.isDaytime(worldTime);
+
             if (isDaytime != this.wasDaytime)
             {
-                this.reset(worldtime);
+                this.reset(worldTime);
                 this.wasDaytime = isDaytime;
             }
 
@@ -48,7 +49,7 @@ public class TimeHandlerServer implements ITimeHandler
             {
                 if (world instanceof WorldServer && ((WorldServer)world).areAllPlayersAsleep())
                 {
-                    updatedWorldtime = worldtime + 24000L;
+                    updatedWorldtime = worldTime + 24000L;
                     updatedWorldtime -= updatedWorldtime % 24000L;
                     world.provider.setWorldTime(updatedWorldtime);
 
@@ -58,38 +59,39 @@ public class TimeHandlerServer implements ITimeHandler
                     wakeAllPlayers.invoke(world);
                 }
             }
-            catch (InvocationTargetException | IllegalAccessException var7)
+            catch (InvocationTargetException | IllegalAccessException exception)
             {
-                log.error("Unable to wake players!", var7);
+                log.error("Unable to wake players!", exception);
             }
 
-            ++this.customtime;
+            ++this.customTime;
 
-            Numbers.setWorldtime(world, this.customtime, this.multiplier);
+            Numbers.setWorldtime(world, this.customTime, this.multiplier);
 
             if (world.getMinecraftServer().getTickCounter() % 20 == 0)
             {
-                MessageHandler.INSTANCE.sendToAll(new PacketTime(this.customtime, this.multiplier));
+                MessageHandler.INSTANCE.sendToAll(new PacketTime(this.customTime, this.multiplier));
 
                 if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug())
                 {
                     updatedWorldtime = world.getWorldTime();
                     log.info(Numbers.progressString(updatedWorldtime, ""));
-                    log.info(String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s", worldtime, updatedWorldtime, this.customtime - 1L, this.customtime, Numbers.day(updatedWorldtime), this.multiplier));
+                    log.info(String.format("Server time update: %s -> %s (%s -> %s) (day %s) | multiplier: %s", worldTime, updatedWorldtime, this.customTime - 1L, this.customTime, Numbers.day(updatedWorldtime), this.multiplier));
                 }
             }
         }
     }
 
-    private void reset(long worldtime)
+    private void reset(long worldTime)
     {
-        this.update(Numbers.customtime(worldtime), Numbers.multiplier(worldtime));
+        this.update(Numbers.customtime(worldTime), Numbers.multiplier(worldTime));
     }
 
-    public void update(long customtime, double multiplier)
+    public void update(long customTime, double multiplier)
     {
-        MessageHandler.INSTANCE.sendToAll(new PacketTime(customtime, multiplier));
-        this.customtime = customtime;
+        MessageHandler.INSTANCE.sendToAll(new PacketTime(customTime, multiplier));
+
+        this.customTime = customTime;
         this.multiplier = multiplier;
     }
 
@@ -104,14 +106,14 @@ public class TimeHandlerServer implements ITimeHandler
         {
             this.lastMinute = minute;
 
-            long worldtime = world.getWorldTime();
+            long worldTime = world.getWorldTime();
             long time = Numbers.systemtime(hour, minute, calendar.get(6));
 
             world.provider.setWorldTime(time);
 
             if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug())
             {
-                log.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldtime, time, calendar.get(6), hour, minute));
+                log.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(6), hour, minute));
             }
         }
 

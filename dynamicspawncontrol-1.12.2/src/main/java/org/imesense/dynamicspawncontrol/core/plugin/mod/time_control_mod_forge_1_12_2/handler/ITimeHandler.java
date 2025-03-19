@@ -6,5 +6,5 @@ public interface ITimeHandler
 {
     void tick(World world);
 
-    void update(long var1, double var3);
+    void update(long customTime, double multiplier);
 }

@@ -24,11 +24,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
-/**
- *
- */
 @EventBusSubscriber
-public class TimeEvents
+public final class TimeEvents
 {
     public static final TimeEvents INSTANCE = new TimeEvents();
 
@@ -69,14 +66,18 @@ public class TimeEvents
     {
         if (event.player instanceof EntityPlayerMP)
         {
-            MessageHandler.INSTANCE.sendTo(new PacketGameRule(event.player.world.getGameRules().getBoolean("doDaylightCycle_tc")), (EntityPlayerMP)event.player);
+            MessageHandler.INSTANCE.sendTo(new PacketGameRule(event.player.world.getGameRules().
+                    getBoolean("doDaylightCycle_tc")), (EntityPlayerMP)event.player);
         }
     }
 
     @SubscribeEvent
     public void onPlayerTick(PlayerTickEvent event)
     {
-        if (event.side == Side.CLIENT && event.phase == Phase.START && event.player.world.provider.getDimension() == 0 && event.player.world.getGameRules().getBoolean("doDaylightCycle_tc")) {
+        if (event.side == Side.CLIENT && event.phase == Phase.START &&
+                event.player.world.provider.getDimension() == 0 &&
+                event.player.world.getGameRules().getBoolean("doDaylightCycle_tc"))
+        {
             clientTime.tick(event.player.world);
         }
     }
@@ -84,7 +85,10 @@ public class TimeEvents
     @SubscribeEvent
     public void onWorldTick(WorldTickEvent event)
     {
-        if (event.world.provider.getDimension() == 0 && event.phase == Phase.START && event.world.getGameRules().getBoolean("doDaylightCycle_tc")) {
+        if (event.world.provider.getDimension() == 0 &&
+                event.phase == Phase.START &&
+                event.world.getGameRules().getBoolean("doDaylightCycle_tc"))
+        {
             serverTime.tick(event.world);
         }
 
@@ -129,23 +133,24 @@ public class TimeEvents
                         }
                         else
                         {
-                            byte var7 = -1;
+                            byte result = -1;
+
                             switch(arg.hashCode())
                             {
                                 case 99228:
                                     if (arg.equals("day"))
                                     {
-                                        var7 = 0;
+                                        result = 0;
                                     }
                                     break;
                                 case 104817688:
                                     if (arg.equals("night"))
                                     {
-                                        var7 = 1;
+                                        result = 1;
                                     }
                             }
 
-                            switch(var7)
+                            switch(result)
                             {
                                 case 0:
                                     time = 1000L;
@@ -173,19 +178,19 @@ public class TimeEvents
                 }
             }
         }
-        catch (CommandException var8)
+        catch (CommandException exception)
         {
-            event.setException(var8);
+            event.setException(exception);
         }
     }
 
-    public void clientUpdate(long customtime, double multiplier)
+    public void clientUpdate(long customTime, double multiplier)
     {
-        clientTime.update(customtime, multiplier);
+        clientTime.update(customTime, multiplier);
     }
 
-    private void serverUpdate(long worldtime)
+    private void serverUpdate(long worldTime)
     {
-        serverTime.update(Numbers.customtime(worldtime), Numbers.multiplier(worldtime));
+        serverTime.update(Numbers.customtime(worldTime), Numbers.multiplier(worldTime));
     }
 }

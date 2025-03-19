@@ -8,10 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
-public class TimeHandlerClient implements ITimeHandler {
+public final class TimeHandlerClient implements ITimeHandler
+{
     private static final Logger log = LogManager.getLogger(TimeHandlerClient.class.getSimpleName());
     private int debugLogDelay = 0;
-    private long customtime = 0L;
+    private long customTime = 0L;
     private double multiplier = 0.0D;
 
     public void tick(World world)
@@ -26,22 +27,25 @@ public class TimeHandlerClient implements ITimeHandler {
                 return;
             }
 
-            ++this.customtime;
+            ++this.customTime;
 
-            Numbers.setWorldtime(world, this.customtime, this.multiplier);
+            Numbers.setWorldtime(world, this.customTime, this.multiplier);
 
             if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug() && this.debugLogDelay % 20 == 0)
             {
-                long worldtime = world.getWorldTime();
-                log.info(String.format("Client time: %s | multiplier: %s | gamerules: %s, %s", worldtime, this.multiplier, world.getGameRules().getBoolean("doDaylightCycle"), world.getGameRules().getBoolean("doDaylightCycle_tc")));
+                long worldTime = world.getWorldTime();
+
+                log.info(String.format("Client time: %s | multiplier: %s | gamerules: %s, %s",
+                        worldTime, this.multiplier, world.getGameRules().getBoolean("doDaylightCycle"),
+                        world.getGameRules().getBoolean("doDaylightCycle_tc")));
             }
         }
 
     }
 
-    public void update(long customtime, double multiplier)
+    public void update(long customTime, double multiplier)
     {
         this.multiplier = multiplier;
-        this.customtime = customtime;
+        this.customTime = customTime;
     }
 }
