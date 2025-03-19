@@ -17,7 +17,6 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.PacketGameRule;
 import net.minecraftforge.event.world.WorldEvent.Load;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -26,7 +25,6 @@ import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTime
 
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-@EventBusSubscriber
 public final class TimeEvents
 {
     private static volatile TimeEvents _INSTANCE;
@@ -39,12 +37,7 @@ public final class TimeEvents
     private static final ITimeHandler serverTime = new TimeHandlerServer();
     private static final ITimeHandler clientTime = new TimeHandlerClient();
 
-    private TimeEvents()
-    {
-    }
-
-    @SubscribeEvent
-    public void onWorldLoad(Load event)
+    public void handleOnWorldLoad(Load event)
     {
         World world = event.getWorld();
 
@@ -62,11 +55,9 @@ public final class TimeEvents
                 this.serverUpdate(world.getWorldTime());
             }
         }
-
     }
 
-    @SubscribeEvent
-    public void onPlayerJoin(PlayerLoggedInEvent event)
+    public void handleOnPlayerJoin(PlayerLoggedInEvent event)
     {
         if (event.player instanceof EntityPlayerMP)
         {
@@ -75,8 +66,7 @@ public final class TimeEvents
         }
     }
 
-    @SubscribeEvent
-    public void onPlayerTick(PlayerTickEvent event)
+    public void handleOnPlayerTick(PlayerTickEvent event)
     {
         if (event.side == Side.CLIENT && event.phase == Phase.START &&
                 event.player.world.provider.getDimension() == 0 &&
@@ -86,8 +76,7 @@ public final class TimeEvents
         }
     }
 
-    @SubscribeEvent
-    public void onWorldTick(WorldTickEvent event)
+    public void handleOnWorldTick(WorldTickEvent event)
     {
         if (event.world.provider.getDimension() == 0 &&
                 event.phase == Phase.START &&
@@ -98,8 +87,7 @@ public final class TimeEvents
 
     }
 
-    @SubscribeEvent
-    public void onCommand(CommandEvent event)
+    public void handleOnCommand(CommandEvent event)
     {
         try
         {

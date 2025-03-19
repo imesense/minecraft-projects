@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.baseregister;
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.register.attach.AttachRegister;
+import org.imesense.dynamicspawncontrol.core.register.commandevent.CommandEventRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.block.EventBlockRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.entity.EventEntityRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.fmlnetwork.EventFMLRegister;
@@ -60,6 +61,7 @@ public abstract class BaseEventRegister
         new EventTickEventRegister();
         new EventWorldRegister();
         new AttachRegister();
+        new CommandEventRegister();
 
         Log.writeDataToLogFile(0, "Total registers created: " + REGISTERS.size());
 

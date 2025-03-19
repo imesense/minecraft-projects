@@ -196,7 +196,7 @@ public final class DynamicSpawnControl
 
         IRecipes.registry();
 
-        MinecraftForge.EVENT_BUS.register(TimeEvents.getInstance());
+        //MinecraftForge.EVENT_BUS.register(TimeEvents.getInstance());
 
         if (Configuration.cleanOnInit)
         {

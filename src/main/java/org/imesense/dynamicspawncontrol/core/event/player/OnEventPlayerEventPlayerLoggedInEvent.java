@@ -9,15 +9,23 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 
+import java.sql.Time;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPlayerEventPlayerLoggedInEvent extends BaseOnEventInstance
 {
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void OnPlayerEventPlayerLoggedInEvent_HIGHEST(PlayerEvent.PlayerLoggedInEvent event)
+    {
+        TimeEvents.getInstance().handleOnPlayerJoin(event);
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnPlayerEventPlayerLoggedInEvent(PlayerEvent.PlayerLoggedInEvent event)
+    public void OnPlayerEventPlayerLoggedInEven_tLOW(PlayerEvent.PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
         String playerName = player.getName();
