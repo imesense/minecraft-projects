@@ -7,31 +7,31 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
 
-public class PacketTime implements IMessage
+public final class PacketTime implements IMessage
 {
-    private long customtime;
+    private long customTime;
     private double multiplier;
 
     public PacketTime()
     {
     }
 
-    public PacketTime(long customtime, double multiplier)
+    public PacketTime(long customTime, double multiplier)
     {
-        this.customtime = customtime;
+        this.customTime = customTime;
         this.multiplier = multiplier;
     }
 
-    public void toBytes(ByteBuf buf)
+    public void toBytes(ByteBuf byteBuf)
     {
-        buf.writeLong(this.customtime);
-        buf.writeDouble(this.multiplier);
+        byteBuf.writeLong(this.customTime);
+        byteBuf.writeDouble(this.multiplier);
     }
 
-    public void fromBytes(ByteBuf buf)
+    public void fromBytes(ByteBuf byteBuf)
     {
-        this.customtime = buf.readLong();
-        this.multiplier = buf.readDouble();
+        this.customTime = byteBuf.readLong();
+        this.multiplier = byteBuf.readDouble();
     }
 
     public static class Handler implements IMessageHandler<PacketTime, IMessage>
@@ -40,7 +40,7 @@ public class PacketTime implements IMessage
         {
             Minecraft.getMinecraft().addScheduledTask(() ->
             {
-                TimeEvents.INSTANCE.clientUpdate(message.customtime, message.multiplier);
+                TimeEvents.INSTANCE.clientUpdate(message.customTime, message.multiplier);
             });
 
             return null;

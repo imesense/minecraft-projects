@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.apache.logging.log4j.LogManager;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
-public class PacketGameRule implements IMessage
+public final class PacketGameRule implements IMessage
 {
     private boolean doDaylightCycle_tc;
 
@@ -21,26 +21,29 @@ public class PacketGameRule implements IMessage
         this.doDaylightCycle_tc = doDaylightCycle_tc;
     }
 
-    public void toBytes(ByteBuf buf)
+    public void toBytes(ByteBuf byteBuf)
     {
-        buf.writeBoolean(this.doDaylightCycle_tc);
+        byteBuf.writeBoolean(this.doDaylightCycle_tc);
     }
 
-    public void fromBytes(ByteBuf buf)
+    public void fromBytes(ByteBuf byteBuf)
     {
-        this.doDaylightCycle_tc = buf.readBoolean();
+        this.doDaylightCycle_tc = byteBuf.readBoolean();
     }
 
     public static class Handler implements IMessageHandler<PacketGameRule, IMessage>
     {
-        public IMessage onMessage(PacketGameRule message, MessageContext ctx) {
+        public IMessage onMessage(PacketGameRule packetGameRule, MessageContext messageContext)
+        {
             Minecraft.getMinecraft().addScheduledTask(() ->
             {
-                Minecraft.getMinecraft().world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", Boolean.toString(message.doDaylightCycle_tc));
+                Minecraft.getMinecraft().world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc",
+                        Boolean.toString(packetGameRule.doDaylightCycle_tc));
 
                 if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug())
                 {
-                    LogManager.getLogger().info("Network packet for gamerule doDaylightCycle_tc received, value: " + message.doDaylightCycle_tc);
+                    LogManager.getLogger().info("Network packet for gamerule doDaylightCycle_tc received, value: " +
+                            packetGameRule.doDaylightCycle_tc);
                 }
 
             });
