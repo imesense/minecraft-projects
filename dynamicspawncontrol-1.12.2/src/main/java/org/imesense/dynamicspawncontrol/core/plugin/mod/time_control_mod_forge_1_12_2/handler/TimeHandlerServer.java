@@ -59,7 +59,7 @@ public final class TimeHandlerServer implements ITimeHandler
             }
             catch (InvocationTargetException | IllegalAccessException exception)
             {
-                Log.writeDataToLogFile(2,"Unable to wake players! Exception: " + exception);
+                Log.writeDataToLogFile(2, "Unable to wake players! Exception: " + exception);
             }
 
             ++this.customTime;
