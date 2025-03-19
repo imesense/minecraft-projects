@@ -29,7 +29,7 @@ public final class TimeHandlerClient implements ITimeHandler
 
             ++this.customTime;
 
-            Numbers.setWorldtime(world, this.customTime, this.multiplier);
+            Numbers._setWorldTime(world, this.customTime, this.multiplier);
 
             if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug() && this.debugLogDelay % 20 == 0)
             {

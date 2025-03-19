@@ -66,7 +66,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
             ++this.customTime;
 
-            Numbers.setWorldtime(world, this.customTime, this.multiplier);
+            Numbers._setWorldTime(world, this.customTime, this.multiplier);
 
             if (world.getMinecraftServer().getTickCounter() % 20 == 0)
             {
@@ -84,7 +84,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
     private void reset(long worldTime)
     {
-        this.update(Numbers.customtime(worldTime), Numbers.multiplier(worldTime));
+        this.update(Numbers._customTime(worldTime), Numbers.multiplier(worldTime));
     }
 
     public void update(long customTime, double multiplier)
@@ -107,7 +107,7 @@ public final class TimeHandlerServer implements ITimeHandler
             this.lastMinute = minute;
 
             long worldTime = world.getWorldTime();
-            long time = Numbers.systemtime(hour, minute, calendar.get(6));
+            long time = Numbers._systemTime(hour, minute, calendar.get(6));
 
             world.provider.setWorldTime(time);
 
@@ -116,6 +116,5 @@ public final class TimeHandlerServer implements ITimeHandler
                 log.info(String.format("System time update: %d -> %d | day %s, %s:%s", worldTime, time, calendar.get(6), hour, minute));
             }
         }
-
     }
 }
