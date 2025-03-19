@@ -8,29 +8,38 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.apache.logging.log4j.LogManager;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
-public class PacketGameRule implements IMessage {
+public class PacketGameRule implements IMessage
+{
     private boolean doDaylightCycle_tc;
 
-    public PacketGameRule() {
+    public PacketGameRule()
+    {
     }
 
-    public PacketGameRule(boolean doDaylightCycle_tc) {
+    public PacketGameRule(boolean doDaylightCycle_tc)
+    {
         this.doDaylightCycle_tc = doDaylightCycle_tc;
     }
 
-    public void toBytes(ByteBuf buf) {
+    public void toBytes(ByteBuf buf)
+    {
         buf.writeBoolean(this.doDaylightCycle_tc);
     }
 
-    public void fromBytes(ByteBuf buf) {
+    public void fromBytes(ByteBuf buf)
+    {
         this.doDaylightCycle_tc = buf.readBoolean();
     }
 
-    public static class Handler implements IMessageHandler<PacketGameRule, IMessage> {
+    public static class Handler implements IMessageHandler<PacketGameRule, IMessage>
+    {
         public IMessage onMessage(PacketGameRule message, MessageContext ctx) {
-            Minecraft.getMinecraft().addScheduledTask(() -> {
+            Minecraft.getMinecraft().addScheduledTask(() ->
+            {
                 Minecraft.getMinecraft().world.getGameRules().setOrCreateGameRule("doDaylightCycle_tc", Boolean.toString(message.doDaylightCycle_tc));
-                if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug()) {
+
+                if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug())
+                {
                     LogManager.getLogger().info("Network packet for gamerule doDaylightCycle_tc received, value: " + message.doDaylightCycle_tc);
                 }
 
