@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import org.apache.logging.log4j.LogManager;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
 public final class PacketGameRule implements IMessage
@@ -42,11 +42,12 @@ public final class PacketGameRule implements IMessage
 
                 if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug())
                 {
-                    LogManager.getLogger().info("Network packet for gamerule doDaylightCycle_tc received, value: " +
+                    Log.writeDataToLogFile(0,"Network packet for gamerule doDaylightCycle_tc received, value: " +
                             packetGameRule.doDaylightCycle_tc);
                 }
 
             });
+
             return null;
         }
     }
