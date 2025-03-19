@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.RenderFPS;
 public final class OnEventRenderGameOverlayEventText extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnRenderGameOverlayEventText(RenderGameOverlayEvent.Text event)
+    public void OnRenderGameOverlayEventText_LOW(RenderGameOverlayEvent.Text event)
     {
         ComplexityBiomes.getInstance().renderBiomesOverlay();
 

@@ -25,7 +25,7 @@ public final class OnEventPlayerEventPlayerLoggedInEvent extends BaseOnEventInst
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnPlayerEventPlayerLoggedInEven_tLOW(PlayerEvent.PlayerLoggedInEvent event)
+    public void OnPlayerEventPlayerLoggedInEvent_LOW(PlayerEvent.PlayerLoggedInEvent event)
     {
         EntityPlayer player = event.player;
         String playerName = player.getName();

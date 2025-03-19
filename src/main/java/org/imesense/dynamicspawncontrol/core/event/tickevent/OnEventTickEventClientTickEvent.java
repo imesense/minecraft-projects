@@ -14,7 +14,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 public final class OnEventTickEventClientTickEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnTickEventClientTickEvent(TickEvent.ClientTickEvent event)
+    public void OnTickEventClientTickEvent_LOW(TickEvent.ClientTickEvent event)
     {
         WindowTitle.getInstance().replace();
 

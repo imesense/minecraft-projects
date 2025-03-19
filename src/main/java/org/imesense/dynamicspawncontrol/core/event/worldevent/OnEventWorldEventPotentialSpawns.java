@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPotentialSp
 public final class OnEventWorldEventPotentialSpawns extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void onPotentialSpawns(WorldEvent.PotentialSpawns event)
+    public void onPotentialSpawns_LOW(WorldEvent.PotentialSpawns event)
     {
         OnEventPotentialSpawn.getInstance().handlePotentialSpawns(event);
     }

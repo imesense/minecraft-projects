@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogE
 public final class OnEventEntityViewRenderEventRenderFogEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnEntityViewRenderEventRenderFogEvent(EntityViewRenderEvent.RenderFogEvent event)
+    public void OnEntityViewRenderEventRenderFogEvent_LOW(EntityViewRenderEvent.RenderFogEvent event)
     {
         FogEventHandler.getInstance().handleRenderFog(event);
 

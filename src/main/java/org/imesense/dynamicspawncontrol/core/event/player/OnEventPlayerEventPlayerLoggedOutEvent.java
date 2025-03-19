@@ -18,7 +18,7 @@ import java.util.UUID;
 public final class OnEventPlayerEventPlayerLoggedOutEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnPlayerEventPlayerLoggedOutEvent(PlayerEvent.PlayerLoggedOutEvent event)
+    public void OnPlayerEventPlayerLoggedOutEvent_LOW(PlayerEvent.PlayerLoggedOutEvent event)
     {
         EntityPlayer player = event.player;
         String playerName = player.getName();
