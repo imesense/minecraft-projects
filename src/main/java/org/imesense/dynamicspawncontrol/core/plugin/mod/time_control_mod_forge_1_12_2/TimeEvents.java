@@ -24,10 +24,17 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
 
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+
 @EventBusSubscriber
 public final class TimeEvents
 {
-    public static final TimeEvents INSTANCE = new TimeEvents();
+    private static volatile TimeEvents _INSTANCE;
+
+    public static TimeEvents getInstance()
+    {
+        return CodeGeneric.getInstance(TimeEvents.class);
+    }
 
     private static final ITimeHandler serverTime = new TimeHandlerServer();
     private static final ITimeHandler clientTime = new TimeHandlerClient();
