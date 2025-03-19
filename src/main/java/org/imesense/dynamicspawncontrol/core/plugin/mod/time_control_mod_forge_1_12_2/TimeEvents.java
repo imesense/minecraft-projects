@@ -29,9 +29,6 @@ public final class TimeEvents
 {
     public static final TimeEvents INSTANCE = new TimeEvents();
 
-    public static final String doDaylightCycle = "doDaylightCycle";
-    public static final String doDaylightCycle_tc = "doDaylightCycle_tc";
-
     private static final ITimeHandler serverTime = new TimeHandlerServer();
     private static final ITimeHandler clientTime = new TimeHandlerClient();
 
@@ -191,6 +188,6 @@ public final class TimeEvents
 
     private void serverUpdate(long worldTime)
     {
-        serverTime.update(Numbers.customtime(worldTime), Numbers.multiplier(worldTime));
+        serverTime.update(Numbers._customTime(worldTime), Numbers.multiplier(worldTime));
     }
 }
