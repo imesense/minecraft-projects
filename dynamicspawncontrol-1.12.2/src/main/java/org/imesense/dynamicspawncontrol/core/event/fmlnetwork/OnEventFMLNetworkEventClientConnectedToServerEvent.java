@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 public final class OnEventFMLNetworkEventClientConnectedToServerEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnFMLNetworkEventClientConnectedToServerEvent(FMLNetworkEvent.ClientConnectedToServerEvent event)
+    public void OnFMLNetworkEventClientConnectedToServerEvent_LOW(FMLNetworkEvent.ClientConnectedToServerEvent event)
     {
         String serverAddress = "unknown";
         String playerName = "unknown";

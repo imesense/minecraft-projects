@@ -18,7 +18,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnEntityJoinWorldEvent(EntityJoinWorldEvent event)
+    public void OnEntityJoinWorldEvent_LOW(EntityJoinWorldEvent event)
     {
         PlayerNetwork.getInstance().handlePlayerJoinWorld(event);
 

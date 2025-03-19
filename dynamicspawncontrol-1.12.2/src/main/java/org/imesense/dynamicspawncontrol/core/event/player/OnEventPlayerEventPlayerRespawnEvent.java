@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 public final class OnEventPlayerEventPlayerRespawnEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnPlayerEventPlayerRespawnEvent(PlayerEvent.PlayerRespawnEvent event)
+    public void OnPlayerEventPlayerRespawnEvent_LOW(PlayerEvent.PlayerRespawnEvent event)
     {
         PlayerNetwork.getInstance().handlePlayerRespawn(event);
     }

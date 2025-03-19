@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 public final class OnEventRenderGameOverlayEventPost extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnRenderGameOverlayEventPost(RenderGameOverlayEvent.Post event)
+    public void OnRenderGameOverlayEventPost_LOW(RenderGameOverlayEvent.Post event)
     {
         OnEventWorldCache.getInstance().handleRenderOverlay(event);
     }

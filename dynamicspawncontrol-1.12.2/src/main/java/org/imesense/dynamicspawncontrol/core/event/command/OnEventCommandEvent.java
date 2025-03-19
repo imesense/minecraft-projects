@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1
 public final class OnEventCommandEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public void OnCommandEventHIGHEST(CommandEvent event)
+    public void OnCommandEvent_HIGHEST(CommandEvent event)
     {
         TimeEvents.getInstance().handleOnCommand(event);
     }

@@ -12,7 +12,7 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPopulationC
 public final class OnEventPopulateChunkEventPre extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnPopulateChunkEventPre(PopulateChunkEvent.Pre event)
+    public void OnPopulateChunkEventPre_LOW(PopulateChunkEvent.Pre event)
     {
         OnEventPopulationChunk.getInstance().handlePotentialSpawn(event);
     }

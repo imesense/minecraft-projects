@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 public final class OnEventFMLNetworkEventClientDisconnectionFromServerEvent extends BaseOnEventInstance {
 
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnFMLNetworkEventClientDisconnectionFromServerEvent(FMLNetworkEvent.ClientDisconnectionFromServerEvent event)
+    public void OnFMLNetworkEventClientDisconnectionFromServerEvent_LOW(FMLNetworkEvent.ClientDisconnectionFromServerEvent event)
     {
         String playerName = "unknown";
         String disconnectReason = "unknown";

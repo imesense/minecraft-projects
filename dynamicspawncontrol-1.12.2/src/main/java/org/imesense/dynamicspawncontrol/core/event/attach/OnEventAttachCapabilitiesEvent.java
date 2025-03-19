@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.
 public final class OnEventAttachCapabilitiesEvent extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnEventAttachCapabilitiesEvent(AttachCapabilitiesEvent<Entity> event)
+    public void OnEventAttachCapabilitiesEvent_LOW(AttachCapabilitiesEvent<Entity> event)
     {
         EventHandler.getInstance().handleAttachCapabilitiesEntity(event);
     }

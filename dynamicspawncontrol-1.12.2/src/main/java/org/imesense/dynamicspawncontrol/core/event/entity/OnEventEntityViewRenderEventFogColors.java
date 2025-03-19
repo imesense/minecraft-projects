@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogE
 public final class OnEventEntityViewRenderEventFogColors extends BaseOnEventInstance
 {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void OnEntityViewRenderEventFogColors(EntityViewRenderEvent.FogColors event)
+    public void OnEntityViewRenderEventFogColors_LOW(EntityViewRenderEvent.FogColors event)
     {
         FogEventHandler.getInstance().handleGetFogColor(event);
 
