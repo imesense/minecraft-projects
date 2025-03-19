@@ -4,7 +4,7 @@ import org.imesense.dynamicspawncontrol.command.*;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseCommandRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-public class CommandRegister extends BaseCommandRegister
+public final class CommandRegister extends BaseCommandRegister
 {
     private static volatile CommandRegister _INSTANCE;
 
