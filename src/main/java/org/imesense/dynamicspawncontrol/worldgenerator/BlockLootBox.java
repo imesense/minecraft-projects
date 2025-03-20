@@ -8,10 +8,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,6 +23,18 @@ public class BlockLootBox implements IWorldGenerator
     public BlockLootBox()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
+    }
+
+    public static List<ItemStack> deepCopyItemStackList(List<ItemStack> original)
+    {
+        List<ItemStack> copy = new ArrayList<>();
+
+        for (ItemStack stack : original)
+        {
+            copy.add(stack.copy());
+        }
+
+        return copy;
     }
 
     @Override
@@ -40,6 +54,7 @@ public class BlockLootBox implements IWorldGenerator
 
         if (lootBoxDataMap.isEmpty())
         {
+            Log.writeDataToLogFile(2, "No loot box data found!");
             return;
         }
 
@@ -49,6 +64,7 @@ public class BlockLootBox implements IWorldGenerator
 
         if (random.nextDouble() > lootBoxData.spawnChance)
         {
+            Log.writeDataToLogFile(0, "Spawn chance failed for loot box: " + randomChestLevel);
             return;
         }
 
@@ -58,6 +74,7 @@ public class BlockLootBox implements IWorldGenerator
 
         BlockPos pos = new BlockPos(chestX, chestY, chestZ);
 
+        Log.writeDataToLogFile(0, "Generating chest at: " + pos + " with " + lootBoxData.items.size() + " items");
         if (world.isAirBlock(pos) && world.getBlockState(pos.down()).isTopSolid())
         {
             world.setBlockState(pos, Blocks.CHEST.getDefaultState());
@@ -65,11 +82,23 @@ public class BlockLootBox implements IWorldGenerator
 
             if (chest != null)
             {
-                for (ItemStack stack : lootBoxData.items)
+                List<ItemStack> itemsCopy = deepCopyItemStackList(lootBoxData.items);
+
+                Log.writeDataToLogFile(0, "Chest inventory size: " + chest.getSizeInventory());
+                for (ItemStack stack : itemsCopy)
                 {
-                    chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), stack.copy());
+                    Log.writeDataToLogFile(0, "Adding item to chest: " + stack.getDisplayName() + " x" + stack.getCount());
+                    chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), stack);
                 }
             }
+            else
+            {
+                Log.writeDataToLogFile(2, "Chest tile entity is null!");
+            }
+        }
+        else
+        {
+            Log.writeDataToLogFile(2, "Cannot place chest at: " + pos);
         }
     }
 }
