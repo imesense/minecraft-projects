@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -60,7 +61,7 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
                 JsonArray itemsArray = chestData.getAsJsonArray("loot");
                 List<ItemStack> items = parseItems(itemsArray);
 
-                GeneralLootBoxGeneratorLVL.LootBoxGeneratorLVLData lootBoxData = new GeneralLootBoxGeneratorLVL.LootBoxGeneratorLVLData(spawnChance, maxHeight, minHeight, items);
+                LootBoxGeneratorLVL.Data lootBoxData = new LootBoxGeneratorLVL.Data(spawnChance, maxHeight, minHeight, items);
                 GeneralLootBoxGeneratorLVL.getInstance().lootBoxGeneratorLVLData.put(chestLevel, lootBoxData);
             }
         }
