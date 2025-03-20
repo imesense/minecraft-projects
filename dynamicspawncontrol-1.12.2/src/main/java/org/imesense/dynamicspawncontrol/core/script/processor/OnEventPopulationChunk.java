@@ -81,18 +81,8 @@ public final class OnEventPopulationChunk
                             int chunkX = event.getChunkX() * 16;
                             int chunkZ = event.getChunkZ() * 16;
 
-                            boolean isInWater = false;
-
-                            for (int y = 255; y >= 0; y--)
-                            {
-                                BlockPos pos = new BlockPos(chunkX, y, chunkZ);
-
-                                if (event.getWorld().getBlockState(pos).getMaterial().isLiquid())
-                                {
-                                    isInWater = true;
-                                    break;
-                                }
-                            }
+                            BlockPos pos = new BlockPos(chunkX, 62, chunkZ);
+                            boolean isInWater = event.getWorld().getBlockState(pos).getMaterial().isLiquid();
 
                             //Log.writeDataToLogFile(0, "Is in water: " + isInWater);
 

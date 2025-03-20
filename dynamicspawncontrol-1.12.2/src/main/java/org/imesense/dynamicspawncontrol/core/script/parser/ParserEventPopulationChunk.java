@@ -142,7 +142,7 @@ public final class ParserEventPopulationChunk extends BaseParser
 
                         Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) _class,
                                 weight, groupCountMin, groupCountMax);
-                        
+
                         newSpawnEntries.add(entry);
                     }
                 }
