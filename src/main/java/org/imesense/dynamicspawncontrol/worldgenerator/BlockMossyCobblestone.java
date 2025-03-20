@@ -52,12 +52,13 @@ public final class BlockMossyCobblestone implements IWorldGenerator
         switch (world.provider.getDimension())
         {
             case 0:
-                run(
+                this.run(
                         CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
                         BlockWorldGeneratorData.MOSSY_COBBLESTONE.getChanceSpawn(),
                         BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMinHeight(),
                         BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMaxHeight()
                 );
+
                 break;
 
             case 1: case -1: default: break;

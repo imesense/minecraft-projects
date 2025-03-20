@@ -53,7 +53,7 @@ public final class BlockNetherRack implements IWorldGenerator
         switch (world.provider.getDimension())
         {
             case 0:
-                run(
+                this.run(
                         CLASS_NETHER_RACK_GENERATOR, world, random, chunkX, chunkZ,
                         BlockWorldGeneratorData.NETHER_RACK.getChanceSpawn(),
                         BlockWorldGeneratorData.NETHER_RACK.getMinHeight(),
