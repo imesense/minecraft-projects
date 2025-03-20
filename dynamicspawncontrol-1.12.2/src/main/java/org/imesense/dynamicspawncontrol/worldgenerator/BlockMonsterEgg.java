@@ -52,12 +52,13 @@ public final class BlockMonsterEgg implements IWorldGenerator
         switch (world.provider.getDimension())
         {
             case 0:
-                run(
+                this.run(
                         CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
                         BlockWorldGeneratorData.MONSTER_EGG.getChanceSpawn(),
                         BlockWorldGeneratorData.MONSTER_EGG.getMinHeight(),
                         BlockWorldGeneratorData.MONSTER_EGG.getMaxHeight()
                 );
+
                 break;
 
             case 1: case -1: default: break;

@@ -53,7 +53,7 @@ public final class BlockEmeraldOre implements IWorldGenerator
         switch (world.provider.getDimension())
         {
             case 0:
-                run(
+                this.run(
                         CLASS_EMERALD_ORE_GENERATOR, world, random, chunkX, chunkZ,
                         BlockWorldGeneratorData.EMERALD_ORE.getChanceSpawn(),
                         BlockWorldGeneratorData.EMERALD_ORE.getMinHeight(),
