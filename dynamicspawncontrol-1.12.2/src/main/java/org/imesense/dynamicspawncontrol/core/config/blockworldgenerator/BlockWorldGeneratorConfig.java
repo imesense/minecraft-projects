@@ -26,6 +26,7 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
         saveBlockSettings(jsonObject, BlockWorldGeneratorData.NETHER_RACK);
         saveBlockSettings(jsonObject, BlockWorldGeneratorData.MOSSY_COBBLESTONE);
         saveBlockSettings(jsonObject, BlockWorldGeneratorData.MONSTER_EGG);
+        saveBlockSettings(jsonObject, BlockWorldGeneratorData.EMERALD_ORE);
 
         return jsonObject;
     }
@@ -36,9 +37,11 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
         loadBlockSettings(jsonObject, BlockWorldGeneratorData.NETHER_RACK);
         loadBlockSettings(jsonObject, BlockWorldGeneratorData.MOSSY_COBBLESTONE);
         loadBlockSettings(jsonObject, BlockWorldGeneratorData.MONSTER_EGG);
+        loadBlockSettings(jsonObject, BlockWorldGeneratorData.EMERALD_ORE);
     }
 
-    private void saveBlockSettings(JsonObject jsonObject, BlockWorldGeneratorDataAbstract blockWorldGeneratorDataAbstract)
+    private void saveBlockSettings(JsonObject jsonObject,
+                                   BlockWorldGeneratorDataAbstract blockWorldGeneratorDataAbstract)
     {
         JsonObject blockSettings = new JsonObject();
 
@@ -55,7 +58,8 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
                 blockSettings);
     }
 
-    private void loadBlockSettings(JsonObject jsonObject, BlockWorldGeneratorDataAbstract blockWorldGeneratorDataAbstract)
+    private void loadBlockSettings(JsonObject jsonObject,
+                                   BlockWorldGeneratorDataAbstract blockWorldGeneratorDataAbstract)
     {
         if (jsonObject.has(blockWorldGeneratorDataAbstract.getCategory()))
         {
