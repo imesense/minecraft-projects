@@ -3,12 +3,12 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -24,22 +24,87 @@ public final class OnEventPopulationChunk
         return CodeGeneric.getInstance(OnEventPopulationChunk.class);
     }
 
-    public void handlePotentialSpawn(PopulateChunkEvent.Pre event)
+    public void handlePopulateChunkEventPre(PopulateChunkEvent.Pre event)
     {
         List<PopulationChunkStruct.Data> populationList = GeneralPopulationChunkSpawn.getInstance().populationChunkStruct;
 
         if (populationList != null)
         {
+            //Log.writeDataToLogFile(0, "Handling PopulateChunkEvent.Pre for " + populationList.size() + " mobs.");
+
             for (PopulationChunkStruct.Data data : populationList)
             {
-                EntityEntry ee = ForgeRegistries.ENTITIES.getValue(data.entity);
+                EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(data.entity);
 
-                if (ee != null)
+                if (entityEntry != null)
                 {
-                    Class<? extends Entity> clazz = ee.getEntityClass();
+                    Class<? extends Entity> _class = entityEntry.getEntityClass();
 
-                    if (clazz != null)
+                    if (_class != null)
                     {
+                        //Log.writeDataToLogFile(0, "Processing mob: " + data.entity.toString());
+
+                        if (data.biomes != null && !data.biomes.isEmpty())
+                        {
+                            BlockPos pos = new BlockPos(event.getChunkX() * 16, 64, event.getChunkZ() * 16);
+
+                            Biome currentBiome = event.getWorld().getBiome(pos);
+
+                            String currentBiomeName = currentBiome.getRegistryName().toString();
+                            String currentBiomeSimpleName = currentBiomeName.replace("minecraft:", "");
+
+                            //Log.writeDataToLogFile(0, "Config biome: " + data.biomes);
+                            //Log.writeDataToLogFile(0, "Current biome: " + currentBiomeName);
+
+                            boolean isBiomeValid = false;
+
+                            for (String biome : data.biomes)
+                            {
+                                if (biome.equalsIgnoreCase(currentBiomeName) || biome.equalsIgnoreCase(currentBiomeSimpleName))
+                                {
+                                    isBiomeValid = true;
+                                    break;
+                                }
+                            }
+
+                            if (!isBiomeValid)
+                            {
+                                //Log.writeDataToLogFile(0, "Skipping mob " +
+                                //        data.entity.toString() + " due to biome mismatch.");
+
+                                continue;
+                            }
+                        }
+
+                        if (data.isWater)
+                        {
+                            int chunkX = event.getChunkX() * 16;
+                            int chunkZ = event.getChunkZ() * 16;
+
+                            boolean isInWater = false;
+
+                            for (int y = 255; y >= 0; y--)
+                            {
+                                BlockPos pos = new BlockPos(chunkX, y, chunkZ);
+
+                                if (event.getWorld().getBlockState(pos).getMaterial().isLiquid())
+                                {
+                                    isInWater = true;
+                                    break;
+                                }
+                            }
+
+                            //Log.writeDataToLogFile(0, "Is in water: " + isInWater);
+
+                            if (!isInWater)
+                            {
+                                //Log.writeDataToLogFile(0,
+                                //        "Skipping mob " + data.entity.toString() + " due to not being in water.");
+
+                                continue;
+                            }
+                        }
+
                         float minChance;
                         float maxChance;
 
@@ -48,10 +113,6 @@ public final class OnEventPopulationChunk
                             case "low":
                                 minChance = 0.01f;
                                 maxChance = 0.25f;
-                                break;
-                            case "medium":
-                                minChance = 0.25f;
-                                maxChance = 0.50f;
                                 break;
                             case "high":
                                 minChance = 0.75f;
@@ -67,21 +128,21 @@ public final class OnEventPopulationChunk
 
                         if (event.getWorld().rand.nextFloat() < randomChance)
                         {
-                            EnumCreatureType creatureType = CodeGeneric.getCreatureType(clazz);
+                            EnumCreatureType creatureType = CodeGeneric.getCreatureType(_class);
 
                             for (Biome biome : Biome.REGISTRY)
                             {
                                 List<Biome.SpawnListEntry> spawnList = biome.getSpawnableList(creatureType);
 
                                 int currentEntitiesInChunk = (int) spawnList.stream()
-                                        .filter(entry -> entry.entityClass.equals(clazz))
+                                        .filter(entry -> entry.entityClass.equals(_class))
                                         .count();
 
                                 if (currentEntitiesInChunk < data.maxEntitiesPerChunk)
                                 {
-                                    spawnList.add(new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
-                                                    data.weight, data.groupCountMin, data.groupCountMax)
-                                    );
+                                    spawnList.add(new Biome.SpawnListEntry((Class<? extends EntityLiving>) _class,
+                                            data.weight, data.groupCountMin, data.groupCountMax));
+                                    //Log.writeDataToLogFile(0, "Added mob to spawn list: " + data.entity.toString());
                                 }
                             }
                         }

@@ -64,17 +64,17 @@ public final class ParserEventPotentialSpawn extends BaseParser
                         JsonObject mobMap = mobElement.getAsJsonObject();
                         String id = mobMap.get("mob").getAsString();
 
-                        EntityEntry ee = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+                        EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
 
-                        if (ee == null)
+                        if (entityEntry == null)
                         {
                             Log.writeDataToLogFile(0, "Mob not found: " + id);
                             continue;
                         }
 
-                        Class<? extends Entity> clazz = ee.getEntityClass();
+                        Class<? extends Entity> _class = entityEntry.getEntityClass();
 
-                        if (clazz == null)
+                        if (_class == null)
                         {
                             Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
                             continue;
@@ -84,7 +84,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
                         Integer groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
                         Integer groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
 
-                        Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz,
+                        Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) _class,
                                 weight, groupCountMin, groupCountMax);
 
                         PotentialSpawnStruct.Data data = new PotentialSpawnStruct.Data();
