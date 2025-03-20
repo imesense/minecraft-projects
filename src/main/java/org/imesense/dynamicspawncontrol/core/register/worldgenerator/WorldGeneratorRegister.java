@@ -4,7 +4,7 @@ import org.imesense.dynamicspawncontrol.core.baseregister.BaseWorldGeneratorRegi
 import org.imesense.dynamicspawncontrol.worldgenerator.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-public class WorldGeneratorRegister extends BaseWorldGeneratorRegister
+public final class WorldGeneratorRegister extends BaseWorldGeneratorRegister
 {
     private static volatile WorldGeneratorRegister _INSTANCE;
 
@@ -18,7 +18,8 @@ public class WorldGeneratorRegister extends BaseWorldGeneratorRegister
         BlockNetherRack.class,
         BlockMossyCobblestone.class,
         BlockMonsterEgg.class,
-        BlockWaterMelon.class
+        BlockWaterMelon.class,
+        BlockEmeraldOre.class
     };
 
     @Override
