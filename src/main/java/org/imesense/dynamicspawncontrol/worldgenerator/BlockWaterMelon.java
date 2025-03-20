@@ -10,22 +10,11 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 import java.util.Random;
 
-/**
- *
- */
 public final class BlockWaterMelon implements IWorldGenerator
 {
-    /**
-     *
-     * @param random the chunk specific {@link Random}.
-     * @param chunkX the chunk X coordinate of this chunk.
-     * @param chunkZ the chunk Z coordinate of this chunk.
-     * @param world : additionalData[0] The minecraft {@link World} we're generating for.
-     * @param iChunkGenerator : additionalData[1] The {@link IChunkProvider} that is generating.
-     * @param iChunkProvider : additionalData[2] {@link IChunkProvider} that is requesting the world generation.
-     */
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
+    public void generate(Random random, int chunkX, int chunkZ,
+                         World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
     {
         if (world.provider.getDimension() == 0)
         {
@@ -33,13 +22,6 @@ public final class BlockWaterMelon implements IWorldGenerator
         }
     }
 
-    /**
-     *
-     * @param world
-     * @param random
-     * @param x
-     * @param z
-     */
     private void generateMelonsNearWater(World world, Random random, int x, int z)
     {
         int attempts = 1 + random.nextInt(5);
@@ -64,12 +46,6 @@ public final class BlockWaterMelon implements IWorldGenerator
         }
     }
 
-    /**
-     *
-     * @param world
-     * @param blockPos
-     * @return
-     */
     private boolean isNextToWater(World world, BlockPos blockPos)
     {
         return world.getBlockState(blockPos.north()).getBlock() == Blocks.WATER ||
