@@ -65,9 +65,7 @@ public class BlockLootBox implements IWorldGenerator
 
             if (chest != null)
             {
-                List<ItemStack> items = lootBoxData.items;
-
-                for (ItemStack stack : items)
+                for (ItemStack stack : lootBoxData.items)
                 {
                     chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), stack.copy());
                 }

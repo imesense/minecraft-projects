@@ -12,10 +12,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class GeneralLootBoxGeneratorLVL
 {
@@ -29,13 +26,12 @@ public final class GeneralLootBoxGeneratorLVL
     public GeneralLootBoxGeneratorLVL()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
-
         this.lootBoxGeneratorLVLData = new HashMap<>();
     }
 
     public Map<String, LootBoxGeneratorLVL.Data> lootBoxGeneratorLVLData;
 
-    public List<ItemStack> parseLootItems(JsonArray itemsArray)
+    public List<ItemStack> parseLootItems(JsonArray itemsArray, Random random)
     {
         List<ItemStack> items = new ArrayList<>();
 
@@ -43,11 +39,35 @@ public final class GeneralLootBoxGeneratorLVL
         {
             JsonObject itemObject = itemElement.getAsJsonObject();
             String itemName = itemObject.get("item").getAsString();
-            int count = itemObject.get("count").getAsInt();
             Item item = Item.getByNameOrId(itemName);
 
             if (item != null)
             {
+                double chanceToSpawn = itemObject.has("chance_to_spawn")
+                        ? itemObject.get("chance_to_spawn").getAsDouble()
+                        : 1.0;
+
+                if (random.nextDouble() > chanceToSpawn)
+                {
+                    continue;
+                }
+
+                int minCount = 0;
+                int maxCount = 1;
+
+                if (itemObject.has("count_range"))
+                {
+                    String[] countRange = itemObject.get("count_range").getAsString().split("-");
+                    minCount = Integer.parseInt(countRange[0]);
+                    maxCount = Integer.parseInt(countRange[1]);
+                }
+                else if (itemObject.has("count"))
+                {
+                    minCount = maxCount = itemObject.get("count").getAsInt();
+                }
+
+                int count = minCount + random.nextInt(maxCount - minCount + 1);
+
                 ItemStack itemStack = new ItemStack(item, count);
 
                 if (itemObject.has("nbt"))

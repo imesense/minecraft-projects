@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 public final class ParserEventLootBoxGeneratorLVL extends BaseParser
 {
@@ -42,6 +43,8 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
             Gson gson = new Gson();
             JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
+            Random random = new Random();
+
             for (JsonElement jsonElement : jsonArray)
             {
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
@@ -54,7 +57,7 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
                 int minHeight = chestData.get("min_height_spawn").getAsInt();
 
                 JsonArray itemsArray = chestData.getAsJsonArray("loot");
-                List<ItemStack> items = GeneralLootBoxGeneratorLVL.getInstance().parseLootItems(itemsArray);
+                List<ItemStack> items = GeneralLootBoxGeneratorLVL.getInstance().parseLootItems(itemsArray, random);
 
                 LootBoxGeneratorLVL.Data lootBoxData = new LootBoxGeneratorLVL.Data(spawnChance, maxHeight, minHeight, items);
                 GeneralLootBoxGeneratorLVL.getInstance().lootBoxGeneratorLVLData.put(chestLevel, lootBoxData);
