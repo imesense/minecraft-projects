@@ -10,8 +10,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class BlockLootBox implements IWorldGenerator
@@ -33,8 +36,25 @@ public class BlockLootBox implements IWorldGenerator
 
     private void generateSurface(World world, Random random, int x, int z)
     {
+        Map<String, GeneralLootBoxGeneratorLVL.LootBoxGeneratorLVLData> lootBoxDataMap =
+                GeneralLootBoxGeneratorLVL.getInstance().lootBoxGeneratorLVLData;
+
+        if (lootBoxDataMap.isEmpty())
+        {
+            return;
+        }
+
+        String[] chestLevels = lootBoxDataMap.keySet().toArray(new String[0]);
+        String randomChestLevel = chestLevels[random.nextInt(chestLevels.length)];
+        GeneralLootBoxGeneratorLVL.LootBoxGeneratorLVLData lootBoxData = lootBoxDataMap.get(randomChestLevel);
+
+        if (random.nextDouble() > lootBoxData.spawnChance)
+        {
+            return;
+        }
+
         int chestX = x + random.nextInt(16);
-        int chestY = 1 + random.nextInt(255);
+        int chestY = lootBoxData.minHeight + random.nextInt(lootBoxData.maxHeight - lootBoxData.minHeight + 1);
         int chestZ = z + random.nextInt(16);
 
         BlockPos pos = new BlockPos(chestX, chestY, chestZ);
@@ -46,20 +66,13 @@ public class BlockLootBox implements IWorldGenerator
 
             if (chest != null)
             {
-                for (int i = 0; i < 5 + random.nextInt(10); i++)
+                List<ItemStack> items = lootBoxData.items;
+
+                for (ItemStack stack : items)
                 {
-                    ItemStack stack = getRandomItem(random);
-                    chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), stack);
+                    chest.setInventorySlotContents(random.nextInt(chest.getSizeInventory()), stack.copy());
                 }
             }
         }
-    }
-
-    private ItemStack getRandomItem(Random random)
-    {
-        Item[] items = {Items.DIAMOND, Items.GOLD_INGOT, Items.IRON_INGOT, Items.APPLE, Items.BREAD};
-        Item item = items[random.nextInt(items.length)];
-
-        return new ItemStack(item, 1 + random.nextInt(64));
     }
 }
