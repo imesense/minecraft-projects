@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage;
 
-import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

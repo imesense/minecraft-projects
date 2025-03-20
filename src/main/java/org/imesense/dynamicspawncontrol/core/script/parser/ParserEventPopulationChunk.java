@@ -51,6 +51,8 @@ public final class ParserEventPopulationChunk extends BaseParser
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
             List<PopulationChunkStruct.Data> populationList = new ArrayList<>();
 
+            Log.writeDataToLogFile(0, "Starting to parse JSON config.");
+
             for (JsonElement topLevelElement : jsonArray)
             {
                 JsonObject topLevelObject = topLevelElement.getAsJsonObject();
@@ -66,45 +68,88 @@ public final class ParserEventPopulationChunk extends BaseParser
                         JsonObject mobMap = mobElement.getAsJsonObject();
                         String id = mobMap.get("mob").getAsString();
 
-                        EntityEntry ee = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+                        Log.writeDataToLogFile(0, "Processing mob: " + id);
 
-                        if (ee == null)
+                        EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
+
+                        if (entityEntry == null)
                         {
                             Log.writeDataToLogFile(0, "Mob not found: " + id);
                             continue;
                         }
 
-                        Class<? extends Entity> clazz = ee.getEntityClass();
+                        Class<? extends Entity> _class = entityEntry.getEntityClass();
 
-                        if (clazz == null)
+                        if (_class == null)
                         {
                             Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
                             continue;
                         }
 
-                        Integer weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
-                        Integer groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
-                        Integer groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
+                        Integer weight = mobMap.has("weight") ?
+                                mobMap.get("weight").getAsInt() : 1;
 
-                        String spawnChancePriority = mobMap.has("spawn_chance_priority") ? mobMap.get("spawn_chance_priority").getAsString() : "medium";
-                        Integer maxEntitiesPerChunk = mobMap.has("max_entities_per_chunk") ? mobMap.get("max_entities_per_chunk").getAsInt() : 1;
+                        Integer groupCountMin = mobMap.has("groupcountmin") ?
+                                mobMap.get("groupcountmin").getAsInt() : 1;
+
+                        Integer groupCountMax = mobMap.has("groupcountmax") ?
+                                mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
+
+                        String spawnChancePriority =
+                                mobMap.has("spawn_chance_priority") ?
+                                        mobMap.get("spawn_chance_priority").getAsString() : "medium";
+
+                        Integer maxEntitiesPerChunk =
+                                mobMap.has("max_entities_per_chunk") ?
+                                        mobMap.get("max_entities_per_chunk").getAsInt() : 1;
+
+                        List<String> biomes = new ArrayList<>();
+
+                        if (mobMap.has("biome"))
+                        {
+                            String biomeString = mobMap.get("biome").getAsString();
+                            Log.writeDataToLogFile(0, "Biomes for mob " + id + ": " + biomeString);
+
+                            if (biomeString.contains(","))
+                            {
+                                String[] biomeArray = biomeString.split(",");
+
+                                for (String biome : biomeArray)
+                                {
+                                    biomes.add(biome.trim());
+                                }
+                            }
+                            else
+                            {
+                                biomes.add(biomeString.trim());
+                            }
+                        }
+
+                        boolean isWater = mobMap.has("isWater") ? mobMap.get("isWater").getAsBoolean() : false;
 
                         PopulationChunkStruct.Data data = new PopulationChunkStruct.Data();
                         data.entity = new ResourceLocation(id);
                         data.weight = weight;
                         data.groupCountMin = groupCountMin;
                         data.groupCountMax = groupCountMax;
+                        data.biomes = biomes;
+                        data.isWater = isWater;
                         data.spawnChancePriority = spawnChancePriority;
                         data.maxEntitiesPerChunk = maxEntitiesPerChunk;
                         populationList.add(data);
 
-                        Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) clazz, weight, groupCountMin, groupCountMax);
+                        Log.writeDataToLogFile(0, "Added mob to population list: " + id);
+
+                        Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) _class,
+                                weight, groupCountMin, groupCountMax);
+                        
                         newSpawnEntries.add(entry);
                     }
                 }
             }
 
             GeneralPopulationChunkSpawn.getInstance().populationChunkStruct = populationList;
+            Log.writeDataToLogFile(0, "Config parsing completed successfully.");
         }
         catch (IOException | JsonSyntaxException exception)
         {
