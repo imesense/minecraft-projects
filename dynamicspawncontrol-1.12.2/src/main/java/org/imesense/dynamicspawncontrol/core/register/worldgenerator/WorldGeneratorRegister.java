@@ -19,7 +19,8 @@ public final class WorldGeneratorRegister extends BaseWorldGeneratorRegister
         BlockMossyCobblestone.class,
         BlockMonsterEgg.class,
         BlockWaterMelon.class,
-        BlockEmeraldOre.class
+        BlockEmeraldOre.class,
+        BlockLootBox.class
     };
 
     @Override
