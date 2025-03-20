@@ -167,6 +167,7 @@ public final class ComplexityBiomes
             case "Savanna Plateau M":
             case "Extreme Hills+ M":
             case "Mesa Plateau F":
+            case "Redwood Taiga Hills M":
                 return 6;
             case "Jungle":
             case "JungleHills":
