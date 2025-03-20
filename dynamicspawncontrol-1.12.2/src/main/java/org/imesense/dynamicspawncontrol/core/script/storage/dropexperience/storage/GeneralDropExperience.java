@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage;
 
-import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.data.EntityDropExperience;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
