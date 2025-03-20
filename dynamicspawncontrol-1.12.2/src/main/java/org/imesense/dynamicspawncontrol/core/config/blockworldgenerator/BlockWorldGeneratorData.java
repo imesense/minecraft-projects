@@ -18,7 +18,7 @@ public abstract class BlockWorldGeneratorData
             new BlockWorldGeneratorDataAbstract("settings_block_monster_egg", 10, 7, 40) {};
 
     public static final BlockWorldGeneratorDataAbstract EMERALD_ORE =
-            new BlockWorldGeneratorDataAbstract("settings_block_emerald_ore", 20, 5, 20) {};
+            new BlockWorldGeneratorDataAbstract("settings_block_emerald_ore", 20, 5, 30) {};
 
     {
         CodeGeneric.printInitClassToLog(this.getClass());
