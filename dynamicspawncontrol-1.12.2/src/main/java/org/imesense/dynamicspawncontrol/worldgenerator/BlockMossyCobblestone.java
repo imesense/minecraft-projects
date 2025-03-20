@@ -14,19 +14,10 @@ import org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWor
 import java.util.Objects;
 import java.util.Random;
 
-/**
- *
- */
 public final class BlockMossyCobblestone implements IWorldGenerator
 {
-    /**
-     *
-     */
     private final WorldGenerator CLASS_MOSSY_COBBLESTONE_GENERATOR;
 
-    /**
-     *
-     */
     public BlockMossyCobblestone()
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -35,19 +26,9 @@ public final class BlockMossyCobblestone implements IWorldGenerator
                 Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 5);
     }
 
-    /**
-     *
-     *
-     * @param worldGenerator
-     * @param world
-     * @param random
-     * @param chunkX
-     * @param chunkZ
-     * @param chance
-     * @param minHeight
-     * @param maxHeight
-     */
-    private void run(WorldGenerator worldGenerator, World world, Random random, int chunkX, int chunkZ, int chance, int minHeight, int maxHeight)
+    private void run(WorldGenerator worldGenerator,
+                     World world, Random random, int chunkX, int chunkZ, int chance,
+                     int minHeight, int maxHeight)
     {
         int heightDiff = maxHeight - minHeight + 1;
 
@@ -64,18 +45,9 @@ public final class BlockMossyCobblestone implements IWorldGenerator
         }
     }
 
-    /**
-     *
-     *
-     * @param random
-     * @param chunkX
-     * @param chunkZ
-     * @param world
-     * @param iChunkGenerator
-     * @param iChunkProvider
-     */
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
+    public void generate(Random random, int chunkX, int chunkZ,
+                         World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
     {
         switch (world.provider.getDimension())
         {
