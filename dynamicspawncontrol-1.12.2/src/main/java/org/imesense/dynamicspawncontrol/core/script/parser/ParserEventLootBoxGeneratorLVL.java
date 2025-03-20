@@ -1,11 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -16,7 +12,6 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class ParserEventLootBoxGeneratorLVL extends BaseParser
@@ -59,7 +54,7 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
                 int minHeight = chestData.get("min_height_spawn").getAsInt();
 
                 JsonArray itemsArray = chestData.getAsJsonArray("loot");
-                List<ItemStack> items = parseItems(itemsArray);
+                List<ItemStack> items = GeneralLootBoxGeneratorLVL.getInstance().parseLootItems(itemsArray);
 
                 LootBoxGeneratorLVL.Data lootBoxData = new LootBoxGeneratorLVL.Data(spawnChance, maxHeight, minHeight, items);
                 GeneralLootBoxGeneratorLVL.getInstance().lootBoxGeneratorLVLData.put(chestLevel, lootBoxData);
@@ -73,41 +68,6 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
         {
             Log.writeDataToLogFile(2, "Runtime error: " + exception.getMessage());
         }
-    }
-
-    private List<ItemStack> parseItems(JsonArray itemsArray)
-    {
-        List<ItemStack> items = new ArrayList<>();
-
-        for (JsonElement itemElement : itemsArray)
-        {
-            JsonObject itemObject = itemElement.getAsJsonObject();
-            String itemName = itemObject.get("item").getAsString();
-            int count = itemObject.get("count").getAsInt();
-            Item item = Item.getByNameOrId(itemName);
-
-            if (item != null)
-            {
-                ItemStack itemStack = new ItemStack(item, count);
-
-                if (itemObject.has("nbt"))
-                {
-                    try
-                    {
-                        NBTTagCompound nbt = JsonToNBT.getTagFromJson(itemObject.get("nbt").getAsString());
-                        itemStack.setTagCompound(nbt);
-                    }
-                    catch (NBTException exception)
-                    {
-                        Log.writeDataToLogFile(2, "Error parsing NBT data: " + exception.getMessage());
-                    }
-                }
-
-                items.add(itemStack);
-            }
-        }
-
-        return items;
     }
 
     @Override
