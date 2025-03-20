@@ -4,6 +4,7 @@ import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
@@ -56,6 +57,6 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
     @Override
     public void eraseData()
     {
-
+        GeneralLootBoxGeneratorLVL.getInstance().lootBoxGeneratorLVLData.clear();
     }
 }

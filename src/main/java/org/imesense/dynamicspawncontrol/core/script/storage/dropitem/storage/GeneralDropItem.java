@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage;
 
-import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
