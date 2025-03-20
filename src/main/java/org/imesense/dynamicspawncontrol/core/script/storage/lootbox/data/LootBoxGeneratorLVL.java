@@ -4,7 +4,7 @@ import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-public class LootBoxGeneratorLVL
+public final class LootBoxGeneratorLVL
 {
     public static final class Data
     {
