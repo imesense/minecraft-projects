@@ -15,6 +15,32 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * [
+ *     {
+ *         "data":
+ *         {
+ *             "levels": "loot_box_1, loot_box_2, loot_box_3",
+ *             "world_for_spawn": "(0: loot_box_1, loot_box_2, loot_box_3, 1: loot_box_3)"
+ *         },
+ *         "lootboxex":
+ *         [
+ *             "loot_box_1":
+ *             {
+ *                 "items": "(0.4, minecraft:apple, 0-5)"
+ *             },
+ *             "loot_box_2":
+ *             {
+ *                 "items": "(0.7, minecraft:deamond, 0-3)"
+ *             },
+ *             "loot_box_3":
+ *             {
+ *                 "items": "(0.7, minecraft:emerald, 0-4)"
+ *             }
+ *         ]
+ *     }
+ * ]
+ */
 public final class ParserEventLootBoxGeneratorLVL extends BaseParser
 {
     public ParserEventLootBoxGeneratorLVL(final String NAME_FILE)
