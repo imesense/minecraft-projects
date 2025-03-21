@@ -1,24 +1,13 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data;
 
+import lombok.Getter;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public final class LootBoxGeneratorLVL
 {
-    public static final class Data
-    {
-        public Double spawnChance;
-        public Integer maxHeight;
-        public Integer minHeight;
-        public List<ItemStack> items;
 
-        public Data(Double spawnChance, Integer maxHeight, Integer minHeight, List<ItemStack> items)
-        {
-            this.spawnChance = spawnChance;
-            this.maxHeight = maxHeight;
-            this.minHeight = minHeight;
-            this.items = items;
-        }
-    }
 }

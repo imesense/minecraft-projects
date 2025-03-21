@@ -42,30 +42,6 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
         {
             Gson gson = new Gson();
             JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
-
-            Log.writeDataToLogFile(0, "Loaded JSON: " + jsonArray.toString());
-
-            Random random = new Random();
-
-            for (JsonElement jsonElement : jsonArray)
-            {
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-
-                String chestLevel = jsonObject.keySet().iterator().next();
-                JsonObject chestData = jsonObject.getAsJsonObject(chestLevel);
-
-                double spawnChance = chestData.get("spawn_chance").getAsDouble();
-                int maxHeight = chestData.get("max_height_spawn").getAsInt();
-                int minHeight = chestData.get("min_height_spawn").getAsInt();
-
-                JsonArray itemsArray = chestData.getAsJsonArray("loot");
-                List<ItemStack> items = GeneralLootBoxGeneratorLVL.getInstance().parseLootItems(itemsArray, random);
-
-                LootBoxGeneratorLVL.Data lootBoxData = new LootBoxGeneratorLVL.Data(spawnChance, maxHeight, minHeight, items);
-                GeneralLootBoxGeneratorLVL.getInstance().lootBoxGeneratorLVLData.put(chestLevel, lootBoxData);
-
-                Log.writeDataToLogFile(0, "Loaded loot box: " + chestLevel + " with " + items.size() + " items");
-            }
         }
         catch (JsonSyntaxException | IOException exception)
         {
@@ -80,6 +56,6 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
     @Override
     public void eraseData()
     {
-        GeneralLootBoxGeneratorLVL.getInstance().lootBoxGeneratorLVLData.clear();
+
     }
 }
