@@ -18,12 +18,15 @@ import java.util.Map;
 public final class ParserEventGeneratorLootBoxInWorld extends BaseParser
 {
     @Getter
-    public static Map<String, List<String>> lootTable;
+    private Map<String, List<String>> lootTable;
+
+    public static ParserEventGeneratorLootBoxInWorld instance;
 
     public ParserEventGeneratorLootBoxInWorld(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         this.nameFile = NAME_FILE;
+        instance = this;
     }
 
     @Override
@@ -61,6 +64,14 @@ public final class ParserEventGeneratorLootBoxInWorld extends BaseParser
     @Override
     public void eraseData()
     {
-        lootTable.clear();
+        if (lootTable != null)
+        {
+            lootTable.clear();
+            Log.writeDataToLogFile(0, "Loot table cleared successfully.");
+        }
+        else
+        {
+            Log.writeDataToLogFile(2, "Loot table is already null. Nothing to clear.");
+        }
     }
 }

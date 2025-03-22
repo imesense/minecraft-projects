@@ -201,8 +201,10 @@ public final class DynamicSpawnControl
             MemoryManager.cleanMemory();
         }
 
-        MinecraftForge.EVENT_BUS.register(new GeneratorLootBoxInWorld());
-        GeneratorLootBoxInWorld.loadLootConfig();
+        GeneratorLootBoxInWorld generatorLootBoxInWorld = new GeneratorLootBoxInWorld();
+
+        MinecraftForge.EVENT_BUS.register(generatorLootBoxInWorld);
+        generatorLootBoxInWorld.loadLootConfig();
     }
 
     /**

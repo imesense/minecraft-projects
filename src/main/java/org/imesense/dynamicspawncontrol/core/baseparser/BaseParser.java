@@ -26,11 +26,15 @@ public abstract class BaseParser
 
     public void reloadConfig()
     {
+        Log.writeDataToLogFile(0, "Reloading config for: " + this.nameFile);
+
         EraseData data = this::eraseData;
         data.eraseData();
 
         ConfigLoader loader = this::loadConfig;
         loader.load(false);
+
+        Log.writeDataToLogFile(0, "Config reloaded successfully for: " + this.nameFile);
     }
 
     public abstract void eraseData();
