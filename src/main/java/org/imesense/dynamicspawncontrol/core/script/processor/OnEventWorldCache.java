@@ -2,36 +2,26 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheMonitorDebug;
 
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 public final class OnEventWorldCache
 {
@@ -89,19 +79,6 @@ public final class OnEventWorldCache
     public void handlePlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event)
     {
         this.CACHE_GENERAL_STORAGE.copyActualToBuffer();
-    }
-
-    public void handleRenderOverlay(RenderGameOverlayEvent.Post event)
-    {
-       // if (!GameDebuggerData.ConfigDataMonitor.Instance.getDebugMonitorCache())
-        //{
-        //    return;
-        //}
-
-        if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT)
-        {
-            CacheMonitorDebug.getInstance().renderDebugInfo(event.getResolution());
-        }
     }
 
     public void handleEntityJoinWorld(EntityJoinWorldEvent event)

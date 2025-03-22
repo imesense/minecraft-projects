@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.register.config;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
 import org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorConfig;
+import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
@@ -27,7 +28,8 @@ public final class ConfigRegister extends BaseConfigRegister
         MainWindowTitleConfig.class,
         BlockWorldGeneratorConfig.class,
         ZombieDropConfig.class,
-        SkeletonDropConfig.class
+        SkeletonDropConfig.class,
+        DebugConfig.class
     };
 
     @Override
