@@ -17,115 +17,114 @@ import java.util.Random;
 
 public class GeneratorLootBoxInWorld
 {
-    private static Map<String, List<String>> lootTable;
-    private static final String[] TIERS = {"common", "rare", "legendary"};
+    private final String[] TIERS = {"common", "rare", "legendary"};
 
-    public static void loadLootConfig()
+    public void loadLootConfig()
     {
         Log.writeDataToLogFile(0, "Loading loot configuration...");
-        lootTable = ParserEventGeneratorLootBoxInWorld.getLootTable();
+        //lootTable = ParserEventGeneratorLootBoxInWorld.instance.getLootTable();
 
-        if (lootTable == null || lootTable.isEmpty())
-        {
-            Log.writeDataToLogFile(2, "Loot table is empty or not loaded!");
-        }
-        else
-        {
-            Log.writeDataToLogFile(0, "Loot table loaded successfully. Tiers available: " + String.join(", ", lootTable.keySet()));
-        }
+        //if (lootTable == null || lootTable.isEmpty())
+        //{
+            //Log.writeDataToLogFile(2, "Loot table is empty or not loaded!");
+        //}
+        //else
+        //{
+            //Log.writeDataToLogFile(0, "Loot table loaded successfully. Tiers available: " + String.join(", ", lootTable.keySet()));
+        //}
     }
 
     @SubscribeEvent
     public void onChunkLoad(ChunkEvent.Load event)
     {
-        Log.writeDataToLogFile(0, "Chunk load event triggered.");
+        //Log.writeDataToLogFile(0, "Chunk load event triggered.");
         World world = event.getWorld();
 
         if (!world.isRemote)
         {
-            Log.writeDataToLogFile(0, "Processing chunk load on server side.");
+            //Log.writeDataToLogFile(0, "Processing chunk load on server side.");
             Random random = new Random();
 
             // TODO: для дебага, сундуки всегда спавнятся в огромном количестве
             if (random.nextFloat() < 1.0)
             {
-                Log.writeDataToLogFile(0, "Attempting to spawn a chest in the chunk.");
+                //Log.writeDataToLogFile(0, "Attempting to spawn a chest in the chunk.");
 
                 int x = (event.getChunk().x * 16) + random.nextInt(16);
                 int z = (event.getChunk().z * 16) + random.nextInt(16);
                 int y = world.getHeight(x, z);
 
-                Log.writeDataToLogFile(0, "Calculated spawn position: X=" + x + ", Y=" + y + ", Z=" + z);
+                //Log.writeDataToLogFile(0, "Calculated spawn position: X=" + x + ", Y=" + y + ", Z=" + z);
                 spawnChest(world, new BlockPos(x, y, z), random);
             }
             else
             {
-                Log.writeDataToLogFile(0, "Chest spawn chance check failed. No chest will be spawned.");
+                //Log.writeDataToLogFile(0, "Chest spawn chance check failed. No chest will be spawned.");
             }
         }
         else
         {
-            Log.writeDataToLogFile(0, "Chunk load event ignored on client side.");
+            //Log.writeDataToLogFile(0, "Chunk load event ignored on client side.");
         }
     }
 
-    private static void spawnChest(World world, BlockPos pos, Random random)
+    private void spawnChest(World world, BlockPos pos, Random random)
     {
-        Log.writeDataToLogFile(0, "Attempting to spawn a chest at position: " + pos);
+        //Log.writeDataToLogFile(0, "Attempting to spawn a chest at position: " + pos);
         world.setBlockState(pos, Blocks.CHEST.getDefaultState(), 2);
 
         TileEntityChest chest = (TileEntityChest) world.getTileEntity(pos);
         if (chest != null)
         {
-            Log.writeDataToLogFile(0, "Chest successfully spawned. Adding loot...");
+            //Log.writeDataToLogFile(0, "Chest successfully spawned. Adding loot...");
             addLootToChest(chest, random);
         }
         else
         {
-            Log.writeDataToLogFile(2, "Failed to create TileEntityChest at position: " + pos);
+            //Log.writeDataToLogFile(2, "Failed to create TileEntityChest at position: " + pos);
         }
     }
 
-    private static void addLootToChest(TileEntityChest chest, Random random)
+    private void addLootToChest(TileEntityChest chest, Random random)
     {
-        if (lootTable == null || lootTable.isEmpty())
+        if (ParserEventGeneratorLootBoxInWorld.instance.getLootTable() == null || ParserEventGeneratorLootBoxInWorld.instance.getLootTable().isEmpty())
         {
-            Log.writeDataToLogFile(2, "Loot table is empty or not loaded!");
+            //Log.writeDataToLogFile(2, "Loot table is empty or not loaded!");
             return;
         }
 
         String selectedTier = TIERS[random.nextInt(TIERS.length)];
         Log.writeDataToLogFile(0, "Selected loot tier: " + selectedTier);
 
-        List<String> items = lootTable.get(selectedTier);
+        List<String> items = ParserEventGeneratorLootBoxInWorld.instance.getLootTable().get(selectedTier);
         if (items == null || items.isEmpty())
         {
-            Log.writeDataToLogFile(2, "No items found for tier: " + selectedTier);
+            //Log.writeDataToLogFile(2, "No items found for tier: " + selectedTier);
             return;
         }
 
         int itemCount = random.nextInt(5) + 1;
-        Log.writeDataToLogFile(0, "Adding " + itemCount + " items to the chest.");
+        //Log.writeDataToLogFile(0, "Adding " + itemCount + " items to the chest.");
 
         for (int i = 0; i < itemCount; i++)
         {
             String itemName = items.get(random.nextInt(items.size()));
-            Log.writeDataToLogFile(0, "Selected item: " + itemName);
+            //Log.writeDataToLogFile(0, "Selected item: " + itemName);
 
             Item item = Item.getByNameOrId(itemName);
 
             if (item == null)
             {
-                Log.writeDataToLogFile(2, "Item not found: " + itemName);
+                //Log.writeDataToLogFile(2, "Item not found: " + itemName);
                 continue;
             }
 
             ItemStack stack = new ItemStack(item, 1);
             int slot = random.nextInt(chest.getSizeInventory());
-            Log.writeDataToLogFile(0, "Adding item to slot " + slot + ": " + itemName);
+            //Log.writeDataToLogFile(0, "Adding item to slot " + slot + ": " + itemName);
             chest.setInventorySlotContents(slot, stack);
         }
 
-        Log.writeDataToLogFile(0, "Chest loot generation completed.");
+        //Log.writeDataToLogFile(0, "Chest loot generation completed.");
     }
 }
