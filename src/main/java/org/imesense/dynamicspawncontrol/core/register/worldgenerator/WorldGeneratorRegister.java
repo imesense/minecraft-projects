@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register.worldgenerator;
 
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseWorldGeneratorRegister;
+import org.imesense.dynamicspawncontrol.lootboxgenerator.LootBoxInWorld;
 import org.imesense.dynamicspawncontrol.worldgenerator.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -19,7 +20,8 @@ public final class WorldGeneratorRegister extends BaseWorldGeneratorRegister
         BlockMossyCobblestone.class,
         BlockMonsterEgg.class,
         BlockWaterMelon.class,
-        BlockEmeraldOre.class
+        BlockEmeraldOre.class,
+        LootBoxInWorld.class
     };
 
     @Override

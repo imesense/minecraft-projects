@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
@@ -24,7 +23,6 @@ import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGenera
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
-import org.imesense.dynamicspawncontrol.lootboxgenerator.GeneratorLootBoxInWorld;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
@@ -200,11 +198,6 @@ public final class DynamicSpawnControl
         {
             MemoryManager.cleanMemory();
         }
-
-        GeneratorLootBoxInWorld generatorLootBoxInWorld = new GeneratorLootBoxInWorld();
-
-        MinecraftForge.EVENT_BUS.register(generatorLootBoxInWorld);
-        generatorLootBoxInWorld.loadLootConfig();
     }
 
     /**
