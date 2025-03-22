@@ -122,6 +122,9 @@ dependencies
 
     // Actual version of builder GSON
     implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Use Byte buddy lib
+    implementation 'net.bytebuddy:byte-buddy:1.12.9'
 }
 
 // Get properties into the manifest for reading by the runtime
