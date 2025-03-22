@@ -1,0 +1,10 @@
+{
+  "break_item": 0.15,
+  "hand_item_damage_factor": 0.85,
+  "head_damage_factor": 0.9,
+  "chest_damage_factor": 0.9,
+  "legs_damage_factor": 0.9,
+  "feet_damage_factor": 0.9,
+  "damage_spread_factor": 0.2,
+  "arrows_to_drops": 1
+}

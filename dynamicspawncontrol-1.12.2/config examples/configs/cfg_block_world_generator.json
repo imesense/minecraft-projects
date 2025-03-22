@@ -1,0 +1,22 @@
+{
+  "settings_block_nether_rack": {
+    "chance_spawn": 20,
+    "min_height": 5,
+    "max_height": 20
+  },
+  "settings_block_mossy_cobblestone": {
+    "chance_spawn": 35,
+    "min_height": 10,
+    "max_height": 45
+  },
+  "settings_block_monster_egg": {
+    "chance_spawn": 10,
+    "min_height": 7,
+    "max_height": 40
+  },
+  "settings_block_emerald_ore": {
+    "chance_spawn": 15,
+    "min_height": 5,
+    "max_height": 30
+  }
+}

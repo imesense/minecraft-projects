@@ -1,0 +1,16 @@
+{
+  "block_web_replacement": true,
+  "web_melee_chance": 0.15,
+  "sling_coolDown": 45.0,
+  "sling_inaccuracy": 6.0,
+  "sling_variance": 2.0,
+  "sling_webbing": true,
+  "sling_webbing_on_web": false,
+  "ai_priority_sling_webs": 3,
+  "entity_to_attack_web": [
+    {
+      "entityId": "minecraft:spider",
+      "priority": 3
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "day_length_minutes": 10,
+  "night_length_minutes": 10,
+  "sync_to_system_time_rate": 20,
+  "time_control_debug": false,
+  "sync_to_system_time": false
+}
