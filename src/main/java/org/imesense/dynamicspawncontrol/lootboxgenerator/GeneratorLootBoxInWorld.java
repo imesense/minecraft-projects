@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxGeneratorLVL;
+import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventGeneratorLootBoxInWorld;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class GeneratorLootBoxInWorld
     public static void loadLootConfig()
     {
         Log.writeDataToLogFile(0, "Loading loot configuration...");
-        lootTable = ParserEventLootBoxGeneratorLVL.getLootTable();
+        lootTable = ParserEventGeneratorLootBoxInWorld.getLootTable();
 
         if (lootTable == null || lootTable.isEmpty())
         {
