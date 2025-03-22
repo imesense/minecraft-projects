@@ -9,14 +9,21 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInWorld;
 
 import java.util.List;
 import java.util.Random;
 
+@InitLog
 public final class LootBoxInWorld implements IWorldGenerator
 {
     private final String[] TIERS = {"common", "rare", "legendary"};
+
+    public LootBoxInWorld()
+    {
+
+    }
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ,

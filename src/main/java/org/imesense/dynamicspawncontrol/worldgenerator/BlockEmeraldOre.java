@@ -8,20 +8,19 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorData;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Objects;
 import java.util.Random;
 
+@InitLog
 public final class BlockEmeraldOre implements IWorldGenerator
 {
     private final WorldGenerator CLASS_EMERALD_ORE_GENERATOR;
 
     public BlockEmeraldOre()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
-
         CLASS_EMERALD_ORE_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("emerald_ore")).getDefaultState(), 5);
     }
