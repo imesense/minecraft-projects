@@ -15,14 +15,14 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-public final class ParserEventGeneratorLootBoxInWorld extends BaseParser
+public final class ParserEventLootBoxInWorld extends BaseParser
 {
     @Getter
     private Map<String, List<String>> lootTable;
 
-    public static ParserEventGeneratorLootBoxInWorld instance;
+    public static ParserEventLootBoxInWorld instance;
 
-    public ParserEventGeneratorLootBoxInWorld(final String NAME_FILE)
+    public ParserEventLootBoxInWorld(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         this.nameFile = NAME_FILE;
