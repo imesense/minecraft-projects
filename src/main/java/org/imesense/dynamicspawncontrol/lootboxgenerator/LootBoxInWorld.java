@@ -14,7 +14,7 @@ import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInW
 import java.util.List;
 import java.util.Random;
 
-public class LootBoxInWorld implements IWorldGenerator
+public final class LootBoxInWorld implements IWorldGenerator
 {
     private final String[] TIERS = {"common", "rare", "legendary"};
 
