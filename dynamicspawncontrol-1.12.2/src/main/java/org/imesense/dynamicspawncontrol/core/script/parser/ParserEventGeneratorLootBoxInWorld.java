@@ -3,13 +3,9 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
-import net.minecraft.item.ItemStack;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
-import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBoxGeneratorLVL;
-import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
@@ -18,14 +14,13 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-public final class ParserEventLootBoxGeneratorLVL extends BaseParser
+public final class ParserEventGeneratorLootBoxInWorld extends BaseParser
 {
     @Getter
     public static Map<String, List<String>> lootTable;
 
-    public ParserEventLootBoxGeneratorLVL(final String NAME_FILE)
+    public ParserEventGeneratorLootBoxInWorld(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
         this.nameFile = NAME_FILE;
@@ -37,7 +32,7 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
         Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
 
         File file = getConfigFile(init,
-                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
+                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_WORLD_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
@@ -66,6 +61,6 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
     @Override
     public void eraseData()
     {
-        lootTable = null;
+        lootTable.clear();
     }
 }
