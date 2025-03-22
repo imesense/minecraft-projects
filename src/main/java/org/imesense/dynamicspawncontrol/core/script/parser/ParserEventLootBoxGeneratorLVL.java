@@ -1,10 +1,13 @@
 package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import lombok.Getter;
 import net.minecraft.item.ItemStack;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBoxGeneratorLVL;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -12,37 +15,16 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
-/**
- * [
- *     {
- *         "data":
- *         {
- *             "levels": "loot_box_1, loot_box_2, loot_box_3",
- *             "world_for_spawn": "(0: loot_box_1, loot_box_2, loot_box_3, 1: loot_box_3)"
- *         },
- *         "lootboxex":
- *         [
- *             "loot_box_1":
- *             {
- *                 "items": "(0.4, minecraft:apple, 0-5)"
- *             },
- *             "loot_box_2":
- *             {
- *                 "items": "(0.7, minecraft:deamond, 0-3)"
- *             },
- *             "loot_box_3":
- *             {
- *                 "items": "(0.7, minecraft:emerald, 0-4)"
- *             }
- *         ]
- *     }
- * ]
- */
 public final class ParserEventLootBoxGeneratorLVL extends BaseParser
 {
+    @Getter
+    public static Map<String, List<String>> lootTable;
+
     public ParserEventLootBoxGeneratorLVL(final String NAME_FILE)
     {
         CodeGeneric.printInitClassToLog(this.getClass());
@@ -67,7 +49,9 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
         try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
+            Type type = new TypeToken<Map<String, List<String>>>() {}.getType();
+            lootTable = gson.fromJson(fileReader, type);
+            Log.writeDataToLogFile(0, "Loot table loaded successfully: " + lootTable);
         }
         catch (JsonSyntaxException | IOException exception)
         {
@@ -82,6 +66,6 @@ public final class ParserEventLootBoxGeneratorLVL extends BaseParser
     @Override
     public void eraseData()
     {
-
+        lootTable = null;
     }
 }
