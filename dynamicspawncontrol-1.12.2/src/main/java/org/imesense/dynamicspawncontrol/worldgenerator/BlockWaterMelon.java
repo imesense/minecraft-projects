@@ -7,11 +7,18 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 
 import java.util.Random;
 
+@InitLog
 public final class BlockWaterMelon implements IWorldGenerator
 {
+    public BlockWaterMelon()
+    {
+
+    }
+
     @Override
     public void generate(Random random, int chunkX, int chunkZ,
                          World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
