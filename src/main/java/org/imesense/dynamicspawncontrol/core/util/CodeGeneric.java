@@ -36,7 +36,7 @@ public final class CodeGeneric
     }
 
     /**
-     *
+     * TODO: Legacy method
      * @param _CLASS
      * @param <T>
      */
