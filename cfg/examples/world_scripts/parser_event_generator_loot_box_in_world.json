@@ -1,0 +1,5 @@
+{
+  "common": ["minecraft:apple", "minecraft:stone_sword"],
+  "rare": ["minecraft:golden_apple", "minecraft:diamond_sword"],
+  "legendary": ["minecraft:elytra", "minecraft:beacon"]
+}

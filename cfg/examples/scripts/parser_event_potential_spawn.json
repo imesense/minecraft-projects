@@ -13,7 +13,7 @@
         {
           "mob": "minecraft:zombie_pigman",
           "weight": 5,
-          "spawn_chance": 0.7,
+          "spawn_chance": 0.55,
           "groupcountmin": 1,
           "groupcountmax": 2,
           "max_height": 30,

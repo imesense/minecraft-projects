@@ -154,6 +154,24 @@
   },
   {
     "data": {
+      "entity": "minecraft:guardian",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 8,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:elder_guardian",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
       "entity": "minecraft:wolf",
       "per_player": false,
       "per_chunk": true,
@@ -164,9 +182,18 @@
   {
     "data": {
       "entity": "minecraft:zombie",
-      "per_player": true,
-      "per_chunk": false,
-      "max_entity_count": 180,
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 250,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:zombie_pigman",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 24,
       "result": "deny"
     }
   },
@@ -221,6 +248,15 @@
       "per_player": false,
       "per_chunk": true,
       "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "divinerpg:rainbour",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
       "result": "deny"
     }
   }

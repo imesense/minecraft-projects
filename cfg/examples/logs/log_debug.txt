@@ -1,0 +1,1892 @@
+*********************************************************************
+** Log file created: 2025-03-22 12:06:20
+** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8
+*******************************************************************
+[INIT]: Checking the name of the mod: C:\Users\ictop\OneDrive\Документы\GitHub\minecraft-projects\dynamicspawncontrol-1.12.2\build\classes\java\main required: dynamicspawncontrol-0.1.jar
+[INFO]: File mixins.dynamicspawncontrol.json found! Loading the mixins...
+[INFO]: File Contents mixins.dynamicspawncontrol.json:
+{
+  "minVersion": "0.8.5",
+  "package": "org.imesense.dynamicspawncontrol.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins":
+  [
+    "MixinDivineRPGFixSpawn"
+  ]
+}
+[INFO]: Mixins uploaded successfully!
+[INFO]: Mixins configuration loaded: mixins.dynamicspawncontrol.json
+[WARN]: Is running in IDE (based on logging level): true
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig}
+[INFO]: Initialized config: cfg_cache_world.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig@69b74dc2
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig}
+[INFO]: Initialized config: cfg_log_file.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig@17c45a57
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig}
+[INFO]: Initialized config: cfg_player.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig@5a187cd4
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig}
+[INFO]: Initialized config: cfg_main_window_title.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig@3c31169f
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorConfig}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorData$1}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorData$2}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorData$3}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorData$4}
+[INFO]: Initialized config: cfg_block_world_generator.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorConfig org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorConfig@4ecbd1da
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig}
+[INFO]: Initialized config: cfg_zombie_drop_item.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig@2090d3d1
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig}
+[INFO]: Initialized config: cfg_skeleton_drop_item.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig@774d286
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig}
+[INFO]: Initialized config: plugin_cfg_darkness_forge_1_12_x_0_5_0.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig@7d7a4740
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig}
+[INFO]: Initialized config: plugin_cfg_webslinger_1_12_2_2_2_4.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig@6169de0c
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig}
+[INFO]: Initialized config: plugin_cfg_time_control_mod_forge_1_12_2.json
+[INFO]: configClass: class org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig@7d707e72
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockNetherRack}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockMossyCobblestone}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockMonsterEgg}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockEmeraldOre}
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventCacheSettings}
+[INFO]: Reading the config for the first time: true file: parser_event_cache_settings.json
+[INFO]: Entity Loaded: minecraft:bat Per Player: false Per Chunk: true Max Count: 3 Result: DENY
+[INFO]: Entity Loaded: minecraft:chicken Per Player: false Per Chunk: true Max Count: 8 Result: DENY
+[INFO]: Entity Loaded: minecraft:cow Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:donkey Per Player: false Per Chunk: true Max Count: 3 Result: DENY
+[INFO]: Entity Loaded: minecraft:horse Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: minecraft:llama Per Player: false Per Chunk: true Max Count: 4 Result: DENY
+[INFO]: Entity Loaded: minecraft:mooshroom Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:mule Per Player: false Per Chunk: true Max Count: 4 Result: DENY
+[INFO]: Entity Loaded: minecraft:ocelot Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:parrot Per Player: false Per Chunk: true Max Count: 6 Result: DENY
+[INFO]: Entity Loaded: minecraft:pig Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:polar_bear Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: minecraft:rabbit Per Player: false Per Chunk: true Max Count: 10 Result: DENY
+[INFO]: Entity Loaded: minecraft:sheep Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: minecraft:skeleton Per Player: false Per Chunk: true Max Count: 15 Result: DENY
+[INFO]: Entity Loaded: minecraft:skeleton_horse Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: minecraft:squid Per Player: false Per Chunk: true Max Count: 4 Result: DENY
+[INFO]: Entity Loaded: minecraft:guardian Per Player: true Per Chunk: true Max Count: 8 Result: DENY
+[INFO]: Entity Loaded: minecraft:elder_guardian Per Player: true Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: minecraft:wolf Per Player: false Per Chunk: true Max Count: 3 Result: DENY
+[INFO]: Entity Loaded: minecraft:zombie Per Player: false Per Chunk: true Max Count: 250 Result: DENY
+[INFO]: Entity Loaded: minecraft:zombie_pigman Per Player: false Per Chunk: true Max Count: 24 Result: DENY
+[INFO]: Entity Loaded: minecraft:zombie_horse Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:villager Per Player: false Per Chunk: true Max Count: 30 Result: DENY
+[INFO]: Entity Loaded: minecraft:villager_golem Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: divinerpg:liopleurodon Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: divinerpg:shark Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: divinerpg:whale Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: divinerpg:rainbour Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage
+[INFO]: Loaded script with data: [org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5762dc14, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@30ba29cf, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@552da55b, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@9215bfb, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@48e2b4b7, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@29770835, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@1148673d, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@1235086c, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@4faf4191, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5e88cef1, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@c2b2b92, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@36e73413, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@3f14897, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@1b96f15e, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@4eb42e05, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@417cdc6c, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@48409124, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@64709573, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@bdb4bfe, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@2ce37955, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@60e6045c, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5dce3e, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5188e170, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@669603c5, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@36823faf, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@58c02b7f, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@4ed5c276, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@180b7842, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@3f5353ab]
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventCheckSpawn}
+[INFO]: Reading the config for the first time: true file: parser_event_check_spawn.json
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storagesupport.SupportCheckSpawnStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storagesupport.SupportCheckSpawnStorage}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storagesupport.SupportCheckSpawnStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventDropExperience}
+[INFO]: Reading the config for the first time: true file: parser_event_drop_experience.json
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventDropItem}
+[INFO]: Reading the config for the first time: true file: parser_event_drop_item.json
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventPotentialSpawn}
+[INFO]: Reading the config for the first time: true file: parser_event_potential_spawn.json
+[INFO]: Loaded mobs: 2
+[INFO]: Entity [EntityZombie*(1-2):25:minecraft:zombie] has been added to the spawn list. Data -> SpawnChance [0.250000], Weight [25], Group min [1], Group max [2], Max Height [100.000000] Min Height [40.000000]
+[INFO]: Entity [EntityPigZombie*(1-2):5:minecraft:zombie_pigman] has been added to the spawn list. Data -> SpawnChance [0.550000], Weight [5], Group min [1], Group max [2], Max Height [30.000000] Min Height [5.000000]
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventPopulationChunk}
+[INFO]: Reading the config for the first time: true file: parser_event_population_chunk.json
+[INFO]: Starting to parse JSON config.
+[INFO]: Loaded mobs: 1
+[INFO]: Processing mob: minecraft:villager_golem
+[INFO]: Added mob to population list: minecraft:villager_golem
+[INFO]: Loaded mobs: 2
+[INFO]: Processing mob: minecraft:guardian
+[INFO]: Biomes for mob minecraft:guardian: minecraft:river, minecraft:ocean, minecraft:deep_ocean
+[INFO]: Added mob to population list: minecraft:guardian
+[INFO]: Processing mob: minecraft:elder_guardian
+[INFO]: Biomes for mob minecraft:elder_guardian: minecraft:deep_ocean
+[INFO]: Added mob to population list: minecraft:elder_guardian
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn
+[INFO]: Config parsing completed successfully.
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventMobTaskManager}
+[INFO]: Reading the config for the first time: true file: parser_event_mob_task_manager.json
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager
+[INFO]: Parsed AddPanicToId.Data:
+[INFO]: panic_to: [minecraft:villager, minecraft:pig, minecraft:cow, minecraft:chicken, minecraft:sheep, minecraft:donkey, minecraft:horse, minecraft:llama, minecraft:rabbit, minecraft:creeper]
+[INFO]: panic_id: [srparasites]
+[INFO]: AddPanicToId.Data successfully added to addPanicToIdData.
+[INFO]: Parsed AddEnemyId.Data:
+[INFO]: enemies_to: [minecraft:villager_golem, minecraft:zombie, minecraft:zombie_villager, minecraft:zombie_pigman, minecraft:skeleton, minecraft:spider, minecraft:enderman, minecraft:silverfish, minecraft:cave_spider, minecraft:wolf, minecraft:stray, minecraft:husk, minecraft:vex, minecraft:wither_skeleton, minecraft:blaze, minecraft:witch, minecraft:ghast, minecraft:slime, minecraft:magma_cube]
+[INFO]: enemy_id: [srparasites]
+[INFO]: AddEnemyId.Data successfully added to addEnemyIdData.
+[INFO]: Parsed AddEnemyToIdThemToId.Data:
+[INFO]: enemy_id: [divinerpg]
+[INFO]: them_id: [srparasites]
+[INFO]: AddEnemyToIdThemToId.Data successfully added to addEnemyToIdThemToIdData.
+[INFO]: Parsed AddEnemy.Data:
+[INFO]: enemies_to: [minecraft:villager_golem]
+[INFO]: to_them: [minecraft:zombie, minecraft:zombie_villager, minecraft:zombie_pigman, minecraft:skeleton, minecraft:spider, minecraft:enderman, minecraft:silverfish, minecraft:cave_spider, minecraft:wolf, minecraft:stray, minecraft:husk, minecraft:vex, minecraft:wither_skeleton, minecraft:blaze, minecraft:witch]
+[INFO]: AddEnemy.Data successfully added to addEnemyData.
+[INFO]: Parsed AddEnemy.Data:
+[INFO]: enemies_to: [minecraft:wolf]
+[INFO]: to_them: [minecraft:skeleton]
+[INFO]: AddEnemy.Data successfully added to addEnemyData.
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.parser.ParserEventGeneratorLootBoxInWorld}
+[INFO]: Reading the config for the first time: true file: parser_event_generator_loot_box_in_world.json
+[INFO]: Loot table loaded successfully: {}
+[INFO]: Initializing all registers...
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.block.EventBlockRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.entity.EventEntityRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.fmlnetwork.EventFMLRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.living.EventLivingRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.player.EventPlayerRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.populatechunk.EventPopulateChunk}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.rendergame.EventRenderGame}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.tickevent.EventTickEventRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.event.world.EventWorldRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.attach.AttachRegister}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.commandevent.CommandEventRegister}
+[INFO]: Total registers created: 11
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.block.OnEventBlockEventBreakEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.entity.OnEventEntityJoinWorldEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.entity.OnEventEntityViewRenderEventFogColors}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.entity.OnEventEntityViewRenderEventRenderFogEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.fmlnetwork.OnEventFMLNetworkEventClientConnectedToServerEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.fmlnetwork.OnEventFMLNetworkEventClientDisconnectionFromServerEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingAttackEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingDeathEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingDropsEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingEventLivingUpdateEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingExperienceDropEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingHurtEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingSpawnEventCheckSpawn}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.living.OnEventLivingSpawnEventSpecialSpawn}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.player.OnEventPlayerEventPlayerLoggedInEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.player.OnEventPlayerEventPlayerLoggedOutEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.player.OnEventPlayerEventPlayerRespawnEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.populatechunk.OnEventPopulateChunkEventPre}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.rendergame.OnEventRenderGameOverlayEventPost}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.rendergame.OnEventRenderGameOverlayEventText}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.tickevent.OnEventTickEventWorldTickEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.tickevent.OnEventTickEventClientTickEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.tickevent.OnEventTickEventPlayerTickEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.worldevent.OnEventWorldEventPotentialSpawns}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.worldevent.OnEventWorldEventLoad}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.attach.OnEventAttachCapabilitiesEvent}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.event.command.OnEventCommandEvent}
+[INFO]: All registers initialized and events registered.
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.collection.TextColorCollection}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection}
+[INFO]: Memory cleaner thread started!
+[INFO]: Memory cleaner thread finished!
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.ItemWebbing}
+[INFO]: Memory cleaner thread started!
+[INFO]: Loading loot configuration...
+[INFO]: Memory cleaner thread started!
+[INFO]: Memory cleaner thread finished!
+[INFO]: Memory cleaner thread finished!
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogEvent
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogEvent
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.EventHandler
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.EventHandler}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.EventHandler
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManager
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManager
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.functional.FunctionalMobTaskManager
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.functional.FunctionalMobTaskManager
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.register.command.CommandRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.register.command.CommandRegister}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.register.command.CommandRegister
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminDumpBlock}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminDumpEntity}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminDumpItem}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminGameMode}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminGetWorldMoonPhase}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminLaunchFireball}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminScanEntities}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminSwitchVanish}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdServerMobsKiller}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdServerScriptReload}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.command.CmdAdminGetDimension}
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGrass
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGrass}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGrass
+[INFO]: ClientConnectedToServerEvent: Player 'unknown' connected to server 'local:E:e1eba532'
+[INFO]: Player [Player46] has been added to the list
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional
+[INFO]: PlayerLoggedInEvent: Player 'Player46' (UUID: a2d3cb04-2e77-32ea-a568-7872ba7e9c5c) logged in at coordinates: X=-902, Y=5, Z=-4
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.eventdescriptions.ComplexityBiomes
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.eventdescriptions.ComplexityBiomes}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.eventdescriptions.ComplexityBiomes
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventPotentialSpawn
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventPotentialSpawn
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.Potion
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.Potion
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.eventdescriptions.NickNameEntity
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.eventdescriptions.NickNameEntity}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.eventdescriptions.NickNameEntity
+[INFO]: Memory cleaner thread started!
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.Priority
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.Priority
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.World
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.World
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.CommandNBT
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.actioncollector.CommandNBT
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.eventdescriptions.RenderFPS
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.eventdescriptions.RenderFPS}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.eventdescriptions.RenderFPS
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheMonitorDebug
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.worldcache.CacheMonitorDebug}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.worldcache.CacheMonitorDebug
+[INFO]: Memory cleaner thread finished!
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventPopulationChunk
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.processor.OnEventPopulationChunk
+[INFO]: Reloading config for: parser_event_cache_settings.json
+[INFO]: Reading the config for the first time: false file: parser_event_cache_settings.json
+[INFO]: Entity Loaded: minecraft:bat Per Player: false Per Chunk: true Max Count: 3 Result: DENY
+[INFO]: Entity Loaded: minecraft:chicken Per Player: false Per Chunk: true Max Count: 8 Result: DENY
+[INFO]: Entity Loaded: minecraft:cow Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:donkey Per Player: false Per Chunk: true Max Count: 3 Result: DENY
+[INFO]: Entity Loaded: minecraft:horse Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: minecraft:llama Per Player: false Per Chunk: true Max Count: 4 Result: DENY
+[INFO]: Entity Loaded: minecraft:mooshroom Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:mule Per Player: false Per Chunk: true Max Count: 4 Result: DENY
+[INFO]: Entity Loaded: minecraft:ocelot Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:parrot Per Player: false Per Chunk: true Max Count: 6 Result: DENY
+[INFO]: Entity Loaded: minecraft:pig Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:polar_bear Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: minecraft:rabbit Per Player: false Per Chunk: true Max Count: 10 Result: DENY
+[INFO]: Entity Loaded: minecraft:sheep Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: minecraft:skeleton Per Player: false Per Chunk: true Max Count: 15 Result: DENY
+[INFO]: Entity Loaded: minecraft:skeleton_horse Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: minecraft:squid Per Player: false Per Chunk: true Max Count: 4 Result: DENY
+[INFO]: Entity Loaded: minecraft:guardian Per Player: true Per Chunk: true Max Count: 8 Result: DENY
+[INFO]: Entity Loaded: minecraft:elder_guardian Per Player: true Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: minecraft:wolf Per Player: false Per Chunk: true Max Count: 3 Result: DENY
+[INFO]: Entity Loaded: minecraft:zombie Per Player: false Per Chunk: true Max Count: 250 Result: DENY
+[INFO]: Entity Loaded: minecraft:zombie_pigman Per Player: false Per Chunk: true Max Count: 24 Result: DENY
+[INFO]: Entity Loaded: minecraft:zombie_horse Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: minecraft:villager Per Player: false Per Chunk: true Max Count: 30 Result: DENY
+[INFO]: Entity Loaded: minecraft:villager_golem Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Entity Loaded: divinerpg:liopleurodon Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: divinerpg:shark Per Player: false Per Chunk: true Max Count: 5 Result: DENY
+[INFO]: Entity Loaded: divinerpg:whale Per Player: false Per Chunk: true Max Count: 1 Result: DENY
+[INFO]: Entity Loaded: divinerpg:rainbour Per Player: false Per Chunk: true Max Count: 2 Result: DENY
+[INFO]: Loaded script with data: [org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@3f4ef8da, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@68a04047, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@1502ccf3, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@733aef64, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@3b7a51f1, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@51328ca1, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5254a720, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@763133c1, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@1f2d012f, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5a3fd1ef, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@2d25102f, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@52f58171, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@25a6d679, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@1b2cb8b, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@41317fa, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@7a13f000, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@6915f425, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@7eec841f, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@625ce0ff, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@72a8f44, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@4158f758, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5b8e4f10, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5e500786, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@dd3e3a7, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@bb73772, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@22681fdb, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@7c5a5027, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@6e065ad0, org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage$EntityData@5c38fcc5]
+[INFO]: Config reloaded successfully for: parser_event_cache_settings.json
+[INFO]: Reloading config for: parser_event_check_spawn.json
+[INFO]: Reading the config for the first time: false file: parser_event_check_spawn.json
+[INFO]: Config reloaded successfully for: parser_event_check_spawn.json
+[INFO]: Reloading config for: parser_event_drop_experience.json
+[INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience}
+[INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience
+[INFO]: Reading the config for the first time: false file: parser_event_drop_experience.json
+[INFO]: Config reloaded successfully for: parser_event_drop_experience.json
+[INFO]: Reloading config for: parser_event_drop_item.json
+[INFO]: Reading the config for the first time: false file: parser_event_drop_item.json
+[INFO]: Config reloaded successfully for: parser_event_drop_item.json
+[INFO]: Reloading config for: parser_event_potential_spawn.json
+[INFO]: Reading the config for the first time: false file: parser_event_potential_spawn.json
+[INFO]: Loaded mobs: 2
+[INFO]: Entity [EntityZombie*(1-2):25:minecraft:zombie] has been added to the spawn list. Data -> SpawnChance [0.250000], Weight [25], Group min [1], Group max [2], Max Height [100.000000] Min Height [40.000000]
+[INFO]: Entity [EntityPigZombie*(1-2):5:minecraft:zombie_pigman] has been added to the spawn list. Data -> SpawnChance [0.550000], Weight [5], Group min [1], Group max [2], Max Height [30.000000] Min Height [5.000000]
+[INFO]: Config reloaded successfully for: parser_event_potential_spawn.json
+[INFO]: Reloading config for: parser_event_population_chunk.json
+[INFO]: Reading the config for the first time: false file: parser_event_population_chunk.json
+[INFO]: Starting to parse JSON config.
+[INFO]: Loaded mobs: 1
+[INFO]: Processing mob: minecraft:villager_golem
+[INFO]: Added mob to population list: minecraft:villager_golem
+[INFO]: Loaded mobs: 2
+[INFO]: Processing mob: minecraft:guardian
+[INFO]: Biomes for mob minecraft:guardian: minecraft:river, minecraft:ocean, minecraft:deep_ocean
+[INFO]: Added mob to population list: minecraft:guardian
+[INFO]: Processing mob: minecraft:elder_guardian
+[INFO]: Biomes for mob minecraft:elder_guardian: minecraft:deep_ocean
+[INFO]: Added mob to population list: minecraft:elder_guardian
+[INFO]: Config parsing completed successfully.
+[INFO]: Config reloaded successfully for: parser_event_population_chunk.json
+[INFO]: Reloading config for: parser_event_mob_task_manager.json
+[INFO]: Reading the config for the first time: false file: parser_event_mob_task_manager.json
+[INFO]: Parsed AddPanicToId.Data:
+[INFO]: panic_to: [minecraft:villager, minecraft:pig, minecraft:cow, minecraft:chicken, minecraft:sheep, minecraft:donkey, minecraft:horse, minecraft:llama, minecraft:rabbit, minecraft:creeper]
+[INFO]: panic_id: [srparasites]
+[INFO]: AddPanicToId.Data successfully added to addPanicToIdData.
+[INFO]: Parsed AddEnemyId.Data:
+[INFO]: enemies_to: [minecraft:villager_golem, minecraft:zombie, minecraft:zombie_villager, minecraft:zombie_pigman, minecraft:skeleton, minecraft:spider, minecraft:enderman, minecraft:silverfish, minecraft:cave_spider, minecraft:wolf, minecraft:stray, minecraft:husk, minecraft:vex, minecraft:wither_skeleton, minecraft:blaze, minecraft:witch, minecraft:ghast, minecraft:slime, minecraft:magma_cube]
+[INFO]: enemy_id: [srparasites]
+[INFO]: AddEnemyId.Data successfully added to addEnemyIdData.
+[INFO]: Parsed AddEnemyToIdThemToId.Data:
+[INFO]: enemy_id: [divinerpg]
+[INFO]: them_id: [srparasites]
+[INFO]: AddEnemyToIdThemToId.Data successfully added to addEnemyToIdThemToIdData.
+[INFO]: Parsed AddEnemy.Data:
+[INFO]: enemies_to: [minecraft:villager_golem]
+[INFO]: to_them: [minecraft:zombie, minecraft:zombie_villager, minecraft:zombie_pigman, minecraft:skeleton, minecraft:spider, minecraft:enderman, minecraft:silverfish, minecraft:cave_spider, minecraft:wolf, minecraft:stray, minecraft:husk, minecraft:vex, minecraft:wither_skeleton, minecraft:blaze, minecraft:witch]
+[INFO]: AddEnemy.Data successfully added to addEnemyData.
+[INFO]: Parsed AddEnemy.Data:
+[INFO]: enemies_to: [minecraft:wolf]
+[INFO]: to_them: [minecraft:skeleton]
+[INFO]: AddEnemy.Data successfully added to addEnemyData.
+[INFO]: Config reloaded successfully for: parser_event_mob_task_manager.json
+[INFO]: Reloading config for: parser_event_generator_loot_box_in_world.json
+[INFO]: Loot table cleared successfully.
+[INFO]: Reading the config for the first time: false file: parser_event_generator_loot_box_in_world.json
+[INFO]: Loot table loaded successfully: {common=[minecraft:apple, minecraft:stone_sword], rare=[minecraft:golden_apple, minecraft:diamond_sword], legendary=[minecraft:elytra, minecraft:beacon]}
+[INFO]: Config reloaded successfully for: parser_event_generator_loot_box_in_world.json
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: legendary
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: common
+[INFO]: Selected loot tier: rare
+[INFO]: ClientDisconnectionFromServerEvent: Player 'Player46' disconnected from server. Reason: 'unknown'
+[INFO]: PlayerLoggedOutEvent: Player 'Player46' (UUID: a2d3cb04-2e77-32ea-a568-7872ba7e9c5c) logged out at coordinates: X=-1040, Y=5, Z=-449
+[INFO]: Player [Player46] has been removed from the list
+[INFO]: Cleaning up CacheGeneralStorage on server stop...
+[INFO]: CacheGeneralStorage cleaned up successfully.
