@@ -5,6 +5,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldProvider;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -12,23 +13,14 @@ import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
+@InitLog
 public final class CmdAdminGetWorldMoonPhase extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminGetWorldMoonPhase()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -36,11 +28,6 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
         return "dsc_moon_phase";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -48,12 +35,6 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
         return "/dsc_moon_phase";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {

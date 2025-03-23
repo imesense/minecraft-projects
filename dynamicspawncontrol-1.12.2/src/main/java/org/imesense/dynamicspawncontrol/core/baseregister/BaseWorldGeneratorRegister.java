@@ -13,17 +13,7 @@ public abstract class BaseWorldGeneratorRegister
 {
     protected abstract Class<?>[] getWorldGeneratorClasses();
 
-    public BaseWorldGeneratorRegister()
-    {
-        CodeGeneric.printInitClassToLog(this.getClass());
-    }
-
-    protected void logInitialization(final Class<?> _CLASS)
-    {
-        Log.writeDataToLogFile(3, String.format("Initializing a class: {%s}", _CLASS.getName()));
-    }
-
-    public void init(FMLPreInitializationEvent fmlPreInitializationEvent)
+    public void init(FMLPreInitializationEvent event)
     {
         for (Class<?> _class : getWorldGeneratorClasses())
         {
@@ -31,7 +21,7 @@ public abstract class BaseWorldGeneratorRegister
             {
                 if (_class.isAnnotationPresent(InitLog.class))
                 {
-                    this.logInitialization(_class);
+                    CodeGeneric.logInitialization(_class);
                 }
 
                 if (!CodeGeneric.hasDefaultConstructor(_class))

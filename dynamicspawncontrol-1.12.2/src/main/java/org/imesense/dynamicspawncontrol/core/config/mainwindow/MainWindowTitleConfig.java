@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @Getter
 @Setter
+@InitLog
 @ConceptConfig(fileName = "cfg_main_window_title")
 public final class MainWindowTitleConfig extends BaseJsonConfig
 {
@@ -21,8 +23,6 @@ public final class MainWindowTitleConfig extends BaseJsonConfig
     public MainWindowTitleConfig(String configPath)
     {
         super(configPath, true);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
 
         loadOrCreateConfig();
     }

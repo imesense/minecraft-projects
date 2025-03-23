@@ -6,6 +6,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.client.IClientCommand;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
@@ -13,9 +14,15 @@ import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
 import java.util.ArrayList;
 import java.util.List;
 
+@InitLog
 public class CmdClientCleanMemory extends CommandBase implements IClientCommand
 {
     public static final String NAME = "cleanmemory";
+
+    public CmdClientCleanMemory()
+    {
+
+    }
 
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException
     {

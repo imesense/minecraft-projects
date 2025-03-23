@@ -5,29 +5,21 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
+@InitLog
 public final class CmdAdminGetDimension extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminGetDimension()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -35,11 +27,6 @@ public final class CmdAdminGetDimension extends CommandBase
         return "dsc_gd";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -47,12 +34,6 @@ public final class CmdAdminGetDimension extends CommandBase
         return "/dsc_gd";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {

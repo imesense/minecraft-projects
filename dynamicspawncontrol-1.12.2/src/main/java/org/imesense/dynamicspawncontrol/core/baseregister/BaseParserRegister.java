@@ -14,11 +14,6 @@ public abstract class BaseParserRegister
 
     private final List<BaseParser> PARSER_LIST = new ArrayList<>();
 
-    public BaseParserRegister()
-    {
-        CodeGeneric.printInitClassToLog(this.getClass());
-    }
-
     public void init()
     {
         for (Class<?> parserClass : getParserClasses())

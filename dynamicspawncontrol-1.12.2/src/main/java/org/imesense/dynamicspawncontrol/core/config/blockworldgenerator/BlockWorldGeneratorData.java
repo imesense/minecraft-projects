@@ -2,9 +2,11 @@ package org.imesense.dynamicspawncontrol.core.config.blockworldgenerator;
 
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @Getter
+@InitLog
 @Accessors(fluent = true)
 public abstract class BlockWorldGeneratorData
 {
@@ -19,8 +21,4 @@ public abstract class BlockWorldGeneratorData
 
     public static final BlockWorldGeneratorDataAbstract EMERALD_ORE =
             new BlockWorldGeneratorDataAbstract("settings_block_emerald_ore", 20, 5, 30) {};
-
-    {
-        CodeGeneric.printInitClassToLog(this.getClass());
-    }
 }

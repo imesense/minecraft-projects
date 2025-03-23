@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
@@ -20,23 +21,14 @@ import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-/**
- *
- */
+@InitLog
 public final class CmdAdminDumpBlock extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminDumpBlock()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -44,11 +36,6 @@ public final class CmdAdminDumpBlock extends CommandBase
         return "dsc_dump_block";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -56,12 +43,6 @@ public final class CmdAdminDumpBlock extends CommandBase
         return "/dsc_dump_block";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {

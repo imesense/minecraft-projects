@@ -48,6 +48,16 @@ public final class CodeGeneric
 
     /**
      *
+     * @param _CLASS
+     */
+    public static void logInitialization(final Class<?> _CLASS)
+    {
+        Log.writeDataToLogFile(3,
+                String.format("Initializing a class: {%s}", _CLASS.getName()));
+    }
+
+    /**
+     *
      * @param object
      * @param _class
      * @return
