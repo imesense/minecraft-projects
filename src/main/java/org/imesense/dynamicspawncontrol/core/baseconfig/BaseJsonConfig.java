@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
 import java.util.Map;
@@ -31,6 +33,11 @@ public abstract class BaseJsonConfig
     {
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.configPath = constructPathToDirectory(isConfigFolder) + nameConfigFile;
+
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
 
         INSTANCES.put(this.getClass(), this);
     }

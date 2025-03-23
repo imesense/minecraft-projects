@@ -4,6 +4,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -12,6 +13,7 @@ import static net.minecraft.client.gui.Gui.*;
 
 //* TODO: Реализовать 'высоту' сложности, например 5 черепков от 5 до 20 высота в шахте и так далее
 
+@InitLog
 public final class ComplexityBiomes
 {
     private String biomesText = "";
@@ -39,7 +41,10 @@ public final class ComplexityBiomes
 
     public ComplexityBiomes()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleBiomesChange(EntityPlayerMP player)

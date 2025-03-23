@@ -15,16 +15,18 @@ import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class FogEventHandler
 {
     private static volatile FogEventHandler _INSTANCE;
 
-    // старые данные без конфига:
-//private float fogDensity = 0.1f;
-//        private int fogColor = 16777215;
+    // TODO: старые данные без конфига:
+    // private float fogDensity = 0.1f;
+    // private int fogColor = 16777215;
 
     public static FogEventHandler getInstance()
     {
@@ -33,7 +35,10 @@ public class FogEventHandler
 
     public FogEventHandler()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     private static double fogX;

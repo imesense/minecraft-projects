@@ -15,6 +15,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -23,6 +24,7 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 import java.util.HashSet;
 import java.util.Optional;
 
+@InitLog
 public final class OnEventWorldCache
 {
     private static volatile OnEventWorldCache _INSTANCE;
@@ -36,7 +38,10 @@ public final class OnEventWorldCache
 
     public OnEventWorldCache()
     {
-		CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleWorldTick(TickEvent.WorldTickEvent event)

@@ -1,10 +1,12 @@
 package org.imesense.dynamicspawncontrol.core.register.worldgenerator;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseWorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.lootboxgenerator.LootBoxInWorld;
 import org.imesense.dynamicspawncontrol.worldgenerator.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class WorldGeneratorRegister extends BaseWorldGeneratorRegister
 {
     private static volatile WorldGeneratorRegister _INSTANCE;

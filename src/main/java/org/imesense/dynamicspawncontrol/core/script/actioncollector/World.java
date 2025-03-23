@@ -1,8 +1,10 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
 import net.minecraft.entity.Entity;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class World
 {
     private static volatile World _INSTANCE;
@@ -10,6 +12,14 @@ public final class World
     public static World getInstance()
     {
         return CodeGeneric.getInstance(World.class);
+    }
+
+    public World()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public boolean checkHeight(Entity entity, Integer minHeight, Integer maxHeight)

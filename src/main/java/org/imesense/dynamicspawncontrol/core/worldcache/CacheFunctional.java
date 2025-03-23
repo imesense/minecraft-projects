@@ -10,11 +10,13 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@InitLog
 public final class CacheFunctional
 {
     private static volatile CacheFunctional _INSTANCE;
@@ -22,6 +24,14 @@ public final class CacheFunctional
     public static CacheFunctional getInstance()
     {
         return CodeGeneric.getInstance(CacheFunctional.class);
+    }
+
+    public CacheFunctional()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public int calculateMaxEntityCount(CacheEntityStorage.EntityData entityData, WorldServer worldServer, EntityPlayerMP player)

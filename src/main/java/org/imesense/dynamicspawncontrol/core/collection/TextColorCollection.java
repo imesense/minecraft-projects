@@ -1,37 +1,26 @@
 package org.imesense.dynamicspawncontrol.core.collection;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- */
 public final class TextColorCollection
 {
-    /**
-     *
-     */
     public static TextColorCollection instance;
 
-    /**
-     *
-     */
     private static final Map<String, String> TEXT_COLORS;
 
-    /**
-     *
-     */
     public TextColorCollection()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
-    /**
-     *
-     */
     static
     {
         Map<String, String> colors = new HashMap<>();
@@ -50,11 +39,6 @@ public final class TextColorCollection
         TEXT_COLORS = Collections.unmodifiableMap(colors);
     }
 
-    /**
-     *
-     * @param colorName
-     * @return
-     */
     public String getCode(String colorName)
     {
         return TEXT_COLORS.get(colorName.toUpperCase());

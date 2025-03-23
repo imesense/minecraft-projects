@@ -14,6 +14,7 @@ public final class PacketGameRule implements IMessage
 
     public PacketGameRule()
     {
+
     }
 
     public PacketGameRule(boolean doDaylightCycle_tc)

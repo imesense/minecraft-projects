@@ -6,6 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.datasupport.AdditionalChecks;
@@ -22,11 +23,12 @@ import java.util.ArrayList;
 
 import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
+@InitLog
 public final class ParserEventCheckSpawn extends BaseParser
 {
     public ParserEventCheckSpawn(final String NAME_FILE)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        super();
         this.nameFile = NAME_FILE;
     }
 

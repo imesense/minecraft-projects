@@ -1,9 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.plugin.mod.bloodmoon_mc1_12_2_1_5_3;
 
 import net.minecraft.launchwrapper.IClassTransformer;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.AbstractInsnNode;

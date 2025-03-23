@@ -7,6 +7,11 @@ import org.imesense.dynamicspawncontrol.core.event.block.OnEventBlockEventBreakE
 @InitLog
 public final class EventBlockRegister extends BaseEventRegister
 {
+    public EventBlockRegister()
+    {
+
+    }
+
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnEventBlockEventBreakEvent.class

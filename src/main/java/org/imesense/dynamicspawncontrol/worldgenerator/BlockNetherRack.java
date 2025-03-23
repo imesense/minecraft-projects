@@ -10,6 +10,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorData;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Objects;
 import java.util.Random;
@@ -21,6 +22,11 @@ public final class BlockNetherRack implements IWorldGenerator
 
     public BlockNetherRack()
     {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
+
         CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
                 Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 5);
     }

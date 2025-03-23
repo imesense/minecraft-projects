@@ -14,6 +14,7 @@ public final class PacketTime implements IMessage
 
     public PacketTime()
     {
+
     }
 
     public PacketTime(long customTime, double multiplier)

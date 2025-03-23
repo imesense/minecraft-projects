@@ -1,11 +1,13 @@
 package org.imesense.dynamicspawncontrol.core.script.actioncollector;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.ProfilePriority;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 import java.util.Random;
 
+@InitLog
 public final class Priority
 {
     private static volatile Priority _INSTANCE;
@@ -13,6 +15,14 @@ public final class Priority
     public static Priority getInstance()
     {
         return CodeGeneric.getInstance(Priority.class);
+    }
+
+    public Priority()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public ProfilePriority.Data getConfigByPriority(List<ProfilePriority.Data> listProfilePriorityData, Random random)

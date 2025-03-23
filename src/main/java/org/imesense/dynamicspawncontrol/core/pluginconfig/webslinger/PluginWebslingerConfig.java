@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @Getter
 @Setter
+@InitLog
 @ConceptConfig(fileName = "plugin_cfg_webslinger_1_12_2_2_2_4")
 public final class PluginWebslingerConfig extends BaseJsonConfig
 {
@@ -36,8 +38,6 @@ public final class PluginWebslingerConfig extends BaseJsonConfig
     public PluginWebslingerConfig(String configPath)
     {
         super(configPath, false);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
 
         loadOrCreateConfig();
     }

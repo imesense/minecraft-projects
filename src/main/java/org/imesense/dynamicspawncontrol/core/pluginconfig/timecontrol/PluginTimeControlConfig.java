@@ -4,11 +4,13 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @Getter
 @Setter
+@InitLog
 @ConceptConfig(fileName = "plugin_cfg_time_control_mod_forge_1_12_2")
 public final class PluginTimeControlConfig extends BaseJsonConfig
 {
@@ -21,8 +23,6 @@ public final class PluginTimeControlConfig extends BaseJsonConfig
     public PluginTimeControlConfig(String configPath)
     {
         super(configPath, false);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
 
         loadOrCreateConfig();
     }

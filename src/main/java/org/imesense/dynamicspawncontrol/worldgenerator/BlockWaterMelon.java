@@ -8,6 +8,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Random;
 
@@ -16,7 +17,10 @@ public final class BlockWaterMelon implements IWorldGenerator
 {
     public BlockWaterMelon()
     {
-
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     @Override

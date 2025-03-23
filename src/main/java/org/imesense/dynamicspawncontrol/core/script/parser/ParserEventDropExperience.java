@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.data.EntityDropExperience;
@@ -19,11 +20,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.function.BiFunction;
 
+@InitLog
 public final class ParserEventDropExperience extends BaseParser
 {
     public ParserEventDropExperience(final String NAME_FILE)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        super();
+
         this.nameFile = NAME_FILE;
     }
 

@@ -1,37 +1,26 @@
 package org.imesense.dynamicspawncontrol.core.debug;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-/**
- *
- */
+@InitLog
 public final class Timer
 {
-    /**
-     *
-     */
     private long startTime;
 
-    /**
-     *
-     */
     public Timer()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
-    /**
-     *
-     */
     public void start()
     {
         this.startTime = System.nanoTime();
     }
 
-    /**
-     *
-     * @return
-     */
     public double stop()
     {
         long endTime = System.nanoTime();

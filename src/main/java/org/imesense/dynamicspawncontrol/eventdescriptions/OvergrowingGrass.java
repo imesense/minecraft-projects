@@ -10,11 +10,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+@InitLog
 public final class OvergrowingGrass
 {
     public static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
@@ -28,7 +30,10 @@ public final class OvergrowingGrass
 
     public OvergrowingGrass()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleWorldTick(World world)

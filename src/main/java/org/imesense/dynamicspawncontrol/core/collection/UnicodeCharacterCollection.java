@@ -1,29 +1,19 @@
 package org.imesense.dynamicspawncontrol.core.collection;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- */
+@InitLog
 public final class UnicodeCharacterCollection
 {
-    /**
-     *
-     */
     public static UnicodeCharacterCollection instance;
 
-    /**
-     *
-     */
     private static final Map<Character, String> UNICODE_CHARACTERS;
 
-    /**
-     *
-     */
     static
     {
         Map<Character, String> characters = new HashMap<>();
@@ -39,29 +29,19 @@ public final class UnicodeCharacterCollection
         UNICODE_CHARACTERS = Collections.unmodifiableMap(characters);
     }
 
-    /**
-     *
-     */
     public UnicodeCharacterCollection()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
-    /**
-     *
-     * @param character
-     * @return
-     */
     public String getDescription(char character)
     {
         return UNICODE_CHARACTERS.get(character);
     }
 
-    /**
-     *
-     * @param description
-     * @return
-     */
     public Character getCharacter(String description)
     {
         for (Map.Entry<Character, String> entry : UNICODE_CHARACTERS.entrySet())
@@ -75,11 +55,6 @@ public final class UnicodeCharacterCollection
         return null;
     }
 
-    /**
-     *
-     * @param character
-     * @return
-     */
     public String toString(char character)
     {
         String description = getDescription(character);

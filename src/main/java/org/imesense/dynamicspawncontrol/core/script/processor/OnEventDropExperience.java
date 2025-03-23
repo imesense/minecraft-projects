@@ -6,9 +6,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class OnEventDropExperience
 {
     private static volatile OnEventDropExperience _INSTANCE;
@@ -16,6 +18,14 @@ public final class OnEventDropExperience
     public static OnEventDropExperience getInstance()
     {
         return CodeGeneric.getInstance(OnEventDropExperience.class);
+    }
+
+    public OnEventDropExperience()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleUpdateLivingExperienceDrop(LivingExperienceDropEvent event)

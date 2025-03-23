@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -15,6 +16,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+@InitLog
 public final class ParserEventLootBoxInWorld extends BaseParser
 {
     @Getter
@@ -24,7 +26,8 @@ public final class ParserEventLootBoxInWorld extends BaseParser
 
     public ParserEventLootBoxInWorld(final String NAME_FILE)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        super();
+
         this.nameFile = NAME_FILE;
         instance = this;
     }

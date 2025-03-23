@@ -7,12 +7,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 
 import java.util.Date;
 
+@InitLog
 public final class DSCInlineDebugStats
 {
     private static volatile DSCInlineDebugStats _INSTANCE;
@@ -26,7 +28,10 @@ public final class DSCInlineDebugStats
 
     public DSCInlineDebugStats()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     private static final Minecraft MC = Minecraft.getMinecraft();
