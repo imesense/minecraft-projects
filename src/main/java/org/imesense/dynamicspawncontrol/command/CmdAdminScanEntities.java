@@ -18,23 +18,13 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- *
- */
 public final class CmdAdminScanEntities extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminScanEntities()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()

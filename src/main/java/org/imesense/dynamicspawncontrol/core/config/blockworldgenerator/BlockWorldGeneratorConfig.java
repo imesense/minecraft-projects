@@ -2,18 +2,18 @@ package org.imesense.dynamicspawncontrol.core.config.blockworldgenerator;
 
 import com.google.gson.JsonObject;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 @ConceptConfig(fileName = "cfg_block_world_generator")
 public final class BlockWorldGeneratorConfig extends BaseJsonConfig
 {
     public BlockWorldGeneratorConfig(String configPath)
     {
         super(configPath, true);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
 
         loadOrCreateConfig();
     }

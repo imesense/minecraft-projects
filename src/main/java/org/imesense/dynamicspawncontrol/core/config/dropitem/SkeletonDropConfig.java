@@ -4,12 +4,14 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @Getter
 @Setter
+@InitLog
 @ConceptConfig(fileName = "cfg_skeleton_drop_item")
 public final class SkeletonDropConfig extends BaseJsonConfig
 {
@@ -26,8 +28,6 @@ public final class SkeletonDropConfig extends BaseJsonConfig
     public SkeletonDropConfig(String configPath)
     {
         super(configPath, true);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
 
         loadOrCreateConfig();
     }

@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.GameType;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -13,23 +14,15 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
+@InitLog
+
 public final class CmdAdminGameMode extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminGameMode()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -37,11 +30,6 @@ public final class CmdAdminGameMode extends CommandBase
         return "dsc_gm";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -49,12 +37,6 @@ public final class CmdAdminGameMode extends CommandBase
         return "/dsc_gm";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {

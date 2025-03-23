@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import net.minecraftforge.common.MinecraftForge;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.register.attach.AttachRegister;
 import org.imesense.dynamicspawncontrol.core.register.commandevent.CommandEventRegister;
@@ -26,7 +27,6 @@ public abstract class BaseEventRegister
 
     public BaseEventRegister()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
         REGISTERS.add(this);
     }
 

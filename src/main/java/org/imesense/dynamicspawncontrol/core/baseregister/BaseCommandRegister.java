@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import net.minecraft.command.ICommand;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -9,25 +10,27 @@ public abstract class BaseCommandRegister
 {
     protected abstract Class<?>[] getCommandClasses();
 
-    public BaseCommandRegister()
+    public void registerCommands(FMLServerStartingEvent event)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
-    }
-
-    public void registerCommands(FMLServerStartingEvent fmlServerStartingEvent)
-    {
-        for (Class<?> cmdClass : getCommandClasses())
+        for (Class<?> _class : getCommandClasses())
         {
             try
             {
-                Object object =
-                        cmdClass.getConstructor().newInstance();
+                if (_class.isAnnotationPresent(InitLog.class))
+                {
+                    CodeGeneric.logInitialization(_class);
+                }
 
-                fmlServerStartingEvent.registerServerCommand((ICommand) object);
+                Object object =
+                        _class.getConstructor().newInstance();
+
+                event.registerServerCommand((ICommand) object);
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception in class: " + cmdClass.getName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception in class: "
+                        + _class.getName() + " - " + exception.getMessage());
+
                 throw new RuntimeException(exception);
             }
         }

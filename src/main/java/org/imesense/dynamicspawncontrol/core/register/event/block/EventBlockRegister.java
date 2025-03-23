@@ -1,8 +1,10 @@
 package org.imesense.dynamicspawncontrol.core.register.event.block;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.block.OnEventBlockEventBreakEvent;
 
+@InitLog
 public final class EventBlockRegister extends BaseEventRegister
 {
     private static final Class<?>[] EVENT_CLASSES =
