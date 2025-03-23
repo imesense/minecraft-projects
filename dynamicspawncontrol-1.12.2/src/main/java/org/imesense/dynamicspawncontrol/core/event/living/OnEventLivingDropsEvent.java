@@ -15,11 +15,6 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.DropZombieItem;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingDropsEvent extends BaseOnEventInstance
 {
-    public OnEventLivingDropsEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingDropsEvent(LivingDropsEvent event)
     {

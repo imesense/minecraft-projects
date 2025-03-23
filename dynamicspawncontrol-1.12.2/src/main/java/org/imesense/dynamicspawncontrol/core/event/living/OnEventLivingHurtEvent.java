@@ -13,11 +13,6 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateTorch;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingHurtEvent extends BaseOnEventInstance
 {
-    public OnEventLivingHurtEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingHurtEvent(LivingHurtEvent event)
     {

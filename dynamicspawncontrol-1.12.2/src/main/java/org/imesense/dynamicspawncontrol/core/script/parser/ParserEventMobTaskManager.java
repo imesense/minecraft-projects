@@ -27,8 +27,6 @@ public final class ParserEventMobTaskManager extends BaseParser
 {
     public ParserEventMobTaskManager(final String NAME_FILE)
     {
-        super();
-
         this.nameFile = NAME_FILE;
     }
 

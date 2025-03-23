@@ -15,11 +15,6 @@ public abstract class BaseOnEventInstance
     {
         Class<?> _class = this.getClass();
 
-        if (_class.isAnnotationPresent(InitLog.class))
-        {
-            CodeGeneric.logInitialization(_class);
-        }
-
         synchronized (INSTANCE_EXITS_MAP)
         {
             if (INSTANCE_EXITS_MAP.getOrDefault(_class, false))

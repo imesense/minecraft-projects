@@ -21,8 +21,6 @@ public final class ParserEventDropItem extends BaseParser
 {
     public ParserEventDropItem(final String NAME_FILE)
     {
-        super();
-
         this.nameFile = NAME_FILE;
     }
 

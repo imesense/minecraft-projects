@@ -17,11 +17,6 @@ import static org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGras
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
 {
-    public OnEventTickEventWorldTickEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnTickEventWorldTickEvent_HIGHEST(TickEvent.WorldTickEvent event)
     {

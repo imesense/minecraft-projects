@@ -20,11 +20,6 @@ import java.util.UUID;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPlayerEventPlayerLoggedInEvent extends BaseOnEventInstance
 {
-    public OnEventPlayerEventPlayerLoggedInEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnPlayerEventPlayerLoggedInEvent_HIGHEST(PlayerEvent.PlayerLoggedInEvent event)
     {

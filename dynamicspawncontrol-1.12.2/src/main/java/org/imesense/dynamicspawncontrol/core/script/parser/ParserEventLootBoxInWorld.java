@@ -26,8 +26,6 @@ public final class ParserEventLootBoxInWorld extends BaseParser
 
     public ParserEventLootBoxInWorld(final String NAME_FILE)
     {
-        super();
-
         this.nameFile = NAME_FILE;
         instance = this;
     }

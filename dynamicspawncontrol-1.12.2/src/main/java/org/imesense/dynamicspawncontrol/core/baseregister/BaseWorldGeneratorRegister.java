@@ -19,11 +19,6 @@ public abstract class BaseWorldGeneratorRegister
         {
             try
             {
-                if (_class.isAnnotationPresent(InitLog.class))
-                {
-                    CodeGeneric.logInitialization(_class);
-                }
-
                 if (!CodeGeneric.hasDefaultConstructor(_class))
                 {
                     Log.writeDataToLogFile(2, "Class " + _class.getName() + " does not have a default constructor.");

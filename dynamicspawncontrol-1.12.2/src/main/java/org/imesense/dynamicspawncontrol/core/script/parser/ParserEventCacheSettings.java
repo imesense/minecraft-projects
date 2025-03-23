@@ -21,8 +21,6 @@ public final class ParserEventCacheSettings extends BaseParser
 {
     public ParserEventCacheSettings(final String NAME_FILE)
     {
-        super();
-
         this.nameFile = NAME_FILE;
     }
 

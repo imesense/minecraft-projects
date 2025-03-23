@@ -25,8 +25,6 @@ public final class ParserEventDropExperience extends BaseParser
 {
     public ParserEventDropExperience(final String NAME_FILE)
     {
-        super();
-
         this.nameFile = NAME_FILE;
     }
 

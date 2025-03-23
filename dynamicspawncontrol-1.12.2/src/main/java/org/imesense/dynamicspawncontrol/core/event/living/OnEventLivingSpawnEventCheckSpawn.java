@@ -14,11 +14,6 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
 {
-    public OnEventLivingSpawnEventCheckSpawn()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnLivingSpawnEventCheckSpawnHIGHEST(LivingSpawnEvent.CheckSpawn event)
     {

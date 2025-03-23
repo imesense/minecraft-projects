@@ -26,8 +26,6 @@ public final class ParserEventPopulationChunk extends BaseParser
 {
     public ParserEventPopulationChunk(final String NAME_FILE)
     {
-        super();
-
         this.nameFile = NAME_FILE;
     }
 

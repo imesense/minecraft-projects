@@ -19,11 +19,6 @@ import java.util.UUID;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPlayerEventPlayerLoggedOutEvent extends BaseOnEventInstance
 {
-    public OnEventPlayerEventPlayerLoggedOutEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnPlayerEventPlayerLoggedOutEvent_LOW(PlayerEvent.PlayerLoggedOutEvent event)
     {

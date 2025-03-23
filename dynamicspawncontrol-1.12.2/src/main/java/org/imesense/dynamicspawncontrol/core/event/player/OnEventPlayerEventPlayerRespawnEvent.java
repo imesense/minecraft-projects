@@ -13,11 +13,6 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPlayerEventPlayerRespawnEvent extends BaseOnEventInstance
 {
-    public OnEventPlayerEventPlayerRespawnEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnPlayerEventPlayerRespawnEvent_LOW(PlayerEvent.PlayerRespawnEvent event)
     {

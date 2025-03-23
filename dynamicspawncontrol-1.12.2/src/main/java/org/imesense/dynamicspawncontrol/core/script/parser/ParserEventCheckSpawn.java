@@ -28,7 +28,6 @@ public final class ParserEventCheckSpawn extends BaseParser
 {
     public ParserEventCheckSpawn(final String NAME_FILE)
     {
-        super();
         this.nameFile = NAME_FILE;
     }
 
