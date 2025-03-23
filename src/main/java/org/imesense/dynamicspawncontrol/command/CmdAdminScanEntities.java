@@ -8,6 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -18,6 +19,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@InitLog
 public final class CmdAdminScanEntities extends CommandBase
 {
     public CmdAdminScanEntities()

@@ -36,17 +36,6 @@ public final class CodeGeneric
     }
 
     /**
-     * TODO: Legacy method
-     * @param _CLASS
-     * @param <T>
-     */
-    public static <T> void printInitClassToLog(final Class<T> _CLASS)
-    {
-        Log.writeDataToLogFile(3,
-                String.format("Initializing a class: {%s}", _CLASS.getName()));
-    }
-
-    /**
      *
      * @param _CLASS
      */

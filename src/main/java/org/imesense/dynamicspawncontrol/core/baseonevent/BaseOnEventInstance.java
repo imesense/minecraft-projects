@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.baseonevent;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -12,18 +13,22 @@ public abstract class BaseOnEventInstance
 
     protected BaseOnEventInstance()
     {
-        Class<?> clazz = this.getClass();
-        CodeGeneric.printInitClassToLog(clazz);
+        Class<?> _class = this.getClass();
+
+        if (_class.isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(_class);
+        }
 
         synchronized (INSTANCE_EXITS_MAP)
         {
-            if (INSTANCE_EXITS_MAP.getOrDefault(clazz, false))
+            if (INSTANCE_EXITS_MAP.getOrDefault(_class, false))
             {
-                Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", clazz.getSimpleName()));
+                Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", _class.getSimpleName()));
                 throw new RuntimeException();
             }
 
-            INSTANCE_EXITS_MAP.put(clazz, true);
+            INSTANCE_EXITS_MAP.put(_class, true);
         }
     }
 }
