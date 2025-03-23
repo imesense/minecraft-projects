@@ -5,12 +5,19 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
+@InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventFMLNetworkEventClientDisconnectionFromServerEvent extends BaseOnEventInstance {
+public final class OnEventFMLNetworkEventClientDisconnectionFromServerEvent extends BaseOnEventInstance
+{
+    public OnEventFMLNetworkEventClientDisconnectionFromServerEvent()
+    {
+
+    }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnFMLNetworkEventClientDisconnectionFromServerEvent_LOW(FMLNetworkEvent.ClientDisconnectionFromServerEvent event)

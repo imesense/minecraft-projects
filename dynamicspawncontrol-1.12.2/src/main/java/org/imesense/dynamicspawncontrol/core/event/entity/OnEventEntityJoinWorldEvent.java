@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManager;
@@ -14,9 +15,15 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 
+@InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 {
+    public OnEventEntityJoinWorldEvent()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityJoinWorldEvent_LOW(EntityJoinWorldEvent event)
     {

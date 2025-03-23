@@ -15,7 +15,6 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import javax.annotation.Nonnull;
 
 @InitLog
-
 public final class CmdAdminGameMode extends CommandBase
 {
     public CmdAdminGameMode()
