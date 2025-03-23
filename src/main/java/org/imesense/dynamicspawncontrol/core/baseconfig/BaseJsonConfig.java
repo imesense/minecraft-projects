@@ -34,11 +34,6 @@ public abstract class BaseJsonConfig
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.configPath = constructPathToDirectory(isConfigFolder) + nameConfigFile;
 
-        if (this.getClass().isAnnotationPresent(InitLog.class))
-        {
-            CodeGeneric.logInitialization(this.getClass());
-        }
-
         INSTANCES.put(this.getClass(), this);
     }
 

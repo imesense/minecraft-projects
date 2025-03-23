@@ -15,11 +15,6 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventTickEventClientTickEvent extends BaseOnEventInstance
 {
-    public OnEventTickEventClientTickEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnTickEventClientTickEvent_LOW(TickEvent.ClientTickEvent event)
     {

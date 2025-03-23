@@ -13,11 +13,6 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.NickNameEntity;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingSpawnEventSpecialSpawn extends BaseOnEventInstance
 {
-    public OnEventLivingSpawnEventSpecialSpawn()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingSpawnEventSpecialSpawn(LivingSpawnEvent.SpecialSpawn event)
     {

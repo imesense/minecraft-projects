@@ -19,11 +19,6 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 {
-    public OnEventEntityJoinWorldEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityJoinWorldEvent_LOW(EntityJoinWorldEvent event)
     {

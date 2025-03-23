@@ -21,11 +21,6 @@ public abstract class BaseParserRegister
         {
             try
             {
-                if (this.getClass().isAnnotationPresent(InitLog.class))
-                {
-                    CodeGeneric.logInitialization(this.getClass());
-                }
-
                 BaseParser parser = (BaseParser) _class.getConstructor(String.class)
                         .newInstance(getParserName(_class));
 

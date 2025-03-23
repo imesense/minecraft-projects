@@ -24,8 +24,6 @@ public final class ParserEventPotentialSpawn extends BaseParser
 {
     public ParserEventPotentialSpawn(final String NAME_FILE)
     {
-        super();
-
         this.nameFile = NAME_FILE;
     }
 

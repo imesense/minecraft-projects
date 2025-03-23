@@ -14,11 +14,6 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventFMLNetworkEventClientConnectedToServerEvent extends BaseOnEventInstance
 {
-    public OnEventFMLNetworkEventClientConnectedToServerEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnFMLNetworkEventClientConnectedToServerEvent_LOW(FMLNetworkEvent.ClientConnectedToServerEvent event)
     {

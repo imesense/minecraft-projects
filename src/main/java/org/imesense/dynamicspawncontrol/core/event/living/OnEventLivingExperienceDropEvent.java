@@ -13,11 +13,6 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventDropExperie
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingExperienceDropEvent extends BaseOnEventInstance
 {
-    public OnEventLivingExperienceDropEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingExperienceDropEvent(LivingExperienceDropEvent event)
     {

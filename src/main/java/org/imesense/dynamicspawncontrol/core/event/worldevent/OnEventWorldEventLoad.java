@@ -13,11 +13,6 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventWorldEventLoad extends BaseOnEventInstance
 {
-    public OnEventWorldEventLoad()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnWorldEventLoad_HIGHEST(WorldEvent.Load event)
     {

@@ -15,11 +15,6 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingEventLivingUpdateEvent extends BaseOnEventInstance
 {
-    public OnEventLivingEventLivingUpdateEvent()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingEventLivingUpdateEvent(LivingEvent.LivingUpdateEvent event)
     {

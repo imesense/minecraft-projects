@@ -13,11 +13,6 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPopulationC
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventPopulateChunkEventPre extends BaseOnEventInstance
 {
-    public OnEventPopulateChunkEventPre()
-    {
-
-    }
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnPopulateChunkEventPre_LOW(PopulateChunkEvent.Pre event)
     {
