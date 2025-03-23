@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
@@ -111,6 +112,10 @@ public final class OnEventWorldCache
                 else if (entity instanceof EntityMob)
                 {
                     this.CACHE_GENERAL_STORAGE.CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
+                }
+                else if (entity instanceof EntityWaterMob)
+                {
+                    this.CACHE_GENERAL_STORAGE.CACHED_ACTUAL_WATER_MOBS.add((EntityWaterMob) entity);
                 }
             }
 

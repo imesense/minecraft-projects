@@ -1,10 +1,14 @@
 package org.imesense.dynamicspawncontrol.core.worldcache;
 
+import lombok.Getter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityGuardian;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntitySquid;
+import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -47,6 +51,7 @@ public final class CacheGeneralStorage
 
     public boolean IsPrimaryPlayerLogged = false;
 
+    @Getter
     private long lastUpdateTime = System.currentTimeMillis();
 
     public final Set<ChunkPos> CACHE_VALID_CHUNKS = new HashSet<>();
@@ -58,6 +63,10 @@ public final class CacheGeneralStorage
     public final Set<IAnimals> CACHED_ACTUAL_HOSTILES = new HashSet<>();
 
     public final Set<IAnimals> CACHED_BUFFER_HOSTILES = new HashSet<>();
+
+    public final Set<EntityLivingBase> CACHED_ACTUAL_WATER_MOBS = new HashSet<>();
+
+    public final Set<EntityLivingBase> CACHED_BUFFER_WATER_MOBS = new HashSet<>();
 
     public final Set<EntityLivingBase> CACHED_ACTUAL_ALL = new HashSet<>();
 
@@ -116,6 +125,10 @@ public final class CacheGeneralStorage
                         {
                             CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
                         }
+                        else if (entity instanceof EntityWaterMob)
+                        {
+                            CACHED_ACTUAL_WATER_MOBS.add((EntityWaterMob) entity);
+                        }
                     }
 
                     CACHED_ACTUAL_ALL.add(entityLivingBase);
@@ -152,6 +165,8 @@ public final class CacheGeneralStorage
         return CACHED_ACTUAL_HOSTILES.size();
     }
 
+    public int getActualWaterMobCount() { return CACHED_ACTUAL_WATER_MOBS.size(); }
+
     public int getBufferAnimalCount()
     {
         return CACHED_BUFFER_ANIMALS.size();
@@ -167,14 +182,11 @@ public final class CacheGeneralStorage
         return CACHED_BUFFER_HOSTILES.size();
     }
 
+    public int getBufferWaterMobCount() { return CACHED_BUFFER_WATER_MOBS.size(); }
+
     public int getValidChunkCount()
     {
         return CACHE_VALID_CHUNKS.size();
-    }
-
-    public long getLastUpdateTime()
-    {
-        return this.lastUpdateTime;
     }
 
     @Nonnull
@@ -192,6 +204,10 @@ public final class CacheGeneralStorage
         CACHED_BUFFER_HOSTILES.clear();
 
         CACHED_BUFFER_HOSTILES.addAll(CACHED_ACTUAL_HOSTILES);
+
+        CACHED_BUFFER_WATER_MOBS.clear();
+
+        CACHED_BUFFER_WATER_MOBS.addAll(CACHED_ACTUAL_WATER_MOBS);
 
         CACHED_BUFFER_ALL.clear();
 
@@ -212,6 +228,7 @@ public final class CacheGeneralStorage
     {
         CACHED_ACTUAL_ANIMALS.clear();
         CACHED_ACTUAL_HOSTILES.clear();
+        CACHED_ACTUAL_WATER_MOBS.clear();
         CACHED_ACTUAL_ALL.clear();
         ENTITIES_ACTUAL_BY_NAME.clear();
         ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.clear();
@@ -223,6 +240,7 @@ public final class CacheGeneralStorage
     {
         CACHED_BUFFER_ANIMALS.clear();
         CACHED_BUFFER_HOSTILES.clear();
+        CACHED_BUFFER_WATER_MOBS.clear();
         CACHED_BUFFER_ALL.clear();
         ENTITIES_BUFFER_BY_NAME.clear();
         ENTITIES_BUFFER_BY_RESOURCE_LOCATION.clear();

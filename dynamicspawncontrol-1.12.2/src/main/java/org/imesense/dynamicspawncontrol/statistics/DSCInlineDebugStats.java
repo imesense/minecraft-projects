@@ -118,6 +118,12 @@ public final class DSCInlineDebugStats
         final String LAST_UPDATE_TIME =
                 TextFormatting.GRAY + "Last Update Time: " + new Date(this.CACHE_GENERAL_STORAGE.getLastUpdateTime()).toString();
 
+        final String ACTUAL_WATER_MOBS =
+                TextFormatting.DARK_BLUE + "Actual Water Mobs: " + this.CACHE_GENERAL_STORAGE.getActualWaterMobCount();
+
+        final String BUFFER_WATER_MOBS =
+                TextFormatting.DARK_BLUE + "Buffer Water Mobs: " + this.CACHE_GENERAL_STORAGE.getBufferWaterMobCount();
+
         int x = 10;
         int y = 10;
 
@@ -151,8 +157,12 @@ public final class DSCInlineDebugStats
         fontRenderer.drawString(ENTITIES_BY_RESOURCE, x, cacheY + 110, 0xFFFFFF);
         fontRenderer.drawString(separator, x, cacheY + 120, 0xFFFFFF);
 
-        fontRenderer.drawString(LAST_UPDATE, x, cacheY + 130, 0xFFFFFF);
-        fontRenderer.drawString(PRIMARY_PLAYER, x, cacheY + 140, 0xFFFFFF);
-        fontRenderer.drawString(LAST_UPDATE_TIME, x, cacheY + 150, 0xFFFFFF);
+        fontRenderer.drawString(ACTUAL_WATER_MOBS, x, cacheY + 130, 0xFFFFFF);
+        fontRenderer.drawString(BUFFER_WATER_MOBS, x, cacheY + 140, 0xFFFFFF);
+        fontRenderer.drawString(separator, x, cacheY + 150, 0xFFFFFF);
+
+        fontRenderer.drawString(LAST_UPDATE, x, cacheY + 160, 0xFFFFFF);
+        fontRenderer.drawString(PRIMARY_PLAYER, x, cacheY + 170, 0xFFFFFF);
+        fontRenderer.drawString(LAST_UPDATE_TIME, x, cacheY + 180, 0xFFFFFF);
     }
 }
