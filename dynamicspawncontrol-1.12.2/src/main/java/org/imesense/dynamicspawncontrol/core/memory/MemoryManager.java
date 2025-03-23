@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.memory;
 
 import net.minecraft.command.ICommandSender;
 
-public class MemoryManager
+public final class MemoryManager
 {
     public static void cleanMemory(ICommandSender sender)
     {

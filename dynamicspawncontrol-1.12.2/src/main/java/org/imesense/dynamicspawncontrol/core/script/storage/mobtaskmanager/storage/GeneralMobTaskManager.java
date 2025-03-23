@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicToId;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyId;
@@ -8,6 +9,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.*;
 
+@InitLog
 public final class GeneralMobTaskManager
 {
     private static volatile GeneralMobTaskManager _INSTANCE;
@@ -19,7 +21,11 @@ public final class GeneralMobTaskManager
 
     public GeneralMobTaskManager()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
+
         this.addEnemyData = new ArrayList<>();
         this.addEnemyIdData = new ArrayList<>();
         this.addPanicToIdData = new ArrayList<>();

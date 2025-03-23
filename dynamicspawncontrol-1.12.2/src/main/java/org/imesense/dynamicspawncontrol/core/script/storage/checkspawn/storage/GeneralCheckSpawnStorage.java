@@ -1,11 +1,13 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@InitLog
 public final class GeneralCheckSpawnStorage
 {
     private static volatile GeneralCheckSpawnStorage _INSTANCE;
@@ -17,7 +19,10 @@ public final class GeneralCheckSpawnStorage
 
     public GeneralCheckSpawnStorage()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
 
         this.entityEquipmentList = new ArrayList<>();;
         this.entityDescriptionsList = new ArrayList<>();

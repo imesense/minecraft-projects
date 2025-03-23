@@ -1,37 +1,27 @@
 package org.imesense.dynamicspawncontrol.core.collection;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- *
- */
+@InitLog
 public final class CmdCallTypeCollection
 {
-    /**
-     *
-     */
     public static CmdCallTypeCollection instance;
 
-    /**
-     *
-     */
     private static final List<String> CMD_CALL_TYPES;
 
-    /**
-     *
-     */
     public CmdCallTypeCollection()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
-    /**
-     *
-     */
     static
     {
         List<String> types = new ArrayList<>();
@@ -46,11 +36,6 @@ public final class CmdCallTypeCollection
         CMD_CALL_TYPES = Collections.unmodifiableList(types);
     }
 
-    /**
-     *
-     * @param index
-     * @return
-     */
     public String getDescription(int index)
     {
         if (index < 0 || index >= CMD_CALL_TYPES.size())

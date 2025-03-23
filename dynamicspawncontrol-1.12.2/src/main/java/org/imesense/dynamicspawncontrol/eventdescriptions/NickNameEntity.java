@@ -8,6 +8,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -15,6 +16,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@InitLog
 public final class NickNameEntity
 {
     private final List<String> RANDOM_NAMES = new ArrayList<>();
@@ -28,7 +30,10 @@ public final class NickNameEntity
 
     public NickNameEntity()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
 
         this.loadNamesFromFile();
     }

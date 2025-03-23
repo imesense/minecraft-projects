@@ -1,11 +1,18 @@
 package org.imesense.dynamicspawncontrol.core.register.event.world;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.worldevent.OnEventWorldEventLoad;
 import org.imesense.dynamicspawncontrol.core.event.worldevent.OnEventWorldEventPotentialSpawns;
 
+@InitLog
 public final class EventWorldRegister extends BaseEventRegister
 {
+    public EventWorldRegister()
+    {
+
+    }
+
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnEventWorldEventPotentialSpawns.class,

@@ -4,10 +4,12 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.functional.FunctionalMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class OnEventMobTaskManager
 {
     private static volatile OnEventMobTaskManager _INSTANCE;
@@ -15,6 +17,14 @@ public final class OnEventMobTaskManager
     public static OnEventMobTaskManager getInstance()
     {
         return CodeGeneric.getInstance(OnEventMobTaskManager.class);
+    }
+
+    public OnEventMobTaskManager()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleUpdateEntityJoinWorld(EntityJoinWorldEvent event)

@@ -8,6 +8,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
@@ -20,11 +21,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@InitLog
 public final class ParserEventPopulationChunk extends BaseParser
 {
     public ParserEventPopulationChunk(final String NAME_FILE)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        super();
+
         this.nameFile = NAME_FILE;
     }
 

@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
@@ -15,11 +16,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@InitLog
 public final class ParserEventDropItem extends BaseParser
 {
     public ParserEventDropItem(final String NAME_FILE)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        super();
+
         this.nameFile = NAME_FILE;
     }
 

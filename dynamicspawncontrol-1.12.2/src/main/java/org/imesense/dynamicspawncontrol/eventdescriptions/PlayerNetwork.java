@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
@@ -16,6 +17,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+@InitLog
 public final class PlayerNetwork
 {
     private static final ArrayList<String> PLAYER_LIST = new ArrayList<>();
@@ -29,7 +31,10 @@ public final class PlayerNetwork
 
     public PlayerNetwork()
     {
-		CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handlePlayerJoinWorld(EntityJoinWorldEvent event)

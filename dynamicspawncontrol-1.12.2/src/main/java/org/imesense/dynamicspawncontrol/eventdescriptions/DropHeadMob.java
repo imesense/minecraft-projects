@@ -14,8 +14,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class DropHeadMob
 {
     private static volatile DropHeadMob _INSTANCE;
@@ -27,7 +29,10 @@ public final class DropHeadMob
 
     public DropHeadMob()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleEntityDeath(LivingDeathEvent event)

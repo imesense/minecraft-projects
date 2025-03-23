@@ -7,12 +7,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.zombie.action.EntityAIZombieBreakTorch;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.register.attach.AttachRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-/**
- *
- */
+@InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventBreakTorch
 {
@@ -23,12 +22,12 @@ public final class OnEventBreakTorch
         return CodeGeneric.getInstance(OnEventBreakTorch.class);
     }
 
-    /**
-     *
-     */
     public OnEventBreakTorch()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleSearchToBreakTorch(EntityJoinWorldEvent event)

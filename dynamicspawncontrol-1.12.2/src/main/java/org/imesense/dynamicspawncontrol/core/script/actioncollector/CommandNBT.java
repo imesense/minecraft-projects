@@ -9,11 +9,13 @@ import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Random;
 
+@InitLog
 public final class CommandNBT
 {
     private static volatile CommandNBT _INSTANCE;
@@ -21,6 +23,14 @@ public final class CommandNBT
     public static CommandNBT getInstance()
     {
         return CodeGeneric.getInstance(CommandNBT.class);
+    }
+
+    public CommandNBT()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void applyNbt(Entity entity, String nbtString)

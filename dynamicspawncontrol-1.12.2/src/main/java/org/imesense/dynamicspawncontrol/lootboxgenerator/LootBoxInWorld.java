@@ -11,6 +11,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInWorld;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 import java.util.Random;
@@ -22,7 +23,10 @@ public final class LootBoxInWorld implements IWorldGenerator
 
     public LootBoxInWorld()
     {
-
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     @Override

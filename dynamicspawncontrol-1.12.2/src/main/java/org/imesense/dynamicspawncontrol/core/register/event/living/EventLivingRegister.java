@@ -1,10 +1,17 @@
 package org.imesense.dynamicspawncontrol.core.register.event.living;
 
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.living.*;
 
+@InitLog
 public final class EventLivingRegister extends BaseEventRegister
 {
+    public EventLivingRegister()
+    {
+
+    }
+
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnEventLivingAttackEvent.class,

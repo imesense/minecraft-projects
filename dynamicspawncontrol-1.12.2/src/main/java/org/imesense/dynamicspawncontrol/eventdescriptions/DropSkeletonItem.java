@@ -6,12 +6,14 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 
+@InitLog
 public final class DropSkeletonItem
 {
     private static volatile DropSkeletonItem _INSTANCE;
@@ -23,7 +25,10 @@ public final class DropSkeletonItem
 
     public DropSkeletonItem()
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleLivingDrops(LivingDropsEvent event)

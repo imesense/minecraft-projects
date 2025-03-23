@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -14,6 +15,7 @@ import java.util.function.Consumer;
 
 @Getter
 @Setter
+@InitLog
 @ConceptConfig(fileName = "plugin_cfg_darkness_forge_1_12_x_0_5_0")
 public final class PluginDarknessConfig extends BaseJsonConfig
 {
@@ -34,8 +36,6 @@ public final class PluginDarknessConfig extends BaseJsonConfig
     public PluginDarknessConfig(String configPath)
     {
         super(configPath, false);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
 
         loadOrCreateConfig();
     }

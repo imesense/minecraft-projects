@@ -4,6 +4,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
@@ -16,6 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@InitLog
 public final class OnEventCheckSpawn
 {
     private static volatile OnEventCheckSpawn _INSTANCE;
@@ -23,6 +25,14 @@ public final class OnEventCheckSpawn
     public static OnEventCheckSpawn getInstance()
     {
         return CodeGeneric.getInstance(OnEventCheckSpawn.class);
+    }
+
+    public OnEventCheckSpawn()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)

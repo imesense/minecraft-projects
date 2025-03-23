@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -16,12 +17,17 @@ public abstract class BaseParserRegister
 
     public void init()
     {
-        for (Class<?> parserClass : getParserClasses())
+        for (Class<?> _class : getParserClasses())
         {
             try
             {
-                BaseParser parser = (BaseParser) parserClass.getConstructor(String.class)
-                        .newInstance(getParserName(parserClass));
+                if (this.getClass().isAnnotationPresent(InitLog.class))
+                {
+                    CodeGeneric.logInitialization(this.getClass());
+                }
+
+                BaseParser parser = (BaseParser) _class.getConstructor(String.class)
+                        .newInstance(getParserName(_class));
 
                 PARSER_LIST.add(parser);
 
@@ -29,7 +35,9 @@ public abstract class BaseParserRegister
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception initializing parser: " + parserClass.getName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception initializing parser: " +
+                        _class.getName() + " - " + exception.getMessage());
+
                 throw new RuntimeException(exception);
             }
         }

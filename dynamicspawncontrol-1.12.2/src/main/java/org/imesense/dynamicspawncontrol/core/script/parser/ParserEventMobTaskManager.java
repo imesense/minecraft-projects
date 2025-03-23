@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
@@ -21,11 +22,13 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+@InitLog
 public final class ParserEventMobTaskManager extends BaseParser
 {
     public ParserEventMobTaskManager(final String NAME_FILE)
     {
-        CodeGeneric.printInitClassToLog(this.getClass());
+        super();
+
         this.nameFile = NAME_FILE;
     }
 

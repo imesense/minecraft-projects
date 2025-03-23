@@ -36,6 +36,11 @@ public abstract class BaseEventRegister
         {
             try
             {
+                if (_class.isAnnotationPresent(InitLog.class))
+                {
+                    CodeGeneric.logInitialization(_class);
+                }
+
                 Object object = _class.getConstructor().newInstance();
                 MinecraftForge.EVENT_BUS.register(object);
             }

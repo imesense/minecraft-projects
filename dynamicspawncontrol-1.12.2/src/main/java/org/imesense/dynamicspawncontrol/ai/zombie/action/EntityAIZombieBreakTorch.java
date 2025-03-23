@@ -9,35 +9,18 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class EntityAIZombieBreakTorch extends EntityAIBase
 {
-    /**
-     *
-     */
     private BlockPos targetTorchPos;
 
-    /**
-     *
-     */
     private final EntityZombie ZOMBIE;
 
-    /**
-     *
-     * @param entityZombie
-     */
     public EntityAIZombieBreakTorch(EntityZombie entityZombie)
     {
         this.ZOMBIE = entityZombie;
         this.setMutexBits(3);
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean shouldExecute()
     {
@@ -52,9 +35,6 @@ public class EntityAIZombieBreakTorch extends EntityAIBase
         return false;
     }
 
-    /**
-     *
-     */
     @Override
     public void startExecuting()
     {
@@ -65,19 +45,12 @@ public class EntityAIZombieBreakTorch extends EntityAIBase
         }
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean shouldContinueExecuting()
     {
         return !this.ZOMBIE.getNavigator().noPath() && this.targetTorchPos != null;
     }
 
-    /**
-     *
-     */
     @Override
     public void updateTask()
     {
@@ -94,10 +67,6 @@ public class EntityAIZombieBreakTorch extends EntityAIBase
         }
     }
 
-    /**
-     *
-     * @return
-     */
     private List<BlockPos> findNearbyTorches()
     {
         BlockPos blockPos = new BlockPos(this.ZOMBIE);

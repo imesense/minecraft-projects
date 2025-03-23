@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.world.WorldEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.PotentialSpawnStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@InitLog
 public final class OnEventPotentialSpawn
 {
     private static volatile OnEventPotentialSpawn _INSTANCE;
@@ -19,6 +21,14 @@ public final class OnEventPotentialSpawn
     public static OnEventPotentialSpawn getInstance()
     {
         return CodeGeneric.getInstance(OnEventPotentialSpawn.class);
+    }
+
+    public OnEventPotentialSpawn()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handlePotentialSpawns(WorldEvent.PotentialSpawns event)

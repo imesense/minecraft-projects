@@ -2,7 +2,9 @@ package org.imesense.dynamicspawncontrol.core.baseparser;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,6 +13,14 @@ import java.io.IOException;
 public abstract class BaseParser
 {
     protected String nameFile = null;
+
+    public BaseParser()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
+    }
 
     @FunctionalInterface
     public interface ConfigLoader

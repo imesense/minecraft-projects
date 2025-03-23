@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.lwjgl.opengl.Display;
@@ -9,6 +10,7 @@ import org.lwjgl.opengl.Display;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
+@InitLog
 public final class WindowTitle
 {
     private static volatile WindowTitle _INSTANCE;
@@ -20,7 +22,10 @@ public final class WindowTitle
 
     public WindowTitle()
     {
-		CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     private final String TITLE =

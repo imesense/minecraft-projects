@@ -4,20 +4,22 @@ import net.minecraft.command.ICommandSender;
 import net.minecraftforge.server.command.TextComponentHelper;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
-public class MemoryThread implements Runnable {
+public final class MemoryThread implements Runnable
+{
     private ICommandSender sender = null;
 
     public MemoryThread(ICommandSender sender) {
         this.sender = sender;
     }
 
-    public MemoryThread() {
+    public MemoryThread()
+    {
+
     }
 
     public void run()
     {
         Log.writeDataToLogFile(0, "Memory cleaner thread started!");
-        //MemoryCleaner.logger.info("Memory cleaner thread started!");
 
         if (this.sender != null && Configuration.showMessage)
         {
@@ -39,6 +41,5 @@ public class MemoryThread implements Runnable {
         }
 
         Log.writeDataToLogFile(0, "Memory cleaner thread finished!");
-        //MemoryCleaner.logger.info("Memory cleaner thread finished!");
     }
 }

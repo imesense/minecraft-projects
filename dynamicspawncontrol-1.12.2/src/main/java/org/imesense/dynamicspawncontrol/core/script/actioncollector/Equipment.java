@@ -10,6 +10,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityAttributes;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityDescription;
@@ -19,6 +20,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.*;
 
+@InitLog
 public final class Equipment
 {
     private static volatile Equipment _INSTANCE;
@@ -26,6 +28,14 @@ public final class Equipment
     public static Equipment getInstance()
     {
         return CodeGeneric.getInstance(Equipment.class);
+    }
+
+    public Equipment()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     private void equipEntityWithItems(EntityLivingBase entityLivingBase,

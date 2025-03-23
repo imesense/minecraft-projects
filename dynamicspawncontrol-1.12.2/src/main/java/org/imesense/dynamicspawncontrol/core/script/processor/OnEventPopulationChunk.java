@@ -8,6 +8,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn;
@@ -15,6 +16,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
 
+@InitLog
 public final class OnEventPopulationChunk
 {
     private static volatile OnEventPopulationChunk _INSTANCE;
@@ -22,6 +24,14 @@ public final class OnEventPopulationChunk
     public static OnEventPopulationChunk getInstance()
     {
         return CodeGeneric.getInstance(OnEventPopulationChunk.class);
+    }
+
+    public OnEventPopulationChunk()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handlePopulateChunkEventPre(PopulateChunkEvent.Pre event)

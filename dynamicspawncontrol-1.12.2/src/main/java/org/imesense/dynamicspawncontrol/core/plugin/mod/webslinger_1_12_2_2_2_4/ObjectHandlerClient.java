@@ -17,12 +17,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.ItemWebbing;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.EntityWebbing;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.wumpleutil_1_12_2_2_12_9.util.misc.RegistrationHelper;
 
+@InitLog
 @GameRegistry.ObjectHolder(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class ObjectHandlerClient
 {
@@ -41,7 +43,10 @@ public final class ObjectHandlerClient
     {
         public RegistrationHandler()
         {
-            CodeGeneric.printInitClassToLog(this.getClass());
+            if (this.getClass().isAnnotationPresent(InitLog.class))
+            {
+                CodeGeneric.logInitialization(this.getClass());
+            }
         }
 
         @SubscribeEvent

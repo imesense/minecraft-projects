@@ -7,10 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class OnEventDropItem
 {
     private static volatile OnEventDropItem _INSTANCE;
@@ -18,6 +20,14 @@ public final class OnEventDropItem
     public static OnEventDropItem getInstance()
     {
         return CodeGeneric.getInstance(OnEventDropItem.class);
+    }
+
+    public OnEventDropItem()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleUpdateLivingDrops(LivingDropsEvent event)

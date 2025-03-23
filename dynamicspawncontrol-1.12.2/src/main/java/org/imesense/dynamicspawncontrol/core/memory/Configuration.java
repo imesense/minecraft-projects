@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.memory;
 
-public class Configuration {
+public final class Configuration
+{
     public static String commandAliases = "";
     public static boolean showMessage = true;
     public static boolean cleanOnJoin = true;

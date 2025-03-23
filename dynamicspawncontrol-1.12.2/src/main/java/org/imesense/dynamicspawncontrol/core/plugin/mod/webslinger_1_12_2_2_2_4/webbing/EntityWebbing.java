@@ -16,7 +16,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.ObjectHandlerClient;
 
 public final class EntityWebbing extends EntityThrowable
@@ -26,15 +25,11 @@ public final class EntityWebbing extends EntityThrowable
     public EntityWebbing(World worldIn)
     {
         super(worldIn);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     public EntityWebbing(World worldIn, EntityLivingBase throwerIn)
     {
         super(worldIn, throwerIn);
-
-        CodeGeneric.printInitClassToLog(this.getClass());
     }
 
     protected void onImpact(RayTraceResult result)

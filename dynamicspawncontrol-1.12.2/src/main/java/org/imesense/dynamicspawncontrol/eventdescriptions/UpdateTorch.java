@@ -15,8 +15,10 @@ import net.minecraft.world.Explosion;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class UpdateTorch
 {
     private static volatile UpdateTorch _INSTANCE;
@@ -28,7 +30,10 @@ public final class UpdateTorch
 
     public UpdateTorch()
     {
-		CodeGeneric.printInitClassToLog(this.getClass());
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
     }
 
     public void handleEntityHit(LivingHurtEvent event)
