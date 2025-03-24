@@ -153,6 +153,7 @@ public final class ComplexityBiomes
             case "ForestHills":
             case "Ice Plains":
             case "JungleEdge":
+            case "Desert M":
                 return 3;
             case "Swampland":
             case "Extreme Hills":
