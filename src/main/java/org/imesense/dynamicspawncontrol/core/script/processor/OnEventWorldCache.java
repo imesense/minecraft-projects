@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,9 +15,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -147,6 +150,17 @@ public final class OnEventWorldCache
         if (entityKey == null)
         {
             return;
+        }
+
+        if ((entity instanceof IAnimals && !(entity instanceof EntityMob)
+                && !WorldCacheConfig.getInstance(WorldCacheConfig.class).isSpawnPeacefulCreaturesAtNight()))
+        {
+            World world = event.getWorld();
+            if (!world.isDaytime())
+            {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
         }
 
         Optional<CacheEntityStorage.EntityData> optionalEntityData = CacheEntityStorage.getInstance()
