@@ -14,6 +14,8 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 @ConceptConfig(fileName = "cfg_cache_world")
 public final class WorldCacheConfig extends BaseJsonConfig
 {
+    private boolean spawnPeacefulCreaturesAtNight = false;
+
     public WorldCacheConfig(String configPath)
     {
         super(configPath, true);
@@ -26,12 +28,18 @@ public final class WorldCacheConfig extends BaseJsonConfig
     {
         JsonObject jsonObject = new JsonObject();
 
+        jsonObject.addProperty("show_stats", spawnPeacefulCreaturesAtNight);
+
         return jsonObject;
     }
 
     @Override
     protected void applyConfig(JsonObject jsonObject)
     {
-
+        if (jsonObject.has("spawn_peaceful_creatures_at_night"))
+        {
+            spawnPeacefulCreaturesAtNight =
+                    jsonObject.get("spawn_peaceful_creatures_at_night").getAsBoolean();
+        }
     }
 }
