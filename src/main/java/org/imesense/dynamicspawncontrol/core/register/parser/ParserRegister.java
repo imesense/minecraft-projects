@@ -24,7 +24,8 @@ public final class ParserRegister extends BaseParserRegister
         ParserEventPotentialSpawn.class,
         ParserEventPopulationChunk.class,
         ParserEventMobTaskManager.class,
-        ParserEventLootBoxInWorld.class
+        ParserEventLootBoxInWorld.class,
+        ParserEventDamageByEntity.class
     };
 
     @Override
