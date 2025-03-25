@@ -3,10 +3,13 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -31,6 +34,7 @@ public final class OnEventDropExperience
     public void handleUpdateLivingExperienceDrop(LivingExperienceDropEvent event)
     {
         Entity entity = event.getEntity();
+        World world = entity.world;
         ResourceLocation entityResourceLocation = EntityList.getKey(entity);
 
         if (entityResourceLocation == null)
@@ -39,14 +43,49 @@ public final class OnEventDropExperience
         }
 
         GeneralDropExperience.getInstance().dropExperienceList.stream()
-                .filter(data -> entityResourceLocation.equals(data.entity))
-                .findFirst()
-                .ifPresent(data ->
-                {
-                    Integer originalXp = event.getDroppedExperience();
-                    Integer modifyXp = (int) ((data.xp != 0 ? data.xp : originalXp) * data.multi_xp + data.adding_xp);
+        .filter(data -> entityResourceLocation.equals(data.entity))
+        .filter(data -> data.isTimeValid(world))
+        .findFirst()
+        .ifPresent(data ->
+        {
+            if (data.result == Event.Result.DENY)
+            {
+                event.setCanceled(true);
+                return;
+            }
 
-                    event.setDroppedExperience(modifyXp);
-                });
+            if (data.result == Event.Result.ALLOW || data.result == Event.Result.DEFAULT)
+            {
+                int modifiedXp;
+                int originalXp = event.getDroppedExperience();
+
+                Log.writeDataToLogFile(0, String.format(
+                        "Processing entity: %s, originalXP: %d, time: %d",
+                        entity.getName(),
+                        originalXp,
+                        world.getWorldTime() % 24000
+                ));
+
+                if (data.use_default_xp)
+                {
+                    modifiedXp = (int)(originalXp * data.multi_xp);
+                    Log.writeDataToLogFile(0, "Entity: " + event.getEntity() + " " + "modifiedXp: " + modifiedXp);
+                }
+                else
+                {
+                    int baseXp = data.xp != null ? data.xp : originalXp;
+                    float adding = data.adding_xp != null ? data.adding_xp : 0;
+
+                    modifiedXp = (int)(baseXp * data.multi_xp + adding);
+
+                    Log.writeDataToLogFile(0, String.format(
+                            "Custom XP mode: (%d * %.1f) + %.1f = %d",
+                            baseXp, data.multi_xp, adding, modifiedXp
+                    ));
+                }
+
+                event.setDroppedExperience(modifiedXp);
+            }
+        });
     }
 }

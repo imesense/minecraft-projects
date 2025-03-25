@@ -1,10 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.script.parser;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
@@ -30,15 +28,22 @@ public final class ParserEventDropExperience extends BaseParser
 
     public static <T> T getValueFromJson(JsonObject jsonObject, String key, T defaultValue, BiFunction<JsonElement, T, T> biFunction)
     {
-        Log.writeDataToLogFile(0, "Read jsonObject: " + jsonObject);
-
         if (jsonObject.has(key))
         {
             JsonElement jsonElement = jsonObject.get(key);
 
-            if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isNumber())
+            if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isBoolean()
+                    && defaultValue instanceof Boolean)
+            {
+                return (T) Boolean.valueOf(jsonElement.getAsBoolean());
+            }
+            else if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isNumber())
             {
                 return biFunction.apply(jsonElement, defaultValue);
+            }
+            else if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isString())
+            {
+                return (T) jsonElement.getAsString();
             }
         }
 
@@ -48,7 +53,7 @@ public final class ParserEventDropExperience extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
@@ -67,37 +72,125 @@ public final class ParserEventDropExperience extends BaseParser
 
             for (JsonElement element : jsonArray)
             {
-                JsonObject jsonObject = element.getAsJsonObject();
-                EntityDropExperience.Data data = new EntityDropExperience.Data();
-
-                String entityId = jsonObject.get("entity").getAsString();
-                data.entity = new ResourceLocation(entityId);
-
-                EntityEntry ee = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(entityId));
-
-                if (ee == null)
+                try
                 {
-                    Log.writeDataToLogFile(0, "Entity not found: " + entityId);
-                    continue;
+                    JsonObject jsonObject = element.getAsJsonObject();
+                    EntityDropExperience.Data data = new EntityDropExperience.Data();
+
+                    if (!jsonObject.has("entity"))
+                    {
+                        Log.writeDataToLogFile(0, "Missing required field 'entity' in entry: " + jsonObject);
+                        continue;
+                    }
+
+                    String entityId = jsonObject.get("entity").getAsString();
+                    data.entity = new ResourceLocation(entityId);
+
+                    EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(data.entity);
+
+                    if (entityEntry == null)
+                    {
+                        Log.writeDataToLogFile(0, "Entity not found: " + entityId);
+                        continue;
+                    }
+
+                    data.use_default_xp = getValueFromJson(jsonObject, "use_default_xp", false,
+                            (el, def) -> el.getAsBoolean());
+
+                    if (data.use_default_xp)
+                    {
+                        if (!jsonObject.has("multi_xp"))
+                        {
+                            Log.writeDataToLogFile(0, "use_default_xp = true requires multi_xp for entity: " + entityId);
+                            continue;
+                        }
+
+                        data.multi_xp = getValueFromJson(jsonObject,
+                                "multi_xp", 1.0f, (el, defaultValue) -> el.getAsFloat());
+
+                        data.xp = null;
+                        data.adding_xp = null;
+                    }
+                    else
+                    {
+                        data.xp = getValueFromJson(jsonObject,
+                                "xp", 0, (el, defaultValue) -> el.getAsInt());
+
+                        data.multi_xp = getValueFromJson(jsonObject,
+                                "multi_xp", 1.0f, (el, defaultValue) -> el.getAsFloat());
+
+                        data.adding_xp = getValueFromJson(jsonObject,
+                                "adding_xp", 0.f, (el, defaultValue) -> el.getAsFloat());
+                    }
+
+                    data.worldTimeIntervalMin = getValueFromJson(jsonObject,
+                            "time_min", null, (el, defaultValue) -> el.getAsLong());
+
+                    data.worldTimeIntervalMax = getValueFromJson(jsonObject,
+                            "time_max", null, (el, defaultValue) -> el.getAsLong());
+
+                    if (data.worldTimeIntervalMin != null && data.worldTimeIntervalMax != null
+                            && data.worldTimeIntervalMin > data.worldTimeIntervalMax)
+                    {
+                        Log.writeDataToLogFile(0, "Invalid time interval for entity " + entityId
+                                + ": min > max (" + data.worldTimeIntervalMin + " > " + data.worldTimeIntervalMax + ")");
+
+                        continue;
+                    }
+
+                    if (jsonObject.has("result"))
+                    {
+                        String resultStr = jsonObject.get("result").getAsString().toLowerCase();
+
+                        switch (resultStr)
+                        {
+                            case "allow":
+                                data.result = Event.Result.ALLOW;
+                                break;
+                            case "deny":
+                                data.result = Event.Result.DENY;
+                                break;
+                            case "default":
+                                data.result = Event.Result.DEFAULT;
+                                break;
+                            default:
+                                Log.writeDataToLogFile(0, "Invalid result value '" + resultStr
+                                        + "' for entity: " + entityId);
+
+                                continue;
+                        }
+                    }
+
+                    Log.writeDataToLogFile(0, String.format(
+                            "Loaded entity: %s, mode: %s, xp: %s, multi: %.2f, add: %s, time: %s-%s, result: %s",
+                            data.entity,
+                            data.use_default_xp ? "DEFAULT_XP" : "FULL",
+                            data.use_default_xp ? "N/A" : data.xp,
+                            data.multi_xp,
+                            data.use_default_xp ? "N/A" : data.adding_xp,
+                            data.worldTimeIntervalMin != null ? data.worldTimeIntervalMin : "ANY",
+                            data.worldTimeIntervalMax != null ? data.worldTimeIntervalMax : "ANY",
+                            data.result
+                    ));
+
+                    GeneralDropExperience.getInstance().dropExperienceList.add(data);
+
                 }
-
-                data.xp = getValueFromJson(jsonObject,
-                        "xp", 0, (el, defaultValue) -> el.getAsInt());
-
-                data.multi_xp = getValueFromJson(jsonObject,
-                        "multi_xp", 0.f, (el, defaultValue) -> el.getAsFloat());
-
-                data.adding_xp = getValueFromJson(jsonObject,
-                        "adding_xp", 0.f, (el, defaultValue) -> el.getAsFloat());
-
-                Log.writeDataToLogFile(0, "Loaded data for entity: " + data.entity + ", xp: " + data.xp + ", multi_xp: " + data.multi_xp + ", adding_xp: " + data.adding_xp);
-
-                GeneralDropExperience.getInstance().dropExperienceList.add(data);
+                catch (Exception exception)
+                {
+                    Log.writeDataToLogFile(0, "Error processing config entry: " + element);
+                    exception.printStackTrace();
+                }
             }
         }
         catch (IOException exception)
         {
             Log.writeDataToLogFile(0, "Failed to load config file: " + file);
+            exception.printStackTrace();
+        }
+        catch (JsonParseException exception)
+        {
+            Log.writeDataToLogFile(0, "Malformed JSON in config file: " + file);
             exception.printStackTrace();
         }
     }
