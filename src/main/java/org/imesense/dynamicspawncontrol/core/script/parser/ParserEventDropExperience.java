@@ -11,7 +11,6 @@ import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.data.EntityDropExperience;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
 import java.io.FileReader;
@@ -26,7 +25,8 @@ public final class ParserEventDropExperience extends BaseParser
         this.nameFile = NAME_FILE;
     }
 
-    public static <T> T getValueFromJson(JsonObject jsonObject, String key, T defaultValue, BiFunction<JsonElement, T, T> biFunction)
+    public static <T> T getValueFromJson(JsonObject jsonObject, String key,
+                                         T defaultValue, BiFunction<JsonElement, T, T> biFunction)
     {
         if (jsonObject.has(key))
         {
@@ -65,10 +65,9 @@ public final class ParserEventDropExperience extends BaseParser
             return;
         }
 
-        try (FileReader reader = new FileReader(file))
+        try (FileReader fileReader = new FileReader(file))
         {
-            JsonParser parser = new JsonParser();
-            JsonArray jsonArray = parser.parse(reader).getAsJsonArray();
+            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
 
             for (JsonElement element : jsonArray)
             {
@@ -150,14 +149,9 @@ public final class ParserEventDropExperience extends BaseParser
                             case "deny":
                                 data.result = Event.Result.DENY;
                                 break;
-                            case "default":
+                            default:
                                 data.result = Event.Result.DEFAULT;
                                 break;
-                            default:
-                                Log.writeDataToLogFile(0, "Invalid result value '" + resultStr
-                                        + "' for entity: " + entityId);
-
-                                continue;
                         }
                     }
 
@@ -179,19 +173,16 @@ public final class ParserEventDropExperience extends BaseParser
                 catch (Exception exception)
                 {
                     Log.writeDataToLogFile(0, "Error processing config entry: " + element);
-                    exception.printStackTrace();
                 }
             }
         }
         catch (IOException exception)
         {
             Log.writeDataToLogFile(0, "Failed to load config file: " + file);
-            exception.printStackTrace();
         }
         catch (JsonParseException exception)
         {
             Log.writeDataToLogFile(0, "Malformed JSON in config file: " + file);
-            exception.printStackTrace();
         }
     }
 

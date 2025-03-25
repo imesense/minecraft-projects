@@ -46,8 +46,7 @@ public final class ParserEventPopulationChunk extends BaseParser
 
         try (FileReader fileReader = new FileReader(file))
         {
-            JsonParser parser = new JsonParser();
-            JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
+            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
 
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
             List<PopulationChunkStruct.Data> populationList = new ArrayList<>();

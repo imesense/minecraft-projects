@@ -33,7 +33,7 @@ public final class FunctionalMobTaskManager
         return CodeGeneric.getInstance(FunctionalMobTaskManager.class);
     }
 
-    public static final EntityId FIXER = new EntityId();
+    public static final EntityId ENTITY_ID = new EntityId();
 
     public static String fixEntityId(String id)
     {
@@ -41,7 +41,7 @@ public final class FunctionalMobTaskManager
 
         nbtXompound.setString("id", id);
 
-        nbtXompound = FIXER.fixTagCompound(nbtXompound);
+        nbtXompound = ENTITY_ID.fixTagCompound(nbtXompound);
 
         return nbtXompound.getString("id");
     }
@@ -359,8 +359,9 @@ public final class FunctionalMobTaskManager
         }
     }
 
-    private boolean canEntityAttack(EntityLiving entity)
+    private Boolean canEntityAttack(EntityLiving entity)
     {
-        return entity instanceof EntityMob || (entity instanceof EntityAnimal && ((EntityAnimal) entity).getAttackTarget() != null);
+        return (entity instanceof EntityMob ||
+                (entity instanceof EntityAnimal && entity.getAttackTarget() != null));
     }
 }

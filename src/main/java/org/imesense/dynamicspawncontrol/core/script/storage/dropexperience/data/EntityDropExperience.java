@@ -12,7 +12,7 @@ public final class EntityDropExperience
         public Integer xp;
         public Float multi_xp = 1.0f;
         public Float adding_xp;
-        public Boolean use_default_xp = false;
+        public Boolean use_default_xp = Boolean.FALSE;
         public Long worldTimeIntervalMax;
         public Long worldTimeIntervalMin;
         public Event.Result result = Event.Result.DEFAULT;;
@@ -24,7 +24,7 @@ public final class EntityDropExperience
                 return true;
             }
 
-            long worldTime = world.getWorldTime() % 24000;
+            Long worldTime = world.getWorldTime() % 24000;
 
             return worldTime >= this.worldTimeIntervalMin && worldTime <= this.worldTimeIntervalMax;
         }
@@ -36,7 +36,7 @@ public final class EntityDropExperience
                 return this.multi_xp != null;
             }
 
-            return true;
+            return Boolean.TRUE;
         }
     }
 }
