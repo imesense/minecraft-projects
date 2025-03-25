@@ -15,7 +15,8 @@ public final class EventRenderGame extends BaseEventRegister
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnEventRenderGameOverlayEventPost.class,
-        OnEventRenderGameOverlayEventText.class
+        OnEventRenderGameOverlayEventText.class,
+        OnEventRenderGameOverlayEventBossInfo.class
     };
 
     @Override
