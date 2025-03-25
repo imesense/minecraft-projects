@@ -28,7 +28,7 @@ public final class WorldCacheConfig extends BaseJsonConfig
     {
         JsonObject jsonObject = new JsonObject();
 
-        jsonObject.addProperty("show_stats", spawnPeacefulCreaturesAtNight);
+        jsonObject.addProperty("spawn_peaceful_creatures_at_night", spawnPeacefulCreaturesAtNight);
 
         return jsonObject;
     }

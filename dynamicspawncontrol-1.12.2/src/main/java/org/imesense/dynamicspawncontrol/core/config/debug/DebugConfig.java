@@ -26,11 +26,11 @@ public final class DebugConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        config.addProperty("show_stats", showStats);
+        jsonObject.addProperty("show_stats", showStats);
 
-        return config;
+        return jsonObject;
     }
 
     @Override
