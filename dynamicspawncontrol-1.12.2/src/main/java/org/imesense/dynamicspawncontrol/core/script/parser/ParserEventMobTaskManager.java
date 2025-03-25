@@ -36,7 +36,7 @@ public final class ParserEventMobTaskManager extends BaseParser
 
         String[] array = new String[jsonArray.size()];
 
-        for (int i = 0; i < jsonArray.size(); i++)
+        for (Integer i = 0; i < jsonArray.size(); i++)
         {
             array[i] = jsonArray.get(i).getAsString();
         }
@@ -61,8 +61,7 @@ public final class ParserEventMobTaskManager extends BaseParser
 
         try (FileReader fileReader = new FileReader(file))
         {
-            JsonParser parser = new JsonParser();
-            JsonArray jsonArray = parser.parse(fileReader).getAsJsonArray();
+            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
 
             GeneralMobTaskManager taskManager = GeneralMobTaskManager.getInstance();
 

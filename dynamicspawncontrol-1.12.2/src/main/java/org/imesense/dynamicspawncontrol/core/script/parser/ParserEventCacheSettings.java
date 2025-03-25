@@ -73,7 +73,7 @@ public final class ParserEventCacheSettings extends BaseParser
                 {
                     result = Event.Result.valueOf(resultStr.toUpperCase());
                 }
-                catch (IllegalArgumentException e)
+                catch (IllegalArgumentException exception)
                 {
                     throw new RuntimeException("Invalid value for 'result': " + resultStr);
                 }
@@ -91,7 +91,10 @@ public final class ParserEventCacheSettings extends BaseParser
                 entityData.result = result;
 
                 entitiesList.add(entityData);
-                Log.writeDataToLogFile(0, "Entity Loaded: " + resourceLocation + " Per Player: " + perPlayer + " Per Chunk: " + perChunk + " Max Count: " + maxEntityCount + " Result: " + result);
+
+                Log.writeDataToLogFile(0, "Entity Loaded: " +
+                        resourceLocation + " Per Player: " + perPlayer + " Per Chunk: " +
+                        perChunk + " Max Count: " + maxEntityCount + " Result: " + result);
             }
 
             CacheEntityStorage.getInstance().entityData = entitiesList;

@@ -12,7 +12,6 @@ import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.datasupport.AdditionalChecks;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storagesupport.SupportCheckSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 
@@ -67,7 +66,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         }
     }
 
-    protected void processJsonObject(JsonObject jsonObject) throws RuntimeException
+    private void processJsonObject(JsonObject jsonObject) throws RuntimeException
     {
         JsonObject templates = jsonObject.has("templates") ? jsonObject.getAsJsonObject("templates") : new JsonObject();
 
@@ -82,7 +81,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         }
     }
 
-    protected void processConfigs(JsonArray configs, JsonObject templates) throws RuntimeException
+    private void processConfigs(JsonArray configs, JsonObject templates) throws RuntimeException
     {
         for (JsonElement configElement : configs)
         {
@@ -98,7 +97,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         }
     }
 
-    protected void validateRequiredFields(JsonObject dataObject) throws RuntimeException
+    private void validateRequiredFields(JsonObject dataObject) throws RuntimeException
     {
         if (!dataObject.has("profile") || !dataObject.has("description"))
         {
@@ -111,7 +110,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         }
     }
 
-    protected void processDataObject(JsonObject dataObject, JsonObject templates)
+    private void processDataObject(JsonObject dataObject, JsonObject templates)
     {
         if (dataObject.has("potion"))
         {
@@ -134,9 +133,9 @@ public final class ParserEventCheckSpawn extends BaseParser
 
         String entityTypeString = dataObject.get("entity_type").getAsString();
         ResourceLocation entityType = new ResourceLocation(entityTypeString);
-        EntityEntry ee = ForgeRegistries.ENTITIES.getValue(entityType);
+        EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
 
-        if (ee == null)
+        if (entityEntry == null)
         {
             Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
             return;
@@ -169,7 +168,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         GeneralCheckSpawnStorage.getInstance().entityAttributesList.add(entityAttributesData);
     }
 
-    protected void processEquipment(JsonObject equipmentObject, EntityEquipment.Data entityEquipmentData)
+    private void processEquipment(JsonObject equipmentObject, EntityEquipment.Data entityEquipmentData)
     {
         entityEquipmentData.heldItem = equipmentObject.has("held_item")
                 ? Equipment.getInstance().parseItemList(equipmentObject.get("held_item"))
@@ -191,10 +190,11 @@ public final class ParserEventCheckSpawn extends BaseParser
                 ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"))
                 : null;
 
-        entityEquipmentData.hasShield = equipmentObject.has("has_shield") && equipmentObject.get("has_shield").getAsBoolean();
+        entityEquipmentData.hasShield = equipmentObject.has("has_shield") &&
+                equipmentObject.get("has_shield").getAsBoolean();
     }
 
-    protected void processPotionEffects(JsonArray potionArray, EntityAttributes.Data entityAttributesData)
+    private void processPotionEffects(JsonArray potionArray, EntityAttributes.Data entityAttributesData)
     {
         entityAttributesData.potion = new ArrayList<>();
 
@@ -209,24 +209,26 @@ public final class ParserEventCheckSpawn extends BaseParser
                 continue;
             }
 
-            ResourceLocation potionId = new ResourceLocation(split[0].trim());
-            Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
+            ResourceLocation resourceLocation = new ResourceLocation(split[0].trim());
+            Potion potion = ForgeRegistries.POTIONS.getValue(resourceLocation);
 
             if (potion == null)
             {
-                Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
+                Log.writeDataToLogFile(2, "Can't find potion '" + resourceLocation + "'!");
                 continue;
             }
 
             Integer duration = Integer.parseInt(split[1].trim());
             Integer amplifier = Integer.parseInt(split[2].trim());
+
             Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
-            entityAttributesData.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
+            entityAttributesData.potion.add(new PotionEffect.Data(new
+                    net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
         }
     }
 
-    protected void processPotionEffectsForDataSupport(JsonArray potionArray, AdditionalChecks.Data dataSupport)
+    private void processPotionEffectsForDataSupport(JsonArray potionArray, AdditionalChecks.Data dataSupport)
     {
         dataSupport.potion = new ArrayList<>();
 
@@ -259,7 +261,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         }
     }
 
-    protected void processDataSupport(JsonArray dataSupportArray)
+    private void processDataSupport(JsonArray dataSupportArray)
     {
         for (JsonElement element : dataSupportArray)
         {
@@ -269,10 +271,11 @@ public final class ParserEventCheckSpawn extends BaseParser
             dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
 
             String entityTypeString = dataSupportObject.get("entity_type").getAsString();
-            ResourceLocation entityType = new ResourceLocation(entityTypeString);
-            EntityEntry ee = ForgeRegistries.ENTITIES.getValue(entityType);
 
-            if (ee == null)
+            ResourceLocation entityType = new ResourceLocation(entityTypeString);
+            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
+
+            if (entityEntry == null)
             {
                 Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
                 return;
@@ -289,7 +292,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         }
     }
 
-    protected void handleLoadError(String message, Exception exception)
+    private void handleLoadError(String message, Exception exception)
     {
         Log.writeDataToLogFile(0, message);
         throw new RuntimeException(message, exception);

@@ -14,7 +14,7 @@ public final class DropItem
         public static final class ItemDrop
         {
             public ResourceLocation item;
-            public int amount;
+            public Integer amount;
         }
     }
 }

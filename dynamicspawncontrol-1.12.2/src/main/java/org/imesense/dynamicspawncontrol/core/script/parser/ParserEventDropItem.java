@@ -39,10 +39,9 @@ public final class ParserEventDropItem extends BaseParser
             return;
         }
 
-        try (FileReader reader = new FileReader(file))
+        try (FileReader fileReader = new FileReader(file))
         {
-            JsonParser parser = new JsonParser();
-            JsonArray jsonArray = parser.parse(reader).getAsJsonArray();
+            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
 
             List<DropItem.Data> dataList = new ArrayList<>();
 
@@ -56,7 +55,7 @@ public final class ParserEventDropItem extends BaseParser
                 JsonArray dropsArray = jsonObject.getAsJsonArray("drop");
                 data.drops = new ArrayList<>();
 
-                for (int i = 0; i < dropsArray.size(); i += 2)
+                for (Integer i = 0; i < dropsArray.size(); i += 2)
                 {
                     DropItem.Data.ItemDrop itemDrop = new DropItem.Data.ItemDrop();
                     itemDrop.item = new ResourceLocation(dropsArray.get(i).getAsString());
