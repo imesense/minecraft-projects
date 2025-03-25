@@ -35,18 +35,18 @@ public final class SkeletonDropConfig extends BaseJsonConfig
     @Override
     protected JsonObject createDefaultConfig()
     {
-        JsonObject config = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
 
-        config.addProperty("break_item", breakItem);
-        config.addProperty("hand_item_damage_factor", handItemDamageFactor);
-        config.addProperty("head_damage_factor", headDamageFactor);
-        config.addProperty("chest_damage_factor", chestDamageFactor);
-        config.addProperty("legs_damage_factor", legsDamageFactor);
-        config.addProperty("feet_damage_factor", feetDamageFactor);
-        config.addProperty("damage_spread_factor", damageSpreadFactor);
-        config.addProperty("arrows_to_drops", arrowsToDrops);
+        jsonObject.addProperty("break_item", breakItem);
+        jsonObject.addProperty("hand_item_damage_factor", handItemDamageFactor);
+        jsonObject.addProperty("head_damage_factor", headDamageFactor);
+        jsonObject.addProperty("chest_damage_factor", chestDamageFactor);
+        jsonObject.addProperty("legs_damage_factor", legsDamageFactor);
+        jsonObject.addProperty("feet_damage_factor", feetDamageFactor);
+        jsonObject.addProperty("damage_spread_factor", damageSpreadFactor);
+        jsonObject.addProperty("arrows_to_drops", arrowsToDrops);
 
-        return config;
+        return jsonObject;
     }
 
     @Override
