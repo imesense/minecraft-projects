@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
@@ -55,11 +56,32 @@ public final class ParserEventDropItem extends BaseParser
                 JsonArray dropsArray = jsonObject.getAsJsonArray("drop");
                 data.drops = new ArrayList<>();
 
-                for (Integer i = 0; i < dropsArray.size(); i += 2)
+                for (Integer i = 0; i < dropsArray.size(); i += 5)
                 {
                     DropItem.Data.ItemDrop itemDrop = new DropItem.Data.ItemDrop();
+
                     itemDrop.item = new ResourceLocation(dropsArray.get(i).getAsString());
-                    itemDrop.amount = dropsArray.get(i + 1).getAsInt();
+
+                    itemDrop.minAmount = dropsArray.get(i + 1).getAsInt();
+                    itemDrop.maxAmount = dropsArray.get(i + 2).getAsInt();
+
+                    itemDrop.chance = dropsArray.get(i + 3).getAsFloat();
+
+                    String resultStr = dropsArray.get(i + 4).getAsString().toLowerCase();
+
+                    switch (resultStr)
+                    {
+                        case "allow":
+                            itemDrop.result = Event.Result.ALLOW;
+                            break;
+                        case "deny":
+                            itemDrop.result = Event.Result.DENY;
+                            break;
+                        default:
+                            itemDrop.result = Event.Result.DEFAULT;
+                            break;
+                    }
+
                     data.drops.add(itemDrop);
                 }
 
