@@ -2,21 +2,25 @@ package org.imesense.dynamicspawncontrol.core.memory;
 
 import net.minecraft.command.ICommandSender;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 public final class MemoryManager
 {
+    private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(r ->
+    {
+        Thread t = new Thread(r, "MemoryCleaner GC Thread");
+        t.setDaemon(true);
+        return t;
+    });
+
     public static void cleanMemory(ICommandSender sender)
     {
-        Runnable runnable = new MemoryThread(sender);
-        Thread gcThread = new Thread(runnable, "MemoryCleaner GC Thread");
-        gcThread.setDaemon(true);
-        gcThread.start();
+        executor.execute(new MemoryThread(sender));
     }
 
     public static void cleanMemory()
     {
-        Runnable runnable = new MemoryThread();
-        Thread gcThread = new Thread(runnable, "MemoryCleaner GC Thread");
-        gcThread.setDaemon(true);
-        gcThread.start();
+        executor.execute(new MemoryThread());
     }
 }
