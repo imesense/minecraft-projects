@@ -17,13 +17,13 @@ public final class CmdClientCleanMemory extends CommandBase
     @Override
     public String getName()
     {
-        return "cleanmemory";
+        return "dsc_clean_up_memory";
     }
 
     @Override
     public String getUsage(ICommandSender iCommandSender)
     {
-        return "/cleanmemory - Clean up memory";
+        return "/dsc_clean_up_memory";
     }
 
     @Override
