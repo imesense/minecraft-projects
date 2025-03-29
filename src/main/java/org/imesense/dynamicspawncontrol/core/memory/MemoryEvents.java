@@ -47,7 +47,7 @@ public final class MemoryEvents
         long currentTime = System.currentTimeMillis();
         long timeSinceLastClean = currentTime - lastCleanTime;
 
-        if (timeSinceLastClean > Configuration.getAutomaticCleanup().getMinInterval() * 1000L)
+        if (timeSinceLastClean > (Configuration.getAutomaticCleanup().getMinInterval() * 1000L))
         {
             Runtime runtime = Runtime.getRuntime();
             double memoryUsage = (double)(runtime.totalMemory() - runtime.freeMemory()) / runtime.maxMemory();
@@ -62,7 +62,7 @@ public final class MemoryEvents
                 {
                     shouldClean = true;
                 }
-                else if (timeSinceLastClean > Configuration.getAutomaticCleanup().getMaxInterval() * 1000L)
+                else if (timeSinceLastClean > (Configuration.getAutomaticCleanup().getMaxInterval() * 1000L))
                 {
                     shouldClean = true;
                 }

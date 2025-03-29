@@ -29,39 +29,6 @@ public final class Configuration
         return Collections.unmodifiableList(COMMAND_ALIASES);
     }
 
-    public static void setCommandAliases(String aliases)
-    {
-        COMMAND_ALIASES.clear();
-
-        for (String alias : aliases.split("\\s+"))
-        {
-            if (!alias.isEmpty())
-            {
-                COMMAND_ALIASES.add(alias);
-            }
-        }
-    }
-
-    public static void setShowMessage(boolean showMessage)
-    {
-        Configuration.showMessage = showMessage;
-    }
-
-    public static void setCleanOnJoin(boolean cleanOnJoin)
-    {
-        Configuration.cleanOnJoin = cleanOnJoin;
-    }
-
-    public static void setCleanOnInit(boolean cleanOnInit)
-    {
-        Configuration.cleanOnInit = cleanOnInit;
-    }
-
-    public static void setForceCleanPercentage(int forceCleanPercentage)
-    {
-        Configuration.forceCleanPercentage = forceCleanPercentage;
-    }
-
     public static AutoCleanup getAutomaticCleanup()
     {
         return AUTOMATIC_CLEANUP;
