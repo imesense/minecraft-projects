@@ -176,11 +176,6 @@ public final class DynamicSpawnControl
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
         TextColorCollection.instance = new TextColorCollection();
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
-
-        if (Configuration.cleanOnInit)
-        {
-            MemoryManager.cleanMemory();
-        }
     }
 
     /**
@@ -193,11 +188,6 @@ public final class DynamicSpawnControl
         IRecipes = new CraftItemWeb();
 
         IRecipes.registry();
-
-        if (Configuration.cleanOnInit)
-        {
-            MemoryManager.cleanMemory();
-        }
     }
 
     /**
@@ -207,7 +197,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        if (Configuration.cleanOnInit)
+        if (Configuration.isCleanOnInit())
         {
             MemoryManager.cleanMemory();
         }

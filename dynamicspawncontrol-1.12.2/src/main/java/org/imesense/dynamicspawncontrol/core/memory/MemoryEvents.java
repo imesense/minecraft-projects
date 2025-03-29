@@ -1,100 +1,121 @@
 package org.imesense.dynamicspawncontrol.core.memory;
 
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public final class MemoryEvents
 {
-    public static long lastCleanTime = 0L;
-    public static List<UUID> recognizedPlayers = new ArrayList();
-    public static int idleTime = 0;
+    @Getter
+    private static long lastCleanTime = 0L;
+    private static final Set<UUID> recognizedPlayers = new LinkedHashSet<>();
+    private static int idleTime = 0;
+
+    public static void setLastCleanTime(long lastCleanTime)
+    {
+        MemoryEvents.lastCleanTime = lastCleanTime;
+    }
 
     @SideOnly(Side.CLIENT)
     public static void handleOnClientTick(TickEvent.ClientTickEvent event)
     {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
-        if (!Minecraft.getMinecraft().isGamePaused() && event.phase == TickEvent.Phase.END && player != null && player.world.isRemote)
+        Minecraft mc = Minecraft.getMinecraft();
+
+        if (mc.isGamePaused() || event.phase != TickEvent.ClientTickEvent.Phase.END)
         {
-            boolean doClean = false;
-            if (System.currentTimeMillis() - lastCleanTime > (long)Configuration.AutomaticCleanup.minInterval * 1000L)
+            return;
+        }
+
+        EntityPlayerSP player = mc.player;
+
+        if (player == null || !player.world.isRemote)
+        {
+            return;
+        }
+
+        boolean shouldClean = false;
+
+        long currentTime = System.currentTimeMillis();
+        long timeSinceLastClean = currentTime - lastCleanTime;
+
+        if (timeSinceLastClean > Configuration.getAutomaticCleanup().getMinInterval() * 1000L)
+        {
+            Runtime runtime = Runtime.getRuntime();
+            double memoryUsage = (double)(runtime.totalMemory() - runtime.freeMemory()) / runtime.maxMemory();
+
+            if (memoryUsage > Configuration.getForceCleanPercentage() / 100.0D)
             {
-                if ((double)(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / (double)Runtime.getRuntime().totalMemory() > (double)Configuration.forceCleanPercentage / 100.0D) {
-                    doClean = true;
-                }
-                else if (Configuration.AutomaticCleanup.autoCleanup)
+                shouldClean = true;
+            }
+            else if (Configuration.getAutomaticCleanup().isAutoCleanup())
+            {
+                if (idleTime > Configuration.getAutomaticCleanup().getMinIdleTime() * 20)
                 {
-                    if (idleTime > Configuration.AutomaticCleanup.minIdleTime * 20)
-                    {
-                        doClean = true;
-                    }
-
-                    if (System.currentTimeMillis() - lastCleanTime > (long)Configuration.AutomaticCleanup.maxInterval * 1000L)
-                    {
-                        doClean = true;
-                    }
+                    shouldClean = true;
                 }
-
-                if (doClean)
+                else if (timeSinceLastClean > Configuration.getAutomaticCleanup().getMaxInterval() * 1000L)
                 {
-                    MemoryManager.cleanMemory(player);
-                    lastCleanTime = System.currentTimeMillis();
+                    shouldClean = true;
+                }
+            }
+
+            if (shouldClean)
+            {
+                MemoryManager.cleanMemory(player);
+                lastCleanTime = currentTime;
+                idleTime = 0;
+            }
+
+            if (Configuration.getAutomaticCleanup().isAutoCleanup())
+            {
+                if (Math.abs(player.motionX) < 0.001D &&
+                        Math.abs(player.motionY) < 0.001D &&
+                        Math.abs(player.motionZ) < 0.001D)
+                {
+                    idleTime++;
+                }
+                else
+                {
                     idleTime = 0;
-                }
-
-                if (Configuration.AutomaticCleanup.autoCleanup)
-                {
-                    if (player.motionX < 0.001D && player.motionY < 0.001D && player.motionZ < 0.001D)
-                    {
-                        ++idleTime;
-                    }
-                    else
-                    {
-                        idleTime = 0;
-                    }
                 }
             }
         }
-
     }
 
     @SideOnly(Side.CLIENT)
     public static void handleOnPlayerLogin(EntityJoinWorldEvent event)
     {
-        if (event.getEntity() instanceof EntityPlayer && event.getWorld().isRemote)
+        if (!(event.getEntity() instanceof EntityPlayer) || !event.getWorld().isRemote)
         {
-            EntityPlayer player = (EntityPlayer)event.getEntity();
-            if (player.getUniqueID().equals(Minecraft.getMinecraft().player.getUniqueID()) &&
-                    !recognizedPlayers.contains(player.getUniqueID()))
+            return;
+        }
+
+        EntityPlayer player = (EntityPlayer)event.getEntity();
+
+        if (player.getUniqueID().equals(Minecraft.getMinecraft().player.getUniqueID()))
+        {
+            if (!recognizedPlayers.contains(player.getUniqueID()))
             {
-                if (Configuration.cleanOnJoin)
+                if (Configuration.isCleanOnJoin())
                 {
                     MemoryManager.cleanMemory(player);
                 }
 
                 lastCleanTime = System.currentTimeMillis();
+
                 idleTime = 0;
+
                 recognizedPlayers.add(player.getUniqueID());
             }
         }
-
     }
-
-    //@SubscribeEvent
-    //public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-    //    if (eventArgs.getModID().equals("memorycleaner")) {
-    //        MemoryCleaner.logger.info("MemoryCleaner Config Changed!");
-    //        ConfigManager.sync("memorycleaner", Type.INSTANCE);
-    //    }
-
-    //}
 }
