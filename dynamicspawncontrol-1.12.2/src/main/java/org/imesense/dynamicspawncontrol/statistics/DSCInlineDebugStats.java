@@ -9,9 +9,12 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
+import org.imesense.dynamicspawncontrol.core.memory.Configuration;
+import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @InitLog
@@ -124,6 +127,41 @@ public final class DSCInlineDebugStats
         final String BUFFER_WATER_MOBS =
                 TextFormatting.DARK_BLUE + "Buffer Water Mobs: " + this.CACHE_GENERAL_STORAGE.getBufferWaterMobCount();
 
+        Runtime runtime = Runtime.getRuntime();
+        long maxMemory = runtime.maxMemory();
+        long totalMemory = runtime.totalMemory();
+        long freeMemory = runtime.freeMemory();
+        long usedMemory = totalMemory - freeMemory;
+
+        String memoryUsage = TextFormatting.LIGHT_PURPLE + String.format(
+                "Memory: %.1f/%.1fMB (%.1f%%)",
+                usedMemory / (1024.0 * 1024.0),
+                maxMemory / (1024.0 * 1024.0),
+                (usedMemory * 100.0) / maxMemory
+        );
+
+        String memoryDetails = TextFormatting.DARK_PURPLE + String.format(
+                "Heap: %.1fMB | Used: %.1fMB | Free: %.1fMB",
+                totalMemory / (1024.0 * 1024.0),
+                usedMemory / (1024.0 * 1024.0),
+                freeMemory / (1024.0 * 1024.0)
+        );
+
+        long lastCleanMillis = MemoryEvents.getLastCleanTime();
+        String lastCleanTime = TextFormatting.GOLD + "Last GC: " +
+                (lastCleanMillis == 0 ? "Never" :
+                        new SimpleDateFormat("HH:mm:ss").format(new Date(lastCleanMillis)));
+
+        long nextCleanMillis = lastCleanMillis + (Configuration.getAutomaticCleanup().getMaxInterval() * 1000L);
+        long timeUntilNextClean = nextCleanMillis - System.currentTimeMillis();
+        String nextCleanTime = TextFormatting.YELLOW + "Next GC in: " +
+                (timeUntilNextClean <= 0 ? "Now" :
+                        String.format("%.1f min", timeUntilNextClean / 60000.0));
+
+        String timeSinceClean = TextFormatting.AQUA + "Since GC: " +
+                (lastCleanMillis == 0 ? "N/A" :
+                        String.format("%.1f min", (System.currentTimeMillis() - lastCleanMillis) / 60000.0));
+
         int x = 10;
         int y = 10;
 
@@ -164,5 +202,13 @@ public final class DSCInlineDebugStats
         fontRenderer.drawString(LAST_UPDATE, x, cacheY + 160, 0xFFFFFF);
         fontRenderer.drawString(PRIMARY_PLAYER, x, cacheY + 170, 0xFFFFFF);
         fontRenderer.drawString(LAST_UPDATE_TIME, x, cacheY + 180, 0xFFFFFF);
+
+        int memoryY = cacheY + 190;
+        fontRenderer.drawString(separator, x, memoryY, 0xFFFFFF);
+        fontRenderer.drawString(memoryUsage, x, memoryY + 10, 0xFFFFFF);
+        fontRenderer.drawString(memoryDetails, x, memoryY + 20, 0xFFFFFF);
+        fontRenderer.drawString(lastCleanTime, x, memoryY + 30, 0xFFFFFF);
+        fontRenderer.drawString(timeSinceClean, x, memoryY + 40, 0xFFFFFF);
+        fontRenderer.drawString(nextCleanTime, x, memoryY + 50, 0xFFFFFF);
     }
 }
