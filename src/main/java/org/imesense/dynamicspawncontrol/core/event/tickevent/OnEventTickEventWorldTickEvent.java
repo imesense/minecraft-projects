@@ -11,8 +11,6 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGrass;
 
-import static org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGrass.TICK_COUNTER;
-
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
@@ -28,18 +26,6 @@ public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
     {
         OnEventWorldCache.getInstance().handleWorldTick(event);
 
-        if (event.phase == TickEvent.Phase.END || event.world.isRemote)
-        {
-            return;
-        }
-
-        if (TICK_COUNTER.incrementAndGet() < 20)
-        {
-            return;
-        }
-
-        TICK_COUNTER.set(0);
-
-        OvergrowingGrass.getInstance().handleWorldTick(event.world);
+        OvergrowingGrass.getInstance().onWorldTick(event);
     }
 }
