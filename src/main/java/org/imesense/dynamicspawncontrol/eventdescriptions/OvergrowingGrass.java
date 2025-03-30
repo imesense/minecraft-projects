@@ -32,10 +32,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 @InitLog
 public final class OvergrowingGrass
 {
+    // TODO: OldSerpskiStalker - это вынести в конфиг.
+    //-' Добавить новую папку для этого: "синхронизация событий"
+
+    //-' Интервал между проверками (в тиках)
     private static final int TICKS_BETWEEN_CHECKS = 20;
+
+    //-' Количество проверок вокруг каждого игрока
     private static final int CHECKS_PER_PLAYER = 5;
-    private static final double GROWTH_CHANCE = 0.95;
-    private static final int PLAYER_RADIUS = 8;
+
+    //-' Вероятность роста травы (0.0 - 1.0)
+    private static final double GROWTH_CHANCE = 0.15;
+
+    //-' Радиус вокруг игрока для проверок (в блоках)
+    private static final int PLAYER_RADIUS = 16; //- для теста
 
     private static final GrassThreadMonitor grassMonitor = GrassThreadMonitor.getInstance();
 
