@@ -3,6 +3,8 @@ package org.imesense.dynamicspawncontrol.core.threads;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class ThreadMonitor
 {
@@ -54,12 +56,15 @@ public class ThreadMonitor
             long currentTime = System.currentTimeMillis();
             long delay = Math.max(0, actualInterval - expectedInterval);
 
-            stats.currentDelay = delay;
-            stats.maxDelay = Math.max(stats.maxDelay, delay);
-            stats.totalDelay += delay;
-            stats.tickCount++;
-            stats.averageDelay = (double) stats.totalDelay / stats.tickCount;
-            stats.lastUpdate = currentTime;
+            synchronized(stats)
+            {
+                stats.currentDelay = delay;
+                stats.maxDelay = Math.max(stats.maxDelay, delay);
+                stats.totalDelay += delay;
+                stats.tickCount++;
+                stats.averageDelay = (double) stats.totalDelay / stats.tickCount;
+                stats.lastUpdate = currentTime;
+            }
         }
     }
 
@@ -78,5 +83,14 @@ public class ThreadMonitor
             long timeSinceLastUpdate = currentTime - mainStats.lastUpdate;
             updateThreadStats("main", 50, timeSinceLastUpdate);
         }
+    }
+
+    public void startLoggingThreadMonitoring()
+    {
+        registerThread("logging");
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() ->
+        {
+            updateThreadStats("logging", 1000, 1000);
+        }, 0, 1, TimeUnit.SECONDS);
     }
 }
