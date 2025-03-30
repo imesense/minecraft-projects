@@ -7,6 +7,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
@@ -20,22 +21,9 @@ import java.util.Map;
 public final class ParserEventLootBoxInWorld extends BaseParser
 {
     @Getter
-    private Map<String, List<LootEntry>> lootTable;
+    private Map<String, List<LootBox.Data>> lootTable;
 
     public static ParserEventLootBoxInWorld instance;
-
-    public final static class LootEntry
-    {
-        private String item;
-        private int minCount = 1;
-        private int maxCount = 1;
-        private float chance = 1.0f;
-
-        public String getItem() { return item; }
-        public int getMinCount() { return minCount; }
-        public int getMaxCount() { return maxCount; }
-        public float getChance() { return chance; }
-    }
 
     public ParserEventLootBoxInWorld(final String NAME_FILE)
     {
@@ -61,7 +49,7 @@ public final class ParserEventLootBoxInWorld extends BaseParser
         try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
-            Type type = new TypeToken<Map<String, List<LootEntry>>>() {}.getType();
+            Type type = new TypeToken<Map<String, List<LootBox.Data>>>() {}.getType();
             lootTable = gson.fromJson(fileReader, type);
             Log.writeDataToLogFile(0, "Loot table loaded: " + lootTable);
         }
