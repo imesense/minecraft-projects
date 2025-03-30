@@ -11,6 +11,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInWorld;
+import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public final class LootBoxInWorld implements IWorldGenerator
 
     private void addLootToChest(TileEntityChest tileEntityChest, Random random)
     {
-        Map<String, List<ParserEventLootBoxInWorld.LootEntry>> lootTable = ParserEventLootBoxInWorld.instance.getLootTable();
+        Map<String, List<LootBox.Data>> lootTable = ParserEventLootBoxInWorld.instance.getLootTable();
 
         if (lootTable == null || lootTable.isEmpty())
         {
@@ -71,14 +72,14 @@ public final class LootBoxInWorld implements IWorldGenerator
         }
 
         String selectedTier = TIERS[random.nextInt(TIERS.length)];
-        List<ParserEventLootBoxInWorld.LootEntry> entries = lootTable.get(selectedTier);
+        List<LootBox.Data> entries = lootTable.get(selectedTier);
 
         if (entries == null || entries.isEmpty())
         {
             return;
         }
 
-        for (ParserEventLootBoxInWorld.LootEntry entry : entries)
+        for (LootBox.Data entry : entries)
         {
             if (random.nextFloat() > entry.getChance())
             {
