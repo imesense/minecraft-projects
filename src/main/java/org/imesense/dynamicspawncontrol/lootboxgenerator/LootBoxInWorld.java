@@ -10,25 +10,31 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInWorld;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @InitLog
 public final class LootBoxInWorld implements IWorldGenerator
 {
     private final String[] TIERS = {"common", "rare", "legendary"};
+    private final double[] SPAWN_CHANCES = {0.1, 0.075, 0.05};
+    private static final boolean DEBUG = true;
 
     public LootBoxInWorld()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
             CodeGeneric.logInitialization(this.getClass());
+
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(0, "LootBoxInWorld initialized with InitLog annotation");
+            }
         }
     }
 
@@ -38,52 +44,187 @@ public final class LootBoxInWorld implements IWorldGenerator
     {
         if (world.provider.getDimension() != 0)
         {
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(1, "Skipping non-overworld dimension");
+            }
+
             return;
         }
 
-        if (random.nextFloat() < 0.1)
+        for (int tierIndex = 0; tierIndex < TIERS.length; tierIndex++)
+        {
+            trySpawnChestForTier(world, random, chunkX, chunkZ, tierIndex);
+        }
+    }
+
+    private void trySpawnChestForTier(World world, Random random, int chunkX, int chunkZ, int tierIndex)
+    {
+        if (random.nextFloat() >= SPAWN_CHANCES[tierIndex])
+        {
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(2, "Spawn chance failed for tier: " + TIERS[tierIndex]);
+            }
+
+            return;
+        }
+
+        for (int attempt = 0; attempt < 5; attempt++)
         {
             int x = chunkX * 16 + random.nextInt(16);
             int z = chunkZ * 16 + random.nextInt(16);
-            int y = world.getHeight(x, z);
 
-            if (world.isAirBlock(new BlockPos(x, y - 1, z)))
+            int y = tierIndex == 0 ? world.getHeight(x, z) : findCaveY(world, x, z, random);
+
+            if (y == -1)
             {
-                return;
+                if (DEBUG)
+                {
+                    Log.writeDataToLogFile(2, "No suitable Y found for " + TIERS[tierIndex] + " chest");
+                }
+
+                continue;
+            }
+
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(3, String.format("Trying to spawn %s chest at [%d, %d, %d]",
+                        TIERS[tierIndex], x, y, z));
+            }
+
+            if (!isValidSpawnLocation(world, x, y, z))
+            {
+                continue;
             }
 
             world.setBlockState(new BlockPos(x, y, z), Blocks.CHEST.getDefaultState(), 2);
+
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(0, String.format("Spawned %s chest at [%d, %d, %d]",
+                        TIERS[tierIndex], x, y, z));
+            }
 
             TileEntityChest chest = (TileEntityChest) world.getTileEntity(new BlockPos(x, y, z));
 
             if (chest != null)
             {
-                addLootToChest(chest, random);
+                if (DEBUG)
+                {
+                    Log.writeDataToLogFile(3, "Adding loot to chest...");
+                }
+
+                addLootToChest(chest, random, TIERS[tierIndex]);
             }
+            break;
         }
     }
 
-    private void addLootToChest(TileEntityChest tileEntityChest, Random random)
+    private int findCaveY(World world, int x, int z, Random random)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            int y = 10 + random.nextInt(50);
+
+            if (world.isAirBlock(new BlockPos(x, y, z)) &&
+                    !world.isAirBlock(new BlockPos(x, y-1, z)) &&
+                    !world.getBlockState(new BlockPos(x, y-1, z)).getMaterial().isLiquid())
+            {
+                return y;
+            }
+        }
+
+        return -1;
+    }
+
+    private boolean isValidSpawnLocation(World world, int x, int y, int z)
+    {
+        BlockPos belowPos = new BlockPos(x, y-1, z);
+
+        if (world.isAirBlock(belowPos) || world.getBlockState(belowPos).getMaterial().isLiquid())
+        {
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(2, "Invalid block below at [" + x + ", " + (y - 1) + ", " + z + "]");
+            }
+
+            return false;
+        }
+
+        if (!world.isAirBlock(new BlockPos(x, y, z)))
+        {
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(2, "Target block is not air at [" + x + ", " + y + ", " + z + "]");
+            }
+
+            return false;
+        }
+
+        for (int dx = 0; dx <= 1; dx++)
+        {
+            for (int dz = 0; dz <= 1; dz++)
+            {
+                BlockPos pos = new BlockPos(x + dx, y, z + dz);
+                if (!world.isAirBlock(pos) && !world.getBlockState(pos).getBlock().isReplaceable(world, pos))
+                {
+                    if (DEBUG)
+                    {
+                        Log.writeDataToLogFile(2, "Block at [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() +
+                                "] is not air or replaceable: " + world.getBlockState(pos).getBlock().getRegistryName());
+                    }
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void addLootToChest(TileEntityChest tileEntityChest, Random random, String tier)
     {
         Map<String, List<LootBox.Data>> lootTable = GeneralLootBox.getInstance().lootTable;
 
         if (lootTable == null || lootTable.isEmpty())
         {
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(1, "Loot table is null or empty for tier: " + tier);
+            }
+
             return;
         }
 
-        String selectedTier = TIERS[random.nextInt(TIERS.length)];
-        List<LootBox.Data> entries = lootTable.get(selectedTier);
+        List<LootBox.Data> entries = lootTable.get(tier);
 
         if (entries == null || entries.isEmpty())
         {
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(1, "No entries found in loot table for tier: " + tier);
+            }
+
             return;
         }
+
+        if (DEBUG)
+        {
+            Log.writeDataToLogFile(3, "Adding " + entries.size() + " possible items to chest");
+        }
+
+        int itemsAdded = 0;
 
         for (LootBox.Data entry : entries)
         {
             if (random.nextFloat() > entry.getChance())
             {
+                if (DEBUG)
+                {
+                    Log.writeDataToLogFile(4, "Item " + entry.getItem() + " failed chance check");
+                }
+
                 continue;
             }
 
@@ -91,16 +232,33 @@ public final class LootBoxInWorld implements IWorldGenerator
 
             if (item == null)
             {
+                if (DEBUG)
+                {
+                    Log.writeDataToLogFile(1, "Item not found: " + entry.getItem());
+                }
+
                 continue;
             }
 
-            int count = entry.getMinCount() +
-                    random.nextInt(entry.getMaxCount() - entry.getMinCount() + 1);
+            int count =
+                entry.getMinCount() + random.nextInt(entry.getMaxCount() - entry.getMinCount() + 1);
 
             ItemStack stack = new ItemStack(item, count);
 
             int slot = random.nextInt(tileEntityChest.getSizeInventory());
             tileEntityChest.setInventorySlotContents(slot, stack);
+            
+            itemsAdded++;
+
+            if (DEBUG)
+            {
+                Log.writeDataToLogFile(3, "Added " + count + "x " + entry.getItem() + " to slot " + slot);
+            }
+        }
+
+        if (DEBUG)
+        {
+            Log.writeDataToLogFile(2, "Added " + itemsAdded + " items to chest of tier " + tier);
         }
     }
 }
