@@ -11,6 +11,7 @@ import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
+import org.imesense.dynamicspawncontrol.core.threads.GrassThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.threads.ThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -25,6 +26,7 @@ public final class DSCInlineDebugStats
     private static final Minecraft MC = Minecraft.getMinecraft();
     private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
     private final ThreadMonitor threadMonitor = ThreadMonitor.getInstance();
+    private final GrassThreadMonitor grassMonitor = GrassThreadMonitor.getInstance();
 
     public static DSCInlineDebugStats getInstance()
     {
@@ -179,7 +181,7 @@ public final class DSCInlineDebugStats
     {
         int lineHeight = 10;
         ThreadMonitor.ThreadStats mainStats = threadMonitor.getThreadStats("main");
-        ThreadMonitor.ThreadStats loggingStats = threadMonitor.getThreadStats("logging");
+        GrassThreadMonitor.GrassThreadStats grassStats = grassMonitor.getStats();
 
         drawDebugBlock(fontRenderer, x, startY, lineHeight,
                 TextFormatting.WHITE + "-------- [ Thread Statistics ] --------",
@@ -189,12 +191,15 @@ public final class DSCInlineDebugStats
                         mainStats.averageDelay),
                 TextFormatting.YELLOW + String.format("Tick Count: %d", mainStats.tickCount),
                 TextFormatting.GREEN + String.format("Estimated TPS: %.1f", 1000.0 / (50 + mainStats.currentDelay)),
-                TextFormatting.LIGHT_PURPLE + "-------- [ Logging Thread ] --------",
-                TextFormatting.AQUA + String.format("Logging Delay: %.1fms (Max: %.1fms)",
-                        loggingStats != null ? loggingStats.currentDelay : 0,
-                        loggingStats != null ? loggingStats.maxDelay : 0),
-                TextFormatting.BLUE + String.format("Log Operations: %d",
-                        loggingStats != null ? loggingStats.tickCount : 0));
+
+                TextFormatting.LIGHT_PURPLE + "-------- [ Grass Thread ] --------",
+                TextFormatting.AQUA + String.format("Queue: %d | Active: %d",
+                        grassStats.queueSize, grassStats.activeTasks),
+                TextFormatting.BLUE + String.format("Avg Time: %.1fms | Max: %.1fms",
+                        grassStats.avgProcessTime, grassStats.maxProcessTime),
+                TextFormatting.GOLD + String.format("Processed: %d | Errors: %d",
+                        grassStats.totalProcessed, grassStats.errorCount)
+        );
     }
 
     public void updateMainThreadStats()
