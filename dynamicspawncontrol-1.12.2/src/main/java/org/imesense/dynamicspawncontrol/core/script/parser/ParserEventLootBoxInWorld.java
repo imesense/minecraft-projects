@@ -20,9 +20,22 @@ import java.util.Map;
 public final class ParserEventLootBoxInWorld extends BaseParser
 {
     @Getter
-    private Map<String, List<String>> lootTable;
+    private Map<String, List<LootEntry>> lootTable;
 
     public static ParserEventLootBoxInWorld instance;
+
+    public final static class LootEntry
+    {
+        private String item;
+        private int minCount = 1;
+        private int maxCount = 1;
+        private float chance = 1.0f;
+
+        public String getItem() { return item; }
+        public int getMinCount() { return minCount; }
+        public int getMaxCount() { return maxCount; }
+        public float getChance() { return chance; }
+    }
 
     public ParserEventLootBoxInWorld(final String NAME_FILE)
     {
@@ -48,17 +61,13 @@ public final class ParserEventLootBoxInWorld extends BaseParser
         try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
-            Type type = new TypeToken<Map<String, List<String>>>() {}.getType();
+            Type type = new TypeToken<Map<String, List<LootEntry>>>() {}.getType();
             lootTable = gson.fromJson(fileReader, type);
-            Log.writeDataToLogFile(0, "Loot table loaded successfully: " + lootTable);
+            Log.writeDataToLogFile(0, "Loot table loaded: " + lootTable);
         }
-        catch (JsonSyntaxException | IOException exception)
+        catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Error reading config file: " + exception.getMessage());
-        }
-        catch (RuntimeException exception)
-        {
-            Log.writeDataToLogFile(2, "Runtime error: " + exception.getMessage());
+            Log.writeDataToLogFile(2, "Error reading config: " + exception.getMessage());
         }
     }
 
