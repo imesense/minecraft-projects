@@ -8,6 +8,7 @@ import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
+import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
@@ -20,15 +21,9 @@ import java.util.Map;
 @InitLog
 public final class ParserEventLootBoxInWorld extends BaseParser
 {
-    @Getter
-    private Map<String, List<LootBox.Data>> lootTable;
-
-    public static ParserEventLootBoxInWorld instance;
-
     public ParserEventLootBoxInWorld(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
-        instance = this;
     }
 
     @Override
@@ -49,9 +44,11 @@ public final class ParserEventLootBoxInWorld extends BaseParser
         try (FileReader fileReader = new FileReader(file))
         {
             Gson gson = new Gson();
+
             Type type = new TypeToken<Map<String, List<LootBox.Data>>>() {}.getType();
-            lootTable = gson.fromJson(fileReader, type);
-            Log.writeDataToLogFile(0, "Loot table loaded: " + lootTable);
+            GeneralLootBox.getInstance().lootTable = gson.fromJson(fileReader, type);
+
+            Log.writeDataToLogFile(0, "Loot table loaded: " + GeneralLootBox.getInstance().lootTable);
         }
         catch (Exception exception)
         {
@@ -62,9 +59,9 @@ public final class ParserEventLootBoxInWorld extends BaseParser
     @Override
     public void eraseData()
     {
-        if (lootTable != null)
+        if (GeneralLootBox.getInstance().lootTable != null)
         {
-            lootTable.clear();
+            GeneralLootBox.getInstance().lootTable.clear();
             Log.writeDataToLogFile(0, "Loot table cleared successfully.");
         }
         else
