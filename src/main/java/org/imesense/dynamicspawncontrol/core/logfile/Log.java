@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.logfile;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
+import org.imesense.dynamicspawncontrol.core.threads.ThreadMonitor;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -17,31 +18,16 @@ import java.util.concurrent.Executors;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
-/**
- *
- */
 public final class Log
 {
-    /**
-     *
-     */
     private static File logFile;
 
-    /**
-     *
-     */
+    private static final ThreadMonitor threadMonitor = ThreadMonitor.getInstance();
+
     private static final String[] LEVEL_PREFIXES = { "[INFO]: ", "[WARN]: ", "[ERROR]: ", "[INIT]: " };
 
-    /**
-     *
-     */
     private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
-    /**
-     *
-     * @param PATH
-     * @param isDebugMode
-     */
     public static void createLogFile(final String PATH, boolean isDebugMode)
     {
         try
@@ -59,14 +45,11 @@ public final class Log
             fileWriter.write("\n** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8");
             fileWriter.write("\n*******************************************************************");
             fileWriter.close();
+
+            threadMonitor.startLoggingThreadMonitoring();
         } catch (IOException ignored) {}
     }
 
-    /**
-     *
-     * @param file
-     * @param maxLines
-     */
     private static void cleanFile(File file, int maxLines)
     {
         try
@@ -81,21 +64,20 @@ public final class Log
         } catch (IOException ignored) {}
     }
 
-    /**
-     *
-     * @param LEVEL_INFO
-     * @param data
-     */
     public static void writeDataToLogFile(final int LEVEL_INFO, String data)
     {
         if (logFile != null)
         {
+            long startTime = System.currentTimeMillis();
+
             EXECUTOR.submit(() ->
             {
                 try
                 {
-                    int logLevel = (LEVEL_INFO < 0 || LEVEL_INFO >= LEVEL_PREFIXES.length) ? 0 : LEVEL_INFO;
+                    threadMonitor.updateThreadStats("logging", 0,
+                            System.currentTimeMillis() - startTime);
 
+                    int logLevel = (LEVEL_INFO < 0 || LEVEL_INFO >= LEVEL_PREFIXES.length) ? 0 : LEVEL_INFO;
                     Files.write(logFile.toPath(), ("\n" + LEVEL_PREFIXES[logLevel] + data).getBytes(), StandardOpenOption.APPEND);
                     cleanFile(logFile, LogFileConfig.getInstance(LogFileConfig.class).getLogMaxLines());
                 } catch (IOException ignored) {}

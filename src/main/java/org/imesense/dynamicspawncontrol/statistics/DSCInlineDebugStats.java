@@ -156,7 +156,7 @@ public final class DSCInlineDebugStats
                 timeSinceClean,
                 nextCleanTime);
 
-        renderThreadStats(fontRenderer, x, currentY + lineHeight);
+        renderThreadStats(fontRenderer, x, currentY);
     }
 
     private int drawDebugBlock(FontRenderer fontRenderer, int x, int y, int lineHeight, String... lines) {
@@ -179,6 +179,7 @@ public final class DSCInlineDebugStats
     {
         int lineHeight = 10;
         ThreadMonitor.ThreadStats mainStats = threadMonitor.getThreadStats("main");
+        ThreadMonitor.ThreadStats loggingStats = threadMonitor.getThreadStats("logging");
 
         drawDebugBlock(fontRenderer, x, startY, lineHeight,
                 TextFormatting.WHITE + "-------- [ Thread Statistics ] --------",
@@ -187,7 +188,13 @@ public final class DSCInlineDebugStats
                         mainStats.maxDelay,
                         mainStats.averageDelay),
                 TextFormatting.YELLOW + String.format("Tick Count: %d", mainStats.tickCount),
-                TextFormatting.GREEN + String.format("Estimated TPS: %.1f", 1000.0 / (50 + mainStats.currentDelay)));
+                TextFormatting.GREEN + String.format("Estimated TPS: %.1f", 1000.0 / (50 + mainStats.currentDelay)),
+                TextFormatting.LIGHT_PURPLE + "-------- [ Logging Thread ] --------",
+                TextFormatting.AQUA + String.format("Logging Delay: %.1fms (Max: %.1fms)",
+                        loggingStats != null ? loggingStats.currentDelay : 0,
+                        loggingStats != null ? loggingStats.maxDelay : 0),
+                TextFormatting.BLUE + String.format("Log Operations: %d",
+                        loggingStats != null ? loggingStats.tickCount : 0));
     }
 
     public void updateMainThreadStats()
