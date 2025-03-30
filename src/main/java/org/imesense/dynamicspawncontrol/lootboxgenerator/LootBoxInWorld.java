@@ -10,6 +10,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInWorld;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
@@ -21,9 +22,13 @@ import java.util.*;
 @InitLog
 public final class LootBoxInWorld implements IWorldGenerator
 {
-    private final String[] TIERS = {"common", "rare", "legendary"};
-    private final double[] SPAWN_CHANCES = {0.1, 0.075, 0.05};
-    private static final boolean DEBUG = true;
+    private static final double OVERALL_CHANCE_PER_CHUNK = 0.05;
+
+    private static final double[] TIER_WEIGHTS = {60.0, 30.0, 10.0};
+    private static final String[] TIERS = {"common", "rare", "legendary"};
+
+    private static final boolean DEBUG =
+            DebugConfig.getInstance(DebugConfig.class).isShowLoggingInEventLootBoxInWorld();
 
     public LootBoxInWorld()
     {
@@ -52,29 +57,51 @@ public final class LootBoxInWorld implements IWorldGenerator
             return;
         }
 
-        for (int tierIndex = 0; tierIndex < TIERS.length; tierIndex++)
-        {
-            trySpawnChestForTier(world, random, chunkX, chunkZ, tierIndex);
-        }
-    }
-
-    private void trySpawnChestForTier(World world, Random random, int chunkX, int chunkZ, int tierIndex)
-    {
-        if (random.nextFloat() >= SPAWN_CHANCES[tierIndex])
+        if (random.nextDouble() >= OVERALL_CHANCE_PER_CHUNK)
         {
             if (DEBUG)
             {
-                Log.writeDataToLogFile(2, "Spawn chance failed for tier: " + TIERS[tierIndex]);
+                Log.writeDataToLogFile(2, "No chest spawned in this chunk (failed overall chance)");
             }
 
             return;
         }
 
+        int tierIndex = selectTierIndex(random);
+        trySpawnChestForTier(world, random, chunkX, chunkZ, tierIndex);
+    }
+
+    private int selectTierIndex(Random random)
+    {
+        double totalWeight = 0;
+
+        for (double weight : TIER_WEIGHTS)
+        {
+            totalWeight += weight;
+        }
+
+        double randomValue = random.nextDouble() * totalWeight;
+        double cumulativeWeight = 0;
+
+        for (int i = 0; i < TIER_WEIGHTS.length; i++)
+        {
+            cumulativeWeight += TIER_WEIGHTS[i];
+
+            if (randomValue <= cumulativeWeight)
+            {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    private void trySpawnChestForTier(World world, Random random, int chunkX, int chunkZ, int tierIndex)
+    {
         for (int attempt = 0; attempt < 5; attempt++)
         {
             int x = chunkX * 16 + random.nextInt(16);
             int z = chunkZ * 16 + random.nextInt(16);
-
             int y = tierIndex == 0 ? world.getHeight(x, z) : findCaveY(world, x, z, random);
 
             if (y == -1)
@@ -117,6 +144,7 @@ public final class LootBoxInWorld implements IWorldGenerator
 
                 addLootToChest(chest, random, TIERS[tierIndex]);
             }
+
             break;
         }
     }
@@ -167,6 +195,7 @@ public final class LootBoxInWorld implements IWorldGenerator
             for (int dz = 0; dz <= 1; dz++)
             {
                 BlockPos pos = new BlockPos(x + dx, y, z + dz);
+
                 if (!world.isAirBlock(pos) && !world.getBlockState(pos).getBlock().isReplaceable(world, pos))
                 {
                     if (DEBUG)
@@ -240,14 +269,14 @@ public final class LootBoxInWorld implements IWorldGenerator
                 continue;
             }
 
-            int count =
-                entry.getMinCount() + random.nextInt(entry.getMaxCount() - entry.getMinCount() + 1);
+            int count = entry.getMinCount() +
+                    random.nextInt(entry.getMaxCount() - entry.getMinCount() + 1);
 
             ItemStack stack = new ItemStack(item, count);
 
             int slot = random.nextInt(tileEntityChest.getSizeInventory());
             tileEntityChest.setInventorySlotContents(slot, stack);
-            
+
             itemsAdded++;
 
             if (DEBUG)

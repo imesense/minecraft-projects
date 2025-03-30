@@ -15,6 +15,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 public final class DebugConfig extends BaseJsonConfig
 {
     private boolean showStats = false;
+    private boolean showLoggingInEventLootBoxInWorld = false;
 
     public DebugConfig(String configPath)
     {
@@ -29,6 +30,7 @@ public final class DebugConfig extends BaseJsonConfig
         JsonObject jsonObject = new JsonObject();
 
         jsonObject.addProperty("show_stats", showStats);
+        jsonObject.addProperty("show_logging_in_event_loot_box_in_world", showLoggingInEventLootBoxInWorld);
 
         return jsonObject;
     }
@@ -39,6 +41,12 @@ public final class DebugConfig extends BaseJsonConfig
         if (jsonObject.has("show_stats"))
         {
             showStats = jsonObject.get("show_stats").getAsBoolean();
+        }
+
+        if (jsonObject.has("show_logging_in_event_loot_box_in_world"))
+        {
+            showLoggingInEventLootBoxInWorld =
+                    jsonObject.get("show_logging_in_event_loot_box_in_world").getAsBoolean();
         }
     }
 }
