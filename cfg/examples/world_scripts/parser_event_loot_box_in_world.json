@@ -1,5 +1,872 @@
 {
-  "common": ["minecraft:apple", "minecraft:stone_sword"],
-  "rare": ["minecraft:golden_apple", "minecraft:diamond_sword"],
-  "legendary": ["minecraft:elytra", "minecraft:beacon"]
+  "common": [
+    {
+      "item": "minecraft:sapling",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.16
+    },
+    {
+      "item": "minecraft:web",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:brown_mushroom",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.17
+    },
+    {
+      "item": "minecraft:red_mushroom",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.17
+    },
+    {
+      "item": "minecraft:torch",
+      "minCount": 0,
+      "maxCount": 16,
+      "chance": 0.18
+    },
+    {
+      "item": "minecraft:crafting_table",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.09
+    },
+    {
+      "item": "minecraft:furnace",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:hay_block",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.075
+    },
+    {
+      "item": "minecraft:flint_and_steel",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.06
+    },
+    {
+      "item": "minecraft:apple",
+      "minCount": 0,
+      "maxCount": 10,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:bow",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.035
+    },
+    {
+      "item": "minecraft:arrow",
+      "minCount": 0,
+      "maxCount": 16,
+      "chance": 0.045
+    },
+    {
+      "item": "minecraft:coal",
+      "minCount": 0,
+      "maxCount": 32,
+      "chance": 0.17
+    },
+    {
+      "item": "minecraft:stick",
+      "minCount": 0,
+      "maxCount": 6,
+      "chance": 0.19
+    },
+    {
+      "item": "minecraft:mushroom_stew",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:string",
+      "minCount": 0,
+      "maxCount": 5,
+      "chance": 0.11
+    },
+    {
+      "item": "minecraft:feather",
+      "minCount": 0,
+      "maxCount": 8,
+      "chance": 0.122
+    },
+    {
+      "item": "minecraft:gunpowder",
+      "minCount": 0,
+      "maxCount": 48,
+      "chance": 0.19
+    },
+    {
+      "item": "minecraft:wheat_seeds",
+      "minCount": 0,
+      "maxCount": 9,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:wheat",
+      "minCount": 0,
+      "maxCount": 12,
+      "chance": 0.068
+    },
+    {
+      "item": "minecraft:flint",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:leather",
+      "minCount": 0,
+      "maxCount": 28,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:book",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.10
+    },
+    {
+      "item": "minecraft:slime_ball",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.085
+    },
+    {
+      "item": "minecraft:fishing_rod",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:bone",
+      "minCount": 0,
+      "maxCount": 20,
+      "chance": 0.094
+    },
+    {
+      "item": "minecraft:cookie",
+      "minCount": 0,
+      "maxCount": 5,
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:melon",
+      "minCount": 0,
+      "maxCount": 10,
+      "chance": 0.088
+    },
+    {
+      "item": "minecraft:experience_bottle",
+      "minCount": 0,
+      "maxCount": 32,
+      "chance": 0.055
+    },
+    {
+      "item": "minecraft:carrot",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.012
+    },
+    {
+      "item": "minecraft:potato",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.067
+    },
+    {
+      "item": "minecraft:pumpkin_pie",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.087
+    },
+    {
+      "item": "minecraft:rabbit",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.076
+    },
+    {
+      "item": "minecraft:name_tag",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.022
+    }
+  ],
+  "rare": [
+    {
+      "item": "minecraft:detector_rail",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:sticky_piston",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:piston",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.3
+    },
+    {
+      "item": "minecraft:gold_block",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:iron_block",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:torch",
+      "minCount": 0,
+      "maxCount": 48,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:tnt",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.25
+    },
+    {
+      "item": "minecraft:mob_spawner",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:pumpkin",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:melon_block",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:mycelium",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:iron_shovel",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:iron_pickaxe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:iron_axe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:flint_and_steel",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:apple",
+      "minCount": 0,
+      "maxCount": 8,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:bow",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.25
+    },
+    {
+      "item": "minecraft:arrow",
+      "minCount": 0,
+      "maxCount": 36,
+      "chance": 0.16
+    },
+    {
+      "item": "minecraft:coal",
+      "minCount": 0,
+      "maxCount": 16,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:gold_ingot",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:iron_sword",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:mushroom_stew",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:bread",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:iron_helmet",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:iron_chestplate",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:iron_leggings",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:iron_boots",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:painting",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:golden_apple",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:boat",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:leather",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:milk_bucket",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:book",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:egg",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:compass",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:fishing_rod",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:clock",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:fish",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:cake",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:repeater",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:ender_pearl",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:gold_nugget",
+      "minCount": 0,
+      "maxCount": 9,
+      "chance": 0.14
+    },
+    {
+      "item": "minecraft:emerald",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:baked_potato",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.13
+    },
+    {
+      "item": "minecraft:golden_carrot",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:comparator",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:beetroot",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.13
+    }
+  ],
+  "legendary": [
+    {
+      "item": "minecraft:iron_block",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:gold_block",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:obsidian",
+      "minCount": 0,
+      "maxCount": 6,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:diamond_block",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:cactus",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:enchanting_table",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:end_portal_frame",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.03
+    },
+    {
+      "item": "minecraft:ender_chest",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.07
+    },
+    {
+      "item": "minecraft:emerald_block",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.06
+    },
+    {
+      "item": "minecraft:beacon",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.04
+    },
+    {
+      "item": "minecraft:command_block",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.01
+    },
+    {
+      "item": "minecraft:anvil",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:redstone_block",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:diamond",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "minCount": 0,
+      "maxCount": 6,
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:gold_ingot",
+      "minCount": 0,
+      "maxCount": 5,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:diamond_sword",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.07
+    },
+    {
+      "item": "minecraft:diamond_shovel",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.07
+    },
+    {
+      "item": "minecraft:diamond_pickaxe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.07
+    },
+    {
+      "item": "minecraft:diamond_axe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.07
+    },
+    {
+      "item": "minecraft:golden_sword",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:golden_shovel",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:golden_pickaxe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:golden_axe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:diamond_hoe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:golden_hoe",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:golden_apple",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:clock",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:compass",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:cake",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:ender_pearl",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:blaze_rod",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:nether_wart",
+      "minCount": 0,
+      "maxCount": 4,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:fermented_spider_eye",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:blaze_powder",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:brewing_stand",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:cauldron",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:ender_eye",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.07
+    },
+    {
+      "item": "minecraft:speckled_melon",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:spawn_egg",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:experience_bottle",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:fire_charge",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:written_book",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.12
+    },
+    {
+      "item": "minecraft:emerald",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:golden_carrot",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:skull",
+      "minCount": 0,
+      "maxCount": 3,
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:nether_star",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.01
+    },
+    {
+      "item": "minecraft:elytra",
+      "minCount": 0,
+      "maxCount": 2,
+      "chance": 0.02
+    },
+    {
+      "item": "minecraft:shield",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:totem_of_undying",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.03
+    },
+    {
+      "item": "minecraft:record_13",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_cat",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_blocks",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_chirp",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_far",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_mall",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_mellohi",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_stal",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_strad",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_ward",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_11",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    },
+    {
+      "item": "minecraft:record_wait",
+      "minCount": 0,
+      "maxCount": 1,
+      "chance": 0.08
+    }
+  ]
 }
