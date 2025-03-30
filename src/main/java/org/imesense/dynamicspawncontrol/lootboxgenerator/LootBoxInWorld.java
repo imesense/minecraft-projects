@@ -14,6 +14,7 @@ import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInW
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @InitLog
@@ -60,38 +61,44 @@ public final class LootBoxInWorld implements IWorldGenerator
         }
     }
 
-    private void addLootToChest(TileEntityChest chest, Random random)
+    private void addLootToChest(TileEntityChest tileEntityChest, Random random)
     {
-        if (ParserEventLootBoxInWorld.instance.getLootTable() == null ||
-                ParserEventLootBoxInWorld.instance.getLootTable().isEmpty())
+        Map<String, List<ParserEventLootBoxInWorld.LootEntry>> lootTable = ParserEventLootBoxInWorld.instance.getLootTable();
+
+        if (lootTable == null || lootTable.isEmpty())
         {
             return;
         }
 
         String selectedTier = TIERS[random.nextInt(TIERS.length)];
-        List<String> items = ParserEventLootBoxInWorld.instance.getLootTable().get(selectedTier);
+        List<ParserEventLootBoxInWorld.LootEntry> entries = lootTable.get(selectedTier);
 
-        if (items == null || items.isEmpty())
+        if (entries == null || entries.isEmpty())
         {
             return;
         }
 
-        int itemCount = random.nextInt(5) + 1;
-
-        for (int i = 0; i < itemCount; i++)
+        for (ParserEventLootBoxInWorld.LootEntry entry : entries)
         {
-            String itemName = items.get(random.nextInt(items.size()));
-            Item item = Item.getByNameOrId(itemName);
+            if (random.nextFloat() > entry.getChance())
+            {
+                continue;
+            }
+
+            Item item = Item.getByNameOrId(entry.getItem());
 
             if (item == null)
             {
                 continue;
             }
 
-            ItemStack stack = new ItemStack(item, 1);
+            int count = entry.getMinCount() +
+                    random.nextInt(entry.getMaxCount() - entry.getMinCount() + 1);
 
-            int slot = random.nextInt(chest.getSizeInventory());
-            chest.setInventorySlotContents(slot, stack);
+            ItemStack stack = new ItemStack(item, count);
+
+            int slot = random.nextInt(tileEntityChest.getSizeInventory());
+            tileEntityChest.setInventorySlotContents(slot, stack);
         }
     }
 }
