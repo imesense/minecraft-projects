@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInWorld;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
+import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.List;
@@ -64,7 +65,7 @@ public final class LootBoxInWorld implements IWorldGenerator
 
     private void addLootToChest(TileEntityChest tileEntityChest, Random random)
     {
-        Map<String, List<LootBox.Data>> lootTable = ParserEventLootBoxInWorld.instance.getLootTable();
+        Map<String, List<LootBox.Data>> lootTable = GeneralLootBox.getInstance().lootTable;
 
         if (lootTable == null || lootTable.isEmpty())
         {
