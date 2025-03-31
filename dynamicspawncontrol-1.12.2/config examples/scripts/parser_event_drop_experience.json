@@ -1,14 +1,18 @@
 [
-  //  {
-  //    "entity": "minecraft:zombie",
-  //    "xp": 500,
-  //    "multi_xp": 10.5,
-  //    "adding_xp": 2.0
-  //  },
-  //  {
-  //    "entity": "minecraft:skeleton",
-  //    "xp": 500,
-  //    "multi_xp": 20.0,
-  //    "adding_xp": 1.0
-  //  }
+  {
+    "entity": "minecraft:zombie",
+    "use_default_xp": true,
+    "multi_xp": 1.5,
+    "time_min": 13500,
+    "time_max": 23999,
+    "result": "allow"
+  },
+  {
+    "entity": "minecraft:skeleton",
+    "use_default_xp": true,
+    "multi_xp": 1.5,
+    "time_min": 13500,
+    "time_max": 23999,
+    "result": "allow"
+  }
 ]

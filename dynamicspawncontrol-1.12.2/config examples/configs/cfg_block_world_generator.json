@@ -15,7 +15,7 @@
     "max_height": 40
   },
   "settings_block_emerald_ore": {
-    "chance_spawn": 15,
+    "chance_spawn": 20,
     "min_height": 5,
     "max_height": 30
   }
