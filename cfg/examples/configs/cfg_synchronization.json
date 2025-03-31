@@ -1,0 +1,10 @@
+{
+  "thread_configs": {
+    "ThreadOvergrowingGrass": {
+      "ticks_between_checks": 45,
+      "checks_per_player": 5,
+      "growth_chance": 0.15,
+      "player_radius": 36
+    }
+  }
+}
