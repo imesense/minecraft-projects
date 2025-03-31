@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.config.synchronization.SynchronizationConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.threads.GrassThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -32,21 +33,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @InitLog
 public final class OvergrowingGrass
 {
-    // TODO: OldSerpskiStalker - это вынести в конфиг.
-    //-' Добавить новую папку для этого: "синхронизация событий"
-
-    //-' Интервал между проверками (в тиках)
-    private static final int TICKS_BETWEEN_CHECKS = 20;
-
-    //-' Количество проверок вокруг каждого игрока
-    private static final int CHECKS_PER_PLAYER = 5;
-
-    //-' Вероятность роста травы (0.0 - 1.0)
-    private static final double GROWTH_CHANCE = 0.15;
-
-    //-' Радиус вокруг игрока для проверок (в блоках)
-    private static final int PLAYER_RADIUS = 16; //- для теста
-
     private static final GrassThreadMonitor grassMonitor = GrassThreadMonitor.getInstance();
 
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
@@ -74,14 +60,14 @@ public final class OvergrowingGrass
         }
     }
 
-    public void onWorldTick(TickEvent.WorldTickEvent event)
+    public void handleWorldTick(TickEvent.WorldTickEvent event)
     {
         if (event.phase != TickEvent.Phase.END || event.world.isRemote)
         {
             return;
         }
 
-        if (TICK_COUNTER.incrementAndGet() < TICKS_BETWEEN_CHECKS)
+        if (TICK_COUNTER.incrementAndGet() < SynchronizationConfig.getInstance(SynchronizationConfig.class).getTicksBetweenChecks())
         {
             return;
         }
@@ -99,10 +85,16 @@ public final class OvergrowingGrass
             BlockPos playerPos = player.getPosition();
             Random random = new Random(world.getWorldTime());
 
-            for (int i = 0; i < CHECKS_PER_PLAYER; i++)
+            for (int i = 0; i < SynchronizationConfig.getInstance(SynchronizationConfig.class).getChecksPerPlayer(); i++)
             {
-                int x = playerPos.getX() + random.nextInt(PLAYER_RADIUS * 2) - PLAYER_RADIUS;
-                int z = playerPos.getZ() + random.nextInt(PLAYER_RADIUS * 2) - PLAYER_RADIUS;
+                int x = playerPos.getX() + random.nextInt(SynchronizationConfig.getInstance(
+                        SynchronizationConfig.class).getPlayerRadius() * 2) -
+                        SynchronizationConfig.getInstance(SynchronizationConfig.class).getPlayerRadius();
+
+                int z = playerPos.getZ() + random.nextInt(SynchronizationConfig.getInstance(
+                        SynchronizationConfig.class).getPlayerRadius() * 2) -
+                        SynchronizationConfig.getInstance(SynchronizationConfig.class).getPlayerRadius();
+
                 taskQueue.offer(new GrowthTask(world, x, z, random.nextLong()));
             }
         }
@@ -179,12 +171,14 @@ public final class OvergrowingGrass
         {
             BlockPos upperPos = abovePos.up();
 
-            if (world.isAirBlock(upperPos) && random.nextDouble() < GROWTH_CHANCE)
+            if (world.isAirBlock(upperPos) && random.nextDouble() <
+                    SynchronizationConfig.getInstance(SynchronizationConfig.class).getGrowthChance())
             {
                 return GrowthType.DOUBLE_GRASS;
             }
         }
-        else if (world.isAirBlock(abovePos) && random.nextDouble() < GROWTH_CHANCE)
+        else if (world.isAirBlock(abovePos) && random.nextDouble() <
+                SynchronizationConfig.getInstance(SynchronizationConfig.class).getGrowthChance())
         {
             return GrowthType.SINGLE_GRASS;
         }
