@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
+import org.imesense.dynamicspawncontrol.core.config.synchronization.SynchronizationConfig;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGrass;
@@ -26,6 +27,6 @@ public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
     {
         OnEventWorldCache.getInstance().handleWorldTick(event);
 
-        OvergrowingGrass.getInstance().onWorldTick(event);
+        OvergrowingGrass.getInstance().handleWorldTick(event);
     }
 }

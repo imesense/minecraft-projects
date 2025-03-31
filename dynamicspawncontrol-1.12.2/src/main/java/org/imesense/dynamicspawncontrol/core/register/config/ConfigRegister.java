@@ -8,6 +8,7 @@ import org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
 import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig;
 import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
+import org.imesense.dynamicspawncontrol.core.config.synchronization.SynchronizationConfig;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -29,7 +30,8 @@ public final class ConfigRegister extends BaseConfigRegister
         BlockWorldGeneratorConfig.class,
         ZombieDropConfig.class,
         SkeletonDropConfig.class,
-        DebugConfig.class
+        DebugConfig.class,
+        SynchronizationConfig.class
     };
 
     @Override
