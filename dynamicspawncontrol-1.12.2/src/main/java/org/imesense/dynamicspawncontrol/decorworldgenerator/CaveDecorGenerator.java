@@ -1,0 +1,116 @@
+package org.imesense.dynamicspawncontrol.decorworldgenerator;
+
+import net.minecraft.block.BlockSkull;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.fml.common.IWorldGenerator;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+
+import java.util.Random;
+
+public final class CaveDecorGenerator implements IWorldGenerator
+{
+    @Override
+    public void generate(Random random, int chunkX, int chunkZ, World world,
+                         IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
+    {
+        if (world.provider.getDimension() == 0)
+        {
+            generateDecorations(world, random, chunkX * 16, chunkZ * 16);
+        }
+    }
+
+    private void generateDecorations(World world, Random random, int x, int z)
+    {
+        for (int i = 0; i < 16; i++) {
+            int randX = x + random.nextInt(16);
+            int randZ = z + random.nextInt(16);
+            int randY = random.nextInt(40);
+            randY = 40 - randY;
+
+            BlockPos pos = new BlockPos(randX, randY, randZ);
+
+            if (world.isAirBlock(pos) && random.nextBoolean())
+            {
+                if (hasAnyNeighbor(world, pos))
+                {
+                    placeWeb(world, pos);
+                }
+                continue;
+            }
+
+            BlockPos groundPos = pos.down();
+            if (world.isAirBlock(pos) && world.getBlockState(groundPos).isSideSolid(world, groundPos, EnumFacing.UP))
+            {
+                placeMobHead(world, pos, random);
+            }
+        }
+    }
+
+    private boolean hasAnyNeighbor(World world, BlockPos pos)
+    {
+        for (EnumFacing side : EnumFacing.values())
+        {
+            if (!world.isAirBlock(pos.offset(side)))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void placeWeb(World world, BlockPos pos)
+    {
+        world.setBlockState(pos, Blocks.WEB.getDefaultState(), 2);
+    }
+
+    private void placeMobHead(World world, BlockPos pos, Random random)
+    {
+        ItemStack skull = getRandomMobHead(random);
+
+        EnumFacing[] horizontalFacings = new EnumFacing[]
+                {
+                EnumFacing.NORTH,
+                EnumFacing.EAST,
+                EnumFacing.SOUTH,
+                EnumFacing.WEST
+        };
+        EnumFacing facing = horizontalFacings[random.nextInt(horizontalFacings.length)];
+
+        world.setBlockState(pos, Blocks.SKULL.getDefaultState()
+                .withProperty(BlockSkull.FACING, facing), 2);
+
+        TileEntity tileEntity = world.getTileEntity(pos);
+        if (tileEntity instanceof TileEntitySkull)
+        {
+            ((TileEntitySkull) tileEntity).setType(skull.getMetadata());
+        }
+    }
+
+    private ItemStack getRandomMobHead(Random random)
+    {
+        int type = random.nextInt(5);
+        switch (type)
+        {
+            case 0: return new ItemStack(Items.SKULL, 1, 0); //-' Скелет
+            case 1: return new ItemStack(Items.SKULL, 1, 2); //-' Зомби
+            case 2: return new ItemStack(Items.SKULL, 1, 4); //-' Крипер
+            case 3: return new ItemStack(Items.SKULL, 1, 3); //-' Игрок TODO: убрать
+            default: return new ItemStack(Items.SKULL, 1, 1); //-' Wither Skeleton TODO: убрать
+        }
+    }
+}

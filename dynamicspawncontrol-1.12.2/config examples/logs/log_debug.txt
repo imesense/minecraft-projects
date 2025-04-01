@@ -60,11 +60,11 @@
 [INFO]: configClass: class org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig@52f5c71a
 [INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister
 [INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister
-[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockNetherRack}
-[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockMossyCobblestone}
-[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockMonsterEgg}
-[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockWaterMelon}
-[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.worldgenerator.BlockEmeraldOre}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.blockworldgenerator.BlockNetherRack}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.blockworldgenerator.BlockMossyCobblestone}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.blockworldgenerator.BlockMonsterEgg}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.blockworldgenerator.BlockWaterMelon}
+[INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.blockworldgenerator.BlockEmeraldOre}
 [INIT]: Initializing a class: {org.imesense.dynamicspawncontrol.lootboxgenerator.LootBoxInWorld}
 [INFO]: Creating Singleton instance for class: org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister
 [INFO]: Singleton instance created for class: org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister
