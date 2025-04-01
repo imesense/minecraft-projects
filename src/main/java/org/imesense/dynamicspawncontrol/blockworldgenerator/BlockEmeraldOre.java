@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.worldgenerator;
+package org.imesense.dynamicspawncontrol.blockworldgenerator;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
