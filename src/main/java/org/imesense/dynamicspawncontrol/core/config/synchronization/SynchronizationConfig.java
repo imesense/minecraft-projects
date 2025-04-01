@@ -60,10 +60,26 @@ public final class SynchronizationConfig extends BaseJsonConfig
             if (threadConfigs.has("ThreadOvergrowingGrass"))
             {
                 JsonObject grassConfig = threadConfigs.getAsJsonObject("ThreadOvergrowingGrass");
-                ticksBetweenChecks = jsonObject.get("ticks_between_checks").getAsInt();
-                checksPerPlayer = grassConfig.get("checks_per_player").getAsInt();
-                growthChance = grassConfig.get("growth_chance").getAsDouble();
-                playerRadius = grassConfig.get("player_radius").getAsInt();
+
+                if (grassConfig.has("ticks_between_checks"))
+                {
+                    ticksBetweenChecks = grassConfig.get("ticks_between_checks").getAsInt();
+                }
+
+                if (grassConfig.has("checks_per_player"))
+                {
+                    checksPerPlayer = grassConfig.get("checks_per_player").getAsInt();
+                }
+
+                if (grassConfig.has("growth_chance"))
+                {
+                    growthChance = grassConfig.get("growth_chance").getAsDouble();
+                }
+
+                if (grassConfig.has("player_radius"))
+                {
+                    playerRadius = grassConfig.get("player_radius").getAsInt();
+                }
             }
         }
     }
