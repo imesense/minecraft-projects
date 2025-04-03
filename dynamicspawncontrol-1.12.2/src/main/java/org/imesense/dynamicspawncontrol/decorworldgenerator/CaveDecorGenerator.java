@@ -67,7 +67,7 @@ public final class CaveDecorGenerator implements IWorldGenerator
 
             if (world.isAirBlock(pos) && world.getBlockState(groundPos).isSideSolid(world, groundPos, EnumFacing.UP))
             {
-                if (random.nextFloat() < 0.1f)
+                if (random.nextFloat() < 0.15f)
                 {
                     placeMobHead(world, pos, random);
                 }
@@ -95,7 +95,7 @@ public final class CaveDecorGenerator implements IWorldGenerator
 
     private void placeMobHead(World world, BlockPos pos, Random random)
     {
-        ItemStack skull = getRandomMobHead(random);
+        ItemStack skull = getRandomMobHead(random, pos.getY());
 
         world.setBlockState(pos, Blocks.SKULL.getDefaultState()
                 .withProperty(BlockSkull.FACING, EnumFacing.UP), 2);
@@ -104,21 +104,39 @@ public final class CaveDecorGenerator implements IWorldGenerator
 
         if (tileEntity instanceof TileEntitySkull)
         {
-            ((TileEntitySkull) tileEntity).setType(skull.getMetadata());
+            TileEntitySkull skullTile = (TileEntitySkull) tileEntity;
+            skullTile.setType(skull.getMetadata());
+
+            int rotation = random.nextInt(16);
+            skullTile.setSkullRotation(rotation);
         }
     }
 
-    private ItemStack getRandomMobHead(Random random)
+    private ItemStack getRandomMobHead(Random random, int y)
     {
-        int type = random.nextInt(5);
-
-        switch (type)
+        if (y > 35)
         {
-            case 0: return new ItemStack(Items.SKULL, 1, 0); //-' Скелет
-            case 1: return new ItemStack(Items.SKULL, 1, 2); //-' Зомби
-            case 2: return new ItemStack(Items.SKULL, 1, 4); //-' Крипер
-            case 3: return new ItemStack(Items.SKULL, 1, 3); //-' Игрок TODO: убрать
-            default: return new ItemStack(Items.SKULL, 1, 1); //-' Wither Skeleton TODO: убрать
+            int type = random.nextInt(5);
+
+            switch (type)
+            {
+                case 0: return new ItemStack(Items.SKULL, 1, 0); //-' Skeleton
+                case 1: return new ItemStack(Items.SKULL, 1, 2); //-' Zombie
+                case 2: return new ItemStack(Items.SKULL, 1, 4); //-' Creeper
+                case 3: return new ItemStack(Items.SKULL, 1, 3); //-' Player
+                default: return new ItemStack(Items.SKULL, 1, 1); //-' Wither Skeleton
+            }
+        }
+        else
+        {
+            int type = random.nextInt(3);
+
+            switch (type)
+            {
+                case 0: return new ItemStack(Items.SKULL, 1, 0); //-' Skeleton
+                case 1: return new ItemStack(Items.SKULL, 1, 1); //-' Wither Skeleton
+                default: return new ItemStack(Items.SKULL, 1, 3); //-' Player
+            }
         }
     }
 }
