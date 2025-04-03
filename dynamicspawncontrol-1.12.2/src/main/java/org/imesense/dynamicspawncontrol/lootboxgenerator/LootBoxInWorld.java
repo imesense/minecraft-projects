@@ -35,11 +35,6 @@ public final class LootBoxInWorld implements IWorldGenerator
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
             CodeGeneric.logInitialization(this.getClass());
-
-            if (DEBUG)
-            {
-                Log.writeDataToLogFile(0, "LootBoxInWorld initialized with InitLog annotation");
-            }
         }
     }
 

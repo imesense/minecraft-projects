@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.threads;
 
-public class GrassThreadMonitor
+public final class GrassThreadMonitor
 {
     private static GrassThreadMonitor instance;
     private final GrassThreadStats stats = new GrassThreadStats();
