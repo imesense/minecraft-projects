@@ -1,12 +1,11 @@
 package org.imesense.dynamicspawncontrol.core.threads;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class ThreadMonitor
+public final class ThreadMonitor
 {
     private static ThreadMonitor instance;
     private final Map<String, ThreadStats> threadStats = new ConcurrentHashMap<>();

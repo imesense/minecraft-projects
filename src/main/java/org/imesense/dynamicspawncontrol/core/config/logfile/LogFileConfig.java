@@ -23,7 +23,6 @@ public final class LogFileConfig extends BaseJsonConfig
         loadOrCreateConfig();
     }
 
-
     @Override
     protected JsonObject createDefaultConfig()
     {
