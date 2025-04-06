@@ -29,6 +29,9 @@ public final class ComplexityBiomes
     private boolean confirmedDepth = false;
     private long lastDepthChangeTime = 0;
     private int[] currentDepthSkulls = new int[4];
+    private int lastDepthLevel = -1;
+    private static final int[] DEPTH_THRESHOLDS = { 55, 48, 38, 28, 18, 10 };
+    private static final long DISPLAY_DURATION = 5000;
 
     private static volatile ComplexityBiomes _INSTANCE;
 
@@ -47,24 +50,62 @@ public final class ComplexityBiomes
 
     public void handleBiomesChange(EntityPlayerMP player)
     {
-        Biome biome = player.world.getBiome(player.getPosition());
+        boolean isUnderground = player.posY <= 55 &&
+                !player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ));
 
-        if (biome != currentBiome)
+        if (isUnderground)
         {
-            currentBiome = biome;
-            biomesEntryTime = System.currentTimeMillis();
+            int currentDepthLevel = getDepthLevel(player.posY);
+
+            if (currentDepthLevel != lastDepthLevel)
+            {
+                lastDepthLevel = currentDepthLevel;
+                lastDepthChangeTime = System.currentTimeMillis();
+                currentDepthSkulls = getSkullCountsForDepth(player.posY);
+            }
+
+            currentBiome = null;
+            confirmedBiome = null;
+            biomesText = "";
+        }
+        else
+        {
+            Biome biome = player.world.getBiome(player.getPosition());
+
+            if (biome != currentBiome)
+            {
+                currentBiome = biome;
+                biomesEntryTime = System.currentTimeMillis();
+            }
+
+            long currentTime = System.currentTimeMillis();
+
+            if (currentBiome != confirmedBiome && currentTime - biomesEntryTime >= 3000)
+            {
+                confirmedBiome = currentBiome;
+                lastBiomesChangeTime = currentTime;
+                biomesText = confirmedBiome.getBiomeName();
+            }
+
+            lastDepthLevel = -1;
+        }
+    }
+
+    private int getDepthLevel(double y)
+    {
+        for (int i = 0; i < DEPTH_THRESHOLDS.length; i++)
+        {
+            if (y > DEPTH_THRESHOLDS[i])
+            {
+                return i;
+            }
         }
 
-        long currentTime = System.currentTimeMillis();
-        long BIOMES_CHANGE_MIN_TIME = 3000;
+        return DEPTH_THRESHOLDS.length;
+    }
 
-        if (currentBiome != confirmedBiome && currentTime - biomesEntryTime >= BIOMES_CHANGE_MIN_TIME)
-        {
-            confirmedBiome = currentBiome;
-            lastBiomesChangeTime = currentTime;
-            biomesText = confirmedBiome.getBiomeName();
-        }
-
+    private void handleDepthChange(EntityPlayerMP player)
+    {
         boolean shouldShowDepth = shouldShowDepthOverlay(player);
         double currentY = player.posY;
 
@@ -73,9 +114,12 @@ public final class ComplexityBiomes
             if (Math.abs(currentY - lastDepthY) > 2.0)
             {
                 lastDepthY = currentY;
-                depthEntryTime = currentTime;
+                depthEntryTime = System.currentTimeMillis();
                 confirmedDepth = false;
             }
+
+            long currentTime = System.currentTimeMillis();
+            long BIOMES_CHANGE_MIN_TIME = 3000;
 
             if (!confirmedDepth && currentTime - depthEntryTime >= BIOMES_CHANGE_MIN_TIME)
             {
@@ -93,63 +137,87 @@ public final class ComplexityBiomes
 
     public void renderBiomesOverlay()
     {
-        long currentTime = System.currentTimeMillis();
-        boolean showBiome = confirmedBiome != null && currentTime - lastBiomesChangeTime < 5000;
-        boolean showDepth = confirmedDepth && currentTime - lastDepthChangeTime < 5000;
+        EntityPlayer player = UniqueField.CLIENT.player;
 
-        if (showBiome || showDepth)
+        if (player == null)
         {
-            int boxWidth = 140;
-            int boxHeight = 40;
+            return;
+        }
 
-            ScaledResolution scaledResolution = new ScaledResolution(UniqueField.CLIENT);
-            int screenWidth = scaledResolution.getScaledWidth();
+        long currentTime = System.currentTimeMillis();
 
-            int xPos = (screenWidth - boxWidth) / 2;
-            int yPos = 35;
+        boolean isUnderground = player.posY <= 55 &&
+                !player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ));
 
-            int backgroundColor = 0x80000000;
-            drawRect(xPos, yPos, xPos + boxWidth, yPos + boxHeight, backgroundColor);
-
-            String displayText = showDepth ? "Deep Area" : biomesText;
-            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(displayText);
-            int textXPos = xPos + (boxWidth - textWidth) / 2;
-            int textYPos = yPos + 5;
-
-            UniqueField.CLIENT.fontRenderer.drawString(displayText, textXPos, textYPos, 0xFFFFFF);
-
-            int[] skullCounts = showDepth ? currentDepthSkulls : new int[]
+        if (isUnderground)
+        {
+            if (currentTime - lastDepthChangeTime < DISPLAY_DURATION)
             {
-                getRedSkullCountForBiomes(confirmedBiome),
-                getOrangeSkullCountForBiomes(confirmedBiome),
-                getRedSkullCountForBiomesPart(confirmedBiome),
-                getOrangeSkullCountForBiomesPart(confirmedBiome)
-            };
+                renderOverlay("Deep Area", currentDepthSkulls);
+            }
+        }
+        else
+        {
+            boolean showBiome = confirmedBiome != null && currentTime - lastBiomesChangeTime < 5000;
 
-            ResourceLocation[] skullTextures =
+            if (showBiome)
             {
-                new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull.png"),
-                new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull.png"),
-                new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull_part.png"),
-                new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull_part.png")
-            };
-
-            int totalSkulls = skullCounts[0] + skullCounts[1] + skullCounts[2] + skullCounts[3];
-            int skullWidth = 12, skullHeight = 12, skullSpacing = 2;
-            int totalSkullWidth = (skullWidth * totalSkulls) + (skullSpacing * (totalSkulls - 1));
-
-            int skullXPos = xPos + (boxWidth - totalSkullWidth) / 2;
-            int skullYPos = yPos + boxHeight - skullHeight - 5;
-
-            for (int i = 0; i < skullCounts.length; i++)
-            {
-                for (int j = 0; j < skullCounts[i]; j++)
+                renderOverlay(biomesText, new int[]
                 {
-                    UniqueField.CLIENT.getTextureManager().bindTexture(skullTextures[i]);
-                    drawModalRectWithCustomSizedTexture(skullXPos, skullYPos,
-                            0, 0, skullWidth, skullHeight, skullWidth, skullHeight);
-                    skullXPos += skullWidth + skullSpacing;
-                }
+                    getRedSkullCountForBiomes(confirmedBiome),
+                    getOrangeSkullCountForBiomes(confirmedBiome),
+                    getRedSkullCountForBiomesPart(confirmedBiome),
+                    getOrangeSkullCountForBiomesPart(confirmedBiome)
+                });
+            }
+        }
+    }
+
+    private void renderOverlay(String text, int[] skullCounts)
+    {
+        int boxWidth = 140;
+        int boxHeight = 40;
+
+        ScaledResolution scaledResolution = new ScaledResolution(UniqueField.CLIENT);
+        int screenWidth = scaledResolution.getScaledWidth();
+
+        int xPos = (screenWidth - boxWidth) / 2;
+        int yPos = 35;
+
+        int backgroundColor = 0x80000000;
+        drawRect(xPos, yPos, xPos + boxWidth, yPos + boxHeight, backgroundColor);
+
+        int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(text);
+        int textXPos = xPos + (boxWidth - textWidth) / 2;
+        int textYPos = yPos + 5;
+
+        UniqueField.CLIENT.fontRenderer.drawString(text, textXPos, textYPos, 0xFFFFFF);
+
+        ResourceLocation[] skullTextures =
+        {
+            new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull.png"),
+            new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull.png"),
+            new ResourceLocation("dynamicspawncontrol", "textures/gui/red_skull_part.png"),
+            new ResourceLocation("dynamicspawncontrol", "textures/gui/orange_skull_part.png")
+        };
+
+        int totalSkulls = skullCounts[0] + skullCounts[1] + skullCounts[2] + skullCounts[3];
+        int skullWidth = 12, skullHeight = 12, skullSpacing = 2;
+        int totalSkullWidth = (skullWidth * totalSkulls) + (skullSpacing * (totalSkulls - 1));
+
+        int skullXPos = xPos + (boxWidth - totalSkullWidth) / 2;
+        int skullYPos = yPos + boxHeight - skullHeight - 5;
+
+        for (int i = 0; i < skullCounts.length; i++)
+        {
+            for (int j = 0; j < skullCounts[i]; j++)
+            {
+                UniqueField.CLIENT.getTextureManager().bindTexture(skullTextures[i]);
+
+                drawModalRectWithCustomSizedTexture(skullXPos, skullYPos,
+                        0, 0, skullWidth, skullHeight, skullWidth, skullHeight);
+
+                skullXPos += skullWidth + skullSpacing;
             }
         }
     }
