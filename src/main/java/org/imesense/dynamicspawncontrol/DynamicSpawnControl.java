@@ -1,11 +1,22 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
@@ -21,6 +32,7 @@ import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
+import org.imesense.dynamicspawncontrol.develop.OnEventSandBox;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
@@ -178,6 +190,27 @@ public final class DynamicSpawnControl
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
     }
 
+    private void registerCustomRecipes()
+    {
+        ItemStack emptySpawner = new ItemStack(Blocks.MOB_SPAWNER);
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "mob_spawner"),
+                new ResourceLocation("dynamicspawncontrol", "custom_recipes"),
+                emptySpawner,
+                "ABC",
+                "KDK",
+                "EFE",
+                'A', new ItemStack(Items.SKULL, 1, 0),
+                'B', new ItemStack(Items.SKULL, 1, 1),
+                'C', new ItemStack(Items.SKULL, 1, 2),
+                'K', new ItemStack(Items.ENDER_PEARL),
+                'D', new ItemStack(Blocks.IRON_BARS),
+                'E', new ItemStack(Items.BLAZE_ROD),
+                'F', new ItemStack(Blocks.OBSIDIAN)
+        );
+    }
+
     /**
      *
      * @param event
@@ -186,8 +219,10 @@ public final class DynamicSpawnControl
     public void init(FMLInitializationEvent event)
     {
         IRecipes = new CraftItemWeb();
-
+        registerCustomRecipes();
         IRecipes.registry();
+
+//        MinecraftForge.EVENT_BUS.register(new OnEventSandBox());
     }
 
     /**
