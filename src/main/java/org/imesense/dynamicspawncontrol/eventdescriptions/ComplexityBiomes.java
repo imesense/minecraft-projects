@@ -11,6 +11,9 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static net.minecraft.client.gui.Gui.*;
 
 @InitLog
@@ -18,9 +21,6 @@ public final class ComplexityBiomes
 {
     private String biomesText = "";
     private long biomesEntryTime = 0;
-    private final byte NULL = 0;
-    private final byte MIN = 1;
-    private final byte MAX = 7;
     private Biome currentBiome = null;
     private Biome confirmedBiome = null;
     private long lastBiomesChangeTime = 0;
@@ -33,6 +33,83 @@ public final class ComplexityBiomes
     private int[] currentDisplaySkulls = new int[4];
     private long skullChangeStartTime = 0;
     private static final long SKULL_CHANGE_DURATION = 1000;
+
+    private static final Map<String, int[]> BIOME_SKULL_MAP = new HashMap<>();
+
+    static
+    {
+        // Plains biomes
+        addBiomeSkulls("Plains", 0, 1, 0, 1);
+        addBiomeSkulls("Sunflower Plains", 1, 1, 0, 1);
+
+        // Forest biomes
+        addBiomeSkulls("Forest", 2, 1, 0, 0);
+        addBiomeSkulls("ForestHills", 3, 2, 0, 0);
+        addBiomeSkulls("Flower Forest", 0, 1, 0, 1);
+        addBiomeSkulls("Birch Forest", 1, 1, 0, 0);
+        addBiomeSkulls("Birch Forest Hills", 2, 0, 0, 0);
+        addBiomeSkulls("Birch Forest M", 2, 0, 0, 0);
+        addBiomeSkulls("Roofed Forest", 3, 0, 0, 0);
+        addBiomeSkulls("Roofed Forest M", 4, 0, 0, 0);
+
+        // Taiga biomes
+        addBiomeSkulls("Taiga", 2, 0, 0, 0);
+        addBiomeSkulls("TaigaHills", 2, 2, 0, 0);
+        addBiomeSkulls("Taiga M", 2, 0, 0, 1);
+        addBiomeSkulls("Cold Taiga", 4, 1, 0, 0);
+        addBiomeSkulls("Cold Taiga Hills", 5, 0, 0, 0);
+        addBiomeSkulls("Mega Taiga", 2, 1, 0, 0);
+        addBiomeSkulls("Mega Taiga Hills", 3, 2, 0, 0);
+        addBiomeSkulls("Redwood Taiga Hills M", 6, 0, 0, 0);
+        addBiomeSkulls("Mega Spruce Taiga", 5, 2, 0, 0);
+
+        // Jungle biomes
+        addBiomeSkulls("Jungle", 7, 0, 0, 0);
+        addBiomeSkulls("JungleHills", 7, 0, 0, 0);
+        addBiomeSkulls("Jungle M", 7, 0, 0, 0);
+        addBiomeSkulls("JungleEdge", 3, 2, 0, 0);
+
+        // Mountain biomes
+        addBiomeSkulls("Extreme Hills", 4, 0, 1, 0);
+        addBiomeSkulls("Extreme Hills+", 6, 0, 0, 0);
+        addBiomeSkulls("Extreme Hills M", 5, 0, 0, 0);
+        addBiomeSkulls("Extreme Hills+ M", 6, 0, 0, 0);
+
+        // Desert biomes
+        addBiomeSkulls("Desert", 4, 0, 0, 0);
+        addBiomeSkulls("Desert M", 3, 0, 0, 0);
+        addBiomeSkulls("DesertHills", 5, 0, 1, 0);
+
+        // Ice biomes
+        addBiomeSkulls("Ice Plains", 3, 0, 1, 0);
+        addBiomeSkulls("Ice Mountains", 4, 2, 0, 0);
+
+        // Swamp biomes
+        addBiomeSkulls("Swampland", 4, 2, 0, 0);
+
+        // Savanna biomes
+        addBiomeSkulls("Savanna", 0, 3, 0, 0);
+        addBiomeSkulls("Savanna M", 0, 4, 0, 0);
+        addBiomeSkulls("Savanna Plateau", 2, 1, 0, 0);
+        addBiomeSkulls("Savanna Plateau M", 6, 1, 0, 0);
+
+        // Mesa biomes
+        addBiomeSkulls("Mesa", 5, 1, 0, 0);
+        addBiomeSkulls("Mesa Plateau F", 6, 1, 0, 0);
+
+        // Ocean biomes
+        addBiomeSkulls("Ocean", 4, 2, 0, 0);
+        addBiomeSkulls("Deep Ocean", 7, 0, 0, 0);
+
+        // Other biomes
+        addBiomeSkulls("River", 0, 1, 0, 0);
+        addBiomeSkulls("Stone Beach", 0, 0, 0, 1);
+    }
+
+    private static void addBiomeSkulls(String biomeName, int red, int orange, int redPart, int orangePart)
+    {
+        BIOME_SKULL_MAP.put(biomeName, new int[] { red, orange, redPart, orangePart });
+    }
 
     private static volatile ComplexityBiomes _INSTANCE;
 
@@ -156,13 +233,8 @@ public final class ComplexityBiomes
 
             if (showBiome)
             {
-                renderOverlay(biomesText, new int[]
-                {
-                    getRedSkullCountForBiomes(confirmedBiome),
-                    getOrangeSkullCountForBiomes(confirmedBiome),
-                    getRedSkullCountForBiomesPart(confirmedBiome),
-                    getOrangeSkullCountForBiomesPart(confirmedBiome)
-                });
+                int[] skullCounts = BIOME_SKULL_MAP.getOrDefault(confirmedBiome.getBiomeName(), new int[]{0, 0, 0, 0});
+                renderOverlay(biomesText, skullCounts);
             }
         }
     }
@@ -250,121 +322,5 @@ public final class ComplexityBiomes
         }
 
         return new int[] {redSkulls, orangeSkulls, redPart, orangePart};
-    }
-
-    private int getRedSkullCountForBiomes(Biome biome)
-    {
-        switch (biome.getBiomeName())
-        {
-            case "Sunflower Plains":
-            case "Birch Forest":
-                return this.MIN;
-            case "Taiga":
-            case "TaigaHills":
-            case "Forest":
-            case "Mega Taiga":
-            case "Taiga M":
-            case "Savanna Plateau":
-            case "Birch Forest Hills":
-            case "Birch Forest M":
-                return 2;
-            case "Roofed Forest":
-            case "Mega Taiga Hills":
-            case "ForestHills":
-            case "Ice Plains":
-            case "JungleEdge":
-            case "Desert M":
-                return 3;
-            case "Swampland":
-            case "Extreme Hills":
-            case "Desert":
-            case "Cold Taiga":
-            case "Ice Mountains":
-            case "Roofed Forest M":
-            case "Ocean":
-                return 4;
-            case "Mega Spruce Taiga":
-            case "DesertHills":
-            case "Extreme Hills M":
-            case "Cold Taiga Hills":
-            case "Mesa":
-                return 5;
-            case "Extreme Hills+":
-            case "Savanna Plateau M":
-            case "Extreme Hills+ M":
-            case "Mesa Plateau F":
-            case "Redwood Taiga Hills M":
-                return 6;
-            case "Jungle":
-            case "JungleHills":
-            case "Jungle M":
-            case "Deep Ocean":
-                return this.MAX;
-            default:
-                return this.NULL;
-        }
-    }
-
-    private int getRedSkullCountForBiomesPart(Biome biome)
-    {
-        switch (biome.getBiomeName())
-        {
-            case "Extreme Hills":
-            case "DesertHills":
-            case "Ice Plains":
-                return this.MIN;
-            default:
-                return this.NULL;
-        }
-    }
-
-    private int getOrangeSkullCountForBiomes(Biome biome)
-    {
-        switch (biome.getBiomeName())
-        {
-            case "Plains":
-            case "Forest":
-            case "Mega Taiga":
-            case "Savanna Plateau":
-            case "Savanna Plateau M":
-            case "Sunflower Plains":
-            case "Birch Forest":
-            case "Cold Taiga":
-            case "Flower Forest":
-            case "Mesa":
-            case "Mesa Plateau F":
-            case "River":
-                return this.MIN;
-            case "TaigaHills":
-            case "Swampland":
-            case "Mega Taiga Hills":
-            case "Mega Spruce Taiga":
-            case "ForestHills":
-            case "Ice Mountains":
-            case "JungleEdge":
-            case "Ocean":
-                return 2;
-            case "Savanna":
-                return 3;
-            case "Savanna M":
-                return 4;
-            default:
-                return this.NULL;
-        }
-    }
-
-    private int getOrangeSkullCountForBiomesPart(Biome biome)
-    {
-        switch (biome.getBiomeName())
-        {
-            case "Plains":
-            case "Taiga M":
-            case "Sunflower Plains":
-            case "Flower Forest":
-            case "Stone Beach":
-                return this.MIN;
-            default:
-                return this.NULL;
-        }
     }
 }
