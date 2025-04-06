@@ -13,26 +13,22 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import static net.minecraft.client.gui.Gui.*;
 
-//* TODO: Реализовать 'высоту' сложности, например 5 черепков от 5 до 20 высота в шахте и так далее
-
 @InitLog
 public final class ComplexityBiomes
 {
     private String biomesText = "";
-
     private long biomesEntryTime = 0;
-
     private final byte NULL = 0;
-
     private final byte MIN = 1;
-
     private final byte MAX = 7;
-
     private Biome currentBiome = null;
-
     private Biome confirmedBiome = null;
-
     private long lastBiomesChangeTime = 0;
+    private double lastDepthY = Double.MAX_VALUE;
+    private long depthEntryTime = 0;
+    private boolean confirmedDepth = false;
+    private long lastDepthChangeTime = 0;
+    private int[] currentDepthSkulls = new int[4];
 
     private static volatile ComplexityBiomes _INSTANCE;
 
@@ -68,14 +64,38 @@ public final class ComplexityBiomes
             lastBiomesChangeTime = currentTime;
             biomesText = confirmedBiome.getBiomeName();
         }
+
+        boolean shouldShowDepth = shouldShowDepthOverlay(player);
+        double currentY = player.posY;
+
+        if (shouldShowDepth)
+        {
+            if (Math.abs(currentY - lastDepthY) > 2.0)
+            {
+                lastDepthY = currentY;
+                depthEntryTime = currentTime;
+                confirmedDepth = false;
+            }
+
+            if (!confirmedDepth && currentTime - depthEntryTime >= BIOMES_CHANGE_MIN_TIME)
+            {
+                confirmedDepth = true;
+                lastDepthChangeTime = currentTime;
+                currentDepthSkulls = getSkullCountsForDepth(currentY);
+            }
+        }
+        else
+        {
+            lastDepthY = Double.MAX_VALUE;
+            confirmedDepth = false;
+        }
     }
 
     public void renderBiomesOverlay()
     {
         long currentTime = System.currentTimeMillis();
-
         boolean showBiome = confirmedBiome != null && currentTime - lastBiomesChangeTime < 5000;
-        boolean showDepth = shouldShowDepthOverlay();
+        boolean showDepth = confirmedDepth && currentTime - lastDepthChangeTime < 5000;
 
         if (showBiome || showDepth)
         {
@@ -98,14 +118,13 @@ public final class ComplexityBiomes
 
             UniqueField.CLIENT.fontRenderer.drawString(displayText, textXPos, textYPos, 0xFFFFFF);
 
-            int[] skullCounts = showDepth ? getSkullCountsForDepth(UniqueField.CLIENT.player.posY) :
-                new int[]
-                {
-                    getRedSkullCountForBiomes(confirmedBiome),
-                    getOrangeSkullCountForBiomes(confirmedBiome),
-                    getRedSkullCountForBiomesPart(confirmedBiome),
-                    getOrangeSkullCountForBiomesPart(confirmedBiome)
-                };
+            int[] skullCounts = showDepth ? currentDepthSkulls : new int[]
+            {
+                getRedSkullCountForBiomes(confirmedBiome),
+                getOrangeSkullCountForBiomes(confirmedBiome),
+                getRedSkullCountForBiomesPart(confirmedBiome),
+                getOrangeSkullCountForBiomesPart(confirmedBiome)
+            };
 
             ResourceLocation[] skullTextures =
             {
@@ -134,21 +153,16 @@ public final class ComplexityBiomes
             }
         }
     }
-    private boolean shouldShowDepthOverlay()
-    {
-        EntityPlayer player = UniqueField.CLIENT.player;
 
+    private boolean shouldShowDepthOverlay(EntityPlayer player)
+    {
         if (player == null)
         {
             return false;
         }
 
-        if (player.posY > 55 || player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ)))
-        {
-            return false;
-        }
-
-        return true;
+        return player.posY <= 55 &&
+                !player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ));
     }
 
     private int[] getSkullCountsForDepth(double playerY)
