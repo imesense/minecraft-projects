@@ -33,6 +33,11 @@ public final class ComplexityBiomes
     private static final int[] DEPTH_THRESHOLDS = { 55, 48, 38, 28, 18, 10 };
     private static final long DISPLAY_DURATION = 5000;
 
+    private int[] targetDepthSkulls = new int[4];
+    private int[] currentDisplaySkulls = new int[4];
+    private long skullChangeStartTime = 0;
+    private static final long SKULL_CHANGE_DURATION = 1000;
+
     private static volatile ComplexityBiomes _INSTANCE;
 
     public static ComplexityBiomes getInstance()
@@ -61,8 +66,11 @@ public final class ComplexityBiomes
             {
                 lastDepthLevel = currentDepthLevel;
                 lastDepthChangeTime = System.currentTimeMillis();
-                currentDepthSkulls = getSkullCountsForDepth(player.posY);
+                targetDepthSkulls = getSkullCountsForDepth(player.posY);
+                skullChangeStartTime = System.currentTimeMillis();
             }
+
+            updateSkullAnimation();
 
             currentBiome = null;
             confirmedBiome = null;
@@ -88,6 +96,27 @@ public final class ComplexityBiomes
             }
 
             lastDepthLevel = -1;
+        }
+    }
+
+    private void updateSkullAnimation()
+    {
+        long currentTime = System.currentTimeMillis();
+        float progress = Math.min(1.0f, (currentTime - skullChangeStartTime) / (float)SKULL_CHANGE_DURATION);
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (progress >= 1.0f)
+            {
+                currentDisplaySkulls[i] = targetDepthSkulls[i];
+            }
+            else
+            {
+                float current = currentDisplaySkulls[i];
+                float target = targetDepthSkulls[i];
+
+                currentDisplaySkulls[i] = Math.round(current + (target - current) * progress);
+            }
         }
     }
 
@@ -153,7 +182,7 @@ public final class ComplexityBiomes
         {
             if (currentTime - lastDepthChangeTime < DISPLAY_DURATION)
             {
-                renderOverlay("Deep Area", currentDepthSkulls);
+                renderOverlay("Deep Area", currentDisplaySkulls);
             }
         }
         else
