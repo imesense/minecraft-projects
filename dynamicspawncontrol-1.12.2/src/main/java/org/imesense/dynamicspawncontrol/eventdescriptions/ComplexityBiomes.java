@@ -1,8 +1,10 @@
 package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
@@ -58,7 +60,6 @@ public final class ComplexityBiomes
         }
 
         long currentTime = System.currentTimeMillis();
-
         long BIOMES_CHANGE_MIN_TIME = 3000;
 
         if (currentBiome != confirmedBiome && currentTime - biomesEntryTime >= BIOMES_CHANGE_MIN_TIME)
@@ -73,7 +74,10 @@ public final class ComplexityBiomes
     {
         long currentTime = System.currentTimeMillis();
 
-        if (confirmedBiome != null && currentTime - lastBiomesChangeTime < 5000)
+        boolean showBiome = confirmedBiome != null && currentTime - lastBiomesChangeTime < 5000;
+        boolean showDepth = shouldShowDepthOverlay();
+
+        if (showBiome || showDepth)
         {
             int boxWidth = 140;
             int boxHeight = 40;
@@ -85,22 +89,23 @@ public final class ComplexityBiomes
             int yPos = 35;
 
             int backgroundColor = 0x80000000;
-
             drawRect(xPos, yPos, xPos + boxWidth, yPos + boxHeight, backgroundColor);
 
-            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(biomesText);
+            String displayText = showDepth ? "Deep Area" : biomesText;
+            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(displayText);
             int textXPos = xPos + (boxWidth - textWidth) / 2;
             int textYPos = yPos + 5;
 
-            UniqueField.CLIENT.fontRenderer.drawString(biomesText, textXPos, textYPos, 0xFFFFFF);
+            UniqueField.CLIENT.fontRenderer.drawString(displayText, textXPos, textYPos, 0xFFFFFF);
 
-            int[] skullCounts =
-            {
-                getRedSkullCountForBiomes(confirmedBiome),
-                getOrangeSkullCountForBiomes(confirmedBiome),
-                getRedSkullCountForBiomesPart(confirmedBiome),
-                getOrangeSkullCountForBiomesPart(confirmedBiome)
-            };
+            int[] skullCounts = showDepth ? getSkullCountsForDepth(UniqueField.CLIENT.player.posY) :
+                new int[]
+                {
+                    getRedSkullCountForBiomes(confirmedBiome),
+                    getOrangeSkullCountForBiomes(confirmedBiome),
+                    getRedSkullCountForBiomesPart(confirmedBiome),
+                    getOrangeSkullCountForBiomesPart(confirmedBiome)
+                };
 
             ResourceLocation[] skullTextures =
             {
@@ -122,14 +127,64 @@ public final class ComplexityBiomes
                 for (int j = 0; j < skullCounts[i]; j++)
                 {
                     UniqueField.CLIENT.getTextureManager().bindTexture(skullTextures[i]);
-
                     drawModalRectWithCustomSizedTexture(skullXPos, skullYPos,
                             0, 0, skullWidth, skullHeight, skullWidth, skullHeight);
-
                     skullXPos += skullWidth + skullSpacing;
                 }
             }
         }
+    }
+    private boolean shouldShowDepthOverlay()
+    {
+        EntityPlayer player = UniqueField.CLIENT.player;
+
+        if (player == null)
+        {
+            return false;
+        }
+
+        if (player.posY > 55 || player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ)))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private int[] getSkullCountsForDepth(double playerY)
+    {
+        int redSkulls = 0;
+        int orangeSkulls = 0;
+        int redPart = 0;
+        int orangePart = 0;
+
+        if (playerY <= 55 && playerY > 48)
+        {
+            redSkulls = 1;
+        }
+        else if (playerY <= 48 && playerY > 38)
+        {
+            redSkulls = 2;
+        }
+        else if (playerY <= 38 && playerY > 28)
+        {
+            redSkulls = 3;
+        }
+        else if (playerY <= 28 && playerY > 18)
+        {
+            redSkulls = 4;
+        }
+        else if (playerY <= 18 && playerY > 10)
+        {
+            redSkulls = 5;
+        }
+        else if (playerY <= 10)
+        {
+            redSkulls = 5;
+            orangeSkulls = 2;
+        }
+
+        return new int[] {redSkulls, orangeSkulls, redPart, orangePart};
     }
 
     private int getRedSkullCountForBiomes(Biome biome)
