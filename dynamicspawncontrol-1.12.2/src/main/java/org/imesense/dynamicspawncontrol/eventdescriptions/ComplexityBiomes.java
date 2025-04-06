@@ -24,11 +24,7 @@ public final class ComplexityBiomes
     private Biome currentBiome = null;
     private Biome confirmedBiome = null;
     private long lastBiomesChangeTime = 0;
-    private double lastDepthY = Double.MAX_VALUE;
-    private long depthEntryTime = 0;
-    private boolean confirmedDepth = false;
     private long lastDepthChangeTime = 0;
-    private int[] currentDepthSkulls = new int[4];
     private int lastDepthLevel = -1;
     private static final int[] DEPTH_THRESHOLDS = { 55, 48, 38, 28, 18, 10 };
     private static final long DISPLAY_DURATION = 5000;
@@ -133,37 +129,6 @@ public final class ComplexityBiomes
         return DEPTH_THRESHOLDS.length;
     }
 
-    private void handleDepthChange(EntityPlayerMP player)
-    {
-        boolean shouldShowDepth = shouldShowDepthOverlay(player);
-        double currentY = player.posY;
-
-        if (shouldShowDepth)
-        {
-            if (Math.abs(currentY - lastDepthY) > 2.0)
-            {
-                lastDepthY = currentY;
-                depthEntryTime = System.currentTimeMillis();
-                confirmedDepth = false;
-            }
-
-            long currentTime = System.currentTimeMillis();
-            long BIOMES_CHANGE_MIN_TIME = 3000;
-
-            if (!confirmedDepth && currentTime - depthEntryTime >= BIOMES_CHANGE_MIN_TIME)
-            {
-                confirmedDepth = true;
-                lastDepthChangeTime = currentTime;
-                currentDepthSkulls = getSkullCountsForDepth(currentY);
-            }
-        }
-        else
-        {
-            lastDepthY = Double.MAX_VALUE;
-            confirmedDepth = false;
-        }
-    }
-
     public void renderBiomesOverlay()
     {
         EntityPlayer player = UniqueField.CLIENT.player;
@@ -249,17 +214,6 @@ public final class ComplexityBiomes
                 skullXPos += skullWidth + skullSpacing;
             }
         }
-    }
-
-    private boolean shouldShowDepthOverlay(EntityPlayer player)
-    {
-        if (player == null)
-        {
-            return false;
-        }
-
-        return player.posY <= 55 &&
-                !player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ));
     }
 
     private int[] getSkullCountsForDepth(double playerY)
