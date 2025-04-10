@@ -14,7 +14,7 @@ abstract class SpawnerCraftBlock extends Block {
     }
 
     @Nonnull
-    public Block func_149663_c(@Nonnull String name) {
+    public Block setUnlocalizedName(@Nonnull String name) {
         return super.setUnlocalizedName("spawnercraft." + name);
     }
 }
