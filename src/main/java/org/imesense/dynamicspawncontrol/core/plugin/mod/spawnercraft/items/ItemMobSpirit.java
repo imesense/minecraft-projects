@@ -21,13 +21,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 
 /* loaded from: input.jar:cad97/spawnercraft/items/ItemMobSpirit.class */
 public class ItemMobSpirit extends ItemMobSoul {
     public ItemMobSpirit() {
         setUnlocalizedName("mob_spirit");
-        setRegistryName(SpawnerCraft.MOD_ID, "mob_spirit");
+        setRegistryName(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID, "mob_spirit");
     }
 
     @Nonnull

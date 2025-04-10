@@ -7,29 +7,31 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+
 /* loaded from: input.jar:cad97/spawnercraft/block/BlockMobCage.class */
 public class BlockMobCage extends SpawnerCraftBlock {
     @Override // cad97.spawnercraft.block.SpawnerCraftBlock
     @Nonnull
-    public /* bridge */ /* synthetic */ Block func_149663_c(@Nonnull String str) {
-        return super.func_149663_c(str);
+    public /* bridge */ /* synthetic */ Block setUnlocalizedName(@Nonnull String str) {
+        return super.setUnlocalizedName(str);
     }
 
     public BlockMobCage() {
         super(Material.ROCK);
         this.blockHardness = 5.0f;
         this.blockSoundType = SoundType.METAL;
-        func_149663_c("mob_cage");
-        setRegistryName(SpawnerCraft.MOD_ID, "mob_cage");
+        setUnlocalizedName("mob_cage");
+        setRegistryName(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID, "mob_cage");
         setHarvestLevel("pickaxe", Item.ToolMaterial.STONE.getHarvestLevel());
     }
 
-    public boolean func_149662_c(IBlockState state) {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
 
     @Nonnull
-    public BlockRenderLayer func_180664_k() {
+    public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
     }
 }
