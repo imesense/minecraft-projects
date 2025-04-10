@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 public class SpawnerCraftTabs {
     public static final CreativeTabs tab = new CreativeTabs("spawnercraft.tab") { // from class: cad97.spawnercraft.creativetabs.SpawnerCraftTabs.1
         @Nonnull
-        public ItemStack func_78016_d() {
-            return new ItemStack(Item.func_150898_a(Blocks.field_150474_ac));
+        public ItemStack getTabIconItem() {
+            return new ItemStack(Item.getItemFromBlock(Blocks.MOB_SPAWNER));
         }
     };
 }

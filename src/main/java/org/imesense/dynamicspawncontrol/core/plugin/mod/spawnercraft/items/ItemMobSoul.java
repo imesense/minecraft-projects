@@ -18,8 +18,8 @@ public abstract class ItemMobSoul extends SpawnerCraftItem {
 
     @Override // cad97.spawnercraft.items.SpawnerCraftItem
     @Nonnull
-    public /* bridge */ /* synthetic */ Item func_77655_b(@Nonnull String str) {
-        return super.func_77655_b(str);
+    public /* bridge */ /* synthetic */ Item setUnlocalizedName(@Nonnull String str) {
+        return super.setUnlocalizedName(str);
     }
 
     static {
@@ -28,40 +28,40 @@ public abstract class ItemMobSoul extends SpawnerCraftItem {
 
     /* JADX INFO: Access modifiers changed from: package-private */
     public ItemMobSoul() {
-        func_77625_d(64);
-        func_77627_a(true);
+        setMaxStackSize(64);
+        setHasSubtypes(true);
     }
 
     @Nonnull
-    public String func_77653_i(@Nonnull ItemStack stack) {
-        String itemName = I18n.func_74838_a(func_77658_a() + ".name").trim();
-        String mobName = EntityList.func_191302_a(ItemMonsterPlacer.func_190908_h(stack));
+    public String getItemStackDisplayName(@Nonnull ItemStack stack) {
+        String itemName = I18n.translateToLocal(getUnlocalizedName() + ".name").trim();
+        String mobName = EntityList.getTranslationName(ItemMonsterPlacer.getNamedIdFrom(stack));
         if (mobName != null) {
-            mobName = I18n.func_74838_a("entity." + mobName + ".name");
+            mobName = I18n.translateToLocal("entity." + mobName + ".name");
         }
         return String.format(itemName, mobName);
     }
 
     @SideOnly(Side.CLIENT)
-    public void func_150895_a(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
-        if (func_194125_a(tab)) {
-            for (EntityList.EntityEggInfo entitylist$entityegginfo : EntityList.field_75627_a.values()) {
+    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
+        if (isInCreativeTab(tab)) {
+            for (EntityList.EntityEggInfo entitylist$entityegginfo : EntityList.ENTITY_EGGS.values()) {
                 ItemStack itemstack = new ItemStack(this, 1);
-                applyEntityIdToItemStack(itemstack, entitylist$entityegginfo.field_75613_a);
+                applyEntityIdToItemStack(itemstack, entitylist$entityegginfo.spawnedID);
                 items.add(itemstack);
             }
         }
     }
 
     public static void applyEntityIdToItemStack(ItemStack stack, ResourceLocation entityId) {
-        NBTTagCompound nbttagcompound = stack.func_77942_o() ? stack.func_77978_p() : new NBTTagCompound();
+        NBTTagCompound nbttagcompound = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
         if (!$assertionsDisabled && nbttagcompound == null) {
             throw new AssertionError();
         }
         NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-        nbttagcompound1.func_74778_a("id", entityId.toString());
-        nbttagcompound.func_74782_a("EntityTag", nbttagcompound1);
-        stack.func_77982_d(nbttagcompound);
+        nbttagcompound1.setString("id", entityId.toString());
+        nbttagcompound.setTag("EntityTag", nbttagcompound1);
+        stack.setTagCompound(nbttagcompound);
     }
 }
 

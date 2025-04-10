@@ -24,33 +24,33 @@ public class NBTPreservingShapedRecipe extends ShapedRecipes {
     }
 
     @Nonnull
-    public ItemStack func_77571_b() {
-        ItemStack output = super.func_77571_b();
-        output.func_77982_d(this.matchingCompound);
+    public ItemStack getRecipeOutput() {
+        ItemStack output = super.getRecipeOutput();
+        output.setTagCompound(this.matchingCompound);
         return output;
     }
 
-    public boolean func_77569_a(@Nonnull InventoryCrafting inv, World worldIn) {
+    public boolean matches(@Nonnull InventoryCrafting inv, World worldIn) {
         this.matchingCompound = null;
         int i = 0;
         while (true) {
-            if (i >= inv.func_70302_i_()) {
+            if (i >= inv.getSizeInventory()) {
                 break;
             }
-            ItemStack itemStack = inv.func_70301_a(i);
-            if (itemStack.func_190926_b()) {
+            ItemStack itemStack = inv.getStackInSlot(i);
+            if (itemStack.isEmpty()) {
                 i++;
             } else {
-                this.matchingCompound = itemStack.func_77978_p();
+                this.matchingCompound = itemStack.getTagCompound();
                 break;
             }
         }
-        for (int i2 = 0; i2 < inv.func_70302_i_(); i2++) {
-            ItemStack itemStack2 = inv.func_70301_a(i2);
-            if (!itemStack2.func_190926_b() && !Objects.equal(itemStack2.func_77978_p(), this.matchingCompound)) {
+        for (int i2 = 0; i2 < inv.getSizeInventory(); i2++) {
+            ItemStack itemStack2 = inv.getStackInSlot(i2);
+            if (!itemStack2.isEmpty() && !Objects.equal(itemStack2.getTagCompound(), this.matchingCompound)) {
                 return false;
             }
         }
-        return super.func_77569_a(inv, worldIn);
+        return super.matches(inv, worldIn);
     }
 }

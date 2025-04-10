@@ -5,6 +5,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
+
 /* loaded from: input.jar:cad97/spawnercraft/proxy/ClientProxy.class */
 public final class ClientProxy extends CommonProxy {
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
@@ -23,6 +26,6 @@ public final class ClientProxy extends CommonProxy {
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        SpawnerCraftItems.registerColors(Minecraft.func_71410_x().getItemColors());
+        SpawnerCraftItems.registerColors(Minecraft.getMinecraft().getItemColors());
     }
 }
