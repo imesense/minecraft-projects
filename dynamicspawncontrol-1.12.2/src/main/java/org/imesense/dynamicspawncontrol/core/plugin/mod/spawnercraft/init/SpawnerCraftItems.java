@@ -53,15 +53,20 @@ public class SpawnerCraftItems {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void registerColors(ItemColors itemColors) {
-        itemColors.registerItemColorHandler(stack, tintIndex -> {
-            EntityList.EntityEggInfo eggInfo = (EntityList.EntityEggInfo) EntityList.ENTITY_EGGS.get
-                    (ItemMonsterPlacer.getNamedIdFrom(stack));
-            if (eggInfo == null) {
-                return -1;
-            }
-            return tintIndex == 0 ? eggInfo.primaryColor : eggInfo.secondaryColor;
-        }, new Item[]{MOB_ESSENCE, MOB_AGGLOMERATION, MOB_SPIRIT});
+    public static void registerColors(ItemColors itemColors)
+    {
+        itemColors.registerItemColorHandler((stack, tintIndex) ->
+        {
+            EntityList.EntityEggInfo eggInfo = EntityList.ENTITY_EGGS.get(
+                    ItemMonsterPlacer.getNamedIdFrom(stack)
+            );
+
+            return eggInfo == null ? -1 :
+                    (tintIndex == 0 ? eggInfo.primaryColor :
+                            eggInfo.secondaryColor);
+        },
+                MOB_ESSENCE, MOB_AGGLOMERATION, MOB_SPIRIT);
+
         Log.writeDataToLogFile(0, "Item colors initialized.");
     }
 }
