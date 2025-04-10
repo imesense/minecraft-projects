@@ -5,6 +5,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.ConfigHandler;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.DropsListener;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftRecipes;
+
 /* loaded from: input.jar:cad97/spawnercraft/proxy/CommonProxy.class */
 abstract class CommonProxy implements IProxy {
     @Override // cad97.spawnercraft.proxy.IProxy

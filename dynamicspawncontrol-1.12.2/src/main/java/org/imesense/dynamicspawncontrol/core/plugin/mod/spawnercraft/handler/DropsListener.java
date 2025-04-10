@@ -11,6 +11,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobSoul;
+
 /* loaded from: input.jar:cad97/spawnercraft/handler/DropsListener.class */
 public class DropsListener {
     public static final DropsListener instance = new DropsListener();
@@ -20,17 +24,17 @@ public class DropsListener {
 
     @SubscribeEvent
     public void onMobDrops(LivingDropsEvent event) {
-        EntityPlayer func_76346_g = event.getSource().func_76346_g();
-        if (func_76346_g instanceof EntityPlayer) {
-            ItemStack heldItem = func_76346_g.func_184614_ca();
-            if (heldItem.func_77973_b() == SpawnerCraftItems.MOB_ROD || !ConfigHandler.dropsRequireFishing) {
+        EntityPlayer getTrueSource = (EntityPlayer) event.getSource().getTrueSource();
+        if (getTrueSource instanceof EntityPlayer) {
+            ItemStack heldItem = getTrueSource.getHeldItemMainhand();
+            if (heldItem.getItem() == SpawnerCraftItems.MOB_ROD || !ConfigHandler.dropsRequireFishing) {
                 dropFor(event.getEntity());
             }
         }
     }
 
     private void dropFor(Entity entity) {
-        ResourceLocation entityResource = EntityList.func_191301_a(entity);
+        ResourceLocation entityResource = EntityList.getKey(entity);
         if (entityResource == null) {
             return;
         }
@@ -40,15 +44,18 @@ public class DropsListener {
             entityResource = new ResourceLocation(entityString);
         }
         ItemStack stack = new ItemStack(SpawnerCraftItems.MOB_ESSENCE);
-        if (EntityList.field_75627_a.containsKey(entityResource) && (ConfigHandler.mobEssenceToggleList.contains(entityString) ^ ConfigHandler.isListBlacklist)) {
+        if (EntityList.ENTITY_EGGS.containsKey(entityResource) && (ConfigHandler.mobEssenceToggleList.contains(entityString) ^
+                ConfigHandler.isListBlacklist)) {
             ItemMobSoul.applyEntityIdToItemStack(stack, entityResource);
-            entity.func_70099_a(stack, 0.0f);
+            entity.entityDropItem(stack, 0.0f);
         }
     }
 
     @SubscribeEvent
     public void onBlockDrops(BlockEvent.HarvestDropsEvent event) {
-        if ((event.getState().func_177230_c() instanceof BlockMobSpawner) && event.getHarvester() != null && EnchantmentHelper.func_77506_a(Enchantments.field_185306_r, event.getHarvester().func_184614_ca()) >= ConfigHandler.spawnerDropSilkLevel) {
+        if ((event.getState().getBlock() instanceof BlockMobSpawner) && event.getHarvester() != null &&
+                EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, event.getHarvester().getHeldItemMainhand()) >=
+                        ConfigHandler.spawnerDropSilkLevel) {
             event.getDrops().add(new ItemStack(SpawnerCraftBlocks.MOB_CAGE));
         }
     }

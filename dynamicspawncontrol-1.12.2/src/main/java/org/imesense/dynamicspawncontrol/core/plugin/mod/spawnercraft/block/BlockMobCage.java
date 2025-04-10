@@ -16,12 +16,12 @@ public class BlockMobCage extends SpawnerCraftBlock {
     }
 
     public BlockMobCage() {
-        super(Material.field_151576_e);
-        this.field_149782_v = 5.0f;
-        this.field_149762_H = SoundType.field_185852_e;
+        super(Material.ROCK);
+        this.blockHardness = 5.0f;
+        this.blockSoundType = SoundType.METAL;
         func_149663_c("mob_cage");
         setRegistryName(SpawnerCraft.MOD_ID, "mob_cage");
-        setHarvestLevel("pickaxe", Item.ToolMaterial.STONE.func_77996_d());
+        setHarvestLevel("pickaxe", Item.ToolMaterial.STONE.getHarvestLevel());
     }
 
     public boolean func_149662_c(IBlockState state) {

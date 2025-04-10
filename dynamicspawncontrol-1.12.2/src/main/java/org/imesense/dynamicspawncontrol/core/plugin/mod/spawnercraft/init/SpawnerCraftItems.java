@@ -1,6 +1,23 @@
 package org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.entity.EntityList;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMonsterPlacer;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobAgglomeration;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobEssence;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobRod;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobSpirit;
+
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
@@ -23,7 +40,7 @@ public class SpawnerCraftItems {
         ForgeRegistries.ITEMS.register(MOB_SPIRIT);
         ForgeRegistries.ITEMS.register(MOB_ROD);
         ForgeRegistries.ITEMS.register(new ItemBlock(SpawnerCraftBlocks.MOB_CAGE).setRegistryName(SpawnerCraftBlocks.MOB_CAGE.getRegistryName()));
-        LogHelper.logInfo("Items initialized.");
+        Log.writeDataToLogFile(0, "Items initialized.");
     }
 
     @SideOnly(Side.CLIENT)
@@ -32,18 +49,19 @@ public class SpawnerCraftItems {
         ModelLoader.setCustomModelResourceLocation(MOB_AGGLOMERATION, 0, new ModelResourceLocation(MOB_AGGLOMERATION.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(MOB_SPIRIT, 0, new ModelResourceLocation(MOB_SPIRIT.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(MOB_ROD, 0, new ModelResourceLocation(MOB_ROD.getRegistryName(), "inventory"));
-        LogHelper.logInfo("Item models initialized.");
+        Log.writeDataToLogFile(0, "Item models initialized.");
     }
 
     @SideOnly(Side.CLIENT)
     public static void registerColors(ItemColors itemColors) {
-        itemColors.func_186730_a(stack, tintIndex -> {
-            EntityList.EntityEggInfo eggInfo = (EntityList.EntityEggInfo) EntityList.field_75627_a.get(ItemMonsterPlacer.func_190908_h(stack));
+        itemColors.registerItemColorHandler(stack, tintIndex -> {
+            EntityList.EntityEggInfo eggInfo = (EntityList.EntityEggInfo) EntityList.ENTITY_EGGS.get
+                    (ItemMonsterPlacer.getNamedIdFrom(stack));
             if (eggInfo == null) {
                 return -1;
             }
-            return tintIndex == 0 ? eggInfo.field_75611_b : eggInfo.field_75612_c;
+            return tintIndex == 0 ? eggInfo.primaryColor : eggInfo.secondaryColor;
         }, new Item[]{MOB_ESSENCE, MOB_AGGLOMERATION, MOB_SPIRIT});
-        LogHelper.logInfo("Item colors initialized.");
+        Log.writeDataToLogFile(0, "Item colors initialized.");
     }
 }
