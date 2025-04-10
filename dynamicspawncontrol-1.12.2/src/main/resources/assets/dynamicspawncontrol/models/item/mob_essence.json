@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "dynamicspawncontrol:items/mob_essence",
+    "layer1": "dynamicspawncontrol:items/mob_essence_overlay"
+  }
+}

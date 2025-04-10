@@ -22,7 +22,7 @@ public class DropsListener {
     private DropsListener() {
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onMobDrops(LivingDropsEvent event) {
         EntityPlayer getTrueSource = (EntityPlayer) event.getSource().getTrueSource();
         if (getTrueSource instanceof EntityPlayer) {
@@ -51,7 +51,7 @@ public class DropsListener {
         }
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent
     public void onBlockDrops(BlockEvent.HarvestDropsEvent event) {
         if ((event.getState().getBlock() instanceof BlockMobSpawner) && event.getHarvester() != null &&
                 EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, event.getHarvester().getHeldItemMainhand()) >=

@@ -130,7 +130,7 @@ dependencies
     implementation fg.deobf("curse.maven:special-mobs-59968:3320102")
 
     // Use Just Enough Items (JEI)
-    implementation fg.deobf("curse.maven:jei-238222:5846804")
+    implementation fg.deobf("libs:jei:1.12.2-4.16.1.1013")
 }
 
 // Get properties into the manifest for reading by the runtime

@@ -14,7 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 
-@JEIPlugin
+//@JEIPlugin
 /* loaded from: input.jar:cad97/spawnercraft/bridge/JEIBridge.class */
 public class JEIBridge implements IModPlugin {
     public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry) {
