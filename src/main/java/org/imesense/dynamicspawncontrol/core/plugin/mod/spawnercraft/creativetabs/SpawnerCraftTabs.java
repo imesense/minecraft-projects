@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 /* loaded from: input.jar:cad97/spawnercraft/creativetabs/SpawnerCraftTabs.class */
 public class SpawnerCraftTabs {
-    public static final CreativeTabs tab = new CreativeTabs("spawnercraft.tab") { // from class: cad97.spawnercraft.creativetabs.SpawnerCraftTabs.1
+    public static final CreativeTabs tab = new CreativeTabs("dynamicspawncontrol.tab") { // from class: cad97.spawnercraft.creativetabs.SpawnerCraftTabs.1
         @Nonnull
         public ItemStack getTabIconItem() {
             return new ItemStack(Item.getItemFromBlock(Blocks.MOB_SPAWNER));
