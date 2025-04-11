@@ -5,7 +5,6 @@
   "mixins":
   [
     "MixinDivineRPGFixSpawn",
-    "MixinUnlimitedEnchantment",
-    "MixinTextureMap"
+    "MixinUnlimitedEnchantment"
   ]
 }

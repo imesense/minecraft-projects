@@ -15,7 +15,7 @@ import org.imesense.dynamicspawncontrol.core.threads.GrassThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.threads.ThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
-import mezz.jei.gui.textures.JeiTextureMap;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
