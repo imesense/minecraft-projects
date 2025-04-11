@@ -18,8 +18,10 @@ public class NBTPreservingShapedRecipeWrapper /*extends BlankRecipeWrapper*/
     //private final ItemStack output;
 
     /* JADX INFO: Access modifiers changed from: package-private */
-    //public NBTPreservingShapedRecipeWrapper(ResourceLocation variant, List<ItemStack> input, ItemStack output) {
-  //      this.input = (List) input.stream().map(itemStack -> {
+    //public NBTPreservingShapedRecipeWrapper(ResourceLocation variant, List<ItemStack> input, ItemStack output)
+    // {
+  //      this.input = (List) input.stream().map(itemStack ->
+    //      {
    //         ItemStack copy = itemStack.copy();
    //         ItemMobSoul.applyEntityIdToItemStack(copy, variant);
    //         return copy;
@@ -28,7 +30,8 @@ public class NBTPreservingShapedRecipeWrapper /*extends BlankRecipeWrapper*/
     //    ItemMobSoul.applyEntityIdToItemStack(this.output, variant);
     //}
 
-    //public void getIngredients(@Nonnull IIngredients ingredients) {
+    //public void getIngredients(@Nonnull IIngredients ingredients)
+    // {
    //     ingredients.setInputs(ItemStack.class, this.input);
    //     ingredients.setOutput(ItemStack.class, this.output);
    // }

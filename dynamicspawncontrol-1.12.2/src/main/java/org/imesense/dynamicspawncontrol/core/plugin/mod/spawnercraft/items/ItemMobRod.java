@@ -18,9 +18,9 @@ public class ItemMobRod extends ItemSword
     }
 
     @Nonnull
-    public Item setUnlocalizedName(@Nonnull String name)
+    public Item setUnlocalizedName(@Nonnull String string)
     {
-        return super.setUnlocalizedName("spawnercraft." + name);
+        return super.setUnlocalizedName("spawnercraft." + string);
     }
 }
 

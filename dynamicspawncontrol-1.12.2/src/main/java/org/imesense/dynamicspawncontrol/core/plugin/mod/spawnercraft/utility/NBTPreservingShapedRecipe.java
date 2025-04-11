@@ -22,9 +22,9 @@ public class NBTPreservingShapedRecipe extends ShapedRecipes
                 NBTPreservingShapedRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
     }
 
-    public NBTPreservingShapedRecipe(String group, int width, int height, NonNullList<Ingredient> items, ItemStack output)
+    public NBTPreservingShapedRecipe(String group, int width, int height, NonNullList<Ingredient> ingredients, ItemStack itemStack)
     {
-        super(group, width, height, items, output);
+        super(group, width, height, ingredients, itemStack);
         this.matchingCompound = null;
     }
 
@@ -33,21 +33,22 @@ public class NBTPreservingShapedRecipe extends ShapedRecipes
     {
         ItemStack output = super.getRecipeOutput();
         output.setTagCompound(this.matchingCompound);
+
         return output;
     }
 
-    public boolean matches(@Nonnull InventoryCrafting inv, World worldIn)
+    public boolean matches(@Nonnull InventoryCrafting inventoryCrafting, World world)
     {
         this.matchingCompound = null;
         int i = 0;
         while (true)
         {
-            if (i >= inv.getSizeInventory())
+            if (i >= inventoryCrafting.getSizeInventory())
             {
                 break;
             }
 
-            ItemStack itemStack = inv.getStackInSlot(i);
+            ItemStack itemStack = inventoryCrafting.getStackInSlot(i);
 
             if (itemStack.isEmpty())
             {
@@ -60,9 +61,9 @@ public class NBTPreservingShapedRecipe extends ShapedRecipes
             }
         }
 
-        for (int i2 = 0; i2 < inv.getSizeInventory(); i2++)
+        for (int i2 = 0; i2 < inventoryCrafting.getSizeInventory(); i2++)
         {
-            ItemStack itemStack2 = inv.getStackInSlot(i2);
+            ItemStack itemStack2 = inventoryCrafting.getStackInSlot(i2);
 
             if (!itemStack2.isEmpty() && !Objects.equal(itemStack2.getTagCompound(), this.matchingCompound))
             {
@@ -70,6 +71,6 @@ public class NBTPreservingShapedRecipe extends ShapedRecipes
             }
         }
 
-        return super.matches(inv, worldIn);
+        return super.matches(inventoryCrafting, world);
     }
 }

@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 /* loaded from: input.jar:cad97/spawnercraft/items/ItemMobSoul.class */
 public abstract class ItemMobSoul extends SpawnerCraftItem
 {
@@ -19,9 +20,9 @@ public abstract class ItemMobSoul extends SpawnerCraftItem
 
     @Override // cad97.spawnercraft.items.SpawnerCraftItem
     @Nonnull
-    public /* bridge */ /* synthetic */ Item setUnlocalizedName(@Nonnull String str)
+    public /* bridge */ /* synthetic */ Item setUnlocalizedName(@Nonnull String string)
     {
-        return super.setUnlocalizedName(str);
+        return super.setUnlocalizedName(string);
     }
 
     static
@@ -37,10 +38,10 @@ public abstract class ItemMobSoul extends SpawnerCraftItem
     }
 
     @Nonnull
-    public String getItemStackDisplayName(@Nonnull ItemStack stack)
+    public String getItemStackDisplayName(@Nonnull ItemStack itemStack)
     {
         String itemName = I18n.translateToLocal(getUnlocalizedName() + ".name").trim();
-        String mobName = EntityList.getTranslationName(ItemMonsterPlacer.getNamedIdFrom(stack));
+        String mobName = EntityList.getTranslationName(ItemMonsterPlacer.getNamedIdFrom(itemStack));
 
         if (mobName != null)
         {
@@ -51,22 +52,22 @@ public abstract class ItemMobSoul extends SpawnerCraftItem
     }
 
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items)
+    public void getSubItems(@Nonnull CreativeTabs creativeTabs, @Nonnull NonNullList<ItemStack> itemStackNonNullList)
     {
-        if (isInCreativeTab(tab))
+        if (isInCreativeTab(creativeTabs))
         {
             for (EntityList.EntityEggInfo entitylist$entityegginfo : EntityList.ENTITY_EGGS.values())
             {
                 ItemStack itemstack = new ItemStack(this, 1);
                 applyEntityIdToItemStack(itemstack, entitylist$entityegginfo.spawnedID);
-                items.add(itemstack);
+                itemStackNonNullList.add(itemstack);
             }
         }
     }
 
-    public static void applyEntityIdToItemStack(ItemStack stack, ResourceLocation entityId)
+    public static void applyEntityIdToItemStack(ItemStack itemStack, ResourceLocation resourceLocation)
     {
-        NBTTagCompound nbttagcompound = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
+        NBTTagCompound nbttagcompound = itemStack.hasTagCompound() ? itemStack.getTagCompound() : new NBTTagCompound();
 
         if (!$assertionsDisabled && nbttagcompound == null)
         {
@@ -74,9 +75,9 @@ public abstract class ItemMobSoul extends SpawnerCraftItem
         }
 
         NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-        nbttagcompound1.setString("id", entityId.toString());
+        nbttagcompound1.setString("id", resourceLocation.toString());
         nbttagcompound.setTag("EntityTag", nbttagcompound1);
-        stack.setTagCompound(nbttagcompound);
+        itemStack.setTagCompound(nbttagcompound);
     }
 }
 

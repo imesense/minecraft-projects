@@ -14,9 +14,9 @@ public class BlockMobCage extends SpawnerCraftBlock
 {
     @Override // cad97.spawnercraft.block.SpawnerCraftBlock
     @Nonnull
-    public /* bridge */ /* synthetic */ Block setUnlocalizedName(@Nonnull String str)
+    public /* bridge */ /* synthetic */ Block setUnlocalizedName(@Nonnull String string)
     {
-        return super.setUnlocalizedName(str);
+        return super.setUnlocalizedName(string);
     }
 
     public BlockMobCage()
@@ -29,7 +29,7 @@ public class BlockMobCage extends SpawnerCraftBlock
         setHarvestLevel("pickaxe", Item.ToolMaterial.STONE.getHarvestLevel());
     }
 
-    public boolean isOpaqueCube(IBlockState state)
+    public boolean isOpaqueCube(IBlockState iBlockState)
     {
         return false;
     }

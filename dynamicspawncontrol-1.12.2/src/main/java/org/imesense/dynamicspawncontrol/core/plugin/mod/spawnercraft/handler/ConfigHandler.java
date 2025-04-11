@@ -27,11 +27,11 @@ public class ConfigHandler
     // {
     //}
 
-    public static void init(File configFile)
+    public static void init(File file)
     {
     //    if (config == null)
         //    {
-    //        config = new Configuration(configFile);
+    //        config = new Configuration(file);
     //    }
     //    loadConfig();
     //    config.save();

@@ -7,10 +7,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 /* loaded from: input.jar:cad97/spawnercraft/proxy/IProxy.class */
 public interface IProxy
 {
-    void preInit(FMLPreInitializationEvent fMLPreInitializationEvent);
+    void preInit(FMLPreInitializationEvent event);
 
-    void init(FMLInitializationEvent fMLInitializationEvent);
+    void init(FMLInitializationEvent event);
 
-    void postInit(FMLPostInitializationEvent fMLPostInitializationEvent);
+    void postInit(FMLPostInitializationEvent event);
 }
 

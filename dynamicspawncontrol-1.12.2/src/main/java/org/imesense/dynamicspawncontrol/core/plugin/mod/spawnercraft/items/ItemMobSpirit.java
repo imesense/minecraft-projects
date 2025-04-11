@@ -34,10 +34,10 @@ public class ItemMobSpirit extends ItemMobSoul
     }
 
     @Nonnull
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos,
-                                      EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(EntityPlayer entityPlayer, World world, BlockPos blockPos,
+                                      EnumHand enumHand, EnumFacing enumFacing, float hitX, float hitY, float hitZ)
     {
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = entityPlayer.getHeldItem(enumHand);
         ResourceLocation id = ItemMonsterPlacer.getNamedIdFrom(stack);
 
         if (id == null || !EntityList.ENTITY_EGGS.containsKey(id))
@@ -50,25 +50,25 @@ public class ItemMobSpirit extends ItemMobSoul
             return EnumActionResult.SUCCESS;
         }
 
-        if (!player.canPlayerEdit(pos.offset(facing), facing, stack))
+        if (!entityPlayer.canPlayerEdit(blockPos.offset(enumFacing), enumFacing, stack))
         {
             return EnumActionResult.FAIL;
         }
 
-        IBlockState state = world.getBlockState(pos);
+        IBlockState state = world.getBlockState(blockPos);
         Block block = state.getBlock();
 
         if (block == SpawnerCraftBlocks.MOB_CAGE)
         {
-            world.setBlockState(pos, Blocks.MOB_SPAWNER.getDefaultState());
-            TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(pos);
+            world.setBlockState(blockPos, Blocks.MOB_SPAWNER.getDefaultState());
+            TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(blockPos);
             Objects.requireNonNull(spawner);
             MobSpawnerBaseLogic logic = spawner.getSpawnerBaseLogic();
             logic.setEntityId(ItemMonsterPlacer.getNamedIdFrom(stack));
             spawner.markDirty();
-            world.notifyBlockUpdate(pos, state, state, 3);
+            world.notifyBlockUpdate(blockPos, state, state, 3);
 
-            if (!player.capabilities.isCreativeMode)
+            if (!entityPlayer.capabilities.isCreativeMode)
             {
                 stack.shrink(1);
             }
@@ -80,7 +80,7 @@ public class ItemMobSpirit extends ItemMobSoul
         }
         else
         {
-            BlockPos pos2 = pos.offset(facing);
+            BlockPos pos2 = blockPos.offset(enumFacing);
             double d0 = getYOffset(world, pos2);
 
             Entity entity = ItemMonsterPlacer.spawnCreature(world,
@@ -94,9 +94,9 @@ public class ItemMobSpirit extends ItemMobSoul
                     entity.setCustomNameTag(stack.getDisplayName());
                 }
 
-                ItemMonsterPlacer.applyItemEntityDataToEntity(world, player, stack, entity);
+                ItemMonsterPlacer.applyItemEntityDataToEntity(world, entityPlayer, stack, entity);
 
-                if (!player.capabilities.isCreativeMode)
+                if (!entityPlayer.capabilities.isCreativeMode)
                 {
                     stack.shrink(1);
                 }
@@ -105,9 +105,9 @@ public class ItemMobSpirit extends ItemMobSoul
         }
     }
 
-    private double getYOffset(World world, BlockPos pos)
+    private double getYOffset(World world, BlockPos blockPos)
     {
-        AxisAlignedBB aabb = new AxisAlignedBB(pos).expand(0.0d, -1.0d, 0.0d);
+        AxisAlignedBB aabb = new AxisAlignedBB(blockPos).expand(0.0d, -1.0d, 0.0d);
         List<AxisAlignedBB> list = world.getCollisionBoxes((Entity) null, aabb);
 
         if (list.isEmpty())
@@ -122,7 +122,7 @@ public class ItemMobSpirit extends ItemMobSoul
             d0 = Math.max(axisalignedbb1.maxY, d0);
         }
 
-        return d0 - pos.getY();
+        return d0 - blockPos.getY();
     }
 }
 

@@ -15,8 +15,8 @@ public class GuiFactory extends DefaultGuiFactory
         super(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID, DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME);
     }
 
-    public GuiScreen createConfigGui(GuiScreen parentScreen)
+    public GuiScreen createConfigGui(GuiScreen guiScreen)
     {
-        return new SpawnerCraftGuiConfig(parentScreen);
+        return new SpawnerCraftGuiConfig(guiScreen);
     }
 }

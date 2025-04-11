@@ -16,9 +16,9 @@ abstract class SpawnerCraftBlock extends Block
     }
 
     @Nonnull
-    public Block setUnlocalizedName(@Nonnull String name)
+    public Block setUnlocalizedName(@Nonnull String string)
     {
-        return super.setUnlocalizedName("dynamicspawncontrol." + name);
+        return super.setUnlocalizedName("dynamicspawncontrol." + string);
     }
 }
 
