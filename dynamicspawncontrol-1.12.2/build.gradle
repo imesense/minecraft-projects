@@ -128,9 +128,6 @@ dependencies
 
     // Use core mod #3 Special-Mobs
     implementation fg.deobf("curse.maven:special-mobs-59968:3320102")
-
-    // Use Just Enough Items (JEI)
-    implementation fg.deobf("libs:jei:1.12.2-4.16.1.9999")
 }
 
 // Get properties into the manifest for reading by the runtime
