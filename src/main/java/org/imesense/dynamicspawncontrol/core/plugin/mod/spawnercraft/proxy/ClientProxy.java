@@ -13,9 +13,9 @@ public final class ClientProxy extends CommonProxy
 {
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void postInit(FMLPostInitializationEvent fMLPostInitializationEvent) {
+    public /* bridge */ /* synthetic */ void postInit(FMLPostInitializationEvent event) {
 
-        super.postInit(fMLPostInitializationEvent);
+        super.postInit(event);
     }
 
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy

@@ -9,22 +9,22 @@ public final class ServerProxy extends CommonProxy
 {
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void postInit(FMLPostInitializationEvent fMLPostInitializationEvent)
+    public /* bridge */ /* synthetic */ void postInit(FMLPostInitializationEvent event)
     {
-        super.postInit(fMLPostInitializationEvent);
+        super.postInit(event);
     }
 
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void init(FMLInitializationEvent fMLInitializationEvent)
+    public /* bridge */ /* synthetic */ void init(FMLInitializationEvent event)
     {
-        super.init(fMLInitializationEvent);
+        super.init(event);
     }
 
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void preInit(FMLPreInitializationEvent fMLPreInitializationEvent)
+    public /* bridge */ /* synthetic */ void preInit(FMLPreInitializationEvent event)
     {
-        super.preInit(fMLPreInitializationEvent);
+        super.preInit(event);
     }
 }
