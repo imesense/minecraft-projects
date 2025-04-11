@@ -10,14 +10,17 @@ import net.minecraft.util.BlockRenderLayer;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
 /* loaded from: input.jar:cad97/spawnercraft/block/BlockMobCage.class */
-public class BlockMobCage extends SpawnerCraftBlock {
+public class BlockMobCage extends SpawnerCraftBlock
+{
     @Override // cad97.spawnercraft.block.SpawnerCraftBlock
     @Nonnull
-    public /* bridge */ /* synthetic */ Block setUnlocalizedName(@Nonnull String str) {
+    public /* bridge */ /* synthetic */ Block setUnlocalizedName(@Nonnull String str)
+    {
         return super.setUnlocalizedName(str);
     }
 
-    public BlockMobCage() {
+    public BlockMobCage()
+    {
         super(Material.ROCK);
         this.blockHardness = 5.0f;
         this.blockSoundType = SoundType.METAL;
@@ -26,12 +29,14 @@ public class BlockMobCage extends SpawnerCraftBlock {
         setHarvestLevel("pickaxe", Item.ToolMaterial.STONE.getHarvestLevel());
     }
 
-    public boolean isOpaqueCube(IBlockState state) {
+    public boolean isOpaqueCube(IBlockState state)
+    {
         return false;
     }
 
     @Nonnull
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getBlockLayer()
+    {
         return BlockRenderLayer.CUTOUT;
     }
 }

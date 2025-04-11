@@ -5,14 +5,17 @@ import net.minecraft.item.Item;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.creativetabs.SpawnerCraftTabs;
 
 /* loaded from: input.jar:cad97/spawnercraft/items/SpawnerCraftItem.class */
-abstract class SpawnerCraftItem extends Item {
+public abstract class SpawnerCraftItem extends Item
+{
     /* JADX INFO: Access modifiers changed from: package-private */
-    public SpawnerCraftItem() {
+    public SpawnerCraftItem()
+    {
         setCreativeTab(SpawnerCraftTabs.tab);
     }
 
     @Nonnull
-    public Item setUnlocalizedName(@Nonnull String name) {
+    public Item setUnlocalizedName(@Nonnull String name)
+    {
         return super.setUnlocalizedName("spawnercraft." + name);
     }
 }

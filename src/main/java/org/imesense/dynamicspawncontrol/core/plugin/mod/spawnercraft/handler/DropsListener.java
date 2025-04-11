@@ -16,46 +16,63 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.Spawne
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobSoul;
 
 /* loaded from: input.jar:cad97/spawnercraft/handler/DropsListener.class */
-public class DropsListener {
+public class DropsListener
+{
     public static final DropsListener instance = new DropsListener();
 
-    private DropsListener() {
+    private DropsListener()
+    {
     }
 
     //@SubscribeEvent
-    public void onMobDrops(LivingDropsEvent event) {
+    public void onMobDrops(LivingDropsEvent event)
+    {
         EntityPlayer getTrueSource = (EntityPlayer) event.getSource().getTrueSource();
-        if (getTrueSource instanceof EntityPlayer) {
+
+        if (getTrueSource instanceof EntityPlayer)
+        {
             ItemStack heldItem = getTrueSource.getHeldItemMainhand();
-            if (heldItem.getItem() == SpawnerCraftItems.MOB_ROD || !ConfigHandler.dropsRequireFishing) {
+            if (heldItem.getItem() == SpawnerCraftItems.MOB_ROD || !ConfigHandler.dropsRequireFishing)
+            {
                 dropFor(event.getEntity());
             }
         }
     }
 
-    private void dropFor(Entity entity) {
+    private void dropFor(Entity entity)
+    {
         ResourceLocation entityResource = EntityList.getKey(entity);
-        if (entityResource == null) {
+
+        if (entityResource == null)
+        {
             return;
         }
+
         String entityString = entityResource.toString();
-        if (ConfigHandler.eggMapping.containsKey(entityString)) {
+
+        if (ConfigHandler.eggMapping.containsKey(entityString))
+        {
             entityString = ConfigHandler.eggMapping.get(entityString);
             entityResource = new ResourceLocation(entityString);
         }
+
         ItemStack stack = new ItemStack(SpawnerCraftItems.MOB_ESSENCE);
+
         if (EntityList.ENTITY_EGGS.containsKey(entityResource) && (ConfigHandler.mobEssenceToggleList.contains(entityString) ^
-                ConfigHandler.isListBlacklist)) {
+                ConfigHandler.isListBlacklist))
+        {
             ItemMobSoul.applyEntityIdToItemStack(stack, entityResource);
             entity.entityDropItem(stack, 0.0f);
         }
     }
 
     //@SubscribeEvent
-    public void onBlockDrops(BlockEvent.HarvestDropsEvent event) {
+    public void onBlockDrops(BlockEvent.HarvestDropsEvent event)
+    {
         if ((event.getState().getBlock() instanceof BlockMobSpawner) && event.getHarvester() != null &&
                 EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, event.getHarvester().getHeldItemMainhand()) >=
-                        ConfigHandler.spawnerDropSilkLevel) {
+                        ConfigHandler.spawnerDropSilkLevel)
+        {
             event.getDrops().add(new ItemStack(SpawnerCraftBlocks.MOB_CAGE));
         }
     }
