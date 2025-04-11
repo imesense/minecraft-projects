@@ -9,22 +9,26 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.Spawne
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 
 /* loaded from: input.jar:cad97/spawnercraft/proxy/ClientProxy.class */
-public final class ClientProxy extends CommonProxy {
+public final class ClientProxy extends CommonProxy
+{
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
     @OverridingMethodsMustInvokeSuper
     public /* bridge */ /* synthetic */ void postInit(FMLPostInitializationEvent fMLPostInitializationEvent) {
+
         super.postInit(fMLPostInitializationEvent);
     }
 
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(FMLPreInitializationEvent event)
+    {
         super.preInit(event);
         SpawnerCraftBlocks.registerModels();
         SpawnerCraftItems.registerModels();
     }
 
     @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
-    public void init(FMLInitializationEvent event) {
+    public void init(FMLInitializationEvent event)
+    {
         super.init(event);
         SpawnerCraftItems.registerColors(Minecraft.getMinecraft().getItemColors());
     }

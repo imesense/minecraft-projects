@@ -25,28 +25,41 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 
 /* loaded from: input.jar:cad97/spawnercraft/items/ItemMobSpirit.class */
-public class ItemMobSpirit extends ItemMobSoul {
-    public ItemMobSpirit() {
+public class ItemMobSpirit extends ItemMobSoul
+{
+    public ItemMobSpirit()
+    {
         setUnlocalizedName("mob_spirit");
         setRegistryName(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID, "mob_spirit");
     }
 
     @Nonnull
-    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos,
+                                      EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
         ItemStack stack = player.getHeldItem(hand);
         ResourceLocation id = ItemMonsterPlacer.getNamedIdFrom(stack);
-        if (id == null || !EntityList.ENTITY_EGGS.containsKey(id)) {
+
+        if (id == null || !EntityList.ENTITY_EGGS.containsKey(id))
+        {
             return EnumActionResult.FAIL;
         }
-        if (world.isRemote) {
+
+        if (world.isRemote)
+        {
             return EnumActionResult.SUCCESS;
         }
-        if (!player.canPlayerEdit(pos.offset(facing), facing, stack)) {
+
+        if (!player.canPlayerEdit(pos.offset(facing), facing, stack))
+        {
             return EnumActionResult.FAIL;
         }
+
         IBlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        if (block == SpawnerCraftBlocks.MOB_CAGE) {
+
+        if (block == SpawnerCraftBlocks.MOB_CAGE)
+        {
             world.setBlockState(pos, Blocks.MOB_SPAWNER.getDefaultState());
             TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(pos);
             Objects.requireNonNull(spawner);
@@ -54,24 +67,37 @@ public class ItemMobSpirit extends ItemMobSoul {
             logic.setEntityId(ItemMonsterPlacer.getNamedIdFrom(stack));
             spawner.markDirty();
             world.notifyBlockUpdate(pos, state, state, 3);
-            if (!player.capabilities.isCreativeMode) {
+
+            if (!player.capabilities.isCreativeMode)
+            {
                 stack.shrink(1);
             }
             return EnumActionResult.SUCCESS;
-        } else if (block == Blocks.MOB_SPAWNER) {
+        }
+        else if (block == Blocks.MOB_SPAWNER)
+        {
             return EnumActionResult.FAIL;
-        } else {
+        }
+        else
+        {
             BlockPos pos2 = pos.offset(facing);
             double d0 = getYOffset(world, pos2);
+
             Entity entity = ItemMonsterPlacer.spawnCreature(world,
                     ItemMonsterPlacer.getNamedIdFrom(stack),
                     pos2.getX() + 0.5d, pos2.getY() + d0, pos2.getZ() + 0.5d);
-            if (entity != null) {
-                if ((entity instanceof EntityLivingBase) && stack.hasDisplayName()) {
+
+            if (entity != null)
+            {
+                if ((entity instanceof EntityLivingBase) && stack.hasDisplayName())
+                {
                     entity.setCustomNameTag(stack.getDisplayName());
                 }
+
                 ItemMonsterPlacer.applyItemEntityDataToEntity(world, player, stack, entity);
-                if (!player.capabilities.isCreativeMode) {
+
+                if (!player.capabilities.isCreativeMode)
+                {
                     stack.shrink(1);
                 }
             }
@@ -79,16 +105,23 @@ public class ItemMobSpirit extends ItemMobSoul {
         }
     }
 
-    private double getYOffset(World world, BlockPos pos) {
+    private double getYOffset(World world, BlockPos pos)
+    {
         AxisAlignedBB aabb = new AxisAlignedBB(pos).expand(0.0d, -1.0d, 0.0d);
         List<AxisAlignedBB> list = world.getCollisionBoxes((Entity) null, aabb);
-        if (list.isEmpty()) {
+
+        if (list.isEmpty())
+        {
             return 0.0d;
         }
+
         double d0 = aabb.minY;
-        for (AxisAlignedBB axisalignedbb1 : list) {
+
+        for (AxisAlignedBB axisalignedbb1 : list)
+        {
             d0 = Math.max(axisalignedbb1.maxY, d0);
         }
+
         return d0 - pos.getY();
     }
 }

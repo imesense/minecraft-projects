@@ -12,7 +12,8 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemM
 /* JADX INFO: Access modifiers changed from: package-private */
 /* compiled from: JEIBridge.java */
 /* loaded from: input.jar:cad97/spawnercraft/bridge/NBTPreservingShapedRecipeWrapper.class */
-public class NBTPreservingShapedRecipeWrapper /*extends BlankRecipeWrapper*/ {
+public class NBTPreservingShapedRecipeWrapper /*extends BlankRecipeWrapper*/
+{
     //private final List<ItemStack> input;
     //private final ItemStack output;
 

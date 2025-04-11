@@ -10,47 +10,66 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.RecipeSorter;
+
 /* loaded from: input.jar:cad97/spawnercraft/utility/NBTPreservingShapedRecipe.class */
-public class NBTPreservingShapedRecipe extends ShapedRecipes {
+public class NBTPreservingShapedRecipe extends ShapedRecipes
+{
     private NBTTagCompound matchingCompound;
 
-    static {
-        RecipeSorter.register("spawnercraft:nbtshaped", NBTPreservingShapedRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
+    static
+    {
+        RecipeSorter.register("spawnercraft:nbtshaped",
+                NBTPreservingShapedRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
     }
 
-    public NBTPreservingShapedRecipe(String group, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
+    public NBTPreservingShapedRecipe(String group, int width, int height, NonNullList<Ingredient> items, ItemStack output)
+    {
         super(group, width, height, items, output);
         this.matchingCompound = null;
     }
 
     @Nonnull
-    public ItemStack getRecipeOutput() {
+    public ItemStack getRecipeOutput()
+    {
         ItemStack output = super.getRecipeOutput();
         output.setTagCompound(this.matchingCompound);
         return output;
     }
 
-    public boolean matches(@Nonnull InventoryCrafting inv, World worldIn) {
+    public boolean matches(@Nonnull InventoryCrafting inv, World worldIn)
+    {
         this.matchingCompound = null;
         int i = 0;
-        while (true) {
-            if (i >= inv.getSizeInventory()) {
+        while (true)
+        {
+            if (i >= inv.getSizeInventory())
+            {
                 break;
             }
+
             ItemStack itemStack = inv.getStackInSlot(i);
-            if (itemStack.isEmpty()) {
+
+            if (itemStack.isEmpty())
+            {
                 i++;
-            } else {
+            }
+            else
+            {
                 this.matchingCompound = itemStack.getTagCompound();
                 break;
             }
         }
-        for (int i2 = 0; i2 < inv.getSizeInventory(); i2++) {
+
+        for (int i2 = 0; i2 < inv.getSizeInventory(); i2++)
+        {
             ItemStack itemStack2 = inv.getStackInSlot(i2);
-            if (!itemStack2.isEmpty() && !Objects.equal(itemStack2.getTagCompound(), this.matchingCompound)) {
+
+            if (!itemStack2.isEmpty() && !Objects.equal(itemStack2.getTagCompound(), this.matchingCompound))
+            {
                 return false;
             }
         }
+
         return super.matches(inv, worldIn);
     }
 }
