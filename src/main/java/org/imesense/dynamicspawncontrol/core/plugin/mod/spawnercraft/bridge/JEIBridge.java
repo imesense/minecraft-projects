@@ -18,7 +18,8 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.Spawne
 
 //@JEIPlugin
 @TODO(
-        value = "Добавить адаптацию к JEI",
+        value = "Добавить адаптацию к JEI. " +
+                "Тут требуется реализация с accessTransformerFiles, чтобы открыть доступ к приватным полям для JEI",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
