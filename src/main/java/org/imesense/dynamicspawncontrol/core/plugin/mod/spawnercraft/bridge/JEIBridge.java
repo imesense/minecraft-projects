@@ -12,9 +12,16 @@ import javax.annotation.Nonnull;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 
 //@JEIPlugin
+@TODO(
+        value = "Добавить адаптацию к JEI",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 public final class JEIBridge //implements IModPlugin
 {
     public JEIBridge()

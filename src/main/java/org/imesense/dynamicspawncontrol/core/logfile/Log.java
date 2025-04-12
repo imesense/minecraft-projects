@@ -24,7 +24,7 @@ public final class Log
 
     private static final ThreadMonitor threadMonitor = ThreadMonitor.getInstance();
 
-    private static final String[] LEVEL_PREFIXES = { "[INFO]: ", "[WARN]: ", "[ERROR]: ", "[INIT]: " };
+    private static final String[] LEVEL_PREFIXES = { "[INFO]: ", "[WARN]: ", "[ERROR]: ", "[INIT]: ", "[TODO]: " };
 
     private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 

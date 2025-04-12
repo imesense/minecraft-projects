@@ -1,7 +1,5 @@
 package org.imesense.dynamicspawncontrol;
 
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
@@ -14,13 +12,9 @@ import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
 import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
 import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
+import org.imesense.dynamicspawncontrol.core.logfile.TodoTracker;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.ConfigHandler;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.DropsListener;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftRecipes;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
@@ -100,6 +94,8 @@ public final class DynamicSpawnControl
         Log.createLogFile(globalDirectory.getPath() +
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+
+        TodoTracker.init(event);
 
         File modFile = event.getSourceFile();
         String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID + "-0.1.jar";
