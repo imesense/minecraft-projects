@@ -8,17 +8,16 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 
-/* loaded from: input.jar:cad97/spawnercraft/proxy/ClientProxy.class */
 public final class ClientProxy extends CommonProxy
 {
-    @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
+    @Override
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void postInit(FMLPostInitializationEvent event) {
-
+    public void postInit(FMLPostInitializationEvent event)
+    {
         super.postInit(event);
     }
 
-    @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
+    @Override
     public void preInit(FMLPreInitializationEvent event)
     {
         super.preInit(event);
@@ -26,7 +25,7 @@ public final class ClientProxy extends CommonProxy
         SpawnerCraftItems.registerModels();
     }
 
-    @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
+    @Override
     public void init(FMLInitializationEvent event)
     {
         super.init(event);

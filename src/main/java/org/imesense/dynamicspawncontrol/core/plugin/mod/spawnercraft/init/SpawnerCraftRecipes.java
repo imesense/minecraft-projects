@@ -9,12 +9,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.ConfigHandler;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.utility.NBTPreservingShapedRecipe;
 
-/* loaded from: input.jar:cad97/spawnercraft/init/SpawnerCraftRecipes.class */
-public class SpawnerCraftRecipes
+public final class SpawnerCraftRecipes
 {
     public static void registerRecipes()
     {
@@ -33,14 +31,12 @@ public class SpawnerCraftRecipes
         if (ConfigHandler.spawnerCraftable)
         {
             GameRegistry.addShapedRecipe(new ResourceLocation(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
-                    "craft_mob_cage"), (ResourceLocation) null, new ItemStack(SpawnerCraftBlocks.MOB_CAGE),
+                    "craft_mob_cage"), null, new ItemStack(SpawnerCraftBlocks.MOB_CAGE),
                     new Object[]{"III", "I I", "III", 'I', new ItemStack(Blocks.IRON_BARS)});
         }
 
         GameRegistry.addShapedRecipe(new ResourceLocation(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
-                "craft_mob_rod"), (ResourceLocation) null, new ItemStack(SpawnerCraftItems.MOB_ROD),
+                "craft_mob_rod"), null, new ItemStack(SpawnerCraftItems.MOB_ROD),
                 new Object[]{"F", "S", 'F', new ItemStack(Items.FISHING_ROD), 'S', new ItemStack(SpawnerCraftBlocks.MOB_CAGE)});
-
-        Log.writeDataToLogFile(0, "Recipes registered.");
     }
 }

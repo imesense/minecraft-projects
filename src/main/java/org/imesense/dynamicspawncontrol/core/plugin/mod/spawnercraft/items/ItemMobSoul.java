@@ -13,14 +13,13 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/* loaded from: input.jar:cad97/spawnercraft/items/ItemMobSoul.class */
 public abstract class ItemMobSoul extends SpawnerCraftItem
 {
-    static final /* synthetic */ boolean $assertionsDisabled;
+    protected static final boolean $assertionsDisabled;
 
-    @Override // cad97.spawnercraft.items.SpawnerCraftItem
+    @Override
     @Nonnull
-    public /* bridge */ /* synthetic */ Item setUnlocalizedName(@Nonnull String string)
+    public Item setUnlocalizedName(@Nonnull String string)
     {
         return super.setUnlocalizedName(string);
     }

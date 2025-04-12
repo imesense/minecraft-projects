@@ -24,8 +24,7 @@ import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 
-/* loaded from: input.jar:cad97/spawnercraft/items/ItemMobSpirit.class */
-public class ItemMobSpirit extends ItemMobSoul
+public final class ItemMobSpirit extends ItemMobSoul
 {
     public ItemMobSpirit()
     {

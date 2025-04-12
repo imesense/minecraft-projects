@@ -11,14 +11,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.RecipeSorter;
 
-/* loaded from: input.jar:cad97/spawnercraft/utility/NBTPreservingShapedRecipe.class */
-public class NBTPreservingShapedRecipe extends ShapedRecipes
+public final class NBTPreservingShapedRecipe extends ShapedRecipes
 {
     private NBTTagCompound matchingCompound;
 
     static
     {
-        RecipeSorter.register("spawnercraft:nbtshaped",
+        RecipeSorter.register("dynamicspawncontrol:nbtshaped",
                 NBTPreservingShapedRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
     }
 
@@ -39,8 +38,9 @@ public class NBTPreservingShapedRecipe extends ShapedRecipes
 
     public boolean matches(@Nonnull InventoryCrafting inventoryCrafting, World world)
     {
-        this.matchingCompound = null;
         int i = 0;
+        this.matchingCompound = null;
+
         while (true)
         {
             if (i >= inventoryCrafting.getSizeInventory())

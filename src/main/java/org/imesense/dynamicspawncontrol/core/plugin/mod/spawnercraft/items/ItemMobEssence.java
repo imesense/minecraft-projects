@@ -2,8 +2,7 @@ package org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
-/* loaded from: input.jar:cad97/spawnercraft/items/ItemMobEssence.class */
-public class ItemMobEssence extends ItemMobSoul
+public final class ItemMobEssence extends ItemMobSoul
 {
     public ItemMobEssence()
     {

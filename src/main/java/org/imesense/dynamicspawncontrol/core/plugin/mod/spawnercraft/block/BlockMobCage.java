@@ -9,12 +9,11 @@ import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
-/* loaded from: input.jar:cad97/spawnercraft/block/BlockMobCage.class */
-public class BlockMobCage extends SpawnerCraftBlock
+public final class BlockMobCage extends SpawnerCraftBlock
 {
-    @Override // cad97.spawnercraft.block.SpawnerCraftBlock
+    @Override
     @Nonnull
-    public /* bridge */ /* synthetic */ Block setUnlocalizedName(@Nonnull String string)
+    public Block setUnlocalizedName(@Nonnull String string)
     {
         return super.setUnlocalizedName(string);
     }

@@ -10,13 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobSoul;
 
-/* loaded from: input.jar:cad97/spawnercraft/handler/DropsListener.class */
-public class DropsListener
+public final class DropsListener
 {
     public static final DropsListener instance = new DropsListener();
 

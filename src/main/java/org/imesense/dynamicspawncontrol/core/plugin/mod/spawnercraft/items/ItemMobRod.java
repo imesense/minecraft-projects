@@ -6,8 +6,7 @@ import net.minecraft.item.ItemSword;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.creativetabs.SpawnerCraftTabs;
 
-/* loaded from: input.jar:cad97/spawnercraft/items/ItemMobRod.class */
-public class ItemMobRod extends ItemSword
+public final class ItemMobRod extends ItemSword
 {
     public ItemMobRod()
     {

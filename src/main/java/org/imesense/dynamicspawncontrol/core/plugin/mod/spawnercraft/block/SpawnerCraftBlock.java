@@ -5,8 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.creativetabs.SpawnerCraftTabs;
 
-/* loaded from: input.jar:cad97/spawnercraft/block/SpawnerCraftBlock.class */
-abstract class SpawnerCraftBlock extends Block
+public abstract class SpawnerCraftBlock extends Block
 {
     /* JADX INFO: Access modifiers changed from: package-private */
     public SpawnerCraftBlock(Material material)
