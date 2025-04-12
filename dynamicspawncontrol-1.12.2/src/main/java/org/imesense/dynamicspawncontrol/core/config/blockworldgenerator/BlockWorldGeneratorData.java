@@ -10,6 +10,11 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 @Accessors(fluent = true)
 public abstract class BlockWorldGeneratorData
 {
+    public BlockWorldGeneratorData()
+    {
+
+    }
+
     public static final BlockWorldGeneratorDataAbstract NETHER_RACK =
             new BlockWorldGeneratorDataAbstract("settings_block_nether_rack", 20, 5, 20) {};
 

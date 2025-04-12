@@ -2,6 +2,11 @@ package org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data
 
 public final class AddEnemy
 {
+    public AddEnemy()
+    {
+
+    }
+
     public static final class Data
     {
         public String[] enemies_to;

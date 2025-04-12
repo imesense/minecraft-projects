@@ -14,6 +14,11 @@ public final class Numbers
     private static final double night_multiplier =
             multiplier(PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).getNightLengthMinutes());
 
+    public Numbers()
+    {
+
+    }
+
     public static double multiplier(long worldTime)
     {
         return isDaytime(worldTime) ? day_multiplier : night_multiplier;

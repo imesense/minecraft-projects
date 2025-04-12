@@ -15,5 +15,8 @@ import java.util.stream.Collectors;
 
 public final class StructureCacheSystem
 {
+    public StructureCacheSystem()
+    {
 
+    }
 }

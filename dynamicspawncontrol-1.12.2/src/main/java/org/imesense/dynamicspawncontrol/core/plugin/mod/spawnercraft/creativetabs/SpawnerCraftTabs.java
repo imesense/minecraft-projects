@@ -8,6 +8,11 @@ import net.minecraft.item.ItemStack;
 
 public final class SpawnerCraftTabs
 {
+    public SpawnerCraftTabs()
+    {
+
+    }
+
     public static final CreativeTabs tab = new CreativeTabs("dynamicspawncontrol.tab")
     {
         @Nonnull

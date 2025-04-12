@@ -13,7 +13,12 @@ public abstract class BaseParserRegister
 {
     protected abstract Class<?>[] getParserClasses();
 
-    private final List<BaseParser> PARSER_LIST = new ArrayList<>();
+    protected final List<BaseParser> PARSER_LIST = new ArrayList<>();
+
+    public BaseParserRegister()
+    {
+
+    }
 
     public void init()
     {
@@ -46,7 +51,7 @@ public abstract class BaseParserRegister
         }
     }
 
-    private String getParserName(Class<?> parserClass)
+    protected String getParserName(Class<?> parserClass)
     {
         return parserClass.getSimpleName()
                 .replaceAll("([a-z])([A-Z]+)", "$1_$2")

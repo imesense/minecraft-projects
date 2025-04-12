@@ -10,6 +10,11 @@ import org.objectweb.asm.tree.MethodNode;
 
 public final class ClassTransformer implements IClassTransformer
 {
+    public ClassTransformer()
+    {
+
+    }
+
     public byte[] transform(String name, String transformedName, byte... basicClass)
     {
         if (transformedName.equals("net.minecraft.client.renderer.EntityRenderer"))

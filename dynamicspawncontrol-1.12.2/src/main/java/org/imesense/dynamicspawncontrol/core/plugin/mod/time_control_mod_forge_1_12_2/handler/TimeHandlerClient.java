@@ -13,6 +13,11 @@ public final class TimeHandlerClient implements ITimeHandler
     private long customTime = 0L;
     private double multiplier = 0.0D;
 
+    public TimeHandlerClient()
+    {
+
+    }
+
     public void tick(World world)
     {
         if (!PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isSyncToSystemTime())

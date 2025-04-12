@@ -14,6 +14,11 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventLivingAttackEvent extends BaseOnEventInstance
 {
+    public OnEventLivingAttackEvent()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingAttackEvent(LivingAttackEvent event)
     {

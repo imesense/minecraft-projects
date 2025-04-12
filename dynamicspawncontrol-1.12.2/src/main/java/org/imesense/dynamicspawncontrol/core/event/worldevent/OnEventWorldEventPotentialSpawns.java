@@ -13,6 +13,11 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPotentialSp
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventWorldEventPotentialSpawns extends BaseOnEventInstance
 {
+    public OnEventWorldEventPotentialSpawns()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPotentialSpawns_LOW(WorldEvent.PotentialSpawns event)
     {

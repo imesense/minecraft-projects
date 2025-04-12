@@ -4,6 +4,11 @@ import java.util.List;
 
 public final class EntityEquipment
 {
+    public EntityEquipment()
+    {
+
+    }
+
     public static final class Data
     {
         public List<ItemDescription.Data> heldItem;

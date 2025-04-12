@@ -21,6 +21,11 @@ public final class ConfigRegister extends BaseConfigRegister
         return CodeGeneric.getInstance(ConfigRegister.class);
     }
 
+    public ConfigRegister()
+    {
+        
+    }
+
     private static final Class<?>[] CONFIG_CLASSES =
     {
         WorldCacheConfig.class,

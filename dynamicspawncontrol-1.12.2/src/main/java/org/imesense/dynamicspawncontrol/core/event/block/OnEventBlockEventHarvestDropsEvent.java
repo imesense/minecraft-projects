@@ -13,6 +13,11 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.Dro
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventBlockEventHarvestDropsEvent extends BaseOnEventInstance
 {
+    public OnEventBlockEventHarvestDropsEvent()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnBlockEventHarvestDropsEvent_LOW(BlockEvent.HarvestDropsEvent event)
     {

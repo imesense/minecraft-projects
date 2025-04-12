@@ -14,6 +14,11 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.utility.NBT
 
 public final class SpawnerCraftRecipes
 {
+    public SpawnerCraftRecipes()
+    {
+
+    }
+
     public static void registerRecipes()
     {
         Ingredient essence = Ingredient.fromItem(SpawnerCraftItems.MOB_ESSENCE);

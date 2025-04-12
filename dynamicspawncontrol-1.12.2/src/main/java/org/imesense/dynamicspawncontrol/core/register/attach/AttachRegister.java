@@ -13,6 +13,11 @@ public final class AttachRegister extends BaseEventRegister
         return CodeGeneric.getInstance(AttachRegister.class);
     }
 
+    public AttachRegister()
+    {
+
+    }
+
     private static final Class<?>[] EVENT_CLASSES =
     {
         OnEventAttachCapabilitiesEvent.class

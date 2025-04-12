@@ -13,6 +13,11 @@ public abstract class BaseWorldGeneratorRegister
 {
     protected abstract Class<?>[] getWorldGeneratorClasses();
 
+    public BaseWorldGeneratorRegister()
+    {
+
+    }
+
     public void init(FMLPreInitializationEvent event)
     {
         for (Class<?> _class : getWorldGeneratorClasses())

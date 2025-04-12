@@ -4,6 +4,11 @@ import com.google.gson.JsonObject;
 
 public final class ItemDescription
 {
+    public ItemDescription()
+    {
+
+    }
+    
     public static final class Data
     {
         public String item;

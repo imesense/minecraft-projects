@@ -43,6 +43,11 @@ public final class WorldProviderTransformer implements IClassTransformer
     private static final String ON_GET_FOG_COLOR_NAME =
             "onGetFogColor";
 
+    public WorldProviderTransformer()
+    {
+
+    }
+
     @Override
     public byte[] transform(String name, String transformedName, byte... basicClass)
     {

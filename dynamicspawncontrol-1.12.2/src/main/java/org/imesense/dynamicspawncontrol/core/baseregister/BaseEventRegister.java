@@ -23,7 +23,7 @@ public abstract class BaseEventRegister
 {
     protected abstract Class<?>[] getEventClasses();
 
-    private static final List<BaseEventRegister> REGISTERS = new ArrayList<>();
+    protected static final List<BaseEventRegister> REGISTERS = new ArrayList<>();
 
     public BaseEventRegister()
     {

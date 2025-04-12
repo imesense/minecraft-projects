@@ -5,6 +5,11 @@ public final class GrassThreadMonitor
     private static GrassThreadMonitor instance;
     private final GrassThreadStats stats = new GrassThreadStats();
 
+    public GrassThreadMonitor()
+    {
+
+    }
+
     public static class GrassThreadStats
     {
         public int queueSize;

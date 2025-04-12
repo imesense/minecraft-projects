@@ -8,6 +8,11 @@ import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknes
 
 public final class WorldProviderHook
 {
+    public WorldProviderHook()
+    {
+
+    }
+
     public static Vec3d onGetFogColor(WorldProvider worldProvider, float angle, float partialTicks)
     {
         if (!PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessEndFog() && worldProvider instanceof WorldProviderEnd)

@@ -14,6 +14,11 @@ import org.imesense.dynamicspawncontrol.statistics.DSCInlineDebugStats;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventRenderGameOverlayEventPost extends BaseOnEventInstance
 {
+    public OnEventRenderGameOverlayEventPost()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnRenderGameOverlayEventPost_LOW(RenderGameOverlayEvent.Post event)
     {

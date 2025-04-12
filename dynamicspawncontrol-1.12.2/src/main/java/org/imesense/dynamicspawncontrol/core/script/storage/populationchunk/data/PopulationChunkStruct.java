@@ -6,6 +6,11 @@ import java.util.List;
 
 public final class PopulationChunkStruct
 {
+    public PopulationChunkStruct()
+    {
+
+    }
+
     public static final class Data
     {
         public ResourceLocation entity;

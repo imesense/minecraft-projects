@@ -34,6 +34,11 @@ public final class Configuration
         return AUTOMATIC_CLEANUP;
     }
 
+    public Configuration()
+    {
+
+    }
+
     @Setter
     @Getter
     public static final class AutoCleanup

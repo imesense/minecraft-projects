@@ -34,6 +34,11 @@ public final class TimeEvents
         return CodeGeneric.getInstance(TimeEvents.class);
     }
 
+    public TimeEvents()
+    {
+
+    }
+
     private static final ITimeHandler serverTime = new TimeHandlerServer();
     private static final ITimeHandler clientTime = new TimeHandlerClient();
 

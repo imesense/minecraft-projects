@@ -8,6 +8,11 @@ public final class MessageHandler
 {
     public static final SimpleNetworkWrapper INSTANCE;
 
+    public MessageHandler()
+    {
+
+    }
+
     public static void init()
     {
         INSTANCE.registerMessage(PacketTime.Handler.class, PacketTime.class, 0, Side.CLIENT);

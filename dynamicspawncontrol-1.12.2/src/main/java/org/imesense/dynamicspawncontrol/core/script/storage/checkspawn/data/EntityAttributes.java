@@ -4,6 +4,11 @@ import java.util.List;
 
 public final class EntityAttributes
 {
+    public EntityAttributes()
+    {
+
+    }
+
     public static final class Data
     {
         public String commandNbt;

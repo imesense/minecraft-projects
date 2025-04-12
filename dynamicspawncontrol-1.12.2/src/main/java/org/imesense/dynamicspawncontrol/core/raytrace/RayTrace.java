@@ -11,18 +11,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-/**
- *
- */
 public final class RayTrace
 {
-    /**
-     *
-     * @param worldIn
-     * @param entityPlayerMP
-     * @param useLiquids
-     * @return
-     */
+    public RayTrace()
+    {
+
+    }
+
     public static RayTraceResult getMovingObjectPositionFromPlayer(World worldIn, EntityPlayerMP entityPlayerMP, boolean useLiquids)
     {
         float pitch = entityPlayerMP.rotationPitch;
@@ -45,11 +40,6 @@ public final class RayTrace
         return worldIn.rayTraceBlocks(vec3, vec31, useLiquids, !useLiquids, false);
     }
 
-    /**
-     *
-     * @param entityPlayerMP
-     * @return
-     */
     private static Vec3d getPlayerEyes(EntityPlayerMP entityPlayerMP)
     {
         double x = entityPlayerMP.posX;
@@ -59,12 +49,6 @@ public final class RayTrace
         return new Vec3d(x, y, z);
     }
 
-    /**
-     *
-     * @param world
-     * @param entityPlayerMP
-     * @return
-     */
     public static boolean isPlayerStandingOnBlock(World world, EntityPlayerMP entityPlayerMP)
     {
         double posX = entityPlayerMP.posX;
@@ -81,11 +65,6 @@ public final class RayTrace
         return block != Blocks.AIR;
     }
 
-    /**
-     *
-     * @param entityPlayerMP
-     * @return
-     */
     public static BlockPos getBlockPosBelowPlayer(EntityPlayerMP entityPlayerMP)
     {
         double posX = entityPlayerMP.posX;

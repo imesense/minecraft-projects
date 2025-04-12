@@ -25,6 +25,11 @@ public final class MemoryEvents
         MemoryEvents.lastCleanTime = lastCleanTime;
     }
 
+    public MemoryEvents()
+    {
+
+    }
+
     @SideOnly(Side.CLIENT)
     public static void handleOnClientTick(TickEvent.ClientTickEvent event)
     {

@@ -1,6 +1,9 @@
 package org.imesense.dynamicspawncontrol.core.plugin.mod.lilliputian_1_0.handlers;
 
-public class EntitySizeHandler
+public final class EntitySizeHandler
 {
+    public EntitySizeHandler()
+    {
 
+    }
 }

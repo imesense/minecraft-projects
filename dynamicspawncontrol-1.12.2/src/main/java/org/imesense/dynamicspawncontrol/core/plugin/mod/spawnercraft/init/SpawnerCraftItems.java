@@ -21,6 +21,11 @@ public final class SpawnerCraftItems
     public static final ItemMobSpirit MOB_SPIRIT = new ItemMobSpirit();
     public static final ItemMobRod MOB_ROD = new ItemMobRod();
 
+    public SpawnerCraftItems()
+    {
+
+    }
+
     public static void registerItems()
     {
         ForgeRegistries.ITEMS.register(MOB_ESSENCE);

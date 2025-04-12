@@ -15,6 +15,11 @@ public final class ParserRegister extends BaseParserRegister
         return CodeGeneric.getInstance(ParserRegister.class);
     }
 
+    public ParserRegister()
+    {
+
+    }
+
     private static final Class<?>[] PARSER_CLASSES =
     {
         ParserEventCacheSettings.class,

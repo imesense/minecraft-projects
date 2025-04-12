@@ -14,6 +14,11 @@ public final class CommandRegister extends BaseCommandRegister
         return CodeGeneric.getInstance(CommandRegister.class);
     }
 
+    public CommandRegister()
+    {
+
+    }
+
     private static final Class<?>[] COMMAND_CLASSES =
     {
         CmdAdminDumpBlock.class,

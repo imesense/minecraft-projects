@@ -12,6 +12,11 @@ public abstract class BaseConfigRegister
 {
     protected abstract Class<?>[] getConfigClasses();
 
+    public BaseConfigRegister()
+    {
+
+    }
+
     public void initializeConfigs()
     {
         for (Class<?> configClass : getConfigClasses())
@@ -20,7 +25,7 @@ public abstract class BaseConfigRegister
         }
     }
 
-    private <T> void initializeConfig(Class<T> _class)
+    protected <T> void initializeConfig(Class<T> _class)
     {
         try
         {

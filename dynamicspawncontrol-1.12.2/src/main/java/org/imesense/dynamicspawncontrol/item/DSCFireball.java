@@ -10,80 +10,35 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
 public final class DSCFireball extends EntityFireball
 {
-    /**
-     *
-     */
     private double explosionStrength = 1.00;
 
-    /**
-     *
-     */
     private interface FireSpawnAction
     {
-        /**
-         *
-         * @param world
-         * @param blockPos
-         * @param radius
-         */
         void spawnFire(World world, BlockPos blockPos, int radius);
     }
 
-    /**
-     *
-     * @param worldIn
-     */
     public DSCFireball(World worldIn)
     {
         super(worldIn);
     }
 
-    /**
-     *
-     * @param worldIn
-     * @param x
-     * @param y
-     * @param z
-     * @param accelX
-     * @param accelY
-     * @param accelZ
-     */
     public DSCFireball(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ)
     {
         super(worldIn, x, y, z, accelX, accelY, accelZ);
     }
 
-    /**
-     *
-     * @param worldIn
-     * @param entityLivingBase
-     * @param accelX
-     * @param accelY
-     * @param accelZ
-     */
     public DSCFireball(World worldIn, EntityLivingBase entityLivingBase, double accelX, double accelY, double accelZ)
     {
         super(worldIn, entityLivingBase, accelX, accelY, accelZ);
     }
 
-    /**
-     *
-     * @param strength
-     */
     public void setExplosionStrength(double strength)
     {
         this.explosionStrength = strength;
     }
 
-    /**
-     *
-     * @param rayTraceResult
-     */
     @Override
     protected void onImpact(@Nonnull RayTraceResult rayTraceResult)
     {

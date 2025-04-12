@@ -17,6 +17,11 @@ public final class WorldGeneratorRegister extends BaseWorldGeneratorRegister
         return CodeGeneric.getInstance(WorldGeneratorRegister.class);
     }
 
+    public WorldGeneratorRegister()
+    {
+
+    }
+
     private static final Class<?>[] ORE_GENERATOR_CLASSES =
     {
         BlockNetherRack.class,

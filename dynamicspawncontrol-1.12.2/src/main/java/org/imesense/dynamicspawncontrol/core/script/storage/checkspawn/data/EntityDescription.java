@@ -4,6 +4,11 @@ import net.minecraft.util.ResourceLocation;
 
 public final class EntityDescription
 {
+    public EntityDescription()
+    {
+
+    }
+
     public static final class Data
     {
         public String name;

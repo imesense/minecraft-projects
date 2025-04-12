@@ -20,7 +20,13 @@ public final class TimeHandlerServer implements ITimeHandler
     private long customTime;
     private double multiplier;
     private boolean wasDaytime = true;
-    private static final Method wakeAllPlayers = ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "func_73053_d", new Class[0]);
+    private static final Method wakeAllPlayers = ReflectionHelper.findMethod(WorldServer.class,
+            "wakeAllPlayers", "func_73053_d", new Class[0]);
+
+    public TimeHandlerServer()
+    {
+
+    }
 
     public void tick(World world)
     {

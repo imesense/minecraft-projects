@@ -9,37 +9,13 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
-public class EntityAISpiderAvoidLight extends EntityAIBase
+public final class EntityAISpiderAvoidLight extends EntityAIBase
 {
-    /**
-     *
-     */
     private final double SPEED;
-
-    /**
-     *
-     */
     private BlockPos targetPosition;
-
-    /**
-     *
-     */
     private final int LIGHT_THRESHOLD;
-
-    /**
-     *
-     */
     private final EntityCreature SPIDER;
 
-    /**
-     *
-     * @param spider
-     * @param speed
-     * @param lightThreshold
-     */
     public EntityAISpiderAvoidLight(EntityCreature spider, double speed, int lightThreshold)
     {
         this.SPIDER = spider;
@@ -47,11 +23,6 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         this.LIGHT_THRESHOLD = lightThreshold;
         this.setMutexBits(1);
     }
-
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean shouldExecute()
     {
@@ -72,10 +43,6 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         return this.targetPosition != null;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean shouldContinueExecuting()
     {
@@ -90,9 +57,6 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         return blockPos.getY() < 50 && world.getLight(blockPos) > LIGHT_THRESHOLD;
     }
 
-    /**
-     *
-     */
     @Override
     public void startExecuting()
     {
@@ -113,12 +77,6 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         }
     }
 
-    /**
-     *
-     * @param blockPos
-     * @param world
-     * @return
-     */
     private BlockPos findDarkerSpot(BlockPos blockPos, World world)
     {
         List<BlockPos> darkSpots = new ArrayList<>();
@@ -148,12 +106,6 @@ public class EntityAISpiderAvoidLight extends EntityAIBase
         return null;
     }
 
-    /**
-     *
-     * @param blockPos
-     * @param world
-     * @return
-     */
     private boolean isNavigable(BlockPos blockPos, World world)
     {
         return world.isAirBlock(blockPos) || world.getBlockState(blockPos).getMaterial().isReplaceable();

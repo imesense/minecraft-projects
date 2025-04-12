@@ -2,8 +2,13 @@ package org.imesense.dynamicspawncontrol.core.plugin.mod.lilliputian_1_0.capabil
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public class DefaultSizeCapability implements ISizeCapability
+public final class DefaultSizeCapability implements ISizeCapability
 {
+    public DefaultSizeCapability()
+    {
+
+    }
+
     @Override
     public float getScale()
     {

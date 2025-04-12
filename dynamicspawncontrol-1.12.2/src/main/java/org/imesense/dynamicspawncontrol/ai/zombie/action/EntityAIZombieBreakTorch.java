@@ -9,10 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityAIZombieBreakTorch extends EntityAIBase
+public final class EntityAIZombieBreakTorch extends EntityAIBase
 {
     private BlockPos targetTorchPos;
-
     private final EntityZombie ZOMBIE;
 
     public EntityAIZombieBreakTorch(EntityZombie entityZombie)

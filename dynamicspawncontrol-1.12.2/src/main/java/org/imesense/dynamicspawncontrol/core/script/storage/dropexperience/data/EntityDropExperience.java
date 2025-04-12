@@ -6,6 +6,11 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 public final class EntityDropExperience
 {
+    public EntityDropExperience()
+    {
+
+    }
+
     public static final class Data
     {
         public ResourceLocation entity;
@@ -27,16 +32,6 @@ public final class EntityDropExperience
             Long worldTime = world.getWorldTime() % 24000;
 
             return worldTime >= this.worldTimeIntervalMin && worldTime <= this.worldTimeIntervalMax;
-        }
-
-        public Boolean validate()
-        {
-            if (this.use_default_xp)
-            {
-                return this.multi_xp != null;
-            }
-
-            return Boolean.TRUE;
         }
     }
 }
