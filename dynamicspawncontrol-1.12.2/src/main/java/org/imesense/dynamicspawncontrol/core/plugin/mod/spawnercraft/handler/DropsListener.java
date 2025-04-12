@@ -11,7 +11,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobSoul;
