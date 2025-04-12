@@ -1,39 +1,42 @@
-package org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.proxy;
+package org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.ConfigHandler;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.DropsListener;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftRecipes;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-abstract class CommonProxy implements IProxy
+public final class RegisterSpawnerCraft
 {
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void preInit(FMLPreInitializationEvent event)
+    private static volatile RegisterSpawnerCraft _INSTANCE;
+
+    public static RegisterSpawnerCraft getInstance()
     {
-        MinecraftForge.EVENT_BUS.register(ConfigHandler.instance);
-        MinecraftForge.EVENT_BUS.register(DropsListener.instance);
-        SpawnerCraftBlocks.registerBlocks();
-        SpawnerCraftItems.registerItems();
+        return CodeGeneric.getInstance(RegisterSpawnerCraft.class);
     }
 
-    @Override
-    @OverridingMethodsMustInvokeSuper
+    public RegisterSpawnerCraft()
+    {
+
+    }
+
+    public void preInit(FMLPreInitializationEvent event)
+    {
+        SpawnerCraftBlocks.registerBlocks();
+        SpawnerCraftItems.registerItems();
+
+        SpawnerCraftBlocks.registerModels();
+        SpawnerCraftItems.registerModels();
+    }
+
     public void init(FMLInitializationEvent event)
     {
         SpawnerCraftRecipes.registerRecipes();
-    }
-
-    @Override
-    @OverridingMethodsMustInvokeSuper
-    public void postInit(FMLPostInitializationEvent event)
-    {
-
+        SpawnerCraftItems.registerColors(Minecraft.getMinecraft().getItemColors());
     }
 }

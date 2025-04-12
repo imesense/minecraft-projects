@@ -11,7 +11,6 @@ public final class ConfigHandler
     public static boolean spawnerCraftable = false;
     public static boolean dropsRequireFishing = true;
     public static boolean isListBlacklist = true;
-    public static final ConfigHandler instance = new ConfigHandler();
     private static String[] DEFAULT_DISABLED_MOBS = new String[0];
     public static List mobEssenceToggleList = Arrays.asList(DEFAULT_DISABLED_MOBS);
     public static Map<String, String> eggMapping = new HashMap();

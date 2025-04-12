@@ -1,2 +1,11 @@
 item.dynamicspawncontrol.webbing.name=Webbing
 entity.dynamicspawncontrol.webbing.name=Webbing
+
+item.dynamicspawncontrol.mob_essence.name=Essence of %s
+item.dynamicspawncontrol.mob_agglomeration.name=Agglomeration of %s
+item.dynamicspawncontrol.mob_spirit.name=Spirit of %s
+item.dynamicspawncontrol.mob_rod.name=Mob Fishing Rod
+
+tile.dynamicspawncontrol.mob_cage.name=Empty Spawner
+
+itemGroup.dynamicspawncontrol.tab=DynamicSpawnControl
