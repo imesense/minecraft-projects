@@ -13,6 +13,11 @@ public final class SpawnerCraftBlocks
 {
     public static final Block MOB_CAGE = new BlockMobCage();
 
+    public SpawnerCraftBlocks()
+    {
+
+    }
+
     public static void registerBlocks()
     {
         ForgeRegistries.BLOCKS.register(MOB_CAGE);

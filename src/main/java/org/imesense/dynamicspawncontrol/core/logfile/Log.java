@@ -28,6 +28,11 @@ public final class Log
 
     private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
 
+    public Log()
+    {
+
+    }
+
     public static void createLogFile(final String PATH, boolean isDebugMode)
     {
         try

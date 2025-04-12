@@ -20,7 +20,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public class FogEventHandler
+public final class FogEventHandler
 {
     private static volatile FogEventHandler _INSTANCE;
 
@@ -47,7 +47,7 @@ public class FogEventHandler
     private static float fogFarPlaneDistance;
 
     //TODO: оставить это событие для кровавой луны
-    public static void handleGetFogColor(EntityViewRenderEvent.FogColors event)
+    public void handleGetFogColor(EntityViewRenderEvent.FogColors event)
     {
         /*
         Vec3d mixedColor;

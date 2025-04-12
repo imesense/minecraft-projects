@@ -13,6 +13,11 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateTorch;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventBlockEventBreakEvent extends BaseOnEventInstance
 {
+    public OnEventBlockEventBreakEvent()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnBlockEventBreakEvent_LOW(BlockEvent.BreakEvent event)
     {

@@ -17,22 +17,12 @@ import divinerpg.registry.ModSpawns;
 @Mixin(ModSpawns.class)
 public abstract class MixinDivineRPGFixSpawn
 {
-    /**
-     *
-     * @param livingSpawnEvent
-     * @param callbackInfo
-     */
     @Inject(method = "init", at = @At("HEAD"), cancellable = true, remap = false)
     private static void mixinInjectInit(LivingSpawnEvent livingSpawnEvent, CallbackInfo callbackInfo)
     {
         callbackInfo.cancel();
     }
 
-    /**
-     *
-     * @param livingSpawnEvent
-     * @param callbackInfo
-     */
     @Inject(method = "onLivingSpawn", at = @At("HEAD"), cancellable = true, remap = false)
     private static void mixinInjectOnLivingSpawn(LivingSpawnEvent livingSpawnEvent, CallbackInfo callbackInfo)
     {

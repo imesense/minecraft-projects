@@ -33,6 +33,11 @@ public final class FunctionalMobTaskManager
         return CodeGeneric.getInstance(FunctionalMobTaskManager.class);
     }
 
+    public FunctionalMobTaskManager()
+    {
+
+    }
+
     public static final EntityId ENTITY_ID = new EntityId();
 
     public static String fixEntityId(String id)

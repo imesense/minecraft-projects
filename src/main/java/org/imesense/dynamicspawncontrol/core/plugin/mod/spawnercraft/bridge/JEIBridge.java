@@ -17,6 +17,11 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.Spawne
 //@JEIPlugin
 public final class JEIBridge //implements IModPlugin
 {
+    public JEIBridge()
+    {
+
+    }
+
     //public void registerItemSubtypes(@Nonnull ISubtypeRegistry subtypeRegistry)
     // {
     //    subtypeRegistry.useNbtForSubtypes(new Item[]{SpawnerCraftItems.MOB_AGGLOMERATION, SpawnerCraftItems.MOB_ESSENCE, SpawnerCraftItems.MOB_SPIRIT});

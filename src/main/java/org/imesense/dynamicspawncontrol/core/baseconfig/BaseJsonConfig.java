@@ -24,8 +24,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class BaseJsonConfig
 {
-    private final Gson gson;
-    private final String configPath;
+    protected final Gson gson;
+    protected final String configPath;
 
     protected static final Map<Class<? extends BaseJsonConfig>, BaseJsonConfig> INSTANCES = new ConcurrentHashMap<>();
 
@@ -56,7 +56,7 @@ public abstract class BaseJsonConfig
         }
     }
 
-    private void loadConfig()
+    protected void loadConfig()
     {
         try (FileReader reader = new FileReader(configPath))
         {

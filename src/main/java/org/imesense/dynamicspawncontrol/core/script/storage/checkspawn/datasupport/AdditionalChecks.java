@@ -7,6 +7,11 @@ import java.util.List;
 
 public final class AdditionalChecks
 {
+    public AdditionalChecks()
+    {
+
+    }
+
     public static final class Data
     {
         public Boolean seeSky;

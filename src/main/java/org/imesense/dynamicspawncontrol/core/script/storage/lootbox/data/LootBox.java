@@ -2,6 +2,11 @@ package org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data;
 
 public final class LootBox
 {
+    public LootBox()
+    {
+
+    }
+
     public final static class Data
     {
         private String item;

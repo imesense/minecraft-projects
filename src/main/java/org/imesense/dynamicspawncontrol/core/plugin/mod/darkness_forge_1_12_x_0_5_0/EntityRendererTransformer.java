@@ -50,6 +50,11 @@ public final class EntityRendererTransformer implements IClassTransformer
     private static final String ON_UPDATE_LIGHTMAP_NAME =
             "onUpdateLightmap";
 
+    public EntityRendererTransformer()
+    {
+
+    }
+
     @Override
     public byte[] transform(String name, String transformedName, byte... basicClass)
     {

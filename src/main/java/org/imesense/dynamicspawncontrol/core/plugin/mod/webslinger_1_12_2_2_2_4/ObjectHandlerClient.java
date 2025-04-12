@@ -38,6 +38,11 @@ public final class ObjectHandlerClient
 
     public static SoundEvent WebbingNonStick;
 
+    public ObjectHandlerClient()
+    {
+
+    }
+
     @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
     public static class RegistrationHandler extends RegistrationHelper
     {

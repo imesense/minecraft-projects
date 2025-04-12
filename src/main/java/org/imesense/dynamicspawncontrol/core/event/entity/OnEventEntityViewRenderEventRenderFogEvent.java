@@ -14,6 +14,11 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogE
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventEntityViewRenderEventRenderFogEvent extends BaseOnEventInstance
 {
+    public OnEventEntityViewRenderEventRenderFogEvent()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityViewRenderEventRenderFogEvent_LOW(EntityViewRenderEvent.RenderFogEvent event)
     {

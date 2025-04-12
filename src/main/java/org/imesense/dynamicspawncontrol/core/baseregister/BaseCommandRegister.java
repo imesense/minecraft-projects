@@ -10,6 +10,11 @@ public abstract class BaseCommandRegister
 {
     protected abstract Class<?>[] getCommandClasses();
 
+    public BaseCommandRegister()
+    {
+
+    }
+
     public void registerCommands(FMLServerStartingEvent event)
     {
         for (Class<?> _class : getCommandClasses())

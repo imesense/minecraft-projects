@@ -10,6 +10,11 @@ public final class CommandEventRegister extends BaseEventRegister
         OnEventCommandEvent.class
     };
 
+    public CommandEventRegister()
+    {
+
+    }
+
     @Override
     protected Class<?>[] getEventClasses()
     {

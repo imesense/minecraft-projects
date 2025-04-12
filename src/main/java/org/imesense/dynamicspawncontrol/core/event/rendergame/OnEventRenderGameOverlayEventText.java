@@ -15,6 +15,11 @@ import org.imesense.dynamicspawncontrol.eventdescriptions.RenderFPS;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventRenderGameOverlayEventText extends BaseOnEventInstance
 {
+    public OnEventRenderGameOverlayEventText()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnRenderGameOverlayEventText_LOW(RenderGameOverlayEvent.Text event)
     {

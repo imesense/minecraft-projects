@@ -12,27 +12,13 @@ import org.spongepowered.asm.mixin.Mixins;
 import java.io.File;
 import java.util.Map;
 
-/**
- *
- */
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 @IFMLLoadingPlugin.Name(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 @IFMLLoadingPlugin.SortingIndex(LoadingPluginCore.AFTER_DEOBFUSCATION)
 public final class LoadingPluginCore implements IFMLLoadingPlugin
 {
-    /**
-     *
-     */
     public static File File_location;
-
-    /**
-     *
-     */
     public static Boolean Runtime_deobfuscation;
-
-    /**
-     *
-     */
     public static final int AFTER_DEOBFUSCATION = 1001;
 
     public LoadingPluginCore()
@@ -41,10 +27,6 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
         Mixins.addConfiguration("mixins.dynamicspawncontrol.json");
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String[] getASMTransformerClass()
     {
@@ -56,30 +38,18 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
         };
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String getModContainerClass()
     {
         return null;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String getSetupClass()
     {
         return null;
     }
 
-    /**
-     *
-     * @param objectMap
-     */
     @Override
     public void injectData(Map<String, Object> objectMap)
     {
@@ -97,10 +67,6 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
         }
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String getAccessTransformerClass()
     {

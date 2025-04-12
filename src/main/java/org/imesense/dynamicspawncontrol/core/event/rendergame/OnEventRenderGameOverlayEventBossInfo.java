@@ -12,6 +12,11 @@ import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventRenderGameOverlayEventBossInfo extends BaseOnEventInstance
 {
+    public OnEventRenderGameOverlayEventBossInfo()
+    {
+
+    }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnRenderGameOverlayEventBossInfo_LOW(RenderGameOverlayEvent.BossInfo event)
     {

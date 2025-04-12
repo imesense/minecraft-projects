@@ -7,6 +7,11 @@ import java.util.Map;
 
 public final class ConfigHandler
 {
+    public ConfigHandler()
+    {
+
+    }
+
     public static int spawnerDropSilkLevel = 0;
     public static boolean spawnerCraftable = false;
     public static boolean dropsRequireFishing = true;

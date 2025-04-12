@@ -30,6 +30,11 @@ public final class EntityRendererHook
 
     static Field bossColorModifierPrevField;
 
+    public EntityRendererHook()
+    {
+
+    }
+
     public static void onUpdateLightmap(EntityRenderer entityRenderer,
                                         float partialTicks) throws NoSuchFieldException, IllegalAccessException
     {

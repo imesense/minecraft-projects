@@ -30,6 +30,11 @@ public class FogEvent
         return CodeGeneric.getInstance(FogEvent.class);
     }
 
+    public FogEvent()
+    {
+
+    }
+
     //@SubscribeEvent
     public void handleFogVoidParticles(TickEvent.ClientTickEvent event) {
         if (/*!ConfigHandler.enabled ||*/ Minecraft.getMinecraft().isGamePaused()) {

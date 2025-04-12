@@ -21,7 +21,8 @@ public final class NBTPreservingShapedRecipe extends ShapedRecipes
                 NBTPreservingShapedRecipe.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
     }
 
-    public NBTPreservingShapedRecipe(String group, int width, int height, NonNullList<Ingredient> ingredients, ItemStack itemStack)
+    public NBTPreservingShapedRecipe(String group, int width, int height,
+                                     NonNullList<Ingredient> ingredients, ItemStack itemStack)
     {
         super(group, width, height, ingredients, itemStack);
         this.matchingCompound = null;

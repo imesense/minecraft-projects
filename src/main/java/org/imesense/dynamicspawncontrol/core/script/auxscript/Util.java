@@ -6,6 +6,11 @@ import com.google.gson.JsonObject;
 
 public final class Util
 {
+    public Util()
+    {
+
+    }
+
     public static JsonElement resolveTemplate(JsonElement jsonElement, JsonObject jsonObject)
     {
         if (jsonElement.isJsonPrimitive())

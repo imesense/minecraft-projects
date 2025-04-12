@@ -7,14 +7,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.ObjectHandlerClient;
 
-/**
- *
- */
 public final class CraftItemWeb implements IRecipes
 {
-    /**
-     *
-     */
+    public CraftItemWeb()
+    {
+
+    }
+
     @Override
     public void registry()
     {

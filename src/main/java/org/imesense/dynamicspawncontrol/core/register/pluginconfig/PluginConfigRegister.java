@@ -17,6 +17,11 @@ public final class PluginConfigRegister extends BaseConfigRegister
         return CodeGeneric.getInstance(PluginConfigRegister.class);
     }
 
+    public PluginConfigRegister()
+    {
+
+    }
+
     private static final Class<?>[] PLUGIN_CONFIG_CLASSES =
     {
         PluginDarknessConfig.class,

@@ -12,6 +12,11 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemM
 /* JADX INFO: Access modifiers changed from: package-private */
 public final class NBTPreservingShapedRecipeWrapper /*extends BlankRecipeWrapper*/
 {
+    public NBTPreservingShapedRecipeWrapper()
+    {
+
+    }
+
     //private final List<ItemStack> input;
     //private final ItemStack output;
 

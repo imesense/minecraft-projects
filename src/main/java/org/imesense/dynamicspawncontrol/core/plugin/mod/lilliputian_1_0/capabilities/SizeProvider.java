@@ -8,8 +8,13 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class SizeProvider implements ICapabilitySerializable<NBTTagCompound>
+public final class SizeProvider implements ICapabilitySerializable<NBTTagCompound>
 {
+    public SizeProvider()
+    {
+
+    }
+
     @Override
     public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing enumFacing)
     {

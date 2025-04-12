@@ -1,6 +1,9 @@
 package org.imesense.dynamicspawncontrol.core.plugin.mod.lilliputian_1_0.util;
 
-public class EntitySizeUtil
+public final class EntitySizeUtil
 {
+    public EntitySizeUtil()
+    {
 
+    }
 }

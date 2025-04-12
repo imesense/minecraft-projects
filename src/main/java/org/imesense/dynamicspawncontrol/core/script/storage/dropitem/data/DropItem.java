@@ -7,6 +7,11 @@ import java.util.List;
 
 public final class DropItem
 {
+    public DropItem()
+    {
+
+    }
+
     public static final class Data
     {
         public ResourceLocation entity;

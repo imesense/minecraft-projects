@@ -6,8 +6,13 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import javax.annotation.Nullable;
 
-public class SizeCapabilityStorage implements Capability.IStorage<ISizeCapability>
+public final class SizeCapabilityStorage implements Capability.IStorage<ISizeCapability>
 {
+    public SizeCapabilityStorage()
+    {
+
+    }
+
     @Nullable
     @Override
     public NBTBase writeNBT(Capability<ISizeCapability> iSizeCapabilityCapability, ISizeCapability iSizeCapability, EnumFacing enumFacing)
