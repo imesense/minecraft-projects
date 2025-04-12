@@ -37,8 +37,7 @@ public final class TodoTracker
                 return;
             }
 
-            String message = String.format("[Priority: %s] %s: %s",
-                    todo.priority(),
+            String message = String.format("%s: %s",
                     className.substring(className.lastIndexOf('.') + 1),
                     todo.value());
 
