@@ -4,26 +4,26 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-/* loaded from: input.jar:cad97/spawnercraft/proxy/ServerProxy.class */
+
 public final class ServerProxy extends CommonProxy
 {
-    @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
+    @Override
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void postInit(FMLPostInitializationEvent event)
+    public void postInit(FMLPostInitializationEvent event)
     {
         super.postInit(event);
     }
 
-    @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
+    @Override
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void init(FMLInitializationEvent event)
+    public void init(FMLInitializationEvent event)
     {
         super.init(event);
     }
 
-    @Override // cad97.spawnercraft.proxy.CommonProxy, cad97.spawnercraft.proxy.IProxy
+    @Override
     @OverridingMethodsMustInvokeSuper
-    public /* bridge */ /* synthetic */ void preInit(FMLPreInitializationEvent event)
+    public void preInit(FMLPreInitializationEvent event)
     {
         super.preInit(event);
     }

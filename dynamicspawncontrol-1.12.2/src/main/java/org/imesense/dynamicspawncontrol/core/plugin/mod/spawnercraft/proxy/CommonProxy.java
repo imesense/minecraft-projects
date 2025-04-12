@@ -11,28 +11,26 @@ import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.Spawne
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftRecipes;
 
-/* loaded from: input.jar:cad97/spawnercraft/proxy/CommonProxy.class */
 abstract class CommonProxy implements IProxy
 {
-    @Override // cad97.spawnercraft.proxy.IProxy
+    @Override
     @OverridingMethodsMustInvokeSuper
     public void preInit(FMLPreInitializationEvent event)
     {
-        ConfigHandler.init(event.getSuggestedConfigurationFile());
         MinecraftForge.EVENT_BUS.register(ConfigHandler.instance);
         MinecraftForge.EVENT_BUS.register(DropsListener.instance);
         SpawnerCraftBlocks.registerBlocks();
         SpawnerCraftItems.registerItems();
     }
 
-    @Override // cad97.spawnercraft.proxy.IProxy
+    @Override
     @OverridingMethodsMustInvokeSuper
     public void init(FMLInitializationEvent event)
     {
         SpawnerCraftRecipes.registerRecipes();
     }
 
-    @Override // cad97.spawnercraft.proxy.IProxy
+    @Override
     @OverridingMethodsMustInvokeSuper
     public void postInit(FMLPostInitializationEvent event)
     {
