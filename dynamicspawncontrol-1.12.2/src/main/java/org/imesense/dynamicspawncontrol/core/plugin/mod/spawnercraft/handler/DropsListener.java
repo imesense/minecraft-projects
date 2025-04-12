@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobSoul;
@@ -36,16 +37,43 @@ public final class DropsListener
 
     public void handleMobDrops(LivingDropsEvent event)
     {
-        EntityPlayer getTrueSource = (EntityPlayer) event.getSource().getTrueSource();
-
-        if (getTrueSource instanceof EntityPlayer)
+        try
         {
-            ItemStack heldItem = getTrueSource.getHeldItemMainhand();
+            if (event == null)
+            {
+                return;
+            }
+
+            if (event.getSource() == null)
+            {
+                return;
+            }
+
+            Entity trueSource = event.getSource().getTrueSource();
+
+            if (trueSource == null)
+            {
+                return;
+            }
+
+            if (!(trueSource instanceof EntityPlayer))
+            {
+                return;
+            }
+
+            EntityPlayer player = (EntityPlayer) trueSource;
+            ItemStack heldItem = player.getHeldItemMainhand();
+
+            if (heldItem.isEmpty())
+            {
+                return;
+            }
+
             if (heldItem.getItem() == SpawnerCraftItems.MOB_ROD || !ConfigHandler.dropsRequireFishing)
             {
                 dropFor(event.getEntity());
             }
-        }
+        } catch (Exception ignored) {}
     }
 
     private void dropFor(Entity entity)
