@@ -1,5 +1,7 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
@@ -14,6 +16,12 @@ import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollecti
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.ConfigHandler;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.DropsListener;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftRecipes;
+import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
@@ -83,10 +91,9 @@ public final class DynamicSpawnControl
     /**
      *
      * @param event
-     * @throws IllegalAccessException
      */
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event) throws IllegalAccessException
+    public void preInit(FMLPreInitializationEvent event)
     {
         globalDirectory = event.getModConfigurationDirectory();
 
@@ -176,6 +183,8 @@ public final class DynamicSpawnControl
         CmdCallTypeCollection.instance = new CmdCallTypeCollection();
         TextColorCollection.instance = new TextColorCollection();
         UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
+
+        RegisterSpawnerCraft.getInstance().preInit(event);
     }
 
     /**
@@ -188,6 +197,8 @@ public final class DynamicSpawnControl
         IRecipes = new CraftItemWeb();
 
         IRecipes.registry();
+
+        RegisterSpawnerCraft.getInstance().init(event);
     }
 
     /**

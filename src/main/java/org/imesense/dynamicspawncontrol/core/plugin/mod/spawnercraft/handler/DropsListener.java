@@ -10,21 +10,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftBlocks;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.init.SpawnerCraftItems;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.items.ItemMobSoul;
+import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+@InitLog
 public final class DropsListener
 {
-    public static final DropsListener instance = new DropsListener();
+    private static volatile DropsListener _INSTANCE;
 
-    private DropsListener()
+    public static DropsListener getInstance()
     {
-
+        return CodeGeneric.getInstance(DropsListener.class);
     }
 
-    //@SubscribeEvent
-    public void onMobDrops(LivingDropsEvent event)
+    public DropsListener()
+    {
+        if (this.getClass().isAnnotationPresent(InitLog.class))
+        {
+            CodeGeneric.logInitialization(this.getClass());
+        }
+    }
+
+    public void handleMobDrops(LivingDropsEvent event)
     {
         EntityPlayer getTrueSource = (EntityPlayer) event.getSource().getTrueSource();
 
@@ -65,8 +75,7 @@ public final class DropsListener
         }
     }
 
-    //@SubscribeEvent
-    public void onBlockDrops(BlockEvent.HarvestDropsEvent event)
+    public void handleBlockDrops(BlockEvent.HarvestDropsEvent event)
     {
         if ((event.getState().getBlock() instanceof BlockMobSpawner) && event.getHarvester() != null &&
                 EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, event.getHarvester().getHeldItemMainhand()) >=

@@ -11,6 +11,7 @@ public final class ItemMobRod extends ItemSword
     public ItemMobRod()
     {
         super(Item.ToolMaterial.IRON);
+
         setCreativeTab(SpawnerCraftTabs.tab);
         setUnlocalizedName("mob_rod");
         setRegistryName(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID, "mob_rod");
@@ -19,7 +20,7 @@ public final class ItemMobRod extends ItemSword
     @Nonnull
     public Item setUnlocalizedName(@Nonnull String string)
     {
-        return super.setUnlocalizedName("spawnercraft." + string);
+        return super.setUnlocalizedName("dynamicspawncontrol." + string);
     }
 }
 

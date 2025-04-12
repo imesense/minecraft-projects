@@ -15,6 +15,6 @@ public abstract class SpawnerCraftItem extends Item
     @Nonnull
     public Item setUnlocalizedName(@Nonnull String string)
     {
-        return super.setUnlocalizedName("spawnercraft." + string);
+        return super.setUnlocalizedName("dynamicspawncontrol." + string);
     }
 }

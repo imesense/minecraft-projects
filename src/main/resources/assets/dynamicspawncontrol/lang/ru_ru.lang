@@ -1,2 +1,11 @@
 item.dynamicspawncontrol.webbing.name=Паутина-ловушка
 entity.dynamicspawncontrol.webbing.name=Паутина-ловушка
+
+item.dynamicspawncontrol.mob_essence.name=Сущность %s
+item.dynamicspawncontrol.mob_agglomeration.name=Агломерация %s
+item.dynamicspawncontrol.mob_spirit.name=Дух %s
+item.dynamicspawncontrol.mob_rod.name=Моб-удочка
+
+tile.dynamicspawncontrol.mob_cage.name=Пустой спавнер
+
+itemGroup.dynamicspawncontrol.tab=DynamicSpawnControl
