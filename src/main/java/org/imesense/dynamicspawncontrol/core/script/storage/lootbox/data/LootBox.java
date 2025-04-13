@@ -1,5 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data;
 
+import lombok.Getter;
+
 public final class LootBox
 {
     public LootBox()
@@ -9,14 +11,16 @@ public final class LootBox
 
     public final static class Data
     {
+        @Getter
         private String item;
-        private int minCount = 1;
-        private int maxCount = 1;
-        private float chance = 1.0f;
 
-        public String getItem() { return item; }
-        public int getMinCount() { return minCount; }
-        public int getMaxCount() { return maxCount; }
-        public float getChance() { return chance; }
+        @Getter
+        private int minCount = 1;
+
+        @Getter
+        private int maxCount = 1;
+
+        @Getter
+        private float chance = 1.0f;
     }
 }

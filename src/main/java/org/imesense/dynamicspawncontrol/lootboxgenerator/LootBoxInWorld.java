@@ -40,7 +40,7 @@ public final class LootBoxInWorld implements IWorldGenerator
 
     @Override
     public void generate(Random random, int chunkX, int chunkZ,
-                         World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
+                         World world, IChunkGenerator iChunkGenerator, IChunkProvider iChunkProvider)
     {
         if (world.provider.getDimension() != 0)
         {

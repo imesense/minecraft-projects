@@ -28,6 +28,7 @@ public final class SynchronizationConfig extends BaseJsonConfig
     public SynchronizationConfig(String configPath)
     {
         super(configPath, true);
+
         loadOrCreateConfig();
     }
 
@@ -35,17 +36,17 @@ public final class SynchronizationConfig extends BaseJsonConfig
     protected JsonObject createDefaultConfig()
     {
         JsonObject jsonObject = new JsonObject();
+        JsonObject jsonObject1 = new JsonObject();
+        JsonObject jsonObject2 = new JsonObject();
 
-        JsonObject grassConfig = new JsonObject();
-        grassConfig.addProperty("ticks_between_checks", ticksBetweenChecks);
-        grassConfig.addProperty("checks_per_player", checksPerPlayer);
-        grassConfig.addProperty("growth_chance", growthChance);
-        grassConfig.addProperty("player_radius", playerRadius);
+        jsonObject1.addProperty("ticks_between_checks", ticksBetweenChecks);
+        jsonObject1.addProperty("checks_per_player", checksPerPlayer);
+        jsonObject1.addProperty("growth_chance", growthChance);
+        jsonObject1.addProperty("player_radius", playerRadius);
 
-        JsonObject threadConfigs = new JsonObject();
-        threadConfigs.add("ThreadOvergrowingGrass", grassConfig);
+        jsonObject2.add("ThreadOvergrowingGrass", jsonObject1);
 
-        jsonObject.add("thread_configs", threadConfigs);
+        jsonObject.add("thread_configs", jsonObject2);
 
         return jsonObject;
     }
@@ -55,30 +56,30 @@ public final class SynchronizationConfig extends BaseJsonConfig
     {
         if (jsonObject.has("thread_configs"))
         {
-            JsonObject threadConfigs = jsonObject.getAsJsonObject("thread_configs");
+            JsonObject jsonObject1 = jsonObject.getAsJsonObject("thread_configs");
 
-            if (threadConfigs.has("ThreadOvergrowingGrass"))
+            if (jsonObject1.has("ThreadOvergrowingGrass"))
             {
-                JsonObject grassConfig = threadConfigs.getAsJsonObject("ThreadOvergrowingGrass");
+                JsonObject jsonObject2 = jsonObject1.getAsJsonObject("ThreadOvergrowingGrass");
 
-                if (grassConfig.has("ticks_between_checks"))
+                if (jsonObject2.has("ticks_between_checks"))
                 {
-                    ticksBetweenChecks = grassConfig.get("ticks_between_checks").getAsInt();
+                    ticksBetweenChecks = jsonObject2.get("ticks_between_checks").getAsInt();
                 }
 
-                if (grassConfig.has("checks_per_player"))
+                if (jsonObject2.has("checks_per_player"))
                 {
-                    checksPerPlayer = grassConfig.get("checks_per_player").getAsInt();
+                    checksPerPlayer = jsonObject2.get("checks_per_player").getAsInt();
                 }
 
-                if (grassConfig.has("growth_chance"))
+                if (jsonObject2.has("growth_chance"))
                 {
-                    growthChance = grassConfig.get("growth_chance").getAsDouble();
+                    growthChance = jsonObject2.get("growth_chance").getAsDouble();
                 }
 
-                if (grassConfig.has("player_radius"))
+                if (jsonObject2.has("player_radius"))
                 {
-                    playerRadius = grassConfig.get("player_radius").getAsInt();
+                    playerRadius = jsonObject2.get("player_radius").getAsInt();
                 }
             }
         }

@@ -161,12 +161,14 @@ public final class DSCInlineDebugStats
         renderThreadStats(fontRenderer, x, currentY);
     }
 
-    private int drawDebugBlock(FontRenderer fontRenderer, int x, int y, int lineHeight, String... lines) {
+    private int drawDebugBlock(FontRenderer fontRenderer, int x, int y, int lineHeight, String... lines)
+    {
         for (String line : lines)
         {
             fontRenderer.drawString(line, x, y, 0xFFFFFF);
             y += lineHeight;
         }
+
         return y;
     }
 

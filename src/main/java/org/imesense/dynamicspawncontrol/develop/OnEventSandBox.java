@@ -164,10 +164,10 @@ public final class OnEventSandBox implements IDebug
         File file = getEntityFile(world);
         if (file.exists())
         {
-            try (FileReader reader = new FileReader(file))
+            try (FileReader fileReader = new FileReader(file))
             {
                 Type listType = new TypeToken<List<EntityData>>() {}.getType();
-                List<EntityData> loadedList = GSON.fromJson(reader, listType);
+                List<EntityData> loadedList = GSON.fromJson(fileReader, listType);
                 if (loadedList != null)
                 {
                     ENTITY_LIST.clear();

@@ -20,9 +20,9 @@ import java.util.List;
 @InitLog
 public final class PlayerNetwork
 {
-    private static final ArrayList<String> PLAYER_LIST = new ArrayList<>();
-
     private static volatile PlayerNetwork _INSTANCE;
+
+    private static final ArrayList<String> PLAYER_LIST = new ArrayList<>();
 
     public static PlayerNetwork getInstance()
     {
@@ -41,28 +41,28 @@ public final class PlayerNetwork
     {
         if (event.getEntity() instanceof EntityPlayerMP && !(event.getEntity() instanceof FakePlayer))
         {
-            EntityPlayerMP player = (EntityPlayerMP) event.getEntity();
+            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.getEntity();
 
-            if (!PLAYER_LIST.contains(player.getName()))
+            if (!PLAYER_LIST.contains(entityPlayerMP.getName()))
             {
-                PLAYER_LIST.add(player.getName());
-                Log.writeDataToLogFile(0, String.format("Player [%s] has been added to the list", player.getName()));
+                PLAYER_LIST.add(entityPlayerMP.getName());
+                Log.writeDataToLogFile(0, String.format("Player [%s] has been added to the list", entityPlayerMP.getName()));
             }
         }
     }
 
     public void handlePlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event)
     {
-        EntityPlayerMP player = (EntityPlayerMP) event.player;
-        PLAYER_LIST.remove(player.getName());
-        Log.writeDataToLogFile(0, String.format("Player [%s] has been removed from the list", player.getName()));
+        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.player;
+        PLAYER_LIST.remove(entityPlayerMP.getName());
+        Log.writeDataToLogFile(0, String.format("Player [%s] has been removed from the list", entityPlayerMP.getName()));
     }
 
     public void handlePlayerRespawn(PlayerEvent.PlayerRespawnEvent event)
     {
-        EntityPlayerMP player = (EntityPlayerMP) event.player;
-        World world = player.world;
-        BlockPos playerPos = player.getPosition();
+        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.player;
+        World world = entityPlayerMP.world;
+        BlockPos playerPos = entityPlayerMP.getPosition();
 
         int radius =
                 PlayerConfig.getInstance(PlayerConfig.class).getProtectRespawnPlayerRadius();

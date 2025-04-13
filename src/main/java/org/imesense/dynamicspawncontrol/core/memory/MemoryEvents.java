@@ -15,10 +15,12 @@ import java.util.*;
 
 public final class MemoryEvents
 {
+    private static int idleTime = 0;
+
     @Getter
     private static long lastCleanTime = 0L;
+
     private static final Set<UUID> recognizedPlayers = new LinkedHashSet<>();
-    private static int idleTime = 0;
 
     public static void setLastCleanTime(long lastCleanTime)
     {

@@ -51,12 +51,12 @@ public final class UpdateFire
         if (event.getEntity() instanceof EntityArrow &&
                 !event.getEntity().world.isRemote)
         {
-            EntityArrow arrowEntity = (EntityArrow) event.getEntity();
-            Entity shooter = arrowEntity.shootingEntity;
+            EntityArrow entityArrow = (EntityArrow) event.getEntity();
+            Entity shooter = entityArrow.shootingEntity;
 
             if (shooter instanceof AbstractSkeleton && shooter.isBurning() && !shooter.isDead && tryPercentage(0.70))
             {
-                arrowEntity.setFire(5);
+                entityArrow.setFire(5);
             }
         }
     }
@@ -92,8 +92,8 @@ public final class UpdateFire
                 else if (heldItem.getItem() == Items.FLINT_AND_STEEL)
                 {
                     event.getEntityLiving().setFire(3);
-                    EntityPlayerMP player = sourceLiving instanceof EntityPlayerMP ? (EntityPlayerMP) sourceLiving : null;
-                    heldItem.attemptDamageItem(1, sourceLiving.getRNG(), player);
+                    EntityPlayerMP entityPlayerMP = sourceLiving instanceof EntityPlayerMP ? (EntityPlayerMP) sourceLiving : null;
+                    heldItem.attemptDamageItem(1, sourceLiving.getRNG(), entityPlayerMP);
                 }
             }
         }

@@ -70,15 +70,17 @@ public abstract class BaseEventRegister
 
         Log.writeDataToLogFile(0, "Total registers created: " + REGISTERS.size());
 
-        for (BaseEventRegister register : REGISTERS)
+        for (BaseEventRegister baseEventRegister : REGISTERS)
         {
             try
             {
-                register.registerClasses();
+                baseEventRegister.registerClasses();
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception while registering events for: " + register.getClass().getSimpleName() + " - " + exception.getMessage());
+                Log.writeDataToLogFile(2, "Exception while registering events for: " +
+                        baseEventRegister.getClass().getSimpleName() + " - " + exception.getMessage());
+
                 throw new RuntimeException(exception);
             }
         }

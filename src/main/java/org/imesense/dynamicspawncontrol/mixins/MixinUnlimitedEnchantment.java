@@ -14,38 +14,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinUnlimitedEnchantment
 {
     @Inject(method = {"isCompatibleWith"}, at = {@At("HEAD")}, cancellable = true)
-    private void isCompatibleWith(Enchantment second, CallbackInfoReturnable<Boolean> info)
+    private void isCompatibleWith(Enchantment enchantment, CallbackInfoReturnable<Boolean> booleanCallbackInfoReturnable)
     {
-        Enchantment first = (Enchantment) (Object) this;
+        Enchantment first = (Enchantment)(Object)this;
 
-        if (!Loader.isModLoaded("togenc") && check(first, second, Enchantments.FORTUNE, Enchantments.SILK_TOUCH))
+        if (!Loader.isModLoaded("togenc") && check(first, enchantment, Enchantments.FORTUNE, Enchantments.SILK_TOUCH))
         {
-            info.setReturnValue(false);
+            booleanCallbackInfoReturnable.setReturnValue(false);
         }
         else
         {
-            info.setReturnValue(true);
+            booleanCallbackInfoReturnable.setReturnValue(true);
         }
     }
 
     @Unique
-    private static boolean check(Enchantment first, Enchantment second, Enchantment firstEnchant, Enchantment secondEnchant)
+    private static boolean check(Enchantment enchantmentFirst, Enchantment enchantmentSecond, Enchantment enchantmentFirst1, Enchantment enchantmentSecond2)
     {
-        return first.equals(firstEnchant) && second.equals(secondEnchant) ||
-                first.equals(secondEnchant) && second.equals(firstEnchant);
+        return enchantmentFirst.equals(enchantmentFirst1) && enchantmentSecond.equals(enchantmentSecond2) ||
+                enchantmentFirst.equals(enchantmentSecond2) && enchantmentSecond.equals(enchantmentFirst1);
     }
 
     @Unique
-    private static boolean check(Enchantment first, Enchantment second, String firstEnchant, String secondEnchant)
+    private static boolean check(Enchantment enchantmentFirst, Enchantment enchantmentSecond, String enchantmentFirst1, String enchantmentSecond2)
     {
-        return first.getName().equals(firstEnchant) &&
-                second.getName().equals(secondEnchant) ||
-                second.getName().equals(firstEnchant) && first.getName().equals(secondEnchant);
+        return enchantmentFirst.getName().equals(enchantmentFirst1) &&
+                enchantmentSecond.getName().equals(enchantmentSecond2) ||
+                enchantmentSecond.getName().equals(enchantmentFirst1) && enchantmentFirst.getName().equals(enchantmentSecond2);
     }
 
     @Inject(method = {"canApply"}, at = {@At("HEAD")}, cancellable = true)
-    private void canEnchant(ItemStack stack, CallbackInfoReturnable<Boolean> info)
+    private void canEnchant(ItemStack itemStack, CallbackInfoReturnable<Boolean> booleanCallbackInfoReturnable)
     {
-        info.setReturnValue(true);
+        booleanCallbackInfoReturnable.setReturnValue(true);
     }
 }

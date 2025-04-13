@@ -58,9 +58,9 @@ public abstract class BaseJsonConfig
 
     protected void loadConfig()
     {
-        try (FileReader reader = new FileReader(configPath))
+        try (FileReader fileReader = new FileReader(configPath))
         {
-            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
             applyConfig(jsonObject);
         }
         catch (IOException exception)
@@ -69,11 +69,11 @@ public abstract class BaseJsonConfig
         }
     }
 
-    public void saveConfig(JsonObject config)
+    public void saveConfig(JsonObject jsonObject)
     {
-        try (FileWriter writer = new FileWriter(configPath))
+        try (FileWriter fileWriter = new FileWriter(configPath))
         {
-            gson.toJson(config, writer);
+            gson.toJson(jsonObject, fileWriter);
         }
         catch (IOException exception)
         {

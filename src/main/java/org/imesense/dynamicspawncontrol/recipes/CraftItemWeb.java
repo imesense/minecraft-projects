@@ -19,10 +19,10 @@ public final class CraftItemWeb implements IRecipes
     {
         GameRegistry.addShapedRecipe(new ResourceLocation("dynamicspawncontrol", "webbing"), null,
                 new ItemStack(ObjectHandlerClient.ItemWebbing),
-                "SSS",
-                "SWS",
-                "SSS",
-                'S', Items.STRING,
-                'W', Items.SLIME_BALL);
+                "OOO",
+                "OGO",
+                "OOO",
+                'O', Items.STRING,
+                'G', Items.SLIME_BALL);
     }
 }

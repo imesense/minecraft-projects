@@ -10,53 +10,29 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- *
- */
 public final class UniqueField
 {
-    /**
-     *
-     */
     private static volatile UniqueField _INSTANCE;
 
-    /**
-     *
-     */
     @UniqueObject
     public static final Random RANDOM = new Random();
 
-    /**
-     *
-     */
     @UniqueObject
     public static final Minecraft CLIENT = Minecraft.getMinecraft();
 
-    /**
-     *
-     */
     @UniqueObject
     public static final Boolean LOGGING_CONSOLE_LEVEL_DEBUG = "debug".equalsIgnoreCase(System.getProperty("forge.logging.console.level"));
 
-    /**
-     *
-     */
     private UniqueField() throws IllegalAccessException
     {
         this.validateUniqueFields(this);
     }
 
-    /**
-     *
-     */
     public UniqueField getInstance()
     {
         return CodeGeneric.getInstance(UniqueField.class);
     }
 
-    /**
-     *
-     */
     private void validateUniqueFields(Object object) throws IllegalAccessException
     {
         Set<Object> uniqueValues = new HashSet<>();

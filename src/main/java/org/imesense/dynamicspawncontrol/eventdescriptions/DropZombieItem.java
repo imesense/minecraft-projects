@@ -55,7 +55,7 @@ public final class DropZombieItem
         }
     }
 
-    private void addDamagedItemToDrops(EntityZombie entityZombie, List<EntityItem> drops, ItemStack originalItem, double damageFactor)
+    private void addDamagedItemToDrops(EntityZombie entityZombie, List<EntityItem> entityItemList, ItemStack originalItem, double damageFactor)
     {
         if (originalItem.getItem() != Items.AIR)
         {
@@ -78,7 +78,7 @@ public final class DropZombieItem
                 itemStack.setItemDamage(randomDamage);
             }
 
-            for (EntityItem entityItem : drops)
+            for (EntityItem entityItem : entityItemList)
             {
                 ItemStack itemStack1 = entityItem.getItem();
 
@@ -88,7 +88,7 @@ public final class DropZombieItem
                 }
             }
 
-            drops.add(new EntityItem(entityZombie.world, entityZombie.posX, entityZombie.posY, entityZombie.posZ, itemStack));
+            entityItemList.add(new EntityItem(entityZombie.world, entityZombie.posX, entityZombie.posY, entityZombie.posZ, itemStack));
         }
     }
 }

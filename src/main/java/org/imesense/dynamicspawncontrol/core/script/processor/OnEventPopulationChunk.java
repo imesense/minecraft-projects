@@ -40,8 +40,6 @@ public final class OnEventPopulationChunk
 
         if (populationList != null)
         {
-            //Log.writeDataToLogFile(0, "Handling PopulateChunkEvent.Pre for " + populationList.size() + " mobs.");
-
             for (PopulationChunkStruct.Data data : populationList)
             {
                 EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(data.entity);
@@ -52,8 +50,6 @@ public final class OnEventPopulationChunk
 
                     if (_class != null)
                     {
-                        //Log.writeDataToLogFile(0, "Processing mob: " + data.entity.toString());
-
                         if (data.biomes != null && !data.biomes.isEmpty())
                         {
                             BlockPos pos = new BlockPos(event.getChunkX() * 16, 64, event.getChunkZ() * 16);
@@ -62,9 +58,6 @@ public final class OnEventPopulationChunk
 
                             String currentBiomeName = currentBiome.getRegistryName().toString();
                             String currentBiomeSimpleName = currentBiomeName.replace("minecraft:", "");
-
-                            //Log.writeDataToLogFile(0, "Config biome: " + data.biomes);
-                            //Log.writeDataToLogFile(0, "Current biome: " + currentBiomeName);
 
                             boolean isBiomeValid = false;
 
@@ -79,9 +72,6 @@ public final class OnEventPopulationChunk
 
                             if (!isBiomeValid)
                             {
-                                //Log.writeDataToLogFile(0, "Skipping mob " +
-                                //        data.entity.toString() + " due to biome mismatch.");
-
                                 continue;
                             }
                         }
@@ -94,13 +84,8 @@ public final class OnEventPopulationChunk
                             BlockPos pos = new BlockPos(chunkX, 62, chunkZ);
                             boolean isInWater = event.getWorld().getBlockState(pos).getMaterial().isLiquid();
 
-                            //Log.writeDataToLogFile(0, "Is in water: " + isInWater);
-
                             if (!isInWater)
                             {
-                                //Log.writeDataToLogFile(0,
-                                //        "Skipping mob " + data.entity.toString() + " due to not being in water.");
-
                                 continue;
                             }
                         }
@@ -142,7 +127,6 @@ public final class OnEventPopulationChunk
                                 {
                                     spawnList.add(new Biome.SpawnListEntry((Class<? extends EntityLiving>) _class,
                                             data.weight, data.groupCountMin, data.groupCountMax));
-                                    //Log.writeDataToLogFile(0, "Added mob to spawn list: " + data.entity.toString());
                                 }
                             }
                         }

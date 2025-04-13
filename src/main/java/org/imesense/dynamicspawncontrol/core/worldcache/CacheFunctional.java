@@ -34,7 +34,8 @@ public final class CacheFunctional
         }
     }
 
-    public int calculateMaxEntityCount(CacheEntityStorage.EntityData entityData, WorldServer worldServer, EntityPlayerMP player)
+    public int calculateMaxEntityCount(CacheEntityStorage.EntityData entityData,
+                                       WorldServer worldServer, EntityPlayerMP player)
     {
         int maxEntityCount = entityData.max_entity_count;
 

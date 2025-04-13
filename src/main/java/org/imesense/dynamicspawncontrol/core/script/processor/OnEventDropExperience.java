@@ -43,9 +43,9 @@ public final class OnEventDropExperience
         }
 
         GeneralDropExperience.getInstance().dropExperienceList.stream()
-        .filter(data -> entityResourceLocation.equals(data.entity))
-        .filter(data -> data.isTimeValid(world))
-        .findFirst()
+            .filter(data -> entityResourceLocation.equals(data.entity))
+            .filter(data -> data.isTimeValid(world))
+            .findFirst()
         .ifPresent(data ->
         {
             if (data.result == Event.Result.DENY)

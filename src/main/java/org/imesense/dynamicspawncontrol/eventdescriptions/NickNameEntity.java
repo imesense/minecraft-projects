@@ -53,10 +53,7 @@ public final class NickNameEntity
                 this.RANDOM_NAMES.add(line.trim());
             }
         }
-        catch (IOException exception)
-        {
-
-        }
+        catch (IOException ignored) {}
     }
 
     public void handleZombieSpawn(LivingSpawnEvent.SpecialSpawn event)

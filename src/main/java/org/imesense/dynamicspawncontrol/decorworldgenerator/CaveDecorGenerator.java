@@ -69,11 +69,11 @@ public final class CaveDecorGenerator implements IWorldGenerator
         }
     }
 
-    private boolean hasAnyNeighbor(World world, BlockPos pos)
+    private boolean hasAnyNeighbor(World world, BlockPos blockPos)
     {
         for (EnumFacing side : EnumFacing.values())
         {
-            if (!world.isAirBlock(pos.offset(side)))
+            if (!world.isAirBlock(blockPos.offset(side)))
             {
                 return true;
             }
@@ -82,19 +82,19 @@ public final class CaveDecorGenerator implements IWorldGenerator
         return false;
     }
 
-    private void placeWeb(World world, BlockPos pos)
+    private void placeWeb(World world, BlockPos blockPos)
     {
-        world.setBlockState(pos, Blocks.WEB.getDefaultState(), 2);
+        world.setBlockState(blockPos, Blocks.WEB.getDefaultState(), 2);
     }
 
-    private void placeMobHead(World world, BlockPos pos, Random random)
+    private void placeMobHead(World world, BlockPos blockPos, Random random)
     {
-        ItemStack skull = getRandomMobHead(random, pos.getY());
+        ItemStack skull = getRandomMobHead(random, blockPos.getY());
 
-        world.setBlockState(pos, Blocks.SKULL.getDefaultState()
+        world.setBlockState(blockPos, Blocks.SKULL.getDefaultState()
                 .withProperty(BlockSkull.FACING, EnumFacing.UP), 2);
 
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = world.getTileEntity(blockPos);
 
         if (tileEntity instanceof TileEntitySkull)
         {

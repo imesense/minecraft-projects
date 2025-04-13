@@ -80,15 +80,4 @@ public final class TodoTracker
             };
         }
     }
-
-    private static int getLogLevel(TODO.TodoPriority priority)
-    {
-        switch (priority)
-        {
-            case CRITICAL: return 3;
-            case HIGH: return 2;
-            case NORMAL: return 1;
-            default: return 0;
-        }
-    }
 }
