@@ -16,17 +16,21 @@ import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
+@TODO(
+        value = "Старые данные без конфига " +
+                "private float fogDensity = 0.1f; private int fogColor = 16777215;" +
+                "Оставить это событие для кровавой луны",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class FogEventHandler
 {
     private static volatile FogEventHandler _INSTANCE;
-
-    // TODO: старые данные без конфига:
-    // private float fogDensity = 0.1f;
-    // private int fogColor = 16777215;
 
     public static FogEventHandler getInstance()
     {
@@ -46,7 +50,6 @@ public final class FogEventHandler
     private static boolean fogInit;
     private static float fogFarPlaneDistance;
 
-    //TODO: оставить это событие для кровавой луны
     public void handleGetFogColor(EntityViewRenderEvent.FogColors event)
     {
         /*
@@ -74,7 +77,6 @@ public final class FogEventHandler
          */
     }
 
-    //TODO: оставить это событие для кровавой луны
     public static void handleRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
         /*
         float farPlaneDistance;
