@@ -26,7 +26,8 @@ public final class Potion
         }
     }
 
-    public void applyPotionEffects(EntityLivingBase entityLivingBase, List<PotionEffect.Data> listPotionEffectData, Random random)
+    public void applyPotionEffects(EntityLivingBase entityLivingBase,
+                                   List<PotionEffect.Data> listPotionEffectData, Random random)
     {
         if (listPotionEffectData != null && !listPotionEffectData.isEmpty())
         {

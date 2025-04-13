@@ -59,25 +59,25 @@ public final class UpdateTorch
         }
     }
 
-    public void handleZombieAttack(EntityZombie zombie, Entity target)
+    public void handleZombieAttack(EntityZombie entityZombie, Entity target)
     {
-        if (Block.getBlockFromItem(zombie.getHeldItemMainhand().getItem()) instanceof BlockTorch)
+        if (Block.getBlockFromItem(entityZombie.getHeldItemMainhand().getItem()) instanceof BlockTorch)
         {
             target.setFire(5);
         }
     }
 
-    public void handlePlayerAttack(EntityPlayerMP player, Entity target)
+    public void handlePlayerAttack(EntityPlayerMP entityPlayerMP, Entity target)
     {
-        if (Block.getBlockFromItem(player.getHeldItemMainhand().getItem()) instanceof BlockTorch)
+        if (Block.getBlockFromItem(entityPlayerMP.getHeldItemMainhand().getItem()) instanceof BlockTorch)
         {
             target.setFire(5);
         }
     }
 
-    public void handleSkeletonAttack(EntitySkeleton skeleton, Entity target)
+    public void handleSkeletonAttack(EntitySkeleton entitySkeleton, Entity target)
     {
-        if (Block.getBlockFromItem(skeleton.getHeldItemMainhand().getItem()) instanceof BlockTorch)
+        if (Block.getBlockFromItem(entitySkeleton.getHeldItemMainhand().getItem()) instanceof BlockTorch)
         {
             target.setFire(5);
         }
@@ -85,9 +85,9 @@ public final class UpdateTorch
 
     public void handleBlockBreak(BlockEvent.BreakEvent event)
     {
-        EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
+        EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.getPlayer();
 
-        if (Block.getBlockFromItem(player.getHeldItemMainhand().getItem()) instanceof BlockTorch)
+        if (Block.getBlockFromItem(entityPlayerMP.getHeldItemMainhand().getItem()) instanceof BlockTorch)
         {
             BlockPos blockPos = event.getPos();
             Block block = event.getState().getBlock();
@@ -96,16 +96,19 @@ public final class UpdateTorch
             {
                 event.setCanceled(true);
 
-                Explosion explosion = new Explosion(player.world,
-                        player, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100.0F, true, true);
+                Explosion explosion = new Explosion(entityPlayerMP.world,
+                        entityPlayerMP, blockPos.getX(), blockPos.getY(), blockPos.getZ(), 100.0F, true, true);
 
-                event.getState().getBlock().onBlockExploded(player.world, blockPos, explosion);
+                event.getState().getBlock().onBlockExploded(entityPlayerMP.world, blockPos, explosion);
 
-                if (!player.capabilities.isCreativeMode)
+                if (!entityPlayerMP.capabilities.isCreativeMode)
                 {
-                    player.getHeldItemMainhand().setCount(player.getHeldItemMainhand().getCount() - 1);
-                    EntityItem stickItem = new EntityItem(player.world, player.posX, player.posY, player.posZ, new ItemStack(Items.STICK));
-                    player.world.spawnEntity(stickItem);
+                    entityPlayerMP.getHeldItemMainhand().setCount(entityPlayerMP.getHeldItemMainhand().getCount() - 1);
+
+                    EntityItem stickItem = new EntityItem(entityPlayerMP.world, entityPlayerMP.posX,
+                            entityPlayerMP.posY, entityPlayerMP.posZ, new ItemStack(Items.STICK));
+
+                    entityPlayerMP.world.spawnEntity(stickItem);
                 }
             }
         }

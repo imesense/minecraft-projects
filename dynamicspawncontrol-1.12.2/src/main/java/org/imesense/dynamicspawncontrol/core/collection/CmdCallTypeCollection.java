@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.collection;
 
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.ArrayList;
@@ -8,6 +9,11 @@ import java.util.Collections;
 import java.util.List;
 
 @InitLog
+@TODO(
+        value = "Требуется рефакторинг",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 public final class CmdCallTypeCollection
 {
     public static CmdCallTypeCollection instance;

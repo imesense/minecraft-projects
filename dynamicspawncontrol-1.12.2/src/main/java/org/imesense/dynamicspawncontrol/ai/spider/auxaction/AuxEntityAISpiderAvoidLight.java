@@ -8,9 +8,9 @@ public final class AuxEntityAISpiderAvoidLight extends EntityAIBase
     private int delay;
     private final EntityAIBase ORIGINAL_TASK;
 
-    public AuxEntityAISpiderAvoidLight(EntityCreature entity, EntityAIBase originalTask, int delay)
+    public AuxEntityAISpiderAvoidLight(EntityCreature entityCreature, EntityAIBase entityAIBase, int delay)
     {
-        this.ORIGINAL_TASK = originalTask;
+        this.ORIGINAL_TASK = entityAIBase;
         this.delay = delay;
     }
 

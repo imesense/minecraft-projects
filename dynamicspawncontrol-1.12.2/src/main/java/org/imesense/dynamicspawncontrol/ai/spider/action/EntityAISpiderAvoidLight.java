@@ -16,13 +16,14 @@ public final class EntityAISpiderAvoidLight extends EntityAIBase
     private final int LIGHT_THRESHOLD;
     private final EntityCreature SPIDER;
 
-    public EntityAISpiderAvoidLight(EntityCreature spider, double speed, int lightThreshold)
+    public EntityAISpiderAvoidLight(EntityCreature entityCreature, double speed, int lightThreshold)
     {
-        this.SPIDER = spider;
+        this.SPIDER = entityCreature;
         this.SPEED = speed;
         this.LIGHT_THRESHOLD = lightThreshold;
         this.setMutexBits(1);
     }
+
     @Override
     public boolean shouldExecute()
     {
@@ -40,6 +41,7 @@ public final class EntityAISpiderAvoidLight extends EntityAIBase
         }
 
         this.targetPosition = findDarkerSpot(blockPos, world);
+
         return this.targetPosition != null;
     }
 

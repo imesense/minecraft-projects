@@ -43,19 +43,19 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
     private void saveBlockSettings(JsonObject jsonObject,
                                    BlockWorldGeneratorDataAbstract blockWorldGeneratorDataAbstract)
     {
-        JsonObject blockSettings = new JsonObject();
+        JsonObject jsonObject1 = new JsonObject();
 
-        blockSettings.addProperty("chance_spawn",
+        jsonObject1.addProperty("chance_spawn",
                 blockWorldGeneratorDataAbstract.getChanceSpawn());
 
-        blockSettings.addProperty("min_height",
+        jsonObject1.addProperty("min_height",
                 blockWorldGeneratorDataAbstract.getMinHeight());
 
-        blockSettings.addProperty("max_height",
+        jsonObject1.addProperty("max_height",
                 blockWorldGeneratorDataAbstract.getMaxHeight());
 
         jsonObject.add(blockWorldGeneratorDataAbstract.getCategory(),
-                blockSettings);
+                jsonObject1);
     }
 
     private void loadBlockSettings(JsonObject jsonObject,
@@ -63,17 +63,17 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
     {
         if (jsonObject.has(blockWorldGeneratorDataAbstract.getCategory()))
         {
-            JsonObject blockSettings =
+            JsonObject jsonObject1 =
                     jsonObject.getAsJsonObject(blockWorldGeneratorDataAbstract.getCategory());
 
             blockWorldGeneratorDataAbstract.
-                    setChanceSpawn(blockSettings.get("chance_spawn").getAsInt());
+                    setChanceSpawn(jsonObject1.get("chance_spawn").getAsInt());
 
             blockWorldGeneratorDataAbstract.
-                    setMinHeight(blockSettings.get("min_height").getAsInt());
+                    setMinHeight(jsonObject1.get("min_height").getAsInt());
 
             blockWorldGeneratorDataAbstract.
-                    setMaxHeight(blockSettings.get("max_height").getAsInt());
+                    setMaxHeight(jsonObject1.get("max_height").getAsInt());
         }
         else
         {

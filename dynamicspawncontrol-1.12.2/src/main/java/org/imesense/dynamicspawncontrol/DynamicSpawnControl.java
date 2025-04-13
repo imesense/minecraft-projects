@@ -34,9 +34,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Main class of modification
- */
 @Mod(
     modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
     name = DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME,
@@ -44,48 +41,25 @@ import java.io.InputStreamReader;
 )
 public final class DynamicSpawnControl
 {
-    /**
-     *
-     */
     @Mod.Instance
     public static DynamicSpawnControl Instance;
 
-    /**
-     *
-     */
     private static File globalDirectory = null;
 
-    /**
-     *
-     * @return
-     */
     public static File getGlobalPathToConfigs()
     {
         return globalDirectory;
     }
 
-    /**
-     *
-     */
     public static IRecipes IRecipes;
 
-    /**
-     *
-     */
     public DynamicSpawnControl()
     {
         Instance = this;
     }
 
-    /**
-     *
-     */
     public static SimpleNetworkWrapper networkWrapper = null;
 
-    /**
-     *
-     * @param event
-     */
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -183,10 +157,6 @@ public final class DynamicSpawnControl
         RegisterSpawnerCraft.getInstance().preInit(event);
     }
 
-    /**
-     *
-     * @param event
-     */
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
@@ -197,10 +167,6 @@ public final class DynamicSpawnControl
         RegisterSpawnerCraft.getInstance().init(event);
     }
 
-    /**
-     *
-     * @param event
-     */
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
@@ -210,30 +176,18 @@ public final class DynamicSpawnControl
         }
     }
 
-    /**
-     *
-     * @param event
-     */
     @Mod.EventHandler
     public void onLoadComplete(FMLLoadCompleteEvent event)
     {
 
     }
 
-    /**
-     *
-     * @param event
-     */
     @Mod.EventHandler
     public void serverLoad(FMLServerStartingEvent event)
     {
         CommandRegister.getInstance().registerCommands(event);
     }
 
-    /**
-     *
-     * @param event
-     */
     @Mod.EventHandler
     public void serverStopped(FMLServerStoppedEvent event)
     {
@@ -245,10 +199,6 @@ public final class DynamicSpawnControl
         Log.writeDataToLogFile(0, "CacheGeneralStorage cleaned up successfully.");
     }
 
-    /**
-     *
-     * @param event
-     */
     @Mod.EventHandler
     public static void onServerShutdown(FMLServerStoppingEvent event)
     {

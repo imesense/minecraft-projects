@@ -30,15 +30,15 @@ public final class RenderFPS
     {
         if (!(UniqueField.CLIENT.currentScreen instanceof net.minecraft.client.gui.GuiChat))
         {
-            ScaledResolution scaled = new ScaledResolution(UniqueField.CLIENT);
+            ScaledResolution scaledResolution = new ScaledResolution(UniqueField.CLIENT);
 
             String fpsText = "FPS: " + Minecraft.getDebugFPS();
 
             int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(fpsText);
 
-            int x = scaled.getScaledWidth() - textWidth - 2;
+            int x = scaledResolution.getScaledWidth() - textWidth - 2;
 
-            UniqueField.CLIENT.fontRenderer.drawString(fpsText, x, scaled.getScaledHeight() - 10, 0x80FFFFFF);
+            UniqueField.CLIENT.fontRenderer.drawString(fpsText, x, scaledResolution.getScaledHeight() - 10, 0x80FFFFFF);
         }
     }
 }

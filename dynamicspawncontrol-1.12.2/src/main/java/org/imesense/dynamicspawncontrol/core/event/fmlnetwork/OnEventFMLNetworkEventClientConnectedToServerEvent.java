@@ -22,8 +22,8 @@ public final class OnEventFMLNetworkEventClientConnectedToServerEvent extends Ba
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnFMLNetworkEventClientConnectedToServerEvent_LOW(FMLNetworkEvent.ClientConnectedToServerEvent event)
     {
-        String serverAddress = "unknown";
         String playerName = "unknown";
+        String serverAddress = "unknown";
 
         if (event.getManager() != null && event.getManager().getRemoteAddress() != null)
         {

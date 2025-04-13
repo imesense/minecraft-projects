@@ -26,12 +26,12 @@ public abstract class BaseParserRegister
         {
             try
             {
-                BaseParser parser = (BaseParser) _class.getConstructor(String.class)
+                BaseParser baseParser = (BaseParser) _class.getConstructor(String.class)
                         .newInstance(getParserName(_class));
 
-                PARSER_LIST.add(parser);
+                PARSER_LIST.add(baseParser);
 
-                parser.loadConfig(true);
+                baseParser.loadConfig(true);
             }
             catch (Exception exception)
             {
@@ -45,15 +45,15 @@ public abstract class BaseParserRegister
 
     public void reloadAllConfigs()
     {
-        for (BaseParser parser : PARSER_LIST)
+        for (BaseParser baseParser : PARSER_LIST)
         {
-            parser.reloadConfig();
+            baseParser.reloadConfig();
         }
     }
 
-    protected String getParserName(Class<?> parserClass)
+    protected String getParserName(Class<?> _class)
     {
-        return parserClass.getSimpleName()
+        return _class.getSimpleName()
                 .replaceAll("([a-z])([A-Z]+)", "$1_$2")
                 .toLowerCase() + DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.SCRIPT_FILE_EXTENSION;
     }

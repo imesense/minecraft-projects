@@ -126,20 +126,21 @@ public final class ComplexityBiomes
         }
     }
 
-    public void handleBiomesChange(EntityPlayerMP player)
+    public void handleBiomesChange(EntityPlayerMP entityPlayerMP)
     {
-        boolean isUnderground = player.posY <= 55 &&
-                !player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ));
+        boolean isUnderground = entityPlayerMP.posY <= 55 &&
+                !entityPlayerMP.world.canSeeSky(new BlockPos(entityPlayerMP.posX,
+                        entityPlayerMP.posY + entityPlayerMP.getEyeHeight(), entityPlayerMP.posZ));
 
         if (isUnderground)
         {
-            int currentDepthLevel = getDepthLevel(player.posY);
+            int currentDepthLevel = getDepthLevel(entityPlayerMP.posY);
 
             if (currentDepthLevel != lastDepthLevel)
             {
                 lastDepthLevel = currentDepthLevel;
                 lastDepthChangeTime = System.currentTimeMillis();
-                targetDepthSkulls = getSkullCountsForDepth(player.posY);
+                targetDepthSkulls = getSkullCountsForDepth(entityPlayerMP.posY);
                 skullChangeStartTime = System.currentTimeMillis();
             }
 
@@ -151,7 +152,7 @@ public final class ComplexityBiomes
         }
         else
         {
-            Biome biome = player.world.getBiome(player.getPosition());
+            Biome biome = entityPlayerMP.world.getBiome(entityPlayerMP.getPosition());
 
             if (biome != currentBiome)
             {
@@ -208,17 +209,18 @@ public final class ComplexityBiomes
 
     public void renderBiomesOverlay()
     {
-        EntityPlayer player = UniqueField.CLIENT.player;
+        EntityPlayer entityPlayer = UniqueField.CLIENT.player;
 
-        if (player == null)
+        if (entityPlayer == null)
         {
             return;
         }
 
         long currentTime = System.currentTimeMillis();
 
-        boolean isUnderground = player.posY <= 55 &&
-                !player.world.canSeeSky(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ));
+        boolean isUnderground = entityPlayer.posY <= 55 &&
+                !entityPlayer.world.canSeeSky(new BlockPos(entityPlayer.posX,
+                        entityPlayer.posY + entityPlayer.getEyeHeight(), entityPlayer.posZ));
 
         if (isUnderground)
         {

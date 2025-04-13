@@ -33,16 +33,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 @InitLog
 public final class OvergrowingGrass
 {
+    private static volatile OvergrowingGrass _INSTANCE;
     private static final GrassThreadMonitor grassMonitor = GrassThreadMonitor.getInstance();
 
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
-    private static volatile OvergrowingGrass _INSTANCE;
 
     private static final ExecutorService WORKER = Executors.newFixedThreadPool(1, r ->
     {
-        Thread t = new Thread(r, "OvergrowingGrass Worker");
-        t.setDaemon(true);
-        return t;
+        Thread thread = new Thread(r, "OvergrowingGrass Worker");
+        thread.setDaemon(true);
+        return thread;
     });
 
     private final BlockingQueue<GrowthTask> taskQueue = new LinkedBlockingQueue<>();
@@ -130,16 +130,16 @@ public final class OvergrowingGrass
         });
     }
 
-    private void processGrowthTask(GrowthTask task, World world)
+    private void processGrowthTask(GrowthTask growthTask, World world)
     {
-        int y = getHeightSafely(world, task.x, task.z) - 1;
+        int y = getHeightSafely(world, growthTask.X, growthTask.Z) - 1;
 
         if (y < 0)
         {
             return;
         }
 
-        BlockPos pos = new BlockPos(task.x, y, task.z);
+        BlockPos pos = new BlockPos(growthTask.X, y, growthTask.Z);
 
         world.getMinecraftServer().addScheduledTask(() ->
         {
@@ -149,7 +149,7 @@ public final class OvergrowingGrass
             BlockPos abovePos = pos.up();
             IBlockState aboveState = world.getBlockState(abovePos);
 
-            GrowthType growthType = determineGrowthType(world, abovePos, aboveState, task.randomSeed);
+            GrowthType growthType = determineGrowthType(world, abovePos, aboveState, growthTask.randomSeed);
             if (growthType == GrowthType.NONE) return;
 
             applyGrowth(world, pos, abovePos, growthType);
@@ -216,15 +216,15 @@ public final class OvergrowingGrass
 
     private static class GrowthTask
     {
-        final World world;
-        final int x, z;
+        final World WORLD;
+        final int X, Z;
         final long randomSeed;
 
         protected GrowthTask(World world, int x, int z, long randomSeed)
         {
-            this.world = world;
-            this.x = x;
-            this.z = z;
+            this.WORLD = world;
+            this.X = x;
+            this.Z = z;
             this.randomSeed = randomSeed;
         }
     }

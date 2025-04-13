@@ -43,8 +43,9 @@ public final class Equipment
     {
         if (listItem != null && !listItem.isEmpty())
         {
-            Object item = listItem.get(random.nextInt(listItem.size()));
             ItemStack itemStack;
+
+            Object item = listItem.get(random.nextInt(listItem.size()));
 
             if (item instanceof ItemDescription.Data)
             {

@@ -49,13 +49,13 @@ public final class CommandNBT
         }
     }
 
-    public NBTTagCompound createEnchantmentNbt(JsonObject nbtObject, Random random)
+    public NBTTagCompound createEnchantmentNbt(JsonObject jsonObject, Random random)
     {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();
 
-        if (nbtObject.has("ench"))
+        if (jsonObject.has("ench"))
         {
-            JsonArray enchantmentsArray = nbtObject.getAsJsonArray("ench");
+            JsonArray enchantmentsArray = jsonObject.getAsJsonArray("ench");
             NBTTagList enchantmentsList = new NBTTagList();
 
             for (JsonElement enchantmentsElement : enchantmentsArray)
@@ -87,11 +87,11 @@ public final class CommandNBT
                     level = Integer.parseInt(lvl);
                 }
 
-                NBTTagCompound enchantmentsTag = new NBTTagCompound();
+                NBTTagCompound nbtTagCompound1 = new NBTTagCompound();
 
-                enchantmentsTag.setShort("id", (short) id);
-                enchantmentsTag.setShort("lvl", (short) level);
-                enchantmentsList.appendTag(enchantmentsTag);
+                nbtTagCompound1.setShort("id", (short) id);
+                nbtTagCompound1.setShort("lvl", (short) level);
+                enchantmentsList.appendTag(nbtTagCompound1);
             }
 
             nbtTagCompound.setTag("ench", enchantmentsList);

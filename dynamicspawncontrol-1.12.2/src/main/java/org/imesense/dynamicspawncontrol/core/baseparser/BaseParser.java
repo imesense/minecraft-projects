@@ -38,11 +38,11 @@ public abstract class BaseParser
     {
         Log.writeDataToLogFile(0, "Reloading config for: " + this.nameFile);
 
-        EraseData data = this::eraseData;
-        data.eraseData();
+        EraseData eraseData = this::eraseData;
+        eraseData.eraseData();
 
-        ConfigLoader loader = this::loadConfig;
-        loader.load(false);
+        ConfigLoader configLoader = this::loadConfig;
+        configLoader.load(false);
 
         Log.writeDataToLogFile(0, "Config reloaded successfully for: " + this.nameFile);
     }
@@ -55,22 +55,22 @@ public abstract class BaseParser
     {
         try
         {
-            File parentDir = FILE.getParentFile();
+            File file = FILE.getParentFile();
 
-            if (!parentDir.exists())
+            if (!file.exists())
             {
-                Log.writeDataToLogFile(0, "Directory does not exist, creating: " + parentDir.getAbsolutePath());
+                Log.writeDataToLogFile(0, "Directory does not exist, creating: " + file.getAbsolutePath());
 
-                if (!parentDir.mkdirs())
+                if (!file.mkdirs())
                 {
-                    throw new IOException("Failed to create directory: " + parentDir.getAbsolutePath());
+                    throw new IOException("Failed to create directory: " + file.getAbsolutePath());
                 }
             }
 
-            try (FileWriter writer = new FileWriter(FILE))
+            try (FileWriter fileWriter = new FileWriter(FILE))
             {
-                writer.write("[]");
-                writer.flush();
+                fileWriter.write("[]");
+                fileWriter.flush();
             }
         }
         catch (IOException exception)

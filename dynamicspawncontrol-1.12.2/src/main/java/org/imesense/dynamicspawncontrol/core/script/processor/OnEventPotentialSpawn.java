@@ -33,10 +33,10 @@ public final class OnEventPotentialSpawn
 
     public void handlePotentialSpawns(WorldEvent.PotentialSpawns event)
     {
-        GeneralPotentialSpawnStorage storage = GeneralPotentialSpawnStorage.getInstance();
+        GeneralPotentialSpawnStorage generalPotentialSpawnStorage = GeneralPotentialSpawnStorage.getInstance();
 
-        List<Biome.SpawnListEntry> spawnEntries = storage.spawnEntries;
-        List<PotentialSpawnStruct.Data> secondaryParameters = storage.potentialSpawnStruct;
+        List<Biome.SpawnListEntry> spawnEntries = generalPotentialSpawnStorage.spawnEntries;
+        List<PotentialSpawnStruct.Data> secondaryParameters = generalPotentialSpawnStorage.potentialSpawnStruct;
 
         if (spawnEntries.isEmpty() || secondaryParameters.isEmpty())
         {

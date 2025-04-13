@@ -42,13 +42,13 @@ public final class FunctionalMobTaskManager
 
     public static String fixEntityId(String id)
     {
-        NBTTagCompound nbtXompound = new NBTTagCompound();
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
 
-        nbtXompound.setString("id", id);
+        nbtTagCompound.setString("id", id);
 
-        nbtXompound = ENTITY_ID.fixTagCompound(nbtXompound);
+        nbtTagCompound = ENTITY_ID.fixTagCompound(nbtTagCompound);
 
-        return nbtXompound.getString("id");
+        return nbtTagCompound.getString("id");
     }
 
     public void processAddEnemyData(EntityJoinWorldEvent event)

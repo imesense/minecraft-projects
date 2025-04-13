@@ -17,7 +17,9 @@ public abstract class BaseOnEventInstance
         {
             if (INSTANCE_EXITS_MAP.getOrDefault(_class, false))
             {
-                Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", _class.getSimpleName()));
+                Log.writeDataToLogFile(2,
+                        String.format("An instance of [%s] already exists!", _class.getSimpleName()));
+
                 throw new RuntimeException();
             }
 

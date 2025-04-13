@@ -57,7 +57,7 @@ public final class DropSkeletonItem
         }
     }
 
-    private void handleArrowDrops(EntitySkeleton skeleton, List<EntityItem> drops)
+    private void handleArrowDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops)
     {
         double arrowDropChance = 0.50;
 
@@ -81,13 +81,13 @@ public final class DropSkeletonItem
 
             if (!arrowsDropped)
             {
-                addArrowsToDrops(skeleton, drops, SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getArrowsToDrops());
+                addArrowsToDrops(entitySkeleton, drops, SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getArrowsToDrops());
             }
         }
     }
 
     private void addDamagedItemToDrops(EntitySkeleton entitySkeleton,
-                                       List<EntityItem> drops, ItemStack originalItem, double damageFactor)
+                                       List<EntityItem> entityItemList, ItemStack originalItem, double damageFactor)
     {
         if (originalItem.getItem() != Items.AIR)
         {
@@ -109,7 +109,7 @@ public final class DropSkeletonItem
                 itemStack.setItemDamage(randomDamage);
             }
 
-            for (EntityItem item : drops)
+            for (EntityItem item : entityItemList)
             {
                 ItemStack itemStack1 = item.getItem();
 
@@ -119,16 +119,16 @@ public final class DropSkeletonItem
                 }
             }
 
-            drops.add(new EntityItem(entitySkeleton.world,
+            entityItemList.add(new EntityItem(entitySkeleton.world,
                     entitySkeleton.posX, entitySkeleton.posY, entitySkeleton.posZ, itemStack));
         }
     }
 
-    private void addArrowsToDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops, byte arrowCount)
+    private void addArrowsToDrops(EntitySkeleton entitySkeleton, List<EntityItem> entityItemList, byte arrowCount)
     {
         ItemStack itemStack = new ItemStack(Items.ARROW, arrowCount);
 
-        drops.add(new EntityItem
+        entityItemList.add(new EntityItem
                 (entitySkeleton.world, entitySkeleton.posX, entitySkeleton.posY, entitySkeleton.posZ, itemStack));
     }
 }
