@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.interfaces.IDebug;
 
@@ -30,11 +31,14 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 @InitLog
+@TODO(
+        value = "Есть баг, который тащит общую память по файлам в новый мир, даже если файла там еще не было",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public final class OnEventSandBox implements IDebug
 {
-    // todo есть баг, который тащит общую память по файлам в новый мир, даже если файла там еще не было
-    // исправить
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final List<EntityData> ENTITY_LIST = new ArrayList<>();
     private static final double TRACK_RADIUS = 64.0;

@@ -354,11 +354,6 @@ public final class FunctionalMobTaskManager
                             }
                         }
                     }
-                    else
-                    {
-						// TODO: Это надо сделать на опцию дебаг лога
-                        //Log.writeDataToLogFile(1, "Entity " + currentEntity.getClass().getSimpleName() + " cannot attack. Skipping task assignment.");
-                    }
                 }
             }
         }
