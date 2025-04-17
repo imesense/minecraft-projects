@@ -5,9 +5,9 @@ import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.rendergame.*;
 
 @InitLog
-public final class EventRenderGame extends BaseEventRegister
+public final class EventRenderGameRegister extends BaseEventRegister
 {
-    public EventRenderGame()
+    public EventRenderGameRegister()
     {
 
     }

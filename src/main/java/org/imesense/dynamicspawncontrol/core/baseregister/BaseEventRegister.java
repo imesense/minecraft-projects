@@ -10,8 +10,8 @@ import org.imesense.dynamicspawncontrol.core.register.event.entity.EventEntityRe
 import org.imesense.dynamicspawncontrol.core.register.event.fmlnetwork.EventFMLRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.living.EventLivingRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.player.EventPlayerRegister;
-import org.imesense.dynamicspawncontrol.core.register.event.populatechunk.EventPopulateChunk;
-import org.imesense.dynamicspawncontrol.core.register.event.rendergame.EventRenderGame;
+import org.imesense.dynamicspawncontrol.core.register.event.populatechunk.EventPopulateChunkRegister;
+import org.imesense.dynamicspawncontrol.core.register.event.rendergame.EventRenderGameRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.tickevent.EventTickEventRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.world.EventWorldRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -61,8 +61,8 @@ public abstract class BaseEventRegister
         new EventFMLRegister();
         new EventLivingRegister();
         new EventPlayerRegister();
-        new EventPopulateChunk();
-        new EventRenderGame();
+        new EventPopulateChunkRegister();
+        new EventRenderGameRegister();
         new EventTickEventRegister();
         new EventWorldRegister();
         new AttachRegister();
