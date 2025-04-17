@@ -5,9 +5,9 @@ import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.populatechunk.OnEventPopulateChunkEventPre;
 
 @InitLog
-public final class EventPopulateChunk extends BaseEventRegister
+public final class EventPopulateChunkRegister extends BaseEventRegister
 {
-    public EventPopulateChunk()
+    public EventPopulateChunkRegister()
     {
 
     }
