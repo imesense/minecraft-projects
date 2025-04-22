@@ -12,7 +12,7 @@ public final class LootBox
     public final static class Data
     {
         @Getter
-        private String item;
+        private String item = "";
 
         @Getter
         private int minCount = 1;
