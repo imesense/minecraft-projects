@@ -15,7 +15,7 @@ public final class AdditionalChecks
     public static final class Data
     {
         public Boolean seeSky;
-        public ResourceLocation entityType;
+        public List<ResourceLocation> entityTypes;
         public List<PotionEffect.Data> potion;
     }
 }

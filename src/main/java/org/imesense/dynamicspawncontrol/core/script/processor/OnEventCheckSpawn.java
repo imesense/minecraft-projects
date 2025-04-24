@@ -38,7 +38,7 @@ public final class OnEventCheckSpawn
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
         ResourceLocation entityType = EntityList.getKey(event.getEntity());
-        
+
         GeneralCheckSpawnStorage generalStorageData = GeneralCheckSpawnStorage.getInstance();
         SupportCheckSpawnStorage supportStorageScriptData = SupportCheckSpawnStorage.getInstance();
 
@@ -48,12 +48,18 @@ public final class OnEventCheckSpawn
             List<ProfilePriority.Data> randomDataList = generalStorageData.profilePriorityList;
             List<GameWorld.Data> worldDataList = generalStorageData.gameWorldList;
 
-            if (configs != null && !configs.isEmpty() && randomDataList != null && !randomDataList.isEmpty() && worldDataList != null && !worldDataList.isEmpty())
+            if (configs != null && !configs.isEmpty() &&
+                    randomDataList != null && !randomDataList.isEmpty() &&
+                    worldDataList != null && !worldDataList.isEmpty())
             {
                 List<ProfilePriority.Data> filteredRandomData = IntStream.range(0, configs.size())
                         .filter(i -> i < generalStorageData.entityDescriptionsList.size())
-                        .filter(i -> generalStorageData.entityDescriptionsList.get(i) != null &&
-                                entityType.equals(generalStorageData.entityDescriptionsList.get(i).entityType))
+                        .filter(i ->
+                        {
+                            EntityDescription.Data desc = generalStorageData.entityDescriptionsList.get(i);
+                            return desc != null && desc.entityTypes != null &&
+                                    desc.entityTypes.contains(entityType);
+                        })
                         .mapToObj(randomDataList::get)
                         .collect(Collectors.toList());
 
@@ -100,7 +106,8 @@ public final class OnEventCheckSpawn
             if (dataSupports != null && !dataSupports.isEmpty())
             {
                 List<AdditionalChecks.Data> filteredDataSupports = dataSupports.stream()
-                        .filter(dataSupport -> entityType.equals(dataSupport.entityType))
+                        .filter(dataSupport -> dataSupport.entityTypes != null &&
+                                dataSupport.entityTypes.contains(entityType))
                         .collect(Collectors.toList());
 
                 if (!filteredDataSupports.isEmpty())
