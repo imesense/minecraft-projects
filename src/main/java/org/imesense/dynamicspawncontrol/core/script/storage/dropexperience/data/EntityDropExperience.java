@@ -4,6 +4,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+import java.util.List;
+
 public final class EntityDropExperience
 {
     public EntityDropExperience()
@@ -13,7 +15,7 @@ public final class EntityDropExperience
 
     public static final class Data
     {
-        public ResourceLocation entity;
+        public List<ResourceLocation> entities;
         public Integer xp;
         public Float multi_xp = 1.0f;
         public Float adding_xp;

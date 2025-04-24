@@ -43,7 +43,7 @@ public final class OnEventDropExperience
         }
 
         GeneralDropExperience.getInstance().dropExperienceList.stream()
-            .filter(data -> entityResourceLocation.equals(data.entity))
+            .filter(data -> data.entities.contains(entityResourceLocation))
             .filter(data -> data.isTimeValid(world))
             .findFirst()
         .ifPresent(data ->
