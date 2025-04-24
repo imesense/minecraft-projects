@@ -2,12 +2,18 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.io.File;
 
 @InitLog
+@TODO(
+        value = "Данный парсер не закончен",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 public final class ParserEventDamageByEntity extends BaseParser
 {
     public ParserEventDamageByEntity(final String NAME_FILE)
