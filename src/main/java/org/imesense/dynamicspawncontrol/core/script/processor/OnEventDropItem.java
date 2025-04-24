@@ -47,29 +47,42 @@ public final class OnEventDropItem
 
         for (DropItem.Data data : GeneralDropItem.getInstance().dropItemList)
         {
-            if (entityResourceLocation.equals(data.entity))
+            boolean entityMatches = false;
+
+            for (ResourceLocation allowedEntity : data.entities)
             {
-                for (DropItem.Data.ItemDrop drop : data.drops)
+                if (entityResourceLocation.equals(allowedEntity))
                 {
-                    if (drop.result == Event.Result.DENY)
+                    entityMatches = true;
+                    break;
+                }
+            }
+
+            if (!entityMatches)
+            {
+                continue;
+            }
+
+            for (DropItem.Data.ItemDrop drop : data.drops)
+            {
+                if (drop.result == Event.Result.DENY)
+                {
+                    continue;
+                }
+
+                boolean shouldDrop = drop.result == Event.Result.ALLOW ||
+                        (drop.result == Event.Result.DEFAULT &&
+                                (drop.chance >= 1.0f || random.nextFloat() <= drop.chance));
+
+                if (shouldDrop)
+                {
+                    int amount = drop.minAmount + (drop.maxAmount > drop.minAmount ?
+                            random.nextInt(drop.maxAmount - drop.minAmount + 1) : 0);
+
+                    if (amount > 0)
                     {
-                        continue;
-                    }
-
-                    boolean shouldDrop = drop.result == Event.Result.ALLOW ||
-                            (drop.result == Event.Result.DEFAULT &&
-                                    (drop.chance >= 1.0f || random.nextFloat() <= drop.chance));
-
-                    if (shouldDrop)
-                    {
-                        int amount = drop.minAmount + (drop.maxAmount > drop.minAmount ?
-                                random.nextInt(drop.maxAmount - drop.minAmount + 1) : 0);
-
-                        if (amount > 0)
-                        {
-                            ItemStack itemStack = new ItemStack(Item.REGISTRY.getObject(drop.item), amount);
-                            event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStack));
-                        }
+                        ItemStack itemStack = new ItemStack(Item.REGISTRY.getObject(drop.item), amount);
+                        event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStack));
                     }
                 }
             }

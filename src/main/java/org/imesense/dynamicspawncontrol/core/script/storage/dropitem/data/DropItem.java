@@ -14,7 +14,7 @@ public final class DropItem
 
     public static final class Data
     {
-        public ResourceLocation entity;
+        public ResourceLocation[] entities;
         public List<ItemDrop> drops;
 
         public static final class ItemDrop
