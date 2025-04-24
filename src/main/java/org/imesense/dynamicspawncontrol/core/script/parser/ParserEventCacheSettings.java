@@ -61,14 +61,43 @@ public final class ParserEventCacheSettings extends BaseParser
                     throw new RuntimeException("Script does not contain key 'data'.");
                 }
 
-                String entityName = dataObject.get("entity").getAsString();
+                List<ResourceLocation> entityLocations = new ArrayList<>();
+
+                if (dataObject.get("entity").isJsonArray())
+                {
+                    JsonArray entityArray = dataObject.getAsJsonArray("entity");
+
+                    for (JsonElement element : entityArray)
+                    {
+                        String entityName = element.getAsString();
+                        String[] parts = entityName.split(":");
+
+                        ResourceLocation resourceLocation = new ResourceLocation(
+                                parts.length > 1 ? parts[0] : "minecraft",
+                                parts.length > 1 ? parts[1] : parts[0]);
+
+                        entityLocations.add(resourceLocation);
+                    }
+                }
+                else
+                {
+                    String entityName = dataObject.get("entity").getAsString();
+                    String[] parts = entityName.split(":");
+
+                    ResourceLocation resourceLocation = new ResourceLocation(
+                            parts.length > 1 ? parts[0] : "minecraft",
+                            parts.length > 1 ? parts[1] : parts[0]);
+
+                    entityLocations.add(resourceLocation);
+                }
+
                 Boolean perPlayer = dataObject.get("per_player").getAsBoolean();
                 Boolean perChunk = dataObject.get("per_chunk").getAsBoolean();
                 Integer maxEntityCount = dataObject.get("max_entity_count").getAsInt();
+
                 String resultStr = dataObject.get("result").getAsString();
 
                 Event.Result result;
-
                 try
                 {
                     result = Event.Result.valueOf(resultStr.toUpperCase());
@@ -78,13 +107,9 @@ public final class ParserEventCacheSettings extends BaseParser
                     throw new RuntimeException("Invalid value for 'result': " + resultStr);
                 }
 
-                String[] parts = entityName.split(":");
-
-                ResourceLocation resourceLocation =
-                        new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
-
                 CacheEntityStorage.EntityData entityData = new CacheEntityStorage.EntityData();
-                entityData.entity = resourceLocation;
+
+                entityData.entities = entityLocations;
                 entityData.per_player = perPlayer;
                 entityData.per_chunk = perChunk;
                 entityData.max_entity_count = maxEntityCount;
@@ -92,9 +117,9 @@ public final class ParserEventCacheSettings extends BaseParser
 
                 entitiesList.add(entityData);
 
-                Log.writeDataToLogFile(0, "Entity Loaded: " +
-                        resourceLocation + " Per Player: " + perPlayer + " Per Chunk: " +
-                        perChunk + " Max Count: " + maxEntityCount + " Result: " + result);
+                Log.writeDataToLogFile(0, "Entities Loaded: " + entityLocations +
+                        ". Per Player: " + perPlayer + ". Per Chunk: " + perChunk +
+                        ". Max Count: " + maxEntityCount + ". Result: " + result);
             }
 
             CacheEntityStorage.getInstance().entityData = entitiesList;

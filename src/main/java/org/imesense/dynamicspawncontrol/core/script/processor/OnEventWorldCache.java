@@ -165,7 +165,7 @@ public final class OnEventWorldCache
 
         Optional<CacheEntityStorage.EntityData> optionalEntityData = CacheEntityStorage.getInstance()
                 .entityData.stream()
-                .filter(data -> data.entity.equals(entityKey))
+                .filter(data -> data.entities.contains(entityKey))
                 .findFirst();
 
         if (!optionalEntityData.isPresent())

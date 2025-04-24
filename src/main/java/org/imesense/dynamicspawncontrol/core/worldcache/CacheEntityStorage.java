@@ -32,7 +32,7 @@ public final class CacheEntityStorage
 
     public static final class EntityData
     {
-        public ResourceLocation entity;
+        public List<ResourceLocation> entities;
         public Boolean per_player;
         public Boolean per_chunk;
         public Integer max_entity_count;
