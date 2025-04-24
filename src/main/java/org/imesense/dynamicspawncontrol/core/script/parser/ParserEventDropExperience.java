@@ -15,8 +15,6 @@ import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.stora
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BiFunction;
 
 @InitLog
@@ -84,48 +82,16 @@ public final class ParserEventDropExperience extends BaseParser
                         continue;
                     }
 
-                    List<ResourceLocation> entityLocations = new ArrayList<>();
+                    String entityId = jsonObject.get("entity").getAsString();
+                    data.entity = new ResourceLocation(entityId);
 
-                    if (jsonObject.get("entity").isJsonArray())
+                    EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(data.entity);
+
+                    if (entityEntry == null)
                     {
-                        JsonArray entityArray = jsonObject.getAsJsonArray("entity");
-
-                        for (JsonElement el : entityArray)
-                        {
-                            String entityId = el.getAsString();
-                            ResourceLocation location = new ResourceLocation(entityId);
-                            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(location);
-
-                            if (entityEntry == null)
-                            {
-                                Log.writeDataToLogFile(0, "Entity not found: " + entityId);
-                                continue;
-                            }
-
-                            entityLocations.add(location);
-                        }
-                    }
-                    else
-                    {
-                        String entityId = jsonObject.get("entity").getAsString();
-                        ResourceLocation location = new ResourceLocation(entityId);
-                        EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(location);
-
-                        if (entityEntry == null)
-                        {
-                            Log.writeDataToLogFile(0, "Entity not found: " + entityId);
-                            continue;
-                        }
-
-                        entityLocations.add(location);
-                    }
-
-                    if (entityLocations.isEmpty())
-                    {
+                        Log.writeDataToLogFile(0, "Entity not found: " + entityId);
                         continue;
                     }
-
-                    data.entities = entityLocations;
 
                     data.use_default_xp = getValueFromJson(jsonObject, "use_default_xp", false,
                             (el, def) -> el.getAsBoolean());
@@ -134,7 +100,7 @@ public final class ParserEventDropExperience extends BaseParser
                     {
                         if (!jsonObject.has("multi_xp"))
                         {
-                            Log.writeDataToLogFile(0, "use_default_xp = true requires multi_xp for entities: " + entityLocations);
+                            Log.writeDataToLogFile(0, "use_default_xp = true requires multi_xp for entity: " + entityId);
                             continue;
                         }
 
@@ -165,6 +131,9 @@ public final class ParserEventDropExperience extends BaseParser
                     if (data.worldTimeIntervalMin != null && data.worldTimeIntervalMax != null
                             && data.worldTimeIntervalMin > data.worldTimeIntervalMax)
                     {
+                        Log.writeDataToLogFile(0, "Invalid time interval for entity " + entityId
+                                + ": min > max (" + data.worldTimeIntervalMin + " > " + data.worldTimeIntervalMax + ")");
+
                         continue;
                     }
 
@@ -187,8 +156,8 @@ public final class ParserEventDropExperience extends BaseParser
                     }
 
                     Log.writeDataToLogFile(0, String.format(
-                            "Loaded entities: %s, mode: %s, xp: %s, multi: %.2f, add: %s, time: %s-%s, result: %s",
-                            data.entities,
+                            "Loaded entity: %s, mode: %s, xp: %s, multi: %.2f, add: %s, time: %s-%s, result: %s",
+                            data.entity,
                             data.use_default_xp ? "DEFAULT_XP" : "FULL",
                             data.use_default_xp ? "N/A" : data.xp,
                             data.multi_xp,
@@ -199,6 +168,7 @@ public final class ParserEventDropExperience extends BaseParser
                     ));
 
                     GeneralDropExperience.getInstance().dropExperienceList.add(data);
+
                 }
                 catch (Exception exception)
                 {

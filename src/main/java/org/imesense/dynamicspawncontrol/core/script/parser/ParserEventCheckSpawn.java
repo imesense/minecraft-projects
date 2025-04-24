@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
@@ -132,48 +131,17 @@ public final class ParserEventCheckSpawn extends BaseParser
         entityDescriptionData.profile = dataObject.get("profile").getAsString();
         entityDescriptionData.description = dataObject.get("description").getAsString();
 
-        List<ResourceLocation> entityTypes = new ArrayList<>();
+        String entityTypeString = dataObject.get("entity_type").getAsString();
+        ResourceLocation entityType = new ResourceLocation(entityTypeString);
+        EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
 
-        if (dataObject.get("entity_type").isJsonArray())
+        if (entityEntry == null)
         {
-            JsonArray entityTypeArray = dataObject.getAsJsonArray("entity_type");
-
-            for (JsonElement element : entityTypeArray)
-            {
-                String entityTypeString = element.getAsString();
-                ResourceLocation entityType = new ResourceLocation(entityTypeString);
-                EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
-
-                if (entityEntry == null)
-                {
-                    Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
-                    continue;
-                }
-
-                entityTypes.add(entityType);
-            }
-        }
-        else
-        {
-            String entityTypeString = dataObject.get("entity_type").getAsString();
-            ResourceLocation entityType = new ResourceLocation(entityTypeString);
-            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
-
-            if (entityEntry == null)
-            {
-                Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
-                return;
-            }
-
-            entityTypes.add(entityType);
-        }
-
-        if (entityTypes.isEmpty())
-        {
+            Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
             return;
         }
 
-        entityDescriptionData.entityTypes = entityTypes;
+        entityDescriptionData.entityType = entityType;
 
         profilePriorityData.priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
         entityDescriptionData.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
@@ -302,47 +270,18 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
 
-            List<ResourceLocation> entityTypes = new ArrayList<>();
+            String entityTypeString = dataSupportObject.get("entity_type").getAsString();
 
-            if (dataSupportObject.get("entity_type").isJsonArray())
+            ResourceLocation entityType = new ResourceLocation(entityTypeString);
+            EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
+
+            if (entityEntry == null)
             {
-                JsonArray entityTypeArray = dataSupportObject.getAsJsonArray("entity_type");
-                for (JsonElement element1 : entityTypeArray)
-                {
-                    String entityTypeString = element1.getAsString();
-                    ResourceLocation entityType = new ResourceLocation(entityTypeString);
-                    EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
-
-                    if (entityEntry == null)
-                    {
-                        Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
-                        continue;
-                    }
-
-                    entityTypes.add(entityType);
-                }
-            }
-            else
-            {
-                String entityTypeString = dataSupportObject.get("entity_type").getAsString();
-                ResourceLocation entityType = new ResourceLocation(entityTypeString);
-                EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
-
-                if (entityEntry == null)
-                {
-                    Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
-                    return;
-                }
-
-                entityTypes.add(entityType);
-            }
-
-            if (entityTypes.isEmpty())
-            {
+                Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
                 return;
             }
 
-            dataSupport.entityTypes = entityTypes;
+            dataSupport.entityType = entityType;
 
             if (dataSupportObject.has("potion"))
             {

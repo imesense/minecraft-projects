@@ -51,26 +51,7 @@ public final class ParserEventDropItem extends BaseParser
                 JsonObject jsonObject = element.getAsJsonObject();
 
                 DropItem.Data data = new DropItem.Data();
-
-                JsonElement entityElement = jsonObject.get("entity");
-
-                if (entityElement.isJsonArray())
-                {
-                    JsonArray entityArray = entityElement.getAsJsonArray();
-                    data.entities = new ResourceLocation[entityArray.size()];
-
-                    for (int i = 0; i < entityArray.size(); i++)
-                    {
-                        data.entities[i] = new ResourceLocation(entityArray.get(i).getAsString());
-                    }
-                }
-                else
-                {
-                    data.entities = new ResourceLocation[]
-                    {
-                        new ResourceLocation(entityElement.getAsString())
-                    };
-                }
+                data.entity = new ResourceLocation(jsonObject.get("entity").getAsString());
 
                 JsonArray dropsArray = jsonObject.getAsJsonArray("drop");
                 data.drops = new ArrayList<>();
