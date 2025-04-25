@@ -6,5 +6,5 @@
   "legs_damage_factor": 0.9,
   "feet_damage_factor": 0.9,
   "damage_spread_factor": 0.2,
-  "arrows_to_drops": 3
+  "arrows_to_drops": 2
 }

@@ -184,7 +184,16 @@
       "entity": "minecraft:zombie",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 250,
+      "max_entity_count": 125,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "specialmobs:specialzombie",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 125,
       "result": "deny"
     }
   },
@@ -193,7 +202,16 @@
       "entity": "minecraft:zombie_pigman",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 24,
+      "max_entity_count": 12,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "specialmobs:specialpigzombie",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 12,
       "result": "deny"
     }
   },

@@ -1,6 +1,4 @@
 [
-  // Блок 1:
-  // Мирные сущности из ванили боятся сущностей типа паразиты
   {
     "panic_to":
     [
@@ -13,12 +11,11 @@
       "minecraft:horse",
       "minecraft:llama",
       "minecraft:rabbit",
-      "minecraft:creeper"
+      "minecraft:creeper",
+      "specialmobs:specialcreeper"
     ],
     "panic_id": ["srparasites"]
   },
-  // Блок 2
-  // Ванильные сущности, которые могут атаковать, являются врагами для паразитов
   {
     "enemies_to":
     [
@@ -40,18 +37,16 @@
       "minecraft:witch",
       "minecraft:ghast",
       "minecraft:slime",
-      "minecraft:magma_cube"
+      "minecraft:magma_cube",
+      "specialmobs:specialzombie",
+      "specialmobs:specialskeleton"
     ],
     "enemy_id": ["srparasites"]
   },
-  // Блок 3
-  // Мобы из Дивайн РПГ всегда враждебны к паразитам
   {
     "enemy_id": ["divinerpg"],
     "them_id": ["srparasites"]
   },
-  // Блок 4
-  // Голем враждебен к ванильным враждебным сущностям для игрока
   {
     "enemies_to": ["minecraft:villager_golem"],
     "to_them":
@@ -73,8 +68,6 @@
       "minecraft:witch"
     ]
   },
-  // Блок 5
-  // Скелеты нападают на волков
   {
     "enemies_to":
     [
