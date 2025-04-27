@@ -19,6 +19,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
@@ -28,7 +29,17 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 import java.util.HashSet;
 import java.util.Optional;
 
+/**
+ * По факту проблема в том что сущность заменяется на этапе EntityJoinWorldEvent event,
+ * а кеш проверяет событие LivingSpawnEvent.CheckSpawn event, т.е проверка кеша стопорится тем,
+ * что сущность прошла проверку на спавн, спавнится и она сразу заменяется, и так получается что ограничение по сущности никогда не будет истинным.
+ */
 @InitLog
+@TODO(
+        value = "Критическая проблема, решить при первой возможности",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 public final class OnEventWorldCache
 {
     private static volatile OnEventWorldCache _INSTANCE;
