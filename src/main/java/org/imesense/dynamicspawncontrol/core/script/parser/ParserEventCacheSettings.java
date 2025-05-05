@@ -62,6 +62,7 @@ public final class ParserEventCacheSettings extends BaseParser
                 }
 
                 String entityName = dataObject.get("entity").getAsString();
+                String instanceofStr = dataObject.get("instanceof").getAsString();
                 Boolean perPlayer = dataObject.get("per_player").getAsBoolean();
                 Boolean perChunk = dataObject.get("per_chunk").getAsBoolean();
                 Integer maxEntityCount = dataObject.get("max_entity_count").getAsInt();
@@ -85,6 +86,37 @@ public final class ParserEventCacheSettings extends BaseParser
 
                 CacheEntityStorage.EntityData entityData = new CacheEntityStorage.EntityData();
                 entityData.entity = resourceLocation;
+
+                Class<?> checkInstanceof;
+
+                try
+                {
+                    try
+                    {
+                        checkInstanceof = Class.forName("net.minecraft.entity.monster." + instanceofStr);
+                    }
+                    catch (ClassNotFoundException exception1)
+                    {
+                        try
+                        {
+                            checkInstanceof = Class.forName("net.minecraft.entity." + instanceofStr);
+                        }
+                        catch (ClassNotFoundException exception2)
+                        {
+                            checkInstanceof = Class.forName(instanceofStr);
+                        }
+                    }
+                }
+                catch (ClassNotFoundException exception)
+                {
+                    throw new RuntimeException("Invalid class for 'instanceof': " + instanceofStr +
+                            ". Valid examples: 'EntityZombie', 'net.minecraft.entity.monster.EntityZombie'", exception);
+                }
+
+                entityData.check_instanceof = checkInstanceof;
+
+                Log.writeDataToLogFile(0, "Entity " + entityName + " checkInstanceof: " + entityData.check_instanceof);
+
                 entityData.per_player = perPlayer;
                 entityData.per_chunk = perChunk;
                 entityData.max_entity_count = maxEntityCount;
