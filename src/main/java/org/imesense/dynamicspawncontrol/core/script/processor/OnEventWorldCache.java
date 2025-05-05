@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityWaterMob;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -29,14 +31,9 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 import java.util.HashSet;
 import java.util.Optional;
 
-/**
- * По факту проблема в том что сущность заменяется на этапе EntityJoinWorldEvent event,
- * а кеш проверяет событие LivingSpawnEvent.CheckSpawn event, т.е проверка кеша стопорится тем,
- * что сущность прошла проверку на спавн, спавнится и она сразу заменяется, и так получается что ограничение по сущности никогда не будет истинным.
- */
 @InitLog
 @TODO(
-        value = "Критическая проблема, решить при первой возможности",
+        value = "Доделать обновление для системы кеширования сущностей в игровом мире",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
@@ -167,6 +164,7 @@ public final class OnEventWorldCache
                 && !WorldCacheConfig.getInstance(WorldCacheConfig.class).isSpawnPeacefulCreaturesAtNight()))
         {
             World world = event.getWorld();
+
             if (!world.isDaytime())
             {
                 event.setResult(Event.Result.DENY);
@@ -185,24 +183,49 @@ public final class OnEventWorldCache
         }
 
         CacheEntityStorage.EntityData entityData = optionalEntityData.get();
-        WorldServer worldServer = (WorldServer) event.getWorld();
 
-        EntityPlayerMP nearestPlayer =
-                CacheFunctional.getInstance().getNearestPlayer(worldServer, event.getX(), event.getY(), event.getZ());
+        /// /////////////////////////////////////////////////////////////////////////////////////////
+        if (entityData.check_instanceof != null)
+        {
+            if (!entityData.check_instanceof.isInstance(entity))
+            {
+                return;
+            }
+
+            if (EntityZombie.class.equals(entityData.check_instanceof) && !event.getWorld().isRemote)
+            {
+                int zombieCount = event.getWorld().getEntities(EntityZombie.class, e -> true).size();
+                Log.writeDataToLogFile(0, "Zombie spawn attempt. Current zombies: " + zombieCount);
+                int MAX_ZOMBIES = 125;
+
+                if (zombieCount >= MAX_ZOMBIES)
+                {
+                    event.setResult(Event.Result.DENY);
+                    Log.writeDataToLogFile(0, "Zombie spawn blocked! Limit reached (" + zombieCount + "/" + MAX_ZOMBIES + ")");
+
+                    return;
+                }
+            }
+        }
+        /// /////////////////////////////////////////////////////////////////////////////////////////
+
+        WorldServer worldServer = (WorldServer) event.getWorld();
+        EntityPlayerMP nearestPlayer = CacheFunctional.getInstance()
+                .getNearestPlayer(worldServer, event.getX(), event.getY(), event.getZ());
 
         if (nearestPlayer == null)
         {
             return;
         }
 
-        int currentEntityCount =
-                CacheFunctional.getInstance().getCurrentEntityCount(worldServer, nearestPlayer, entityKey);
+        int currentEntityCount = CacheFunctional.getInstance()
+                .getCurrentEntityCount(worldServer, nearestPlayer, entityKey);
 
-        int maxEntityCount =
-                CacheFunctional.getInstance().calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
+        int maxEntityCount = CacheFunctional.getInstance()
+                .calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
 
-        //Log.writeDataToLogFile(0, "Entity: " + entityKey + ", " +
-        //        "Current Count: " + currentEntityCount + ", Max Count: " + maxEntityCount);
+        Log.writeDataToLogFile(0, "Entity: " + entityKey + ", Current Count: " + //-' При проверке instanceof числинность всегда 0
+                currentEntityCount + ", Max Count: " + maxEntityCount);
 
         if (currentEntityCount >= maxEntityCount)
         {
