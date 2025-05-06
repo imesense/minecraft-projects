@@ -13,7 +13,7 @@
 
         if (instanceExists)
         {
-            Log.writeDataToLogFile(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
+            Log.write(2, String.format("An instance of [%s] already exists!", this.getClass().getSimpleName()));
             throw new RuntimeException();
         }
 

@@ -30,14 +30,14 @@ public final class ParserEventPotentialSpawn extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
-            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
@@ -57,7 +57,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
                 {
                     JsonArray mobsArray = topLevelObject.getAsJsonArray("mobs");
 
-                    Log.writeDataToLogFile(0, "Loaded mobs: " + mobsArray.size());
+                    Log.write(0, "Loaded mobs: " + mobsArray.size());
 
                     for (JsonElement mobElement : mobsArray)
                     {
@@ -68,7 +68,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
 
                         if (entityEntry == null)
                         {
-                            Log.writeDataToLogFile(0, "Mob not found: " + id);
+                            Log.write(0, "Mob not found: " + id);
                             continue;
                         }
 
@@ -76,7 +76,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
 
                         if (_class == null)
                         {
-                            Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
+                            Log.write(0, "Entity class not found for mob: " + id);
                             continue;
                         }
 
@@ -96,7 +96,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
                         newSpawnEntries.add(entry);
                         newSecondaryParameters.add(data);
 
-                        Log.writeDataToLogFile(0, String.format(
+                        Log.write(0, String.format(
                                 "Entity [%s:%s] has been added to the spawn list. " +
                                         "Data -> SpawnChance [%f], " +
                                         "Weight [%d], " +
@@ -114,7 +114,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
         }
         catch (IOException | JsonSyntaxException exception)
         {
-            Log.writeDataToLogFile(0, "Error loading config file: " + exception.getMessage());
+            Log.write(0, "Error loading config file: " + exception.getMessage());
         }
     }
 

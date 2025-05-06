@@ -35,7 +35,7 @@ public abstract class BaseParserRegister
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception initializing parser: " +
+                Log.write(2, "Exception initializing parser: " +
                         _class.getName() + " - " + exception.getMessage());
 
                 throw new RuntimeException(exception);

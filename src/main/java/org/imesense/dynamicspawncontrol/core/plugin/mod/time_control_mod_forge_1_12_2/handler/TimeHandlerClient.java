@@ -26,7 +26,7 @@ public final class TimeHandlerClient implements ITimeHandler
 
             if (this.multiplier == 0.0D && this.debugLogDelay % 20 == 0)
             {
-                Log.writeDataToLogFile(0, "Waiting for server time packet...");
+                Log.write(0, "Waiting for server time packet...");
                 return;
             }
 
@@ -38,7 +38,7 @@ public final class TimeHandlerClient implements ITimeHandler
             {
                 long worldTime = world.getWorldTime();
 
-                Log.writeDataToLogFile(0, String.format("Client time: %s | multiplier: %s | gamerules: %s, %s",
+                Log.write(0, String.format("Client time: %s | multiplier: %s | gamerules: %s, %s",
                         worldTime, this.multiplier, world.getGameRules().getBoolean("doDaylightCycle"),
                         world.getGameRules().getBoolean("doDaylightCycle_tc")));
             }

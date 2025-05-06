@@ -25,7 +25,7 @@ public abstract class BaseWorldGeneratorRegister
             {
                 if (!CodeGeneric.hasDefaultConstructor(_class))
                 {
-                    Log.writeDataToLogFile(2, "Class " + _class.getName() + " does not have a default constructor.");
+                    Log.write(2, "Class " + _class.getName() + " does not have a default constructor.");
                     throw new RuntimeException("Default constructor not found in class: " + _class.getName());
                 }
 
@@ -38,7 +38,7 @@ public abstract class BaseWorldGeneratorRegister
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
+                Log.write(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
                 throw new RuntimeException(exception);
             }
         }

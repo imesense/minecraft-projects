@@ -53,7 +53,7 @@ public final class CmdAdminGameMode extends CommandBase
         }
         catch (NumberFormatException exception)
         {
-            Log.writeDataToLogFile(2, String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
+            Log.write(2, String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
 
             iCommandSender.sendMessage(new TextComponentString(UnicodeCharacterCollection.instance.getDescription('\u00A7') +
                     TextColorCollection.instance.getCode("RED") +

@@ -60,18 +60,18 @@ public final class CmdAdminDumpBlock extends CommandBase
 
                 iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD + "Block ID: " + blockId));
 
-                Log.writeDataToLogFile(0, "Block ID: " + blockId);
+                Log.write(0, "Block ID: " + blockId);
 
                 iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD +
                         Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString()));
 
-                Log.writeDataToLogFile(0, Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString());
+                Log.write(0, Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString());
 
                 for (IProperty<?> key : iBlockState.getPropertyKeys())
                 {
                     String getString = iBlockState.getValue(key).toString();
                     iCommandSender.sendMessage(new TextComponentString("State: " + key.getName() + " = " + getString));
-                    Log.writeDataToLogFile(0, "State: " + key.getName() + " = " + getString);
+                    Log.write(0, "State: " + key.getName() + " = " + getString);
                 }
 
                 TileEntity tileEntity = entityPlayerMP.getEntityWorld().getTileEntity(blockPos);
@@ -80,7 +80,7 @@ public final class CmdAdminDumpBlock extends CommandBase
                 {
                     NBTTagCompound nbtTagCompound = tileEntity.writeToNBT(new NBTTagCompound());
                     iCommandSender.sendMessage(new TextComponentString("NBT Tags: " + nbtTagCompound));
-                    Log.writeDataToLogFile(0, "NBT Tags: " + nbtTagCompound);
+                    Log.write(0, "NBT Tags: " + nbtTagCompound);
                 }
             }
         }

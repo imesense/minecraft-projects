@@ -60,19 +60,19 @@ public final class CmdAdminScanEntities extends CommandBase
         AtomicInteger atomicInteger = new AtomicInteger();
         List<Entity> entityList = world.loadedEntityList;
 
-        Log.writeDataToLogFile(0, "------------ START SCAN ENTITY LIST ------------");
+        Log.write(0, "------------ START SCAN ENTITY LIST ------------");
 
         for (Entity entity : entityList)
         {
             if (entity != null)
             {
-                Log.writeDataToLogFile(0, "-----------------------------------------------------------");
+                Log.write(0, "-----------------------------------------------------------");
 
                 @Nonnull String entityType;
 
-                Log.writeDataToLogFile(0, "Iteration: " + atomicInteger.getAndIncrement());
-                Log.writeDataToLogFile(0, entity.toString());
-                Log.writeDataToLogFile(0, "Entity ID: " + entity.getEntityId());
+                Log.write(0, "Iteration: " + atomicInteger.getAndIncrement());
+                Log.write(0, entity.toString());
+                Log.write(0, "Entity ID: " + entity.getEntityId());
 
                 ResourceLocation resourceLocation = EntityList.getKey(entity);
 
@@ -87,9 +87,9 @@ public final class CmdAdminScanEntities extends CommandBase
                             resourceLocation.toString() : "Unknown";
                 }
 
-                Log.writeDataToLogFile(0, "Entity: " + entityType);
+                Log.write(0, "Entity: " + entityType);
 
-                Log.writeDataToLogFile(0, "-----------------------------------------------------------");
+                Log.write(0, "-----------------------------------------------------------");
             }
         }
 
@@ -100,6 +100,6 @@ public final class CmdAdminScanEntities extends CommandBase
                            UnicodeCharacterCollection.instance.getDescription(' ') +
                         "The scan is completed"));
 
-        Log.writeDataToLogFile(0, "------------ END SCAN ENTITY LIST ------------");
+        Log.write(0, "------------ END SCAN ENTITY LIST ------------");
     }
 }

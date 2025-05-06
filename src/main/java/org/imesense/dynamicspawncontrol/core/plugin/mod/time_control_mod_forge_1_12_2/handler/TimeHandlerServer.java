@@ -65,7 +65,7 @@ public final class TimeHandlerServer implements ITimeHandler
             }
             catch (InvocationTargetException | IllegalAccessException exception)
             {
-                Log.writeDataToLogFile(2, "Unable to wake players! Exception: " + exception);
+                Log.write(2, "Unable to wake players! Exception: " + exception);
             }
 
             ++this.customTime;
@@ -80,9 +80,9 @@ public final class TimeHandlerServer implements ITimeHandler
                 {
                     updatedWorldtime = world.getWorldTime();
 
-                    Log.writeDataToLogFile(0,Numbers.progressString(updatedWorldtime, ""));
+                    Log.write(0,Numbers.progressString(updatedWorldtime, ""));
 
-                    Log.writeDataToLogFile(0,String.format("Server time update: %s -> %s (%s -> %s) (day %s) | " +
+                    Log.write(0,String.format("Server time update: %s -> %s (%s -> %s) (day %s) | " +
                             "multiplier: %s", worldTime, updatedWorldtime,
                             this.customTime - 1L, this.customTime, Numbers.day(updatedWorldtime), this.multiplier));
                 }
@@ -121,7 +121,7 @@ public final class TimeHandlerServer implements ITimeHandler
 
             if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug())
             {
-                Log.writeDataToLogFile(0, String.format("System time update: %d -> %d | day %s, %s:%s",
+                Log.write(0, String.format("System time update: %d -> %d | day %s, %s:%s",
                         worldTime, time, calendar.get(6), hour, minute));
             }
         }

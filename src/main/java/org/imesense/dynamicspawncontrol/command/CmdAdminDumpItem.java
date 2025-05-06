@@ -55,7 +55,7 @@ public final class CmdAdminDumpItem extends CommandBase
             iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD +
                     Objects.requireNonNull(item.getRegistryName()).toString()));
 
-            Log.writeDataToLogFile(0, Objects.requireNonNull(item.getRegistryName()).toString());
+            Log.write(0, Objects.requireNonNull(item.getRegistryName()).toString());
 
             NBTTagCompound nbtTagCompound = itemStack.getTagCompound();
             if (nbtTagCompound != null)
@@ -82,7 +82,7 @@ public final class CmdAdminDumpItem extends CommandBase
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Int) " +
                             key + " = " + nbtTagCompound.getInteger(key)));
 
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Int) " + key + " = " +
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(Int) " + key + " = " +
                             nbtTagCompound.getInteger(key));
 
                     break;
@@ -90,7 +90,7 @@ public final class CmdAdminDumpItem extends CommandBase
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Long) " +
                             key + " = " + nbtTagCompound.getLong(key)));
 
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Long) " + key + " = " +
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(Long) " + key + " = " +
                             nbtTagCompound.getLong(key));
 
                     break;
@@ -98,7 +98,7 @@ public final class CmdAdminDumpItem extends CommandBase
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Double) " +
                             key + " = " + nbtTagCompound.getDouble(key)));
 
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Double) " + key + " = " +
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(Double) " + key + " = " +
                             nbtTagCompound.getDouble(key));
 
                     break;
@@ -106,7 +106,7 @@ public final class CmdAdminDumpItem extends CommandBase
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Float) " +
                             key + " = " + nbtTagCompound.getFloat(key)));
 
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Float) " + key + " = " +
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(Float) " + key + " = " +
                             nbtTagCompound.getFloat(key));
 
                     break;
@@ -114,7 +114,7 @@ public final class CmdAdminDumpItem extends CommandBase
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(String) " +
                             key + " = " + nbtTagCompound.getString(key)));
 
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(String) " + key + " = " +
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(String) " + key + " = " +
                             nbtTagCompound.getString(key));
 
                     break;
@@ -122,7 +122,7 @@ public final class CmdAdminDumpItem extends CommandBase
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Byte) " +
                             key + " = " + nbtTagCompound.getByte(key)));
 
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Byte) " + key + " = " +
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(Byte) " + key + " = " +
                             nbtTagCompound.getByte(key));
 
                     break;
@@ -130,13 +130,13 @@ public final class CmdAdminDumpItem extends CommandBase
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(Short) " +
                             key + " = " + nbtTagCompound.getShort(key)));
 
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(Short) " + key + " = " +
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(Short) " + key + " = " +
                             nbtTagCompound.getShort(key));
 
                     break;
                 case Constants.NBT.TAG_LIST:
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(List) " + key));
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(List) " + key);
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(List) " + key);
                     NBTBase nbtBase1 = nbtTagCompound.getTag(key);
 
                     if (((NBTTagList)nbtBase1).getTagType() == Constants.NBT.TAG_COMPOUND)
@@ -150,7 +150,7 @@ public final class CmdAdminDumpItem extends CommandBase
                             iCommandSender.sendMessage(new TextComponentString(TextFormatting.YELLOW +
                                     StringUtils.repeat(' ', indent+2) + "Index " + idx));
 
-                            Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent+2) + "Index " + idx);
+                            Log.write(0, StringUtils.repeat(' ', indent+2) + "Index " + idx);
                             idx++;
                             dumpNBT(iCommandSender, indent + 4, (NBTTagCompound) nbtBase2);
                         }
@@ -158,12 +158,12 @@ public final class CmdAdminDumpItem extends CommandBase
                     break;
                 case Constants.NBT.TAG_COMPOUND:
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(NBT) " + key));
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(NBT) " + key);
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(NBT) " + key);
                     dumpNBT(iCommandSender, indent + 2, nbtTagCompound.getCompoundTag(key));
                     break;
                 default:
                     iCommandSender.sendMessage(new TextComponentString(StringUtils.repeat(' ', indent) + "(?) " + key));
-                    Log.writeDataToLogFile(0, StringUtils.repeat(' ', indent) + "(?) " + key);
+                    Log.write(0, StringUtils.repeat(' ', indent) + "(?) " + key);
                     break;
             }
         }

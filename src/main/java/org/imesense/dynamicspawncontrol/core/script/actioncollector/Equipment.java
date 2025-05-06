@@ -73,7 +73,7 @@ public final class Equipment
             }
             else
             {
-                Log.writeDataToLogFile(1, "Item not found: " + item);
+                Log.write(1, "Item not found: " + item);
                 throw new RuntimeException("Item not found: " + item);
             }
         }

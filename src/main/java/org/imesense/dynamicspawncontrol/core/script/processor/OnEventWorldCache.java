@@ -203,7 +203,7 @@ public final class OnEventWorldCache
                         e -> true
                 ).size();
 
-                Log.writeDataToLogFile(0,
+                Log.write(0,
                         (isZombie ? "Zombie" : "Pig Zombie") +
                                 " spawn attempt. Current count: " + zombieCount);
 
@@ -211,7 +211,7 @@ public final class OnEventWorldCache
                 {
                     event.setResult(entityData.result);
 
-                    Log.writeDataToLogFile(0,
+                    Log.write(0,
                             (isZombie ? "Zombie" : "Pig Zombie") +
                                     " spawn blocked! Limit reached (" +
                                     zombieCount + "/" + entityData.max_entity_count + ")");
@@ -238,7 +238,7 @@ public final class OnEventWorldCache
         int maxEntityCount = CacheFunctional.getInstance()
                 .calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
 
-        Log.writeDataToLogFile(0, "Entity: " + countKey +
+        Log.write(0, "Entity: " + countKey +
                 ", Current Count: " + currentEntityCount +
                 ", Max Count: " + maxEntityCount);
 

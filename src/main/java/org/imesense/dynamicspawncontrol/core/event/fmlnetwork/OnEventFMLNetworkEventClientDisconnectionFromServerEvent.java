@@ -41,6 +41,6 @@ public final class OnEventFMLNetworkEventClientDisconnectionFromServerEvent exte
                 disconnectReason
         );
 
-        Log.writeDataToLogFile(0, logMessage);
+        Log.write(0, logMessage);
     }
 }

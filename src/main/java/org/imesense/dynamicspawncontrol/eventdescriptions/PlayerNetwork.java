@@ -46,7 +46,7 @@ public final class PlayerNetwork
             if (!PLAYER_LIST.contains(entityPlayerMP.getName()))
             {
                 PLAYER_LIST.add(entityPlayerMP.getName());
-                Log.writeDataToLogFile(0, String.format("Player [%s] has been added to the list", entityPlayerMP.getName()));
+                Log.write(0, String.format("Player [%s] has been added to the list", entityPlayerMP.getName()));
             }
         }
     }
@@ -55,7 +55,7 @@ public final class PlayerNetwork
     {
         EntityPlayerMP entityPlayerMP = (EntityPlayerMP) event.player;
         PLAYER_LIST.remove(entityPlayerMP.getName());
-        Log.writeDataToLogFile(0, String.format("Player [%s] has been removed from the list", entityPlayerMP.getName()));
+        Log.write(0, String.format("Player [%s] has been removed from the list", entityPlayerMP.getName()));
     }
 
     public void handlePlayerRespawn(PlayerEvent.PlayerRespawnEvent event)
@@ -85,7 +85,7 @@ public final class PlayerNetwork
                         entity.posZ
                 );
 
-                Log.writeDataToLogFile(0, entityInfo);
+                Log.write(0, entityInfo);
 
                 entity.setDead();
             }

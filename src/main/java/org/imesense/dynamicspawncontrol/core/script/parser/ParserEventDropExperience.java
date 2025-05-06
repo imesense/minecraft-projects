@@ -53,14 +53,14 @@ public final class ParserEventDropExperience extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " file: " + this.nameFile);
+        Log.write(0, "Reading the config for the first time: " + init + " file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
-            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
@@ -78,7 +78,7 @@ public final class ParserEventDropExperience extends BaseParser
 
                     if (!jsonObject.has("entity"))
                     {
-                        Log.writeDataToLogFile(0, "Missing required field 'entity' in entry: " + jsonObject);
+                        Log.write(0, "Missing required field 'entity' in entry: " + jsonObject);
                         continue;
                     }
 
@@ -89,7 +89,7 @@ public final class ParserEventDropExperience extends BaseParser
 
                     if (entityEntry == null)
                     {
-                        Log.writeDataToLogFile(0, "Entity not found: " + entityId);
+                        Log.write(0, "Entity not found: " + entityId);
                         continue;
                     }
 
@@ -100,7 +100,7 @@ public final class ParserEventDropExperience extends BaseParser
                     {
                         if (!jsonObject.has("multi_xp"))
                         {
-                            Log.writeDataToLogFile(0, "use_default_xp = true requires multi_xp for entity: " + entityId);
+                            Log.write(0, "use_default_xp = true requires multi_xp for entity: " + entityId);
                             continue;
                         }
 
@@ -131,7 +131,7 @@ public final class ParserEventDropExperience extends BaseParser
                     if (data.worldTimeIntervalMin != null && data.worldTimeIntervalMax != null
                             && data.worldTimeIntervalMin > data.worldTimeIntervalMax)
                     {
-                        Log.writeDataToLogFile(0, "Invalid time interval for entity " + entityId
+                        Log.write(0, "Invalid time interval for entity " + entityId
                                 + ": min > max (" + data.worldTimeIntervalMin + " > " + data.worldTimeIntervalMax + ")");
 
                         continue;
@@ -155,7 +155,7 @@ public final class ParserEventDropExperience extends BaseParser
                         }
                     }
 
-                    Log.writeDataToLogFile(0, String.format(
+                    Log.write(0, String.format(
                             "Loaded entity: %s, mode: %s, xp: %s, multi: %.2f, add: %s, time: %s-%s, result: %s",
                             data.entity,
                             data.use_default_xp ? "DEFAULT_XP" : "FULL",
@@ -172,17 +172,17 @@ public final class ParserEventDropExperience extends BaseParser
                 }
                 catch (Exception exception)
                 {
-                    Log.writeDataToLogFile(0, "Error processing config entry: " + element);
+                    Log.write(0, "Error processing config entry: " + element);
                 }
             }
         }
         catch (IOException exception)
         {
-            Log.writeDataToLogFile(0, "Failed to load config file: " + file);
+            Log.write(0, "Failed to load config file: " + file);
         }
         catch (JsonParseException exception)
         {
-            Log.writeDataToLogFile(0, "Malformed JSON in config file: " + file);
+            Log.write(0, "Malformed JSON in config file: " + file);
         }
     }
 

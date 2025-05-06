@@ -43,7 +43,7 @@ public final class PacketGameRule implements IMessage
 
                 if (PluginTimeControlConfig.getInstance(PluginTimeControlConfig.class).isTimeControlDebug())
                 {
-                    Log.writeDataToLogFile(0,"Network packet for gamerule doDaylightCycle_tc received, value: " +
+                    Log.write(0,"Network packet for gamerule doDaylightCycle_tc received, value: " +
                             packetGameRule.doDaylightCycle_tc);
                 }
 

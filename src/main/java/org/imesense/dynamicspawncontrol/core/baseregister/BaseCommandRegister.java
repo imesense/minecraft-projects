@@ -33,7 +33,7 @@ public abstract class BaseCommandRegister
             }
             catch (Exception exception)
             {
-                Log.writeDataToLogFile(2, "Exception in class: "
+                Log.write(2, "Exception in class: "
                         + _class.getName() + " - " + exception.getMessage());
 
                 throw new RuntimeException(exception);

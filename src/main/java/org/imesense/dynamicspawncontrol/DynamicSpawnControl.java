@@ -74,13 +74,13 @@ public final class DynamicSpawnControl
         File modFile = event.getSourceFile();
         String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID + "-0.1.jar";
 
-        Log.writeDataToLogFile(3, "Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
+        Log.write(3, "Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
 
         if (!modFile.getName().equals(expectedName) && !UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
-            Log.writeDataToLogFile(2, "Renaming a mod is prohibited.");
-            Log.writeDataToLogFile(2, "You can make an official fork and rename it in its original form:");
-            Log.writeDataToLogFile(2, "https://github.com/imesense/minecraft-projects");
+            Log.write(2, "Renaming a mod is prohibited.");
+            Log.write(2, "You can make an official fork and rename it in its original form:");
+            Log.write(2, "https://github.com/imesense/minecraft-projects");
 
             FMLCommonHandler.instance().exitJava(1, false);
         }
@@ -92,7 +92,7 @@ public final class DynamicSpawnControl
 
             if (stream != null)
             {
-                Log.writeDataToLogFile(0, "File " + configFile + " found! Loading the mixins...");
+                Log.write(0, "File " + configFile + " found! Loading the mixins...");
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
                 StringBuilder fileContent = new StringBuilder();
@@ -115,23 +115,23 @@ public final class DynamicSpawnControl
 
                 reader.close();
 
-                Log.writeDataToLogFile(0, "File Contents " + configFile + ":\n" + fileContent.toString());
+                Log.write(0, "File Contents " + configFile + ":\n" + fileContent.toString());
 
-                Log.writeDataToLogFile(0, "Mixins uploaded successfully!");
-                Log.writeDataToLogFile(0, "Mixins configuration loaded: " + configFile);
+                Log.write(0, "Mixins uploaded successfully!");
+                Log.write(0, "Mixins configuration loaded: " + configFile);
             }
             else
             {
-                Log.writeDataToLogFile(0, "File " + configFile + " not found! Check the path and the name.");
+                Log.write(0, "File " + configFile + " not found! Check the path and the name.");
             }
         }
         catch (Exception exception)
         {
-            Log.writeDataToLogFile(0, "Download error Mixin: " + exception.getMessage());
+            Log.write(0, "Download error Mixin: " + exception.getMessage());
             exception.printStackTrace();
         }
 
-        Log.writeDataToLogFile(1, "Is running in IDE (based on logging level): " +
+        Log.write(1, "Is running in IDE (based on logging level): " +
                 (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "true" : "false"));
 
         MessageHandler.init();
@@ -191,12 +191,12 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void serverStopped(FMLServerStoppedEvent event)
     {
-        Log.writeDataToLogFile(0, "Cleaning up CacheGeneralStorage on server stop...");
+        Log.write(0, "Cleaning up CacheGeneralStorage on server stop...");
 
         CacheGeneralStorage.getInstance().cleanActualCache();
         CacheGeneralStorage.getInstance().cleanBufferCache();
 
-        Log.writeDataToLogFile(0, "CacheGeneralStorage cleaned up successfully.");
+        Log.write(0, "CacheGeneralStorage cleaned up successfully.");
     }
 
     @Mod.EventHandler

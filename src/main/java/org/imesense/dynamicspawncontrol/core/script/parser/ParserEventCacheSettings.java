@@ -27,14 +27,14 @@ public final class ParserEventCacheSettings extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE, this.nameFile);
 
         if (!file.exists())
         {
-            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
@@ -129,7 +129,7 @@ public final class ParserEventCacheSettings extends BaseParser
                     }
 
                     entityData.check_instanceof = checkInstanceof;
-                    Log.writeDataToLogFile(0, "Entity checkInstanceof: " + entityData.check_instanceof);
+                    Log.write(0, "Entity checkInstanceof: " + entityData.check_instanceof);
                 }
                 else if (entityName != null)
                 {
@@ -139,7 +139,7 @@ public final class ParserEventCacheSettings extends BaseParser
                             new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
 
                     entityData.entity = resourceLocation;
-                    Log.writeDataToLogFile(0, "Entity ResourceLocation: " + resourceLocation);
+                    Log.write(0, "Entity ResourceLocation: " + resourceLocation);
                 }
 
                 entityData.per_player = perPlayer;
@@ -149,14 +149,14 @@ public final class ParserEventCacheSettings extends BaseParser
 
                 entitiesList.add(entityData);
 
-                Log.writeDataToLogFile(0, "Entity Loaded: " +
+                Log.write(0, "Entity Loaded: " +
                         (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName) +
                         " Per Player: " + perPlayer + " Per Chunk: " +
                         perChunk + " Max Count: " + maxEntityCount + " Result: " + result);
             }
 
             CacheEntityStorage.getInstance().entityData = entitiesList;
-            Log.writeDataToLogFile(0, "Loaded script with data: " + entitiesList);
+            Log.write(0, "Loaded script with data: " + entitiesList);
         }
         catch (IOException | JsonSyntaxException exception)
         {

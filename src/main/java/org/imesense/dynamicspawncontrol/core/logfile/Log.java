@@ -69,7 +69,7 @@ public final class Log
         } catch (IOException ignored) {}
     }
 
-    public static void writeDataToLogFile(final int LEVEL_INFO, String data)
+    public static void write(final int LEVEL_INFO, String data)
     {
         if (logFile != null)
         {

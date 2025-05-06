@@ -33,14 +33,14 @@ public final class ParserEventCheckSpawn extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
-            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
@@ -137,7 +137,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
         if (entityEntry == null)
         {
-            Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
+            Log.write(0, "Mob not found: " + entityTypeString);
             return;
         }
 
@@ -205,7 +205,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             if (split.length < 3 || split.length > 4)
             {
-                Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                Log.write(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
                 continue;
             }
 
@@ -214,7 +214,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             if (potion == null)
             {
-                Log.writeDataToLogFile(2, "Can't find potion '" + resourceLocation + "'!");
+                Log.write(2, "Can't find potion '" + resourceLocation + "'!");
                 continue;
             }
 
@@ -239,7 +239,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             if (split.length < 3 || split.length > 4)
             {
-                Log.writeDataToLogFile(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
+                Log.write(2, "Bad potion specifier '" + potionString + "'! Use <potion>,<duration>,<amplifier>[,<chance>]");
                 continue;
             }
 
@@ -248,7 +248,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             if (potion == null)
             {
-                Log.writeDataToLogFile(2, "Can't find potion '" + potionId + "'!");
+                Log.write(2, "Can't find potion '" + potionId + "'!");
                 continue;
             }
 
@@ -277,7 +277,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             if (entityEntry == null)
             {
-                Log.writeDataToLogFile(0, "Mob not found: " + entityTypeString);
+                Log.write(0, "Mob not found: " + entityTypeString);
                 return;
             }
 
@@ -294,7 +294,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
     private void handleLoadError(String message, Exception exception)
     {
-        Log.writeDataToLogFile(0, message);
+        Log.write(0, message);
         throw new RuntimeException(message, exception);
     }
 

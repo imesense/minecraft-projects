@@ -59,7 +59,7 @@ public final class OnEventDropExperience
                 int modifiedXp;
                 int originalXp = event.getDroppedExperience();
 
-                Log.writeDataToLogFile(0, String.format(
+                Log.write(0, String.format(
                         "Processing entity: %s, originalXP: %d, time: %d",
                         entity.getName(),
                         originalXp,
@@ -69,7 +69,7 @@ public final class OnEventDropExperience
                 if (data.use_default_xp)
                 {
                     modifiedXp = (int)(originalXp * data.multi_xp);
-                    Log.writeDataToLogFile(0, "Entity: " + event.getEntity() + " " + "modifiedXp: " + modifiedXp);
+                    Log.write(0, "Entity: " + event.getEntity() + " " + "modifiedXp: " + modifiedXp);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ public final class OnEventDropExperience
 
                     modifiedXp = (int)(baseXp * data.multi_xp + adding);
 
-                    Log.writeDataToLogFile(0, String.format(
+                    Log.write(0, String.format(
                             "Custom XP mode: (%d * %.1f) + %.1f = %d",
                             baseXp, data.multi_xp, adding, modifiedXp
                     ));

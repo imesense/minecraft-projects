@@ -32,14 +32,14 @@ public final class ParserEventPopulationChunk extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
-            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
@@ -51,7 +51,7 @@ public final class ParserEventPopulationChunk extends BaseParser
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
             List<PopulationChunkStruct.Data> populationList = new ArrayList<>();
 
-            Log.writeDataToLogFile(0, "Starting to parse JSON config.");
+            Log.write(0, "Starting to parse JSON config.");
 
             for (JsonElement topLevelElement : jsonArray)
             {
@@ -61,20 +61,20 @@ public final class ParserEventPopulationChunk extends BaseParser
                 {
                     JsonArray mobsArray = topLevelObject.getAsJsonArray("mobs");
 
-                    Log.writeDataToLogFile(0, "Loaded mobs: " + mobsArray.size());
+                    Log.write(0, "Loaded mobs: " + mobsArray.size());
 
                     for (JsonElement mobElement : mobsArray)
                     {
                         JsonObject mobMap = mobElement.getAsJsonObject();
                         String id = mobMap.get("mob").getAsString();
 
-                        Log.writeDataToLogFile(0, "Processing mob: " + id);
+                        Log.write(0, "Processing mob: " + id);
 
                         EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id));
 
                         if (entityEntry == null)
                         {
-                            Log.writeDataToLogFile(0, "Mob not found: " + id);
+                            Log.write(0, "Mob not found: " + id);
                             continue;
                         }
 
@@ -82,7 +82,7 @@ public final class ParserEventPopulationChunk extends BaseParser
 
                         if (_class == null)
                         {
-                            Log.writeDataToLogFile(0, "Entity class not found for mob: " + id);
+                            Log.write(0, "Entity class not found for mob: " + id);
                             continue;
                         }
 
@@ -108,7 +108,7 @@ public final class ParserEventPopulationChunk extends BaseParser
                         if (mobMap.has("biome"))
                         {
                             String biomeString = mobMap.get("biome").getAsString();
-                            Log.writeDataToLogFile(0, "Biomes for mob " + id + ": " + biomeString);
+                            Log.write(0, "Biomes for mob " + id + ": " + biomeString);
 
                             if (biomeString.contains(","))
                             {
@@ -138,7 +138,7 @@ public final class ParserEventPopulationChunk extends BaseParser
                         data.maxEntitiesPerChunk = maxEntitiesPerChunk;
                         populationList.add(data);
 
-                        Log.writeDataToLogFile(0, "Added mob to population list: " + id);
+                        Log.write(0, "Added mob to population list: " + id);
 
                         Biome.SpawnListEntry entry = new Biome.SpawnListEntry((Class<? extends EntityLiving>) _class,
                                 weight, groupCountMin, groupCountMax);
@@ -149,11 +149,11 @@ public final class ParserEventPopulationChunk extends BaseParser
             }
 
             GeneralPopulationChunkSpawn.getInstance().populationChunkStruct = populationList;
-            Log.writeDataToLogFile(0, "Config parsing completed successfully.");
+            Log.write(0, "Config parsing completed successfully.");
         }
         catch (IOException | JsonSyntaxException exception)
         {
-            Log.writeDataToLogFile(0, "Error loading config file: " + exception.getMessage());
+            Log.write(0, "Error loading config file: " + exception.getMessage());
         }
     }
 

@@ -104,7 +104,7 @@ public final class CmdAdminDumpEntity extends CommandBase
                 }
 
                 iCommandSender.sendMessage(new TextComponentString(entityInfo.toString()));
-                Log.writeDataToLogFile(0, entityInfo.toString());
+                Log.write(0, entityInfo.toString());
             }
             else
             {

@@ -45,21 +45,21 @@ public abstract class BaseConfigRegister
                 Constructor<T> constructor = _class.getConstructor(String.class);
                 final T INSTANCE = constructor.newInstance(configFileName);
 
-                Log.writeDataToLogFile(0, "Initialized config: " + configFileName);
-                Log.writeDataToLogFile(0, "configClass: " + _class + " " + INSTANCE);
+                Log.write(0, "Initialized config: " + configFileName);
+                Log.write(0, "configClass: " + _class + " " + INSTANCE);
             }
             else
             {
-                Log.writeDataToLogFile(2, "No ConfigClass annotation found in: " + _class.getName());
+                Log.write(2, "No ConfigClass annotation found in: " + _class.getName());
             }
         }
         catch (NoSuchMethodException exception)
         {
-            Log.writeDataToLogFile(2, "Constructor with String parameter not found in class: " + _class.getName() + " - " + exception.getMessage());
+            Log.write(2, "Constructor with String parameter not found in class: " + _class.getName() + " - " + exception.getMessage());
         }
         catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
+            Log.write(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
             throw new RuntimeException(exception);
         }
     }

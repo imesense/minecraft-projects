@@ -29,14 +29,14 @@ public final class ParserEventLootBoxInWorld extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_WORLD_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
-            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
@@ -48,11 +48,11 @@ public final class ParserEventLootBoxInWorld extends BaseParser
             Type type = new TypeToken<Map<String, List<LootBox.Data>>>() {}.getType();
             GeneralLootBox.getInstance().lootTable = gson.fromJson(fileReader, type);
 
-            Log.writeDataToLogFile(0, "Loot table loaded: " + GeneralLootBox.getInstance().lootTable);
+            Log.write(0, "Loot table loaded: " + GeneralLootBox.getInstance().lootTable);
         }
         catch (Exception exception)
         {
-            Log.writeDataToLogFile(2, "Error reading config: " + exception.getMessage());
+            Log.write(2, "Error reading config: " + exception.getMessage());
         }
     }
 
@@ -62,11 +62,11 @@ public final class ParserEventLootBoxInWorld extends BaseParser
         if (GeneralLootBox.getInstance().lootTable != null)
         {
             GeneralLootBox.getInstance().lootTable.clear();
-            Log.writeDataToLogFile(0, "Loot table cleared successfully.");
+            Log.write(0, "Loot table cleared successfully.");
         }
         else
         {
-            Log.writeDataToLogFile(2, "Loot table is already null. Nothing to clear.");
+            Log.write(2, "Loot table is already null. Nothing to clear.");
         }
     }
 }

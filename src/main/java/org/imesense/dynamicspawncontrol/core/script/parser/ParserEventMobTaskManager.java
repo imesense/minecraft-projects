@@ -47,14 +47,14 @@ public final class ParserEventMobTaskManager extends BaseParser
     @Override
     public void loadConfig(boolean init)
     {
-        Log.writeDataToLogFile(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
+        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
         if (!file.exists())
         {
-            Log.writeDataToLogFile(0, "Config file not found, creating new: " + file);
+            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
@@ -75,13 +75,13 @@ public final class ParserEventMobTaskManager extends BaseParser
                     data.enemies_to = getStringArray(topLevelObject, "enemies_to");
                     data.to_them = getStringArray(topLevelObject, "to_them");
 
-                    Log.writeDataToLogFile(0, "Parsed AddEnemy.Data:");
-                    Log.writeDataToLogFile(0, "enemies_to: " + Arrays.toString(data.enemies_to));
-                    Log.writeDataToLogFile(0, "to_them: " + Arrays.toString(data.to_them));
+                    Log.write(0, "Parsed AddEnemy.Data:");
+                    Log.write(0, "enemies_to: " + Arrays.toString(data.enemies_to));
+                    Log.write(0, "to_them: " + Arrays.toString(data.to_them));
 
                     taskManager.addEnemyData.add(data);
 
-                    Log.writeDataToLogFile(0, "AddEnemy.Data successfully added to addEnemyData.");
+                    Log.write(0, "AddEnemy.Data successfully added to addEnemyData.");
                 }
                 else if (topLevelObject.has("enemies_to") && topLevelObject.has("enemy_id"))
                 {
@@ -89,13 +89,13 @@ public final class ParserEventMobTaskManager extends BaseParser
                     data.enemies_to = getStringArray(topLevelObject, "enemies_to");
                     data.enemy_id = getStringArray(topLevelObject, "enemy_id");
 
-                    Log.writeDataToLogFile(0, "Parsed AddEnemyId.Data:");
-                    Log.writeDataToLogFile(0, "enemies_to: " + Arrays.toString(data.enemies_to));
-                    Log.writeDataToLogFile(0, "enemy_id: " + Arrays.toString(data.enemy_id));
+                    Log.write(0, "Parsed AddEnemyId.Data:");
+                    Log.write(0, "enemies_to: " + Arrays.toString(data.enemies_to));
+                    Log.write(0, "enemy_id: " + Arrays.toString(data.enemy_id));
 
                     taskManager.addEnemyIdData.add(data);
 
-                    Log.writeDataToLogFile(0, "AddEnemyId.Data successfully added to addEnemyIdData.");
+                    Log.write(0, "AddEnemyId.Data successfully added to addEnemyIdData.");
                 }
                 else if (topLevelObject.has("panic_to") && topLevelObject.has("panic_id"))
                 {
@@ -103,13 +103,13 @@ public final class ParserEventMobTaskManager extends BaseParser
                     data.panic_to = getStringArray(topLevelObject, "panic_to");
                     data.panic_id = getStringArray(topLevelObject, "panic_id");
 
-                    Log.writeDataToLogFile(0, "Parsed AddPanicToId.Data:");
-                    Log.writeDataToLogFile(0, "panic_to: " + Arrays.toString(data.panic_to));
-                    Log.writeDataToLogFile(0, "panic_id: " + Arrays.toString(data.panic_id));
+                    Log.write(0, "Parsed AddPanicToId.Data:");
+                    Log.write(0, "panic_to: " + Arrays.toString(data.panic_to));
+                    Log.write(0, "panic_id: " + Arrays.toString(data.panic_id));
 
                     taskManager.addPanicToIdData.add(data);
 
-                    Log.writeDataToLogFile(0, "AddPanicToId.Data successfully added to addPanicToIdData.");
+                    Log.write(0, "AddPanicToId.Data successfully added to addPanicToIdData.");
                 }
                 else if (topLevelObject.has("enemy_id") && topLevelObject.has("them_id"))
                 {
@@ -117,13 +117,13 @@ public final class ParserEventMobTaskManager extends BaseParser
                     data.enemy_id = getStringArray(topLevelObject, "enemy_id");
                     data.them_id = getStringArray(topLevelObject, "them_id");
 
-                    Log.writeDataToLogFile(0, "Parsed AddEnemyToIdThemToId.Data:");
-                    Log.writeDataToLogFile(0, "enemy_id: " + Arrays.toString(data.enemy_id));
-                    Log.writeDataToLogFile(0, "them_id: " + Arrays.toString(data.them_id));
+                    Log.write(0, "Parsed AddEnemyToIdThemToId.Data:");
+                    Log.write(0, "enemy_id: " + Arrays.toString(data.enemy_id));
+                    Log.write(0, "them_id: " + Arrays.toString(data.them_id));
 
                     taskManager.addEnemyToIdThemToIdData.add(data);
 
-                    Log.writeDataToLogFile(0, "AddEnemyToIdThemToId.Data successfully added to addEnemyToIdThemToIdData.");
+                    Log.write(0, "AddEnemyToIdThemToId.Data successfully added to addEnemyToIdThemToIdData.");
                 }
             }
         }
