@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntitySquid;
@@ -155,11 +156,6 @@ public final class OnEventWorldCache
         Entity entity = event.getEntity();
         ResourceLocation entityKey = EntityList.getKey(entity);
 
-        if (entityKey == null)
-        {
-            return;
-        }
-
         if ((entity instanceof IAnimals && !(entity instanceof EntityMob)
                 && !WorldCacheConfig.getInstance(WorldCacheConfig.class).isSpawnPeacefulCreaturesAtNight()))
         {
@@ -173,9 +169,20 @@ public final class OnEventWorldCache
         }
 
         Optional<CacheEntityStorage.EntityData> optionalEntityData = CacheEntityStorage.getInstance()
-                .entityData.stream()
-                .filter(data -> data.entity.equals(entityKey))
-                .findFirst();
+        .entityData.stream()
+            .filter(data ->
+            {
+                if (data.check_instanceof != null)
+                {
+                    return data.check_instanceof.isInstance(entity);
+                }
+                else if (data.entity != null && entityKey != null)
+                {
+                    return data.entity.equals(entityKey);
+                }
+                return false;
+            })
+        .findFirst();
 
         if (!optionalEntityData.isPresent())
         {
@@ -184,30 +191,35 @@ public final class OnEventWorldCache
 
         CacheEntityStorage.EntityData entityData = optionalEntityData.get();
 
-        /// /////////////////////////////////////////////////////////////////////////////////////////
         if (entityData.check_instanceof != null)
         {
-            if (!entityData.check_instanceof.isInstance(entity))
-            {
-                return;
-            }
+            boolean isZombie = EntityZombie.class.equals(entityData.check_instanceof);
+            boolean isPigZombie = EntityPigZombie.class.equals(entityData.check_instanceof);
 
-            if (EntityZombie.class.equals(entityData.check_instanceof) && !event.getWorld().isRemote)
+            if ((isZombie || isPigZombie) && !event.getWorld().isRemote)
             {
-                int zombieCount = event.getWorld().getEntities(EntityZombie.class, e -> true).size();
-                Log.writeDataToLogFile(0, "Zombie spawn attempt. Current zombies: " + zombieCount);
-                int MAX_ZOMBIES = 125;
+                int zombieCount = event.getWorld().getEntities(
+                        isZombie ? EntityZombie.class : EntityPigZombie.class,
+                        e -> true
+                ).size();
 
-                if (zombieCount >= MAX_ZOMBIES)
+                Log.writeDataToLogFile(0,
+                        (isZombie ? "Zombie" : "Pig Zombie") +
+                                " spawn attempt. Current count: " + zombieCount);
+
+                if (entityData.max_entity_count != null && zombieCount >= entityData.max_entity_count)
                 {
-                    event.setResult(Event.Result.DENY);
-                    Log.writeDataToLogFile(0, "Zombie spawn blocked! Limit reached (" + zombieCount + "/" + MAX_ZOMBIES + ")");
+                    event.setResult(entityData.result);
+
+                    Log.writeDataToLogFile(0,
+                            (isZombie ? "Zombie" : "Pig Zombie") +
+                                    " spawn blocked! Limit reached (" +
+                                    zombieCount + "/" + entityData.max_entity_count + ")");
 
                     return;
                 }
             }
         }
-        /// /////////////////////////////////////////////////////////////////////////////////////////
 
         WorldServer worldServer = (WorldServer) event.getWorld();
         EntityPlayerMP nearestPlayer = CacheFunctional.getInstance()
@@ -218,14 +230,17 @@ public final class OnEventWorldCache
             return;
         }
 
+        ResourceLocation countKey = entityData.entity != null ? entityData.entity : entityKey;
+
         int currentEntityCount = CacheFunctional.getInstance()
-                .getCurrentEntityCount(worldServer, nearestPlayer, entityKey);
+                .getCurrentEntityCount(worldServer, nearestPlayer, countKey);
 
         int maxEntityCount = CacheFunctional.getInstance()
                 .calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
 
-        Log.writeDataToLogFile(0, "Entity: " + entityKey + ", Current Count: " + //-' При проверке instanceof числинность всегда 0
-                currentEntityCount + ", Max Count: " + maxEntityCount);
+        Log.writeDataToLogFile(0, "Entity: " + countKey +
+                ", Current Count: " + currentEntityCount +
+                ", Max Count: " + maxEntityCount);
 
         if (currentEntityCount >= maxEntityCount)
         {

@@ -61,8 +61,27 @@ public final class ParserEventCacheSettings extends BaseParser
                     throw new RuntimeException("Script does not contain key 'data'.");
                 }
 
-                String entityName = dataObject.get("entity").getAsString();
-                String instanceofStr = dataObject.get("instanceof").getAsString();
+                if (dataObject.has("instanceof") && dataObject.has("entity"))
+                {
+                    throw new RuntimeException("Script cannot contain both 'instanceof' and 'entity' keys. Use only one.");
+                }
+
+                String entityName = null;
+                String instanceofStr = null;
+
+                if (dataObject.has("instanceof"))
+                {
+                    instanceofStr = dataObject.get("instanceof").getAsString();
+                }
+                else if (dataObject.has("entity"))
+                {
+                    entityName = dataObject.get("entity").getAsString();
+                }
+                else
+                {
+                    throw new RuntimeException("Script must contain either 'instanceof' or 'entity' key.");
+                }
+
                 Boolean perPlayer = dataObject.get("per_player").getAsBoolean();
                 Boolean perChunk = dataObject.get("per_chunk").getAsBoolean();
                 Integer maxEntityCount = dataObject.get("max_entity_count").getAsInt();
@@ -79,43 +98,49 @@ public final class ParserEventCacheSettings extends BaseParser
                     throw new RuntimeException("Invalid value for 'result': " + resultStr);
                 }
 
-                String[] parts = entityName.split(":");
-
-                ResourceLocation resourceLocation =
-                        new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
-
                 CacheEntityStorage.EntityData entityData = new CacheEntityStorage.EntityData();
-                entityData.entity = resourceLocation;
 
-                Class<?> checkInstanceof;
-
-                try
+                if (instanceofStr != null)
                 {
+                    Class<?> checkInstanceof;
+
                     try
-                    {
-                        checkInstanceof = Class.forName("net.minecraft.entity.monster." + instanceofStr);
-                    }
-                    catch (ClassNotFoundException exception1)
                     {
                         try
                         {
-                            checkInstanceof = Class.forName("net.minecraft.entity." + instanceofStr);
+                            checkInstanceof = Class.forName("net.minecraft.entity.monster." + instanceofStr);
                         }
-                        catch (ClassNotFoundException exception2)
+                        catch (ClassNotFoundException exception1)
                         {
-                            checkInstanceof = Class.forName(instanceofStr);
+                            try
+                            {
+                                checkInstanceof = Class.forName("net.minecraft.entity." + instanceofStr);
+                            }
+                            catch (ClassNotFoundException exception2)
+                            {
+                                checkInstanceof = Class.forName(instanceofStr);
+                            }
                         }
                     }
+                    catch (ClassNotFoundException exception)
+                    {
+                        throw new RuntimeException("Invalid class for 'instanceof': " + instanceofStr +
+                                ". Valid examples: 'EntityZombie' or 'EntityPigZombie', 'net.minecraft.entity.monster.EntityZombie', 'net.minecraft.entity.monster.EntityPigZombie", exception);
+                    }
+
+                    entityData.check_instanceof = checkInstanceof;
+                    Log.writeDataToLogFile(0, "Entity checkInstanceof: " + entityData.check_instanceof);
                 }
-                catch (ClassNotFoundException exception)
+                else if (entityName != null)
                 {
-                    throw new RuntimeException("Invalid class for 'instanceof': " + instanceofStr +
-                            ". Valid examples: 'EntityZombie', 'net.minecraft.entity.monster.EntityZombie'", exception);
+                    String[] parts = entityName.split(":");
+
+                    ResourceLocation resourceLocation =
+                            new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
+
+                    entityData.entity = resourceLocation;
+                    Log.writeDataToLogFile(0, "Entity ResourceLocation: " + resourceLocation);
                 }
-
-                entityData.check_instanceof = checkInstanceof;
-
-                Log.writeDataToLogFile(0, "Entity " + entityName + " checkInstanceof: " + entityData.check_instanceof);
 
                 entityData.per_player = perPlayer;
                 entityData.per_chunk = perChunk;
@@ -125,7 +150,8 @@ public final class ParserEventCacheSettings extends BaseParser
                 entitiesList.add(entityData);
 
                 Log.writeDataToLogFile(0, "Entity Loaded: " +
-                        resourceLocation + " Per Player: " + perPlayer + " Per Chunk: " +
+                        (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName) +
+                        " Per Player: " + perPlayer + " Per Chunk: " +
                         perChunk + " Max Count: " + maxEntityCount + " Result: " + result);
             }
 
