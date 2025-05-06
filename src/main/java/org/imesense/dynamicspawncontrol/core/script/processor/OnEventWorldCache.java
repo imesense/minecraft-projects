@@ -34,7 +34,7 @@ import java.util.Optional;
 
 @InitLog
 @TODO(
-        value = "Доделать обновление для системы кеширования сущностей в игровом мире",
+        value = "Пофиксить учет сущностей, у которых используется ключевое слово в парсере 'instanceof'",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
