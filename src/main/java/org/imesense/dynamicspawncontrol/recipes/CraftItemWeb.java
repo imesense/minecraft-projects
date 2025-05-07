@@ -4,9 +4,15 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.ObjectHandlerClient;
 
+@TODO(
+        value = "Исправить работу класса, разбить регистарцию рецептов",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 public final class CraftItemWeb implements IRecipes
 {
     public CraftItemWeb()
