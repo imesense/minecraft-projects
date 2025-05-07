@@ -24,5 +24,17 @@ public final class CraftItemWeb implements IRecipes
                 "OOO",
                 'O', Items.STRING,
                 'G', Items.SLIME_BALL);
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder"),
+                null,
+                new ItemStack(Items.GUNPOWDER),
+                "RC ",
+                "F  ",
+                "   ",
+                'R', Items.REDSTONE,
+                'C', Items.COAL,
+                'F', Items.FLINT
+        );
     }
 }

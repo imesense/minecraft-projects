@@ -183,13 +183,13 @@ public final class DynamicSpawnControl
     }
 
     @Mod.EventHandler
-    public void serverLoad(FMLServerStartingEvent event)
+    public void onServerLoad(FMLServerStartingEvent event)
     {
         CommandRegister.getInstance().registerCommands(event);
     }
 
     @Mod.EventHandler
-    public void serverStopped(FMLServerStoppedEvent event)
+    public void onServerStopped(FMLServerStoppedEvent event)
     {
         Log.write(0, "Cleaning up CacheGeneralStorage on server stop...");
 
