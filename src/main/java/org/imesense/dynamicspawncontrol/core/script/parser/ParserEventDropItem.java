@@ -20,9 +20,16 @@ import java.util.List;
 @InitLog
 public final class ParserEventDropItem extends BaseParser
 {
+    private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
+
     public ParserEventDropItem(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "ParserEventDropItem constructor called with file: " + NAME_FILE);
+        }
     }
 
     @Override
@@ -33,6 +40,11 @@ public final class ParserEventDropItem extends BaseParser
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Config file path: " + file.getAbsolutePath());
+        }
+
         if (!file.exists())
         {
             Log.write(0, "Config file not found, creating new: " + file);
@@ -42,50 +54,133 @@ public final class ParserEventDropItem extends BaseParser
 
         try (FileReader fileReader = new FileReader(file))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Reading and parsing JSON file");
+            }
+
             JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Found " + jsonArray.size() + " entity entries in JSON");
+            }
 
             List<DropItem.Data> dataList = new ArrayList<>();
 
             for (JsonElement element : jsonArray)
             {
-                JsonObject jsonObject = element.getAsJsonObject();
-
-                DropItem.Data data = new DropItem.Data();
-                data.entity = new ResourceLocation(jsonObject.get("entity").getAsString());
-
-                JsonArray dropsArray = jsonObject.getAsJsonArray("drop");
-                data.drops = new ArrayList<>();
-
-                for (Integer i = 0; i < dropsArray.size(); i += 5)
+                try
                 {
-                    DropItem.Data.ItemDrop itemDrop = new DropItem.Data.ItemDrop();
-
-                    itemDrop.item = new ResourceLocation(dropsArray.get(i).getAsString());
-
-                    itemDrop.minAmount = dropsArray.get(i + 1).getAsInt();
-                    itemDrop.maxAmount = dropsArray.get(i + 2).getAsInt();
-
-                    itemDrop.chance = dropsArray.get(i + 3).getAsFloat();
-
-                    String resultStr = dropsArray.get(i + 4).getAsString().toLowerCase();
-
-                    switch (resultStr)
+                    if (DEBUG_AND_CHECK_SYNTAX)
                     {
-                        case "allow":
-                            itemDrop.result = Event.Result.ALLOW;
-                            break;
-                        case "deny":
-                            itemDrop.result = Event.Result.DENY;
-                            break;
-                        default:
-                            itemDrop.result = Event.Result.DEFAULT;
-                            break;
+                        Log.write(0, "Processing new entity drop configuration");
                     }
 
-                    data.drops.add(itemDrop);
-                }
+                    JsonObject jsonObject = element.getAsJsonObject();
 
-                dataList.add(data);
+                    if (!jsonObject.has("entity"))
+                    {
+                        Log.write(0, "Missing required 'entity' field in JSON object");
+                        continue;
+                    }
+
+                    String entityId = jsonObject.get("entity").getAsString();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Processing drops for entity: " + entityId);
+                    }
+
+                    DropItem.Data data = new DropItem.Data();
+                    data.entity = new ResourceLocation(entityId);
+
+                    if (!jsonObject.has("drop"))
+                    {
+                        Log.write(0, "Missing required 'drop' array for entity: " + entityId);
+                        continue;
+                    }
+
+                    JsonArray dropsArray = jsonObject.getAsJsonArray("drop");
+                    data.drops = new ArrayList<>();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Found " + dropsArray.size() + " drop entries (will process in chunks of 5)");
+                    }
+
+                    for (Integer i = 0; i < dropsArray.size(); i += 5)
+                    {
+                        if (i + 4 >= dropsArray.size())
+                        {
+                            Log.write(0, "Incomplete drop entry (needs 5 elements) at position " + i);
+                            break;
+                        }
+
+                        DropItem.Data.ItemDrop itemDrop = new DropItem.Data.ItemDrop();
+
+                        String itemId = dropsArray.get(i).getAsString();
+                        itemDrop.item = new ResourceLocation(itemId);
+
+                        itemDrop.minAmount = dropsArray.get(i + 1).getAsInt();
+                        itemDrop.maxAmount = dropsArray.get(i + 2).getAsInt();
+                        itemDrop.chance = dropsArray.get(i + 3).getAsFloat();
+
+                        if (DEBUG_AND_CHECK_SYNTAX)
+                        {
+                            Log.write(0, String.format(
+                                    "Drop item: %s, amount: %d-%d, chance: %.2f",
+                                    itemId,
+                                    itemDrop.minAmount,
+                                    itemDrop.maxAmount,
+                                    itemDrop.chance
+                            ));
+                        }
+
+                        String resultStr = dropsArray.get(i + 4).getAsString().toLowerCase();
+
+                        switch (resultStr)
+                        {
+                            case "allow":
+                                itemDrop.result = Event.Result.ALLOW;
+                                break;
+                            case "deny":
+                                itemDrop.result = Event.Result.DENY;
+                                break;
+                            default:
+                                itemDrop.result = Event.Result.DEFAULT;
+                                break;
+                        }
+
+                        if (DEBUG_AND_CHECK_SYNTAX)
+                        {
+                            Log.write(0, "Drop result set to: " + itemDrop.result);
+                        }
+
+                        data.drops.add(itemDrop);
+                    }
+
+                    dataList.add(data);
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Successfully processed drops for entity: " + entityId);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.write(0, "Error processing drop item entry: " + exception.getMessage());
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        exception.printStackTrace();
+                    }
+                }
+            }
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Adding " + dataList.size() + " entity drop configurations to storage");
             }
 
             GeneralDropItem.getInstance().dropItemList.addAll(dataList);
@@ -93,12 +188,31 @@ public final class ParserEventDropItem extends BaseParser
         catch (IOException exception)
         {
             Log.write(0, "Failed to load drop item config: " + exception.getMessage());
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                exception.printStackTrace();
+            }
+        }
+        catch (JsonParseException exception)
+        {
+            Log.write(0, "Malformed JSON in drop item config: " + exception.getMessage());
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                exception.printStackTrace();
+            }
         }
     }
 
     @Override
     public void eraseData()
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Clearing all drop item configurations");
+        }
+
         GeneralDropItem.getInstance().dropItemList.clear();
     }
 }

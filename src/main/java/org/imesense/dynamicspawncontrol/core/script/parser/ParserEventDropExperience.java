@@ -20,14 +20,26 @@ import java.util.function.BiFunction;
 @InitLog
 public final class ParserEventDropExperience extends BaseParser
 {
+    private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
+
     public ParserEventDropExperience(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "ParserEventDropExperience constructor called with file: " + NAME_FILE);
+        }
     }
 
     public static <T> T getValueFromJson(JsonObject jsonObject, String key,
                                          T defaultValue, BiFunction<JsonElement, T, T> biFunction)
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Getting value from JSON for key: " + key + " with default: " + defaultValue);
+        }
+
         if (jsonObject.has(key))
         {
             JsonElement jsonElement = jsonObject.get(key);
@@ -35,16 +47,38 @@ public final class ParserEventDropExperience extends BaseParser
             if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isBoolean()
                     && defaultValue instanceof Boolean)
             {
+                if (DEBUG_AND_CHECK_SYNTAX)
+                {
+                    Log.write(0, "Found boolean value: " + jsonElement.getAsBoolean());
+                }
+
                 return (T) Boolean.valueOf(jsonElement.getAsBoolean());
             }
             else if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isNumber())
             {
-                return biFunction.apply(jsonElement, defaultValue);
+                T value = biFunction.apply(jsonElement, defaultValue);
+
+                if (DEBUG_AND_CHECK_SYNTAX)
+                {
+                    Log.write(0, "Found number value: " + value);
+                }
+
+                return value;
             }
             else if (jsonElement.isJsonPrimitive() && jsonElement.getAsJsonPrimitive().isString())
             {
+                if (DEBUG_AND_CHECK_SYNTAX)
+                {
+                    Log.write(0, "Found string value: " + jsonElement.getAsString());
+                }
+
                 return (T) jsonElement.getAsString();
             }
+        }
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Using default value for key: " + key);
         }
 
         return defaultValue;
@@ -67,12 +101,27 @@ public final class ParserEventDropExperience extends BaseParser
 
         try (FileReader fileReader = new FileReader(file))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Reading file: " + file.getAbsolutePath());
+            }
+
             JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Found " + jsonArray.size() + " entries in JSON array");
+            }
 
             for (JsonElement element : jsonArray)
             {
                 try
                 {
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Processing new JSON element");
+                    }
+
                     JsonObject jsonObject = element.getAsJsonObject();
                     EntityDropExperience.Data data = new EntityDropExperience.Data();
 
@@ -83,6 +132,12 @@ public final class ParserEventDropExperience extends BaseParser
                     }
 
                     String entityId = jsonObject.get("entity").getAsString();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Processing entity: " + entityId);
+                    }
+
                     data.entity = new ResourceLocation(entityId);
 
                     EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(data.entity);
@@ -98,6 +153,11 @@ public final class ParserEventDropExperience extends BaseParser
 
                     if (data.use_default_xp)
                     {
+                        if (DEBUG_AND_CHECK_SYNTAX)
+                        {
+                            Log.write(0, "Using default XP for entity: " + entityId);
+                        }
+
                         if (!jsonObject.has("multi_xp"))
                         {
                             Log.write(0, "use_default_xp = true requires multi_xp for entity: " + entityId);
@@ -112,6 +172,11 @@ public final class ParserEventDropExperience extends BaseParser
                     }
                     else
                     {
+                        if (DEBUG_AND_CHECK_SYNTAX)
+                        {
+                            Log.write(0, "Using custom XP values for entity: " + entityId);
+                        }
+
                         data.xp = getValueFromJson(jsonObject,
                                 "xp", 0, (el, defaultValue) -> el.getAsInt());
 
@@ -128,6 +193,12 @@ public final class ParserEventDropExperience extends BaseParser
                     data.worldTimeIntervalMax = getValueFromJson(jsonObject,
                             "time_max", null, (el, defaultValue) -> el.getAsLong());
 
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Time interval for " + entityId + ": " +
+                                data.worldTimeIntervalMin + " - " + data.worldTimeIntervalMax);
+                    }
+
                     if (data.worldTimeIntervalMin != null && data.worldTimeIntervalMax != null
                             && data.worldTimeIntervalMin > data.worldTimeIntervalMax)
                     {
@@ -140,6 +211,11 @@ public final class ParserEventDropExperience extends BaseParser
                     if (jsonObject.has("result"))
                     {
                         String resultStr = jsonObject.get("result").getAsString().toLowerCase();
+
+                        if (DEBUG_AND_CHECK_SYNTAX)
+                        {
+                            Log.write(0, "Processing result: " + resultStr);
+                        }
 
                         switch (resultStr)
                         {
@@ -169,26 +245,50 @@ public final class ParserEventDropExperience extends BaseParser
 
                     GeneralDropExperience.getInstance().dropExperienceList.add(data);
 
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Successfully added drop experience data for entity: " + entityId);
+                    }
                 }
                 catch (Exception exception)
                 {
                     Log.write(0, "Error processing config entry: " + element);
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Exception details: " + exception.getMessage());
+                    }
                 }
             }
         }
         catch (IOException exception)
         {
             Log.write(0, "Failed to load config file: " + file);
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "IOException details: " + exception.getMessage());
+            }
         }
         catch (JsonParseException exception)
         {
             Log.write(0, "Malformed JSON in config file: " + file);
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "JsonParseException details: " + exception.getMessage());
+            }
         }
     }
 
     @Override
     public void eraseData()
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Clearing drop experience list");
+        }
+
         GeneralDropExperience.getInstance().dropExperienceList.clear();
     }
 }

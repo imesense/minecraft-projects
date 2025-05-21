@@ -19,9 +19,16 @@ import java.util.List;
 @InitLog
 public final class ParserEventCacheSettings extends BaseParser
 {
+    private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
+
     public ParserEventCacheSettings(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "ParserEventCacheSettings constructor called with file: " + NAME_FILE);
+        }
     }
 
     @Override
@@ -41,6 +48,11 @@ public final class ParserEventCacheSettings extends BaseParser
 
         try (FileReader fileReader = new FileReader(file))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Reading file: " + file.getAbsolutePath());
+            }
+
             Gson gson = new Gson();
             JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
@@ -49,10 +61,20 @@ public final class ParserEventCacheSettings extends BaseParser
                 throw new RuntimeException("Script does not contain key 'data'.");
             }
 
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "JSON array size: " + jsonArray.size());
+            }
+
             List<CacheEntityStorage.EntityData> entitiesList = new ArrayList<>();
 
             for (JsonElement jsonElement : jsonArray)
             {
+                if (DEBUG_AND_CHECK_SYNTAX)
+                {
+                    Log.write(0, "Processing new JSON element");
+                }
+
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 JsonObject dataObject = jsonObject.getAsJsonObject("data");
 
@@ -72,10 +94,20 @@ public final class ParserEventCacheSettings extends BaseParser
                 if (dataObject.has("instanceof"))
                 {
                     instanceofStr = dataObject.get("instanceof").getAsString();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Found instanceof: " + instanceofStr);
+                    }
                 }
                 else if (dataObject.has("entity"))
                 {
                     entityName = dataObject.get("entity").getAsString();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Found entity: " + entityName);
+                    }
                 }
                 else
                 {
@@ -86,6 +118,14 @@ public final class ParserEventCacheSettings extends BaseParser
                 Boolean perChunk = dataObject.get("per_chunk").getAsBoolean();
                 Integer maxEntityCount = dataObject.get("max_entity_count").getAsInt();
                 String resultStr = dataObject.get("result").getAsString();
+
+                if (DEBUG_AND_CHECK_SYNTAX)
+                {
+                    Log.write(0, "Parsed values - per_player: " + perPlayer +
+                            ", per_chunk: " + perChunk +
+                            ", max_entity_count: " + maxEntityCount +
+                            ", result: " + resultStr);
+                }
 
                 Event.Result result;
 
@@ -109,16 +149,31 @@ public final class ParserEventCacheSettings extends BaseParser
                         try
                         {
                             checkInstanceof = Class.forName("net.minecraft.entity.monster." + instanceofStr);
+
+                            if (DEBUG_AND_CHECK_SYNTAX)
+                            {
+                                Log.write(0, "Trying net.minecraft.entity.monster package for: " + instanceofStr);
+                            }
                         }
                         catch (ClassNotFoundException exception1)
                         {
                             try
                             {
                                 checkInstanceof = Class.forName("net.minecraft.entity." + instanceofStr);
+
+                                if (DEBUG_AND_CHECK_SYNTAX)
+                                {
+                                    Log.write(0, "Trying net.minecraft.entity package for: " + instanceofStr);
+                                }
                             }
                             catch (ClassNotFoundException exception2)
                             {
                                 checkInstanceof = Class.forName(instanceofStr);
+
+                                if (DEBUG_AND_CHECK_SYNTAX)
+                                {
+                                    Log.write(0, "Trying full class name for: " + instanceofStr);
+                                }
                             }
                         }
                     }
@@ -139,7 +194,11 @@ public final class ParserEventCacheSettings extends BaseParser
                             new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
 
                     entityData.entity = resourceLocation;
-                    Log.write(0, "Entity ResourceLocation: " + resourceLocation);
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Created ResourceLocation: " + resourceLocation);
+                    }
                 }
 
                 entityData.per_player = perPlayer;
@@ -171,6 +230,11 @@ public final class ParserEventCacheSettings extends BaseParser
     @Override
     public void eraseData()
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Clearing entity data cache");
+        }
+
         CacheEntityStorage.getInstance().entityData.clear();
     }
 }

@@ -25,9 +25,16 @@ import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 @InitLog
 public final class ParserEventCheckSpawn extends BaseParser
 {
+    private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
+
     public ParserEventCheckSpawn(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "ParserEventCheckSpawn constructor called with file: " + NAME_FILE);
+        }
     }
 
     @Override
@@ -47,11 +54,26 @@ public final class ParserEventCheckSpawn extends BaseParser
 
         try (FileReader fileReader = new FileReader(file))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Reading file: " + file.getAbsolutePath());
+            }
+
             Gson gson = new Gson();
             JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "JSON array size: " + jsonArray.size());
+            }
+
             for (JsonElement jsonElement : jsonArray)
             {
+                if (DEBUG_AND_CHECK_SYNTAX)
+                {
+                    Log.write(0, "Processing new JSON element");
+                }
+
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 processJsonObject(jsonObject);
             }
@@ -68,21 +90,46 @@ public final class ParserEventCheckSpawn extends BaseParser
 
     private void processJsonObject(JsonObject jsonObject) throws RuntimeException
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Processing JSON object");
+        }
+
         JsonObject templates = jsonObject.has("templates") ? jsonObject.getAsJsonObject("templates") : new JsonObject();
+
+        if (DEBUG_AND_CHECK_SYNTAX && jsonObject.has("templates"))
+        {
+            Log.write(0, "Found templates section");
+        }
 
         if (jsonObject.has("configs"))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Found configs section");
+            }
+
             processConfigs(jsonObject.getAsJsonArray("configs"), templates);
         }
 
         if (jsonObject.has("data_support"))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Found data_support section");
+            }
+
             processDataSupport(jsonObject.getAsJsonArray("data_support"));
         }
     }
 
     private void processConfigs(JsonArray configs, JsonObject templates) throws RuntimeException
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Processing configs, count: " + configs.size());
+        }
+
         for (JsonElement configElement : configs)
         {
             JsonObject dataObject = configElement.getAsJsonObject().getAsJsonObject("data");
@@ -92,6 +139,11 @@ public final class ParserEventCheckSpawn extends BaseParser
                 throw new RuntimeException("Key 'data' not found in JSON file.");
             }
 
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Processing config data object");
+            }
+
             validateRequiredFields(dataObject);
             processDataObject(dataObject, templates);
         }
@@ -99,6 +151,11 @@ public final class ParserEventCheckSpawn extends BaseParser
 
     private void validateRequiredFields(JsonObject dataObject) throws RuntimeException
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Validating required fields");
+        }
+
         if (!dataObject.has("profile") || !dataObject.has("description"))
         {
             throw new RuntimeException("Fields 'profile' and 'description' are required in the 'data' section.");
@@ -112,13 +169,28 @@ public final class ParserEventCheckSpawn extends BaseParser
 
     private void processDataObject(JsonObject dataObject, JsonObject templates)
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Processing data object with profile: " + dataObject.get("profile").getAsString());
+        }
+
         if (dataObject.has("potion"))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Found potion section");
+            }
+
             dataObject.add("potion", resolveTemplate(dataObject.get("potion"), templates));
         }
 
         if (dataObject.has("command_nbt"))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Found command_nbt section");
+            }
+
             dataObject.add("command_nbt", resolveTemplate(dataObject.get("command_nbt"), templates));
         }
 
@@ -132,6 +204,12 @@ public final class ParserEventCheckSpawn extends BaseParser
         entityDescriptionData.description = dataObject.get("description").getAsString();
 
         String entityTypeString = dataObject.get("entity_type").getAsString();
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Entity type: " + entityTypeString);
+        }
+
         ResourceLocation entityType = new ResourceLocation(entityTypeString);
         EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
 
@@ -151,13 +229,33 @@ public final class ParserEventCheckSpawn extends BaseParser
         gameWorldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
         entityDescriptionData.name = dataObject.has("name") ? dataObject.get("name").getAsString() : null;
 
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Parsed basic entity data: " +
+                    "priority=" + profilePriorityData.priority +
+                    ", isArcher=" + entityDescriptionData.isArcher +
+                    ", seeSky=" + gameWorldData.seeSky +
+                    ", maxHeight=" + gameWorldData.maxHeight +
+                    ", minHeight=" + gameWorldData.minHeight);
+        }
+
         if (dataObject.has("equipment"))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Processing equipment section");
+            }
+
             processEquipment(dataObject.getAsJsonObject("equipment"), entityEquipmentData);
         }
 
         if (dataObject.has("potion"))
         {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Processing potion effects");
+            }
+
             processPotionEffects(dataObject.getAsJsonArray("potion"), entityAttributesData);
         }
 
@@ -166,10 +264,20 @@ public final class ParserEventCheckSpawn extends BaseParser
         GeneralCheckSpawnStorage.getInstance().gameWorldList.add(gameWorldData);
         GeneralCheckSpawnStorage.getInstance().entityDescriptionsList.add(entityDescriptionData);
         GeneralCheckSpawnStorage.getInstance().entityAttributesList.add(entityAttributesData);
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Successfully added entity data to storage");
+        }
     }
 
     private void processEquipment(JsonObject equipmentObject, EntityEquipment.Data entityEquipmentData)
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Processing equipment details");
+        }
+
         entityEquipmentData.heldItem = equipmentObject.has("held_item")
                 ? Equipment.getInstance().parseItemList(equipmentObject.get("held_item"))
                 : null;
@@ -192,15 +300,37 @@ public final class ParserEventCheckSpawn extends BaseParser
 
         entityEquipmentData.hasShield = equipmentObject.has("has_shield") &&
                 equipmentObject.get("has_shield").getAsBoolean();
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Equipment processed: " +
+                    "heldItem=" + (entityEquipmentData.heldItem != null) +
+                    ", helmet=" + (entityEquipmentData.helmet != null) +
+                    ", chestPlate=" + (entityEquipmentData.chestPlate != null) +
+                    ", legging=" + (entityEquipmentData.legging != null) +
+                    ", boots=" + (entityEquipmentData.boots != null) +
+                    ", hasShield=" + entityEquipmentData.hasShield);
+        }
     }
 
     private void processPotionEffects(JsonArray potionArray, EntityAttributes.Data entityAttributesData)
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Processing " + potionArray.size() + " potion effects");
+        }
+
         entityAttributesData.potion = new ArrayList<>();
 
         for (JsonElement potionElement : potionArray)
         {
             String potionString = potionElement.getAsString();
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Processing potion: " + potionString);
+            }
+
             String[] split = potionString.split(",");
 
             if (split.length < 3 || split.length > 4)
@@ -210,6 +340,12 @@ public final class ParserEventCheckSpawn extends BaseParser
             }
 
             ResourceLocation resourceLocation = new ResourceLocation(split[0].trim());
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Potion resource location: " + resourceLocation);
+            }
+
             Potion potion = ForgeRegistries.POTIONS.getValue(resourceLocation);
 
             if (potion == null)
@@ -225,16 +361,35 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             entityAttributesData.potion.add(new PotionEffect.Data(new
                     net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Added potion effect: " + potion.getName() +
+                        ", duration=" + duration +
+                        ", amplifier=" + amplifier +
+                        ", chance=" + chance);
+            }
         }
     }
 
     private void processPotionEffectsForDataSupport(JsonArray potionArray, AdditionalChecks.Data dataSupport)
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Processing " + potionArray.size() + " potion effects for data support");
+        }
+
         dataSupport.potion = new ArrayList<>();
 
         for (JsonElement potionElement : potionArray)
         {
             String potionString = potionElement.getAsString();
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Processing data support potion: " + potionString);
+            }
+
             String[] split = potionString.split(",");
 
             if (split.length < 3 || split.length > 4)
@@ -244,6 +399,12 @@ public final class ParserEventCheckSpawn extends BaseParser
             }
 
             ResourceLocation potionId = new ResourceLocation(split[0].trim());
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Data support potion ID: " + potionId);
+            }
+
             Potion potion = ForgeRegistries.POTIONS.getValue(potionId);
 
             if (potion == null)
@@ -258,11 +419,24 @@ public final class ParserEventCheckSpawn extends BaseParser
             Double chance = (split.length == 4) ? Double.parseDouble(split[3].trim()) : 1.0;
 
             dataSupport.potion.add(new PotionEffect.Data(new net.minecraft.potion.PotionEffect(potion, duration, amplifier), chance));
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Added data support potion effect: " + potion.getName() +
+                        ", duration=" + duration +
+                        ", amplifier=" + amplifier +
+                        ", chance=" + chance);
+            }
         }
     }
 
     private void processDataSupport(JsonArray dataSupportArray)
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Processing data support, count: " + dataSupportArray.size());
+        }
+
         for (JsonElement element : dataSupportArray)
         {
             JsonObject dataSupportObject = element.getAsJsonObject();
@@ -271,6 +445,11 @@ public final class ParserEventCheckSpawn extends BaseParser
             dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
 
             String entityTypeString = dataSupportObject.get("entity_type").getAsString();
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Data support entity type: " + entityTypeString);
+            }
 
             ResourceLocation entityType = new ResourceLocation(entityTypeString);
             EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(entityType);
@@ -285,10 +464,20 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             if (dataSupportObject.has("potion"))
             {
+                if (DEBUG_AND_CHECK_SYNTAX)
+                {
+                    Log.write(0, "Processing potion effects for data support");
+                }
+
                 processPotionEffectsForDataSupport(dataSupportObject.getAsJsonArray("potion"), dataSupport);
             }
 
             SupportCheckSpawnStorage.getInstance().dataSupportList.add(dataSupport);
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Added data support entry for entity: " + entityTypeString);
+            }
         }
     }
 
@@ -301,6 +490,11 @@ public final class ParserEventCheckSpawn extends BaseParser
     @Override
     public void eraseData()
     {
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Clearing all data storages");
+        }
+
         GeneralCheckSpawnStorage.getInstance().entityEquipmentList.clear();
         GeneralCheckSpawnStorage.getInstance().profilePriorityList.clear();
         GeneralCheckSpawnStorage.getInstance().gameWorldList.clear();
