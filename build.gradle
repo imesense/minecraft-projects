@@ -111,6 +111,8 @@ dependencies
     implementation 'org.slf4j:slf4j-simple:1.7.36'
 
     // Use mixins lib
+    implementation 'org.spongepowered:mixin:0.8.5'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf("curse.maven:mixin-0-7-0-8-compatibility-405327:4641243")
     implementation fg.deobf("curse.maven:mixin-booter-419286:4459218")
 
