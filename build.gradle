@@ -9,7 +9,7 @@ buildscript
 
         maven
         {
-            url = 'https://repo.spongepowered.org/maven'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
 
         mavenCentral()
@@ -43,7 +43,7 @@ apply plugin: 'org.spongepowered.mixin'
 
 // File metadata
 version = '0.1'
-group = 'org.imesense.dynamicspawncontrol.modid'
+group = 'org.imesense.dynamicspawncontrol'
 archivesBaseName = 'dynamicspawncontrol'
 
 // Java version
@@ -111,8 +111,8 @@ dependencies
     implementation 'org.slf4j:slf4j-simple:1.7.36'
 
     // Use mixins lib
-    implementation 'org.spongepowered:mixin:0.8.5'
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation fg.deobf("curse.maven:mixin-0-7-0-8-compatibility-405327:4641243")
+    implementation fg.deobf("curse.maven:mixin-booter-419286:4459218")
 
     // Use core mod #1 DivineRPG
     implementation fg.deobf("curse.maven:official-divinerpg-363543:2937175")
@@ -143,15 +143,39 @@ jar
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"imesense",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+            "MixinConfigs": "mixins.dynamicspawncontrol.json",
             "FMLCorePlugin": "org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore",
             "FMLCorePluginContainsFMLMod": "true",
-            "MixinConfigs": "mixins.dynamicspawncontrol.json"
+            "ForceLoadAsMod": "true"
         ])
     }
+
+    exclude 'net/**'
 }
 
 // Preferred method to reobfuscate JAR file
 jar.finalizedBy('reobfJar')
+
+// Build sources task
+tasks.register('sourcesJar', Jar) {
+    from sourceSets.main.allJava
+    from sourceSets.main.resources
+    classifier = 'sources'
+}
+
+// Build documentation task
+tasks.register('javadocJar', Jar) {
+    dependsOn javadoc
+    from "$buildDir/docs/javadoc"
+    classifier = 'javadoc'
+}
+
+// Build additional artifacts
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
 
 publishing
 {
@@ -160,6 +184,8 @@ publishing
         mavenJava(MavenPublication)
         {
             artifact jar
+            artifact sourcesJar
+            artifact javadocJar
         }
     }
 
@@ -191,3 +217,14 @@ compileJava
         "-AoutRefMap=mixins.dynamicspawncontrol.refmap.json"
     ]
 }
+
+tasks.register('copyDependencies', Copy) {
+    from configurations.runtimeClasspath.filter { file ->
+        file.name.contains('mixin-0-7-0-8-compatibility') ||
+                file.name.contains('mixin-booter-419286')
+    }
+
+    into 'build/libs'
+}
+
+build.dependsOn copyDependencies
