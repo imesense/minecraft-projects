@@ -9,7 +9,7 @@ import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.ObjectHandlerClient;
 
 @TODO(
-        value = "Исправить работу класса, разбить регистарцию рецептов",
+        value = "Divide this class into different methods",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
