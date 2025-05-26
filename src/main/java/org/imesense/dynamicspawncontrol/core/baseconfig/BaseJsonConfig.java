@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
@@ -46,13 +47,22 @@ public abstract class BaseJsonConfig
     {
         Path path = Paths.get(configPath);
 
-        if (Files.notExists(path))
+        try
         {
-            saveConfig(createDefaultConfig());
+            Files.createDirectories(path.getParent());
+
+            if (Files.notExists(path))
+            {
+                saveConfig(createDefaultConfig());
+            }
+            else
+            {
+                loadConfig();
+            }
         }
-        else
+        catch (IOException exception)
         {
-            loadConfig();
+            exception.printStackTrace();
         }
     }
 
@@ -83,10 +93,14 @@ public abstract class BaseJsonConfig
 
     protected String constructPathToDirectory(boolean isConfigFolder)
     {
-        return DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
+        String path = DynamicSpawnControl.getGlobalPathToConfigs().getPath() + File.separator +
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY + File.separator +
                 (isConfigFolder ? DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS :
                         DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_PLUGINS) + File.separator;
+
+        Log.write(0, "constructPathToDirectory: " + path);
+
+        return path;
     }
 
     protected abstract JsonObject createDefaultConfig();
