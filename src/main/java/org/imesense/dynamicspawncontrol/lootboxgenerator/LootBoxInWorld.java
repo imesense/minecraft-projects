@@ -22,7 +22,7 @@ import java.util.*;
 @InitLog
 public final class LootBoxInWorld implements IWorldGenerator
 {
-    private static final double OVERALL_CHANCE_PER_CHUNK = 0.05;
+    private static final double OVERALL_CHANCE_PER_CHUNK = 0.01;
 
     private static final double[] TIER_WEIGHTS = {60.0, 30.0, 10.0};
     private static final String[] TIERS = {"common", "rare", "legendary"};
