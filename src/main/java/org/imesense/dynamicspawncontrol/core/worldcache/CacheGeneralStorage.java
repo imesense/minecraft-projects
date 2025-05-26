@@ -18,6 +18,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
@@ -30,6 +31,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @InitLog
+@TODO(
+        value = "Нужно реализовать это в потокобезопасном режиме",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 public final class CacheGeneralStorage
 {
     private static volatile CacheGeneralStorage _INSTANCE;
@@ -107,47 +113,52 @@ public final class CacheGeneralStorage
             }
         }
 
-        for (Entity entity : world.loadedEntityList)
+        //-' HACK:
+        synchronized (world.loadedEntityList)
         {
-            if (entity instanceof EntityLivingBase)
+            for (Entity entity : world.loadedEntityList)
             {
-                EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
-
-                if (CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
+                if (entity instanceof EntityLivingBase)
                 {
-                    if (entity instanceof IAnimals)
+                    EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
+
+                    if (CACHE_VALID_CHUNKS.contains(new ChunkPos(entity.chunkCoordX, entity.chunkCoordZ)))
                     {
-                        if (entity instanceof EntityAnimal)
+                        if (entity instanceof IAnimals)
                         {
-                            CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
+                            if (entity instanceof EntityAnimal)
+                            {
+                                CACHED_ACTUAL_ANIMALS.add((EntityAnimal) entity);
+                            }
+                            else if (entity instanceof EntityMob)
+                            {
+                                CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
+                            }
+                            else if (entity instanceof EntityWaterMob)
+                            {
+                                CACHED_ACTUAL_WATER_MOBS.add((EntityWaterMob) entity);
+                            }
                         }
-                        else if (entity instanceof EntityMob)
-                        {
-                            CACHED_ACTUAL_HOSTILES.add((IAnimals) entity);
-                        }
-                        else if (entity instanceof EntityWaterMob)
-                        {
-                            CACHED_ACTUAL_WATER_MOBS.add((EntityWaterMob) entity);
-                        }
-                    }
 
-                    CACHED_ACTUAL_ALL.add(entityLivingBase);
+                        CACHED_ACTUAL_ALL.add(entityLivingBase);
 
-                    String entityName = entity.getName();
+                        String entityName = entity.getName();
 
-                    ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
-                            new HashSet<>()).add(entityLivingBase);
-
-                    ResourceLocation resourceLocation = EntityList.getKey(entity);
-
-                    if (resourceLocation != null)
-                    {
-                        ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k ->
+                        ENTITIES_ACTUAL_BY_NAME.computeIfAbsent(entityName, k ->
                                 new HashSet<>()).add(entityLivingBase);
+
+                        ResourceLocation resourceLocation = EntityList.getKey(entity);
+
+                        if (resourceLocation != null)
+                        {
+                            ENTITIES_ACTUAL_BY_RESOURCE_LOCATION.computeIfAbsent(resourceLocation, k ->
+                                    new HashSet<>()).add(entityLivingBase);
+                        }
                     }
                 }
             }
         }
+        /// ////////////////////////////////////////////////////////////
     }
 
     public int getActualAnimalCount()
