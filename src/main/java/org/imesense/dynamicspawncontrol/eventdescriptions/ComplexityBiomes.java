@@ -48,6 +48,7 @@ public final class ComplexityBiomes
         addBiomeSkulls("Flower Forest", 0, 1, 0, 1);
         addBiomeSkulls("Birch Forest", 1, 1, 0, 0);
         addBiomeSkulls("Birch Forest Hills", 2, 0, 0, 0);
+        addBiomeSkulls("Birch Forest Hills M", 3, 0, 0, 0);
         addBiomeSkulls("Birch Forest M", 2, 0, 0, 0);
         addBiomeSkulls("Roofed Forest", 3, 0, 0, 0);
         addBiomeSkulls("Roofed Forest M", 4, 0, 0, 0);
@@ -95,6 +96,7 @@ public final class ComplexityBiomes
 
         // Mesa biomes
         addBiomeSkulls("Mesa", 5, 1, 0, 0);
+        addBiomeSkulls("Mesa Plateau", 6, 1, 0, 0);
         addBiomeSkulls("Mesa Plateau F", 6, 1, 0, 0);
 
         // Ocean biomes
