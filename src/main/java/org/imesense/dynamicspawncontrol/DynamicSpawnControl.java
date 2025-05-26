@@ -37,7 +37,9 @@ import java.io.InputStreamReader;
 @Mod(
     modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
     name = DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME,
-    version = DynamicSpawnControlStructure.STRUCT_INFO_MOD.VERSION
+    version = DynamicSpawnControlStructure.STRUCT_INFO_MOD.VERSION,
+    dependencies =
+            "required-after:divinerpg;required-after:srparasites;required-after:specialmobs;"
 )
 public final class DynamicSpawnControl
 {
