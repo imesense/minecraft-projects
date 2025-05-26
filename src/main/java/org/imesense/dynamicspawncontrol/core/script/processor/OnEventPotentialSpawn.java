@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.world.WorldEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.PotentialSpawnStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
@@ -14,6 +15,11 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @InitLog
+@TODO(
+        value = "Вообщем тут проблема в том, если указан параметр 'weight': >15, то затираются списки оригинальных сущностей со спавна или становятся слишком редкими",
+        priority = TODO.TodoPriority.HIGH,
+        showOnce = false
+)
 public final class OnEventPotentialSpawn
 {
     private static volatile OnEventPotentialSpawn _INSTANCE;
@@ -46,9 +52,13 @@ public final class OnEventPotentialSpawn
         Integer eventY = event.getPos().getY();
 
         List<Biome.SpawnListEntry> filteredEntries = IntStream.range(0, spawnEntries.size())
-                .filter(i -> UniqueField.RANDOM.nextFloat() < secondaryParameters.get(i).spawnChance &&
-                        eventY >= secondaryParameters.get(i).minHeight &&
-                        eventY <= secondaryParameters.get(i).maxHeight)
+                .filter(i -> {
+                    PotentialSpawnStruct.Data data = secondaryParameters.get(i);
+                    float effectiveChance = data.spawnChance * spawnEntries.get(i).itemWeight / 100f;
+                    return UniqueField.RANDOM.nextFloat() < effectiveChance &&
+                            eventY >= data.minHeight &&
+                            eventY <= data.maxHeight;
+                })
                 .mapToObj(spawnEntries::get)
                 .collect(Collectors.toList());
 
