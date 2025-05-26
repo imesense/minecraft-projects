@@ -117,13 +117,10 @@ dependencies
     implementation fg.deobf("curse.maven:mixin-booter-419286:4459218")
 
     // Use core mod #1 DivineRPG
-    implementation fg.deobf("curse.maven:official-divinerpg-363543:2937175")
+    implementation fg.deobf("curse.maven:official-divinerpg-363543:3081433")
 
     // Use core mod #2 SRParasites
     implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:5370258")
-
-    // Actual version of builder GSON
-    implementation 'com.google.code.gson:gson:2.8.9'
 
     // Use Byte buddy lib
     implementation 'net.bytebuddy:byte-buddy:1.12.9'
