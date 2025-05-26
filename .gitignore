@@ -3,3 +3,26 @@
 # System cache
 .DS_Store
 Thumbs.db
+
+# Eclipse cache and settings
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# IntelliJ Idea cache and settings
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# Gradle cache and settings
+build
+.gradle
+
+# Other cache
+eclipse
+run
