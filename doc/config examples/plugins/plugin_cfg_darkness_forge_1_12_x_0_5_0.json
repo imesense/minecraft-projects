@@ -1,0 +1,23 @@
+{
+  "darknessOverWorld": true,
+  "darknessNether": true,
+  "darknessEnd": true,
+  "darknessDefault": true,
+  "darknessSkyLess": true,
+  "darknessNetherFog": true,
+  "darknessEndFog": true,
+  "ignoreMoonLight": false,
+  "invertBlacklist": false,
+  "blacklistByID": [],
+  "moonPhaseFactors": [
+    0.6,
+    0.4,
+    0.3,
+    0.2,
+    0.0,
+    0.1,
+    0.2,
+    0.4
+  ],
+  "blacklistByName": []
+}

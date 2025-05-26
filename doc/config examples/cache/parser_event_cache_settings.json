@@ -1,0 +1,263 @@
+[
+  {
+    "data": {
+      "entity": "minecraft:bat",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:chicken",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 8,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:cow",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:donkey",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:horse",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:llama",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:mooshroom",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:mule",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:ocelot",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:parrot",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 6,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:pig",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:polar_bear",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:rabbit",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 10,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:sheep",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:skeleton",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 15,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:skeleton_horse",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:squid",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:guardian",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 8,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:elder_guardian",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:wolf",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "instanceof": "EntityZombie",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 125,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "instanceof": "EntityPigZombie",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 12,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:zombie_horse",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:villager",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 30,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:villager_golem",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "divinerpg:liopleurodon",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "divinerpg:shark",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "divinerpg:whale",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "divinerpg:rainbour",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  }
+]
