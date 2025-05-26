@@ -99,7 +99,7 @@ public final class NickNameEntity
 
                 if (!world.isRemote && world.getMinecraftServer() != null)
                 {
-                    if (UniqueField.RANDOM.nextFloat() < 0.75f)
+                    if (UniqueField.RANDOM.nextFloat() < 0.05f)
                     {
                         world.getMinecraftServer().getPlayerList().sendMessage(new TextComponentString(deathMessage));
                     }
