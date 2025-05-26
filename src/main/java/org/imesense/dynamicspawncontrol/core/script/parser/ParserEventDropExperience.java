@@ -106,7 +106,7 @@ public final class ParserEventDropExperience extends BaseParser
                 Log.write(0, "Reading file: " + file.getAbsolutePath());
             }
 
-            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
+            JsonArray jsonArray = new JsonParser().parse(fileReader).getAsJsonArray();
 
             if (DEBUG_AND_CHECK_SYNTAX)
             {

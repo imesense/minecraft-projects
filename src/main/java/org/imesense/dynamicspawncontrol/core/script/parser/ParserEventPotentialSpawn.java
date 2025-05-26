@@ -61,7 +61,7 @@ public final class ParserEventPotentialSpawn extends BaseParser
                 Log.write(0, "Reading and parsing potential spawn configuration");
             }
 
-            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
+            JsonArray jsonArray = new JsonParser().parse(fileReader).getAsJsonArray();
 
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
             List<PotentialSpawnStruct.Data> newSecondaryParameters = new ArrayList<>();

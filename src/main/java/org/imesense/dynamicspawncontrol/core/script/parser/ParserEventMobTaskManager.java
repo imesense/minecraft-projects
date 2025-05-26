@@ -89,7 +89,7 @@ public final class ParserEventMobTaskManager extends BaseParser
                 Log.write(0, "Reading and parsing mob task configuration");
             }
 
-            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
+            JsonArray jsonArray = new JsonParser().parse(fileReader).getAsJsonArray();
             GeneralMobTaskManager taskManager = GeneralMobTaskManager.getInstance();
 
             if (DEBUG_AND_CHECK_SYNTAX)

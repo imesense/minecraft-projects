@@ -59,7 +59,7 @@ public final class ParserEventDropItem extends BaseParser
                 Log.write(0, "Reading and parsing JSON file");
             }
 
-            JsonArray jsonArray = JsonParser.parseReader(fileReader).getAsJsonArray();
+            JsonArray jsonArray = new JsonParser().parse(fileReader).getAsJsonArray();
 
             if (DEBUG_AND_CHECK_SYNTAX)
             {
