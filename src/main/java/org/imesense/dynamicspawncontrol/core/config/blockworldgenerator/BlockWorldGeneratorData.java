@@ -22,8 +22,8 @@ public abstract class BlockWorldGeneratorData
             new BlockWorldGeneratorDataAbstract("settings_block_mossy_cobblestone", 35, 10, 45) {};
 
     public static final BlockWorldGeneratorDataAbstract MONSTER_EGG =
-            new BlockWorldGeneratorDataAbstract("settings_block_monster_egg", 10, 7, 40) {};
+            new BlockWorldGeneratorDataAbstract("settings_block_monster_egg", 15, 7, 40) {};
 
     public static final BlockWorldGeneratorDataAbstract EMERALD_ORE =
-            new BlockWorldGeneratorDataAbstract("settings_block_emerald_ore", 20, 5, 30) {};
+            new BlockWorldGeneratorDataAbstract("settings_block_emerald_ore", 2, 5, 30) {};
 }
