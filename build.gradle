@@ -63,34 +63,35 @@ minecraft
     {
         client
         {
+            // Test
+            args "--username=InDev"
+
+            // JvmArgs
+            jvmArg "-Dfml.coreMods.load=org.imesense.emptymod.plugin.LoadingPlugin"
+            jvmArg "-Dmixin.hotSwap=true"
+            jvmArg "-Dmixin.checks.interfaces=true"
+
+            // WorkingDir
             workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
+            // Other properties
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
-            // Load LoadingPluginCore
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore'
-
-            // Mixins
-            arg '-torg.spongepowered.asm.launch.MixinTweaker'
         }
 
         server
         {
-            // Recommended logging data for a userdev environment
+            // JvmArgs
+            jvmArg "-Dfml.coreMods.load=org.imesense.emptymod.plugin.LoadingPlugin"
+            jvmArg "-Dmixin.hotSwap=true"
+            jvmArg "-Dmixin.checks.interfaces=true"
+
+            // WorkingDir
+            workingDirectory project.file('run')
+
+            // Other properties
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
-            // Load LoadingPluginCore
-            property 'fml.coreMods.load', 'org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore'
-
-            // Mixins
-            arg '-torg.spongepowered.asm.launch.MixinTweaker'
         }
     }
 }
@@ -108,13 +109,18 @@ dependencies
     // Use lombok lib
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
     implementation 'org.slf4j:slf4j-simple:1.7.36'
 
-    // Use mixins lib
+    // Use SpongePowered mixins
     implementation 'org.spongepowered:mixin:0.8.5'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation fg.deobf("curse.maven:mixin-0-7-0-8-compatibility-405327:4641243")
-    implementation fg.deobf("curse.maven:mixin-booter-419286:4459218")
+
+    // Use llamalad7 mixinextras
+    implementation "io.github.llamalad7:mixinextras-common:0.3.6"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:0.3.6"
+
+    implementation fg.deobf("curse.maven:fermiumbooter-968474:6386622")
 
     // Use core mod #1 DivineRPG
     implementation fg.deobf("curse.maven:official-divinerpg-363543:3081433")
@@ -217,13 +223,13 @@ compileJava
     ]
 }
 
-tasks.register('copyDependencies', Copy) {
-    from configurations.runtimeClasspath.filter { file ->
-        file.name.contains('mixin-0-7-0-8-compatibility') ||
-                file.name.contains('mixin-booter-419286')
-    }
-
-    into 'build/libs'
-}
-
-build.dependsOn copyDependencies
+//tasks.register('copyDependencies', Copy) {
+//    from configurations.runtimeClasspath.filter { file ->
+//        file.name.contains('mixin-0-7-0-8-compatibility') ||
+//                file.name.contains('mixin-booter-419286')
+//    }
+//
+//    into 'build/libs'
+//}
+//
+//build.dependsOn copyDependencies
