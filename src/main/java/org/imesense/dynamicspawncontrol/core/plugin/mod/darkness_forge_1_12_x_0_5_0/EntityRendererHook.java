@@ -7,11 +7,16 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig;
 
 import java.lang.reflect.Field;
 
+@TODO(
+        value = "Миксины больше не работают с подобным, убрать этот класс",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 public final class EntityRendererHook
 {
     static Field mcField;
@@ -35,6 +40,7 @@ public final class EntityRendererHook
 
     }
 
+// ОРИГИНАЛЬНЫЙ МЕТОД
     public static void onUpdateLightmap(EntityRenderer entityRenderer,
                                         float partialTicks) throws NoSuchFieldException, IllegalAccessException
     {
@@ -86,6 +92,7 @@ public final class EntityRendererHook
         updateLuminance(entityRenderer, partialTicks, world);
     }
 
+//ДОБАВОЧНЫЙ
     private static boolean blacklistDim(WorldProvider worldProvider)
     {
         DimensionType dimensionType = worldProvider.getDimensionType();
@@ -99,6 +106,7 @@ public final class EntityRendererHook
         return blacklistContains(worldProvider, dimensionType) ^ PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isInvertBlacklist();
     }
 
+//ДОБАВОЧНЫЙ
     private static boolean blacklistContains(WorldProvider worldProvider,
                                              DimensionType dimensionType)
     {
@@ -130,6 +138,7 @@ public final class EntityRendererHook
         return false;
     }
 
+//ДОБАВОЧНЫЙ
     private static boolean isDark(WorldProvider worldProvider,
                                   DimensionType dimensionType)
     {
@@ -155,6 +164,7 @@ public final class EntityRendererHook
         }
     }
 
+//ДОБАВОЧНЫЙ
     private static float getMoonBrightness(float partialTicks, World world)
     {
         WorldProvider worldProvider = world.provider;
@@ -213,6 +223,7 @@ public final class EntityRendererHook
         return linear(w * w, (float) moon, 1.f);
     }
 
+//ДОБАВОЧНЫЙ
     private static void updateLuminance(EntityRenderer entityRenderer,
                                         float partialTicks,
                                         World world) throws NoSuchFieldException, IllegalAccessException
@@ -394,6 +405,7 @@ public final class EntityRendererHook
         }
     }
 
+//ДОБАВОЧНЫЙ
     private static int darken(int color, float lightTarget)
     {
         float r = (color & 0xFF) / 255.f;
@@ -421,11 +433,13 @@ public final class EntityRendererHook
         return color;
     }
 
+//ДОБАВОЧНЫЙ
     private static float luminance(float red, float green, float blue)
     {
         return red * 0.2126f + green * 0.7152f + blue * 0.0722f;
     }
 
+//ДОБАВОЧНЫЙ
     private static float linear(float t, float start, float end)
     {
         return start + t * (end - start);

@@ -4,8 +4,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldProviderEnd;
 import net.minecraft.world.WorldProviderHell;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig;
 
+@TODO(
+        value = "Миксины больше не работают с подобным, убрать этот класс",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 public final class WorldProviderHook
 {
     public WorldProviderHook()

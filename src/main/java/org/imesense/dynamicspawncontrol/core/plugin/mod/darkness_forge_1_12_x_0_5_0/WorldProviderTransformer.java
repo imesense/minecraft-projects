@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0;
 
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
@@ -13,6 +14,10 @@ import org.objectweb.asm.commons.GeneratorAdapter;
 import net.minecraft.launchwrapper.IClassTransformer;
 import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
 
+@TODO(
+        value = "Миксины больше не работают с подобным, убрать этот класс",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 public final class WorldProviderTransformer implements IClassTransformer
 {
     private static final String WORLD_PROVIDER =
