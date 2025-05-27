@@ -67,7 +67,7 @@ minecraft
             args "--username=InDev"
 
             // JvmArgs
-            jvmArg "-Dfml.coreMods.load=org.imesense.emptymod.plugin.LoadingPlugin"
+            jvmArg "-Dfml.coreMods.load=org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore"
             jvmArg "-Dmixin.hotSwap=true"
             jvmArg "-Dmixin.checks.interfaces=true"
 
@@ -82,7 +82,7 @@ minecraft
         server
         {
             // JvmArgs
-            jvmArg "-Dfml.coreMods.load=org.imesense.emptymod.plugin.LoadingPlugin"
+            jvmArg "-Dfml.coreMods.load=org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore"
             jvmArg "-Dmixin.hotSwap=true"
             jvmArg "-Dmixin.checks.interfaces=true"
 
@@ -149,7 +149,6 @@ jar
             "Implementation-Vendor" :"imesense",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-            "MixinConfigs": "mixins.dynamicspawncontrol.json",
             "FMLCorePlugin": "org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore",
             "FMLCorePluginContainsFMLMod": "true",
             "ForceLoadAsMod": "true"
