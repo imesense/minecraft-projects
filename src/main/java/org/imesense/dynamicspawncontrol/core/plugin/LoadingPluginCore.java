@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.plugin;
 
+import fermiumbooter.FermiumRegistryAPI;
 import net.minecraftforge.common.ForgeVersion;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.bloodmoon_mc1_12_2_1_5_3.ClassTransformer;
@@ -12,19 +14,20 @@ import org.spongepowered.asm.mixin.Mixins;
 import java.io.File;
 import java.util.Map;
 
-@IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
-@IFMLLoadingPlugin.Name(DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-@IFMLLoadingPlugin.SortingIndex(LoadingPluginCore.AFTER_DEOBFUSCATION)
+@IFMLLoadingPlugin.MCVersion("1.12.2")
 public final class LoadingPluginCore implements IFMLLoadingPlugin
 {
     public static File File_location;
     public static Boolean Runtime_deobfuscation;
-    public static final int AFTER_DEOBFUSCATION = 1001;
 
     public LoadingPluginCore()
     {
         MixinBootstrap.init();
-        Mixins.addConfiguration("mixins.dynamicspawncontrol.json");
+
+        FermiumRegistryAPI.enqueueMixin(false, "mixin.unlimited.enchantment.json");
+
+        FermiumRegistryAPI.enqueueMixin(true, "mixin.fix.spawn.divinerpg.json",
+                () -> Loader.isModLoaded("divinerpg"));
     }
 
     @Override

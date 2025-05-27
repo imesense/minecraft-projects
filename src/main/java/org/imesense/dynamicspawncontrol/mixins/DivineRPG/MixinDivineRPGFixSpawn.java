@@ -1,6 +1,5 @@
-package org.imesense.dynamicspawncontrol.mixins;
+package org.imesense.dynamicspawncontrol.mixins.DivineRPG;
 
-import divinerpg.registry.EntitySpawnRegistry;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,10 +13,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * - При попытке добавить ограничение на спавн этих существ через кеш, возникала ошибка, которая ломала механизм их спавна в Divine RPG.
  * - Это приводило к хаотичному и бесконтрольному спавну, так как сущности типа спрутов отсутствовали, что вызывало постоянные попытки их создания.
  */
-@Mixin(value = EntitySpawnRegistry.class, remap = false)
-public abstract class MixinDivineRPGFixSpawn extends EntitySpawnRegistry
+@Mixin(targets = "divinerpg.registry.EntitySpawnRegistry")
+public abstract class MixinDivineRPGFixSpawn
 {
-    @Inject(method = {"onLivingSpawn"}, at = {@At("HEAD")}, cancellable = true, remap = false)
+    @Inject(
+            method = "onLivingSpawn(Lnet/minecraftforge/event/entity/living/LivingSpawnEvent$CheckSpawn;)V",
+            at = @At("HEAD"),
+            cancellable = true,
+            remap = false
+    )
     private static void onLivingSpawn(LivingSpawnEvent.CheckSpawn event, CallbackInfo callbackInfo)
     {
         callbackInfo.cancel();

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.mixins;
+package org.imesense.dynamicspawncontrol.mixins.Minecraft;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
