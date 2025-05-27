@@ -8,12 +8,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig;
 
 import java.util.Arrays;
 
@@ -44,15 +44,10 @@ public abstract class MixinDarknessRenderer
     @Inject(method = "updateLightmap", at = @At("HEAD"), cancellable = true)
     public void updateLightmap(float partialTicks, CallbackInfo callbackInfo)
     {
-        System.out.println("==== MixinDarknessRenderer Constructor ====");
-        System.out.println("lightmapUpdateNeeded: " + lightmapUpdateNeeded);
-        System.out.println("mc: " + mc);
-        System.out.println("bossColorModifier: " + bossColorModifier);
-        System.out.println("bossColorModifierPrev: " + bossColorModifierPrev);
-        System.out.println("torchFlickerX: " + torchFlickerX);
-        System.out.println("lightmapColors: " + Arrays.toString(lightmapColors));
-        System.out.println("lightmapTexture: " + lightmapTexture);
-        System.out.println("===========================================");
+        if (this.lightmapColors == null || Arrays.stream(this.lightmapColors).allMatch(value -> value == 0))
+        {
+            return;
+        }
 
         if (this.lightmapUpdateNeeded)
         {
@@ -132,16 +127,6 @@ public abstract class MixinDarknessRenderer
 
     private void updateLuminance(EntityRenderer renderer, float partialTicks, World world)
     {
-        System.out.println("==== MixinDarknessRenderer updateLuminance ====");
-        System.out.println("lightmapUpdateNeeded: " + lightmapUpdateNeeded);
-        System.out.println("mc: " + mc);
-        System.out.println("bossColorModifier: " + bossColorModifier);
-        System.out.println("bossColorModifierPrev: " + bossColorModifierPrev);
-        System.out.println("torchFlickerX: " + torchFlickerX);
-        System.out.println("lightmapColors: " + Arrays.toString(lightmapColors));
-        System.out.println("lightmapTexture: " + lightmapTexture);
-        System.out.println("===========================================");
-
         WorldProvider dim = world.provider;
         DimensionType dimType = dim.getDimensionType();
 
