@@ -17,10 +17,6 @@ import java.util.Map;
 @IFMLLoadingPlugin.MCVersion("1.12.2")
 public final class LoadingPluginCore implements IFMLLoadingPlugin
 {
-    //public static File File_location;
-    //public static Boolean Runtime_deobfuscation;
-    //public static final int AFTER_DEOBFUSCATION = 1001;
-
     public LoadingPluginCore()
     {
         MixinBootstrap.init();
@@ -36,11 +32,6 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
     public String[] getASMTransformerClass()
     {
         return new String[0];
-        //{
-        //    WorldProviderTransformer.class.getName(),
-        //    EntityRendererTransformer.class.getName(),
-        //    ClassTransformer.class.getName()
-        //};
     }
 
     @Override
@@ -58,20 +49,7 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
     @Override
     public void injectData(Map<String, Object> objectMap)
     {
-        /*
-        Runtime_deobfuscation = (Boolean) objectMap.get("runtimeDeobfuscationEnabled");
-        File_location = (File) objectMap.get("coremodLocation");
 
-        if (File_location == null)
-        {
-            File_location = new File(
-                    getClass()
-                            .getProtectionDomain()
-                            .getCodeSource()
-                            .getLocation()
-                            .getPath());
-        }
-         */
     }
 
     @Override

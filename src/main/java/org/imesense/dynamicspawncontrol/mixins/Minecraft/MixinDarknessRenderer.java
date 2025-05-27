@@ -8,6 +8,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,6 +18,10 @@ import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknes
 
 import java.util.Arrays;
 
+@TODO(
+        value = "Обновить диаграмму классов для пакета",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 @Mixin(EntityRenderer.class)
 public abstract class MixinDarknessRenderer
 {

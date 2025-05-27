@@ -4,8 +4,6 @@
   "darknessEnd": true,
   "darknessDefault": true,
   "darknessSkyLess": true,
-  "darknessNetherFog": true,
-  "darknessEndFog": true,
   "ignoreMoonLight": false,
   "invertBlacklist": false,
   "blacklistByID": [],

@@ -4,12 +4,17 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@TODO(
+        value = "Обновить диаграмму классов для пакета",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 @Mixin(Enchantment.class)
 public abstract class MixinUnlimitedEnchantment
 {

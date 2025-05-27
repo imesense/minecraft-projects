@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.mixins.DivineRPG;
 
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,6 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * - При попытке добавить ограничение на спавн этих существ через кеш, возникала ошибка, которая ломала механизм их спавна в Divine RPG.
  * - Это приводило к хаотичному и бесконтрольному спавну, так как сущности типа спрутов отсутствовали, что вызывало постоянные попытки их создания.
  */
+@TODO(
+        value = "Обновить диаграмму классов для пакета",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 @Mixin(targets = "divinerpg.registry.EntitySpawnRegistry")
 public abstract class MixinDivineRPGFixSpawn
 {

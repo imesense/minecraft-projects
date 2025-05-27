@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -17,21 +18,24 @@ import java.util.function.Consumer;
 @Setter
 @InitLog
 @ConceptConfig(fileName = "plugin_cfg_darkness_forge_1_12_x_0_5_0")
+@TODO(
+        value = "Убрать лишние опции, оставить только влияение освещенности луны",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 public final class PluginDarknessConfig extends BaseJsonConfig
 {
-    private boolean darknessOverWorld = true;
-    private boolean darknessNether = true;
-    private boolean darknessEnd = true;
-    private boolean darknessDefault = true;
-    private boolean darknessSkyLess = true;
-    private boolean darknessNetherFog = true;
-    private boolean darknessEndFog = true;
-    private boolean ignoreMoonLight = false;
-    private boolean invertBlacklist = false;
+    private boolean darknessOverWorld = true; // deleted later
+    private boolean darknessNether = true; // deleted later
+    private boolean darknessEnd = true; // deleted later
+    private boolean darknessDefault = true; // deleted later
+    private boolean darknessSkyLess = true; // deleted later
 
-    private int[] blacklistByID = {};
+    private boolean ignoreMoonLight = false; // deleted later
+    private boolean invertBlacklist = false; // deleted later
+
+    private int[] blacklistByID = {}; // deleted later
     private double[] moonPhaseFactors = {0.6, 0.4, 0.3, 0.2, 0.0, 0.1, 0.2, 0.4};
-    private String[] blacklistByName = {};
+    private String[] blacklistByName = {}; // deleted later
 
     public PluginDarknessConfig(String configPath)
     {
@@ -50,8 +54,6 @@ public final class PluginDarknessConfig extends BaseJsonConfig
         jsonObject.addProperty("darknessEnd", darknessEnd);
         jsonObject.addProperty("darknessDefault", darknessDefault);
         jsonObject.addProperty("darknessSkyLess", darknessSkyLess);
-        jsonObject.addProperty("darknessNetherFog", darknessNetherFog);
-        jsonObject.addProperty("darknessEndFog", darknessEndFog);
         jsonObject.addProperty("ignoreMoonLight", ignoreMoonLight);
         jsonObject.addProperty("invertBlacklist", invertBlacklist);
 
@@ -95,8 +97,6 @@ public final class PluginDarknessConfig extends BaseJsonConfig
         booleanSetters.put("darknessEnd", this::setDarknessEnd);
         booleanSetters.put("darknessDefault", this::setDarknessDefault);
         booleanSetters.put("darknessSkyLess", this::setDarknessSkyLess);
-        booleanSetters.put("darknessNetherFog", this::setDarknessNetherFog);
-        booleanSetters.put("darknessEndFog", this::setDarknessEndFog);
         booleanSetters.put("ignoreMoonLight", this::setIgnoreMoonLight);
         booleanSetters.put("invertBlacklist", this::setInvertBlacklist);
 
