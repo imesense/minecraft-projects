@@ -9,6 +9,10 @@
   [
     "Minecraft.MixinDarknessRenderer"
   ],
+  "client":
+  [
+    "Minecraft.EntityRendererAccessor"
+  ],
   "injectors":
   {
     "maxShiftBy": 10
