@@ -64,13 +64,63 @@ public abstract class MixinDarknessRenderer
                 return;
             }
 
+            if (this.blacklistDim(world.provider))
+            {
+                return;
+            }
+
             this.updateLuminance(partialTicks, world, accessor);
             accessor.getLightmapTexture().updateDynamicTexture();
             callbackInfo.cancel();
-            //accessor.setLightmapUpdateNeeded(false);
+            //accessor.setLightmapUpdateNeeded(false); // test later
         }
 
-        //callbackInfo.cancel();
+        //callbackInfo.cancel(); // test later
+    }
+
+    private boolean blacklistDim(WorldProvider worldProvider)
+    {
+        DimensionType dimensionType = worldProvider.getDimensionType();
+
+        if (dimensionType == DimensionType.THE_END &&
+                !PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessEnd())
+        {
+            return true;
+        }
+
+        return blacklistContains(worldProvider, dimensionType) ^
+                PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isInvertBlacklist();
+    }
+
+    private boolean blacklistContains(WorldProvider worldProvider,
+                                      DimensionType dimensionType)
+    {
+        String dimensionTypeName = dimensionType.getName();
+
+        for (String blacklistName :
+                PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByName())
+        {
+            if (!blacklistName.equals(dimensionTypeName))
+            {
+                continue;
+            }
+
+            return true;
+        }
+
+        int dimID = worldProvider.getDimension();
+
+        for (int blacklistID : PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByID())
+        {
+            if (dimID != blacklistID)
+            {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     private void updateLuminance(float partialTicks, World world, EntityRendererAccessor accessor)
@@ -182,13 +232,42 @@ public abstract class MixinDarknessRenderer
 
     private boolean isDark(WorldProvider worldProvider, DimensionType dimensionType)
     {
-        return true;
+        if (dimensionType == DimensionType.OVERWORLD)
+        {
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessOverWorld();
+        }
+        else if (dimensionType == DimensionType.NETHER)
+        {
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessNether();
+        }
+        else if (dimensionType == DimensionType.THE_END)
+        {
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessEnd();
+        }
+        else if (worldProvider.hasSkyLight())
+        {
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessDefault();
+        }
+        else
+        {
+            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessSkyLess();
+        }
     }
 
     private float getMoonBrightness(float partialTicks, World world)
     {
         WorldProvider worldProvider = world.provider;
         DimensionType dimensionType = worldProvider.getDimensionType();
+
+        if (!this.isDark(worldProvider, dimensionType))
+        {
+            return 1.f;
+        }
+
+        if (!worldProvider.hasSkyLight())
+        {
+            return 0.f;
+        }
 
         float angle = world.getCelestialAngle(partialTicks);
 
@@ -197,7 +276,28 @@ public abstract class MixinDarknessRenderer
             return 1.f;
         }
 
-        final double moon = 0.f;
+        double moon;
+
+        if (!PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isIgnoreMoonLight())
+        {
+            double[] phaseFactors = PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getMoonPhaseFactors();
+
+            int moonPhase = worldProvider.getMoonPhase(world.getWorldTime());
+
+            if (moonPhase < phaseFactors.length)
+            {
+                moon = phaseFactors[moonPhase];
+            }
+            else
+            {
+                moon = world.getCurrentMoonPhaseFactor();
+            }
+        }
+        else
+        {
+            moon = 0.f;
+        }
+
         float w;
 
         if (angle <= 0.3f || 0.7f <= angle)
