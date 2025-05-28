@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.mixins.Minecraft;
+package org.imesense.dynamicspawncontrol.mixins.Interfaces;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;

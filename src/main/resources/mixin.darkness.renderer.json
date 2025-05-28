@@ -5,13 +5,10 @@
   "compatibilityLevel": "JAVA_8",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
-  "mixins":
-  [
-    "Minecraft.MixinDarknessRenderer"
-  ],
   "client":
   [
-    "Minecraft.EntityRendererAccessor"
+    "Render.MixinDarknessRenderer",
+    "Interfaces.EntityRendererAccessor"
   ],
   "injectors":
   {

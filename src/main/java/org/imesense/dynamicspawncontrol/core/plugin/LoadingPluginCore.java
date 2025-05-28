@@ -1,17 +1,10 @@
 package org.imesense.dynamicspawncontrol.core.plugin;
 
 import fermiumbooter.FermiumRegistryAPI;
-import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.bloodmoon_mc1_12_2_1_5_3.ClassTransformer;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.EntityRendererTransformer;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.darkness_forge_1_12_x_0_5_0.WorldProviderTransformer;
 import org.spongepowered.asm.launch.MixinBootstrap;
-import org.spongepowered.asm.mixin.Mixins;
 
-import java.io.File;
 import java.util.Map;
 
 @IFMLLoadingPlugin.MCVersion("1.12.2")

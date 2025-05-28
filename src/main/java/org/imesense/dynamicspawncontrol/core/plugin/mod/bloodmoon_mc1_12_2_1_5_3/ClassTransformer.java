@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.plugin.mod.bloodmoon_mc1_12_2_1_5_3;
 
 import net.minecraft.launchwrapper.IClassTransformer;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -8,6 +9,10 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;
 
+@TODO(
+        value = "Убрать этот класс, заменить на миксины. Поправить диаграмму",
+        showOnce = false,
+        priority = TODO.TodoPriority.HIGH)
 public final class ClassTransformer implements IClassTransformer
 {
     public ClassTransformer()
