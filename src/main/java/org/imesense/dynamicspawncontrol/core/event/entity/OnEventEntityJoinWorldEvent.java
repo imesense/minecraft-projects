@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.event.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -76,15 +77,19 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                             mobId.equals("srparasites:marauder") ||
                             mobId.equals("srparasites:grunt") ||
                             mobId.equals("minecraft:zombie_pigman") ||
-                            mobId.equals("specialmobs:hellfireblaze"))
+                            mobId.equals("specialmobs:hellfireblaze") ||
+                            mobId.equals("minecraft:wither_skeleton"))
                     {
                         String mobName = getMobDisplayName(mobId);
 
-                        String message = String.format("%s%s появился на высоте %s%d блоков%s!",
+                        String message = String.format("%s%s появился на координатах X: %s%d Y: %s%d Z: %s%d (биом: %s%s%s)",
                                 TextFormatting.RED,
                                 mobName,
-                                TextFormatting.YELLOW,
-                                (int)entity.posY,
+                                TextFormatting.YELLOW, (int)entity.posX,
+                                TextFormatting.YELLOW, (int)entity.posY,
+                                TextFormatting.YELLOW, (int)entity.posZ,
+                                TextFormatting.AQUA,
+                                event.getWorld().getBiome(new BlockPos(entity)).getBiomeName(),
                                 TextFormatting.RED);
 
                         event.getWorld().getMinecraftServer().getPlayerList()
@@ -107,6 +112,10 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                 return "Пехотинец";
             case "specialmobs:hellfireblaze":
                 return "Адский огонь";
+            case "minecraft:wither_skeleton":
+                return "Скелет Иссушитель";
+            case "minecraft:zombie_pigman":
+                return "Свинозомби";
             default:
                 return mobId;
         }
