@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.statistics;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.EnumSkyBlock;
@@ -45,7 +46,8 @@ public final class DSCInlineDebugStats
     {
         if (MC.gameSettings.showDebugInfo ||
                 !DebugConfig.getInstance(DebugConfig.class).isShowStats() ||
-                MC.player.openContainer != MC.player.inventoryContainer) {
+                MC.player.openContainer != MC.player.inventoryContainer ||
+                MC.currentScreen instanceof GuiChat) {
             return;
         }
 
