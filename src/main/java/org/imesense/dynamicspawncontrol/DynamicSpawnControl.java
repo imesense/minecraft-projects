@@ -79,6 +79,8 @@ public final class DynamicSpawnControl
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
+        Log.write(0, "preInit: Basic registration phase - blocks/items/configs");
+
         TodoTracker.init(event);
 
         File modFile = event.getSourceFile();
@@ -188,6 +190,8 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
+        Log.write(0, "init: Core setup - recipes, events, network packets");
+
         IRecipes = new CraftItemWeb();
 
         IRecipes.registry();
@@ -200,6 +204,8 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+        Log.write(0, "postInit: Finalization - cross-mod integration");
+
         if (Configuration.isCleanOnInit())
         {
             MemoryManager.cleanMemory();
