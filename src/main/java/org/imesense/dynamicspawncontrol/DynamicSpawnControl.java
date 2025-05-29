@@ -174,7 +174,6 @@ public final class DynamicSpawnControl
 
         WorldGeneratorRegister.getInstance().init(event);
 
-        ParserRegister.getInstance().init();
         BaseEventRegister.initialize();
 
         WindowTitle.getInstance().replace();
@@ -194,6 +193,8 @@ public final class DynamicSpawnControl
         IRecipes.registry();
 
         RegisterSpawnerCraft.getInstance().init(event);
+
+        ParserRegister.getInstance().init();
     }
 
     @Mod.EventHandler
