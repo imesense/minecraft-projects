@@ -34,7 +34,7 @@ import java.util.Optional;
 
 @InitLog
 @TODO(
-        value = "Пофиксить учет сущностей, у которых используется ключевое слово в парсере 'instanceof'",
+        value = "Пофиксить учет сущностей, у которых используется ключевое слово в парсере 'instanceof'. И добавить логгирование",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
@@ -203,18 +203,18 @@ public final class OnEventWorldCache
                         e -> true
                 ).size();
 
-                Log.write(0,
-                        (isZombie ? "Zombie" : "Pig Zombie") +
-                                " spawn attempt. Current count: " + zombieCount);
+                //Log.write(0,
+                //        (isZombie ? "Zombie" : "Pig Zombie") +
+                //                " spawn attempt. Current count: " + zombieCount);
 
                 if (entityData.max_entity_count != null && zombieCount >= entityData.max_entity_count)
                 {
                     event.setResult(entityData.result);
 
-                    Log.write(0,
-                            (isZombie ? "Zombie" : "Pig Zombie") +
-                                    " spawn blocked! Limit reached (" +
-                                    zombieCount + "/" + entityData.max_entity_count + ")");
+                    //Log.write(0,
+                    //        (isZombie ? "Zombie" : "Pig Zombie") +
+                    //                " spawn blocked! Limit reached (" +
+                    //                zombieCount + "/" + entityData.max_entity_count + ")");
 
                     return;
                 }
@@ -238,9 +238,9 @@ public final class OnEventWorldCache
         int maxEntityCount = CacheFunctional.getInstance()
                 .calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
 
-        Log.write(0, "Entity: " + countKey +
-                ", Current Count: " + currentEntityCount +
-                ", Max Count: " + maxEntityCount);
+        //Log.write(0, "Entity: " + countKey +
+        //        ", Current Count: " + currentEntityCount +
+        //        ", Max Count: " + maxEntityCount);
 
         if (currentEntityCount >= maxEntityCount)
         {
