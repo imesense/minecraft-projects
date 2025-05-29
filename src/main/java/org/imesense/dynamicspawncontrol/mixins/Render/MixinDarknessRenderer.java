@@ -70,11 +70,10 @@ public abstract class MixinDarknessRenderer
 
             this.updateLuminance(partialTicks, world, accessor);
             accessor.getLightmapTexture().updateDynamicTexture();
-            callbackInfo.cancel();
-            //accessor.setLightmapUpdateNeeded(false); // test later
-        }
+            accessor.setLightmapUpdateNeeded(false);
 
-        //callbackInfo.cancel(); // test later
+            callbackInfo.cancel();
+        }
     }
 
     private boolean blacklistDim(WorldProvider worldProvider)

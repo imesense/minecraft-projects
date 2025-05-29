@@ -15,6 +15,9 @@ public interface EntityRendererAccessor
     @Accessor("lightmapUpdateNeeded")
     boolean getLightmapUpdateNeeded();
 
+    @Accessor("lightmapUpdateNeeded")
+    void setLightmapUpdateNeeded(boolean value);
+
     @Accessor("mc")
     Minecraft getMinecraft();
 
