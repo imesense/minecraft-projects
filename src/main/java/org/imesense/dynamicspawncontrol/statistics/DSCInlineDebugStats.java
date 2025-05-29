@@ -43,8 +43,9 @@ public final class DSCInlineDebugStats
 
     public void handleRenderDebugInfo(RenderGameOverlayEvent.Post event)
     {
-        if (MC.gameSettings.showDebugInfo || !DebugConfig.getInstance(DebugConfig.class).isShowStats())
-        {
+        if (MC.gameSettings.showDebugInfo ||
+                !DebugConfig.getInstance(DebugConfig.class).isShowStats() ||
+                MC.player.openContainer != MC.player.inventoryContainer) {
             return;
         }
 
