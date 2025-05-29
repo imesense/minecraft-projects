@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 @InitLog
 @TODO(
-        value = "Вообщем тут проблема в том, если указан параметр 'weight': >15, то затираются списки оригинальных сущностей со спавна или становятся слишком редкими",
+        value = "Исправить тут логирование на опцию в конфиге",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
@@ -38,7 +38,7 @@ public final class OnEventPotentialSpawn
         }
     }
 
-    static boolean SPAWN_DEBUG_LOGGING = true;
+    static boolean SPAWN_DEBUG_LOGGING = false;
 
     public void handlePotentialSpawns(WorldEvent.PotentialSpawns event)
     {
