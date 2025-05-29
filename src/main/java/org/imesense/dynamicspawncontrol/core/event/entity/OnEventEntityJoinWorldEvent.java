@@ -78,19 +78,39 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                             mobId.equals("srparasites:grunt") ||
                             mobId.equals("minecraft:zombie_pigman") ||
                             mobId.equals("specialmobs:hellfireblaze") ||
-                            mobId.equals("minecraft:wither_skeleton"))
+                            mobId.equals("minecraft:wither_skeleton") ||
+                            mobId.equals("srparasites:hi_golem"))
                     {
                         String mobName = getMobDisplayName(mobId);
 
-                        String message = String.format("%s%s появился на координатах X: %s%d Y: %s%d Z: %s%d (биом: %s%s%s)",
-                                TextFormatting.RED,
-                                mobName,
-                                TextFormatting.YELLOW, (int)entity.posX,
-                                TextFormatting.YELLOW, (int)entity.posY,
-                                TextFormatting.YELLOW, (int)entity.posZ,
-                                TextFormatting.AQUA,
-                                event.getWorld().getBiome(new BlockPos(entity)).getBiomeName(),
-                                TextFormatting.RED);
+                        String biomeName = event.getWorld().getBiome(new BlockPos(entity)).getBiomeName();
+
+                        /**
+                         * EntityHeed - Бдитель 50 на 50
+                         * srparasites:crux - Извечный 50 на 50
+                         * +srparasites:warden - Хранитель 100%
+                         * +srparasites:marauder - Мародер 100%
+                         * srparasites:monarch - Монарх 50 на 50
+                         * +srparasites:grunt - Пехотинец 100%
+                         * +srparasites:hi_golem - Голем 100%
+                         */
+
+                        String message = String.format("%s%s %sпоявился на координатах %sX: %s%d Y: %s%d Z: %s%d %s(биом: %s%s%s)%s",
+                                TextFormatting.GREEN,    // 1. Цвет имени моба
+                                mobName,                 // 2. Имя моба
+                                TextFormatting.WHITE,    // 3. Цвет текста "появился"
+                                TextFormatting.RED,      // 4. Цвет текста "координатах"
+                                TextFormatting.RED,      // 5. Цвет значения X
+                                (int)entity.posX,        // 6. Значение X
+                                TextFormatting.RED,      // 7. Цвет значения Y
+                                (int)entity.posY,        // 8. Значение Y
+                                TextFormatting.RED,      // 9. Цвет значения Z
+                                (int)entity.posZ,        // 10. Значение Z
+                                TextFormatting.GREEN,    // 11. Цвет открывающей скобки
+                                TextFormatting.AQUA,     // 12. Цвет имени биома
+                                biomeName,               // 13. Имя биома
+                                TextFormatting.GREEN,    // 14. Цвет закрывающей скобки
+                                TextFormatting.RESET);   // 15. Сброс форматирования
 
                         event.getWorld().getMinecraftServer().getPlayerList()
                                 .sendMessage(new TextComponentString(message));
@@ -116,6 +136,8 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                 return "Скелет Иссушитель";
             case "minecraft:zombie_pigman":
                 return "Свинозомби";
+            case "srparasites:hi_golem":
+                return "Захваченный голем";
             default:
                 return mobId;
         }
