@@ -46,7 +46,8 @@ import java.util.List;
         "required-after:fermiumbooter;" +
         "required-after:divinerpg;" +
         "required-after:srparasites;" +
-        "required-after:specialmobs;"
+        "required-after:specialmobs;",
+    guiFactory = "org.imesense.dynamicspawncontrol.DynamicSpawnControlGuiFactory"
 )
 public final class DynamicSpawnControl
 {
