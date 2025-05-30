@@ -154,7 +154,7 @@
           "profile": "Зомби (Слабый)",
           "description": "Экипировка: палка, деревянные и каменные инструменты, кожанная и кальчужная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
           "entity_type": "minecraft:zombie",
-          "priority": 21,
+          "priority": 41,
           "equipment": {
             "held_item": [
               "minecraft:stick",
@@ -195,7 +195,7 @@
           "profile": "Зомби (Средний)",
           "description": "Экипировка: Каменные и золотые инструменты, кальчужная и золотая броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
           "entity_type": "minecraft:zombie",
-          "priority": 15,
+          "priority": 35,
           "equipment": {
             "held_item": [
               "minecraft:stone_sword",
@@ -244,7 +244,7 @@
           "profile": "Зомби (Сильный)",
           "description": "Экипировка: Золотые и алмазные инструменты, золотая и алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
           "entity_type": "minecraft:zombie",
-          "priority": 12,
+          "priority": 22,
           "equipment": {
             "held_item": [
               "minecraft:golden_sword",
@@ -1123,7 +1123,7 @@
           "profile": "Скелет иссушитель (Средний)",
           "description": "Экипировка: Каменные и золотые инструменты, кальчужная и золотая броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
           "entity_type": "minecraft:wither_skeleton",
-          "priority": 15,
+          "priority": 25,
           "equipment": {
             "armor_helmet": [
               "minecraft:chainmail_helmet",
@@ -1155,7 +1155,7 @@
           "profile": "Скелет иссушитель (Сильный)",
           "description": "Экипировка: Золотые и алмазные инструменты, золотая и алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
           "entity_type": "minecraft:wither_skeleton",
-          "priority": 12,
+          "priority": 15,
           "equipment": {
             "armor_helmet": [
               "minecraft:golden_helmet",
