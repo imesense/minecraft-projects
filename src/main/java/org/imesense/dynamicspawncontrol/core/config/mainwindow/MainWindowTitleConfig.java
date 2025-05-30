@@ -16,7 +16,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 public final class MainWindowTitleConfig extends BaseJsonConfig
 {
     private String windowTitle =
-            String.format("Minecraft: %s + %s",
+            String.format("Minecraft Forge: %s + %s",
                     DynamicSpawnControlStructure.STRUCT_INFO_MOD.VERSION,
                     DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME);
 
