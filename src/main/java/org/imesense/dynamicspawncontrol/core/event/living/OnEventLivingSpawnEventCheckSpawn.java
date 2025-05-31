@@ -1,9 +1,14 @@
 package org.imesense.dynamicspawncontrol.core.event.living;
 
 import com.dhanantry.scapeandrunparasites.entity.EntityBody;
+import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityCrux;
+import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityHeed;
 import com.dhanantry.scapeandrunparasites.entity.monster.hijacked.EntityHiGolem;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityFlog;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityGanro;
+import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityOrch;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -16,9 +21,13 @@ import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 @InitLog
 @TODO(
-        value = "Перенести в отдельный класс: onCheckSpawn(LivingSpawnEvent.CheckSpawn event)",
+        value = "Перенести в отдельный класс: onCheckSpawn(LivingSpawnEvent.CheckSpawn event). По возможности сделать еще один парсер, который будет управлять правилом спавна",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
@@ -42,25 +51,20 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
         OnEventCheckSpawn.getInstance().handleLivingSpawnEventCheckSpawn(event);
     }
 
+    private static final Set<Class<? extends Entity>> ALLOWED_ENTITIES = new HashSet<>(Arrays.asList(
+            EntityHiGolem.class,
+            EntityGanro.class,
+            EntityBody.class,
+            EntityFlog.class,
+            EntityCrux.class,
+            EntityHeed.class,
+            EntityOrch.class
+    ));
+
     @SubscribeEvent
     public void onCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
-        if (event.getEntity() instanceof EntityHiGolem)
-        {
-            event.setResult(Event.Result.ALLOW);
-        }
-
-        if (event.getEntity() instanceof EntityGanro)
-        {
-            event.setResult(Event.Result.ALLOW);
-        }
-
-        if (event.getEntity() instanceof EntityBody)
-        {
-            event.setResult(Event.Result.ALLOW);
-        }
-
-        if (event.getEntity() instanceof EntityFlog)
+        if (ALLOWED_ENTITIES.contains(event.getEntity().getClass()))
         {
             event.setResult(Event.Result.ALLOW);
         }

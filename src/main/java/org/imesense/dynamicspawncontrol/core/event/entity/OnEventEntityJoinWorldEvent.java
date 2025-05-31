@@ -79,38 +79,37 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                             mobId.equals("minecraft:zombie_pigman") ||
                             mobId.equals("specialmobs:hellfireblaze") ||
                             mobId.equals("minecraft:wither_skeleton") ||
-                            mobId.equals("srparasites:hi_golem"))
+                            mobId.equals("srparasites:hi_golem") ||
+                            mobId.equals("minecraft:cave_spider") ||
+                            mobId.equals("minecraft:slime") ||
+                            mobId.equals("minecraft:silverfish") ||
+                            mobId.equals("minecraft:vex") ||
+                            mobId.equals("srparasites:heed") ||
+                            mobId.equals("srparasites:crux") ||
+                            mobId.equals("srparasites:monarch")
+                    )
                     {
                         String mobName = getMobDisplayName(mobId);
 
                         String biomeName = event.getWorld().getBiome(new BlockPos(entity)).getBiomeName();
 
-                        /**
-                         * EntityHeed - Бдитель 50 на 50
-                         * srparasites:crux - Извечный 50 на 50
-                         * +srparasites:warden - Хранитель 100%
-                         * +srparasites:marauder - Мародер 100%
-                         * srparasites:monarch - Монарх 50 на 50
-                         * +srparasites:grunt - Пехотинец 100%
-                         * +srparasites:hi_golem - Голем 100%
-                         */
-
                         String message = String.format("%s%s %sпоявился на координатах %sX: %s%d Y: %s%d Z: %s%d %s(биом: %s%s%s)%s",
-                                TextFormatting.GREEN,    // 1. Цвет имени моба
-                                mobName,                 // 2. Имя моба
-                                TextFormatting.WHITE,    // 3. Цвет текста "появился"
-                                TextFormatting.RED,      // 4. Цвет текста "координатах"
-                                TextFormatting.RED,      // 5. Цвет значения X
-                                (int)entity.posX,        // 6. Значение X
-                                TextFormatting.RED,      // 7. Цвет значения Y
-                                (int)entity.posY,        // 8. Значение Y
-                                TextFormatting.RED,      // 9. Цвет значения Z
-                                (int)entity.posZ,        // 10. Значение Z
-                                TextFormatting.GREEN,    // 11. Цвет открывающей скобки
-                                TextFormatting.AQUA,     // 12. Цвет имени биома
-                                biomeName,               // 13. Имя биома
-                                TextFormatting.GREEN,    // 14. Цвет закрывающей скобки
-                                TextFormatting.RESET);   // 15. Сброс форматирования
+                                TextFormatting.GREEN,         // 1. Имя моба (не DARK_RED, но не яркий)
+                                mobName,                    // 2. Имя моба
+                                TextFormatting.YELLOW,      // 3. "появился" (тёплый жёлтый)
+                                TextFormatting.GOLD,       // 4. "координатах" (спокойный зелёный)
+                                TextFormatting.GOLD,        // 5. Число X (мягче, чем YELLOW)
+                                (int)entity.posX,           // 6. X
+                                TextFormatting.GOLD,        // 7. Число Y
+                                (int)entity.posY,           // 8. Y
+                                TextFormatting.GOLD,        // 9. Число Z
+                                (int)entity.posZ,           // 10. Z
+                                TextFormatting.WHITE,        // 11. Скобки (нейтральные)
+                                TextFormatting.GREEN,    // 12. Биом (тёмно-красный)
+                                biomeName,                  // 13. Биом
+                                TextFormatting.WHITE,        // 14. Закрывающая скобка
+                                TextFormatting.RESET        // 15. Сброс
+                        );
 
                         event.getWorld().getMinecraftServer().getPlayerList()
                                 .sendMessage(new TextComponentString(message));
@@ -138,6 +137,20 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                 return "Свинозомби";
             case "srparasites:hi_golem":
                 return "Захваченный голем";
+            case "minecraft:cave_spider":
+                return "Пещерный паук";
+            case "minecraft:slime":
+                return "Слайм";
+            case "minecraft:silverfish":
+                return "Чешуйница";
+            case "minecraft:vex":
+                return "Вредина";
+            case "srparasites:heed":
+                return "Бдитель";
+            case "srparasites:crux":
+                return "Извечный";
+            case "srparasites:monarch":
+                return "Монарх";
             default:
                 return mobId;
         }
