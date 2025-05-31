@@ -35,14 +35,14 @@ public final class MemoryEvents
     @SideOnly(Side.CLIENT)
     public static void handleOnClientTick(TickEvent.ClientTickEvent event)
     {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft minecraft = Minecraft.getMinecraft();
 
-        if (mc.isGamePaused() || event.phase != TickEvent.ClientTickEvent.Phase.END)
+        if (minecraft.isGamePaused() || event.phase != TickEvent.ClientTickEvent.Phase.END)
         {
             return;
         }
 
-        EntityPlayerSP player = mc.player;
+        EntityPlayerSP player = minecraft.player;
 
         if (player == null || !player.world.isRemote)
         {

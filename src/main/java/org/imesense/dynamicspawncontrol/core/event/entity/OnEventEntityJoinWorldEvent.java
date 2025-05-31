@@ -58,7 +58,7 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
         MemoryEvents.handleOnPlayerLogin(event);
     }
 
-    @SubscribeEvent
+    //@SubscribeEvent // disabled on ver. 0.1
     public void onTestParserSpawn(EntityJoinWorldEvent event)
     {
         if (!event.getWorld().isRemote)
@@ -94,7 +94,7 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 
                         String biomeName = event.getWorld().getBiome(new BlockPos(entity)).getBiomeName();
 
-                        String message = String.format("%s%s %sпоявился на координатах %sX: %s%d Y: %s%d Z: %s%d %s(биом: %s%s%s)%s",
+                        String message = String.format("%s%s %sappeared on coordinates %sX: %s%d Y: %s%d Z: %s%d %s(biome: %s%s%s)%s",
                                 TextFormatting.GREEN,         // 1. Имя моба (не DARK_RED, но не яркий)
                                 mobName,                    // 2. Имя моба
                                 TextFormatting.YELLOW,      // 3. "появился" (тёплый жёлтый)
@@ -125,35 +125,35 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
         switch(mobId)
         {
             case "srparasites:warden":
-                return "Хранитель";
+                return "(SRP) Warden";
             case "srparasites:marauder":
-                return "Мародер";
+                return "(SRP) Marauder";
             case "srparasites:grunt":
-                return "Пехотинец";
+                return "(SRP) Grunt";
             case "specialmobs:hellfireblaze":
-                return "Адский огонь";
+                return "(Special mobs) Hell Fire Blaze";
             case "minecraft:wither_skeleton":
-                return "Скелет Иссушитель";
+                return "(Minecraft) Wither Skeleton";
             case "minecraft:zombie_pigman":
-                return "Свинозомби";
+                return "(Minecraft) Zombie Pigman";
             case "srparasites:hi_golem":
-                return "Захваченный голем";
+                return "(SRP) Captured Golem";
             case "minecraft:cave_spider":
-                return "Пещерный паук";
+                return "(Minecraft) Cave spider";
             case "minecraft:slime":
-                return "Слайм";
+                return "(Minecraft) Slime";
             case "minecraft:silverfish":
-                return "Чешуйница";
+                return "(Minecraft) Silverfish";
             case "minecraft:vex":
-                return "Вредина";
+                return "(Minecraft) Vex";
             case "srparasites:heed":
-                return "Бдитель";
+                return "(SRP) Heed";
             case "srparasites:crux":
-                return "Извечный";
+                return "(SRP) Crux";
             case "srparasites:monarch":
-                return "Монарх";
+                return "(SRP) Monarch";
             case "minecraft:blaze":
-                return "Ифрит";
+                return "(Minecraft) Blaze";
             default:
                 return mobId;
         }

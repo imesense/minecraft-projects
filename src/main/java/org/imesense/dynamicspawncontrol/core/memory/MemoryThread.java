@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.memory;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.server.command.TextComponentHelper;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
@@ -25,7 +26,6 @@ public final class MemoryThread implements Runnable
         try
         {
             Log.write(0, "[MemoryCleaner] Starting memory cleanup...");
-
             System.out.println("[MemoryCleaner] Starting memory cleanup...");
 
             Runtime runtime = Runtime.getRuntime();
@@ -33,7 +33,9 @@ public final class MemoryThread implements Runnable
 
             if (sender != null && Configuration.isShowMessage())
             {
-                sender.sendMessage(new TextComponentString("§aStarting memory cleanup..."));
+                TextComponentString message = new TextComponentString("Starting memory cleanup...");
+                message.getStyle().setColor(TextFormatting.GREEN);
+                sender.sendMessage(message);
             }
 
             System.gc();
@@ -44,8 +46,19 @@ public final class MemoryThread implements Runnable
 
             if (sender != null && Configuration.isShowMessage())
             {
-                String message = String.format("§aMemory cleanup complete! Freed §e%d MB§a.", freedMem / (1024 * 1024));
-                sender.sendMessage(new TextComponentString(message));
+                TextComponentString prefix = new TextComponentString("Memory cleanup complete! Freed ");
+                prefix.getStyle().setColor(TextFormatting.GREEN);
+
+                TextComponentString freedPart = new TextComponentString(String.valueOf(freedMem / (1024 * 1024)));
+                freedPart.getStyle().setColor(TextFormatting.YELLOW);
+
+                TextComponentString suffix = new TextComponentString(" MB.");
+                suffix.getStyle().setColor(TextFormatting.GREEN);
+
+                prefix.appendSibling(freedPart);
+                prefix.appendSibling(suffix);
+
+                sender.sendMessage(prefix);
             }
 
             String logMessage = String.format("[MemoryCleaner] Cleanup complete! Freed %d bytes", freedMem);
@@ -55,13 +68,14 @@ public final class MemoryThread implements Runnable
         catch (Exception exception)
         {
             String errorMessage = "[MemoryCleaner] Error during memory cleanup: " + exception.getMessage();
-
             Log.write(2, errorMessage);
             System.err.println(errorMessage);
 
             if (sender != null && Configuration.isShowMessage())
             {
-                sender.sendMessage(new TextComponentString("§cMemory cleanup failed!"));
+                TextComponentString message = new TextComponentString("Memory cleanup failed!");
+                message.getStyle().setColor(TextFormatting.RED);
+                sender.sendMessage(message);
             }
         }
     }

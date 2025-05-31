@@ -14,9 +14,10 @@ public final class MemoryManager
 
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(r ->
     {
-        Thread t = new Thread(r, "MemoryCleaner GC Thread");
-        t.setDaemon(true);
-        return t;
+        Thread thread = new Thread(r, "MemoryCleaner GC Thread");
+        thread.setDaemon(true);
+
+        return thread;
     });
 
     public static void cleanMemory(ICommandSender sender)
