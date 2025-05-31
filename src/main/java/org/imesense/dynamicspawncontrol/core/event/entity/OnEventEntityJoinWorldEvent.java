@@ -86,7 +86,8 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                             mobId.equals("minecraft:vex") ||
                             mobId.equals("srparasites:heed") ||
                             mobId.equals("srparasites:crux") ||
-                            mobId.equals("srparasites:monarch")
+                            mobId.equals("srparasites:monarch") ||
+                            mobId.equals("minecraft:blaze")
                     )
                     {
                         String mobName = getMobDisplayName(mobId);
@@ -151,6 +152,8 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                 return "Извечный";
             case "srparasites:monarch":
                 return "Монарх";
+            case "minecraft:blaze":
+                return "Ифрит";
             default:
                 return mobId;
         }
