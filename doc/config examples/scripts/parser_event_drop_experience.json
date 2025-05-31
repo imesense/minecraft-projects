@@ -16,17 +16,24 @@
     "result": "allow"
   },
   {
-		"entity": "srparasites:sim_human",
-		"xp": 8.0,
-		"multi_xp": 2.1,
-		"adding_xp": 6,
+    "entity": "srparasites:sim_human",
+    "xp": 8.0,
+    "multi_xp": 2.1,
+    "adding_xp": 6,
     "result": "allow"
-	},
-	{
-		"entity": "srparasites:sim_villager",
-		"xp": 7.0,
-		"multi_xp": 2.2,
-		"adding_xp": 5,
+  },
+  {
+    "entity": "srparasites:sim_villager",
+    "xp": 7.0,
+    "multi_xp": 2.2,
+    "adding_xp": 5,
     "result": "allow"
-	}
+  },
+  {
+    "entity": "srparasites:grunt",
+    "xp": 10.0,
+    "multi_xp": 5.5,
+    "adding_xp": 50,
+    "result": "allow"
+  }
 ]

@@ -1244,6 +1244,15 @@
         ]
       },
       {
+        "entity_type": "minecraft:slime",
+        "potion": [
+          "minecraft:invisibility, 10000, 1, 0.15",
+          "minecraft:speed, 10000, 1, 0.2",
+          "minecraft:jump_boost, 10000, 1, 0.2",
+          "minecraft:fire_resistance, 10000, 1, 0.2"
+        ]
+      },
+      {
         "entity_type": "minecraft:silverfish",
         "potion": [
           "minecraft:invisibility, 10000, 1, 0.1",

@@ -72,6 +72,78 @@
         "groupcountmax": 2,
         "max_height": 35,
         "min_height": 5
+      },
+      {
+        "mob": "minecraft:cave_spider",
+        "weight": 7,
+        "spawn_chance": 0.45,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 50,
+        "min_height": 20
+      },
+      {
+        "mob": "minecraft:slime",
+        "weight": 20,
+        "spawn_chance": 0.75,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 40,
+        "min_height": 5
+      },
+      {
+        "mob": "minecraft:silverfish",
+        "weight": 5,
+        "spawn_chance": 0.60,
+        "groupcountmin": 1,
+        "groupcountmax": 1,
+        "max_height": 35,
+        "min_height": 1
+      },
+      {
+        "mob": "minecraft:vex",
+        "weight": 5,
+        "spawn_chance": 0.60,
+        "groupcountmin": 1,
+        "groupcountmax": 1,
+        "max_height": 35,
+        "min_height": 1
+      },
+      {
+        "mob": "srparasites:heed",
+        "weight": 5,
+        "spawn_chance": 0.20,
+        "groupcountmin": 1,
+        "groupcountmax": 1,
+        "max_height": 25,
+        "min_height": 1
+      },
+      {
+        "mob": "srparasites:crux",
+        "weight": 5,
+        "spawn_chance": 0.20,
+        "groupcountmin": 1,
+        "groupcountmax": 1,
+        "max_height": 20,
+        "min_height": 1
+      },
+      {
+        "mob": "srparasites:monarch",
+        "weight": 5,
+        "spawn_chance": 0.15,
+        "groupcountmin": 1,
+        "groupcountmax": 1,
+        "max_height": 35,
+        "min_height": 1
+      },
+      {
+        "mob": "minecraft:blaze",
+        "weight": 12,
+        "spawn_chance": 0.35,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 40,
+        "min_height": 5
       }
     ]
   }
