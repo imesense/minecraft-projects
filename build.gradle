@@ -63,8 +63,8 @@ minecraft
     {
         client
         {
-            // Test
-            args "--username=InDev"
+            // Name player
+            args "--username=AmTx"
 
             // JvmArgs
             jvmArg "-Dfml.coreMods.load=org.imesense.dynamicspawncontrol.core.plugin.LoadingPluginCore"
