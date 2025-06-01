@@ -30,7 +30,7 @@
       },
       {
         "mob": "srparasites:warden",
-        "weight": 5,
+        "weight": 1,
         "spawn_chance": 0.25,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -39,7 +39,7 @@
       },
       {
         "mob": "srparasites:marauder",
-        "weight": 5,
+        "weight": 1,
         "spawn_chance": 0.20,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -48,7 +48,7 @@
       },
       {
         "mob": "srparasites:grunt",
-        "weight": 8,
+        "weight": 2,
         "spawn_chance": 0.45,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -57,7 +57,7 @@
       },
       {
         "mob": "srparasites:hi_golem",
-        "weight": 5,
+        "weight": 3,
         "spawn_chance": 0.40,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -66,7 +66,7 @@
       },
       {
         "mob": "specialmobs:hellfireblaze",
-        "weight": 10,
+        "weight": 4,
         "spawn_chance": 0.30,
         "groupcountmin": 1,
         "groupcountmax": 2,
@@ -75,7 +75,7 @@
       },
       {
         "mob": "minecraft:cave_spider",
-        "weight": 7,
+        "weight": 4,
         "spawn_chance": 0.45,
         "groupcountmin": 1,
         "groupcountmax": 2,
@@ -84,7 +84,7 @@
       },
       {
         "mob": "minecraft:slime",
-        "weight": 20,
+        "weight": 5,
         "spawn_chance": 0.75,
         "groupcountmin": 1,
         "groupcountmax": 2,
@@ -93,7 +93,7 @@
       },
       {
         "mob": "minecraft:silverfish",
-        "weight": 5,
+        "weight": 3,
         "spawn_chance": 0.60,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -102,7 +102,7 @@
       },
       {
         "mob": "minecraft:vex",
-        "weight": 5,
+        "weight": 2,
         "spawn_chance": 0.60,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -111,7 +111,7 @@
       },
       {
         "mob": "srparasites:heed",
-        "weight": 5,
+        "weight": 1,
         "spawn_chance": 0.20,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -120,7 +120,7 @@
       },
       {
         "mob": "srparasites:crux",
-        "weight": 5,
+        "weight": 2,
         "spawn_chance": 0.20,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -129,7 +129,7 @@
       },
       {
         "mob": "srparasites:monarch",
-        "weight": 5,
+        "weight": 1,
         "spawn_chance": 0.15,
         "groupcountmin": 1,
         "groupcountmax": 1,
@@ -138,7 +138,7 @@
       },
       {
         "mob": "minecraft:blaze",
-        "weight": 12,
+        "weight": 2,
         "spawn_chance": 0.35,
         "groupcountmin": 1,
         "groupcountmax": 2,
