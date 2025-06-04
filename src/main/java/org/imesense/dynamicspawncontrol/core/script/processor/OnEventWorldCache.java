@@ -34,7 +34,7 @@ import java.util.Optional;
 
 @InitLog
 @TODO(
-        value = "Пофиксить учет сущностей, у которых используется ключевое слово в парсере 'instanceof'. И добавить логгирование",
+        value = "Fix the accounting of entities, which use the keyword 'instanceof' in the parser. And add logging",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )

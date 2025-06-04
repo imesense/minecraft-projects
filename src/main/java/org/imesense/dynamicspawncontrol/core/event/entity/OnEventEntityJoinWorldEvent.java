@@ -23,7 +23,9 @@ import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 
-@TODO(value = "Отключена до следующих версий, логика, когда зомби идет разбивать факел. Не правильно работает приоритет. 2 Задача, перенести новое событие для нового парсера",
+@TODO(
+        // = "Отключена до следующих версий, логика, когда зомби идет разбивать факел. Не правильно работает приоритет. 2 Задача, перенести новое событие для нового парсера",
+        value = "TODO 1",
         showOnce = false,
         priority = TODO.TodoPriority.HIGH)
 @InitLog
@@ -95,21 +97,21 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
                         String biomeName = event.getWorld().getBiome(new BlockPos(entity)).getBiomeName();
 
                         String message = String.format("%s%s %sappeared on coordinates %sX: %s%d Y: %s%d Z: %s%d %s(biome: %s%s%s)%s",
-                                TextFormatting.GREEN,         // 1. Имя моба (не DARK_RED, но не яркий)
-                                mobName,                    // 2. Имя моба
-                                TextFormatting.YELLOW,      // 3. "появился" (тёплый жёлтый)
-                                TextFormatting.GOLD,       // 4. "координатах" (спокойный зелёный)
-                                TextFormatting.GOLD,        // 5. Число X (мягче, чем YELLOW)
-                                (int)entity.posX,           // 6. X
-                                TextFormatting.GOLD,        // 7. Число Y
-                                (int)entity.posY,           // 8. Y
-                                TextFormatting.GOLD,        // 9. Число Z
-                                (int)entity.posZ,           // 10. Z
-                                TextFormatting.WHITE,        // 11. Скобки (нейтральные)
-                                TextFormatting.GREEN,    // 12. Биом (тёмно-красный)
-                                biomeName,                  // 13. Биом
-                                TextFormatting.WHITE,        // 14. Закрывающая скобка
-                                TextFormatting.RESET        // 15. Сброс
+                                TextFormatting.GREEN,
+                                mobName,
+                                TextFormatting.YELLOW,
+                                TextFormatting.GOLD,
+                                TextFormatting.GOLD,
+                                (int)entity.posX,
+                                TextFormatting.GOLD,
+                                (int)entity.posY,
+                                TextFormatting.GOLD,
+                                (int)entity.posZ,
+                                TextFormatting.WHITE,
+                                TextFormatting.GREEN,
+                                biomeName,
+                                TextFormatting.WHITE,
+                                TextFormatting.RESET
                         );
 
                         event.getWorld().getMinecraftServer().getPlayerList()

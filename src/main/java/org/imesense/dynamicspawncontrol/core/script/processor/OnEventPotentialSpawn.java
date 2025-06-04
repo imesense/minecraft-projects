@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 
 @InitLog
 @TODO(
-        value = "Исправить тут логирование на опцию в конфиге",
+        value = "Add logging and an additional option in the config",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )

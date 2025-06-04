@@ -47,11 +47,12 @@ group = 'org.imesense.dynamicspawncontrol'
 archivesBaseName = 'dynamicspawncontrol'
 
 // Java version
-sourceCompatibility =
-targetCompatibility =
-compileJava.sourceCompatibility =
-compileJava.targetCompatibility =
-    '1.8'
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava
+{
+    sourceCompatibility = targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+}
 
 minecraft
 {
