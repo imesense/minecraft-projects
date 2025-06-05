@@ -19,6 +19,9 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
 
         FermiumRegistryAPI.enqueueMixin(true, "mixin.fix.spawn.divinerpg.json",
                 () -> Loader.isModLoaded("divinerpg"));
+
+        FermiumRegistryAPI.enqueueMixin(true, "mixin.ic2.exp.wireless.industry.json",
+                () -> Loader.isModLoaded("wirelesstools"));
     }
 
     @Override

@@ -134,6 +134,9 @@ dependencies
 
     // Use core mod #3 Special-Mobs
     implementation fg.deobf("curse.maven:special-mobs-59968:3320102")
+
+    implementation fg.deobf("curse.maven:wireless-industry-377164:6013007")
+    implementation fg.deobf("curse.maven:industrial-craft-242638:3838713")
 }
 
 // Get properties into the manifest for reading by the runtime
@@ -216,6 +219,7 @@ sourceSets
 compileJava
 {
     options.annotationProcessorPath = configurations.annotationProcessor
+
     options.compilerArgs +=
     [
         "-AdefaultObfuscationEnv=searge",

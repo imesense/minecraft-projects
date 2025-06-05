@@ -33,9 +33,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 @Mod(
@@ -112,7 +110,7 @@ public final class DynamicSpawnControl
 
                     while ((resource = bufferedReader.readLine()) != null)
                     {
-                        if (resource.startsWith("mixin.") && resource.endsWith(".json"))
+                        if (resource.startsWith("mixin.ic2.exp.wireless.industry.json") && resource.endsWith(".json"))
                         {
                             configFiles.add(resource);
                         }
