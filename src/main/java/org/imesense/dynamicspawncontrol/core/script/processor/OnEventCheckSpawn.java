@@ -5,6 +5,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.debug.InlineTimer;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
@@ -22,6 +24,8 @@ public final class OnEventCheckSpawn
 {
     private static volatile OnEventCheckSpawn _INSTANCE;
 
+    private static final InlineTimer timer = new InlineTimer();
+
     public static OnEventCheckSpawn getInstance()
     {
         return CodeGeneric.getInstance(OnEventCheckSpawn.class);
@@ -37,6 +41,8 @@ public final class OnEventCheckSpawn
 
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
+        timer.start();
+
         ResourceLocation entityType = EntityList.getKey(event.getEntity());
         
         GeneralCheckSpawnStorage generalStorageData = GeneralCheckSpawnStorage.getInstance();
@@ -126,5 +132,9 @@ public final class OnEventCheckSpawn
                 }
             }
         }
+
+        double elapsedTime = timer.stop();
+
+        Log.write(0, String.format("Выполнение заняло: %.3f мс", elapsedTime));
     }
 }

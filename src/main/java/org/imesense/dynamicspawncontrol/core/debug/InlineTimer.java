@@ -1,14 +1,16 @@
 package org.imesense.dynamicspawncontrol.core.debug;
 
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
-public final class Timer
+@TODO(value = "Учесть изменения на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
+public final class InlineTimer
 {
     private long startTime;
 
-    public Timer()
+    public InlineTimer()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
