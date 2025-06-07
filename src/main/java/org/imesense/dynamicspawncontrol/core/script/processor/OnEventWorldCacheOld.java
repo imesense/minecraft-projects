@@ -7,7 +7,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -23,7 +22,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -34,22 +32,22 @@ import java.util.Optional;
 
 @InitLog
 @TODO(
-        value = "Fix the accounting of entities, which use the keyword 'instanceof' in the parser. And add logging",
+        value = "Fix the accounting of entities, which use the keyword 'instanceof' in the parser. And add logging + fix diagram and break optimization",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
-public final class OnEventWorldCache
+public final class OnEventWorldCacheOld
 {
-    private static volatile OnEventWorldCache _INSTANCE;
+    private static volatile OnEventWorldCacheOld _INSTANCE;
 
-    public static OnEventWorldCache getInstance()
+    public static OnEventWorldCacheOld getInstance()
     {
-        return CodeGeneric.getInstance(OnEventWorldCache.class);
+        return CodeGeneric.getInstance(OnEventWorldCacheOld.class);
     }
 
     private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
 
-    public OnEventWorldCache()
+    public OnEventWorldCacheOld()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

@@ -2,24 +2,23 @@ package org.imesense.dynamicspawncontrol.core.script.processor;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.functional.FunctionalMobTaskManager;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
-public final class OnEventMobTaskManager
+@TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
+public final class OnEventMobTaskManagerOld
 {
-    private static volatile OnEventMobTaskManager _INSTANCE;
+    private static volatile OnEventMobTaskManagerOld _INSTANCE;
 
-    public static OnEventMobTaskManager getInstance()
+    public static OnEventMobTaskManagerOld getInstance()
     {
-        return CodeGeneric.getInstance(OnEventMobTaskManager.class);
+        return CodeGeneric.getInstance(OnEventMobTaskManagerOld.class);
     }
 
-    public OnEventMobTaskManager()
+    public OnEventMobTaskManagerOld()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

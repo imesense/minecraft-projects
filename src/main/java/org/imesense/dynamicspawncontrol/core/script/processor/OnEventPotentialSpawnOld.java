@@ -17,20 +17,20 @@ import java.util.stream.IntStream;
 
 @InitLog
 @TODO(
-        value = "Add logging and an additional option in the config",
+        value = "Add logging and an additional option in the config + Bkeak optimization and fix diagram",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
-public final class OnEventPotentialSpawn
+public final class OnEventPotentialSpawnOld
 {
-    private static volatile OnEventPotentialSpawn _INSTANCE;
+    private static volatile OnEventPotentialSpawnOld _INSTANCE;
 
-    public static OnEventPotentialSpawn getInstance()
+    public static OnEventPotentialSpawnOld getInstance()
     {
-        return CodeGeneric.getInstance(OnEventPotentialSpawn.class);
+        return CodeGeneric.getInstance(OnEventPotentialSpawnOld.class);
     }
 
-    public OnEventPotentialSpawn()
+    public OnEventPotentialSpawnOld()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

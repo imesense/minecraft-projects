@@ -11,9 +11,8 @@ import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCacheOld;
 
-import java.sql.Time;
 import java.util.UUID;
 
 @InitLog
@@ -50,6 +49,6 @@ public final class OnEventPlayerEventPlayerLoggedInEvent extends BaseOnEventInst
 
         Log.write(0, logMessage);
 
-        OnEventWorldCache.getInstance().handlePlayerLoggedIn(event);
+        OnEventWorldCacheOld.getInstance().handlePlayerLoggedIn(event);
     }
 }

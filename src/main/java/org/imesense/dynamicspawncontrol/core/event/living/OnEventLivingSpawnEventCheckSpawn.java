@@ -8,7 +8,6 @@ import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityFlog;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityGanro;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityOrch;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntitySlime;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -18,8 +17,8 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawnOld;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCacheOld;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -42,13 +41,13 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnLivingSpawnEventCheckSpawnHIGHEST(LivingSpawnEvent.CheckSpawn event)
     {
-        OnEventWorldCache.getInstance().handleEntitySpawnEvent(event);
+        OnEventWorldCacheOld.getInstance().handleEntitySpawnEvent(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void OnLivingSpawnEventCheckSpawnLOW(LivingSpawnEvent.CheckSpawn event)
     {
-        OnEventCheckSpawn.getInstance().handleLivingSpawnEventCheckSpawn(event);
+        OnEventCheckSpawnOld.getInstance().handleLivingSpawnEventCheckSpawn(event);
     }
 
     private static final Set<Class<? extends Entity>> ALLOWED_ENTITIES = new HashSet<>(Arrays.asList(

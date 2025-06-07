@@ -9,7 +9,7 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -17,16 +17,17 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.List;
 
 @InitLog
-public final class OnEventPopulationChunk
+@TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
+public final class OnEventPopulationChunkOld
 {
-    private static volatile OnEventPopulationChunk _INSTANCE;
+    private static volatile OnEventPopulationChunkOld _INSTANCE;
 
-    public static OnEventPopulationChunk getInstance()
+    public static OnEventPopulationChunkOld getInstance()
     {
-        return CodeGeneric.getInstance(OnEventPopulationChunk.class);
+        return CodeGeneric.getInstance(OnEventPopulationChunkOld.class);
     }
 
-    public OnEventPopulationChunk()
+    public OnEventPopulationChunkOld()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

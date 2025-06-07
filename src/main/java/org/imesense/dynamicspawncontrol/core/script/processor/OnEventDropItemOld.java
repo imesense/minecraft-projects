@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -16,16 +17,17 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.Random;
 
 @InitLog
-public final class OnEventDropItem
+@TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
+public final class OnEventDropItemOld
 {
-    private static volatile OnEventDropItem _INSTANCE;
+    private static volatile OnEventDropItemOld _INSTANCE;
 
-    public static OnEventDropItem getInstance()
+    public static OnEventDropItemOld getInstance()
     {
-        return CodeGeneric.getInstance(OnEventDropItem.class);
+        return CodeGeneric.getInstance(OnEventDropItemOld.class);
     }
 
-    public OnEventDropItem()
+    public OnEventDropItemOld()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

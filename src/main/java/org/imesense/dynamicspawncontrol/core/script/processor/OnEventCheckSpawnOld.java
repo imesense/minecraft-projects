@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.debug.InlineTimer;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
@@ -20,18 +21,19 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @InitLog
-public final class OnEventCheckSpawn
+@TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
+public final class OnEventCheckSpawnOld
 {
-    private static volatile OnEventCheckSpawn _INSTANCE;
+    private static volatile OnEventCheckSpawnOld _INSTANCE;
 
     private static final InlineTimer timer = new InlineTimer();
 
-    public static OnEventCheckSpawn getInstance()
+    public static OnEventCheckSpawnOld getInstance()
     {
-        return CodeGeneric.getInstance(OnEventCheckSpawn.class);
+        return CodeGeneric.getInstance(OnEventCheckSpawnOld.class);
     }
 
-    public OnEventCheckSpawn()
+    public OnEventCheckSpawnOld()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
