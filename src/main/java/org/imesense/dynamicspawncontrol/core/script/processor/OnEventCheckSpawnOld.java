@@ -26,8 +26,6 @@ public final class OnEventCheckSpawnOld
 {
     private static volatile OnEventCheckSpawnOld _INSTANCE;
 
-    private static final InlineTimer timer = new InlineTimer();
-
     public static OnEventCheckSpawnOld getInstance()
     {
         return CodeGeneric.getInstance(OnEventCheckSpawnOld.class);
@@ -43,8 +41,6 @@ public final class OnEventCheckSpawnOld
 
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
-        timer.start();
-
         ResourceLocation entityType = EntityList.getKey(event.getEntity());
         
         GeneralCheckSpawnStorage generalStorageData = GeneralCheckSpawnStorage.getInstance();
@@ -134,9 +130,5 @@ public final class OnEventCheckSpawnOld
                 }
             }
         }
-
-        double elapsedTime = timer.stop();
-
-        Log.write(0, String.format("Выполнение заняло: %.3f мс", elapsedTime));
     }
 }

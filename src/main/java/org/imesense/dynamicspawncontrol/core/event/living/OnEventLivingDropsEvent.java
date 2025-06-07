@@ -8,7 +8,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.DropsListener;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventDropItem;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventDropItemOld;
 import org.imesense.dynamicspawncontrol.eventdescriptions.DropSkeletonItem;
 import org.imesense.dynamicspawncontrol.eventdescriptions.DropZombieItem;
 
@@ -27,7 +27,7 @@ public final class OnEventLivingDropsEvent extends BaseOnEventInstance
         DropSkeletonItem.getInstance().handleLivingDrops(event);
         DropZombieItem.getInstance().handleZombieDrops(event);
 
-        OnEventDropItem.getInstance().handleUpdateLivingDrops(event);
+        OnEventDropItemOld.getInstance().handleUpdateLivingDrops(event);
 
         DropsListener.getInstance().handleMobDrops(event);
     }
