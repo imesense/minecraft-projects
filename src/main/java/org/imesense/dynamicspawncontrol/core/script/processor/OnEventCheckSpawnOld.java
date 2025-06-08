@@ -6,8 +6,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.debug.InlineTimer;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
@@ -21,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @InitLog
-@TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "НАЧАТЬ РЕВОРК ПАРСЕРОВ С ЭТОГО СКРИПТА! Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class OnEventCheckSpawnOld
 {
     private static volatile OnEventCheckSpawnOld _INSTANCE;
@@ -41,6 +39,15 @@ public final class OnEventCheckSpawnOld
 
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
+        /**
+         * В чем тут мем, то что у нас entityType проверяется на каждую сущность, на каждую сущность открывается файл
+         * Отсюда идут дикие просадки FPS, нужно переделать это на кеширование с использованием хард-сущности
+         * То что проверяем только те сущности, которые у нас указаны в файле спавна в целом
+         * Например у нас указан "minecraft:zombie" мы сравниваем его минимально с entityType и смотрим что у нас указано
+         * В массиве файла, допустим [сущность: "Зомби", его index профиля и уже этот профиль в готовом виде отправляем в событие]
+         * Чтобы не уничтожать фпс в 0
+         * Работаем по index и сразу применяем готовый профиль без поиска его по файлу КАЖДЫЙ КАДР!!!
+         */
         ResourceLocation entityType = EntityList.getKey(event.getEntity());
         
         GeneralCheckSpawnStorage generalStorageData = GeneralCheckSpawnStorage.getInstance();
