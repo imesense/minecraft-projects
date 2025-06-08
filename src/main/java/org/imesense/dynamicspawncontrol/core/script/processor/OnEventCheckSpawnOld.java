@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @InitLog
-@TODO(value = "НАЧАТЬ РЕВОРК ПАРСЕРОВ С ЭТОГО СКРИПТА! Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "START REWORKING PARSERS WITH THIS SCRIPT! Optimization is broken, besides redoing the class in the diagram", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class OnEventCheckSpawnOld
 {
     private static volatile OnEventCheckSpawnOld _INSTANCE;
