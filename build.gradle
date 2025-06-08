@@ -222,8 +222,7 @@ compileJava
 
     options.compilerArgs +=
     [
-        "-AdefaultObfuscationEnv=searge",
-        "-AoutRefMap=mixins.dynamicspawncontrol.refmap.json"
+        "-AdefaultObfuscationEnv=searge"
     ]
 }
 

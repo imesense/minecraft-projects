@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.mixins.DivineRPG;
 
+import divinerpg.registry.EntitySpawnRegistry;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
         value = "Обновить диаграмму классов для пакета",
         showOnce = false,
         priority = TODO.TodoPriority.HIGH)
-@Mixin(targets = "divinerpg.registry.EntitySpawnRegistry")
+@Mixin(EntitySpawnRegistry.class)
 public abstract class MixinDivineRPGFixSpawn
 {
     @Inject(

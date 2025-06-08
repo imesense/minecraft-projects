@@ -13,7 +13,7 @@ import ru.wirelesstools.wnet.LinkedEnergySaveData;
 @Mixin(WorldLoadUnloadHandler.class)
 public abstract class WorldLoadUnloadHandlerMixin
 {
-    @Shadow
+    @Shadow(remap = false)
     private LinkedEnergySaveData data;
 
     @Inject(
