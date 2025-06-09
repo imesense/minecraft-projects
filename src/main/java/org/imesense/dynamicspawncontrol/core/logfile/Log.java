@@ -39,8 +39,9 @@ public final class Log
             File logsDir = new File(PATH, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
             logsDir.mkdirs();
 
-            String logFileName = isDebugMode ? "debug.log" :
-                    new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()) +
+            String logFileName = isDebugMode ? "debug" +
+                    DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION :
+                        new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()) +
                             DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
 
             logFile = new File(logsDir, logFileName);
