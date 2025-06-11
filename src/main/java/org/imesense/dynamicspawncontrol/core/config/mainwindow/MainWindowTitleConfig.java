@@ -17,7 +17,7 @@ public final class MainWindowTitleConfig extends BaseJsonConfig
 {
     private String windowTitle =
             String.format("Minecraft Forge: %s + %s",
-                    DynamicSpawnControlStructure.STRUCT_INFO_MOD.VERSION,
+                    DynamicSpawnControlStructure.STRUCT_INFO_MOD.FORGE_VERSION,
                     DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME);
 
     public MainWindowTitleConfig(String configPath)

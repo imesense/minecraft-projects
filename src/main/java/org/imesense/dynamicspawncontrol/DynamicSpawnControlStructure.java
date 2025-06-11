@@ -8,7 +8,9 @@ public final class DynamicSpawnControlStructure
 
         public static final String NAME = "Dynamic Spawn Control";
 
-        public static final String VERSION = "1.12.2-14.23.5.2860";
+        public static final String FORGE_VERSION = "1.12.2-14.23.5.2860";
+
+        public static final String RELEASE_VERSION = "-0.1.jar";
     }
 
     public static final class STRUCT_FILES_DIRS

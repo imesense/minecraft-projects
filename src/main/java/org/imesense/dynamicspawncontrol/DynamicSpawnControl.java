@@ -39,7 +39,7 @@ import java.util.List;
 @Mod(
     modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
     name = DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME,
-    version = DynamicSpawnControlStructure.STRUCT_INFO_MOD.VERSION,
+    version = DynamicSpawnControlStructure.STRUCT_INFO_MOD.FORGE_VERSION,
     dependencies =
         "required-after:fermiumbooter;" +
         "required-after:divinerpg;" +
@@ -82,7 +82,9 @@ public final class DynamicSpawnControl
         TodoTracker.init(event);
 
         File modFile = event.getSourceFile();
-        String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID + "-0.1.jar";
+
+        String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID +
+                DynamicSpawnControlStructure.STRUCT_INFO_MOD.RELEASE_VERSION;
 
         Log.write(3, "Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
 
@@ -110,7 +112,7 @@ public final class DynamicSpawnControl
 
                     while ((resource = bufferedReader.readLine()) != null)
                     {
-                        if (resource.startsWith("mixin.ic2.exp.wireless.industry.json") && resource.endsWith(".json"))
+                        if (resource.startsWith("mixin.") && resource.endsWith(".json"))
                         {
                             configFiles.add(resource);
                         }
