@@ -106,6 +106,8 @@ public final class ComplexityBiomes
         // Other biomes
         addBiomeSkulls("River", 0, 1, 0, 0);
         addBiomeSkulls("Stone Beach", 0, 0, 0, 1);
+        addBiomeSkulls("MushroomIsland", 5, 2, 0, 0);
+        addBiomeSkulls("MushroomIslandShore", 3, 2, 0, 0);
     }
 
     private static void addBiomeSkulls(String biomeName, int red, int orange, int redPart, int orangePart)
