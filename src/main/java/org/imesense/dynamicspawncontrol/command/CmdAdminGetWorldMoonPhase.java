@@ -4,12 +4,11 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
-import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
+import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
+import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
 import javax.annotation.Nonnull;
 
@@ -42,11 +41,9 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
         int moonPhase = worldProvider.getMoonPhase(iCommandSender.getEntityWorld().getWorldTime());
 
         iCommandSender.sendMessage(new TextComponentString(
-                    UnicodeCharacterCollection.instance.getDescription('\u00A7') +
-                        TextColorCollection.instance.getCode("AQUA") +
-                        CmdCallTypeCollection.instance.getDescription(1) +
-                        UnicodeCharacterCollection.instance.getDescription(' ') +
-                        "-> The current phase of the moon: " +
-                        moonPhase));
+                ChatColorUtil.color(CmdCallType.COMMAND + " -> The current phase of the moon: " + moonPhase,
+                        TextFormatting.AQUA)
+        ));
+
     }
 }

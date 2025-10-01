@@ -4,12 +4,11 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
-import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
+import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
+import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
 import javax.annotation.Nonnull;
 
@@ -41,22 +40,18 @@ public final class CmdServerScriptReload extends CommandBase
         if (args.length > 0)
         {
             iCommandSender.sendMessage(new TextComponentString(
-                       UnicodeCharacterCollection.instance.getDescription('\u00A7') +
-                            TextColorCollection.instance.getCode("RED") +
-                            CmdCallTypeCollection.instance.getDescription(1) +
-                            UnicodeCharacterCollection.instance.getDescription(' ') +
-                            "The command does not accept arguments"));
+                    ChatColorUtil.color(CmdCallType.COMMAND + " The command does not accept arguments",
+                            TextFormatting.RED)
+            ));
         }
         else
         {
             ParserRegister.getInstance().reloadAllConfigs();
 
             iCommandSender.sendMessage(new TextComponentString(
-                       UnicodeCharacterCollection.instance.getDescription('\u00A7') +
-                            TextColorCollection.instance.getCode("GREEN") +
-                            CmdCallTypeCollection.instance.getDescription(1) +
-                            UnicodeCharacterCollection.instance.getDescription(' ') +
-                            "Configurations have been reloaded"));
+                    ChatColorUtil.color(CmdCallType.COMMAND + " Configurations have been reloaded",
+                            TextFormatting.GREEN)
+            ));
         }
     }
 }

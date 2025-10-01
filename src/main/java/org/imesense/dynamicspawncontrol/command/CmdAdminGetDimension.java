@@ -5,10 +5,10 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
-import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
+import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
 import javax.annotation.Nonnull;
 
@@ -39,10 +39,9 @@ public final class CmdAdminGetDimension extends CommandBase
     {
         if (args.length > 0)
         {
-            iCommandSender.sendMessage(new TextComponentString(UnicodeCharacterCollection.instance.getDescription('\u00A7') +
-                    TextColorCollection.instance.getCode("RED") +
-                    "This command does not accept arguments."));
-
+            iCommandSender.sendMessage(new TextComponentString(
+                    ChatColorUtil.color(CmdCallType.COMMAND + " The command does not accept arguments",
+                            TextFormatting.RED)));
             return;
         }
 

@@ -7,13 +7,12 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
-import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
+import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
+import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -94,11 +93,10 @@ public final class CmdAdminScanEntities extends CommandBase
         }
 
         iCommandSender.sendMessage(new TextComponentString(
-                   UnicodeCharacterCollection.instance.getDescription('\u0047') +
-                        TextColorCollection.instance.getCode("GREEN") +
-                        CmdCallTypeCollection.instance.getDescription(1) +
-                           UnicodeCharacterCollection.instance.getDescription(' ') +
-                        "The scan is completed"));
+                ChatColorUtil.color(CmdCallType.COMMAND + " The scan is completed",
+                        TextFormatting.GREEN)
+        ));
+
 
         Log.write(0, "------------ END SCAN ENTITY LIST ------------");
     }

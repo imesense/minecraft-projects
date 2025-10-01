@@ -8,9 +8,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
-import org.imesense.dynamicspawncontrol.core.collection.CmdCallTypeCollection;
-import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
-import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.TodoTracker;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
@@ -179,10 +176,6 @@ public final class DynamicSpawnControl
         BaseEventRegister.initialize();
 
         WindowTitle.getInstance().replace();
-
-        CmdCallTypeCollection.instance = new CmdCallTypeCollection();
-        TextColorCollection.instance = new TextColorCollection();
-        UnicodeCharacterCollection.instance = new UnicodeCharacterCollection();
 
         RegisterSpawnerCraft.getInstance().preInit(event);
     }

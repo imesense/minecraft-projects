@@ -2,15 +2,15 @@ package org.imesense.dynamicspawncontrol.command;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.collection.TextColorCollection;
-import org.imesense.dynamicspawncontrol.core.collection.UnicodeCharacterCollection;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 
 import javax.annotation.Nonnull;
 
@@ -55,9 +55,12 @@ public final class CmdAdminGameMode extends CommandBase
         {
             Log.write(2, String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
 
-            iCommandSender.sendMessage(new TextComponentString(UnicodeCharacterCollection.instance.getDescription('\u00A7') +
-                    TextColorCollection.instance.getCode("RED") +
-                    "Invalid game mode: " + args[0]));
+            ChatColorUtil.sendColoredMessage(
+                    iCommandSender instanceof EntityPlayer ? (EntityPlayer) iCommandSender : null,
+                    "Invalid game mode: " + args[0],
+                    TextFormatting.RED
+            );
+
 
             return;
         }
