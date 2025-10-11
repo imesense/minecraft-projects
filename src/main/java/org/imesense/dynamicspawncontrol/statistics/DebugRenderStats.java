@@ -21,20 +21,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @InitLog
-public final class DSCInlineDebugStats
+public final class DebugRenderStats
 {
-    private static volatile DSCInlineDebugStats _INSTANCE;
+    private static volatile DebugRenderStats _INSTANCE;
     private static final Minecraft MC = Minecraft.getMinecraft();
     private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
     private final ThreadMonitor threadMonitor = ThreadMonitor.getInstance();
     private final GrassThreadMonitor grassMonitor = GrassThreadMonitor.getInstance();
 
-    public static DSCInlineDebugStats getInstance()
+    public static DebugRenderStats getInstance()
     {
-        return CodeGeneric.getInstance(DSCInlineDebugStats.class);
+        return CodeGeneric.getInstance(DebugRenderStats.class);
     }
 
-    public DSCInlineDebugStats()
+    public DebugRenderStats()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

@@ -10,7 +10,7 @@ import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogEvent;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
-import org.imesense.dynamicspawncontrol.statistics.DSCInlineDebugStats;
+import org.imesense.dynamicspawncontrol.statistics.DebugRenderStats;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
@@ -26,7 +26,7 @@ public final class OnEventTickEventClientTickEvent extends BaseOnEventInstance
     {
         if (event.phase == TickEvent.Phase.START)
         {
-            DSCInlineDebugStats.getInstance().updateMainThreadStats();
+            DebugRenderStats.getInstance().updateMainThreadStats();
         }
 
         WindowTitle.getInstance().replace();

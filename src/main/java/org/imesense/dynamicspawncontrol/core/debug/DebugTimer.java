@@ -5,12 +5,11 @@ import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
-@TODO(value = "Учесть изменения на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class InlineTimer
+public final class DebugTimer
 {
     private long startTime;
 
-    public InlineTimer()
+    public DebugTimer()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
