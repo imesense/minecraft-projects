@@ -63,7 +63,7 @@ public abstract class MixinDarknessRenderer
                 return;
             }
 
-            if (this.blacklistDim(world.provider))
+            if (this.isDimensionBlacklisted(world.provider))
             {
                 return;
             }
@@ -76,46 +76,16 @@ public abstract class MixinDarknessRenderer
         }
     }
 
-    private boolean blacklistDim(WorldProvider worldProvider)
+    private boolean isDimensionBlacklisted(WorldProvider worldProvider)
     {
-        DimensionType dimensionType = worldProvider.getDimensionType();
-
-        if (dimensionType == DimensionType.THE_END &&
-                !PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessEnd())
-        {
-            return true;
-        }
-
-        return blacklistContains(worldProvider, dimensionType) ^
-                PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isInvertBlacklist();
-    }
-
-    private boolean blacklistContains(WorldProvider worldProvider,
-                                      DimensionType dimensionType)
-    {
-        String dimensionTypeName = dimensionType.getName();
-
-        for (String blacklistName :
-                PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByName())
-        {
-            if (!blacklistName.equals(dimensionTypeName))
-            {
-                continue;
-            }
-
-            return true;
-        }
-
         int dimID = worldProvider.getDimension();
 
         for (int blacklistID : PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByID())
         {
-            if (dimID != blacklistID)
+            if (dimID == blacklistID)
             {
-                continue;
+                return true;
             }
-
-            return true;
         }
 
         return false;
@@ -126,7 +96,6 @@ public abstract class MixinDarknessRenderer
         WorldProvider dim = world.provider;
         DimensionType dimType = dim.getDimensionType();
         float[] brightnessTable = dim.getLightBrightnessTable();
-        boolean dimDark = isDark(dim, dimType);
 
         float sunBrightness = world.getSunBrightness(1.0F);
         float moonBrightness = getMoonBrightness(partialTicks, world);
@@ -165,13 +134,8 @@ public abstract class MixinDarknessRenderer
                 skyBlue = skyBlue * (1.0F - m) + skyBlue * 0.6F * m;
             }
 
-            float blockFactor = 1f;
-
-            if (dimDark)
-            {
-                blockFactor = 1f - blockIndex / 15f;
-                blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
-            }
+            float blockFactor = 1f - blockIndex / 15f;
+            blockFactor = 1 - blockFactor * blockFactor * blockFactor * blockFactor;
 
             final float flicker = torchFlickerX * 0.1F + 1.5F;
             final float blockBase = blockFactor * brightnessTable[blockIndex] * flicker;
@@ -228,39 +192,9 @@ public abstract class MixinDarknessRenderer
         }
     }
 
-    private boolean isDark(WorldProvider worldProvider, DimensionType dimensionType)
-    {
-        if (dimensionType == DimensionType.OVERWORLD)
-        {
-            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessOverWorld();
-        }
-        else if (dimensionType == DimensionType.NETHER)
-        {
-            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessNether();
-        }
-        else if (dimensionType == DimensionType.THE_END)
-        {
-            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessEnd();
-        }
-        else if (worldProvider.hasSkyLight())
-        {
-            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessDefault();
-        }
-        else
-        {
-            return PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isDarknessSkyLess();
-        }
-    }
-
     private float getMoonBrightness(float partialTicks, World world)
     {
         WorldProvider worldProvider = world.provider;
-        DimensionType dimensionType = worldProvider.getDimensionType();
-
-        if (!this.isDark(worldProvider, dimensionType))
-        {
-            return 1.f;
-        }
 
         if (!worldProvider.hasSkyLight())
         {
@@ -268,36 +202,16 @@ public abstract class MixinDarknessRenderer
         }
 
         float angle = world.getCelestialAngle(partialTicks);
-
         if (angle <= 0.25f || 0.75f <= angle)
         {
             return 1.f;
         }
 
-        double moon;
-
-        if (!PluginDarknessConfig.getInstance(PluginDarknessConfig.class).isIgnoreMoonLight())
-        {
-            double[] phaseFactors = PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getMoonPhaseFactors();
-
-            int moonPhase = worldProvider.getMoonPhase(world.getWorldTime());
-
-            if (moonPhase < phaseFactors.length)
-            {
-                moon = phaseFactors[moonPhase];
-            }
-            else
-            {
-                moon = world.getCurrentMoonPhaseFactor();
-            }
-        }
-        else
-        {
-            moon = 0.f;
-        }
+        double[] phaseFactors = PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getMoonPhaseFactors();
+        int moonPhase = worldProvider.getMoonPhase(world.getWorldTime());
+        double moon = moonPhase < phaseFactors.length ? phaseFactors[moonPhase] : world.getCurrentMoonPhaseFactor();
 
         float w;
-
         if (angle <= 0.3f || 0.7f <= angle)
         {
             w = 20.f * (Math.abs(angle - 0.5f) - 0.2f);
