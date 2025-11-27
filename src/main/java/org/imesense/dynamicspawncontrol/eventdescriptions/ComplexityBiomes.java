@@ -58,7 +58,9 @@ public final class ComplexityBiomes
         addBiomeSkulls("TaigaHills", 2, 2, 0, 0);
         addBiomeSkulls("Taiga M", 2, 0, 0, 1);
         addBiomeSkulls("Cold Taiga", 4, 1, 0, 0);
+        addBiomeSkulls("Cold Taiga M", 5, 1, 0, 0);
         addBiomeSkulls("Cold Taiga Hills", 5, 0, 0, 0);
+        addBiomeSkulls("Cold Beach", 0, 2, 0, 0);
         addBiomeSkulls("Mega Taiga", 2, 1, 0, 0);
         addBiomeSkulls("Mega Taiga Hills", 3, 2, 0, 0);
         addBiomeSkulls("Redwood Taiga Hills M", 6, 0, 0, 0);
@@ -83,6 +85,7 @@ public final class ComplexityBiomes
 
         // Ice biomes
         addBiomeSkulls("Ice Plains", 3, 0, 1, 0);
+        addBiomeSkulls("Ice Plains Spikes", 4, 2, 0, 0);
         addBiomeSkulls("Ice Mountains", 4, 2, 0, 0);
 
         // Swamp biomes
