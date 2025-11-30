@@ -32,7 +32,8 @@ public final class CommandRegister extends BaseCommandRegister
         CmdServerMobsKiller.class,
         CmdServerScriptReload.class,
         CmdAdminGetDimension.class,
-        CmdClientCleanMemory.class
+        CmdClientCleanMemory.class,
+        CmdAdminCopyWorldSeed.class
     };
 
     @Override
