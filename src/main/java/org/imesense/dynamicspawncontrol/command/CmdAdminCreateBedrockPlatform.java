@@ -26,21 +26,21 @@ public final class CmdAdminCreateBedrockPlatform extends CommandBase
 
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "/dsc_test";
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
-        if (!(sender instanceof EntityPlayerMP))
+        if (!(iCommandSender instanceof EntityPlayerMP))
         {
-            sender.sendMessage(new TextComponentString("This command can only be used by players!"));
+            iCommandSender.sendMessage(new TextComponentString("This command can only be used by players!"));
             return;
         }
 
-        EntityPlayerMP player = (EntityPlayerMP) sender;
+        EntityPlayerMP player = (EntityPlayerMP) iCommandSender;
         World world = player.getEntityWorld();
 
         BlockPos center = player.getPosition();
@@ -57,6 +57,6 @@ public final class CmdAdminCreateBedrockPlatform extends CommandBase
             }
         }
 
-        sender.sendMessage(new TextComponentString("Generated bedrock platform at Y = 255"));
+        iCommandSender.sendMessage(new TextComponentString("Generated bedrock platform at Y = 255"));
     }
 }
