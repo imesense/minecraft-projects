@@ -12,7 +12,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

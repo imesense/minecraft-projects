@@ -9,7 +9,6 @@ import net.minecraft.world.biome.Biome;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.HashMap;
 import java.util.Map;
