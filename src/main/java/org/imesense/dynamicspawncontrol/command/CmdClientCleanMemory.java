@@ -12,14 +12,24 @@ import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+/**
+ *
+ */
 @InitLog
 public final class CmdClientCleanMemory extends CommandBase
 {
+    /**
+     *
+     */
     public CmdClientCleanMemory()
     {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public String getName()
@@ -27,6 +37,11 @@ public final class CmdClientCleanMemory extends CommandBase
         return "dsc_clean_up_memory";
     }
 
+    /**
+     *
+     * @param iCommandSender
+     * @return
+     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -34,6 +49,13 @@ public final class CmdClientCleanMemory extends CommandBase
         return "/dsc_clean_up_memory";
     }
 
+    /**
+     *
+     * @param minecraftServer
+     * @param iCommandSender
+     * @param args
+     * @throws CommandException
+     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer,
                         @Nonnull ICommandSender iCommandSender, @Nonnull String... args) throws CommandException
@@ -42,6 +64,10 @@ public final class CmdClientCleanMemory extends CommandBase
         MemoryEvents.setLastCleanTime(System.currentTimeMillis());
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public List<String> getAliases()

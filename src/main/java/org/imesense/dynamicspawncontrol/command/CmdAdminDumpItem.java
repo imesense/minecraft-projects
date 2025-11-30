@@ -20,14 +20,24 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
+/**
+ *
+ */
 @InitLog
 public final class CmdAdminDumpItem extends CommandBase
 {
+    /**
+     *
+     */
     public CmdAdminDumpItem()
     {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public String getName()
@@ -35,6 +45,11 @@ public final class CmdAdminDumpItem extends CommandBase
         return "dsc_dump_item";
     }
 
+    /**
+     *
+     * @param iCommandSender
+     * @return
+     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -42,6 +57,12 @@ public final class CmdAdminDumpItem extends CommandBase
         return "/dsc_dump_item";
     }
 
+    /**
+     *
+     * @param minecraftServer
+     * @param iCommandSender
+     * @param args
+     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
@@ -68,6 +89,12 @@ public final class CmdAdminDumpItem extends CommandBase
         }
     }
 
+    /**
+     *
+     * @param iCommandSender
+     * @param indent
+     * @param nbtTagCompound
+     */
     private static void dumpNBT(ICommandSender iCommandSender, int indent, NBTTagCompound nbtTagCompound)
     {
         for (String key : nbtTagCompound.getKeySet())

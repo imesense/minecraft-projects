@@ -13,14 +13,24 @@ import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 
 import javax.annotation.Nonnull;
 
+/**
+ *
+ */
 @InitLog
 public final class CmdAdminCopyWorldSeed extends CommandBase
 {
+    /**
+     *
+     */
     public CmdAdminCopyWorldSeed()
     {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public String getName()
@@ -28,6 +38,11 @@ public final class CmdAdminCopyWorldSeed extends CommandBase
         return "dsc_copy_world_seed";
     }
 
+    /**
+     *
+     * @param iCommandSender
+     * @return
+     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -35,6 +50,13 @@ public final class CmdAdminCopyWorldSeed extends CommandBase
         return "/dsc_copy_world_seed";
     }
 
+    /**
+     *
+     * @param minecraftServer
+     * @param iCommandSender
+     * @param args
+     * @throws CommandException
+     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args) throws CommandException
     {

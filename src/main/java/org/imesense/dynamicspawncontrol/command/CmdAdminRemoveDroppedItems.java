@@ -5,13 +5,20 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 
 import javax.annotation.Nonnull;
 
-// Консольная команда на удаление всех валяющихся предметов
+/**
+ *
+ */
 @InitLog
+@TODO(value = "[WIP] Консольная команда для удаление всех валяющихся предметов", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class CmdAdminRemoveDroppedItems extends CommandBase
 {
+    /**
+     *
+     */
     public CmdAdminRemoveDroppedItems()
     {
 
@@ -35,7 +42,7 @@ public final class CmdAdminRemoveDroppedItems extends CommandBase
      */
     @Nonnull
     @Override
-    public String getUsage(ICommandSender iCommandSender)
+    public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
         return "";
     }
@@ -48,7 +55,7 @@ public final class CmdAdminRemoveDroppedItems extends CommandBase
      * @throws CommandException
      */
     @Override
-    public void execute(MinecraftServer minecraftServer, ICommandSender iCommandSender, @Nonnull String... args) throws CommandException
+    public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args) throws CommandException
     {
 
     }

@@ -12,14 +12,24 @@ import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
 import javax.annotation.Nonnull;
 
+/**
+ *
+ */
 @InitLog
 public final class CmdAdminGetWorldMoonPhase extends CommandBase
 {
+    /**
+     *
+     */
     public CmdAdminGetWorldMoonPhase()
     {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public String getName()
@@ -27,6 +37,11 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
         return "dsc_moon_phase";
     }
 
+    /**
+     *
+     * @param iCommandSender
+     * @return
+     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -34,6 +49,12 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
         return "/dsc_moon_phase";
     }
 
+    /**
+     *
+     * @param minecraftServer
+     * @param iCommandSender
+     * @param args
+     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
@@ -44,6 +65,5 @@ public final class CmdAdminGetWorldMoonPhase extends CommandBase
                 ChatColorUtil.color(CmdCallType.COMMAND + " -> The current phase of the moon: " + moonPhase,
                         TextFormatting.AQUA)
         ));
-
     }
 }

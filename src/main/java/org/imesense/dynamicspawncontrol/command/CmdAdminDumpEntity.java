@@ -19,14 +19,24 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import javax.annotation.Nonnull;
 
+/**
+ *
+ */
 @InitLog
 public final class CmdAdminDumpEntity extends CommandBase
 {
+    /**
+     *
+     */
     public CmdAdminDumpEntity()
     {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public String getName()
@@ -34,6 +44,11 @@ public final class CmdAdminDumpEntity extends CommandBase
         return "dsc_dump_entity";
     }
 
+    /**
+     *
+     * @param iCommandSender
+     * @return
+     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -41,6 +56,12 @@ public final class CmdAdminDumpEntity extends CommandBase
         return "/dsc_dump_entity";
     }
 
+    /**
+     *
+     * @param minecraftServer
+     * @param iCommandSender
+     * @param args
+     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {

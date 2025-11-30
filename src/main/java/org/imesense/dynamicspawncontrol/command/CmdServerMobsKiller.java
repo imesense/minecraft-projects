@@ -17,14 +17,24 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 @InitLog
 public final class CmdServerMobsKiller extends CommandBase
 {
+    /**
+     *
+     */
     public CmdServerMobsKiller()
     {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Nonnull
     @Override
     public String getName()
@@ -32,6 +42,11 @@ public final class CmdServerMobsKiller extends CommandBase
         return "dsc_mob_killer";
     }
 
+    /**
+     *
+     * @param iCommandSender
+     * @return
+     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -39,6 +54,12 @@ public final class CmdServerMobsKiller extends CommandBase
         return "/dsc_mob_killer <'all', 'entity' (id), 'animals' or 'monsters'>";
     }
 
+    /**
+     *
+     * @param minecraftServer
+     * @param iCommandSender
+     * @param args
+     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
