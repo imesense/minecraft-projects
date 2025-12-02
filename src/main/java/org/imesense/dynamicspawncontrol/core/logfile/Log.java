@@ -36,13 +36,22 @@ public final class Log
     {
         try
         {
+            String logFileName;
             File logsDir = new File(PATH, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
-            logsDir.mkdirs();
 
-            String logFileName = isDebugMode ? "debug" +
-                    DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION :
-                        new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()) +
-                            DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+            logsDir.mkdirs();
+            String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+
+            if (isDebugMode)
+            {
+                logFileName = "debug_" + timestamp +
+                        DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+            }
+            else
+            {
+                logFileName = timestamp +
+                        DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+            }
 
             logFile = new File(logsDir, logFileName);
 
@@ -50,6 +59,7 @@ public final class Log
                     "*********************************************************************",
                     "** Log file created: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()),
                     "** DynamicsSpawnControl. Authors: OldSerpskiStalker, acidicMercury8",
+                    "** Mode: " + (isDebugMode ? "DEBUG" : "RELEASE"),
                     "*********************************************************************",
                     ""
             );
