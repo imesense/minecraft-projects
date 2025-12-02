@@ -65,6 +65,54 @@ public final class DynamicSpawnControl
 
     public static SimpleNetworkWrapper networkWrapper = null;
 
+    private static final String[] MIXIN_CONFIGS =
+    {
+        "mixin.darkness.renderer.json",
+        "mixin.fix.spawn.divinerpg.json",
+        "mixin.ic2.exp.wireless.industry.json",
+        "mixin.unlimited.enchantment.json"
+    };
+
+    private void loadMixins()
+    {
+        ClassLoader classLoader = DynamicSpawnControl.class.getClassLoader();
+
+        Log.write(0, "Searching for mixin config files...");
+
+        for (String config : MIXIN_CONFIGS)
+        {
+            Log.write(0, "Trying to load: " + config);
+
+            try (InputStream inputStream = classLoader.getResourceAsStream(config))
+            {
+                if (inputStream == null)
+                {
+                    Log.write(2, "Mixin not found in resources: " + config);
+                    continue;
+                }
+
+                try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream)))
+                {
+                    String line;
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ((line = bufferedReader.readLine()) != null)
+                    {
+                        stringBuilder.append(line).append('\n');
+                    }
+
+                    Log.write(0, "Successfully loaded mixin: " + config);
+                    Log.write(0, stringBuilder.toString());
+                }
+            }
+            catch (Exception exception)
+            {
+                Log.write(2, "Error loading " + config + ": " + exception.getMessage());
+                exception.printStackTrace();
+            }
+        }
+    }
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -96,66 +144,11 @@ public final class DynamicSpawnControl
 
         try
         {
-            String resourcePath = "";
-            List<String> configFiles = new ArrayList<>();
-
-            try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath))
-            {
-                assert inputStream != null;
-
-                try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream)))
-                {
-                    String resource;
-
-                    while ((resource = bufferedReader.readLine()) != null)
-                    {
-                        if (resource.startsWith("mixin.") && resource.endsWith(".json"))
-                        {
-                            configFiles.add(resource);
-                        }
-                    }
-                }
-            }
-
-            if (configFiles.isEmpty())
-            {
-                Log.write(0, "No mixin config files found!");
-                return;
-            }
-
-            Log.write(0, "Found " + configFiles.size() + " mixin config files:");
-
-            for (String configFile : configFiles)
-            {
-                try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(configFile))
-                {
-                    assert inputStream != null;
-
-                    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream)))
-                    {
-                        Log.write(0, "Loading mixin: " + configFile);
-
-                        String line;
-                        StringBuilder stringBuilder = new StringBuilder();
-
-                        while ((line = bufferedReader.readLine()) != null)
-                        {
-                            stringBuilder.append(line).append("\n");
-                        }
-
-                        Log.write(0, "Contents of " + configFile + ":\n" + stringBuilder);
-                        Log.write(0, "Successfully loaded: " + configFile);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    Log.write(0, "Error loading " + configFile + ": " + exception.getMessage());
-                }
-            }
+            this.loadMixins();
         }
         catch (Exception exception)
         {
-            Log.write(0, "General error: " + exception.getMessage());
+            Log.write(2, "Mixin loading failed: " + exception.getMessage());
             exception.printStackTrace();
         }
 
