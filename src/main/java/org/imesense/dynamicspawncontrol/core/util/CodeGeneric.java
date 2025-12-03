@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.lang.reflect.Field;
+import java.util.function.Supplier;
 
 public final class CodeGeneric
 {
@@ -89,6 +90,38 @@ public final class CodeGeneric
                         Log.write(0, "Creating Singleton instance for class: " + _class.getName());
 
                         T instance = _class.getDeclaredConstructor().newInstance();
+                        instanceField.set(null, instance);
+
+                        Log.write(0, "Singleton instance created for class: " + _class.getName());
+                    }
+                }
+            }
+
+            return (T) instanceField.get(null);
+        }
+        catch (Exception exception)
+        {
+            Log.write(0, "Failed to create Singleton instance for class: " + _class.getName() + ". Error: " + exception.getMessage());
+            throw new RuntimeException("Failed to create Singleton instance for class: " + _class.getName(), exception);
+        }
+    }
+
+    public static <T> T getInstance(Class<T> _class, Supplier<T> supplier)
+    {
+        try
+        {
+            Field instanceField = _class.getDeclaredField("_INSTANCE");
+            instanceField.setAccessible(true);
+
+            if (instanceField.get(null) == null)
+            {
+                synchronized (_class)
+                {
+                    if (instanceField.get(null) == null)
+                    {
+                        Log.write(0, "Creating Singleton instance for class: " + _class.getName());
+
+                        T instance = supplier.get();
                         instanceField.set(null, instance);
 
                         Log.write(0, "Singleton instance created for class: " + _class.getName());
