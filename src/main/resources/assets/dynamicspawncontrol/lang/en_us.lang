@@ -9,3 +9,5 @@ item.dynamicspawncontrol.mob_rod.name=Mob Fishing Rod
 tile.dynamicspawncontrol.mob_cage.name=Empty Spawner
 
 itemGroup.dynamicspawncontrol.tab=DynamicSpawnControl
+
+entity.feral_zombie.name=Feral Zombie

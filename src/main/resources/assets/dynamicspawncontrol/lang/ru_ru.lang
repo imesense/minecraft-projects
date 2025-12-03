@@ -9,3 +9,5 @@ item.dynamicspawncontrol.mob_rod.name=Моб-удочка
 tile.dynamicspawncontrol.mob_cage.name=Пустой спавнер
 
 itemGroup.dynamicspawncontrol.tab=DynamicSpawnControl
+
+entity.feral_zombie.name=Феральный Зомби
