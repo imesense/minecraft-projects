@@ -34,11 +34,11 @@ public final class EntityRegister
 
     /**
      *
-     * @param supplier
+     * @param entityRegisterSupplier
      */
-    public static void init(Supplier<EntityRegister> supplier)
+    public static void init(Supplier<EntityRegister> entityRegisterSupplier)
     {
-        instanceSupplier = supplier;
+        instanceSupplier = entityRegisterSupplier;
     }
 
     /**
@@ -57,11 +57,11 @@ public final class EntityRegister
 
     /**
      *
-     * @param modInstance
+     * @param object
      */
-    private EntityRegister(Object modInstance)
+    private EntityRegister(Object object)
     {
-        this.modInstance = modInstance;
+        this.modInstance = object;
 
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
