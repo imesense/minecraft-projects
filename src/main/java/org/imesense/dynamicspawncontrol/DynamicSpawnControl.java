@@ -20,6 +20,7 @@ import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
+import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
@@ -154,6 +155,10 @@ public final class DynamicSpawnControl
 
         Log.write(1, "Is running in IDE (based on logging level): " +
                 (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "true" : "false"));
+
+        EntityRegister.init(() -> EntityRegister.create(this));
+        EntityRegister entityRegister = EntityRegister.getInstance();
+        entityRegister.preInitStartGame();
 
         MessageHandler.init();
 
