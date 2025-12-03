@@ -181,19 +181,28 @@
   },
   {
     "data": {
-      "instanceof": "EntityZombie",
+      "entity": "minecraft:zombie",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 125,
+      "max_entity_count": 200,
       "result": "deny"
     }
   },
   {
     "data": {
-      "instanceof": "EntityPigZombie",
+      "entity": "dynamicspawncontrol:feral_zombie",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 12,
+      "max_entity_count": 50,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:zombie_pigman",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 24,
       "result": "deny"
     }
   },

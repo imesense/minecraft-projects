@@ -32,30 +32,6 @@
         "specialmobs:undeadwitch",
         "specialmobs:shadowswitch",
         "specialmobs:dominationwitch"
-      /////////////////////////////////////////////////////// ИГНОРЯТСЯ:
-      //,
-      //"minecraft:slime",
-      //"minecraft:specialslime",
-      //"specialmobs:watermelonslime",
-      //"specialmobs:strawberryslime",
-      //"specialmobs:lemonslime",
-      //"specialmobs:grapeslime",
-      //"specialmobs:caramelslime",
-      //"specialmobs:blackberryslime",
-      //"specialmobs:blueberryslime"//,
-      //"minecart:ghast",
-      //"specialmobs:specialghast",
-      //"specialmobs:unholyghast",
-      //"specialmobs:queenghast",
-      //"specialmobs:kingghast",
-      //"specialmobs:fighterghast",
-      //"specialmobs:babyghast",
-      //specialmobs:flyinglavaslime
-      //specialmobs:hardenedlavaslime
-      //specialmobs:stickylavaslime
-      //specialmobs:volatilelavaslime
-      //specialmobs:speciallavaslime,
-      //"minecraft:magma_cube"
     ],
     "panic_id": ["srparasites"]
   },
@@ -64,6 +40,7 @@
     [
         "minecraft:villager_golem",
         "minecraft:zombie",
+        "dynamicspawncontrol:feral_zombie",
         "minecraft:zombie_villager",
         "specialmobs:specialzombie",
         "specialmobs:brutezombie",
@@ -162,6 +139,7 @@
     "to_them":
     [
         "minecraft:zombie",
+        "dynamicspawncontrol:feral_zombie",
         "minecraft:zombie_villager",
         "specialmobs:specialzombie",
         "specialmobs:brutezombie",

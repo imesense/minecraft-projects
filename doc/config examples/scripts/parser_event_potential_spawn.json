@@ -11,6 +11,15 @@
         "min_height": 20
       },
       {
+        "mob": "dynamicspawncontrol:feral_zombie",
+        "weight": 15,
+        "spawn_chance": 0.55,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 30,
+        "min_height": 1
+      },
+      {
         "mob": "minecraft:zombie_pigman",
         "weight": 10,
         "spawn_chance": 0.35,

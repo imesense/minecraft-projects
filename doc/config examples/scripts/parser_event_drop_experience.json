@@ -8,6 +8,22 @@
     "result": "allow"
   },
   {
+    "entity": "dynamicspawncontrol:feral_zombie",
+    "use_default_xp": true,
+    "multi_xp": 10,
+    "time_min": 13500,
+    "time_max": 23999,
+    "result": "allow"
+  },
+  {
+    "entity": "dynamicspawncontrol:feral_zombie",
+    "use_default_xp": true,
+    "multi_xp": 15,
+    "time_min": 0,
+    "time_max": 13500,
+    "result": "allow"
+  },
+  {
     "entity": "minecraft:skeleton",
     "use_default_xp": true,
     "multi_xp": 1.5,
