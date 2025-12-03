@@ -71,7 +71,8 @@ public final class DynamicSpawnControl
         "mixin.darkness.renderer.json",
         "mixin.fix.spawn.divinerpg.json",
         "mixin.ic2.exp.wireless.industry.json",
-        "mixin.unlimited.enchantment.json"
+        "mixin.unlimited.enchantment.json"//,
+        //"mixin.specialmobs.json"
     };
 
     private void loadMixins()
