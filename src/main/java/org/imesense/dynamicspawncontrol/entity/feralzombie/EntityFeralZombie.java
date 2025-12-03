@@ -34,4 +34,14 @@ public final class EntityFeralZombie extends EntityZombie
 
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D); // 3.0D
     }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    protected boolean shouldBurnInDay()
+    {
+        return false;
+    }
 }
