@@ -114,17 +114,75 @@ public final class ParserEventCacheSettings extends BaseParser
                     throw new RuntimeException("Script must contain either 'instanceof' or 'entity' key.");
                 }
 
-                Boolean perPlayer = dataObject.get("per_player").getAsBoolean();
-                Boolean perChunk = dataObject.get("per_chunk").getAsBoolean();
-                Integer maxEntityCount = dataObject.get("max_entity_count").getAsInt();
+                Boolean isContinue = false;
+                if (dataObject.has("continue"))
+                {
+                    isContinue = dataObject.get("continue").getAsBoolean();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Found continue: " + isContinue);
+                    }
+                }
+
+                Boolean perPlayer = false;
+                Boolean perChunk = false;
+                Integer maxEntityCount = 0;
+
+                if (!isContinue)
+                {
+                    if (dataObject.has("per_player"))
+                    {
+                        perPlayer = dataObject.get("per_player").getAsBoolean();
+                    }
+                    else
+                    {
+                        throw new RuntimeException("Script must contain 'per_player' key when continue is false.");
+                    }
+
+                    if (dataObject.has("per_chunk"))
+                    {
+                        perChunk = dataObject.get("per_chunk").getAsBoolean();
+                    }
+                    else
+                    {
+                        throw new RuntimeException("Script must contain 'per_chunk' key when continue is false.");
+                    }
+
+                    if (dataObject.has("max_entity_count"))
+                    {
+                        maxEntityCount = dataObject.get("max_entity_count").getAsInt();
+                    }
+                    else
+                    {
+                        throw new RuntimeException("Script must contain 'max_entity_count' key when continue is false.");
+                    }
+                }
+                else
+                {
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Continue is true, skipping per_player, per_chunk, and max_entity_count parsing");
+                    }
+                }
+
                 String resultStr = dataObject.get("result").getAsString();
 
                 if (DEBUG_AND_CHECK_SYNTAX)
                 {
-                    Log.write(0, "Parsed values - per_player: " + perPlayer +
-                            ", per_chunk: " + perChunk +
-                            ", max_entity_count: " + maxEntityCount +
-                            ", result: " + resultStr);
+                    if (!isContinue)
+                    {
+                        Log.write(0, "Parsed values - per_player: " + perPlayer +
+                                ", per_chunk: " + perChunk +
+                                ", max_entity_count: " + maxEntityCount +
+                                ", continue: " + isContinue +
+                                ", result: " + resultStr);
+                    }
+                    else
+                    {
+                        Log.write(0, "Parsed values - continue: " + isContinue +
+                                ", result: " + resultStr + " (other parameters ignored)");
+                    }
                 }
 
                 Event.Result result;
@@ -204,14 +262,26 @@ public final class ParserEventCacheSettings extends BaseParser
                 entityData.per_player = perPlayer;
                 entityData.per_chunk = perChunk;
                 entityData.max_entity_count = maxEntityCount;
+                entityData.isContinue = isContinue;
                 entityData.result = result;
 
                 entitiesList.add(entityData);
 
-                Log.write(0, "Entity Loaded: " +
-                        (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName) +
-                        " Per Player: " + perPlayer + " Per Chunk: " +
-                        perChunk + " Max Count: " + maxEntityCount + " Result: " + result);
+                if (!isContinue)
+                {
+                    Log.write(0, "Entity Loaded: " +
+                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName) +
+                            " Per Player: " + perPlayer + " Per Chunk: " +
+                            perChunk + " Max Count: " + maxEntityCount +
+                            " Continue: " + isContinue + " Result: " + result);
+                }
+                else
+                {
+                    Log.write(0, "Entity Loaded (Continue mode): " +
+                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName) +
+                            " Continue: " + isContinue + " Result: " + result +
+                            " (per_player, per_chunk, max_entity_count ignored)");
+                }
             }
 
             CacheEntityStorage.getInstance().entityData = entitiesList;
