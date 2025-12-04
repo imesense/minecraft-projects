@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
@@ -168,18 +169,18 @@ public final class OnEventWorldCacheOld
 
         Optional<CacheEntityStorage.EntityData> optionalEntityData = CacheEntityStorage.getInstance()
         .entityData.stream()
-            .filter(data ->
+        .filter(data ->
+        {
+            if (data.check_instanceof != null)
             {
-                if (data.check_instanceof != null)
-                {
-                    return data.check_instanceof.isInstance(entity);
-                }
-                else if (data.entity != null && entityKey != null)
-                {
-                    return data.entity.equals(entityKey);
-                }
-                return false;
-            })
+                return data.check_instanceof.isInstance(entity);
+            }
+            else if (data.entity != null && entityKey != null)
+            {
+                return data.entity.equals(entityKey);
+            }
+            return false;
+        })
         .findFirst();
 
         if (!optionalEntityData.isPresent())
@@ -188,6 +189,17 @@ public final class OnEventWorldCacheOld
         }
 
         CacheEntityStorage.EntityData entityData = optionalEntityData.get();
+
+        if (entityData.isContinue != null && entityData.isContinue)
+        {
+            if (entityData.result != null)
+            {
+                event.setResult(entityData.result);
+            }
+
+            Log.write(0, "Entity " + entityKey + " processed with continue: true, result: " + (entityData.result != null ? entityData.result : "DEFAULT"));
+            return;
+        }
 
         if (entityData.check_instanceof != null)
         {
