@@ -42,11 +42,7 @@ public final class CacheFunctional
         if (entityData.per_player)
         {
             int playerCount = getPlayerCount(worldServer);
-
-            if (playerCount > 1)
-            {
-                maxEntityCount = (int) (maxEntityCount * (0.5 + 0.5 * playerCount));
-            }
+            maxEntityCount = maxEntityCount * playerCount;
         }
 
         if (entityData.per_chunk)
