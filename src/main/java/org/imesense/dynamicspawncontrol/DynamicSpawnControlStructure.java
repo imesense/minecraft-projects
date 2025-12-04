@@ -23,6 +23,8 @@ public final class DynamicSpawnControlStructure
 
         public static final String NAME_DIR_GAME_SCRIPTS = "scripts";
 
+        public static final String NAME_DIR_DOC_COMPILE = "doc";
+
         public static final String NAME_DIR_LOGS = "logs";
 
         public static final String NAME_DIR_CACHE = "cache";

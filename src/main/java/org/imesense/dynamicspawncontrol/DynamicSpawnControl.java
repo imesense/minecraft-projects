@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.TodoTracker;
@@ -144,6 +145,9 @@ public final class DynamicSpawnControl
             FMLCommonHandler.instance().exitJava(1, false);
         }
 
+        DocJSONToHTMLCompiler.createHTMLFile(globalDirectory.getPath() +
+                File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY, UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+
         try
         {
             this.loadMixins();
@@ -214,6 +218,19 @@ public final class DynamicSpawnControl
     public void onServerLoad(FMLServerStartingEvent event)
     {
         CommandRegister.getInstance().registerCommands(event);
+
+        try
+        {
+            File minecraftDir = FMLCommonHandler.instance().getMinecraftServerInstance().getDataDirectory();
+
+            DocJSONToHTMLCompiler.createHTMLFile(minecraftDir.getAbsolutePath(), true);
+
+            Log.write(0, "HTML отчет по настройкам сущностей успешно сгенерирован при запуске сервера");
+        }
+        catch (Exception exception)
+        {
+            Log.write(2, "Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
+        }
     }
 
     @Mod.EventHandler
