@@ -282,6 +282,8 @@ public final class DocJSONToHTMLCompiler
         categorizedEntities.put("Passive Mobs", new ArrayList<>());
         categorizedEntities.put("Neutral Mobs", new ArrayList<>());
         categorizedEntities.put("Boss Mobs", new ArrayList<>());
+        categorizedEntities.put("Divine RPG", new ArrayList<>());
+        categorizedEntities.put("Dynamic Spawn Control", new ArrayList<>());
         categorizedEntities.put("Other", new ArrayList<>());
 
         for (JsonElement element : jsonArray)
@@ -462,6 +464,23 @@ public final class DocJSONToHTMLCompiler
      */
     private static String categorizeEntity(String entityName)
     {
+        if (entityName.startsWith("dynamicspawncontrol:"))
+        {
+            return "Dynamic Spawn Control";
+        }
+        else if (entityName.startsWith("divinerpg:"))
+        {
+            return "Divine RPG";
+        }
+        else if (entityName.contains(":"))
+        {
+            if (!entityName.startsWith("minecraft:"))
+            {
+                return "Custom Mod Mobs";
+            }
+        }
+
+        // Стандартная категоризация для vanilla мобов
         if (entityName.contains("zombie") || entityName.contains("skeleton") ||
                 entityName.contains("creeper") || entityName.contains("spider") ||
                 entityName.contains("witch") || entityName.contains("ghast") ||
@@ -486,7 +505,8 @@ public final class DocJSONToHTMLCompiler
         }
         else if (entityName.contains("wolf") || entityName.contains("polar_bear") ||
                 entityName.contains("enderman") || entityName.contains("zombie_pigman") ||
-                entityName.contains("ocelot") || entityName.contains("villager_golem") || entityName.contains("minecraft:villager"))
+                entityName.contains("ocelot") || entityName.contains("villager_golem") ||
+                entityName.contains("villager"))
         {
             return "Neutral Mobs";
         }
