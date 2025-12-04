@@ -42,6 +42,9 @@ public final class OnEventPotentialSpawnOld
 
     public void handlePotentialSpawns(WorldEvent.PotentialSpawns event)
     {
+        if (DisableEventBooleansTest.test)
+            return;
+
         GeneralPotentialSpawnStorage generalPotentialSpawnStorage = GeneralPotentialSpawnStorage.getInstance();
         List<Biome.SpawnListEntry> spawnEntries = generalPotentialSpawnStorage.spawnEntries;
         List<PotentialSpawnStruct.Data> secondaryParameters = generalPotentialSpawnStorage.potentialSpawnStruct;

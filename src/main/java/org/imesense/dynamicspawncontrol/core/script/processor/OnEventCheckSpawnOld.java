@@ -1,9 +1,11 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.*;
@@ -19,7 +21,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @InitLog
-@TODO(value = "START REWORKING PARSERS WITH THIS SCRIPT! Optimization is broken, besides redoing the class in the diagram", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "START REWORKING PARSERS WITH THIS SCRIPT! Optimization is broken, besides redoing the class in the diagram, + " +
+        "добавить новые параметры в дебаг", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class OnEventCheckSpawnOld
 {
     private static volatile OnEventCheckSpawnOld _INSTANCE;
@@ -37,8 +40,54 @@ public final class OnEventCheckSpawnOld
         }
     }
 
+    ///
+    private static final List<String> ALLOWED_ENTITIES = Arrays.asList(
+        "minecraft:bat"
+    );
+    ///
+
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
+        // для дебага в 0.2 версии
+        if (DisableEventBooleansTest.test == false)
+        {
+            // Пропускаем спавн из спаунеров
+            if (event.getSpawner() != null) {
+                return;
+            }
+
+            // Пропускаем события, которые уже отменены
+            if (event.getResult() == Event.Result.DENY) {
+                return;
+            }
+
+            Entity entity = event.getEntity();
+            net.minecraft.world.World world = event.getWorld();
+
+            // Получаем ID сущности
+            ResourceLocation entityId = EntityList.getKey(entity);
+
+            if (entityId == null) {
+                return;
+            }
+
+            String entityIdString = entityId.toString();
+
+            // Проверяем, разрешена ли сущность
+            if (!ALLOWED_ENTITIES.contains(entityIdString)) {
+                event.setResult(Event.Result.DENY);
+
+                // Логируем блокировку (опционально)
+                if (world.isRemote) {
+                    System.out.println("Blocked spawn of: " + entityIdString + " at " +
+                            entity.posX + ", " + entity.posY + ", " + entity.posZ);
+                }
+            }
+
+            if (DisableEventBooleansTest.test)
+                return;
+        }
+
         /**
          * В чем тут мем, то что у нас entityType проверяется на каждую сущность, на каждую сущность открывается файл
          * Отсюда идут дикие просадки FPS, нужно переделать это на кеширование с использованием хард-сущности (У нас есть список, с ним работаем)
