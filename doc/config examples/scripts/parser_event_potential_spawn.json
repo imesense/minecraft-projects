@@ -11,6 +11,69 @@
         "min_height": 20
       },
       {
+        "mob": "minecraft:zombie_villager",
+        "weight": 25,
+        "spawn_chance": 0.35,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 100,
+        "min_height": 50
+      },
+      {
+        "mob": "minecraft:skeleton",
+        "weight": 25,
+        "spawn_chance": 0.4,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 100,
+        "min_height": 45
+      },
+      {
+        "mob": "minecraft:stray",
+        "weight": 15,
+        "spawn_chance": 0.3,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 50,
+        "min_height": 10
+      },
+      {
+        "mob": "minecraft:husk",
+        "weight": 20,
+        "spawn_chance": 0.3,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 75,
+        "min_height": 5
+      },
+      {
+        "mob": "minecraft:witch",
+        "weight": 15,
+        "spawn_chance": 0.45,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 100,
+        "min_height": 20
+      },
+      {
+        "mob": "minecraft:enderman",
+        "weight": 30,
+        "spawn_chance": 0.45,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 100,
+        "min_height": 30
+      },
+      {
+        "mob": "minecraft:creeper",
+        "weight": 20,
+        "spawn_chance": 0.35,
+        "groupcountmin": 1,
+        "groupcountmax": 2,
+        "max_height": 100,
+        "min_height": 20
+      },
+      {
         "mob": "dynamicspawncontrol:feral_zombie",
         "weight": 15,
         "spawn_chance": 0.55,
@@ -30,11 +93,11 @@
       },
       {
         "mob": "minecraft:wither_skeleton",
-        "weight": 10,
+        "weight": 15,
         "spawn_chance": 0.25,
         "groupcountmin": 1,
         "groupcountmax": 2,
-        "max_height": 25,
+        "max_height": 30,
         "min_height": 5
       },
       {
@@ -88,8 +151,8 @@
         "spawn_chance": 0.45,
         "groupcountmin": 1,
         "groupcountmax": 2,
-        "max_height": 50,
-        "min_height": 20
+        "max_height": 45,
+        "min_height": 5
       },
       {
         "mob": "minecraft:slime",
@@ -107,7 +170,7 @@
         "groupcountmin": 1,
         "groupcountmax": 1,
         "max_height": 35,
-        "min_height": 1
+        "min_height": 5
       },
       {
         "mob": "minecraft:vex",
@@ -144,15 +207,6 @@
         "groupcountmax": 1,
         "max_height": 35,
         "min_height": 1
-      },
-      {
-        "mob": "minecraft:blaze",
-        "weight": 2,
-        "spawn_chance": 0.35,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 40,
-        "min_height": 5
       }
     ]
   }

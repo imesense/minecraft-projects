@@ -4,14 +4,30 @@
       "entity": "minecraft:bat",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 3,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:blaze",
+      "continue": true,
+      "result": "default"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:cave_spider",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 25,
       "result": "deny"
     }
   },
   {
     "data": {
       "entity": "minecraft:chicken",
-      "per_player": false,
+      "per_player": true,
       "per_chunk": true,
       "max_entity_count": 8,
       "result": "deny"
@@ -20,7 +36,7 @@
   {
     "data": {
       "entity": "minecraft:cow",
-      "per_player": false,
+      "per_player": true,
       "per_chunk": true,
       "max_entity_count": 5,
       "result": "deny"
@@ -28,16 +44,25 @@
   },
   {
     "data": {
-      "entity": "minecraft:donkey",
+      "entity": "minecraft:creeper",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 3,
+      "max_entity_count": 15,
       "result": "deny"
     }
   },
   {
     "data": {
-      "entity": "minecraft:horse",
+      "entity": "minecraft:donkey",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:elder_guardian",
       "per_player": false,
       "per_chunk": true,
       "max_entity_count": 2,
@@ -46,20 +71,88 @@
   },
   {
     "data": {
-      "entity": "minecraft:llama",
+      "entity": "minecraft:enderman",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 4,
+      "max_entity_count": 8,
       "result": "deny"
     }
   },
   {
     "data": {
-      "entity": "minecraft:mooshroom",
+      "entity": "minecraft:endermite",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 16,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:evocation_illager",
       "per_player": false,
       "per_chunk": true,
       "max_entity_count": 5,
       "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:ghast",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 6,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:guardian",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 8,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:horse",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:husk",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 24,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:llama",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:magma_cube",
+      "continue": true,
+      "result": "default"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:mooshroom",
+      "continue": true,
+      "result": "default"
     }
   },
   {
@@ -83,16 +176,14 @@
   {
     "data": {
       "entity": "minecraft:parrot",
-      "per_player": false,
-      "per_chunk": true,
-      "max_entity_count": 6,
-      "result": "deny"
+      "continue": true,
+      "result": "default"
     }
   },
   {
     "data": {
       "entity": "minecraft:pig",
-      "per_player": false,
+      "per_player": true,
       "per_chunk": true,
       "max_entity_count": 5,
       "result": "deny"
@@ -101,27 +192,41 @@
   {
     "data": {
       "entity": "minecraft:polar_bear",
-      "per_player": false,
-      "per_chunk": true,
-      "max_entity_count": 2,
-      "result": "deny"
+      "continue": true,
+      "result": "default"
     }
   },
   {
     "data": {
       "entity": "minecraft:rabbit",
-      "per_player": false,
+      "per_player": true,
       "per_chunk": true,
-      "max_entity_count": 10,
+      "max_entity_count": 12,
       "result": "deny"
     }
   },
   {
     "data": {
       "entity": "minecraft:sheep",
+      "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:shulker",
+      "continue": true,
+      "result": "default"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:silverfish",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 1,
+      "max_entity_count": 36,
       "result": "deny"
     }
   },
@@ -137,9 +242,27 @@
   {
     "data": {
       "entity": "minecraft:skeleton_horse",
-      "per_player": false,
+      "per_player": true,
       "per_chunk": true,
       "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:slime",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 24,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:spider",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 15,
       "result": "deny"
     }
   },
@@ -154,8 +277,42 @@
   },
   {
     "data": {
-      "entity": "minecraft:guardian",
+      "entity": "minecraft:stray",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 12,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:vex",
       "per_player": true,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:villager",
+      "continue": true,
+      "result": "default"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:vindication_illager",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 16,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:witch",
+      "per_player": false,
       "per_chunk": true,
       "max_entity_count": 8,
       "result": "deny"
@@ -163,10 +320,10 @@
   },
   {
     "data": {
-      "entity": "minecraft:elder_guardian",
-      "per_player": true,
+      "entity": "minecraft:wither_skeleton",
+      "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 2,
+      "max_entity_count": 30,
       "result": "deny"
     }
   },
@@ -184,25 +341,7 @@
       "entity": "minecraft:zombie",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 200,
-      "result": "deny"
-    }
-  },
-  {
-    "data": {
-      "entity": "dynamicspawncontrol:feral_zombie",
-      "per_player": false,
-      "per_chunk": true,
-      "max_entity_count": 50,
-      "result": "deny"
-    }
-  },
-  {
-    "data": {
-      "entity": "minecraft:zombie_pigman",
-      "per_player": false,
-      "per_chunk": true,
-      "max_entity_count": 24,
+      "max_entity_count": 195,
       "result": "deny"
     }
   },
@@ -217,10 +356,19 @@
   },
   {
     "data": {
-      "entity": "minecraft:villager",
+      "entity": "minecraft:zombie_pigman",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 30,
+      "max_entity_count": 24,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "minecraft:zombie_villager",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 18,
       "result": "deny"
     }
   },
@@ -230,6 +378,15 @@
       "per_player": false,
       "per_chunk": true,
       "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "dynamicspawncontrol:feral_zombie",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 55,
       "result": "deny"
     }
   },

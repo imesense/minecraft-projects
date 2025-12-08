@@ -31,7 +31,8 @@
         "specialmobs:wildswitch",
         "specialmobs:undeadwitch",
         "specialmobs:shadowswitch",
-        "specialmobs:dominationwitch"
+        "specialmobs:dominationwitch",
+        "thaumcraft:brainyzombie"
     ],
     "panic_id": ["srparasites"]
   },
@@ -126,7 +127,8 @@
         "specialmobs:conflagrationblaze",
         "specialmobs:cinderblaze",
         "minecraft:wolf",
-        "minecraft:vex"
+        "minecraft:vex",
+        "thaumcraft:brainyzombie"
     ],
     "enemy_id": ["srparasites"]
   },
