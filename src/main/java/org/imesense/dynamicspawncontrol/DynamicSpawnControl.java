@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
@@ -22,6 +23,7 @@ import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigR
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
+import org.imesense.dynamicspawncontrol.eventdescriptions.NewConceptTestEvent;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
@@ -195,6 +197,9 @@ public final class DynamicSpawnControl
         RegisterSpawnerCraft.getInstance().init(event);
 
         ParserRegister.getInstance().init();
+
+        // TEST
+        MinecraftForge.EVENT_BUS.register(new NewConceptTestEvent());
     }
 
     @Mod.EventHandler
