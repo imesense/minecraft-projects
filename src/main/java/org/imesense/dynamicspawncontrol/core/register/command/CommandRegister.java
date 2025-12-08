@@ -1,7 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register.command;
 
 import org.imesense.dynamicspawncontrol.command.*;
-import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseCommandRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -33,7 +32,9 @@ public final class CommandRegister extends BaseCommandRegister
         CmdServerScriptReload.class,
         CmdAdminGetDimension.class,
         CmdClientCleanMemory.class,
-        CmdAdminCopyWorldSeed.class
+        CmdAdminCopyWorldSeed.class,
+        CmdAdminGiveDSCBow.class,
+        CmdAdminGiveDSCSword.class
     };
 
     @Override
