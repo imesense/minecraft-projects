@@ -97,6 +97,7 @@ public final class ComplexityBiomes
         addBiomeSkulls("Savanna Plateau M", 6, 1, 0, 0);
 
         // Mesa biomes
+        addBiomeSkulls("Mesa (Bryce)", 3, 2, 0, 0);
         addBiomeSkulls("Mesa", 5, 1, 0, 0);
         addBiomeSkulls("Mesa Plateau", 6, 1, 0, 0);
         addBiomeSkulls("Mesa Plateau F", 6, 1, 0, 0);
