@@ -50,6 +50,8 @@ import java.util.List;
 )
 public final class DynamicSpawnControl
 {
+    // ./gradlew genIntellijRuns
+    // ./gradlew build
     @Mod.Instance
     public static DynamicSpawnControl Instance;
 
