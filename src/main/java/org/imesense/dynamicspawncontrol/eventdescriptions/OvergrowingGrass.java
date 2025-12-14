@@ -1,22 +1,17 @@
 package org.imesense.dynamicspawncontrol.eventdescriptions;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.synchronization.SynchronizationConfig;
-import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.threads.GrassThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.jline.utils.Log;
@@ -31,6 +26,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @InitLog
+@TODO(value = "Fix 'scheduleGrassChecks' for Nether World in 0.2 ver", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class OvergrowingGrass
 {
     private static volatile OvergrowingGrass _INSTANCE;
@@ -78,6 +74,11 @@ public final class OvergrowingGrass
 
     private void scheduleGrassChecks(World world)
     {
+        if (world.provider.getDimension() != 0) // 0 is the overworld dimension
+        {
+            return; // Don't schedule any growth tasks in the Nether, End, etc.
+        }
+
         List<EntityPlayerMP> players = new ArrayList<>(world.getMinecraftServer().getPlayerList().getPlayers());
 
         for (EntityPlayerMP player : players)
