@@ -26,7 +26,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @InitLog
-@TODO(value = "Fix 'scheduleGrassChecks' for Nether World in 0.2 ver", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "Fix 'scheduleGrassChecks' and 'processGrowthTask' for Nether World in 0.2 ver", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class OvergrowingGrass
 {
     private static volatile OvergrowingGrass _INSTANCE;
@@ -133,6 +133,11 @@ public final class OvergrowingGrass
 
     private void processGrowthTask(GrowthTask growthTask, World world)
     {
+        if (world.provider.getDimension() != 0)
+        {
+            return; // Final safety check
+        }
+
         int y = getHeightSafely(world, growthTask.X, growthTask.Z) - 1;
 
         if (y < 0)
