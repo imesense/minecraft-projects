@@ -34,25 +34,21 @@ public final class CacheFunctional
         }
     }
 
-    public int calculateMaxEntityCount(CacheEntityStorage.EntityData entityData,
-                                       WorldServer worldServer, EntityPlayerMP player)
+    public int calculateMaxEntityCount(CacheEntityStorage.EntityData data, WorldServer world, EntityPlayerMP player)
     {
-        int maxEntityCount = entityData.max_entity_count;
+        double playerFactor = data.per_player
+                ? Math.min(1.0, getPlayerCount(world) / 5.0)
+                : 1.0;
 
-        if (entityData.per_player)
-        {
-            int playerCount = getPlayerCount(worldServer);
-            maxEntityCount = maxEntityCount * playerCount;
-        }
+        double chunkFactor = data.per_chunk
+                ? Math.min(1.0, getLoadedChunkCount(world, player) / 289.0)
+                : 1.0;
 
-        if (entityData.per_chunk)
-        {
-            int loadedChunkCount = getLoadedChunkCount(worldServer, player);
-            maxEntityCount = (int) (maxEntityCount * ((double) loadedChunkCount / 289));
-        }
+        int max = (int)(data.max_entity_count * playerFactor * chunkFactor);
 
-        return maxEntityCount;
+        return Math.max(0, max);
     }
+
 
     public EntityPlayerMP getNearestPlayer(WorldServer worldServer, double x, double y, double z)
     {
