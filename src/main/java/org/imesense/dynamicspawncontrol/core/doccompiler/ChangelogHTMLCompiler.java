@@ -6,6 +6,7 @@ import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -48,7 +49,8 @@ public final class ChangelogHTMLCompiler
         }
 
         StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(jsonFile)))
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8)))
         {
             String line;
             while ((line = reader.readLine()) != null)
@@ -443,7 +445,8 @@ public final class ChangelogHTMLCompiler
 
     private static void writeHTMLFile(File htmlFile, String content) throws IOException
     {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(htmlFile)))
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(htmlFile), StandardCharsets.UTF_8)))
         {
             writer.write(content);
         }
