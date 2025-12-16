@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
@@ -151,6 +152,12 @@ public final class DynamicSpawnControl
 
         DocJSONToHTMLCompiler.createHTMLFile(globalDirectory.getPath() +
                 File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY, UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+
+        ChangelogHTMLCompiler.createChangelogHTML(
+                globalDirectory.getPath() + File.separator +
+                        DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
+                UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG
+        );
 
         try
         {
