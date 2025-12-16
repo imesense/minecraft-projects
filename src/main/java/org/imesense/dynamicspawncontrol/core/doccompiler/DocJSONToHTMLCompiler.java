@@ -284,6 +284,7 @@ public final class DocJSONToHTMLCompiler
         categorizedEntities.put("Boss Mobs", new ArrayList<>());
         categorizedEntities.put("Divine RPG", new ArrayList<>());
         categorizedEntities.put("Dynamic Spawn Control", new ArrayList<>());
+        categorizedEntities.put("Scape and Run Parasites", new ArrayList<>());
         categorizedEntities.put("Other", new ArrayList<>());
 
         for (JsonElement element : jsonArray)
@@ -472,6 +473,10 @@ public final class DocJSONToHTMLCompiler
         {
             return "Divine RPG";
         }
+        else if (entityName.startsWith("srparasites:"))
+        {
+            return "Scape and Run Parasites";
+        }
         else if (entityName.contains(":"))
         {
             if (!entityName.startsWith("minecraft:"))
@@ -480,32 +485,25 @@ public final class DocJSONToHTMLCompiler
             }
         }
 
-        // Стандартная категоризация для vanilla мобов
-        if (entityName.contains("zombie") || entityName.contains("skeleton") ||
-                entityName.contains("creeper") || entityName.contains("spider") ||
-                entityName.contains("witch") || entityName.contains("ghast") ||
-                entityName.contains("blaze") || entityName.contains("guardian") ||
-                entityName.contains("shulker") || entityName.contains("vex") ||
-                entityName.contains("evocation") || entityName.contains("vindication") ||
-                entityName.contains("husk") || entityName.contains("stray") ||
-                entityName.contains("wither_skeleton") || entityName.contains("silverfish") ||
-                entityName.contains("endermite") || entityName.contains("magma_cube") ||
-                entityName.contains("slime"))
-        {
+        if (entityName.contains("zombie") || entityName.contains("skeleton") || entityName.contains("creeper") ||
+                entityName.contains("spider") || entityName.contains("witch") || entityName.contains("ghast") ||
+                entityName.contains("blaze") || entityName.contains("guardian") || entityName.contains("shulker") ||
+                entityName.contains("vex") || entityName.contains("evocation") || entityName.contains("vindication") ||
+                entityName.contains("husk") || entityName.contains("stray") || entityName.contains("wither_skeleton") ||
+                entityName.contains("silverfish") || entityName.contains("endermite") || entityName.contains("magma_cube") ||
+                entityName.contains("slime")) {
             return "Hostile Mobs";
         }
-        else if (entityName.contains("cow") || entityName.contains("pig") ||
-                entityName.contains("chicken") || entityName.contains("sheep") ||
-                entityName.contains("rabbit") || entityName.contains("horse") ||
-                entityName.contains("donkey") || entityName.contains("mule") ||
-                entityName.contains("mooshroom") || entityName.contains("llama") ||
-                entityName.contains("parrot") || entityName.contains("bat") ||
-                entityName.contains("squid")) {
+        else if (entityName.contains("cow") || entityName.contains("pig") || entityName.contains("chicken") ||
+                entityName.contains("sheep") || entityName.contains("rabbit") || entityName.contains("horse") ||
+                entityName.contains("donkey") || entityName.contains("mule") || entityName.contains("mooshroom") ||
+                entityName.contains("llama") || entityName.contains("parrot") || entityName.contains("bat") ||
+                entityName.contains("squid"))
+        {
             return "Passive Mobs";
         }
-        else if (entityName.contains("wolf") || entityName.contains("polar_bear") ||
-                entityName.contains("enderman") || entityName.contains("zombie_pigman") ||
-                entityName.contains("ocelot") || entityName.contains("villager_golem") ||
+        else if (entityName.contains("wolf") || entityName.contains("polar_bear") || entityName.contains("enderman") ||
+                entityName.contains("zombie_pigman") || entityName.contains("ocelot") || entityName.contains("villager_golem") ||
                 entityName.contains("villager"))
         {
             return "Neutral Mobs";
