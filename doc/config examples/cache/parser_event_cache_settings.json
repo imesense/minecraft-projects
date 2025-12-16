@@ -341,7 +341,7 @@
       "entity": "minecraft:zombie",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 195,
+      "max_entity_count": 95,
       "result": "deny"
     }
   },
@@ -423,6 +423,594 @@
       "per_player": false,
       "per_chunk": true,
       "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_bigspider",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 6,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_squid",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 12,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_bear",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_human",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 25,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_humanhead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 25,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_enderman",
+      "per_player": false,
+      "per_chunk": false,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_endermanhead",
+      "per_player": false,
+      "per_chunk": false,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_cow",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 7,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_cowhead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 7,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_sheep",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 8,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_sheephead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 8,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_wolf",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_wolfhead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_pig",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 9,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_pighead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 9,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_villager",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 12,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_villagerhead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 12,
+      "result": "deny"
+    }
+  },
+
+  {
+    "data": {
+      "entity": "srparasites:sim_horse",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_horsehead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_adventurer",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:sim_adventurerhead",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_bear",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_human",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_cow",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_enderman",
+      "per_player": false,
+      "per_chunk": false,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_horse",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_pig",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_sheep",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:fer_villager",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+
+  {
+    "data": {
+      "entity": "srparasites:hi_golem",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 6,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:host",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:hostii",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:heed",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:crux",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:thrall",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 8,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_longarms",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_summoner",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_reeker",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_manducater",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_yelloweye",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_bolster",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_tozoon",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_vermin",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_arachnida",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:pri_devourer",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+
+  {
+    "data": {
+      "entity": "srparasites:ada_longarms",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:ada_summoner",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:ada_reeker",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:ada_manducater",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:ada_yelloweye",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 2,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:ada_bolster",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:ada_arachnida",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:buglin",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 50,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:rupter",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 70,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:mangler",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 25,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:carrier_heavy",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 5,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:carrier_light",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 7,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:carrier_flying",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 3,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:vigilante",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:overseer",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 4,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:warden",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:bomber_light",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 6,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:marauder",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 1,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:monarch",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 6,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
+      "entity": "srparasites:grunt",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 6,
       "result": "deny"
     }
   }
