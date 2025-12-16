@@ -22,9 +22,16 @@ public final class NewConceptTestEvent
 
     //}
 
+    private static boolean disableEvent = true;
+
     @SubscribeEvent
     public void NewConceptTestEvent1(EntityJoinWorldEvent event)
     {
+        if (disableEvent)
+        {
+            return;
+        }
+
         World world = event.getWorld();
 
         // Пропускаем только во время загрузки мира
