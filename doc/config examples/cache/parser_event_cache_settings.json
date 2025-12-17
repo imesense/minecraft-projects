@@ -392,6 +392,15 @@
   },
   {
     "data": {
+      "entity": "specialmobs:hellfireblaze",
+      "per_player": false,
+      "per_chunk": true,
+      "max_entity_count": 20,
+      "result": "deny"
+    }
+  },
+  {
+    "data": {
       "entity": "divinerpg:liopleurodon",
       "per_player": false,
       "per_chunk": true,
