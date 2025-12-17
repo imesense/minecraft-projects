@@ -287,6 +287,7 @@ public final class DocJSONToHTMLCompiler
         categorizedEntities.put("Divine RPG", new ArrayList<>());
         categorizedEntities.put("Dynamic Spawn Control", new ArrayList<>());
         categorizedEntities.put("Scape and Run Parasites", new ArrayList<>());
+        categorizedEntities.put("Special Mobs", new ArrayList<>());
         categorizedEntities.put("Other", new ArrayList<>());
 
         for (JsonElement element : jsonArray)
@@ -478,6 +479,10 @@ public final class DocJSONToHTMLCompiler
         else if (entityName.startsWith("srparasites:"))
         {
             return "Scape and Run Parasites";
+        }
+        else if (entityName.startsWith("specialmobs:"))
+        {
+            return "Special Mobs";
         }
         else if (entityName.contains(":"))
         {
