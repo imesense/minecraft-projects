@@ -47,23 +47,31 @@ public final class DSCFireball extends EntityFireball
             this.world.createExplosion(this.shootingEntity,
                     this.posX, this.posY, this.posZ, (float)this.explosionStrength, true);
 
-            FireSpawnAction fireSpawnAction = (world, explosionPos, radius) ->
+            FireSpawnAction fireSpawnAction = (world, center, radius) ->
             {
-                for (int x = -radius; x <= radius + UniqueField.RANDOM.nextInt(5); x++)
-                {
-                    for (int y = -radius; y <= radius + UniqueField.RANDOM.nextInt(5); y++)
-                    {
-                        for (int z = -radius; z <= radius + UniqueField.RANDOM.nextInt(5); z++)
-                        {
-                            BlockPos blockPos = explosionPos.add(x, y, z);
-                            double distanceSq = explosionPos.distanceSq(blockPos);
+                int rSq = radius * radius;
 
-                            if (distanceSq <= radius * radius && world.getBlockState(blockPos).getBlock() == Blocks.AIR)
+                for (int x = -radius; x <= radius; x++)
+                {
+                    for (int y = -radius; y <= radius; y++)
+                    {
+                        for (int z = -radius; z <= radius; z++)
+                        {
+                            double distSq = x * x + y * y + z * z;
+
+                            if (distSq > rSq)
+                                continue;
+
+                            double noise = UniqueField.RANDOM.nextDouble() * radius * 0.8;
+
+                            if (distSq + noise > rSq)
+                                continue;
+
+                            BlockPos pos = center.add(x, y, z);
+
+                            if (world.isAirBlock(pos) && UniqueField.RANDOM.nextFloat() < 0.12f)
                             {
-                                if (UniqueField.RANDOM.nextFloat() < 0.1f)
-                                {
-                                    world.setBlockState(blockPos, Blocks.FIRE.getDefaultState());
-                                }
+                                world.setBlockState(pos, Blocks.FIRE.getDefaultState());
                             }
                         }
                     }
