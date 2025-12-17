@@ -95,6 +95,10 @@ public final class CmdAdminSwitchVanish extends CommandBase
         entityPlayerMP.addPotionEffect(new
                 PotionEffect(Objects.requireNonNull(Potion.getPotionById
                     (14)), Integer.MAX_VALUE, 0, false, false));
+
+        entityPlayerMP.addPotionEffect(new
+                PotionEffect(Objects.requireNonNull(Potion.getPotionById
+                    (16)), Integer.MAX_VALUE, 0,false, false));
     }
 
     /**
@@ -105,5 +109,6 @@ public final class CmdAdminSwitchVanish extends CommandBase
     {
         entityPlayerMP.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(1)));
         entityPlayerMP.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(14)));
+        entityPlayerMP.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(16)));
     }
 }
