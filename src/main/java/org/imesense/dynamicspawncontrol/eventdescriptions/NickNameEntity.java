@@ -19,14 +19,16 @@ import java.util.List;
 @InitLog
 public final class NickNameEntity
 {
-    private final List<String> RANDOM_NAMES = new ArrayList<>();
-
     private static volatile NickNameEntity _INSTANCE;
 
     public static NickNameEntity getInstance()
     {
         return CodeGeneric.getInstance(NickNameEntity.class);
     }
+
+    private final List<String> RANDOM_NAMES = new ArrayList<>();
+
+    private static final float SEND_MESSAGE_WHEN_ZOMBIE_DIES = 0.15f;
 
     public NickNameEntity()
     {
@@ -99,7 +101,7 @@ public final class NickNameEntity
 
                 if (!world.isRemote && world.getMinecraftServer() != null)
                 {
-                    if (UniqueField.RANDOM.nextFloat() < 0.1f)
+                    if (UniqueField.RANDOM.nextFloat() < SEND_MESSAGE_WHEN_ZOMBIE_DIES)
                     {
                         world.getMinecraftServer().getPlayerList().sendMessage(new TextComponentString(deathMessage));
                     }
