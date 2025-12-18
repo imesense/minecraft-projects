@@ -101,7 +101,7 @@ public final class PlayerNetwork
         if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
             Log.write(0, String.format(
-                    "[RESPAWN] Игрок %s начал респавн в измерении %d",
+                    "[RESPAWN] игрок %s начал респавн в измерении %d",
                     player.getName(),
                     player.dimension
             ));
@@ -148,7 +148,7 @@ public final class PlayerNetwork
         {
             if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
             {
-                Log.write(0, "[TELEPORT] Игрок не жив, отмена");
+                Log.write(0, "[TELEPORT] игрок не жив, отмена");
             }
             return;
         }
@@ -338,11 +338,11 @@ public final class PlayerNetwork
 
         if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
-            Log.write(0, "[ИТОГ] " + result);
+            Log.write(0, "[Result] " + result);
             if (failedCount > 0)
             {
                 Log.write(0, String.format(
-                        "[ИТОГ] Не удалось телепортировать %d мобов",
+                        "[Result] Не удалось телепортировать %d мобов",
                         failedCount
                 ));
             }
