@@ -27,6 +27,7 @@ import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 import org.imesense.dynamicspawncontrol.eventdescriptions.NewConceptTestEvent;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
+import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
@@ -231,6 +232,8 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void onServerLoad(FMLServerStartingEvent event)
     {
+        CommandManager.registerCommands(event);
+
         CommandRegister.getInstance().registerCommands(event);
 
         try
