@@ -107,6 +107,9 @@ public final class ChangelogHTMLCompiler
 
         int totalCategories = 0;
         int totalChanges = 0;
+        int totalWorking = 0;
+        int totalInDevelopment = 0;
+        int totalDisabled = 0;
 
         if (changelog.has("categories"))
         {
@@ -118,13 +121,47 @@ public final class ChangelogHTMLCompiler
                 JsonObject category = cat.getAsJsonObject();
                 if (category.has("items"))
                 {
-                    totalChanges += category.getAsJsonArray("items").size();
+                    JsonArray items = category.getAsJsonArray("items");
+                    totalChanges += items.size();
+                    for (JsonElement item : items)
+                    {
+                        String itemText = item.getAsString();
+                        if (itemText.endsWith("[работает]"))
+                        {
+                            totalWorking++;
+                        }
+                        else if (itemText.endsWith("[в разработке]")) {
+
+                            totalInDevelopment++;
+                        }
+                        else if (itemText.endsWith("[отключено]"))
+                        {
+                            totalDisabled++;
+                        }
+                    }
                 }
                 if (category.has("subcategories"))
                 {
                     for (JsonElement sub : category.getAsJsonArray("subcategories"))
                     {
-                        totalChanges += sub.getAsJsonObject().getAsJsonArray("items").size();
+                        JsonArray items = sub.getAsJsonObject().getAsJsonArray("items");
+                        totalChanges += items.size();
+                        for (JsonElement item : items)
+                        {
+                            String itemText = item.getAsString();
+                            if (itemText.endsWith("[работает]"))
+                            {
+                                totalWorking++;
+                            }
+                            else if (itemText.endsWith("[в разработке]"))
+                            {
+                                totalInDevelopment++;
+                            }
+                            else if (itemText.endsWith("[отключено]"))
+                            {
+                                totalDisabled++;
+                            }
+                        }
                     }
                 }
             }
@@ -167,6 +204,24 @@ public final class ChangelogHTMLCompiler
         html.append("            </div>\n");
         html.append("        </div>\n");
 
+        html.append("        <div class=\"status-stats\">\n");
+        html.append("            <div class=\"status-item working\">\n");
+        html.append("                <span class=\"status-icon\">✅</span>\n");
+        html.append("                <span class=\"status-count\">").append(totalWorking).append("</span>\n");
+        html.append("                <span class=\"status-label\">Работает</span>\n");
+        html.append("            </div>\n");
+        html.append("            <div class=\"status-item development\">\n");
+        html.append("                <span class=\"status-icon\">🔄</span>\n");
+        html.append("                <span class=\"status-count\">").append(totalInDevelopment).append("</span>\n");
+        html.append("                <span class=\"status-label\">В разработке</span>\n");
+        html.append("            </div>\n");
+        html.append("            <div class=\"status-item disabled\">\n");
+        html.append("                <span class=\"status-icon\">⏸️</span>\n");
+        html.append("                <span class=\"status-count\">").append(totalDisabled).append("</span>\n");
+        html.append("                <span class=\"status-label\">Отключено</span>\n");
+        html.append("            </div>\n");
+        html.append("        </div>\n");
+
         html.append("        <div class=\"changelog-content\">\n");
 
         if (changelog.has("categories"))
@@ -193,7 +248,8 @@ public final class ChangelogHTMLCompiler
                     html.append("                    <ul class=\"change-list\">\n");
                     for (JsonElement item : items)
                     {
-                        html.append("                        <li>").append(item.getAsString()).append("</li>\n");
+                        String itemText = item.getAsString();
+                        html.append("                        ").append(parseChangeItem(itemText)).append("\n");
                     }
                     html.append("                    </ul>\n");
                 }
@@ -215,7 +271,8 @@ public final class ChangelogHTMLCompiler
                             html.append("                        <ul class=\"change-list\">\n");
                             for (JsonElement item : items)
                             {
-                                html.append("                            <li>").append(item.getAsString()).append("</li>\n");
+                                String itemText = item.getAsString();
+                                html.append("                            ").append(parseChangeItem(itemText)).append("\n");
                             }
                             html.append("                        </ul>\n");
                         }
@@ -239,6 +296,136 @@ public final class ChangelogHTMLCompiler
         html.append("</html>");
 
         return html.toString();
+    }
+
+    /**
+     *
+     * @param itemText
+     * @return
+     */
+    private static String parseChangeItem(String itemText)
+    {
+        String status = "";
+        String worldType = "";
+        String text = itemText;
+
+        if (itemText.contains("[работает]"))
+        {
+            status = "working";
+            text = text.replace("[работает]", "").trim();
+        }
+        else if (itemText.contains("[в разработке]"))
+        {
+            status = "development";
+            text = text.replace("[в разработке]", "").trim();
+        }
+        else if (itemText.contains("[отключено]"))
+        {
+            status = "disabled";
+            text = text.replace("[отключено]", "").trim();
+        }
+
+        if (text.contains("[только основной мир]"))
+        {
+            worldType = "overworld";
+            text = text.replace("[только основной мир]", "").trim();
+        }
+        else if (text.contains("[только ад]"))
+        {
+            worldType = "nether";
+            text = text.replace("[только ад]", "").trim();
+        }
+        else if (text.contains("[только энд]"))
+        {
+            worldType = "end";
+            text = text.replace("[только энд]", "").trim();
+        }
+
+        StringBuilder li = new StringBuilder();
+
+        li.append("<li class=\"change-item");
+
+        if (!status.isEmpty())
+        {
+            li.append(" status-").append(status);
+        }
+
+        li.append("\">");
+
+        li.append("<div class=\"item-content\">");
+
+        li.append("<div class=\"item-header\">");
+
+        // Иконка статуса
+        if (!status.isEmpty())
+        {
+            li.append("<span class=\"item-status\">");
+            switch (status) {
+                case "working":
+                    li.append("✅");
+                    break;
+                case "development":
+                    li.append("🔄");
+                    break;
+                case "disabled":
+                    li.append("⏸️");
+                    break;
+            }
+            li.append("</span>");
+        }
+
+        li.append("<span class=\"item-text\">").append(text).append("</span>");
+
+        li.append("</div>");
+
+        if (!worldType.isEmpty() || !status.isEmpty())
+        {
+            li.append("<div class=\"item-tags\">");
+
+            if (!worldType.isEmpty())
+            {
+                li.append("<span class=\"world-type-badge ").append(worldType).append("\">");
+                switch (worldType)
+                {
+                    case "overworld":
+                        li.append("🌍 Основной мир");
+                        break;
+                    case "nether":
+                        li.append("🔥 Ад");
+                        break;
+                    case "end":
+                        li.append("✨ Энд");
+                        break;
+                }
+                li.append("</span>");
+            }
+
+            // Бейдж статуса
+            if (!status.isEmpty())
+            {
+                li.append("<span class=\"status-badge\">");
+                switch (status)
+                {
+                    case "working":
+                        li.append("работает");
+                        break;
+                    case "development":
+                        li.append("в разработке");
+                        break;
+                    case "disabled":
+                        li.append("отключено");
+                        break;
+                }
+                li.append("</span>");
+            }
+
+            li.append("</div>");
+        }
+
+        li.append("</div>");
+
+        li.append("</li>");
+        return li.toString();
     }
 
     /**
@@ -337,6 +524,52 @@ public final class ChangelogHTMLCompiler
         css.append("            text-transform: uppercase;\n");
         css.append("            letter-spacing: 1.5px;\n");
         css.append("        }\n");
+        css.append("        .status-stats {\n");
+        css.append("            display: flex;\n");
+        css.append("            justify-content: center;\n");
+        css.append("            gap: 30px;\n");
+        css.append("            padding: 25px;\n");
+        css.append("            background: white;\n");
+        css.append("            border-bottom: 1px solid #eaeaea;\n");
+        css.append("        }\n");
+        css.append("        .status-item {\n");
+        css.append("            display: flex;\n");
+        css.append("            flex-direction: column;\n");
+        css.append("            align-items: center;\n");
+        css.append("            padding: 15px 25px;\n");
+        css.append("            border-radius: 10px;\n");
+        css.append("            min-width: 120px;\n");
+        css.append("        }\n");
+        css.append("        .status-item.working {\n");
+        css.append("            background: rgba(40, 167, 69, 0.1);\n");
+        css.append("            border: 2px solid #28a745;\n");
+        css.append("        }\n");
+        css.append("        .status-item.development {\n");
+        css.append("            background: rgba(255, 193, 7, 0.1);\n");
+        css.append("            border: 2px solid #ffc107;\n");
+        css.append("        }\n");
+        css.append("        .status-item.disabled {\n");
+        css.append("            background: rgba(108, 117, 125, 0.1);\n");
+        css.append("            border: 2px solid #6c757d;\n");
+        css.append("        }\n");
+        css.append("        .status-icon {\n");
+        css.append("            font-size: 2rem;\n");
+        css.append("            margin-bottom: 8px;\n");
+        css.append("        }\n");
+        css.append("        .status-count {\n");
+        css.append("            font-size: 1.8rem;\n");
+        css.append("            font-weight: bold;\n");
+        css.append("            margin-bottom: 5px;\n");
+        css.append("        }\n");
+        css.append("        .status-item.working .status-count { color: #28a745; }\n");
+        css.append("        .status-item.development .status-count { color: #ffc107; }\n");
+        css.append("        .status-item.disabled .status-count { color: #6c757d; }\n");
+        css.append("        .status-label {\n");
+        css.append("            font-size: 0.9rem;\n");
+        css.append("            text-transform: uppercase;\n");
+        css.append("            letter-spacing: 1px;\n");
+        css.append("            font-weight: 600;\n");
+        css.append("        }\n");
         css.append("        .changelog-content {\n");
         css.append("            padding: 30px;\n");
         css.append("        }\n");
@@ -382,18 +615,117 @@ public final class ChangelogHTMLCompiler
         css.append("            list-style-type: none;\n");
         css.append("            padding-left: 0;\n");
         css.append("        }\n");
-        css.append("        .change-list li {\n");
-        css.append("            padding: 12px 15px;\n");
-        css.append("            margin: 8px 0;\n");
+        css.append("        .change-item {\n");
+        css.append("            display: flex;\n");
+        css.append("            padding: 20px;\n");
+        css.append("            margin: 12px 0;\n");
         css.append("            background: white;\n");
-        css.append("            border-radius: 8px;\n");
-        css.append("            border-left: 4px solid #28a745;\n");
-        css.append("            box-shadow: 0 2px 5px rgba(0,0,0,0.05);\n");
+        css.append("            border-radius: 12px;\n");
+        css.append("            box-shadow: 0 3px 10px rgba(0,0,0,0.06);\n");
         css.append("            transition: all 0.3s ease;\n");
+        css.append("            border-left: 5px solid #28a745;\n");
         css.append("        }\n");
-        css.append("        .change-list li:hover {\n");
-        css.append("            background: #f8f9fa;\n");
+        css.append("        .change-item.status-development {\n");
+        css.append("            border-left-color: #ffc107;\n");
+        css.append("            background: rgba(255, 193, 7, 0.03);\n");
+        css.append("        }\n");
+        css.append("        .change-item.status-disabled {\n");
+        css.append("            border-left-color: #6c757d;\n");
+        css.append("            background: rgba(108, 117, 125, 0.03);\n");
+        css.append("            opacity: 0.85;\n");
+        css.append("        }\n");
+        css.append("        .change-item:hover {\n");
         css.append("            transform: translateX(5px);\n");
+        css.append("            box-shadow: 0 5px 15px rgba(0,0,0,0.1);\n");
+        css.append("        }\n");
+        css.append("        .change-item:hover.status-development {\n");
+        css.append("            background: rgba(255, 193, 7, 0.06);\n");
+        css.append("        }\n");
+        css.append("        .change-item:hover.status-disabled {\n");
+        css.append("            background: rgba(108, 117, 125, 0.06);\n");
+        css.append("        }\n");
+        css.append("        .item-content {\n");
+        css.append("            display: flex;\n");
+        css.append("            flex-direction: column;\n");
+        css.append("            width: 100%;\n");
+        css.append("            gap: 12px;\n");
+        css.append("        }\n");
+        css.append("        .item-header {\n");
+        css.append("            display: flex;\n");
+        css.append("            align-items: flex-start;\n");
+        css.append("            gap: 12px;\n");
+        css.append("        }\n");
+        css.append("        .item-status {\n");
+        css.append("            font-size: 1.4rem;\n");
+        css.append("            min-width: 32px;\n");
+        css.append("            height: 32px;\n");
+        css.append("            display: flex;\n");
+        css.append("            align-items: center;\n");
+        css.append("            justify-content: center;\n");
+        css.append("            flex-shrink: 0;\n");
+        css.append("        }\n");
+        css.append("        .item-text {\n");
+        css.append("            flex: 1;\n");
+        css.append("            font-size: 1.05rem;\n");
+        css.append("            line-height: 1.6;\n");
+        css.append("            color: #2d3748;\n");
+        css.append("            padding-top: 2px;\n");
+        css.append("        }\n");
+        css.append("        .item-tags {\n");
+        css.append("            display: flex;\n");
+        css.append("            flex-wrap: wrap;\n");
+        css.append("            gap: 10px;\n");
+        css.append("            margin-top: 2px;\n");
+        css.append("        }\n");
+        css.append("        .world-type-badge {\n");
+        css.append("            padding: 6px 14px;\n");
+        css.append("            border-radius: 16px;\n");
+        css.append("            font-size: 0.85rem;\n");
+        css.append("            font-weight: 600;\n");
+        css.append("            background: rgba(86, 98, 246, 0.12);\n");
+        css.append("            color: #4f46e5;\n");
+        css.append("            border: 1px solid rgba(86, 98, 246, 0.2);\n");
+        css.append("            display: inline-flex;\n");
+        css.append("            align-items: center;\n");
+        css.append("            gap: 6px;\n");
+        css.append("            text-transform: uppercase;\n");
+        css.append("            letter-spacing: 0.3px;\n");
+        css.append("        }\n");
+        css.append("        .world-type-badge.overworld {\n");
+        css.append("            background: rgba(34, 197, 94, 0.12);\n");
+        css.append("            color: #059669;\n");
+        css.append("            border-color: rgba(34, 197, 94, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .world-type-badge.nether {\n");
+        css.append("            background: rgba(239, 68, 68, 0.12);\n");
+        css.append("            color: #dc2626;\n");
+        css.append("            border-color: rgba(239, 68, 68, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .world-type-badge.end {\n");
+        css.append("            background: rgba(168, 85, 247, 0.12);\n");
+        css.append("            color: #7c3aed;\n");
+        css.append("            border-color: rgba(168, 85, 247, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .status-badge {\n");
+        css.append("            padding: 6px 14px;\n");
+        css.append("            border-radius: 16px;\n");
+        css.append("            font-size: 0.85rem;\n");
+        css.append("            font-weight: 600;\n");
+        css.append("            text-transform: uppercase;\n");
+        css.append("            letter-spacing: 0.5px;\n");
+        css.append("            white-space: nowrap;\n");
+        css.append("        }\n");
+        css.append("        .change-item.status-working .status-badge {\n");
+        css.append("            background: rgba(34, 197, 94, 0.15);\n");
+        css.append("            color: #059669;\n");
+        css.append("        }\n");
+        css.append("        .change-item.status-development .status-badge {\n");
+        css.append("            background: rgba(245, 158, 11, 0.15);\n");
+        css.append("            color: #d97706;\n");
+        css.append("        }\n");
+        css.append("        .change-item.status-disabled .status-badge {\n");
+        css.append("            background: rgba(107, 114, 128, 0.15);\n");
+        css.append("            color: #4b5563;\n");
         css.append("        }\n");
         css.append("        .footer {\n");
         css.append("            text-align: center;\n");
@@ -413,8 +745,42 @@ public final class ChangelogHTMLCompiler
         css.append("            .stats {\n");
         css.append("                grid-template-columns: 1fr;\n");
         css.append("            }\n");
+        css.append("            .status-stats {\n");
+        css.append("                flex-direction: column;\n");
+        css.append("                align-items: center;\n");
+        css.append("                gap: 15px;\n");
+        css.append("            }\n");
+        css.append("            .status-item {\n");
+        css.append("                width: 80%;\n");
+        css.append("                max-width: 250px;\n");
+        css.append("            }\n");
         css.append("            .category-content {\n");
         css.append("                padding: 15px;\n");
+        css.append("            }\n");
+        css.append("            .change-item {\n");
+        css.append("                padding: 16px;\n");
+        css.append("            }\n");
+        css.append("            .item-content {\n");
+        css.append("                gap: 10px;\n");
+        css.append("            }\n");
+        css.append("            .item-header {\n");
+        css.append("                flex-direction: column;\n");
+        css.append("                gap: 8px;\n");
+        css.append("            }\n");
+        css.append("            .item-status {\n");
+        css.append("                align-self: flex-start;\n");
+        css.append("            }\n");
+        css.append("            .item-text {\n");
+        css.append("                font-size: 1rem;\n");
+        css.append("                line-height: 1.5;\n");
+        css.append("            }\n");
+        css.append("            .item-tags {\n");
+        css.append("                gap: 8px;\n");
+        css.append("            }\n");
+        css.append("            .world-type-badge,\n");
+        css.append("            .status-badge {\n");
+        css.append("                font-size: 0.8rem;\n");
+        css.append("                padding: 5px 10px;\n");
         css.append("            }\n");
         css.append("        }\n");
         css.append("    </style>\n");
