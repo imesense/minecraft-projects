@@ -39,11 +39,11 @@ public final class ChangelogHTMLCompiler
             String htmlContent = generateChangelogHTML(jsonContent);
             writeHTMLFile(htmlFile, htmlContent);
 
-            Log.write(0, "HTML report on the changes has been successfully created: " + htmlFile.getAbsolutePath());
+            Log.write(0, "HTML отчет об изменениях успешно создан: " + htmlFile.getAbsolutePath());
         }
         catch (Exception exception)
         {
-            Log.write(2, "Error when creating an HTML report: " + exception.getMessage());
+            Log.write(2, "Ошибка при создании HTML отчета: " + exception.getMessage());
         }
     }
 
@@ -58,7 +58,7 @@ public final class ChangelogHTMLCompiler
         String resourcePath = "/assets/dynamicspawncontrol/changelog/changelog_1_12_2_0_1.json";
 
         Log.write(0, String.format(
-                "[CHANGELOG] Read file to path: %s", resourcePath));
+                "[CHANGELOG] Чтение файла по пути: %s", resourcePath));
 
         try (InputStream inputStream = DynamicSpawnControlStructure.class
                 .getResourceAsStream(resourcePath))
@@ -78,7 +78,7 @@ public final class ChangelogHTMLCompiler
         }
         catch (IOException exception)
         {
-            Log.write(2, "Error reading changelog: " + exception.getMessage());
+            Log.write(2, "Ошибка чтения changelog: " + exception.getMessage());
             return exception.toString();
         }
     }
@@ -95,7 +95,7 @@ public final class ChangelogHTMLCompiler
 
         if (changelog == null)
         {
-            return getErrorHTML("Incorrect JSON changelog file");
+            return getErrorHTML("Некорректный JSON файл changelog");
         }
 
         StringBuilder html = new StringBuilder();
@@ -130,8 +130,8 @@ public final class ChangelogHTMLCompiler
                         {
                             totalWorking++;
                         }
-                        else if (itemText.endsWith("[в разработке]")) {
-
+                        else if (itemText.endsWith("[в разработке]"))
+                        {
                             totalInDevelopment++;
                         }
                         else if (itemText.endsWith("[отключено]"))
@@ -248,8 +248,12 @@ public final class ChangelogHTMLCompiler
                     html.append("                    <ul class=\"change-list\">\n");
                     for (JsonElement item : items)
                     {
-                        String itemText = item.getAsString();
-                        html.append("                        ").append(parseChangeItem(itemText)).append("\n");
+                        String itemText = item.getAsString().trim();
+
+                        if (!itemText.isEmpty())
+                        {
+                            html.append("                        ").append(parseChangeItem(itemText)).append("\n");
+                        }
                     }
                     html.append("                    </ul>\n");
                 }
@@ -268,13 +272,35 @@ public final class ChangelogHTMLCompiler
                         if (subcat.has("items"))
                         {
                             JsonArray items = subcat.getAsJsonArray("items");
-                            html.append("                        <ul class=\"change-list\">\n");
+
+                            boolean isContentSection = false;
                             for (JsonElement item : items)
                             {
-                                String itemText = item.getAsString();
-                                html.append("                            ").append(parseChangeItem(itemText)).append("\n");
+                                String itemText = item.getAsString().trim();
+                                if (itemText.isEmpty() || itemText.contains("\n"))
+                                {
+                                    isContentSection = true;
+                                    break;
+                                }
                             }
-                            html.append("                        </ul>\n");
+
+                            if (isContentSection)
+                            {
+                                html.append(parseContentSection(items));
+                            }
+                            else
+                            {
+                                html.append("                        <ul class=\"change-list\">\n");
+                                for (JsonElement item : items)
+                                {
+                                    String itemText = item.getAsString().trim();
+                                    if (!itemText.isEmpty())
+                                    {
+                                        html.append("                            ").append(parseChangeItem(itemText)).append("\n");
+                                    }
+                                }
+                                html.append("                        </ul>\n");
+                            }
                         }
                         html.append("                    </div>\n");
                     }
@@ -305,9 +331,16 @@ public final class ChangelogHTMLCompiler
      */
     private static String parseChangeItem(String itemText)
     {
+        if (itemText == null || itemText.trim().isEmpty())
+        {
+            return "<li class=\"empty-item\"></li>";
+        }
+
         String status = "";
         String worldType = "";
-        String text = itemText;
+        String text = itemText.trim();
+
+        List<String> tags = new ArrayList<>();
 
         if (itemText.contains("[работает]"))
         {
@@ -341,6 +374,10 @@ public final class ChangelogHTMLCompiler
             text = text.replace("[только энд]", "").trim();
         }
 
+        extractCommandTags(text, tags);
+
+        text = removeCommandTags(text);
+
         StringBuilder li = new StringBuilder();
 
         li.append("<li class=\"change-item");
@@ -356,11 +393,11 @@ public final class ChangelogHTMLCompiler
 
         li.append("<div class=\"item-header\">");
 
-        // Иконка статуса
         if (!status.isEmpty())
         {
             li.append("<span class=\"item-status\">");
-            switch (status) {
+            switch (status)
+            {
                 case "working":
                     li.append("✅");
                     break;
@@ -378,7 +415,7 @@ public final class ChangelogHTMLCompiler
 
         li.append("</div>");
 
-        if (!worldType.isEmpty() || !status.isEmpty())
+        if (!worldType.isEmpty() || !status.isEmpty() || !tags.isEmpty())
         {
             li.append("<div class=\"item-tags\">");
 
@@ -400,7 +437,13 @@ public final class ChangelogHTMLCompiler
                 li.append("</span>");
             }
 
-            // Бейдж статуса
+            for (String tag : tags)
+            {
+                li.append("<span class=\"command-tag ").append(getCommandTagClass(tag)).append("\">");
+                li.append(getCommandTagIcon(tag)).append(" ").append(getCommandTagText(tag));
+                li.append("</span>");
+            }
+
             if (!status.isEmpty())
             {
                 li.append("<span class=\"status-badge\">");
@@ -426,6 +469,186 @@ public final class ChangelogHTMLCompiler
 
         li.append("</li>");
         return li.toString();
+    }
+
+    /**
+     *
+     * @param items
+     * @return
+     */
+    private static String parseContentSection(JsonArray items)
+    {
+        StringBuilder html = new StringBuilder();
+        html.append("                        <div class=\"content-section\">\n");
+
+        for (JsonElement item : items)
+        {
+            String itemText = item.getAsString().trim();
+
+            if (itemText.isEmpty())
+            {
+                continue;
+            }
+
+            if (itemText.startsWith("## "))
+            {
+                String title = itemText.substring(3).trim();
+                html.append("                            <h4 class=\"content-title\">").append(title).append("</h4>\n");
+            }
+            else if (!itemText.startsWith("[") && !itemText.endsWith("]"))
+            {
+                itemText = itemText.replace("Красные черепа", "<span class='skull red'>🔴 Красные черепа</span>");
+                itemText = itemText.replace("Оранжевые черепа", "<span class='skull orange'>🟠 Оранжевые черепа</span>");
+
+                itemText = itemText.replace("**", "<strong>").replace("**", "</strong>");
+
+                html.append("                            <p class=\"content-text\">").append(itemText).append("</p>\n");
+            }
+            else if (itemText.startsWith("- "))
+            {
+                String listItem = itemText.substring(2).trim();
+                listItem = listItem.replace("Красные черепа", "<span class='skull red'>🔴 Красные черепа</span>");
+                listItem = listItem.replace("Оранжевые черепа", "<span class='skull orange'>🟠 Оранжевые черепа</span>");
+
+                html.append("                            <div class=\"content-list-item\">\n");
+                html.append("                                <span class=\"list-marker\">•</span>\n");
+                html.append("                                <span class=\"list-text\">").append(listItem).append("</span>\n");
+                html.append("                            </div>\n");
+            }
+            else if (itemText.startsWith("**Примечания:**"))
+            {
+                String notes = itemText.replace("**Примечания:**", "").trim();
+                html.append("                            <div class=\"notes-section\">\n");
+                html.append("                                <h5 class=\"notes-title\">📝 Примечания:</h5>\n");
+                html.append("                                <p class=\"notes-text\">").append(notes).append("</p>\n");
+                html.append("                            </div>\n");
+            }
+        }
+
+        html.append("                        </div>\n");
+        return html.toString();
+    }
+
+    /**
+     *
+     * @param text
+     * @param tags
+     */
+    private static void extractCommandTags(String text, List<String> tags)
+    {
+        String[] tagPatterns = {
+                "\\[аргументы: [^\\]]+\\]",
+                "\\[отладочная команда\\]",
+                "\\[клиентская команда\\]",
+                "\\[админская команда\\]",
+                "\\[тип команды: [^\\]]+\\]",
+                "\\[без аргументов\\]",
+                "\\[просто ввод\\]",
+                "\\[ввод \\([^)]+\\)\\]",
+                "\\[мультипле аргументы\\]"
+        };
+
+        for (String pattern : tagPatterns)
+        {
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile(pattern);
+            java.util.regex.Matcher m = p.matcher(text);
+            while (m.find())
+            {
+                tags.add(m.group());
+            }
+        }
+    }
+
+    /**
+     *
+     * @param text
+     * @return
+     */
+    private static String removeCommandTags(String text)
+    {
+        String[] tagsToRemove = {
+                "\\[аргументы: [^\\]]+\\]",
+                "\\[отладочная команда\\]",
+                "\\[клиентская команда\\]",
+                "\\[админская команда\\]",
+                "\\[тип команды: [^\\]]+\\]",
+                "\\[без аргументов\\]",
+                "\\[просто ввод\\]",
+                "\\[ввод \\([^)]+\\)\\]",
+                "\\[мультипле аргументы\\]"
+        };
+
+        String result = text;
+        for (String tag : tagsToRemove)
+        {
+            result = result.replaceAll(tag, "").trim();
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @param tag
+     * @return
+     */
+    private static String getCommandTagClass(String tag)
+    {
+        if (tag.contains("отладочная команда")) return "debug";
+        if (tag.contains("клиентская команда")) return "client";
+        if (tag.contains("админская команда")) return "admin";
+        if (tag.contains("аргументы:")) return "args";
+        if (tag.contains("тип команды:")) return "type";
+        if (tag.contains("без аргументов") || tag.contains("просто ввод")) return "no-args";
+        if (tag.contains("мультипле аргументы")) return "multi-args";
+        if (tag.contains("ввод (")) return "input";
+        return "default";
+    }
+
+    /**
+     *
+     * @param tag
+     * @return
+     */
+    private static String getCommandTagIcon(String tag)
+    {
+        if (tag.contains("отладочная команда")) return "🐛";
+        if (tag.contains("клиентская команда")) return "💻";
+        if (tag.contains("админская команда")) return "👑";
+        if (tag.contains("аргументы:")) return "📋";
+        if (tag.contains("тип команды:")) return "🔧";
+        if (tag.contains("без аргументов") || tag.contains("просто ввод")) return "⏺️";
+        if (tag.contains("мультипле аргументы")) return "📦";
+        if (tag.contains("ввод (")) return "⌨️";
+        return "🏷️";
+    }
+
+    /**
+     *
+     * @param tag
+     * @return
+     */
+    private static String getCommandTagText(String tag)
+    {
+        if (tag.contains("аргументы:"))
+        {
+            return tag.replace("[аргументы:", "Арг:").replace("]", "");
+        }
+        if (tag.contains("тип команды:"))
+        {
+            return tag.replace("[тип команды:", "Тип:").replace("]", "");
+        }
+        if (tag.contains("ввод ("))
+        {
+            return tag.replace("[ввод (", "Ввод:").replace(")]", "");
+        }
+
+        if (tag.contains("отладочная команда")) return "Отладка";
+        if (tag.contains("клиентская команда")) return "Клиент";
+        if (tag.contains("админская команда")) return "Админ";
+        if (tag.contains("без аргументов")) return "Без арг.";
+        if (tag.contains("просто ввод")) return "Просто";
+        if (tag.contains("мультипле аргументы")) return "Мульти";
+        return tag.replace("[", "").replace("]", "");
     }
 
     /**
@@ -611,6 +834,94 @@ public final class ChangelogHTMLCompiler
         css.append("            padding-bottom: 8px;\n");
         css.append("            border-bottom: 2px solid #dee2e6;\n");
         css.append("        }\n");
+
+        // Styles for clients
+        css.append("        .content-section {\n");
+        css.append("            margin: 20px 0;\n");
+        css.append("            padding: 20px;\n");
+        css.append("            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);\n");
+        css.append("            border-radius: 10px;\n");
+        css.append("            border-left: 4px solid #375369;\n");
+        css.append("        }\n");
+        css.append("        .content-title {\n");
+        css.append("            font-size: 1.3rem;\n");
+        css.append("            color: #2d3748;\n");
+        css.append("            margin-bottom: 15px;\n");
+        css.append("            padding-bottom: 8px;\n");
+        css.append("            border-bottom: 2px solid #cbd5e0;\n");
+        css.append("            display: flex;\n");
+        css.append("            align-items: center;\n");
+        css.append("            gap: 10px;\n");
+        css.append("        }\n");
+        css.append("        .content-text {\n");
+        css.append("            font-size: 1.05rem;\n");
+        css.append("            line-height: 1.7;\n");
+        css.append("            color: #4a5568;\n");
+        css.append("            margin-bottom: 12px;\n");
+        css.append("            padding-left: 10px;\n");
+        css.append("        }\n");
+        css.append("        .content-list-item {\n");
+        css.append("            display: flex;\n");
+        css.append("            align-items: flex-start;\n");
+        css.append("            gap: 10px;\n");
+        css.append("            margin-bottom: 8px;\n");
+        css.append("            padding-left: 10px;\n");
+        css.append("        }\n");
+        css.append("        .list-marker {\n");
+        css.append("            color: #375369;\n");
+        css.append("            font-weight: bold;\n");
+        css.append("            flex-shrink: 0;\n");
+        css.append("            margin-top: 2px;\n");
+        css.append("        }\n");
+        css.append("        .list-text {\n");
+        css.append("            flex: 1;\n");
+        css.append("            font-size: 1.05rem;\n");
+        css.append("            line-height: 1.6;\n");
+        css.append("            color: #4a5568;\n");
+        css.append("        }\n");
+        css.append("        .notes-section {\n");
+        css.append("            margin-top: 20px;\n");
+        css.append("            padding: 15px;\n");
+        css.append("            background: rgba(255, 245, 157, 0.2);\n");
+        css.append("            border-radius: 8px;\n");
+        css.append("            border-left: 4px solid #d97706;\n");
+        css.append("        }\n");
+        css.append("        .notes-title {\n");
+        css.append("            font-size: 1.1rem;\n");
+        css.append("            color: #92400e;\n");
+        css.append("            margin-bottom: 8px;\n");
+        css.append("            display: flex;\n");
+        css.append("            align-items: center;\n");
+        css.append("            gap: 8px;\n");
+        css.append("        }\n");
+        css.append("        .notes-text {\n");
+        css.append("            font-size: 1rem;\n");
+        css.append("            line-height: 1.6;\n");
+        css.append("            color: #78350f;\n");
+        css.append("        }\n");
+        css.append("        .skull {\n");
+        css.append("            font-weight: 600;\n");
+        css.append("            padding: 2px 6px;\n");
+        css.append("            border-radius: 12px;\n");
+        css.append("            display: inline-flex;\n");
+        css.append("            align-items: center;\n");
+        css.append("            gap: 4px;\n");
+        css.append("        }\n");
+        css.append("        .skull.red {\n");
+        css.append("            background: rgba(239, 68, 68, 0.15);\n");
+        css.append("            color: #dc2626;\n");
+        css.append("            border: 1px solid rgba(239, 68, 68, 0.3);\n");
+        css.append("        }\n");
+        css.append("        .skull.orange {\n");
+        css.append("            background: rgba(249, 115, 22, 0.15);\n");
+        css.append("            color: #ea580c;\n");
+        css.append("            border: 1px solid rgba(249, 115, 22, 0.3);\n");
+        css.append("        }\n");
+        css.append("        strong {\n");
+        css.append("            font-weight: 600;\n");
+        css.append("            color: #2d3748;\n");
+        css.append("        }\n");
+
         css.append("        .change-list {\n");
         css.append("            list-style-type: none;\n");
         css.append("            padding-left: 0;\n");
@@ -727,6 +1038,63 @@ public final class ChangelogHTMLCompiler
         css.append("            background: rgba(107, 114, 128, 0.15);\n");
         css.append("            color: #4b5563;\n");
         css.append("        }\n");
+        css.append("        .command-tag {\n");
+        css.append("            padding: 5px 10px;\n");
+        css.append("            border-radius: 14px;\n");
+        css.append("            font-size: 0.75rem;\n");
+        css.append("            font-weight: 600;\n");
+        css.append("            text-transform: uppercase;\n");
+        css.append("            letter-spacing: 0.3px;\n");
+        css.append("            white-space: nowrap;\n");
+        css.append("            display: inline-flex;\n");
+        css.append("            align-items: center;\n");
+        css.append("            gap: 4px;\n");
+        css.append("        }\n");
+        css.append("        .command-tag.debug {\n");
+        css.append("            background: rgba(139, 92, 246, 0.15);\n");
+        css.append("            color: #7c3aed;\n");
+        css.append("            border: 1px solid rgba(139, 92, 246, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.client {\n");
+        css.append("            background: rgba(59, 130, 246, 0.15);\n");
+        css.append("            color: #2563eb;\n");
+        css.append("            border: 1px solid rgba(59, 130, 246, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.admin {\n");
+        css.append("            background: rgba(239, 68, 68, 0.15);\n");
+        css.append("            color: #dc2626;\n");
+        css.append("            border: 1px solid rgba(239, 68, 68, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.args {\n");
+        css.append("            background: rgba(34, 197, 94, 0.15);\n");
+        css.append("            color: #059669;\n");
+        css.append("            border: 1px solid rgba(34, 197, 94, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.type {\n");
+        css.append("            background: rgba(245, 158, 11, 0.15);\n");
+        css.append("            color: #d97706;\n");
+        css.append("            border: 1px solid rgba(245, 158, 11, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.no-args {\n");
+        css.append("            background: rgba(107, 114, 128, 0.15);\n");
+        css.append("            color: #4b5563;\n");
+        css.append("            border: 1px solid rgba(107, 114, 128, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.multi-args {\n");
+        css.append("            background: rgba(168, 85, 247, 0.15);\n");
+        css.append("            color: #7c3aed;\n");
+        css.append("            border: 1px solid rgba(168, 85, 247, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.input {\n");
+        css.append("            background: rgba(14, 165, 233, 0.15);\n");
+        css.append("            color: #0284c7;\n");
+        css.append("            border: 1px solid rgba(14, 165, 233, 0.2);\n");
+        css.append("        }\n");
+        css.append("        .command-tag.default {\n");
+        css.append("            background: rgba(107, 114, 128, 0.15);\n");
+        css.append("            color: #4b5563;\n");
+        css.append("            border: 1px solid rgba(107, 114, 128, 0.2);\n");
+        css.append("        }\n");
         css.append("        .footer {\n");
         css.append("            text-align: center;\n");
         css.append("            padding: 25px;\n");
@@ -781,6 +1149,15 @@ public final class ChangelogHTMLCompiler
         css.append("            .status-badge {\n");
         css.append("                font-size: 0.8rem;\n");
         css.append("                padding: 5px 10px;\n");
+        css.append("            }\n");
+        css.append("            .content-section {\n");
+        css.append("                padding: 15px;\n");
+        css.append("            }\n");
+        css.append("            .content-title {\n");
+        css.append("                font-size: 1.2rem;\n");
+        css.append("            }\n");
+        css.append("            .content-text, .list-text {\n");
+        css.append("                font-size: 1rem;\n");
         css.append("            }\n");
         css.append("        }\n");
         css.append("    </style>\n");
