@@ -5,15 +5,20 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @InitLog
+@TODO(value = "Add param 'getMinDurabilityPercent' in config", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class DropSkeletonItem
 {
     private static volatile DropSkeletonItem _INSTANCE;
@@ -33,103 +38,141 @@ public final class DropSkeletonItem
 
     public void handleLivingDrops(LivingDropsEvent event)
     {
-        if (event.getEntity() instanceof EntitySkeleton)
+        if (!(event.getEntity() instanceof EntitySkeleton)) return;
+
+        EntitySkeleton skeleton = (EntitySkeleton) event.getEntity();
+        List<EntityItem> drops = event.getDrops();
+
+        DamageSource source = event.getSource();
+        if (source != null && (source.isExplosion() || source.isFireDamage()))
         {
-            EntitySkeleton skeleton = (EntitySkeleton) event.getEntity();
-            List<EntityItem> drops = event.getDrops();
-
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD),
-                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getHeadDamageFactor());
-
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST),
-                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getChestDamageFactor());
-
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS),
-                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getLegsDamageFactor());
-
-            addDamagedItemToDrops(skeleton, drops, skeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET),
-                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getFeetDamageFactor());
-
-            addDamagedItemToDrops(skeleton, drops, skeleton.getHeldItemMainhand(),
-                    SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getHandItemDamageFactor());
-
-            handleArrowDrops(skeleton, drops);
+            return;
         }
-    }
 
-    private void handleArrowDrops(EntitySkeleton entitySkeleton, List<EntityItem> drops)
-    {
-        double arrowDropChance = 0.50;
-
-        if (UniqueField.RANDOM.nextDouble() < arrowDropChance)
+        if (!rollDifficultyChance(skeleton.world.getDifficulty()))
         {
-            boolean arrowsDropped = false;
+            handleArrowDrops(skeleton, drops);
+            return;
+        }
 
-            for (EntityItem item : drops)
+        List<ItemStack> equipment = new ArrayList<>();
+
+        addIfValid(equipment, skeleton.getItemStackFromSlot(EntityEquipmentSlot.HEAD));
+        addIfValid(equipment, skeleton.getItemStackFromSlot(EntityEquipmentSlot.CHEST));
+        addIfValid(equipment, skeleton.getItemStackFromSlot(EntityEquipmentSlot.LEGS));
+        addIfValid(equipment, skeleton.getItemStackFromSlot(EntityEquipmentSlot.FEET));
+        addIfValid(equipment, skeleton.getHeldItemMainhand());
+
+        if (!equipment.isEmpty())
+        {
+            ItemStack selected = equipment.get(UniqueField.RANDOM.nextInt(equipment.size()));
+
+            ItemStack drop = selected.copy();
+
+            if (drop.isItemStackDamageable())
             {
-                if (item.getItem().getItem() == Items.ARROW)
+                int max = drop.getMaxDamage();
+                int dmg = drop.getItemDamage();
+
+                double durability = 1.0 - ((double) dmg / max);
+
+                if (durability < /*SkeletonDropConfig.getInstance(SkeletonDropConfig.class)
+                        .getMinDurabilityPercent()*/0.6)
                 {
-                    int currentCount = item.getItem().getCount();
+                    dropBrokenItem(skeleton, drops);
+                }
+                else
+                {
+                    int spread = (int) (max * SkeletonDropConfig.getInstance(SkeletonDropConfig.class)
+                            .getDamageSpreadFactor());
 
-                    item.getItem().setCount(currentCount + 1 +
-                            SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getArrowsToDrops());
+                    if (spread > 0)
+                    {
+                        drop.setItemDamage(
+                                Math.min(max - 1, dmg + UniqueField.RANDOM.nextInt(spread))
+                        );
+                    }
 
-                    arrowsDropped = true;
-                    break;
+                    addIfNotDuplicate(skeleton, drops, drop);
                 }
             }
-
-            if (!arrowsDropped)
+            else
             {
-                addArrowsToDrops(entitySkeleton, drops, SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getArrowsToDrops());
+                addIfNotDuplicate(skeleton, drops, drop);
             }
+        }
+
+        handleArrowDrops(skeleton, drops);
+    }
+
+    private void addIfValid(List<ItemStack> list, ItemStack stack)
+    {
+        if (!stack.isEmpty() && stack.getItem() != Items.AIR)
+        {
+            list.add(stack);
         }
     }
 
-    private void addDamagedItemToDrops(EntitySkeleton entitySkeleton,
-                                       List<EntityItem> entityItemList, ItemStack originalItem, double damageFactor)
+    private void addIfNotDuplicate(EntitySkeleton skeleton, List<EntityItem> drops, ItemStack drop)
     {
-        if (originalItem.getItem() != Items.AIR)
+        for (EntityItem item : drops)
         {
-            if (UniqueField.RANDOM.nextDouble() < SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getBreakItem())
+            if (item.getItem().isItemEqualIgnoreDurability(drop))
             {
                 return;
             }
-
-            ItemStack itemStack = originalItem.copy();
-            int maxDamage = itemStack.getMaxDamage();
-
-            if (maxDamage > 0)
-            {
-                int minDamage = (int) (maxDamage * damageFactor);
-
-                int damageSpread = (int) (maxDamage * SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getDamageSpreadFactor());
-                int randomDamage = minDamage + UniqueField.RANDOM.nextInt(damageSpread);
-
-                itemStack.setItemDamage(randomDamage);
-            }
-
-            for (EntityItem item : entityItemList)
-            {
-                ItemStack itemStack1 = item.getItem();
-
-                if (itemStack1.isItemEqualIgnoreDurability(itemStack))
-                {
-                    return;
-                }
-            }
-
-            entityItemList.add(new EntityItem(entitySkeleton.world,
-                    entitySkeleton.posX, entitySkeleton.posY, entitySkeleton.posZ, itemStack));
         }
+
+        drops.add(new EntityItem(skeleton.world, skeleton.posX, skeleton.posY, skeleton.posZ, drop));
     }
 
-    private void addArrowsToDrops(EntitySkeleton entitySkeleton, List<EntityItem> entityItemList, byte arrowCount)
+    private boolean rollDifficultyChance(EnumDifficulty difficulty)
     {
-        ItemStack itemStack = new ItemStack(Items.ARROW, arrowCount);
+        double chance;
 
-        entityItemList.add(new EntityItem
-                (entitySkeleton.world, entitySkeleton.posX, entitySkeleton.posY, entitySkeleton.posZ, itemStack));
+        switch (difficulty)
+        {
+            case EASY:   chance = 0.05; break;
+            case NORMAL: chance = 0.08; break;
+            case HARD:   chance = 0.12; break;
+            default:     chance = 0.05;
+        }
+
+        return UniqueField.RANDOM.nextDouble() <= chance;
+    }
+
+    private void dropBrokenItem(EntitySkeleton skeleton, List<EntityItem> drops)
+    {
+        drops.add(new EntityItem(skeleton.world, skeleton.posX, skeleton.posY, skeleton.posZ,
+                new ItemStack(Items.IRON_NUGGET, 1 + UniqueField.RANDOM.nextInt(2))));
+    }
+
+    /* ───────── Стрелы ───────── */
+
+    private void handleArrowDrops(EntitySkeleton skeleton, List<EntityItem> drops)
+    {
+        double arrowDropChance = 0.50;
+
+        if (UniqueField.RANDOM.nextDouble() > arrowDropChance)
+            return;
+
+        for (EntityItem item : drops)
+        {
+            if (item.getItem().getItem() == Items.ARROW)
+            {
+                item.getItem().grow(
+                        1 + SkeletonDropConfig.getInstance(SkeletonDropConfig.class)
+                                .getArrowsToDrops()
+                );
+                return;
+            }
+        }
+
+        addArrowsToDrops(skeleton, drops, SkeletonDropConfig.getInstance(SkeletonDropConfig.class).getArrowsToDrops());
+    }
+
+    private void addArrowsToDrops(EntitySkeleton skeleton, List<EntityItem> drops, byte arrowCount)
+    {
+        drops.add(new EntityItem(skeleton.world, skeleton.posX, skeleton.posY, skeleton.posZ, new ItemStack(Items.ARROW, arrowCount)));
     }
 }
-

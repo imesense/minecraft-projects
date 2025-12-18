@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -12,6 +13,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 @Setter
 @InitLog
 @ConceptConfig(fileName = "cfg_zombie_drop_item")
+@TODO(value = "Rework this config in 0.2 ver", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class ZombieDropConfig extends BaseJsonConfig
 {
     private float breakItem = 0.15f;
