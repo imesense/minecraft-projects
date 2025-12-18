@@ -10,11 +10,22 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ *
+ */
 @InitLog
 public final class ChangelogHTMLCompiler
 {
+    /**
+     *
+     */
     public ChangelogHTMLCompiler() {}
 
+    /**
+     *
+     * @param PATH
+     * @param isDebugMode
+     */
     public static void createChangelogHTML(final String PATH, boolean isDebugMode)
     {
         File docsDir = new File(PATH, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_DOC_COMPILE);
@@ -28,63 +39,55 @@ public final class ChangelogHTMLCompiler
             String htmlContent = generateChangelogHTML(jsonContent);
             writeHTMLFile(htmlFile, htmlContent);
 
-            Log.write(0, "HTML отчет по изменениям успешно создан: " + htmlFile.getAbsolutePath());
+            Log.write(0, "HTML report on the changes has been successfully created: " + htmlFile.getAbsolutePath());
         }
         catch (Exception exception)
         {
-            Log.write(2, "Ошибка при создании HTML отчета: " + exception.getMessage());
+            Log.write(2, "Error when creating an HTML report: " + exception.getMessage());
         }
     }
 
+    /**
+     *
+     * @param PATH
+     * @return
+     * @throws IOException
+     */
     private static String readChangelogJSON(final String PATH) throws IOException
     {
-        File jsonFile = new File(PATH,
-                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE +
-                        File.separator +
-                        "changelog_1_12_2.json");
+        String resourcePath = "/assets/dynamicspawncontrol/changelog/changelog_1_12_2_0_1.json";
 
-        if (!jsonFile.exists())
-        {
-            return convertMDtoJSON(PATH);
-        }
+        Log.write(0, String.format(
+                "[CHANGELOG] Read file to path: %s", resourcePath));
 
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8)))
+        try (InputStream inputStream = DynamicSpawnControlStructure.class
+                .getResourceAsStream(resourcePath))
         {
-            String line;
-            while ((line = reader.readLine()) != null)
+            StringBuilder content = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(inputStream, StandardCharsets.UTF_8)))
             {
-                content.append(line).append("\n");
+                String line;
+                while ((line = reader.readLine()) != null)
+                {
+                    content.append(line).append("\n");
+                }
             }
+
+            return content.toString();
         }
-
-        return content.toString();
-    }
-
-    private static String convertMDtoJSON(final String PATH) throws IOException
-    {
-        File mdFile = new File(PATH,
-                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE +
-                        File.separator +
-                        "change-log-1.12.2.md");
-
-        if (!mdFile.exists())
+        catch (IOException exception)
         {
-            throw new FileNotFoundException("Файл чейнджлога не найден");
+            Log.write(2, "Error reading changelog: " + exception.getMessage());
+            return exception.toString();
         }
-
-        JsonObject changelog = new JsonObject();
-        changelog.addProperty("version", "1.12.2");
-        changelog.addProperty("generation_date", new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date()));
-
-        JsonArray categories = new JsonArray();
-
-        changelog.add("categories", categories);
-
-        return new Gson().toJson(changelog);
     }
 
+    /**
+     *
+     * @param jsonContent
+     * @return
+     */
     private static String generateChangelogHTML(String jsonContent)
     {
         Gson gson = new Gson();
@@ -92,7 +95,7 @@ public final class ChangelogHTMLCompiler
 
         if (changelog == null)
         {
-            return getErrorHTML("Некорректный JSON файл чейнджлога");
+            return getErrorHTML("Incorrect JSON changelog file");
         }
 
         StringBuilder html = new StringBuilder();
@@ -238,6 +241,10 @@ public final class ChangelogHTMLCompiler
         return html.toString();
     }
 
+    /**
+     *
+     * @return
+     */
     private static String getCSSStyles()
     {
         StringBuilder css = new StringBuilder();
@@ -415,6 +422,11 @@ public final class ChangelogHTMLCompiler
         return css.toString();
     }
 
+    /**
+     *
+     * @param message
+     * @return
+     */
     private static String getErrorHTML(String message)
     {
         StringBuilder html = new StringBuilder();
@@ -443,6 +455,12 @@ public final class ChangelogHTMLCompiler
         return html.toString();
     }
 
+    /**
+     *
+     * @param htmlFile
+     * @param content
+     * @throws IOException
+     */
     private static void writeHTMLFile(File htmlFile, String content) throws IOException
     {
         try (BufferedWriter writer = new BufferedWriter(

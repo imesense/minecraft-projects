@@ -45,12 +45,12 @@ public final class DocJSONToHTMLCompiler
 
             writeHTMLFile(htmlFile, htmlContent);
 
-            Log.write(0, "HTML отчет успешно создан: " + htmlFile.getAbsolutePath());
+            Log.write(0, "HTML report on the changes has been successfully created: " + htmlFile.getAbsolutePath());
 
         }
         catch (Exception exception)
         {
-            Log.write(2, "Ошибка при создании HTML отчета: " + exception.getMessage());
+            Log.write(2, "Error when creating an HTML report: " + exception.getMessage());
         }
     }
 
@@ -69,7 +69,7 @@ public final class DocJSONToHTMLCompiler
 
         if (!jsonFile.exists())
         {
-            throw new FileNotFoundException("JSON файл не найден: " + jsonFile.getAbsolutePath());
+            throw new FileNotFoundException("Error reading changelog: " + jsonFile.getAbsolutePath());
         }
 
         StringBuilder content = new StringBuilder();
@@ -100,7 +100,7 @@ public final class DocJSONToHTMLCompiler
 
         if (jsonArray == null)
         {
-            return "<html><body><h1>Ошибка: Некорректный JSON файл</h1></body></html>";
+            return "<html><body><h1>Error: Invalid JSON file</h1></body></html>";
         }
 
         StringBuilder html = new StringBuilder();
