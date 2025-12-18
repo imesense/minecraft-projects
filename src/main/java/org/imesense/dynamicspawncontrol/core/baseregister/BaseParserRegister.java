@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -9,6 +10,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.ArrayList;
 import java.util.List;
 
+@TODO(value = "Merge 'base' files into 'core/base/...' and fix the class diagram in version 0.2", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public abstract class BaseParserRegister
 {
     protected abstract Class<?>[] getParserClasses();

@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.register.attach.AttachRegister;
 import org.imesense.dynamicspawncontrol.core.register.commandevent.CommandEventRegister;
@@ -19,6 +20,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.ArrayList;
 import java.util.List;
 
+@TODO(value = "Merge 'base' files into 'core/base/...' and fix the class diagram in version 0.2", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public abstract class BaseEventRegister
 {
     protected abstract Class<?>[] getEventClasses();

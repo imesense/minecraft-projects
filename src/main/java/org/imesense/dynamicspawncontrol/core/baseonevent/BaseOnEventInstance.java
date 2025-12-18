@@ -3,8 +3,10 @@ package org.imesense.dynamicspawncontrol.core.baseonevent;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
+@TODO(value = "Merge 'base' files into 'core/base/...' and fix the class diagram in version 0.2", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public abstract class BaseOnEventInstance
 {
     private static final Map<Class<?>, Boolean> INSTANCE_EXITS_MAP = new HashMap<>();
