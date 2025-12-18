@@ -32,7 +32,7 @@ public final class CmdAdminRemoveDroppedItems extends CommandBase
     @Override
     public String getName()
     {
-        return "";
+        return "dsc_remove_dropped_items";
     }
 
     /**
@@ -44,7 +44,7 @@ public final class CmdAdminRemoveDroppedItems extends CommandBase
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
-        return "";
+        return "/dsc_remove_dropped_items";
     }
 
     /**
