@@ -93,6 +93,8 @@ public final class PlayerNetwork
 
     public void handlePlayerRespawn(PlayerEvent.PlayerRespawnEvent event)
     {
+        //disabled
+        /*
         if (!(event.player instanceof EntityPlayerMP))
             return;
 
@@ -140,6 +142,7 @@ public final class PlayerNetwork
                     teleportMobsAwayFromPlayer(player, configRadius);
                 })
         );
+         */
     }
 
     private void teleportMobsAwayFromPlayer(EntityPlayerMP player, int radius)
