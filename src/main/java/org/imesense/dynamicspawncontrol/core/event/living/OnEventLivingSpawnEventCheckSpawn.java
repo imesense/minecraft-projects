@@ -41,13 +41,19 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnLivingSpawnEventCheckSpawnHIGHEST(LivingSpawnEvent.CheckSpawn event)
     {
-        OnEventWorldCacheOld.getInstance().handleEntitySpawnEvent(event);
+        if (!event.getWorld().isRemote)
+        {
+            OnEventWorldCacheOld.getInstance().handleEntitySpawnEvent(event);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void OnLivingSpawnEventCheckSpawnLOW(LivingSpawnEvent.CheckSpawn event)
     {
-        OnEventCheckSpawnOld.getInstance().handleLivingSpawnEventCheckSpawn(event);
+        if (!event.getWorld().isRemote)
+        {
+            OnEventCheckSpawnOld.getInstance().handleLivingSpawnEventCheckSpawn(event);
+        }
     }
 
     private static final Set<Class<? extends Entity>> ALLOWED_ENTITIES = new HashSet<>(Arrays.asList(

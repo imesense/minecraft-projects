@@ -21,6 +21,9 @@ public final class OnEventWorldEventPotentialSpawns extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void onPotentialSpawns_LOW(WorldEvent.PotentialSpawns event)
     {
-        OnEventPotentialSpawnOld.getInstance().handlePotentialSpawns(event);
+        if (!event.getWorld().isRemote)
+        {
+            OnEventPotentialSpawnOld.getInstance().handlePotentialSpawns(event);
+        }
     }
 }

@@ -21,6 +21,9 @@ public final class OnEventPopulateChunkEventPre extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnPopulateChunkEventPre_LOW(PopulateChunkEvent.Pre event)
     {
-        OnEventPopulationChunkOld.getInstance().handlePopulateChunkEventPre(event);
+        if (!event.getWorld().isRemote)
+        {
+            OnEventPopulationChunkOld.getInstance().handlePopulateChunkEventPre(event);
+        }
     }
 }

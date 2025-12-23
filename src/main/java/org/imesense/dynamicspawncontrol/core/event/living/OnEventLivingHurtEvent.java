@@ -24,6 +24,9 @@ public final class OnEventLivingHurtEvent extends BaseOnEventInstance
     {
         UpdateTorch.getInstance().handleEntityHit(event);
 
-        OnEventLivingHurt.getInstance().handleUpdateLivingHurtEvent(event);
+        if (!event.getEntity().world.isRemote)
+        {
+            OnEventLivingHurt.getInstance().handleUpdateLivingHurtEvent(event);
+        }
     }
 }

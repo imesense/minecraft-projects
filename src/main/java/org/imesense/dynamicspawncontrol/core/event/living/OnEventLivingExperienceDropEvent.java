@@ -21,6 +21,9 @@ public final class OnEventLivingExperienceDropEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnLivingExperienceDropEvent(LivingExperienceDropEvent event)
     {
-        OnEventDropExperienceOld.getInstance().handleUpdateLivingExperienceDrop(event);
+        if (!event.getEntity().world.isRemote)
+        {
+            OnEventDropExperienceOld.getInstance().handleUpdateLivingExperienceDrop(event);
+        }
     }
 }

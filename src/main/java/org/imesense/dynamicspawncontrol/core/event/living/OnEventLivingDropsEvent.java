@@ -27,7 +27,10 @@ public final class OnEventLivingDropsEvent extends BaseOnEventInstance
         DropSkeletonItem.getInstance().handleLivingDrops(event);
         DropZombieItem.getInstance().handleZombieDrops(event);
 
-        OnEventDropItemOld.getInstance().handleUpdateLivingDrops(event);
+        if (!event.getEntity().world.isRemote)
+        {
+            OnEventDropItemOld.getInstance().handleUpdateLivingDrops(event);
+        }
 
         DropsListener.getInstance().handleMobDrops(event);
     }

@@ -53,9 +53,12 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 
         OnEventAvoidLight.getInstance().handleSpiderSpawn(event);
 
-        OnEventMobTaskManagerOld.getInstance().handleUpdateEntityJoinWorld(event);
+        if (!event.getEntity().world.isRemote)
+        {
+            OnEventMobTaskManagerOld.getInstance().handleUpdateEntityJoinWorld(event);
 
-        OnEventWorldCacheOld.getInstance().handleEntityJoinWorld(event);
+            OnEventWorldCacheOld.getInstance().handleEntityJoinWorld(event);
+        }
 
         MemoryEvents.handleOnPlayerLogin(event);
     }
