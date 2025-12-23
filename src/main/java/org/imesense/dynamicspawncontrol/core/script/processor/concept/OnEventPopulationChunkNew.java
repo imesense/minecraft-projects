@@ -1,7 +1,7 @@
-package org.imesense.dynamicspawncontrol.core.script.processor;
+package org.imesense.dynamicspawncontrol.core.script.processor.concept;
 
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 
 @TODO(value = "Концептуально новый класс для реализации МТ события")
-public class OnEventWorldCacheNew {
+public class OnEventPopulationChunkNew {
 }
