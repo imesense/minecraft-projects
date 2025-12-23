@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.eventdescriptions;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
@@ -15,6 +16,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
@@ -62,33 +64,94 @@ public final class DropHeadMob
 
         ItemStack heldItem = entityLivingBase.getHeldItemMainhand();
 
-        if (heldItem.getItem() == Items.WOODEN_SWORD)
+        double attackDamage = 1.0D;
+
+        if (entityLivingBase.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
         {
-            baseChance = 0.05f;
-        }
-        else if (heldItem.getItem() == Items.STONE_SWORD)
-        {
-            baseChance = 0.10f;
-        }
-        else if (heldItem.getItem() == Items.IRON_SWORD)
-        {
-            baseChance = 0.15f;
-        }
-        else if (heldItem.getItem() == Items.GOLDEN_SWORD)
-        {
-            baseChance = 0.20f;
-        }
-        else if (heldItem.getItem() == Items.DIAMOND_SWORD)
-        {
-            baseChance = 0.30f;
+            attackDamage = entityLivingBase
+                    .getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE)
+                    .getAttributeValue();
         }
 
-        int smiteLevel = EnchantmentHelper.
-                getEnchantmentLevel(Enchantments.SMITE, heldItem);
+        float damageFactor =
+                MathHelper.clamp((float) attackDamage / 35.0f, 0.0f, 0.5f);
 
-        baseChance += smiteLevel * 0.10f;
+        baseChance += damageFactor;
 
-        return MathHelper.clamp(baseChance, 0.0f, 1.0f);
+        int smiteLevel = EnchantmentHelper
+                .getEnchantmentLevel(Enchantments.SMITE, heldItem);
+
+        float smiteMultiplier = 1.0f;
+
+        if (smiteLevel > 0)
+        {
+            smiteMultiplier += smiteLevel * 0.75f;
+            baseChance *= smiteMultiplier;
+        }
+
+        float durabilityFactor = 1.0f;
+
+        if (!heldItem.isEmpty() && heldItem.isItemStackDamageable())
+        {
+            durabilityFactor =
+                    1.0f - ((float) heldItem.getItemDamage() / heldItem.getMaxDamage());
+
+            durabilityFactor = MathHelper.clamp(durabilityFactor, 0.2f, 1.0f);
+            baseChance *= durabilityFactor;
+        }
+
+        boolean isCritical =
+                entityLivingBase.fallDistance > 0.0F &&
+                        !entityLivingBase.onGround &&
+                        !entityLivingBase.isInWater() &&
+                        !entityLivingBase.isPotionActive(net.minecraft.init.MobEffects.BLINDNESS) &&
+                        entityLivingBase.getRidingEntity() == null;
+
+        float critMultiplier = 1.0f;
+
+        if (isCritical)
+        {
+            critMultiplier = 1.35f;
+            baseChance *= critMultiplier;
+        }
+
+        float difficultyMultiplier = 1.0f;
+
+        switch (entityLivingBase.world.getDifficulty())
+        {
+            case PEACEFUL:
+                difficultyMultiplier = 0.0f;
+                break;
+            case EASY:
+                difficultyMultiplier = 0.75f;
+                break;
+            case NORMAL:
+                difficultyMultiplier = 1.0f;
+                break;
+            case HARD:
+                difficultyMultiplier = 1.25f;
+                break;
+        }
+
+        baseChance *= difficultyMultiplier;
+
+        float finalChance = MathHelper.clamp(baseChance, 0.0f, 1.0f);
+
+        Log.write(0,
+                "[HeadDrop] " +
+                        "Damage=" + String.format("%.2f", attackDamage) +
+                        " DmgFactor=" + String.format("%.2f", damageFactor) +
+                        " SmiteLvl=" + smiteLevel +
+                        " SmiteMul=" + String.format("%.2f", smiteMultiplier) +
+                        " DurMul=" + String.format("%.2f", durabilityFactor) +
+                        " Crit=" + isCritical +
+                        " CritMul=" + String.format("%.2f", critMultiplier) +
+                        " Difficulty=" + entityLivingBase.world.getDifficulty() +
+                        " DiffMul=" + String.format("%.2f", difficultyMultiplier) +
+                        " Final=" + String.format("%.3f", finalChance)
+        );
+
+        return finalChance;
     }
 
     private void dropHead(EntityLivingBase entityLivingBase, World world)
