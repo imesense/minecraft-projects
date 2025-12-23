@@ -6,10 +6,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
+@TODO(value = "Rework this event. Event does not meet the design standards", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class OnEventLivingHurt
 {
     private static volatile OnEventLivingHurt _INSTANCE;
