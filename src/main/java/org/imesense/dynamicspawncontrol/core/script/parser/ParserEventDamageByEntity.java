@@ -10,7 +10,7 @@ import java.io.File;
 
 @InitLog
 @TODO(
-        value = "Данный парсер не закончен",
+        value = "Work in Progress. Concept for 0.2 ver",
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
