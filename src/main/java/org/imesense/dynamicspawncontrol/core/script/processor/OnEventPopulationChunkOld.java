@@ -44,15 +44,13 @@ public final class OnEventPopulationChunkOld
 
         if (populationList != null)
         {
+            int currentDimension = event.getWorld().provider.getDimension();
+
             for (PopulationChunkStruct.Data data : populationList)
             {
-                if (data.idDimension != null)
+                if (data.idDimension != null && data.idDimension != currentDimension)
                 {
-                    int currentDimension = event.getWorld().provider.getDimension();
-                    if (currentDimension != data.idDimension)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
                 EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(data.entity);
@@ -66,7 +64,6 @@ public final class OnEventPopulationChunkOld
                         if (data.biomes != null && !data.biomes.isEmpty())
                         {
                             BlockPos pos = new BlockPos(event.getChunkX() * 16, 64, event.getChunkZ() * 16);
-
                             Biome currentBiome = event.getWorld().getBiome(pos);
 
                             String currentBiomeName = currentBiome.getRegistryName().toString();
@@ -128,19 +125,24 @@ public final class OnEventPopulationChunkOld
                         {
                             EnumCreatureType creatureType = CodeGeneric.getCreatureType(_class);
 
-                            for (Biome biome : Biome.REGISTRY)
+                            Biome currentBiome = event.getWorld().getBiome(
+                                    new BlockPos(event.getChunkX() * 16, 64, event.getChunkZ() * 16)
+                            );
+
+                            List<Biome.SpawnListEntry> spawnList = currentBiome.getSpawnableList(creatureType);
+
+                            int currentEntitiesInChunk = (int) spawnList.stream()
+                                .filter(entry -> entry.entityClass.equals(_class))
+                                .count();
+
+                            if (currentEntitiesInChunk < data.maxEntitiesPerChunk)
                             {
-                                List<Biome.SpawnListEntry> spawnList = biome.getSpawnableList(creatureType);
-
-                                int currentEntitiesInChunk = (int) spawnList.stream()
-                                        .filter(entry -> entry.entityClass.equals(_class))
-                                        .count();
-
-                                if (currentEntitiesInChunk < data.maxEntitiesPerChunk)
-                                {
-                                    spawnList.add(new Biome.SpawnListEntry((Class<? extends EntityLiving>) _class,
-                                            data.weight, data.groupCountMin, data.groupCountMax));
-                                }
+                                spawnList.add(new Biome.SpawnListEntry(
+                                        (Class<? extends EntityLiving>) _class,
+                                        data.weight,
+                                        data.groupCountMin,
+                                        data.groupCountMax
+                                ));
                             }
                         }
                     }
