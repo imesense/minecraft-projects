@@ -22,6 +22,7 @@ import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
+import org.imesense.dynamicspawncontrol.core.script.processor.AIZombieHasShieldNBT;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 import org.imesense.dynamicspawncontrol.eventdescriptions.NewConceptTestEvent;
@@ -36,8 +37,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod(
     modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
@@ -210,6 +209,7 @@ public final class DynamicSpawnControl
 
         // TEST
         MinecraftForge.EVENT_BUS.register(new NewConceptTestEvent());
+        MinecraftForge.EVENT_BUS.register(new AIZombieHasShieldNBT());
     }
 
     @Mod.EventHandler

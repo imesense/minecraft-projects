@@ -21,7 +21,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@TODO(value = "Merge this class in AI Tasks for Zombie entity", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "Merge this class in AI Tasks for Zombie entity. Rework this class, rework NBT/NET part", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public class AIZombieHasShieldNBT {
 
     // NBT теги для хранения данных
@@ -51,7 +51,8 @@ public class AIZombieHasShieldNBT {
         public static boolean ENABLE_SOUNDS = true; // Включить звуки
         public static boolean DESTROY_SHIELD_ON_BREAK = true; // Удалять щит при поломке
         public static boolean ALLOW_SHIELD_REPAIR = false; // Позволить восстановление щита после перезарядки
-        public static boolean USE_TEST_DURABILITY = true; // Использовать тестовую прочность щита
+        //public static boolean USE_TEST_DURABILITY = true; // Использовать тестовую прочность щита
+        public static boolean USE_RANDOM_SHIELD_STATE = true; // рандомная прочность щита от 1 до полного состояния
     }
 
     @SubscribeEvent
@@ -59,6 +60,51 @@ public class AIZombieHasShieldNBT {
         if (event.getEntity() instanceof EntityZombie) {
             EntityZombie zombie = (EntityZombie) event.getEntity();
             initShieldData(zombie);
+
+            if (Config.USE_RANDOM_SHIELD_STATE) {
+                // Проверяем основную руку
+                ItemStack mainHand = zombie.getHeldItem(EnumHand.MAIN_HAND);
+                if (!mainHand.isEmpty() && mainHand.getItem() instanceof ItemShield) {
+
+                    int max = mainHand.getMaxDamage();
+
+                    // Случайная ОСТАВШАЯСЯ прочность: от 1 до max
+                    int remaining = 1 + zombie.getRNG().nextInt(max);
+
+                    // Переводим в itemDamage
+                    mainHand.setItemDamage(max - remaining);
+
+                    if (ALWAYS_LOG_IMPORTANT_EVENTS) {
+                        Log.write(0, String.format(
+                                "[AIZombieShield][RANDOM] Случайное состояние щита: %d/%d (entity=%s)",
+                                remaining,
+                                max,
+                                zombie.getEntityId()
+                        ));
+                    }
+                    return;
+                }
+
+                // Проверяем вторую руку
+                ItemStack offHand = zombie.getHeldItem(EnumHand.OFF_HAND);
+                if (!offHand.isEmpty() && offHand.getItem() instanceof ItemShield) {
+
+                    int max = offHand.getMaxDamage();
+                    int remaining = 1 + zombie.getRNG().nextInt(max);
+                    offHand.setItemDamage(max - remaining);
+
+                    if (ALWAYS_LOG_IMPORTANT_EVENTS) {
+                        Log.write(0, String.format(
+                                "[AIZombieShield][RANDOM] Случайное состояние щита: %d/%d (entity=%s)",
+                                remaining,
+                                max,
+                                zombie.getEntityId()
+                        ));
+                    }
+                }
+            }
+
+
 
             //if (ALWAYS_LOG_IMPORTANT_EVENTS) {
             //    Log.write(0, String.format("[AIZombieShield] Зомби %s присоединился к миру в (%.1f, %.1f, %.1f)",
@@ -536,179 +582,5 @@ public class AIZombieHasShieldNBT {
                 Log.write(2, "[AIZombieShield] Сильный блок! Дополнительные эффекты для зомби " + zombie.getEntityId());
             }
         }
-    }
-
-    // Метод для принудительной установки щита (можно вызывать из спавнера)
-    public static void setupZombieWithShield(EntityZombie zombie, ItemStack shield) {
-        if (shield == null || !(shield.getItem() instanceof ItemShield)) {
-            Log.write(2, "[AIZombieShield] Попытка установить не-щит зомби " + zombie.getEntityId());
-            return;
-        }
-
-        // Создаем копию щита с полной прочностью
-        ItemStack shieldCopy = shield.copy();
-
-        // Устанавливаем тестовую прочность, если включено
-        if (Config.USE_TEST_DURABILITY) {
-            shieldCopy.setItemDamage(0); // Восстанавливаем прочность
-            // Устанавливаем максимальную прочность для теста
-            // В Minecraft 1.12.2 нет прямого setMaxDamage, но мы можем использовать NBT
-            NBTTagCompound tag = shieldCopy.getTagCompound();
-            if (tag == null) {
-                tag = new NBTTagCompound();
-            }
-            tag.setInteger("DSC_TestDurability", TEST_SHIELD_DURABILITY);
-            shieldCopy.setTagCompound(tag);
-        } else {
-            shieldCopy.setItemDamage(0); // Просто восстанавливаем прочность
-        }
-
-        // Даем щит в основную руку
-        zombie.setHeldItem(EnumHand.MAIN_HAND, shieldCopy);
-
-        // Инициализируем данные щита
-        AIZombieHasShieldNBT instance = new AIZombieHasShieldNBT();
-        instance.initShieldData(zombie);
-
-        // Получаем данные для начальной настройки
-        NBTTagCompound dscData = instance.getDSCDataPrivate(zombie);
-        dscData.setFloat(SHIELD_HEALTH, Config.MAX_SHIELD_HEALTH);
-        dscData.setInteger(SHIELD_COOLDOWN, 0);
-        dscData.setLong(LAST_HIT_TIME, 0);
-
-        if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-            Log.write(0, String.format("[AIZombieShield] Зомби %s экипирован умным щитом (здоровье=%.1f, прочность: %d/%d, тестовая прочность: %s)",
-                    zombie.getEntityId(), Config.MAX_SHIELD_HEALTH,
-                    shieldCopy.getItemDamage(), shieldCopy.getMaxDamage(),
-                    Config.USE_TEST_DURABILITY ? "ДА (" + TEST_SHIELD_DURABILITY + ")" : "НЕТ"));
-        }
-    }
-
-    // Метод для создания тестового щита с уменьшенной прочностью
-    public static ItemStack createTestShield() {
-        ItemStack shield = new ItemStack(net.minecraft.init.Items.SHIELD);
-
-        if (Config.USE_TEST_DURABILITY) {
-            // Устанавливаем тестовую прочность через NBT
-            NBTTagCompound tag = new NBTTagCompound();
-            tag.setInteger("DSC_TestDurability", TEST_SHIELD_DURABILITY);
-            shield.setTagCompound(tag);
-
-            if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-                Log.write(0, String.format("[AIZombieShield] Создан тестовый щит с прочностью %d", TEST_SHIELD_DURABILITY));
-            }
-        }
-
-        return shield;
-    }
-
-    private NBTTagCompound getDSCDataPrivate(EntityZombie zombie) {
-        NBTTagCompound data = zombie.getEntityData();
-        if (!data.hasKey("DynamicSpawnControl")) {
-            data.setTag("DynamicSpawnControl", new NBTTagCompound());
-        }
-        return data.getCompoundTag("DynamicSpawnControl");
-    }
-
-    // Методы для изменения конфигурации в runtime
-    public static void updateConfig(float maxHealth, float blockPercent, int breakCooldown,
-                                    int blockCooldown, long rechargeDelay, float rechargeRate) {
-        Config.MAX_SHIELD_HEALTH = maxHealth;
-        Config.BLOCK_PERCENTAGE = blockPercent;
-        Config.SHIELD_BREAK_COOLDOWN = breakCooldown;
-        Config.BLOCK_COOLDOWN = blockCooldown;
-        Config.RECHARGE_DELAY = rechargeDelay;
-        Config.RECHARGE_RATE = rechargeRate;
-
-        if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-            Log.write(0, "[AIZombieShield] Конфигурация обновлена:");
-            Log.write(0, String.format("  MAX_SHIELD_HEALTH: %.1f", Config.MAX_SHIELD_HEALTH));
-            Log.write(0, String.format("  BLOCK_PERCENTAGE: %.0f%%", Config.BLOCK_PERCENTAGE * 100));
-            Log.write(0, String.format("  SHIELD_BREAK_COOLDOWN: %d тиков (%.1f сек)",
-                    Config.SHIELD_BREAK_COOLDOWN, Config.SHIELD_BREAK_COOLDOWN / 20.0F));
-            Log.write(0, String.format("  BLOCK_COOLDOWN: %d тиков (%.1f сек)",
-                    Config.BLOCK_COOLDOWN, Config.BLOCK_COOLDOWN / 20.0F));
-            Log.write(0, String.format("  RECHARGE_DELAY: %d тиков (%.1f сек)",
-                    Config.RECHARGE_DELAY, Config.RECHARGE_DELAY / 20.0F));
-            Log.write(0, String.format("  RECHARGE_RATE: %.2f/тик", Config.RECHARGE_RATE));
-            Log.write(0, String.format("  DESTROY_SHIELD_ON_BREAK: %s", Config.DESTROY_SHIELD_ON_BREAK));
-            Log.write(0, String.format("  ALLOW_SHIELD_REPAIR: %s", Config.ALLOW_SHIELD_REPAIR));
-            Log.write(0, String.format("  USE_TEST_DURABILITY: %s (прочность: %d)",
-                    Config.USE_TEST_DURABILITY, TEST_SHIELD_DURABILITY));
-        }
-    }
-
-    // Метод для изменения тестовой прочности щита
-    public static void setTestShieldDurability(int durability) {
-        TEST_SHIELD_DURABILITY = durability;
-        if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-            Log.write(0, String.format("[AIZombieShield] Установлена тестовая прочность щита: %d", TEST_SHIELD_DURABILITY));
-        }
-    }
-
-    // Метод для отладки - печать состояния щита
-    public static void debugShieldState(EntityZombie zombie) {
-        AIZombieHasShieldNBT instance = new AIZombieHasShieldNBT();
-        NBTTagCompound dscData = instance.getDSCDataPrivate(zombie);
-        float health = dscData.getFloat(SHIELD_HEALTH);
-        int cooldown = dscData.getInteger(SHIELD_COOLDOWN);
-        long lastHit = dscData.getLong(LAST_HIT_TIME);
-        long currentTime = zombie.world.getTotalWorldTime();
-
-        if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-            Log.write(0, String.format("[AIZombieShield] Отладка зомби %s:", zombie.getEntityId()));
-            Log.write(0, String.format("  Здоровье щита: %.1f/%.1f (%.0f%%)",
-                    health, Config.MAX_SHIELD_HEALTH, (health / Config.MAX_SHIELD_HEALTH) * 100));
-            Log.write(0, String.format("  Кулдаун: %d тиков (%.1f сек)", cooldown, cooldown / 20.0F));
-            Log.write(0, String.format("  Последний удар: %d тиков назад", currentTime - lastHit));
-            Log.write(0, String.format("  Конфиг: блок=%.0f%%, перезарядка=%.2f/тик, уничтожать щит=%s, тест=%s",
-                    Config.BLOCK_PERCENTAGE * 100, Config.RECHARGE_RATE,
-                    Config.DESTROY_SHIELD_ON_BREAK, Config.USE_TEST_DURABILITY ? "ДА" : "НЕТ"));
-        }
-
-        ItemStack shield = instance.getShieldItem(zombie);
-        if (shield != null && !shield.isEmpty()) {
-            if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-                Log.write(0, String.format("  Предмет щита: %s, прочность: %d/%d, сломан: %s",
-                        shield.getDisplayName(),
-                        shield.getItemDamage(), shield.getMaxDamage(),
-                        shield.getItemDamage() >= shield.getMaxDamage() ? "ДА" : "НЕТ"));
-            }
-
-            // Проверяем тестовую прочность в NBT
-            if (shield.hasTagCompound()) {
-                NBTTagCompound tag = shield.getTagCompound();
-                if (tag.hasKey("DSC_TestDurability")) {
-                    if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-                        Log.write(0, String.format("  Тестовая прочность: %d", tag.getInteger("DSC_TestDurability")));
-                    }
-                }
-            }
-        } else {
-            if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-                Log.write(0, "  Щит не найден в руках");
-            }
-        }
-    }
-
-    // Метод для получения текущей конфигурации
-    public static String getConfigSummary() {
-        return String.format(
-                "MAX_SHIELD_HEALTH=%.1f, BLOCK_PERCENTAGE=%.0f%%, " +
-                        "SHIELD_BREAK_COOLDOWN=%d, BLOCK_COOLDOWN=%d, " +
-                        "RECHARGE_DELAY=%d, RECHARGE_RATE=%.2f, " +
-                        "DESTROY_SHIELD=%s, REPAIR_SHIELD=%s, " +
-                        "TEST_DURABILITY=%s (%d)",
-                Config.MAX_SHIELD_HEALTH,
-                Config.BLOCK_PERCENTAGE * 100,
-                Config.SHIELD_BREAK_COOLDOWN,
-                Config.BLOCK_COOLDOWN,
-                Config.RECHARGE_DELAY,
-                Config.RECHARGE_RATE,
-                Config.DESTROY_SHIELD_ON_BREAK,
-                Config.ALLOW_SHIELD_REPAIR,
-                Config.USE_TEST_DURABILITY,
-                TEST_SHIELD_DURABILITY
-        );
     }
 }
