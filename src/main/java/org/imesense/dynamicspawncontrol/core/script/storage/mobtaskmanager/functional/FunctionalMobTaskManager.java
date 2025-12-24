@@ -108,10 +108,10 @@ public final class FunctionalMobTaskManager
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             targetEntityClass.asSubclass(EntityLiving.class), true));
 
-                            Log.write(0, String.format(
-                                    "[MobTask] AddEnemy: %s -> %s in dimension %d",
-                                    enemyToId, targetId, currentDimension
-                            ));
+                            //Log.write(0, String.format(
+                            //        "[MobTask] AddEnemy: %s -> %s in dimension %d",
+                            //        enemyToId, targetId, currentDimension
+                            //));
                         }
                         else if (targetEntityClass.isInstance(currentEntity))
                         {
@@ -119,10 +119,10 @@ public final class FunctionalMobTaskManager
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             enemyToEntityClass.asSubclass(EntityLiving.class), true));
 
-                            Log.write(0, String.format(
-                                    "[MobTask] AddEnemy reverse: %s -> %s in dimension %d",
-                                    targetId, enemyToId, currentDimension
-                            ));
+                            //Log.write(0, String.format(
+                            //        "[MobTask] AddEnemy reverse: %s -> %s in dimension %d",
+                            //        targetId, enemyToId, currentDimension
+                            //));
                         }
                     }
                 }
@@ -173,12 +173,12 @@ public final class FunctionalMobTaskManager
                                                 targetClass, true));
                             }
 
-                            Log.write(0, String.format(
-                                    "[MobTask] AddEnemy multi: %s enemies -> %d targets in dimension %d",
-                                    currentEntity.getClass().getSimpleName(),
-                                    targetClassesSet.size(),
-                                    currentDimension
-                            ));
+                            //Log.write(0, String.format(
+                            //        "[MobTask] AddEnemy multi: %s enemies -> %d targets in dimension %d",
+                            //        currentEntity.getClass().getSimpleName(),
+                            //        targetClassesSet.size(),
+                            //        currentDimension
+                            //));
                         }
                         else if (targetClassesSet.contains(entityClass))
                         {
@@ -189,12 +189,12 @@ public final class FunctionalMobTaskManager
                                                 enemyClass, true));
                             }
 
-                            Log.write(0, String.format(
-                                    "[MobTask] AddEnemy multi reverse: %s target -> %d enemies in dimension %d",
-                                    currentEntity.getClass().getSimpleName(),
-                                    enemyClassesSet.size(),
-                                    currentDimension
-                            ));
+                            //Log.write(0, String.format(
+                            //        "[MobTask] AddEnemy multi reverse: %s target -> %d enemies in dimension %d",
+                            //        currentEntity.getClass().getSimpleName(),
+                            //        enemyClassesSet.size(),
+                            //        currentDimension
+                            //));
                         }
                     }
                 }
@@ -264,12 +264,12 @@ public final class FunctionalMobTaskManager
                                             targetClass, true));
                         }
 
-                        Log.write(0, String.format(
-                                "[MobTask] AddEnemyId: %s -> %d prefix targets in dimension %d",
-                                currentEntity.getClass().getSimpleName(),
-                                enemyIdClassesSet.size(),
-                                currentDimension
-                        ));
+                        //Log.write(0, String.format(
+                        //        "[MobTask] AddEnemyId: %s -> %d prefix targets in dimension %d",
+                        //        currentEntity.getClass().getSimpleName(),
+                        //        enemyIdClassesSet.size(),
+                        //        currentDimension
+                        //));
                     }
                     else if (enemyIdClassesSet.contains(currentEntityClass))
                     {
@@ -280,12 +280,12 @@ public final class FunctionalMobTaskManager
                                             targetClass, true));
                         }
 
-                        Log.write(0, String.format(
-                                "[MobTask] AddEnemyId reverse: %s -> %d specific enemies in dimension %d",
-                                currentEntity.getClass().getSimpleName(),
-                                enemyClassesSet.size(),
-                                currentDimension
-                        ));
+                        //Log.write(0, String.format(
+                        //        "[MobTask] AddEnemyId reverse: %s -> %d specific enemies in dimension %d",
+                        //        currentEntity.getClass().getSimpleName(),
+                        //        enemyClassesSet.size(),
+                        //        currentDimension
+                        //));
                     }
                 }
             }
@@ -352,12 +352,12 @@ public final class FunctionalMobTaskManager
                                         panicClass, 16.0F, 1.5D, 2.0D));
                     }
 
-                    Log.write(0, String.format(
-                            "[MobTask] AddPanic: %s fears %d entities in dimension %d",
-                            currentEntity.getClass().getSimpleName(),
-                            panicIdClassesSet.size(),
-                            currentDimension
-                    ));
+                    //Log.write(0, String.format(
+                    //        "[MobTask] AddPanic: %s fears %d entities in dimension %d",
+                    //        currentEntity.getClass().getSimpleName(),
+                    //        panicIdClassesSet.size(),
+                    //        currentDimension
+                    //));
                 }
             }
         }
@@ -430,12 +430,12 @@ public final class FunctionalMobTaskManager
                                                 targetClass, true));
                             }
 
-                            Log.write(0, String.format(
-                                    "[MobTask] EnemyToId: %s -> %d them targets in dimension %d",
-                                    currentEntity.getClass().getSimpleName(),
-                                    themIdClassesSet.size(),
-                                    currentDimension
-                            ));
+                            //Log.write(0, String.format(
+                            //        "[MobTask] EnemyToId: %s -> %d them targets in dimension %d",
+                            //        currentEntity.getClass().getSimpleName(),
+                            //        themIdClassesSet.size(),
+                            //        currentDimension
+                            //));
                         }
 
                         if (themIdClassesSet.contains(currentEntityClass))
@@ -447,12 +447,12 @@ public final class FunctionalMobTaskManager
                                                 targetClass, true));
                             }
 
-                            Log.write(0, String.format(
-                                    "[MobTask] EnemyToId reverse: %s -> %d enemy targets in dimension %d",
-                                    currentEntity.getClass().getSimpleName(),
-                                    enemyIdClassesSet.size(),
-                                    currentDimension
-                            ));
+                            //Log.write(0, String.format(
+                            //        "[MobTask] EnemyToId reverse: %s -> %d enemy targets in dimension %d",
+                            //        currentEntity.getClass().getSimpleName(),
+                            //        enemyIdClassesSet.size(),
+                            //        currentDimension
+                            //));
                         }
                     }
                 }
