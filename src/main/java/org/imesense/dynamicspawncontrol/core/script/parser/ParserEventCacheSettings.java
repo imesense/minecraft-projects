@@ -125,6 +125,17 @@ public final class ParserEventCacheSettings extends BaseParser
                     }
                 }
 
+                Integer idDimension = null;
+                if (dataObject.has("id_dimension"))
+                {
+                    idDimension = dataObject.get("id_dimension").getAsInt();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Found id_dimension: " + idDimension);
+                    }
+                }
+
                 Boolean perPlayer = false;
                 Boolean perChunk = false;
                 Integer maxEntityCount = 0;
@@ -172,16 +183,16 @@ public final class ParserEventCacheSettings extends BaseParser
                 {
                     if (!isContinue)
                     {
-                        Log.write(0, "Parsed values - per_player: " + perPlayer +
-                                ", per_chunk: " + perChunk +
-                                ", max_entity_count: " + maxEntityCount +
-                                ", continue: " + isContinue +
-                                ", result: " + resultStr);
+                        Log.write(0, String.format("Parsed values - per_player: %s, per_chunk: %s, " +
+                                        "max_entity_count: %d, id_dimension: %s, continue: %s, result: %s",
+                                perPlayer, perChunk, maxEntityCount,
+                                idDimension != null ? idDimension.toString() : "any",
+                                isContinue, resultStr));
                     }
                     else
                     {
-                        Log.write(0, "Parsed values - continue: " + isContinue +
-                                ", result: " + resultStr + " (other parameters ignored)");
+                        Log.write(0, String.format("Parsed values - continue: %s, id_dimension: %s, result: %s",
+                                isContinue, idDimension != null ? idDimension.toString() : "any", resultStr));
                     }
                 }
 
@@ -264,28 +275,30 @@ public final class ParserEventCacheSettings extends BaseParser
                 entityData.max_entity_count = maxEntityCount;
                 entityData.isContinue = isContinue;
                 entityData.result = result;
+                entityData.idDimension = idDimension;
 
                 entitiesList.add(entityData);
 
                 if (!isContinue)
                 {
-                    Log.write(0, "Entity Loaded: " +
-                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName) +
-                            " Per Player: " + perPlayer + " Per Chunk: " +
-                            perChunk + " Max Count: " + maxEntityCount +
-                            " Continue: " + isContinue + " Result: " + result);
+                    Log.write(0, String.format("Entity Loaded: %s Per Player: %s Per Chunk: %s " +
+                                    "Max Count: %d Dimension: %s Continue: %s Result: %s",
+                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName),
+                            perPlayer, perChunk, maxEntityCount,
+                            idDimension != null ? idDimension.toString() : "any",
+                            isContinue, result));
                 }
                 else
                 {
-                    Log.write(0, "Entity Loaded (Continue mode): " +
-                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName) +
-                            " Continue: " + isContinue + " Result: " + result +
-                            " (per_player, per_chunk, max_entity_count ignored)");
+                    Log.write(0, String.format("Entity Loaded (Continue mode): %s Dimension: %s Continue: %s Result: %s",
+                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName),
+                            idDimension != null ? idDimension.toString() : "any",
+                            isContinue, result));
                 }
             }
 
             CacheEntityStorage.getInstance().entityData = entitiesList;
-            Log.write(0, "Loaded script with data: " + entitiesList);
+            Log.write(0, "Loaded script with " + entitiesList.size() + " entity data entries");
         }
         catch (IOException | JsonSyntaxException exception)
         {

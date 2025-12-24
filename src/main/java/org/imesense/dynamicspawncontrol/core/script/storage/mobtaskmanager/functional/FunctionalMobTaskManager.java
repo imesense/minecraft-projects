@@ -14,10 +14,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyToIdThemToId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicToId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -51,12 +48,39 @@ public final class FunctionalMobTaskManager
         return nbtTagCompound.getString("id");
     }
 
+    private boolean checkDimension(Entity entity, Integer ruleDimension)
+    {
+        if (ruleDimension == null)
+        {
+            return true;
+        }
+
+        int currentDimension = entity.world.provider.getDimension();
+        boolean isValid = currentDimension == ruleDimension;
+
+        if (!isValid)
+        {
+            Log.write(0, String.format(
+                    "[MobTask] Skipping rule: dimension mismatch (need %d, got %d)",
+                    ruleDimension, currentDimension
+            ));
+        }
+
+        return isValid;
+    }
+
     public void processAddEnemyData(EntityJoinWorldEvent event)
     {
         EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        int currentDimension = currentEntity.world.provider.getDimension();
 
         for (AddEnemy.Data data : GeneralMobTaskManager.getInstance().addEnemyData)
         {
+            if (!checkDimension(currentEntity, data.idDimension))
+            {
+                continue;
+            }
+
             String[] enemiesTo = data.enemies_to;
             String[] toThem = data.to_them;
 
@@ -83,12 +107,22 @@ public final class FunctionalMobTaskManager
                             currentEntity.targetTasks.addTask(5,
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             targetEntityClass.asSubclass(EntityLiving.class), true));
+
+                            Log.write(0, String.format(
+                                    "[MobTask] AddEnemy: %s -> %s in dimension %d",
+                                    enemyToId, targetId, currentDimension
+                            ));
                         }
                         else if (targetEntityClass.isInstance(currentEntity))
                         {
                             currentEntity.targetTasks.addTask(5,
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             enemyToEntityClass.asSubclass(EntityLiving.class), true));
+
+                            Log.write(0, String.format(
+                                    "[MobTask] AddEnemy reverse: %s -> %s in dimension %d",
+                                    targetId, enemyToId, currentDimension
+                            ));
                         }
                     }
                 }
@@ -138,6 +172,13 @@ public final class FunctionalMobTaskManager
                                         new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                                 targetClass, true));
                             }
+
+                            Log.write(0, String.format(
+                                    "[MobTask] AddEnemy multi: %s enemies -> %d targets in dimension %d",
+                                    currentEntity.getClass().getSimpleName(),
+                                    targetClassesSet.size(),
+                                    currentDimension
+                            ));
                         }
                         else if (targetClassesSet.contains(entityClass))
                         {
@@ -147,6 +188,13 @@ public final class FunctionalMobTaskManager
                                         new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                                 enemyClass, true));
                             }
+
+                            Log.write(0, String.format(
+                                    "[MobTask] AddEnemy multi reverse: %s target -> %d enemies in dimension %d",
+                                    currentEntity.getClass().getSimpleName(),
+                                    enemyClassesSet.size(),
+                                    currentDimension
+                            ));
                         }
                     }
                 }
@@ -157,9 +205,15 @@ public final class FunctionalMobTaskManager
     public void processAddEnemyIdData(EntityJoinWorldEvent event)
     {
         EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        int currentDimension = currentEntity.world.provider.getDimension();
 
         for (AddEnemyId.Data data : GeneralMobTaskManager.getInstance().addEnemyIdData)
         {
+            if (!checkDimension(currentEntity, data.idDimension))
+            {
+                continue;
+            }
+
             String[] enemiesTo = data.enemies_to;
             String[] enemyIdPrefixes = data.enemy_id;
 
@@ -209,6 +263,13 @@ public final class FunctionalMobTaskManager
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             targetClass, true));
                         }
+
+                        Log.write(0, String.format(
+                                "[MobTask] AddEnemyId: %s -> %d prefix targets in dimension %d",
+                                currentEntity.getClass().getSimpleName(),
+                                enemyIdClassesSet.size(),
+                                currentDimension
+                        ));
                     }
                     else if (enemyIdClassesSet.contains(currentEntityClass))
                     {
@@ -218,6 +279,13 @@ public final class FunctionalMobTaskManager
                                     new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                             targetClass, true));
                         }
+
+                        Log.write(0, String.format(
+                                "[MobTask] AddEnemyId reverse: %s -> %d specific enemies in dimension %d",
+                                currentEntity.getClass().getSimpleName(),
+                                enemyClassesSet.size(),
+                                currentDimension
+                        ));
                     }
                 }
             }
@@ -227,9 +295,15 @@ public final class FunctionalMobTaskManager
     public void processAddPanicToIdData(EntityJoinWorldEvent event)
     {
         EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        int currentDimension = currentEntity.world.provider.getDimension();
 
         for (AddPanicToId.Data data : GeneralMobTaskManager.getInstance().addPanicToIdData)
         {
+            if (!checkDimension(currentEntity, data.idDimension))
+            {
+                continue;
+            }
+
             String[] panicTo = data.panic_to;
             String[] panicIdPrefixes = data.panic_id;
 
@@ -277,6 +351,13 @@ public final class FunctionalMobTaskManager
                                 new EntityAIAvoidEntity<>((EntityCreature) currentEntity,
                                         panicClass, 16.0F, 1.5D, 2.0D));
                     }
+
+                    Log.write(0, String.format(
+                            "[MobTask] AddPanic: %s fears %d entities in dimension %d",
+                            currentEntity.getClass().getSimpleName(),
+                            panicIdClassesSet.size(),
+                            currentDimension
+                    ));
                 }
             }
         }
@@ -285,9 +366,15 @@ public final class FunctionalMobTaskManager
     public void processAddEnemyToIdThemToIdData(EntityJoinWorldEvent event)
     {
         EntityLiving currentEntity = (EntityLiving) event.getEntity();
+        int currentDimension = currentEntity.world.provider.getDimension();
 
         for (AddEnemyToIdThemToId.Data data : GeneralMobTaskManager.getInstance().addEnemyToIdThemToIdData)
         {
+            if (!checkDimension(currentEntity, data.idDimension))
+            {
+                continue;
+            }
+
             String[] enemyIdPrefixes = data.enemy_id;
             String[] themIdPrefixes = data.them_id;
 
@@ -342,6 +429,13 @@ public final class FunctionalMobTaskManager
                                         new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                                 targetClass, true));
                             }
+
+                            Log.write(0, String.format(
+                                    "[MobTask] EnemyToId: %s -> %d them targets in dimension %d",
+                                    currentEntity.getClass().getSimpleName(),
+                                    themIdClassesSet.size(),
+                                    currentDimension
+                            ));
                         }
 
                         if (themIdClassesSet.contains(currentEntityClass))
@@ -352,6 +446,13 @@ public final class FunctionalMobTaskManager
                                         new EntityAINearestAttackableTarget<>((EntityCreature) currentEntity,
                                                 targetClass, true));
                             }
+
+                            Log.write(0, String.format(
+                                    "[MobTask] EnemyToId reverse: %s -> %d enemy targets in dimension %d",
+                                    currentEntity.getClass().getSimpleName(),
+                                    enemyIdClassesSet.size(),
+                                    currentDimension
+                            ));
                         }
                     }
                 }

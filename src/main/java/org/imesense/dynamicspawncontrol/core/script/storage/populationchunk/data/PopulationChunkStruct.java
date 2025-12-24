@@ -19,6 +19,7 @@ public final class PopulationChunkStruct
         public Integer groupCountMax;
         public List<String> biomes;
         public Boolean isWater;
+        public Integer idDimension;
         public String spawnChancePriority;
         public Integer maxEntitiesPerChunk;
     }

@@ -224,6 +224,7 @@ public final class ParserEventCheckSpawn extends BaseParser
         profilePriorityData.priority = dataObject.has("priority") ? dataObject.get("priority").getAsInt() : 0;
         entityDescriptionData.isArcher = dataObject.has("is_archer") && dataObject.get("is_archer").getAsBoolean();
         gameWorldData.seeSky = dataObject.has("see_sky") ? dataObject.get("see_sky").getAsBoolean() : null;
+        gameWorldData.idDimension = dataObject.has("id_dimension") ? dataObject.get("id_dimension").getAsInt() : null;
         entityAttributesData.commandNbt = dataObject.has("command_nbt") ? dataObject.get("command_nbt").toString() : null;
         gameWorldData.maxHeight = dataObject.has("max_height") ? dataObject.get("max_height").getAsInt() : null;
         gameWorldData.minHeight = dataObject.has("min_height") ? dataObject.get("min_height").getAsInt() : null;
@@ -232,11 +233,12 @@ public final class ParserEventCheckSpawn extends BaseParser
         if (DEBUG_AND_CHECK_SYNTAX)
         {
             Log.write(0, "Parsed basic entity data: " +
-                    "priority=" + profilePriorityData.priority +
-                    ", isArcher=" + entityDescriptionData.isArcher +
-                    ", seeSky=" + gameWorldData.seeSky +
-                    ", maxHeight=" + gameWorldData.maxHeight +
-                    ", minHeight=" + gameWorldData.minHeight);
+                    "priority = " + profilePriorityData.priority +
+                    ", isArcher = " + entityDescriptionData.isArcher +
+                    ", seeSky = " + gameWorldData.seeSky +
+                    ", idDimension = " + gameWorldData.idDimension +
+                    ", maxHeight = " + gameWorldData.maxHeight +
+                    ", minHeight = " + gameWorldData.minHeight);
         }
 
         if (dataObject.has("equipment"))
@@ -443,6 +445,7 @@ public final class ParserEventCheckSpawn extends BaseParser
             AdditionalChecks.Data dataSupport = new AdditionalChecks.Data();
 
             dataSupport.seeSky = dataSupportObject.has("see_sky") ? dataSupportObject.get("see_sky").getAsBoolean() : null;
+            dataSupport.idDimension = dataSupportObject.has("idDimension") ? dataSupportObject.get("idDimension").getAsInt() : null;
 
             String entityTypeString = dataSupportObject.get("entity_type").getAsString();
 

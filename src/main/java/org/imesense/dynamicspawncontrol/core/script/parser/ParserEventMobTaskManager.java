@@ -5,10 +5,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemy;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddPanicToId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyId;
-import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.AddEnemyToIdThemToId;
+import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
@@ -17,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 
 @InitLog
 public final class ParserEventMobTaskManager extends BaseParser
@@ -60,6 +56,30 @@ public final class ParserEventMobTaskManager extends BaseParser
         }
 
         return array;
+    }
+
+    private Integer parseIdDimension(JsonObject jsonObject, String dataType)
+    {
+        if (jsonObject.has("id_dimension"))
+        {
+            Integer idDim = jsonObject.get("id_dimension").getAsInt();
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, String.format("Found id_dimension: %d for %s", idDim, dataType));
+            }
+
+            return idDim;
+        }
+        else
+        {
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, String.format("No id_dimension for %s (will work in all dimensions)", dataType));
+            }
+
+            return null;
+        }
     }
 
     @Override
@@ -119,9 +139,14 @@ public final class ParserEventMobTaskManager extends BaseParser
                         data.enemies_to = getStringArray(topLevelObject, "enemies_to");
                         data.to_them = getStringArray(topLevelObject, "to_them");
 
-                        Log.write(0, "Parsed AddEnemy.Data:");
-                        Log.write(0, "enemies_to: " + Arrays.toString(data.enemies_to));
-                        Log.write(0, "to_them: " + Arrays.toString(data.to_them));
+                        data.idDimension = parseIdDimension(topLevelObject, "AddEnemy.Data");
+
+                        Log.write(0, String.format(
+                                "Parsed AddEnemy.Data: enemies_to: %s, to_them: %s, dimension: %s",
+                                Arrays.toString(data.enemies_to),
+                                Arrays.toString(data.to_them),
+                                data.idDimension != null ? data.idDimension.toString() : "any"
+                        ));
 
                         taskManager.addEnemyData.add(data);
 
@@ -142,9 +167,14 @@ public final class ParserEventMobTaskManager extends BaseParser
                         data.enemies_to = getStringArray(topLevelObject, "enemies_to");
                         data.enemy_id = getStringArray(topLevelObject, "enemy_id");
 
-                        Log.write(0, "Parsed AddEnemyId.Data:");
-                        Log.write(0, "enemies_to: " + Arrays.toString(data.enemies_to));
-                        Log.write(0, "enemy_id: " + Arrays.toString(data.enemy_id));
+                        data.idDimension = parseIdDimension(topLevelObject, "AddEnemyId.Data");
+
+                        Log.write(0, String.format(
+                                "Parsed AddEnemyId.Data: enemies_to: %s, enemy_id: %s, dimension: %s",
+                                Arrays.toString(data.enemies_to),
+                                Arrays.toString(data.enemy_id),
+                                data.idDimension != null ? data.idDimension.toString() : "any"
+                        ));
 
                         taskManager.addEnemyIdData.add(data);
 
@@ -165,9 +195,14 @@ public final class ParserEventMobTaskManager extends BaseParser
                         data.panic_to = getStringArray(topLevelObject, "panic_to");
                         data.panic_id = getStringArray(topLevelObject, "panic_id");
 
-                        Log.write(0, "Parsed AddPanicToId.Data:");
-                        Log.write(0, "panic_to: " + Arrays.toString(data.panic_to));
-                        Log.write(0, "panic_id: " + Arrays.toString(data.panic_id));
+                        data.idDimension = parseIdDimension(topLevelObject, "AddPanicToId.Data");
+
+                        Log.write(0, String.format(
+                                "Parsed AddPanicToId.Data: panic_to: %s, panic_id: %s, dimension: %s",
+                                Arrays.toString(data.panic_to),
+                                Arrays.toString(data.panic_id),
+                                data.idDimension != null ? data.idDimension.toString() : "any"
+                        ));
 
                         taskManager.addPanicToIdData.add(data);
 
@@ -188,9 +223,14 @@ public final class ParserEventMobTaskManager extends BaseParser
                         data.enemy_id = getStringArray(topLevelObject, "enemy_id");
                         data.them_id = getStringArray(topLevelObject, "them_id");
 
-                        Log.write(0, "Parsed AddEnemyToIdThemToId.Data:");
-                        Log.write(0, "enemy_id: " + Arrays.toString(data.enemy_id));
-                        Log.write(0, "them_id: " + Arrays.toString(data.them_id));
+                        data.idDimension = parseIdDimension(topLevelObject, "AddEnemyToIdThemToId.Data");
+
+                        Log.write(0, String.format(
+                                "Parsed AddEnemyToIdThemToId.Data: enemy_id: %s, them_id: %s, dimension: %s",
+                                Arrays.toString(data.enemy_id),
+                                Arrays.toString(data.them_id),
+                                data.idDimension != null ? data.idDimension.toString() : "any"
+                        ));
 
                         taskManager.addEnemyToIdThemToIdData.add(data);
 
@@ -214,6 +254,16 @@ public final class ParserEventMobTaskManager extends BaseParser
                     }
                 }
             }
+
+            Log.write(0, String.format(
+                    "Mob task configuration loaded: %d AddEnemy, %d AddEnemyId, %d AddPanicToId, %d AddEnemyToIdThemToId",
+                    taskManager.addEnemyData.size(),
+                    taskManager.addEnemyIdData.size(),
+                    taskManager.addPanicToIdData.size(),
+                    taskManager.addEnemyToIdThemToIdData.size()
+            ));
+
+            logDimensionStats(taskManager);
         }
         catch (FileNotFoundException exception)
         {
@@ -234,6 +284,58 @@ public final class ParserEventMobTaskManager extends BaseParser
         {
             Log.write(2, "Unexpected error: " + exception.getMessage());
             throw new RuntimeException(exception);
+        }
+    }
+
+    private void logDimensionStats(GeneralMobTaskManager taskManager)
+    {
+        Log.write(0, "=== Dimension statistics for mob tasks ===");
+
+        int anyDimensionCount = 0;
+        int specificDimensionCount = 0;
+
+        for (AddEnemy.Data data : taskManager.addEnemyData)
+        {
+            if (data.idDimension == null) anyDimensionCount++;
+            else specificDimensionCount++;
+        }
+
+        for (AddEnemyId.Data data : taskManager.addEnemyIdData)
+        {
+            if (data.idDimension == null) anyDimensionCount++;
+            else specificDimensionCount++;
+        }
+
+        for (AddPanicToId.Data data : taskManager.addPanicToIdData)
+        {
+            if (data.idDimension == null) anyDimensionCount++;
+            else specificDimensionCount++;
+        }
+
+        for (AddEnemyToIdThemToId.Data data : taskManager.addEnemyToIdThemToIdData)
+        {
+            if (data.idDimension == null) anyDimensionCount++;
+            else specificDimensionCount++;
+        }
+
+        Log.write(0, String.format(
+                "Rules for any dimension: %d, Rules for specific dimensions: %d, Total: %d",
+                anyDimensionCount, specificDimensionCount, anyDimensionCount + specificDimensionCount
+        ));
+
+        if (DEBUG_AND_CHECK_SYNTAX)
+        {
+            Log.write(0, "Examples of dimension-specific rules:");
+            for (AddEnemy.Data data : taskManager.addEnemyData)
+            {
+                if (data.idDimension != null)
+                {
+                    Log.write(0, String.format("  - AddEnemy in dim %d: %s -> %s",
+                            data.idDimension,
+                            Arrays.toString(data.enemies_to),
+                            Arrays.toString(data.to_them)));
+                }
+            }
         }
     }
 

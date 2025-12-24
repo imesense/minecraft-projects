@@ -144,6 +144,16 @@ public final class OnEventCheckSpawnOld
                         }
                     }
 
+                    if (selectedWorldData.idDimension != null)
+                    {
+                        int currentDimension = event.getWorld().provider.getDimension();
+
+                        if (currentDimension != selectedWorldData.idDimension)
+                        {
+                            return;
+                        }
+                    }
+
                     if (entityDescription != null && entityDescription.name != null)
                     {
                         event.getEntity().setCustomNameTag(entityDescription.name);
@@ -172,6 +182,16 @@ public final class OnEventCheckSpawnOld
                             Boolean canSeeSky = event.getWorld().canBlockSeeSky(event.getEntity().getPosition());
 
                             if ((dataSupport.seeSky && !canSeeSky) || (!dataSupport.seeSky && canSeeSky))
+                            {
+                                continue;
+                            }
+                        }
+
+                        if (dataSupport.idDimension != null)
+                        {
+                            int currentDimension = event.getWorld().provider.getDimension();
+
+                            if (currentDimension != dataSupport.idDimension)
                             {
                                 continue;
                             }

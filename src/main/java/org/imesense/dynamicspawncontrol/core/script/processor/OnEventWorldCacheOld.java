@@ -24,9 +24,7 @@ import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheFunctional;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
-import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
+import org.imesense.dynamicspawncontrol.core.worldcache.*;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -153,13 +151,13 @@ public final class OnEventWorldCacheOld
     public void handleEntitySpawnEvent(LivingSpawnEvent.CheckSpawn event)
     {
         Entity entity = event.getEntity();
+        World world = event.getWorld();
+        int currentDimension = world.provider.getDimension();
         ResourceLocation entityKey = EntityList.getKey(entity);
 
-        if ((entity instanceof IAnimals && !(entity instanceof EntityMob)
+        if (currentDimension == 0 && (entity instanceof IAnimals && !(entity instanceof EntityMob)
                 && !WorldCacheConfig.getInstance(WorldCacheConfig.class).isSpawnPeacefulCreaturesAtNight()))
         {
-            World world = event.getWorld();
-
             if (!world.isDaytime())
             {
                 event.setResult(Event.Result.DENY);
@@ -171,6 +169,11 @@ public final class OnEventWorldCacheOld
         .entityData.stream()
         .filter(data ->
         {
+            if (data.idDimension != null && data.idDimension != currentDimension)
+            {
+                return false;
+            }
+
             if (data.check_instanceof != null)
             {
                 return data.check_instanceof.isInstance(entity);
@@ -197,7 +200,8 @@ public final class OnEventWorldCacheOld
                 event.setResult(entityData.result);
             }
 
-            Log.write(0, "Entity " + entityKey + " processed with continue: true, result: " + (entityData.result != null ? entityData.result : "DEFAULT"));
+            Log.write(0, String.format("Entity %s in dimension %d processed with continue: true, result: %s",
+                    entityKey, currentDimension, entityData.result != null ? entityData.result : "DEFAULT"));
             return;
         }
 
@@ -208,14 +212,14 @@ public final class OnEventWorldCacheOld
 
             if ((isZombie || isPigZombie) && !event.getWorld().isRemote)
             {
-                int zombieCount = event.getWorld().getEntities(
-                        isZombie ? EntityZombie.class : EntityPigZombie.class,
-                        e -> true
-                ).size();
-
-                //Log.write(0,
-                //        (isZombie ? "Zombie" : "Pig Zombie") +
-                //                " spawn attempt. Current count: " + zombieCount);
+                int zombieCount = (int) event.getWorld().loadedEntityList.stream()
+                .filter(e ->
+                {
+                    if (isZombie && e instanceof EntityZombie) return true;
+                    if (isPigZombie && e instanceof EntityPigZombie) return true;
+                    return false;
+                })
+                .count();
 
                 if (entityData.max_entity_count != null && zombieCount >= entityData.max_entity_count)
                 {

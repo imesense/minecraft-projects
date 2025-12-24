@@ -14,6 +14,7 @@ public final class EntityDropExperience
     public static final class Data
     {
         public ResourceLocation entity;
+        public Integer idDimension;
         public Integer xp;
         public Float multi_xp = 1.0f;
         public Float adding_xp;

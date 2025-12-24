@@ -121,27 +121,30 @@ public final class ParserEventPotentialSpawn extends BaseParser
                                 }
 
                                 Integer weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
+                                Integer idDimension = mobMap.has("id_dimension") ? mobMap.get("id_dimension").getAsInt() : null;
                                 Integer groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
                                 Integer groupCountMax = mobMap.has("groupcountmax") ? mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
 
                                 if (DEBUG_AND_CHECK_SYNTAX)
                                 {
                                     Log.write(0, String.format(
-                                            "Mob %s settings: weight=%d, groupCount=%d-%d",
-                                            id, weight, groupCountMin, groupCountMax
+                                            "Mob %s settings: weight = %d, id dimension = %d, groupCount = %d - %d",
+                                            id, weight, idDimension, groupCountMin, groupCountMax
                                     ));
                                 }
 
                                 PotentialSpawnStruct.Data data = new PotentialSpawnStruct.Data();
-                                data.spawnChance = mobMap.has("spawn_chance") ? mobMap.get("spawn_chance").getAsFloat() : 0.01f;
                                 data.minHeight = mobMap.has("min_height") ? mobMap.get("min_height").getAsFloat() : 1.0f;
                                 data.maxHeight = mobMap.has("max_height") ? mobMap.get("max_height").getAsFloat() : 255.0f;
+                                data.spawnChance = mobMap.has("spawn_chance") ? mobMap.get("spawn_chance").getAsFloat() : 0.01f;
+                                data.idDimension = idDimension;
 
                                 if (DEBUG_AND_CHECK_SYNTAX)
                                 {
                                     Log.write(0, String.format(
-                                            "Spawn parameters: chance=%.2f, height=%.1f-%.1f",
-                                            data.spawnChance, data.minHeight, data.maxHeight
+                                            "Spawn parameters: chance = %.2f, height = %.1f - %.1f, dimension = %s",
+                                            data.spawnChance, data.minHeight, data.maxHeight,
+                                            data.idDimension != null ? data.idDimension.toString() : "any"
                                     ));
                                 }
 
@@ -164,10 +167,12 @@ public final class ParserEventPotentialSpawn extends BaseParser
                                                 "Weight [%d], " +
                                                 "Group min [%d], " +
                                                 "Group max [%d], " +
-                                                "Height [%.1f-%.1f]",
+                                                "Height [%.1f-%.1f], " +
+                                                "Dimension [%s]",
                                         entry, id, data.spawnChance, weight,
                                         groupCountMin, groupCountMax,
-                                        data.minHeight, data.maxHeight));
+                                        data.minHeight, data.maxHeight,
+                                        data.idDimension != null ? data.idDimension.toString() : "any"));
                             }
                             catch (Exception exception)
                             {

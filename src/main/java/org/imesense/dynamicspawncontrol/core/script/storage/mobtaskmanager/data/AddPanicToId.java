@@ -9,6 +9,7 @@ public final class AddPanicToId
 
     public static final class Data
     {
+        public Integer idDimension;
         public String[] panic_to;
         public String[] panic_id;
     }

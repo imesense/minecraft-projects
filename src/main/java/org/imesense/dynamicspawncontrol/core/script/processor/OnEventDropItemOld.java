@@ -10,6 +10,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -48,36 +49,104 @@ public final class OnEventDropItemOld
             return;
         }
 
+        int currentDimension = entity.world.provider.getDimension();
         Random random = new Random();
+
+        boolean foundRules = false;
 
         for (DropItem.Data data : GeneralDropItem.getInstance().dropItemList)
         {
-            if (entityResourceLocation.equals(data.entity))
+            if (!entityResourceLocation.equals(data.entity))
             {
-                for (DropItem.Data.ItemDrop drop : data.drops)
+                continue;
+            }
+
+            foundRules = true;
+
+            if (data.idDimension != null && data.idDimension != currentDimension)
+            {
+                Log.write(0, String.format(
+                        "[DropItem] Skipping rule for %s: dimension mismatch (need %d, got %d)",
+                        data.entity, data.idDimension, currentDimension
+                ));
+                continue;
+            }
+
+            Log.write(0, String.format(
+                    "[DropItem] Processing rule for %s in dimension %d",
+                    data.entity, currentDimension
+            ));
+
+            int itemsAdded = 0;
+
+            for (DropItem.Data.ItemDrop drop : data.drops)
+            {
+                if (drop.result == Event.Result.DENY)
                 {
-                    if (drop.result == Event.Result.DENY)
+                    Log.write(0, String.format(
+                            "  [DropItem] SKIP item %s: result=DENY",
+                            drop.item
+                    ));
+                    continue;
+                }
+
+                boolean shouldDrop = drop.result == Event.Result.ALLOW ||
+                        (drop.result == Event.Result.DEFAULT &&
+                                (drop.chance >= 1.0f || random.nextFloat() <= drop.chance));
+
+                if (shouldDrop)
+                {
+                    int amount = drop.minAmount + (drop.maxAmount > drop.minAmount ?
+                            random.nextInt(drop.maxAmount - drop.minAmount + 1) : 0);
+
+                    if (amount > 0)
                     {
-                        continue;
+                        ItemStack itemStack = new ItemStack(Item.REGISTRY.getObject(drop.item), amount);
+                        event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStack));
+
+                        itemsAdded++;
+
+                        Log.write(0, String.format(
+                                "  [DropItem] ADDED %s x%d (chance: %.2f, result: %s)",
+                                drop.item, amount, drop.chance, drop.result
+                        ));
                     }
-
-                    boolean shouldDrop = drop.result == Event.Result.ALLOW ||
-                            (drop.result == Event.Result.DEFAULT &&
-                                    (drop.chance >= 1.0f || random.nextFloat() <= drop.chance));
-
-                    if (shouldDrop)
+                    else
                     {
-                        int amount = drop.minAmount + (drop.maxAmount > drop.minAmount ?
-                                random.nextInt(drop.maxAmount - drop.minAmount + 1) : 0);
-
-                        if (amount > 0)
-                        {
-                            ItemStack itemStack = new ItemStack(Item.REGISTRY.getObject(drop.item), amount);
-                            event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStack));
-                        }
+                        Log.write(0, String.format(
+                                "  [DropItem] SKIP item %s: amount=0",
+                                drop.item
+                        ));
                     }
                 }
+                else
+                {
+                    Log.write(0, String.format(
+                            "  [DropItem] FAILED chance for %s: %.2f (result: %s)",
+                            drop.item, drop.chance, drop.result
+                    ));
+                }
             }
+
+            Log.write(0, String.format(
+                    "[DropItem] Rule for %s completed: %d items added",
+                    data.entity, itemsAdded
+            ));
+        }
+
+        if (!foundRules)
+        {
+            Log.write(0, String.format(
+                    "[DropItem] No rules found for entity %s in dimension %d",
+                    entityResourceLocation, currentDimension
+            ));
+        }
+        else
+        {
+            Log.write(0, String.format(
+                    "[DropItem] Finished processing drops for %s in dimension %d. Total drops: %d",
+                    entity.getName(), currentDimension, event.getDrops().size()
+            ));
         }
     }
 }

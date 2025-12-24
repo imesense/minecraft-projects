@@ -46,6 +46,15 @@ public final class OnEventPopulationChunkOld
         {
             for (PopulationChunkStruct.Data data : populationList)
             {
+                if (data.idDimension != null)
+                {
+                    int currentDimension = event.getWorld().provider.getDimension();
+                    if (currentDimension != data.idDimension)
+                    {
+                        continue;
+                    }
+                }
+
                 EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(data.entity);
 
                 if (entityEntry != null)

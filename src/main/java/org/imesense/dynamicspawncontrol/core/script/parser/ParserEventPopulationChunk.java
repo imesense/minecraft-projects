@@ -123,6 +123,9 @@ public final class ParserEventPopulationChunk extends BaseParser
                                 Integer weight = mobMap.has("weight") ?
                                         mobMap.get("weight").getAsInt() : 1;
 
+                                Integer idDimension = mobMap.has("id_dimension") ?
+                                        mobMap.get("id_dimension").getAsInt() : null;
+
                                 Integer groupCountMin = mobMap.has("groupcountmin") ?
                                         mobMap.get("groupcountmin").getAsInt() : 1;
 
@@ -140,8 +143,9 @@ public final class ParserEventPopulationChunk extends BaseParser
                                 if (DEBUG_AND_CHECK_SYNTAX)
                                 {
                                     Log.write(0, String.format(
-                                            "Mob %s settings: weight=%d, groupCount=%d-%d, priority=%s, maxPerChunk=%d",
-                                            id, weight, groupCountMin, groupCountMax, spawnChancePriority, maxEntitiesPerChunk
+                                            "Mob %s settings: weight = %d, groupCount = %d - %d, priority = %s, maxPerChunk = %d, dimension = %s",
+                                            id, weight, groupCountMin, groupCountMax, spawnChancePriority, maxEntitiesPerChunk,
+                                            idDimension != null ? idDimension.toString() : "any"
                                     ));
                                 }
 
@@ -186,19 +190,23 @@ public final class ParserEventPopulationChunk extends BaseParser
                                 boolean isWater = mobMap.has("isWater") ? mobMap.get("isWater").getAsBoolean() : false;
 
                                 PopulationChunkStruct.Data data = new PopulationChunkStruct.Data();
+
                                 data.entity = mobResource;
                                 data.weight = weight;
                                 data.groupCountMin = groupCountMin;
                                 data.groupCountMax = groupCountMax;
                                 data.biomes = biomes;
                                 data.isWater = isWater;
+                                data.idDimension = idDimension;
                                 data.spawnChancePriority = spawnChancePriority;
                                 data.maxEntitiesPerChunk = maxEntitiesPerChunk;
+
                                 populationList.add(data);
 
                                 if (DEBUG_AND_CHECK_SYNTAX)
                                 {
-                                    Log.write(0, "Added mob data to population list: " + id);
+                                    Log.write(0, "Added mob data to population list: " + id +
+                                            " (dimension: " + (data.idDimension != null ? data.idDimension : "any") + ")");
                                 }
 
                                 Biome.SpawnListEntry entry = new Biome.SpawnListEntry(

@@ -95,6 +95,25 @@ public final class ParserEventDropItem extends BaseParser
                     DropItem.Data data = new DropItem.Data();
                     data.entity = new ResourceLocation(entityId);
 
+                    if (jsonObject.has("id_dimension"))
+                    {
+                        data.idDimension = jsonObject.get("id_dimension").getAsInt();
+
+                        if (DEBUG_AND_CHECK_SYNTAX)
+                        {
+                            Log.write(0, "Found id_dimension: " + data.idDimension + " for entity: " + entityId);
+                        }
+                    }
+                    else
+                    {
+                        data.idDimension = null;
+
+                        if (DEBUG_AND_CHECK_SYNTAX)
+                        {
+                            Log.write(0, "No id_dimension specified for entity: " + entityId + " (will work in all dimensions)");
+                        }
+                    }
+
                     if (!jsonObject.has("drop"))
                     {
                         Log.write(0, "Missing required 'drop' array for entity: " + entityId);
@@ -164,7 +183,11 @@ public final class ParserEventDropItem extends BaseParser
 
                     if (DEBUG_AND_CHECK_SYNTAX)
                     {
-                        Log.write(0, "Successfully processed drops for entity: " + entityId);
+                        Log.write(0, String.format(
+                                "Successfully processed drops for entity: %s, dimension: %s",
+                                entityId,
+                                data.idDimension != null ? data.idDimension.toString() : "any"
+                        ));
                     }
                 }
                 catch (Exception exception)
@@ -184,6 +207,20 @@ public final class ParserEventDropItem extends BaseParser
             }
 
             GeneralDropItem.getInstance().dropItemList.addAll(dataList);
+
+            Log.write(0, String.format(
+                    "Loaded %d drop configurations. Examples by dimension:",
+                    dataList.size()
+            ));
+
+            for (DropItem.Data data : dataList) {
+                Log.write(0, String.format(
+                        "  - Entity: %s, Dimension: %s, Drops: %d",
+                        data.entity.toString(),
+                        data.idDimension != null ? data.idDimension.toString() : "any",
+                        data.drops != null ? data.drops.size() : 0
+                ));
+            }
         }
         catch (IOException exception)
         {

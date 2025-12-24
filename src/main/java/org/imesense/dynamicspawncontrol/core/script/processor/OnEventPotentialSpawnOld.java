@@ -62,12 +62,14 @@ public final class OnEventPotentialSpawnOld
         }
 
         Integer eventY = event.getPos().getY();
+        int currentDimension = event.getWorld().provider.getDimension();
 
         if (SPAWN_DEBUG_LOGGING)
         {
             Log.write(1, "╔═══════════════════════════════════");
             Log.write(1, "║ SPAWN PROCESSING STARTED");
             Log.write(1, "╠═ Y Level: " + eventY);
+            Log.write(1, "╠═ Dimension: " + currentDimension);
             Log.write(1, "╠═ Registered custom mobs (" + spawnEntries.size() + "):");
 
             spawnEntries.forEach(entry ->
@@ -88,15 +90,36 @@ public final class OnEventPotentialSpawnOld
             PotentialSpawnStruct.Data data = secondaryParameters.get(i);
             Biome.SpawnListEntry entry = spawnEntries.get(i);
 
+            if (data.idDimension != null)
+            {
+                if (currentDimension != data.idDimension)
+                {
+                    if (SPAWN_DEBUG_LOGGING)
+                    {
+                        String details = String.format(
+                                "║ ✗ %s: wrong dimension (need %d, current %d)",
+                                entry.entityClass.getSimpleName(),
+                                data.idDimension,
+                                currentDimension
+                        );
+                        Log.write(1, details);
+                    }
+                    return false;
+                }
+            }
+
             float effectiveChance = data.spawnChance * entry.itemWeight / 100f;
             boolean heightValid = eventY >= data.minHeight && eventY <= data.maxHeight;
             boolean chanceValid = UniqueField.RANDOM.nextFloat() < effectiveChance;
 
             if (SPAWN_DEBUG_LOGGING)
             {
+                String dimensionInfo = data.idDimension != null ?
+                        String.format("dim=%d", data.idDimension) : "dim=any";
+
                 String status = (heightValid && chanceValid) ? "✓" : "✗";
                 String details = String.format(
-                        "║ %s %s: chance=%.1f%% (%.1f*%d/100), height=%d [%.0f-%.0f] %s",
+                        "║ %s %s: chance=%.1f%% (%.1f*%d/100), height=%d [%.0f-%.0f] %s, %s",
                         status,
                         entry.entityClass.getSimpleName(),
                         effectiveChance * 100,
@@ -105,7 +128,8 @@ public final class OnEventPotentialSpawnOld
                         eventY,
                         data.minHeight,
                         data.maxHeight,
-                        heightValid ? "(H)" : "(h)"
+                        heightValid ? "(H)" : "(h)",
+                        dimensionInfo
                 );
                 Log.write(1, details);
             }

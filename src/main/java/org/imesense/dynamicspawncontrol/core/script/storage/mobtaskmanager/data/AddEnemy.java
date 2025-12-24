@@ -9,6 +9,7 @@ public final class AddEnemy
 
     public static final class Data
     {
+        public Integer idDimension;
         public String[] enemies_to;
         public String[] to_them;
     }

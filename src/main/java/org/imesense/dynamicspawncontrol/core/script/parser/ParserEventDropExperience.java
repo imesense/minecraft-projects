@@ -148,6 +148,14 @@ public final class ParserEventDropExperience extends BaseParser
                         continue;
                     }
 
+                    data.idDimension = getValueFromJson(jsonObject, "id_dimension", null,
+                            (el, def) -> el.getAsInt());
+
+                    if (DEBUG_AND_CHECK_SYNTAX && data.idDimension != null)
+                    {
+                        Log.write(0, "Found id_dimension: " + data.idDimension + " for entity: " + entityId);
+                    }
+
                     data.use_default_xp = getValueFromJson(jsonObject, "use_default_xp", false,
                             (el, def) -> el.getAsBoolean());
 
@@ -232,8 +240,9 @@ public final class ParserEventDropExperience extends BaseParser
                     }
 
                     Log.write(0, String.format(
-                            "Loaded entity: %s, mode: %s, xp: %s, multi: %.2f, add: %s, time: %s-%s, result: %s",
+                            "Loaded entity: %s, dimension: %s, mode: %s, xp: %s, multi: %.2f, add: %s, time: %s-%s, result: %s",
                             data.entity,
+                            data.idDimension != null ? data.idDimension.toString() : "any",
                             data.use_default_xp ? "DEFAULT_XP" : "FULL",
                             data.use_default_xp ? "N/A" : data.xp,
                             data.multi_xp,

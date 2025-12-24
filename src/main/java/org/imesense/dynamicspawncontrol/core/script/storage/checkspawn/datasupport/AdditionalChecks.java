@@ -15,6 +15,7 @@ public final class AdditionalChecks
     public static final class Data
     {
         public Boolean seeSky;
+        public Integer idDimension;
         public ResourceLocation entityType;
         public List<PotionEffect.Data> potion;
     }

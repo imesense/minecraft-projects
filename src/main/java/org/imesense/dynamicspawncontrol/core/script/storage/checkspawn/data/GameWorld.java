@@ -12,5 +12,6 @@ public final class GameWorld
         public Boolean seeSky;
         public Integer maxHeight;
         public Integer minHeight;
+        public Integer idDimension;
     }
 }
