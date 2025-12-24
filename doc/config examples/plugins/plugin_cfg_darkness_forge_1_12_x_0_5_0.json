@@ -1,5 +1,5 @@
 {
-  "blacklistByID": [],
+  "blacklistByID": [-1, 1, 7, 420, 421, 422, 423, 424, 425, 426, 427],
   "moonPhaseFactors": [
     0.06,
     0.04,
