@@ -1,5 +1,6 @@
 [
   {
+    "id_dimension": 0,
     "entity": "minecraft:zombie",
     "use_default_xp": true,
     "multi_xp": 9.5,
@@ -8,6 +9,7 @@
     "result": "allow"
   },
   {
+    "id_dimension": 0,
     "entity": "dynamicspawncontrol:feral_zombie",
     "use_default_xp": true,
     "multi_xp": 10,
@@ -16,6 +18,7 @@
     "result": "allow"
   },
   {
+    "id_dimension": 0,
     "entity": "dynamicspawncontrol:feral_zombie",
     "use_default_xp": true,
     "multi_xp": 15,
@@ -24,6 +27,7 @@
     "result": "allow"
   },
   {
+    "id_dimension": 0,
     "entity": "minecraft:skeleton",
     "use_default_xp": true,
     "multi_xp": 1.5,
@@ -32,6 +36,7 @@
     "result": "allow"
   },
   {
+    "id_dimension": 0,
     "entity": "srparasites:sim_human",
     "xp": 8.0,
     "multi_xp": 2.1,
@@ -39,6 +44,7 @@
     "result": "allow"
   },
   {
+    "id_dimension": 0,
     "entity": "srparasites:sim_villager",
     "xp": 7.0,
     "multi_xp": 2.2,
@@ -46,6 +52,7 @@
     "result": "allow"
   },
   {
+    "id_dimension": 0,
     "entity": "srparasites:grunt",
     "xp": 10.0,
     "multi_xp": 5.5,

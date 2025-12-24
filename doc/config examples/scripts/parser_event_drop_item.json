@@ -1,5 +1,6 @@
 [
   {
+    "id_dimension": 0,
     "entity": "minecraft:zombie",
     "drop": [
       "minecraft:torch",
@@ -105,6 +106,7 @@
     ]
   },
   {
+    "id_dimension": 0,
     "entity": "dynamicspawncontrol:feral_zombie",
     "drop": [
       "minecraft:torch",

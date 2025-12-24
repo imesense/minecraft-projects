@@ -2,6 +2,7 @@
   {
     "mobs": [
       {
+        "id_dimension": 0,
         "mob": "minecraft:villager_golem",
         "weight": 2,
         "groupcountmin": 1,
@@ -14,6 +15,7 @@
   {
     "mobs": [
       {
+        "id_dimension": 0,
         "mob": "minecraft:guardian",
         "weight": 4,
         "groupcountmin": 1,
@@ -24,6 +26,7 @@
         "isWater": true
       },
       {
+        "id_dimension": 0,
         "mob": "minecraft:elder_guardian",
         "weight": 2,
         "groupcountmin": 1,
