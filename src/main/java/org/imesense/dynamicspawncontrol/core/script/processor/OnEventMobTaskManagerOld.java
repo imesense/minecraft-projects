@@ -36,9 +36,12 @@ public final class OnEventMobTaskManagerOld
             return;
         }
 
-        FunctionalMobTaskManager.getInstance().processAddEnemyData(event);
-        FunctionalMobTaskManager.getInstance().processAddEnemyIdData(event);
-        FunctionalMobTaskManager.getInstance().processAddPanicToIdData(event);
-        FunctionalMobTaskManager.getInstance().processAddEnemyToIdThemToIdData(event);
+        if (!event.getEntity().world.isRemote)
+        {
+            FunctionalMobTaskManager.getInstance().processAddEnemyData(event);
+            FunctionalMobTaskManager.getInstance().processAddEnemyIdData(event);
+            FunctionalMobTaskManager.getInstance().processAddPanicToIdData(event);
+            FunctionalMobTaskManager.getInstance().processAddEnemyToIdThemToIdData(event);
+        }
     }
 }
