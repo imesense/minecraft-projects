@@ -1,8 +1,15 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemShield;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
@@ -11,7 +18,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
-@TODO(value = "Rework this event. Event does not meet the design standards", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "Rework this event. Event does not meet the design standards and rework event zombieHasShield", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class OnEventLivingHurt
 {
     private static volatile OnEventLivingHurt _INSTANCE;
@@ -46,4 +53,54 @@ public final class OnEventLivingHurt
                 + "Original: " + originalDamage
                 + " -> Reduced: " + reducedDamage);
     }
+
+    /*
+    @SubscribeEvent
+    public void zombieHasShield(LivingHurtEvent event)
+    {
+        if (event.getEntityLiving() instanceof EntityZombie)
+        {
+            EntityZombie zombie = (EntityZombie) event.getEntityLiving();
+
+            // Проверяем щит
+            ItemStack shield = zombie.getHeldItemMainhand();
+            boolean hasShield = !shield.isEmpty() && shield.getItem() instanceof ItemShield;
+
+            if (!hasShield)
+            {
+                shield = zombie.getHeldItemOffhand();
+                hasShield = !shield.isEmpty() && shield.getItem() instanceof ItemShield;
+            }
+
+            if (hasShield && !event.getSource().isUnblockable())
+            {
+                // 50% шанс блокировать
+                if (zombie.getRNG().nextFloat() < 0.5F)
+                {
+                    // Уменьшаем урон на 50%
+                    event.setAmount(event.getAmount() * 0.5F);
+
+                    // Повреждаем щит
+                    int damage = 1 + (int)event.getAmount();
+                    shield.damageItem(damage, zombie);
+
+                    // Звук
+                    zombie.world.playSound(null, zombie.posX, zombie.posY, zombie.posZ,
+                            SoundEvents.ITEM_SHIELD_BLOCK, SoundCategory.HOSTILE,
+                            1.0F, 0.8F + zombie.getRNG().nextFloat() * 0.4F);
+
+                    // Отбрасывание атакующего
+                    Entity attacker = event.getSource().getImmediateSource();
+
+                    if (attacker instanceof EntityLivingBase)
+                    {
+                        ((EntityLivingBase) attacker).knockBack(zombie, 0.5F,
+                                MathHelper.sin(attacker.rotationYaw * 0.017453292F),
+                                -MathHelper.cos(attacker.rotationYaw * 0.017453292F));
+                    }
+                }
+            }
+        }
+    }
+     */
 }
