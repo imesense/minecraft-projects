@@ -43,25 +43,15 @@ public class AIZombieHasShieldNBT {
         public static float SHIELD_DAMAGE_MULTIPLIER = 2.0F; // Множитель урона щиту
         public static boolean ENABLE_PARTICLES = true; // Включить частицы
         public static boolean ENABLE_SOUNDS = true; // Включить звуки
+        public static boolean DESTROY_SHIELD_ON_BREAK = true; // Удалять щит при поломке
+        public static boolean ALLOW_SHIELD_REPAIR = false; // Позволить восстановление щита после перезарядки
     }
-
-    //public static void register() {
-    //    Log.write(0, "[AdvancedZombieShield] Регистрация системы умных щитов");
-    //    Log.write(0, String.format("[AdvancedZombieShield] Конфигурация: здоровье=%.1f, блок=%.0f%%, перезарядка=%.2f/тик",
-    //            Config.MAX_SHIELD_HEALTH, Config.BLOCK_PERCENTAGE * 100, Config.RECHARGE_RATE));
-    //    //MinecraftForge.EVENT_BUS.register(new AIZombieHasShieldNBT());
-    //}
 
     @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent event) {
         if (event.getEntity() instanceof EntityZombie) {
             EntityZombie zombie = (EntityZombie) event.getEntity();
             initShieldData(zombie);
-
-            //if (DEBUG) {
-            //    Log.write(0, String.format("[AdvancedZombieShield] Зомби %s присоединился к миру в (%.1f, %.1f, %.1f)",
-            //            zombie.getEntityId(), zombie.posX, zombie.posY, zombie.posZ));
-           // }
         }
     }
 
@@ -69,7 +59,7 @@ public class AIZombieHasShieldNBT {
         NBTTagCompound data = zombie.getEntityData();
         if (!data.hasKey("DynamicSpawnControl")) {
             data.setTag("DynamicSpawnControl", new NBTTagCompound());
-            if (DEBUG) Log.write(0, "[AdvancedZombieShield] Создан новый тег DynamicSpawnControl для зомби " + zombie.getEntityId());
+            if (DEBUG) Log.write(0, "[AIZombieShield] Создан новый тег DynamicSpawnControl для зомби " + zombie.getEntityId());
         }
 
         NBTTagCompound dscData = data.getCompoundTag("DynamicSpawnControl");
@@ -79,7 +69,7 @@ public class AIZombieHasShieldNBT {
             dscData.setLong(LAST_HIT_TIME, 0);
 
             if (DEBUG) {
-                Log.write(0, String.format("[AdvancedZombieShield] Инициализирован щит для зомби %s: здоровье=%.1f, кулдаун=%d",
+                Log.write(0, String.format("[AIZombieShield] Инициализирован щит для зомби %s: здоровье=%.1f, кулдаун=%d",
                         zombie.getEntityId(), Config.MAX_SHIELD_HEALTH, 0));
             }
         }
@@ -97,31 +87,82 @@ public class AIZombieHasShieldNBT {
         // Проверяем основную руку
         ItemStack mainHand = zombie.getHeldItem(EnumHand.MAIN_HAND);
         if (!mainHand.isEmpty() && mainHand.getItem() instanceof ItemShield) {
-            if (DEBUG) Log.write(2, "[AdvancedZombieShield] Зомби " + zombie.getEntityId() + " имеет щит в основной руке");
+            if (DEBUG && zombie.ticksExisted % 100 == 0) Log.write(3, "[AIZombieShield] Зомби " + zombie.getEntityId() + " имеет щит в основной руке, прочность: " + mainHand.getItemDamage() + "/" + mainHand.getMaxDamage());
             return mainHand;
         }
 
         // Проверяем вторую руку
         ItemStack offHand = zombie.getHeldItem(EnumHand.OFF_HAND);
         if (!offHand.isEmpty() && offHand.getItem() instanceof ItemShield) {
-            if (DEBUG) Log.write(2, "[AdvancedZombieShield] Зомби " + zombie.getEntityId() + " имеет щит в дополнительной руке");
+            if (DEBUG && zombie.ticksExisted % 100 == 0) Log.write(3, "[AIZombieShield] Зомби " + zombie.getEntityId() + " имеет щит в дополнительной руке, прочность: " + offHand.getItemDamage() + "/" + offHand.getMaxDamage());
             return offHand;
         }
 
-        if (DEBUG) Log.write(2, "[AdvancedZombieShield] Зомби " + zombie.getEntityId() + " не имеет щита");
+        if (DEBUG && zombie.ticksExisted % 100 == 0) Log.write(3, "[AIZombieShield] Зомби " + zombie.getEntityId() + " не имеет щита");
         return null;
+    }
+
+    private void checkAndRemoveBrokenShield(EntityZombie zombie, ItemStack shield) {
+        if (shield == null || shield.isEmpty()) return;
+
+        // Проверяем, сломан ли щит (прочность достигла максимума)
+        if (shield.getItemDamage() >= shield.getMaxDamage()) {
+            if (DEBUG) Log.write(1, String.format("[AIZombieShield] Щит зомби %s полностью сломан (прочность: %d/%d), удаляем из инвентаря",
+                    zombie.getEntityId(), shield.getItemDamage(), shield.getMaxDamage()));
+
+            // Удаляем щит из руки
+            if (zombie.getHeldItem(EnumHand.MAIN_HAND) == shield) {
+                zombie.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+            } else if (zombie.getHeldItem(EnumHand.OFF_HAND) == shield) {
+                zombie.setHeldItem(EnumHand.OFF_HAND, ItemStack.EMPTY);
+            }
+
+            // Эффект разрушения предмета
+            zombie.world.playSound(null, zombie.posX, zombie.posY, zombie.posZ,
+                    net.minecraft.init.SoundEvents.ENTITY_ITEM_BREAK,
+                    SoundCategory.HOSTILE, 1.0F, 1.0F);
+
+            // Сбрасываем данные щита в NBT
+            NBTTagCompound dscData = getDSCData(zombie);
+            dscData.setFloat(SHIELD_HEALTH, 0);
+            dscData.setInteger(SHIELD_COOLDOWN, Config.SHIELD_BREAK_COOLDOWN);
+
+            if (Config.DESTROY_SHIELD_ON_BREAK) {
+                // Уничтожаем предмет полностью
+                shield.setCount(0);
+            }
+        }
+    }
+
+    private void repairShieldIfNeeded(EntityZombie zombie, ItemStack shield, float shieldHealth) {
+        if (shield == null || shield.isEmpty()) return;
+
+        // Если щит имеет прочность и мы позволяем восстановление
+        if (Config.ALLOW_SHIELD_REPAIR && shieldHealth >= Config.MAX_SHIELD_HEALTH * 0.9F) {
+            // Восстанавливаем немного прочность щита
+            int currentDamage = shield.getItemDamage();
+            if (currentDamage > 0) {
+                int repairAmount = Math.min(currentDamage, 10); // Восстанавливаем до 10 прочности
+                shield.setItemDamage(currentDamage - repairAmount);
+
+                if (DEBUG && zombie.ticksExisted % 200 == 0) {
+                    Log.write(2, String.format("[AIZombieShield] Щит зомби %s частично восстановлен: %d -> %d прочности",
+                            zombie.getEntityId(), currentDamage, shield.getItemDamage()));
+                }
+            }
+        }
     }
 
     private boolean isAttackFromFront(EntityZombie zombie, DamageSource source) {
         // Если не требуется атака спереди, всегда возвращаем true
         if (!Config.REQUIRE_FRONT_ATTACK) {
-            if (DEBUG) Log.write(3, "[AdvancedZombieShield] Проверка направления отключена в конфиге");
+            if (DEBUG && zombie.ticksExisted % 200 == 0) Log.write(3, "[AIZombieShield] Проверка направления отключена в конфиге");
             return true;
         }
 
         Entity attacker = source.getImmediateSource();
         if (attacker == null) {
-            if (DEBUG) Log.write(2, "[AdvancedZombieShield] Атака без источника, считаем спереди");
+            if (DEBUG) Log.write(3, "[AIZombieShield] Атака без источника, считаем спереди");
             return true; // Если нет атакующего, считаем что спереди
         }
 
@@ -136,8 +177,8 @@ public class AIZombieHasShieldNBT {
         double dot = zombieLook.dotProduct(toAttacker);
         boolean isFromFront = dot < 0;
 
-        if (DEBUG) {
-            Log.write(2, String.format("[AdvancedZombieShield] Проверка направления: зомби %s, атакующий %s, dot=%.2f, спереди=%s",
+        if (DEBUG && isFromFront) {
+            Log.write(2, String.format("[AIZombieShield] Проверка направления: зомби %s, атакующий %s, dot=%.2f, спереди=%s",
                     zombie.getEntityId(), attacker.getEntityId(), dot, isFromFront));
         }
 
@@ -146,7 +187,7 @@ public class AIZombieHasShieldNBT {
 
     private void knockbackAttacker(EntityZombie zombie, DamageSource source) {
         if (Config.KNOCKBACK_STRENGTH <= 0) {
-            if (DEBUG) Log.write(3, "[AdvancedZombieShield] Отбрасывание отключено в конфиге");
+            if (DEBUG && zombie.ticksExisted % 200 == 0) Log.write(3, "[AIZombieShield] Отбрасывание отключено в конфиге");
             return;
         }
 
@@ -160,7 +201,7 @@ public class AIZombieHasShieldNBT {
                     -MathHelper.cos(livingAttacker.rotationYaw * 0.017453292F));
 
             if (DEBUG) {
-                Log.write(1, String.format("[AdvancedZombieShield] Зомби %s отбросил атакующего %s силой %.2f",
+                Log.write(1, String.format("[AIZombieShield] Зомби %s отбросил атакующего %s силой %.2f",
                         zombie.getEntityId(), attacker.getEntityId(), Config.KNOCKBACK_STRENGTH));
             }
         }
@@ -171,11 +212,6 @@ public class AIZombieHasShieldNBT {
 
         World world = zombie.world;
         if (world.isRemote) return; // Только на клиенте
-
-        //if (DEBUG && world.rand.nextFloat() < 0.01F) {
-       //     Log.write(3, String.format("[AdvancedZombieShield] Зомби %s: щит на %.1f%%",
-        //            zombie.getEntityId(), shieldPercentage * 100));
-       // }
 
         // Разные частицы в зависимости от состояния щита
         EnumParticleTypes particleType;
@@ -213,8 +249,14 @@ public class AIZombieHasShieldNBT {
         EntityZombie zombie = (EntityZombie) event.getEntityLiving();
         ItemStack shield = getShieldItem(zombie);
 
+        // Проверяем и удаляем сломанный щит перед обработкой
+        checkAndRemoveBrokenShield(zombie, shield);
+
+        // Получаем щит снова (возможно, он был удален)
+        shield = getShieldItem(zombie);
+
         if (shield == null) {
-            if (DEBUG) Log.write(2, "[AdvancedZombieShield] Зомби " + zombie.getEntityId() + " не имеет щита, пропускаем блокирование");
+            if (DEBUG && zombie.ticksExisted % 100 == 0) Log.write(3, "[AIZombieShield] Зомби " + zombie.getEntityId() + " не имеет щита, пропускаем блокирование");
             return;
         }
 
@@ -223,25 +265,31 @@ public class AIZombieHasShieldNBT {
         int cooldown = dscData.getInteger(SHIELD_COOLDOWN);
 
         if (DEBUG) {
-            Log.write(1, String.format("[AdvancedZombieShield] Зомби %s получил урон %.2f, щит: здоровье=%.1f, кулдаун=%d",
-                    zombie.getEntityId(), event.getAmount(), shieldHealth, cooldown));
+            Log.write(1, String.format("[AIZombieShield] Зомби %s получил урон %.2f, щит: здоровье=%.1f, кулдаун=%d, прочность предмета: %d/%d",
+                    zombie.getEntityId(), event.getAmount(), shieldHealth, cooldown,
+                    shield.getItemDamage(), shield.getMaxDamage()));
         }
 
         // Щит на перезарядке или сломан
         if (cooldown > 0) {
-            if (DEBUG) Log.write(2, String.format("[AdvancedZombieShield] Щит на кулдауне: %d тиков (%.1f сек)",
+            if (DEBUG) Log.write(2, String.format("[AIZombieShield] Щит на кулдауне: %d тиков (%.1f сек)",
                     cooldown, cooldown / 20.0F));
             return;
         }
 
         if (shieldHealth <= 0) {
-            if (DEBUG) Log.write(2, "[AdvancedZombieShield] Щит сломан, здоровье: " + shieldHealth);
+            if (DEBUG) Log.write(2, "[AIZombieShield] Щит сломан, здоровье: " + shieldHealth);
+
+            // Если щит сломан, удаляем его
+            if (Config.DESTROY_SHIELD_ON_BREAK) {
+                checkAndRemoveBrokenShield(zombie, shield);
+            }
             return;
         }
 
         // Проверяем направление атаки (только спереди)
         if (!isAttackFromFront(zombie, event.getSource())) {
-            if (DEBUG) Log.write(2, "[AdvancedZombieShield] Атака не спереди, блокирование невозможно");
+            if (DEBUG) Log.write(2, "[AIZombieShield] Атака не спереди, блокирование невозможно");
             return;
         }
 
@@ -251,7 +299,7 @@ public class AIZombieHasShieldNBT {
         float blocked = Math.min(damage * Config.BLOCK_PERCENTAGE, maxBlock);
 
         if (DEBUG) {
-            Log.write(0, String.format("[AdvancedZombieShield] Попытка блокирования: урон=%.2f, макс.блок=%.1f, заблокировано=%.2f (%.0f%%)",
+            Log.write(0, String.format("[AIZombieShield] Попытка блокирования: урон=%.2f, макс.блок=%.1f, заблокировано=%.2f (%.0f%%)",
                     damage, maxBlock, blocked, Config.BLOCK_PERCENTAGE * 100));
         }
 
@@ -263,7 +311,7 @@ public class AIZombieHasShieldNBT {
         if (shieldHealth <= 0) {
             dscData.setInteger(SHIELD_COOLDOWN, Config.SHIELD_BREAK_COOLDOWN);
             if (DEBUG) {
-                Log.write(0, String.format("[AdvancedZombieShield] Щит зомби %s сломан! Установлен кулдаун %d тиков (%.1f сек)",
+                Log.write(0, String.format("[AIZombieShield] Щит зомби %s сломан! Установлен кулдаун %d тиков (%.1f сек)",
                         zombie.getEntityId(), Config.SHIELD_BREAK_COOLDOWN, Config.SHIELD_BREAK_COOLDOWN / 20.0F));
             }
 
@@ -274,12 +322,17 @@ public class AIZombieHasShieldNBT {
                         SoundCategory.HOSTILE, 1.0F, 1.0F);
             }
 
+            // Удаляем сломанный щит
+            if (Config.DESTROY_SHIELD_ON_BREAK) {
+                checkAndRemoveBrokenShield(zombie, shield);
+            }
+
         } else {
             dscData.setInteger(SHIELD_COOLDOWN, Config.BLOCK_COOLDOWN);
             dscData.setLong(LAST_HIT_TIME, zombie.world.getTotalWorldTime());
 
             if (DEBUG) {
-                Log.write(1, String.format("[AdvancedZombieShield] Успешный блок! Оставшееся здоровье щита: %.1f/%.1f, кулдаун: %d тиков",
+                Log.write(1, String.format("[AIZombieShield] Успешный блок! Оставшееся здоровье щита: %.1f/%.1f, кулдаун: %d тиков",
                         shieldHealth, Config.MAX_SHIELD_HEALTH, Config.BLOCK_COOLDOWN));
             }
 
@@ -292,7 +345,7 @@ public class AIZombieHasShieldNBT {
         event.setAmount(newDamage);
 
         if (DEBUG) {
-            Log.write(0, String.format("[AdvancedZombieShield] Урон изменен: было %.2f, стало %.2f (снижение на %.1f%%)",
+            Log.write(0, String.format("[AIZombieShield] Урон изменен: было %.2f, стало %.2f (снижение на %.1f%%)",
                     damage, newDamage, (blocked / damage) * 100));
         }
 
@@ -303,8 +356,11 @@ public class AIZombieHasShieldNBT {
         int shieldDamage = (int) (blocked * Config.SHIELD_DAMAGE_MULTIPLIER);
         shield.damageItem(shieldDamage, zombie);
 
+        // Проверяем, не сломался ли предмет щита
+        checkAndRemoveBrokenShield(zombie, shield);
+
         if (DEBUG) {
-            Log.write(1, String.format("[AdvancedZombieShield] Щит поврежден на %d единиц (множитель %.1f), прочность: %d/%d",
+            Log.write(1, String.format("[AIZombieShield] Щит поврежден на %d единиц (множитель %.1f), прочность: %d/%d",
                     shieldDamage, Config.SHIELD_DAMAGE_MULTIPLIER,
                     shield.getMaxDamage() - shield.getItemDamage(), shield.getMaxDamage()));
         }
@@ -315,6 +371,14 @@ public class AIZombieHasShieldNBT {
         if (!(event.getEntityLiving() instanceof EntityZombie)) return;
 
         EntityZombie zombie = (EntityZombie) event.getEntityLiving();
+        ItemStack shield = getShieldItem(zombie);
+
+        // Проверяем и удаляем сломанный щит
+        checkAndRemoveBrokenShield(zombie, shield);
+
+        // Получаем щит снова (возможно, он был удален)
+        shield = getShieldItem(zombie);
+
         NBTTagCompound dscData = getDSCData(zombie);
 
         // Обновляем кулдаун
@@ -324,7 +388,7 @@ public class AIZombieHasShieldNBT {
             dscData.setInteger(SHIELD_COOLDOWN, cooldown - 1);
 
             if (DEBUG && oldCooldown % 20 == 0) { // Логируем каждую секунду
-                Log.write(3, String.format("[AdvancedZombieShield] Зомби %s: кулдаун щита %d -> %d тиков",
+                Log.write(3, String.format("[AIZombieShield] Зомби %s: кулдаун щита %d -> %d тиков",
                         zombie.getEntityId(), oldCooldown, cooldown - 1));
             }
         }
@@ -343,8 +407,13 @@ public class AIZombieHasShieldNBT {
                 dscData.setFloat(SHIELD_HEALTH, shieldHealth);
 
                 if (DEBUG && zombie.world.rand.nextFloat() < 0.01F) {
-                    Log.write(3, String.format("[AdvancedZombieShield] Зомби %s: перезарядка щита %.1f -> %.1f (задержка %d, скорость %.2f/тик)",
+                    Log.write(3, String.format("[AIZombieShield] Зомби %s: перезарядка щита %.1f -> %.1f (задержка %d, скорость %.2f/тик)",
                             zombie.getEntityId(), oldHealth, shieldHealth, Config.RECHARGE_DELAY, Config.RECHARGE_RATE));
+                }
+
+                // Восстанавливаем прочность предмета щита, если нужно
+                if (shield != null) {
+                    repairShieldIfNeeded(zombie, shield, shieldHealth);
                 }
 
                 // Визуальный эффект перезарядки
@@ -355,8 +424,16 @@ public class AIZombieHasShieldNBT {
         }
 
         // Визуальная индикация щита
-        if (shieldHealth > 0 && Config.ENABLE_PARTICLES) {
+        if (shieldHealth > 0 && shield != null && Config.ENABLE_PARTICLES) {
             showShieldParticles(zombie, shieldHealth / Config.MAX_SHIELD_HEALTH);
+        }
+
+        // Периодическая проверка состояния щита
+        if (zombie.ticksExisted % 40 == 0 && shield != null) { // Каждые 2 секунды
+            if (DEBUG) {
+                Log.write(3, String.format("[AIZombieShield] Состояние зомби %s: щит здоровье=%.1f, прочность предмета=%d/%d",
+                        zombie.getEntityId(), shieldHealth, shield.getItemDamage(), shield.getMaxDamage()));
+            }
         }
     }
 
@@ -378,7 +455,7 @@ public class AIZombieHasShieldNBT {
         }
 
         if (DEBUG && world.rand.nextFloat() < 0.1F) {
-            Log.write(3, "[AdvancedZombieShield] Показаны частицы перезарядки для зомби " + zombie.getEntityId());
+            Log.write(3, "[AIZombieShield] Показаны частицы перезарядки для зомби " + zombie.getEntityId());
         }
     }
 
@@ -395,7 +472,7 @@ public class AIZombieHasShieldNBT {
                     blockPercentage, 0.8F + zombie.getRNG().nextFloat() * 0.4F);
 
             if (DEBUG) {
-                Log.write(2, String.format("[AdvancedZombieShield] Воспроизведен звук блокирования: громкость=%.2f, тон=%.2f",
+                Log.write(2, String.format("[AIZombieShield] Воспроизведен звук блокирования: громкость=%.2f, тон=%.2f",
                         blockPercentage, 0.8F + zombie.getRNG().nextFloat() * 0.4F));
             }
         }
@@ -411,35 +488,41 @@ public class AIZombieHasShieldNBT {
             }
 
             if (DEBUG && blockPercentage > 0.5F) {
-                Log.write(2, "[AdvancedZombieShield] Сильный блок! Дополнительные эффекты для зомби " + zombie.getEntityId());
+                Log.write(2, "[AIZombieShield] Сильный блок! Дополнительные эффекты для зомби " + zombie.getEntityId());
             }
         }
     }
 
     // Метод для принудительной установки щита (можно вызывать из спавнера)
-    public void setupZombieWithShield(EntityZombie zombie, ItemStack shield) {
+    public static void setupZombieWithShield(EntityZombie zombie, ItemStack shield) {
         if (shield == null || !(shield.getItem() instanceof ItemShield)) {
-            Log.write(2, "[AdvancedZombieShield] Попытка установить не-щит зомби " + zombie.getEntityId());
+            Log.write(2, "[AIZombieShield] Попытка установить не-щит зомби " + zombie.getEntityId());
             return;
         }
 
+        // Создаем копию щита с полной прочностью
+        ItemStack shieldCopy = shield.copy();
+        shieldCopy.setItemDamage(0); // Восстанавливаем прочность
+
         // Даем щит в основную руку
-        zombie.setHeldItem(EnumHand.MAIN_HAND, shield.copy());
+        zombie.setHeldItem(EnumHand.MAIN_HAND, shieldCopy);
 
         // Инициализируем данные щита
-        initShieldData(zombie);
+        AIZombieHasShieldNBT instance = new AIZombieHasShieldNBT();
+        instance.initShieldData(zombie);
 
         // Получаем данные для начальной настройки
-        NBTTagCompound dscData = getDSCDataPrivate(zombie);
+        NBTTagCompound dscData = instance.getDSCDataPrivate(zombie);
         dscData.setFloat(SHIELD_HEALTH, Config.MAX_SHIELD_HEALTH);
         dscData.setInteger(SHIELD_COOLDOWN, 0);
         dscData.setLong(LAST_HIT_TIME, 0);
 
-        Log.write(0, String.format("[AdvancedZombieShield] Зомби %s экипирован умным щитом (здоровье=%.1f)",
-                zombie.getEntityId(), Config.MAX_SHIELD_HEALTH));
+        Log.write(0, String.format("[AIZombieShield] Зомби %s экипирован умным щитом (здоровье=%.1f, прочность: %d/%d)",
+                zombie.getEntityId(), Config.MAX_SHIELD_HEALTH,
+                shieldCopy.getItemDamage(), shieldCopy.getMaxDamage()));
     }
 
-    private static NBTTagCompound getDSCDataPrivate(EntityZombie zombie) {
+    private NBTTagCompound getDSCDataPrivate(EntityZombie zombie) {
         NBTTagCompound data = zombie.getEntityData();
         if (!data.hasKey("DynamicSpawnControl")) {
             data.setTag("DynamicSpawnControl", new NBTTagCompound());
@@ -448,7 +531,7 @@ public class AIZombieHasShieldNBT {
     }
 
     // Методы для изменения конфигурации в runtime
-    public void updateConfig(float maxHealth, float blockPercent, int breakCooldown,
+    public static void updateConfig(float maxHealth, float blockPercent, int breakCooldown,
                                     int blockCooldown, long rechargeDelay, float rechargeRate) {
         Config.MAX_SHIELD_HEALTH = maxHealth;
         Config.BLOCK_PERCENTAGE = blockPercent;
@@ -457,7 +540,7 @@ public class AIZombieHasShieldNBT {
         Config.RECHARGE_DELAY = rechargeDelay;
         Config.RECHARGE_RATE = rechargeRate;
 
-        Log.write(0, "[AdvancedZombieShield] Конфигурация обновлена:");
+        Log.write(0, "[AIZombieShield] Конфигурация обновлена:");
         Log.write(0, String.format("  MAX_SHIELD_HEALTH: %.1f", Config.MAX_SHIELD_HEALTH));
         Log.write(0, String.format("  BLOCK_PERCENTAGE: %.0f%%", Config.BLOCK_PERCENTAGE * 100));
         Log.write(0, String.format("  SHIELD_BREAK_COOLDOWN: %d тиков (%.1f сек)",
@@ -467,30 +550,35 @@ public class AIZombieHasShieldNBT {
         Log.write(0, String.format("  RECHARGE_DELAY: %d тиков (%.1f сек)",
                 Config.RECHARGE_DELAY, Config.RECHARGE_DELAY / 20.0F));
         Log.write(0, String.format("  RECHARGE_RATE: %.2f/тик", Config.RECHARGE_RATE));
+        Log.write(0, String.format("  DESTROY_SHIELD_ON_BREAK: %s", Config.DESTROY_SHIELD_ON_BREAK));
+        Log.write(0, String.format("  ALLOW_SHIELD_REPAIR: %s", Config.ALLOW_SHIELD_REPAIR));
     }
 
     // Метод для отладки - печать состояния щита
-    public void debugShieldState(EntityZombie zombie) {
+    public static void debugShieldState(EntityZombie zombie) {
         if (!DEBUG) return;
 
-        NBTTagCompound dscData = getDSCDataPrivate(zombie);
+        AIZombieHasShieldNBT instance = new AIZombieHasShieldNBT();
+        NBTTagCompound dscData = instance.getDSCDataPrivate(zombie);
         float health = dscData.getFloat(SHIELD_HEALTH);
         int cooldown = dscData.getInteger(SHIELD_COOLDOWN);
         long lastHit = dscData.getLong(LAST_HIT_TIME);
         long currentTime = zombie.world.getTotalWorldTime();
 
-        Log.write(0, String.format("[AdvancedZombieShield] Отладка зомби %s:", zombie.getEntityId()));
+        Log.write(0, String.format("[AIZombieShield] Отладка зомби %s:", zombie.getEntityId()));
         Log.write(0, String.format("  Здоровье щита: %.1f/%.1f (%.0f%%)",
                 health, Config.MAX_SHIELD_HEALTH, (health / Config.MAX_SHIELD_HEALTH) * 100));
         Log.write(0, String.format("  Кулдаун: %d тиков (%.1f сек)", cooldown, cooldown / 20.0F));
         Log.write(0, String.format("  Последний удар: %d тиков назад", currentTime - lastHit));
-        Log.write(0, String.format("  Конфиг: блок=%.0f%%, перезарядка=%.2f/тик",
-                Config.BLOCK_PERCENTAGE * 100, Config.RECHARGE_RATE));
+        Log.write(0, String.format("  Конфиг: блок=%.0f%%, перезарядка=%.2f/тик, уничтожать щит=%s",
+                Config.BLOCK_PERCENTAGE * 100, Config.RECHARGE_RATE, Config.DESTROY_SHIELD_ON_BREAK));
 
-        ItemStack shield = getShieldItem(zombie);
-        if (shield != null) {
-            Log.write(0, String.format("  Предмет щита: %s, прочность: %d/%d",
-                    shield.getDisplayName(), shield.getMaxDamage() - shield.getItemDamage(), shield.getMaxDamage()));
+        ItemStack shield = instance.getShieldItem(zombie);
+        if (shield != null && !shield.isEmpty()) {
+            Log.write(0, String.format("  Предмет щита: %s, прочность: %d/%d, сломан: %s",
+                    shield.getDisplayName(),
+                    shield.getItemDamage(), shield.getMaxDamage(),
+                    shield.getItemDamage() >= shield.getMaxDamage() ? "ДА" : "НЕТ"));
         } else {
             Log.write(0, "  Щит не найден в руках");
         }
@@ -501,13 +589,16 @@ public class AIZombieHasShieldNBT {
         return String.format(
                 "MAX_SHIELD_HEALTH=%.1f, BLOCK_PERCENTAGE=%.0f%%, " +
                         "SHIELD_BREAK_COOLDOWN=%d, BLOCK_COOLDOWN=%d, " +
-                        "RECHARGE_DELAY=%d, RECHARGE_RATE=%.2f",
+                        "RECHARGE_DELAY=%d, RECHARGE_RATE=%.2f, " +
+                        "DESTROY_SHIELD=%s, REPAIR_SHIELD=%s",
                 Config.MAX_SHIELD_HEALTH,
                 Config.BLOCK_PERCENTAGE * 100,
                 Config.SHIELD_BREAK_COOLDOWN,
                 Config.BLOCK_COOLDOWN,
                 Config.RECHARGE_DELAY,
-                Config.RECHARGE_RATE
+                Config.RECHARGE_RATE,
+                Config.DESTROY_SHIELD_ON_BREAK,
+                Config.ALLOW_SHIELD_REPAIR
         );
     }
 }
