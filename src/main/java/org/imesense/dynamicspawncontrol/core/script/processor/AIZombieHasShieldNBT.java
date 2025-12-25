@@ -51,7 +51,7 @@ public class AIZombieHasShieldNBT {
         public static boolean ENABLE_SOUNDS = true; // Включить звуки
         public static boolean DESTROY_SHIELD_ON_BREAK = true; // Удалять щит при поломке
         public static boolean ALLOW_SHIELD_REPAIR = false; // Позволить восстановление щита после перезарядки
-        //public static boolean USE_TEST_DURABILITY = true; // Использовать тестовую прочность щита
+        //public static boolean USE_TEST_DURABILITY = true; // использовать тестовую прочность щита
         public static boolean USE_RANDOM_SHIELD_STATE = true; // рандомная прочность щита от 1 до полного состояния
     }
 
@@ -129,7 +129,7 @@ public class AIZombieHasShieldNBT {
             dscData.setLong(LAST_HIT_TIME, 0);
 
             if (ALWAYS_LOG_IMPORTANT_EVENTS) {
-                Log.write(0, String.format("[AIZombieShield] Инициализирован щит для зомби %s: здоровье=%.1f, кулдаун=%d",
+                Log.write(0, String.format("[AIZombieShield] инициализирован щит для зомби %s: здоровье=%.1f, кулдаун=%d",
                         zombie.getEntityId(), Config.MAX_SHIELD_HEALTH, 0));
             }
         }
