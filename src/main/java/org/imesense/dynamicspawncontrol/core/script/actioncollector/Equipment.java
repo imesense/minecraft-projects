@@ -102,9 +102,19 @@ public final class Equipment
             equipEntityWithItems(livingEntity, entityEquipmentData.legging, EntityEquipmentSlot.LEGS, random);
             equipEntityWithItems(livingEntity, entityEquipmentData.boots, EntityEquipmentSlot.FEET, random);
 
-            if (entityEquipmentData.hasShield)
+            if (entityEquipmentData.hasShield != null && entityEquipmentData.hasShield)
             {
-                equipEntityWithItems(livingEntity, Collections.singletonList("minecraft:shield"), EntityEquipmentSlot.OFFHAND, random);
+                double chance = entityEquipmentData.shieldChance != null ?
+                        entityEquipmentData.shieldChance : 1.0;
+
+                double randomValue = random.nextDouble();
+
+                if (randomValue <= chance)
+                {
+                    equipEntityWithItems(livingEntity,
+                            Collections.singletonList("minecraft:shield"),
+                            EntityEquipmentSlot.OFFHAND, random);
+                }
             }
 
             if (entityAttributesData.potion != null)

@@ -18,5 +18,6 @@ public final class EntityEquipment
         public List<ItemDescription.Data> boots;
 
         public Boolean hasShield;
+        public Double shieldChance;
     }
 }

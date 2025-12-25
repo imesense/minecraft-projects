@@ -300,8 +300,37 @@ public final class ParserEventCheckSpawn extends BaseParser
                 ? Equipment.getInstance().parseItemList(equipmentObject.get("armor_boots"))
                 : null;
 
-        entityEquipmentData.hasShield = equipmentObject.has("has_shield") &&
-                equipmentObject.get("has_shield").getAsBoolean();
+        if (equipmentObject.has("has_shield"))
+        {
+            JsonElement shieldElement = equipmentObject.get("has_shield");
+
+            if (shieldElement.isJsonPrimitive())
+            {
+                JsonPrimitive primitive = shieldElement.getAsJsonPrimitive();
+
+                if (primitive.isBoolean())
+                {
+                    entityEquipmentData.hasShield = primitive.getAsBoolean();
+                    entityEquipmentData.shieldChance = primitive.getAsBoolean() ? 1.0 : 0.0;
+                }
+                else if (primitive.isNumber())
+                {
+                    double chance = primitive.getAsDouble();
+                    entityEquipmentData.hasShield = chance > 0.0;
+                    entityEquipmentData.shieldChance = Math.max(0.0, Math.min(1.0, chance));
+                }
+            }
+            else
+            {
+                entityEquipmentData.hasShield = false;
+                entityEquipmentData.shieldChance = 0.0;
+            }
+        }
+        else
+        {
+            entityEquipmentData.hasShield = false;
+            entityEquipmentData.shieldChance = 0.0;
+        }
 
         if (DEBUG_AND_CHECK_SYNTAX)
         {
@@ -311,7 +340,8 @@ public final class ParserEventCheckSpawn extends BaseParser
                     ", chestPlate=" + (entityEquipmentData.chestPlate != null) +
                     ", legging=" + (entityEquipmentData.legging != null) +
                     ", boots=" + (entityEquipmentData.boots != null) +
-                    ", hasShield=" + entityEquipmentData.hasShield);
+                    ", hasShield=" + entityEquipmentData.hasShield +
+                    ", shieldChance=" + entityEquipmentData.shieldChance);
         }
     }
 
