@@ -10,6 +10,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -39,24 +40,32 @@ public final class DropHeadMob
 
     public void handleEntityDeath(LivingDeathEvent event)
     {
-        if (event.getSource().getTrueSource() instanceof EntityLivingBase)
+        if (!(event.getSource().getTrueSource() instanceof EntityLivingBase))
+            return;
+
+        EntityLivingBase attacker =
+                (EntityLivingBase) event.getSource().getTrueSource();
+
+        ItemStack heldItem = attacker.getHeldItemMainhand();
+
+        if (heldItem.isEmpty() || !(heldItem.getItem() instanceof ItemSword))
+            return;
+
+        Entity entity = event.getEntity();
+
+        if (entity instanceof EntitySkeleton ||
+                entity instanceof EntityZombie ||
+                entity instanceof EntityCreeper)
         {
-            Entity entity = event.getEntity();
-            EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
+            float dropChance = calculateDropChance(attacker);
 
-            if (entity instanceof EntitySkeleton ||
-                    entity instanceof EntityZombie ||
-                    entity instanceof EntityCreeper)
+            if (attacker.getRNG().nextFloat() < dropChance)
             {
-                float dropChance = calculateDropChance(attacker);
-
-                if (attacker.getRNG().nextFloat() < dropChance)
-                {
-                    dropHead((EntityLivingBase) entity, attacker.world);
-                }
+                dropHead((EntityLivingBase) entity, attacker.world);
             }
         }
     }
+
 
     private float calculateDropChance(EntityLivingBase entityLivingBase)
     {
