@@ -13,5 +13,8 @@ public final class EntityAttributes
     {
         public String commandNbt;
         public List<PotionEffect.Data> potion;
+
+        public Double potionChance;
+        public Double commandNbtChance;
     }
 }

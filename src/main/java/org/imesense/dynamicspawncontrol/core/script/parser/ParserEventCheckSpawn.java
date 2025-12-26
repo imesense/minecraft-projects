@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
+import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.script.actioncollector.Equipment;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.datasupport.AdditionalChecks;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
 @InitLog
+@TODO(value = "Merge 'TemplateWithChance' in storage for scripts", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class ParserEventCheckSpawn extends BaseParser
 {
     private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
@@ -36,6 +38,50 @@ public final class ParserEventCheckSpawn extends BaseParser
             Log.write(0, "ParserEventCheckSpawn constructor called with file: " + NAME_FILE);
         }
     }
+
+    // MERGE THIS CLASS!!!!
+    private static class TemplateWithChance
+    {
+        JsonElement resolved;
+        double chance;
+
+        TemplateWithChance(JsonElement resolved, double chance)
+        {
+            this.resolved = resolved;
+            this.chance = chance;
+        }
+    }
+
+    // MERGE THIS CLASS!!!!
+    private TemplateWithChance resolveTemplateWithChance(JsonElement element, JsonObject templates)
+    {
+        if (element.isJsonPrimitive())
+        {
+            return new TemplateWithChance(
+                    resolveTemplate(element, templates),
+                    1.0
+            );
+        }
+
+        if (element.isJsonArray())
+        {
+            JsonArray arr = element.getAsJsonArray();
+
+            if (arr.size() != 2)
+                throw new RuntimeException("Template array must be [template, chance]");
+
+            JsonElement template = resolveTemplate(arr.get(0), templates);
+            double chance = arr.get(1).getAsDouble();
+
+            return new TemplateWithChance(
+                    template,
+                    Math.max(0.0, Math.min(1.0, chance))
+            );
+        }
+
+        throw new RuntimeException("Invalid template format: " + element);
+    }
+
 
     @Override
     public void loadConfig(boolean init)
@@ -174,31 +220,31 @@ public final class ParserEventCheckSpawn extends BaseParser
             Log.write(0, "Processing data object with profile: " + dataObject.get("profile").getAsString());
         }
 
-        if (dataObject.has("potion"))
-        {
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                Log.write(0, "Found potion section");
-            }
-
-            dataObject.add("potion", resolveTemplate(dataObject.get("potion"), templates));
-        }
-
-        if (dataObject.has("command_nbt"))
-        {
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                Log.write(0, "Found command_nbt section");
-            }
-
-            dataObject.add("command_nbt", resolveTemplate(dataObject.get("command_nbt"), templates));
-        }
-
         EntityEquipment.Data entityEquipmentData = new EntityEquipment.Data();
         EntityDescription.Data entityDescriptionData = new EntityDescription.Data();
         ProfilePriority.Data profilePriorityData = new ProfilePriority.Data();
         GameWorld.Data gameWorldData = new GameWorld.Data();
         EntityAttributes.Data entityAttributesData = new EntityAttributes.Data();
+
+        if (dataObject.has("potion"))
+        {
+            TemplateWithChance potion = resolveTemplateWithChance(
+                    dataObject.get("potion"), templates
+            );
+
+            dataObject.add("potion", potion.resolved);
+            entityAttributesData.potionChance = potion.chance;
+        }
+
+        if (dataObject.has("command_nbt"))
+        {
+            TemplateWithChance nbt = resolveTemplateWithChance(
+                    dataObject.get("command_nbt"), templates
+            );
+
+            dataObject.add("command_nbt", nbt.resolved);
+            entityAttributesData.commandNbtChance = nbt.chance;
+        }
 
         entityDescriptionData.profile = dataObject.get("profile").getAsString();
         entityDescriptionData.description = dataObject.get("description").getAsString();

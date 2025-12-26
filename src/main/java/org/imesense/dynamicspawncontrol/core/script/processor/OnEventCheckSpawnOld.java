@@ -46,6 +46,23 @@ public final class OnEventCheckSpawnOld
     );
     ///
 
+    private EntityAttributes.Data cloneWithoutPotion(EntityAttributes.Data src)
+    {
+        EntityAttributes.Data d = new EntityAttributes.Data();
+        d.commandNbt = src.commandNbt;
+        d.commandNbtChance = src.commandNbtChance;
+        return d;
+    }
+
+    private EntityAttributes.Data cloneWithoutCommandNBT(EntityAttributes.Data src)
+    {
+        EntityAttributes.Data d = new EntityAttributes.Data();
+        d.potion = src.potion;
+        d.potionChance = src.potionChance;
+        return d;
+    }
+
+
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
         // для дебага в 0.2 версии
@@ -160,8 +177,33 @@ public final class OnEventCheckSpawnOld
                         event.getEntity().setAlwaysRenderNameTag(true);
                     }
 
-                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig,
-                            entityDescription, entityAttributes, UniqueField.RANDOM.self());
+                    EntityAttributes.Data finalAttributes = entityAttributes;
+
+                    if (entityAttributes.potion != null)
+                    {
+                        double chance = entityAttributes.potionChance != null
+                                ? entityAttributes.potionChance
+                                : 1.0;
+
+                        if (Math.random() > chance)
+                        {
+                            finalAttributes = cloneWithoutPotion(entityAttributes);
+                        }
+                    }
+
+                    if (finalAttributes.commandNbt != null)
+                    {
+                        double chance = finalAttributes.commandNbtChance != null
+                                ? finalAttributes.commandNbtChance
+                                : 1.0;
+
+                        if (Math.random() > chance)
+                        {
+                            finalAttributes = cloneWithoutCommandNBT(finalAttributes);
+                        }
+                    }
+
+                    Equipment.getInstance().equipEntity(event.getEntity(), selectedConfig, entityDescription, finalAttributes, UniqueField.RANDOM.self());
                 }
             }
 
