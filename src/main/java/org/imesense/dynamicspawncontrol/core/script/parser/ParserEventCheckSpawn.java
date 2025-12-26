@@ -19,7 +19,12 @@ import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
@@ -27,6 +32,14 @@ import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 @TODO(value = "Merge 'TemplateWithChance' in storage for scripts", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class ParserEventCheckSpawn extends BaseParser
 {
+    private File baseFile;
+
+    private static final String[] SECTION_ORDER = {
+            "templates",
+            "configs",
+            "data_support"
+    };
+
     private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
 
     public ParserEventCheckSpawn(final String NAME_FILE)
@@ -82,6 +95,359 @@ public final class ParserEventCheckSpawn extends BaseParser
         throw new RuntimeException("Invalid template format: " + element);
     }
 
+    private JsonObject processOrderedIncludes(JsonObject jsonObject, File currentFile) throws IOException
+    {
+        JsonObject result = new JsonObject();
+
+        for (String section : SECTION_ORDER)
+        {
+            if (jsonObject.has(section))
+            {
+                JsonElement sectionElement = jsonObject.get(section);
+                JsonElement processedSection = processSection(section, sectionElement, currentFile);
+
+                if (processedSection != null)
+                {
+                    result.add(section, processedSection);
+                }
+            }
+        }
+
+        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet())
+        {
+            String key = entry.getKey();
+            if (!Arrays.asList(SECTION_ORDER).contains(key) && !result.has(key))
+            {
+                result.add(key, entry.getValue());
+            }
+        }
+
+        return result;
+    }
+
+    private JsonElement processSection(String sectionName, JsonElement sectionElement, File currentFile) throws IOException
+    {
+        if (sectionElement.isJsonObject())
+        {
+            JsonObject sectionObj = sectionElement.getAsJsonObject();
+
+            if (sectionObj.has("#include"))
+            {
+                return processIncludeDirective(sectionObj.get("#include"), currentFile, sectionName);
+            }
+            else
+            {
+                return processOrderedIncludes(sectionObj, currentFile);
+            }
+        }
+        else if (sectionElement.isJsonArray())
+        {
+            JsonArray sectionArray = sectionElement.getAsJsonArray();
+            JsonArray resultArray = new JsonArray();
+
+            for (JsonElement element : sectionArray)
+            {
+                if (element.isJsonObject() && element.getAsJsonObject().has("#include"))
+                {
+                    JsonObject included = loadIncludedFile(element.getAsJsonObject().get("#include").getAsString(), currentFile);
+                    resultArray.add(included);
+                }
+                else
+                {
+                    resultArray.add(element);
+                }
+            }
+
+            return resultArray;
+        }
+
+        return sectionElement;
+    }
+
+    private JsonElement processIncludeDirective(JsonElement includeElement, File currentFile, String sectionName) throws IOException
+    {
+        if (includeElement.isJsonPrimitive())
+        {
+            String includeFile = includeElement.getAsString();
+            return loadIncludedFileForSection(includeFile, currentFile, sectionName);
+        }
+        else if (includeElement.isJsonArray())
+        {
+            JsonArray includeArray = includeElement.getAsJsonArray();
+
+            if (sectionName.equals("configs") || sectionName.equals("data_support"))
+            {
+                JsonArray mergedArray = new JsonArray();
+
+                for (JsonElement element : includeArray)
+                {
+                    String includeFile = element.getAsString();
+                    JsonObject included = loadIncludedFile(includeFile, currentFile);
+
+                    if (included.has(sectionName))
+                    {
+                        JsonElement sectionContent = included.get(sectionName);
+                        if (sectionContent.isJsonArray())
+                        {
+                            for (JsonElement item : sectionContent.getAsJsonArray())
+                            {
+                                mergedArray.add(item);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        mergedArray.add(included);
+                    }
+                }
+
+                return mergedArray;
+            }
+            else
+            {
+                JsonObject mergedObject = new JsonObject();
+
+                for (JsonElement element : includeArray)
+                {
+                    String includeFile = element.getAsString();
+                    JsonObject included = loadIncludedFile(includeFile, currentFile);
+
+                    if (included.has(sectionName))
+                    {
+                        mergeJsonObjects(mergedObject, included.get(sectionName).getAsJsonObject());
+                    }
+                    else
+                    {
+                        mergeJsonObjects(mergedObject, included);
+                    }
+                }
+
+                return mergedObject;
+            }
+        }
+
+        return JsonNull.INSTANCE;
+    }
+
+    private JsonElement loadIncludedFileForSection(String includePath, File currentFile, String sectionName) throws IOException
+    {
+        JsonObject included = loadIncludedFile(includePath, currentFile);
+
+        if (included.has(sectionName))
+        {
+            return included.get(sectionName);
+        }
+
+        return included;
+    }
+
+    private JsonObject loadIncludedFile(String includePath, File currentFile) throws IOException
+    {
+        Path includeFilePath = resolveIncludePath(includePath, currentFile);
+
+        if (!Files.exists(includeFilePath))
+        {
+            throw new IOException("Included file not found: " + includeFilePath);
+        }
+
+        try (FileReader reader = new FileReader(includeFilePath.toFile()))
+        {
+            Gson gson = new Gson();
+            JsonObject includedJson = gson.fromJson(reader, JsonObject.class);
+
+            return processOrderedIncludes(includedJson, includeFilePath.toFile());
+        }
+    }
+
+    private Path resolveIncludePath(String includePath, File currentFile)
+    {
+        if (includePath.startsWith("./") || includePath.startsWith("../"))
+        {
+
+            Path currentDir = currentFile.toPath().getParent();
+            return currentDir.resolve(includePath).normalize();
+        }
+        else if (!includePath.contains("/") || includePath.startsWith("includes/"))
+        {
+            File scriptsDir = getConfigFile(true,
+                    DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, "");
+            Path includesDir = scriptsDir.toPath().resolve("includes");
+            return includesDir.resolve(includePath).normalize();
+        }
+        else
+        {
+            File scriptsDir = getConfigFile(true,
+                    DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, "");
+            return scriptsDir.toPath().resolve(includePath).normalize();
+        }
+    }
+
+    private void mergeJsonObjects(JsonObject target, JsonObject source)
+    {
+        for (Map.Entry<String, JsonElement> entry : source.entrySet())
+        {
+            String key = entry.getKey();
+            JsonElement value = entry.getValue();
+
+            if (target.has(key))
+            {
+                JsonElement existing = target.get(key);
+
+                if (existing.isJsonArray() && value.isJsonArray())
+                {
+                    JsonArray mergedArray = new JsonArray();
+                    for (JsonElement elem : existing.getAsJsonArray()) mergedArray.add(elem);
+                    for (JsonElement elem : value.getAsJsonArray()) mergedArray.add(elem);
+                    target.add(key, mergedArray);
+                }
+                else if (existing.isJsonObject() && value.isJsonObject())
+                {
+                    JsonObject mergedObject = existing.getAsJsonObject();
+                    mergeJsonObjects(mergedObject, value.getAsJsonObject());
+                    target.add(key, mergedObject);
+                }
+                else
+                {
+                    target.add(key, value);
+                }
+            }
+            else
+            {
+                target.add(key, value);
+            }
+        }
+    }
+
+    private JsonObject loadTemplates(JsonObject jsonObject, File currentFile) throws IOException
+    {
+        JsonObject templates = new JsonObject();
+
+        if (jsonObject.has("templates"))
+        {
+            JsonElement templatesElement = jsonObject.get("templates");
+
+            if (templatesElement.isJsonObject())
+            {
+                templates = templatesElement.getAsJsonObject();
+
+                if (templates.has("#include"))
+                {
+                    templates = processIncludeDirective(templates.get("#include"), currentFile, "templates").getAsJsonObject();
+                }
+            }
+        }
+
+        return templates;
+    }
+
+    private void removeIncludeDirectives(JsonObject jsonObject)
+    {
+        if (jsonObject.has("#include"))
+        {
+            jsonObject.remove("#include");
+        }
+
+        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet())
+        {
+            if (entry.getValue().isJsonObject())
+            {
+                removeIncludeDirectives(entry.getValue().getAsJsonObject());
+            }
+            else if (entry.getValue().isJsonArray())
+            {
+                JsonArray array = entry.getValue().getAsJsonArray();
+                for (JsonElement element : array)
+                {
+                    if (element.isJsonObject())
+                    {
+                        removeIncludeDirectives(element.getAsJsonObject());
+                    }
+                }
+            }
+        }
+    }
+
+    private List<TemplateWithChance> resolveMultipleTemplatesWithChance(JsonElement element, JsonObject templates)
+    {
+        List<TemplateWithChance> result = new ArrayList<>();
+
+        if (element.isJsonPrimitive())
+        {
+            String templateString = element.getAsString();
+            String[] templateNames = templateString.split("\\s*,\\s*");
+
+            for (String templateName : templateNames)
+            {
+                templateName = templateName.trim();
+                if (!templateName.isEmpty())
+                {
+                    result.add(new TemplateWithChance(
+                            resolveTemplate(new JsonPrimitive(templateName), templates),
+                            1.0
+                    ));
+                }
+            }
+        }
+        else if (element.isJsonArray())
+        {
+            JsonArray arr = element.getAsJsonArray();
+
+            if (arr.size() == 2 && arr.get(0).isJsonPrimitive())
+            {
+                String templateString = arr.get(0).getAsString();
+                double commonChance = arr.get(1).getAsDouble();
+
+                String[] templateNames = templateString.split("\\s*,\\s*");
+                for (String templateName : templateNames)
+                {
+                    templateName = templateName.trim();
+                    if (!templateName.isEmpty())
+                    {
+                        result.add(new TemplateWithChance(
+                                resolveTemplate(new JsonPrimitive(templateName), templates),
+                                commonChance
+                        ));
+                    }
+                }
+            }
+            else if (arr.size() > 0 && arr.get(0).isJsonArray())
+            {
+                for (JsonElement subElement : arr)
+                {
+                    if (subElement.isJsonArray())
+                    {
+                        JsonArray subArr = subElement.getAsJsonArray();
+                        if (subArr.size() == 2)
+                        {
+                            JsonElement templateElement = subArr.get(0);
+                            double chance = subArr.get(1).getAsDouble();
+
+                            result.add(new TemplateWithChance(
+                                    resolveTemplate(templateElement, templates),
+                                    chance
+                            ));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (arr.size() == 2)
+                {
+                    Log.write(1, "Warning: Old [template, chance] format for potions. Consider using new format for multiple templates.");
+                    JsonElement templateElement = arr.get(0);
+                    double chance = arr.get(1).getAsDouble();
+
+                    result.add(new TemplateWithChance(
+                            resolveTemplate(templateElement, templates),
+                            chance
+                    ));
+                }
+            }
+        }
+
+        return result;
+    }
 
     @Override
     public void loadConfig(boolean init)
@@ -90,6 +456,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
+        this.baseFile = file;
 
         if (!file.exists())
         {
@@ -106,23 +473,23 @@ public final class ParserEventCheckSpawn extends BaseParser
             }
 
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
+            JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
+
+            JsonObject templates = loadTemplates(jsonObject, file);
+
+            JsonObject processedJson = processOrderedIncludes(jsonObject, file);
+
+            processedJson.add("templates", templates);
+
+            removeIncludeDirectives(processedJson);
 
             if (DEBUG_AND_CHECK_SYNTAX)
             {
-                Log.write(0, "JSON array size: " + jsonArray.size());
+                Log.write(0, "JSON processed successfully");
+                Log.write(0, "Templates count: " + (templates != null ? templates.size() : 0));
             }
 
-            for (JsonElement jsonElement : jsonArray)
-            {
-                if (DEBUG_AND_CHECK_SYNTAX)
-                {
-                    Log.write(0, "Processing new JSON element");
-                }
-
-                JsonObject jsonObject = jsonElement.getAsJsonObject();
-                processJsonObject(jsonObject);
-            }
+            processJsonObject(processedJson);
         }
         catch (JsonSyntaxException | IOException exception)
         {
@@ -228,12 +595,37 @@ public final class ParserEventCheckSpawn extends BaseParser
 
         if (dataObject.has("potion"))
         {
-            TemplateWithChance potion = resolveTemplateWithChance(
+            List<TemplateWithChance> potionTemplates = resolveMultipleTemplatesWithChance(
                     dataObject.get("potion"), templates
             );
 
-            dataObject.add("potion", potion.resolved);
-            entityAttributesData.potionChance = potion.chance;
+            JsonArray mergedPotions = new JsonArray();
+            double maxChance = 0.0;
+
+            for (TemplateWithChance template : potionTemplates)
+            {
+                if (template.resolved.isJsonArray())
+                {
+                    for (JsonElement potion : template.resolved.getAsJsonArray())
+                    {
+                        mergedPotions.add(potion);
+                    }
+                }
+                else
+                {
+                    mergedPotions.add(template.resolved);
+                }
+
+                maxChance = Math.max(maxChance, template.chance);
+            }
+
+            dataObject.add("potion", mergedPotions);
+            entityAttributesData.potionChance = maxChance;
+
+            if (DEBUG_AND_CHECK_SYNTAX)
+            {
+                Log.write(0, "Processed " + potionTemplates.size() + " potion templates, total effects: " + mergedPotions.size());
+            }
         }
 
         if (dataObject.has("command_nbt"))
