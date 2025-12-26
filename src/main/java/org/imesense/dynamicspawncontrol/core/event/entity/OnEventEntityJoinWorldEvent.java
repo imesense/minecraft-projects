@@ -37,7 +37,7 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 
     }
 
-    static boolean isTestLogic = false;
+    static boolean isTestLogic = true;
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityJoinWorldEvent_LOW(EntityJoinWorldEvent event)

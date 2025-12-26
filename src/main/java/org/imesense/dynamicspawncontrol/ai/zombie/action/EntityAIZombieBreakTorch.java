@@ -5,29 +5,55 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import org.imesense.dynamicspawncontrol.ai.ILightReactiveMob;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public final class EntityAIZombieBreakTorch extends EntityAIBase
 {
-    private BlockPos targetTorchPos;
-    private final EntityZombie ZOMBIE;
+    private final EntityZombie zombie;
+    private final ILightReactiveMob profile;
+    private final Random rand;
 
-    public EntityAIZombieBreakTorch(EntityZombie entityZombie)
+    private BlockPos targetTorch;
+    private int cooldown;
+
+    public EntityAIZombieBreakTorch(EntityZombie zombie, ILightReactiveMob profile)
     {
-        this.ZOMBIE = entityZombie;
+        this.zombie = zombie;
+        this.profile = profile;
+        this.rand = zombie.getRNG();
         this.setMutexBits(3);
     }
 
     @Override
     public boolean shouldExecute()
     {
-        List<BlockPos> nearbyTorches = findNearbyTorches();
+        if (!profile.canReactToLight())
+            return false;
 
-        if (!nearbyTorches.isEmpty())
+        if (cooldown-- > 0)
+            return false;
+
+        if (zombie.getAttackTarget() != null)
+            return false;
+
+        if (zombie.world.isDaytime())
+            return false;
+
+        if (zombie.world.getLight(zombie.getPosition()) < 9)
+            return false;
+
+        if (rand.nextFloat() > profile.getLightReactionChance())
+            return false;
+
+        this.targetTorch = findNearbyTorch();
+
+        if (this.targetTorch != null)
         {
-            this.targetTorchPos = nearbyTorches.get(0);
+            cooldown = 200 + rand.nextInt(200);
             return true;
         }
 
@@ -37,49 +63,60 @@ public final class EntityAIZombieBreakTorch extends EntityAIBase
     @Override
     public void startExecuting()
     {
-        if (this.targetTorchPos != null)
-        {
-            this.ZOMBIE.getNavigator().tryMoveToXYZ(this.targetTorchPos.getX(),
-                    this.targetTorchPos.getY(), this.targetTorchPos.getZ(), 1.00);
-        }
+        zombie.getNavigator().tryMoveToXYZ(
+                targetTorch.getX(),
+                targetTorch.getY(),
+                targetTorch.getZ(),
+                1.0
+        );
     }
 
     @Override
     public boolean shouldContinueExecuting()
     {
-        return !this.ZOMBIE.getNavigator().noPath() && this.targetTorchPos != null;
+        return targetTorch != null
+                && !zombie.getNavigator().noPath()
+                && zombie.getAttackTarget() == null;
     }
 
     @Override
     public void updateTask()
     {
-        if (this.targetTorchPos != null &&
-                this.ZOMBIE.getDistanceSqToCenter(this.targetTorchPos) < 2.00)
-        {
-            IBlockState iBlockState = this.ZOMBIE.world.getBlockState(this.targetTorchPos);
+        if (targetTorch == null)
+            return;
 
-            if (iBlockState.getBlock() == Blocks.TORCH)
+        if (zombie.getDistanceSqToCenter(targetTorch) > 2.5)
+            return;
+
+        IBlockState state = zombie.world.getBlockState(targetTorch);
+
+        if (state.getBlock() == Blocks.TORCH)
+        {
+            if (rand.nextFloat() < 0.6f)
             {
-                this.ZOMBIE.world.destroyBlock(this.targetTorchPos, false);
-                this.targetTorchPos = null;
+                zombie.world.destroyBlock(targetTorch, false);
             }
         }
+
+        targetTorch = null;
     }
 
-    private List<BlockPos> findNearbyTorches()
+    private BlockPos findNearbyTorch()
     {
-        BlockPos blockPos = new BlockPos(this.ZOMBIE);
-        List<BlockPos> listBlockPos = new ArrayList<>();
+        BlockPos base = zombie.getPosition();
+        int r = profile.getLightSearchRadius();
 
-        for (BlockPos pos : BlockPos.getAllInBox(blockPos.
-                add(-10, -10, -10), blockPos.add(10, 10, 10)))
-        {
-            if (this.ZOMBIE.world.getBlockState(pos).getBlock() == Blocks.TORCH)
+        for (int dx = -r; dx <= r; dx++)
+            for (int dz = -r; dz <= r; dz++)
             {
-                listBlockPos.add(pos);
-            }
-        }
+                BlockPos pos = base.add(dx, 0, dz);
 
-        return listBlockPos;
+                if (zombie.world.getLight(pos) >= 12 &&
+                        zombie.world.getBlockState(pos).getBlock() == Blocks.TORCH)
+                {
+                    return pos;
+                }
+            }
+        return null;
     }
 }

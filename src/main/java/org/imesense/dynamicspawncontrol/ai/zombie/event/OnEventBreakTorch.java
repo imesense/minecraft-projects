@@ -5,6 +5,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.ai.ZombieLightProfile;
 import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
 import org.imesense.dynamicspawncontrol.ai.zombie.action.EntityAIZombieBreakTorch;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
@@ -32,10 +33,16 @@ public final class OnEventBreakTorch
 
     public void handleSearchToBreakTorch(EntityJoinWorldEvent event)
     {
-        if (event.getEntity() instanceof EntityZombie)
-        {
-            EntityZombie eventEntity = (EntityZombie) event.getEntity();
-            eventEntity.tasks.addTask(1, new EntityAIZombieBreakTorch(eventEntity));
-        }
+        if (!(event.getEntity() instanceof EntityZombie))
+            return;
+
+        EntityZombie zombie = (EntityZombie) event.getEntity();
+
+        ZombieLightProfile profile = new ZombieLightProfile(zombie);
+
+        zombie.tasks.addTask(
+                5, // низкий приоритет
+                new EntityAIZombieBreakTorch(zombie, profile)
+        );
     }
 }
