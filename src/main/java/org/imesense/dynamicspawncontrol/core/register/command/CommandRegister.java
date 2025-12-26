@@ -34,7 +34,8 @@ public final class CommandRegister extends BaseCommandRegister
         CmdClientCleanMemory.class,
         CmdAdminCopyWorldSeed.class,
         CmdAdminGiveDSCBow.class,
-        CmdAdminGiveDSCSword.class
+        CmdAdminGiveDSCSword.class,
+        CmdAdminTimeSet.class
     };
 
     @Override
