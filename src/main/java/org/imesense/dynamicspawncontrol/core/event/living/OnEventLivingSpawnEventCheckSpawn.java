@@ -4,6 +4,7 @@ import com.dhanantry.scapeandrunparasites.entity.EntityBody;
 import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityCrux;
 import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityHeed;
 import com.dhanantry.scapeandrunparasites.entity.monster.hijacked.EntityHiGolem;
+import com.dhanantry.scapeandrunparasites.entity.monster.inborn.EntityRathol;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityFlog;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityGanro;
 import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityOrch;
@@ -57,13 +58,11 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     }
 
     private static final Set<Class<? extends Entity>> ALLOWED_ENTITIES = new HashSet<>(Arrays.asList(
-            EntityHiGolem.class,
-            EntityGanro.class,
-            EntityBody.class,
-            EntityFlog.class,
-            EntityCrux.class,
-            EntityHeed.class,
-            EntityOrch.class
+        EntityHiGolem.class, // Захваченный голем
+        EntityRathol.class, // Тяжелый переносчик
+        EntityCrux.class, // извечный
+        EntityFlog.class, // Пехотинец
+        EntityHeed.class // Бдитель
     ));
 
     @SubscribeEvent
