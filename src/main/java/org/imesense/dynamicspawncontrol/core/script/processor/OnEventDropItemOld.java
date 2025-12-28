@@ -136,10 +136,10 @@ public final class OnEventDropItemOld
 
         if (!foundRules)
         {
-            Log.write(0, String.format(
-                    "[DropItem] No rules found for entity %s in dimension %d",
-                    entityResourceLocation, currentDimension
-            ));
+            //Log.write(0, String.format(
+           //         "[DropItem] No rules found for entity %s in dimension %d",
+           ///         entityResourceLocation, currentDimension
+           // ));
         }
         else
         {
