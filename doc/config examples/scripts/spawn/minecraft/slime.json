@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "minecraft:slime",
+      "weight": 5,
+      "spawn_chance": 0.75,
+      "groupcountmin": 1,
+      "groupcountmax": 2,
+      "max_height": 120,
+      "min_height": 40
+    }
+  ]
+}

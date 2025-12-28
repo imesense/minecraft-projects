@@ -1,0 +1,38 @@
+{
+  "configs": [
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Визер-скелет (Средний)",
+        "description": "Экипировка: Кольчужная, железная или золотая броня (В разброс). Оружие: Каменный меч. Эффекты: Скорость I, Спешка I, Сила II, Прыгучесть II, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье I, Поглощение II.",
+        "entity_type": "minecraft:wither_skeleton",
+        "priority": 15,
+        "equipment": {
+          "armor_helmet": [
+            "minecraft:chainmail_helmet",
+            "minecraft:iron_helmet",
+            "minecraft:golden_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:chainmail_chestplate",
+            "minecraft:iron_chestplate",
+            "minecraft:golden_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:chainmail_leggings",
+            "minecraft:iron_leggings",
+            "minecraft:golden_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:chainmail_boots",
+            "minecraft:iron_boots",
+            "minecraft:golden_boots"
+          ],
+          "has_shield": 0.3
+        },
+        "potion": ["@potion_set_normal_minecraft_wither_skeleton", 0.5],
+        "command_nbt": ["@nbt_set_normal_minecraft_wither_skeleton", 0.5]
+      }
+    }
+  ]
+}

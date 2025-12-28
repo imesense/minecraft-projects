@@ -381,7 +381,7 @@
       "entity": "minecraft:zombie",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 95,
+      "max_entity_count": 60,
       "result": "deny"
     }
   },
@@ -431,7 +431,7 @@
       "entity": "dynamicspawncontrol:feral_zombie",
       "per_player": false,
       "per_chunk": true,
-      "max_entity_count": 55,
+      "max_entity_count": 60,
       "result": "deny"
     }
   },

@@ -1,0 +1,11 @@
+{
+  "data_support": [
+    {
+      "id_dimension": 0,
+      "entity_type": "minecraft:vex",
+      "potion": [
+        "minecraft:strength, 10000, 1, 0.15"
+      ]
+    }
+  ]
+}

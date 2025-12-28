@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "minecraft:creeper",
+      "weight": 20,
+      "spawn_chance": 0.35,
+      "groupcountmin": 1,
+      "groupcountmax": 2,
+      "max_height": 100,
+      "min_height": 45
+    }
+  ]
+}

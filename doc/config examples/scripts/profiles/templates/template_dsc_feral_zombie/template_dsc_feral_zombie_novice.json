@@ -1,0 +1,30 @@
+{
+  "templates": {
+    "potion_set_novice_dsc_feral_zombie": [
+      "minecraft:speed, 10000, 1, 0.1",
+      "minecraft:haste, 10000, 1, 0.1",
+      "minecraft:strength, 10000, 1, 0.1",
+      "minecraft:jump_boost, 10000, 1, 0.1",
+      "minecraft:regeneration, 10000, 1, 0.35",
+      "minecraft:resistance, 10000, 1, 0.1",
+      "minecraft:invisibility, 10000, 1, 0.1",
+      "minecraft:health_boost, 10000, 1, 0.1",
+      "minecraft:absorption, 10000, 1, 0.1"
+    ],
+    "nbt_set_novice_dsc_feral_zombie": {
+      "Attributes": [
+        {
+          "Base": 0.23,
+          "Modifiers": [
+            {
+              "Operation": 2,
+              "Amount": 0.5,
+              "Name": "effect.moveSlowdown -0.25"
+            }
+          ],
+          "Name": "generic.movementSpeed"
+        }
+      ]
+    }
+  }
+}

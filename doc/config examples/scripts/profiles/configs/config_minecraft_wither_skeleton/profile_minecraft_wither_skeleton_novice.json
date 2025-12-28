@@ -1,0 +1,30 @@
+{
+  "configs": [
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Визер-скелет (Новичок)",
+        "description": "Экипировка: Кожаная броня (Сет). Оружие: Каменный меч. Эффекты: Скорость I, Спешка I, Сила I, Прыгучесть I, Регенерация I, Сопротивление I, Невидимость I, Дополнительное здоровье I, Поглощение I.",
+        "entity_type": "minecraft:wither_skeleton",
+        "priority": 35,
+        "equipment": {
+          "armor_helmet": [
+            "minecraft:leather_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:leather_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:leather_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:leather_boots"
+          ],
+          "has_shield": 0.1
+        },
+        "potion": ["@potion_set_novice_minecraft_wither_skeleton", 0.5],
+        "command_nbt": ["@nbt_set_novice_minecraft_wither_skeleton", 0.5]
+      }
+    }
+  ]
+}

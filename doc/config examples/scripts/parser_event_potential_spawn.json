@@ -1,286 +1,32 @@
-[
-  {
-    "mobs": [
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:cave_spider",
-        "weight": 4,
-        "spawn_chance": 0.45,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 45,
-        "min_height": 5
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:creeper",
-        "weight": 20,
-        "spawn_chance": 0.35,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 100,
-        "min_height": 45
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:enderman",
-        "weight": 5,
-        "spawn_chance": 0.45,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 100,
-        "min_height": 45
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:endermite",
-        "weight": 5,
-        "spawn_chance": 0.35,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 50,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:evocation_illager",
-        "weight": 5,
-        "spawn_chance": 0.35,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 45,
-        "min_height": 10
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:husk",
-        "weight": 20,
-        "spawn_chance": 0.3,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 60,
-        "min_height": 30
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:silverfish",
-        "weight": 3,
-        "spawn_chance": 0.60,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 40,
-        "min_height": 5
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:skeleton",
-        "weight": 25,
-        "spawn_chance": 0.4,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 100,
-        "min_height": 45
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:slime",
-        "weight": 5,
-        "spawn_chance": 0.75,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 120,
-        "min_height": 40
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:spider",
-        "weight": 10,
-        "spawn_chance": 0.45,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 120,
-        "min_height": 50
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:stray",
-        "weight": 15,
-        "spawn_chance": 0.3,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 45,
-        "min_height": 5
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:vex",
-        "weight": 3,
-        "spawn_chance": 0.60,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 35,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:vindication_illager",
-        "weight": 9,
-        "spawn_chance": 0.60,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 60,
-        "min_height": 20
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:witch",
-        "weight": 7,
-        "spawn_chance": 0.45,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 100,
-        "min_height": 50
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:wither_skeleton",
-        "weight": 45,
-        "spawn_chance": 0.3,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 30,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:zombie",
-        "weight": 30,
-        "spawn_chance": 0.55,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 100,
-        "min_height": 30
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:zombie_pigman",
-        "weight": 40,
-        "spawn_chance": 0.35,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 30,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "minecraft:zombie_villager",
-        "weight": 25,
-        "spawn_chance": 0.35,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 120,
-        "min_height": 55
-      },
-      {
-        "id_dimension": 0,
-        "mob": "dynamicspawncontrol:feral_zombie",
-        "weight": 30,
-        "spawn_chance": 0.45,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 35,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "specialmobs:hellfireblaze",
-        "weight": 6,
-        "spawn_chance": 0.45,
-        "groupcountmin": 1,
-        "groupcountmax": 2,
-        "max_height": 35,
-        "min_height": 5
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:carrier_heavy",
-        "weight": 8,
-        "spawn_chance": 0.40,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 40,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:warden",
-        "weight": 4,
-        "spawn_chance": 0.25,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 35,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:marauder",
-        "weight": 4,
-        "spawn_chance": 0.20,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 35,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:grunt",
-        "weight": 5,
-        "spawn_chance": 0.45,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 30,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:hi_golem",
-        "weight": 5,
-        "spawn_chance": 0.40,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 30,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:heed",
-        "weight": 4,
-        "spawn_chance": 0.20,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 30,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:crux",
-        "weight": 4,
-        "spawn_chance": 0.20,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 25,
-        "min_height": 1
-      },
-      {
-        "id_dimension": 0,
-        "mob": "srparasites:monarch",
-        "weight": 4,
-        "spawn_chance": 0.15,
-        "groupcountmin": 1,
-        "groupcountmax": 1,
-        "max_height": 30,
-        "min_height": 1
-      }
-    ]
-  }
-]
+{
+  "#include": [
+    "spawn/dynamicspawncontrol/feral_zombie.json",
+
+    "spawn/minecraft/cave_spider.json",
+    "spawn/minecraft/creeper.json",
+    "spawn/minecraft/enderman.json",
+    "spawn/minecraft/endermite.json",
+    "spawn/minecraft/evocation_illager.json",
+    "spawn/minecraft/husk.json",
+    "spawn/minecraft/silverfish.json",
+    "spawn/minecraft/skeleton.json",
+    "spawn/minecraft/slime.json",
+    "spawn/minecraft/spider.json",
+    "spawn/minecraft/stray.json",
+    "spawn/minecraft/vex.json",
+    "spawn/minecraft/vindication_illager.json",
+    "spawn/minecraft/witch.json",
+    "spawn/minecraft/wither_skeleton.json",
+    "spawn/minecraft/zombie.json",
+    "spawn/minecraft/zombie_pigman.json",
+    "spawn/minecraft/zombie_villager.json",
+
+    "spawn/specialmobs/hellfireblaze.json",
+
+    "spawn/srparasites/carrier_heavy.json",
+    "spawn/srparasites/crux.json",
+    "spawn/srparasites/grunt.json",
+    "spawn/srparasites/heed.json",
+    "spawn/srparasites/hi_golem.json"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "minecraft:vindication_illager",
+      "weight": 9,
+      "spawn_chance": 0.60,
+      "groupcountmin": 1,
+      "groupcountmax": 1,
+      "max_height": 60,
+      "min_height": 20
+    }
+  ]
+}

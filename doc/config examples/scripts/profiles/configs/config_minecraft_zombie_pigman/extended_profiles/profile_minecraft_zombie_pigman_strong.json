@@ -1,0 +1,34 @@
+{
+  "configs": [
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Свинозомби (Сильный)",
+        "description": "Экипировка: Золотая или алмазная броня (В разброс). Оружие: Золотой меч. Эффекты: Скорость II, Спешка I, Сила II, Прыгучесть II, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье II, Поглощение II.",
+        "entity_type": "minecraft:zombie_pigman",
+        "priority": 15,
+        "equipment": {
+          "armor_helmet": [
+            "minecraft:golden_helmet",
+            "minecraft:diamond_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:golden_chestplate",
+            "minecraft:diamond_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:golden_leggings",
+            "minecraft:diamond_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:golden_boots",
+            "minecraft:diamond_boots"
+          ],
+          "has_shield": 0.5
+        },
+        "potion": ["@potion_set_strong_minecraft_zombie_pigman", 0.5],
+        "command_nbt": ["@nbt_set_strong_minecraft_zombie_pigman", 0.5]
+      }
+    }
+  ]
+}

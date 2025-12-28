@@ -1,0 +1,91 @@
+{
+  "configs": [
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Дикий зомби (Опытный)",
+        "description": "Экипировка: Кольчужная броня (Сет). Оружие: Каменный меч. Эффекты: Скорость I, Спешка I, Сила I, Прыгучесть I, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье I, Поглощение II.",
+        "entity_type": "dynamicspawncontrol:feral_zombie",
+        "priority": 20,
+        "equipment": {
+          "held_item": [
+            "minecraft:stone_sword"
+          ],
+          "armor_helmet": [
+            "minecraft:chainmail_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:chainmail_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:chainmail_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:chainmail_boots"
+          ],
+          "has_shield": 0.3
+        },
+        "potion": ["@potion_set_experienced_dsc_feral_zombie", 0.5],
+        "command_nbt": ["@nbt_set_experienced_dsc_feral_zombie", 0.5]
+      }
+    },
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Дикий зомби (Опытный дровосек)",
+        "description": "Экипировка: Кольчужная броня (Сет). Оружие: Каменный топор. Эффекты: Скорость I, Спешка I, Сила I, Прыгучесть I, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье I, Поглощение II.",
+        "entity_type": "dynamicspawncontrol:feral_zombie",
+        "priority": 20,
+        "equipment": {
+          "held_item": [
+            "minecraft:stone_axe"
+          ],
+          "armor_helmet": [
+            "minecraft:chainmail_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:chainmail_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:chainmail_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:chainmail_boots"
+          ],
+          "has_shield": 0.3
+        },
+        "potion": ["@potion_set_experienced_dsc_feral_zombie", 0.5],
+        "command_nbt": ["@nbt_set_experienced_dsc_feral_zombie", 0.5]
+      }
+    },
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Дикий зомби (Опытный шахтер)",
+        "description": "Экипировка: Кольчужная броня (Сет). Оружие: Каменная кирка. Эффекты: Скорость I, Спешка I, Сила I, Прыгучесть I, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье I, Поглощение II.",
+        "entity_type": "dynamicspawncontrol:feral_zombie",
+        "priority": 20,
+        "equipment": {
+          "held_item": [
+            "minecraft:stone_pickaxe"
+          ],
+          "armor_helmet": [
+            "minecraft:chainmail_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:chainmail_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:chainmail_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:chainmail_boots"
+          ],
+          "has_shield": 0.3
+        },
+        "potion": ["@potion_set_experienced_dsc_feral_zombie", 0.5],
+        "command_nbt": ["@nbt_set_experienced_dsc_feral_zombie", 0.5]
+      }
+    }
+  ]
+}

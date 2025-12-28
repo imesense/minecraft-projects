@@ -1,0 +1,19 @@
+{
+  "data_support": [
+    {
+      "id_dimension": 0,
+      "entity_type": "minecraft:creeper",
+      "potion": [
+        "minecraft:speed, 10000, 1, 0.1",
+        "minecraft:haste, 10000, 1, 0.1",
+        "minecraft:strength, 10000, 1, 0.1",
+        "minecraft:jump_boost, 10000, 1, 0.1",
+        "minecraft:regeneration, 10000, 1, 0.1",
+        "minecraft:resistance, 10000, 1, 0.1",
+        "minecraft:invisibility, 10000, 1, 0.1",
+        "minecraft:health_boost, 10000, 1, 0.1",
+        "minecraft:absorption, 10000, 1, 0.1"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "templates": {
+    "potion_set_weak_minecraft_wither_skeleton": [
+      "minecraft:speed, 10000, 1, 0.15",
+      "minecraft:haste, 10000, 1, 0.15",
+      "minecraft:strength, 10000, 1, 0.15",
+      "minecraft:jump_boost, 10000, 1, 0.15",
+      "minecraft:regeneration, 10000, 2, 0.35",
+      "minecraft:resistance, 10000, 2, 0.15",
+      "minecraft:invisibility, 10000, 1, 0.15",
+      "minecraft:health_boost, 10000, 1, 0.15",
+      "minecraft:absorption, 10000, 2, 0.15"
+    ],
+    "nbt_set_weak_minecraft_wither_skeleton": {
+      "Attributes": [
+        {
+          "Base": 0.23,
+          "Modifiers": [
+            {
+              "Operation": 2,
+              "Amount": 0.5,
+              "Name": "effect.moveSlowdown -0.35"
+            }
+          ],
+          "Name": "generic.movementSpeed"
+        }
+      ]
+    }
+  }
+}

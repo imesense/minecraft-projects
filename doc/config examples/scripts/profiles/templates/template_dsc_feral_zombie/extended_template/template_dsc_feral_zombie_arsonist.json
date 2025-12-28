@@ -1,0 +1,33 @@
+{
+  "templates": {
+    "potion_set_arsonist_dsc_feral_zombie": [
+      "minecraft:speed, 10000, 2, 0.30",
+      "minecraft:haste, 10000, 2, 0.30",
+      "minecraft:strength, 10000, 2, 0.30",
+      "minecraft:jump_boost, 10000, 2, 0.30",
+      "minecraft:regeneration, 10000, 2, 0.45",
+      "minecraft:resistance, 10000, 2, 0.30",
+      "minecraft:invisibility, 10000, 1, 0.30",
+      "minecraft:health_boost, 10000, 2, 0.30",
+      "minecraft:absorption, 10000, 2, 0.30"
+    ],
+    "potion_set_arsonist_dsc_feral_zombie_fire_resistance": [
+      "minecraft:fire_resistance, 20000, 2, 1.0"
+    ],
+    "nbt_set_arsonist_dsc_feral_zombie": {
+      "Attributes": [
+        {
+          "Base": 0.23,
+          "Modifiers": [
+            {
+              "Operation": 2,
+              "Amount": 0.5,
+              "Name": "effect.moveSlowdown -0.35"
+            }
+          ],
+          "Name": "generic.movementSpeed"
+        }
+      ]
+    }
+  }
+}

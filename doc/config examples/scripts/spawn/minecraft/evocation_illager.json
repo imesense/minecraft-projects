@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "minecraft:evocation_illager",
+      "weight": 5,
+      "spawn_chance": 0.35,
+      "groupcountmin": 1,
+      "groupcountmax": 1,
+      "max_height": 45,
+      "min_height": 10
+    }
+  ]
+}

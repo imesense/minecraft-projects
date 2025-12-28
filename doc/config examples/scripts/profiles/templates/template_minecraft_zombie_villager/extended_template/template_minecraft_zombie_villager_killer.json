@@ -1,0 +1,39 @@
+{
+  "templates": {
+    "potion_set_killer_minecraft_zombie_villager": [
+      "minecraft:speed, 10000, 2, 0.30",
+      "minecraft:haste, 10000, 2, 0.30",
+      "minecraft:jump_boost, 10000, 2, 0.30",
+      "minecraft:regeneration, 10000, 2, 0.45",
+      "minecraft:resistance, 10000, 2, 0.30",
+      "minecraft:health_boost, 10000, 2, 0.30",
+      "minecraft:absorption, 10000, 2, 0.30"
+    ],
+    "potion_set_killer_minecraft_zombie_villager_strength_fire_resistance": [
+      "minecraft:fire_resistance, 20000, 1, 1.0",
+      "minecraft:strength, 20000, 2, 1.0"
+    ],
+    "potion_set_killer_minecraft_zombie_villager_invisibility": [
+      "minecraft:invisibility, 20000, 1, 1.0"
+    ],
+    "nbt_set_killer_minecraft_zombie_villager": {
+      "Attributes": [
+        {
+          "Base": 45.0,
+          "Name": "generic.maxHealth"
+        },
+        {
+          "Base": 0.23,
+          "Modifiers": [
+            {
+              "Operation": 2,
+              "Amount": 0.75,
+              "Name": "effect.moveSlowdown -0.23"
+            }
+          ],
+          "Name": "generic.movementSpeed"
+        }
+      ]
+    }
+  }
+}

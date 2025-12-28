@@ -1,0 +1,40 @@
+{
+  "configs": [
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Зомби (Сильный)",
+        "description": "Экипировка: Брони нет. Оружие: Золотой топор на 3 чара (Острота VIII-X, Заговор огня II-III, Отбрасывание III-VI). Эффекты: Скорость II, Спешка II, Сила II, Прыгучесть II, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье II, Поглощение II.",
+        "entity_type": "minecraft:zombie",
+        "priority": 25,
+        "max_height": 40,
+        "see_sky": false,
+        "equipment": {
+          "held_item": [
+            {
+              "item": "minecraft:golden_axe",
+              "nbt": {
+                "ench": [
+                  {
+                    "lvl": "8:10",
+                    "id": 16
+                  },
+                  {
+                    "lvl": "2:3",
+                    "id": 20
+                  },
+                  {
+                    "lvl": "3:6",
+                    "id": 19
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "potion": "@potion_set_killer_minecraft_zombie, @potion_set_killer_minecraft_zombie_strength_fire_resistance, @potion_set_killer_minecraft_zombie_invisibility",
+        "command_nbt": "@nbt_set_killer_minecraft_zombie"
+      }
+    }
+  ]
+}

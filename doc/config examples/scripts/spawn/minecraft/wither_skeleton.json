@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "minecraft:wither_skeleton",
+      "weight": 45,
+      "spawn_chance": 0.3,
+      "groupcountmin": 1,
+      "groupcountmax": 2,
+      "max_height": 30,
+      "min_height": 1
+    }
+  ]
+}

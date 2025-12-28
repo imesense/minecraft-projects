@@ -1,0 +1,12 @@
+{
+  "data_support": [
+    {
+      "id_dimension": 0,
+      "see_sky": false,
+      "entity_type": "minecraft:husk",
+      "potion": [
+        "minecraft:fire_resistance, 10000, 1, 0.7"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "srparasites:heed",
+      "weight": 4,
+      "spawn_chance": 0.20,
+      "groupcountmin": 1,
+      "groupcountmax": 1,
+      "max_height": 30,
+      "min_height": 1
+    }
+  ]
+}

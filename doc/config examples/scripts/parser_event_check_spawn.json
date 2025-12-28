@@ -1,1757 +1,238 @@
-[
-  {
-    "templates": {
-      "potion_set_normal_zombie": [
-        "minecraft:absorption, 10000, 1, 0.4",
-        "minecraft:invisibility, 10000, 1, 0.4",
-        "minecraft:speed, 10000, 1, 0.1",
-        "minecraft:jump_boost, 10000, 1, 0.45"
-      ],
-      "potion_set_feral_zombie": [
-        "minecraft:absorption, 10000, 1, 0.4",
-        "minecraft:invisibility, 10000, 1, 0.4",
-        "minecraft:speed, 10000, 1, 0.1",
-        "minecraft:jump_boost, 10000, 1, 0.45"
-      ],
-      "potion_set_normal_zombie_pigman": [
-        "minecraft:strength, 10000, 1, 0.4",
-        "minecraft:speed, 10000, 1, 0.1",
-        "minecraft:invisibility, 10000, 1, 0.1",
-        "minecraft:jump_boost, 10000, 1, 0.3"
-      ],
-      "potion_set_normal_husk":
-      [
-        "minecraft:absorption, 10000, 1, 0.5",
-        "minecraft:strength, 10000, 1, 0.45",
-        "minecraft:speed, 10000, 1, 0.1",
-        "minecraft:invisibility, 10000, 1, 0.45"
-      ],
-      "potion_set_normal_skeleton":
-      [
-        "minecraft:absorption, 10000, 1, 0.45",
-        "minecraft:invisibility, 10000, 1, 0.40",
-        "minecraft:speed, 10000, 1, 0.1",
-        "minecraft:jump_boost, 10000, 1, 0.35"
-      ],
-      "potion_set_normal_stray":
-      [
-        "minecraft:absorption, 10000, 1, 0.4",
-        "minecraft:invisibility, 10000, 1, 0.4",
-        "minecraft:speed, 10000, 1, 0.1",
-        "minecraft:jump_boost, 10000, 1, 0.45"
-      ],
-      "potion_set_strong_zombie": [
-        "minecraft:strength, 10000, 2, 0.45"
-      ],
-      "potion_set_very_strong_zombie_invisibility": [
-        "minecraft:invisibility, 10000, 2, 1.0"
-      ],
-      "potion_set_very_strong_zombie_strength": [
-        "minecraft:strength, 10000, 2, 1.0"
-      ],
-      "potion_set_very_strong_zombie_piroman": [
-        "minecraft:fire_resistance, 10000, 1, 1.0",
-        "minecraft:strength, 10000, 2, 1.0"
-      ],
-      "potion_set_normal_wither_skeleton": [
-        "minecraft:strength, 10000, 1, 0.4",
-        "minecraft:speed, 10000, 1, 0.1",
-        "minecraft:invisibility, 10000, 1, 0.4",
-        "minecraft:jump_boost, 10000, 1, 0.4"
-      ],
-      "nbt_set_normal_zombie_movement_speed": {
-        "Attributes": [
-          {
-            "Base": 0.23,
-            "Modifiers": [
-              {
-                "Operation": 2,
-                "Amount": 0.5,
-                "Name": "effect.moveSlowdown -0.25"
-              }
-            ],
-            "Name": "generic.movementSpeed"
-          }
-        ]
-      },
-      "nbt_set_killer_zombie_movement_speed_max_health": {
-        "Attributes": [
-          {
-            "Base": 40.0,
-            "Name": "generic.maxHealth"
-          },
-          {
-            "Base": 0.23,
-            "Modifiers": [
-              {
-                "Operation": 2,
-                "Amount": 1.2,
-                "Name": "effect.moveSlowdown -0.10"
-              }
-            ],
-            "Name": "generic.movementSpeed"
-          }
-        ]
-      },
-      "nbt_set_strong_zombie_movement_speed": {
-        "Attributes": [
-          {
-            "Base": 0.23,
-            "Modifiers": [
-              {
-                "Operation": 2,
-                "Amount": 0.65,
-                "Name": "effect.moveSlowdown -0.35"
-              }
-            ],
-            "Name": "generic.movementSpeed"
-          }
-        ]
-      },
-      "nbt_set_normal_husk_movement_speed": {
-        "Attributes": [
-          {
-            "Base": 0.23,
-            "Modifiers": [
-              {
-                "Operation": 2,
-                "Amount": 0.65,
-                "Name": "effect.moveSlowdown -0.25"
-              }
-            ],
-            "Name": "generic.movementSpeed"
-          }
-        ]
-      },
-      "nbt_set_normal_zombie_pigman_movement_speed": {
-        "Attributes": [
-          {
-            "Base": 0.23,
-            "Modifiers": [
-              {
-                "Operation": 2,
-                "Amount": 0.65,
-                "Name": "effect.moveSlowdown -0.45"
-              }
-            ],
-            "Name": "generic.movementSpeed"
-          }
-        ]
-      },
-      "nbt_set_normal_wither_skeleton_movement_speed": {
-        "Attributes": [
-          {
-            "Base": 0.23,
-            "Modifiers": [
-              {
-                "Operation": 2,
-                "Amount": 0.5,
-                "Name": "effect.moveSlowdown -0.25"
-              }
-            ],
-            "Name": "generic.movementSpeed"
-          }
-        ]
-      }
-    },
-    "configs": [
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Слабый)",
-          "description": "Экипировка: палка, деревянные и каменные инструменты, кожанная и кальчужная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie",
-          "priority": 41,
-          "equipment": {
-            "held_item": [
-              "minecraft:stick",
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:wooden_pickaxe",
-              "minecraft:wooden_shovel",
-              "minecraft:wooden_hoe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Слабый)",
-          "description": "Экипировка: палка, деревянные и каменные инструменты, кожанная и кальчужная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 41,
-          "equipment": {
-            "held_item": [
-              "minecraft:stick",
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:wooden_pickaxe",
-              "minecraft:wooden_shovel",
-              "minecraft:wooden_hoe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots"
-            ]
-          },
-          "potion": "@potion_set_feral_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Средний)",
-          "description": "Экипировка: Каменные и золотые инструменты, кальчужная и золотая броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie",
-          "priority": 35,
-          "equipment": {
-            "held_item": [
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe",
-              "minecraft:iron_sword",
-              "minecraft:iron_axe",
-              "minecraft:iron_pickaxe",
-              "minecraft:iron_shovel",
-              "minecraft:iron_hoe",
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Средний)",
-          "description": "Экипировка: Каменные и золотые инструменты, кальчужная и золотая броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 35,
-          "equipment": {
-            "held_item": [
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe",
-              "minecraft:iron_sword",
-              "minecraft:iron_axe",
-              "minecraft:iron_pickaxe",
-              "minecraft:iron_shovel",
-              "minecraft:iron_hoe",
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots"
-            ]
-          },
-          "potion": "@potion_set_feral_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Сильный)",
-          "description": "Экипировка: Золотые и алмазные инструменты, золотая и алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie",
-          "priority": 22,
-          "equipment": {
-            "held_item": [
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe",
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe",
-              "minecraft:diamond_pickaxe",
-              "minecraft:diamond_shovel",
-              "minecraft:diamond_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Сильный)",
-          "description": "Экипировка: Золотые и алмазные инструменты, золотая и алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 22,
-          "equipment": {
-            "held_item": [
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe",
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe",
-              "minecraft:diamond_pickaxe",
-              "minecraft:diamond_shovel",
-              "minecraft:diamond_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_feral_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Очень сильный)",
-          "description": "Экипировка: Алмазный меч и топор, алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок, Сила",
-          "entity_type": "minecraft:zombie",
-          "priority": 22,
-          "max_height": 30,
-          "see_sky": false,
-          "equipment": {
-            "held_item": [
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe"
-            ],
-            "armor_helmet": [
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie, @potion_set_strong_zombie",
-          "command_nbt": "@nbt_set_strong_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Очень сильный)",
-          "description": "Экипировка: Алмазный меч и топор, алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок, Сила",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 22,
-          "max_height": 30,
-          "see_sky": false,
-          "equipment": {
-            "held_item": [
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe"
-            ],
-            "armor_helmet": [
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_feral_zombie, @potion_set_strong_zombie",
-          "command_nbt": "@nbt_set_strong_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Микс)",
-          "description": "Экипировка: использует всю возможную броню и оружие. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie",
-          "priority": 27,
-          "equipment": {
-            "held_item": [
-              "minecraft:stick",
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:wooden_pickaxe",
-              "minecraft:wooden_shovel",
-              "minecraft:wooden_hoe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe",
-              "minecraft:iron_sword",
-              "minecraft:iron_axe",
-              "minecraft:iron_pickaxe",
-              "minecraft:iron_shovel",
-              "minecraft:iron_hoe",
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe",
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe",
-              "minecraft:diamond_pickaxe",
-              "minecraft:diamond_shovel",
-              "minecraft:diamond_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Микс)",
-          "description": "Экипировка: использует всю возможную броню и оружие. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 27,
-          "equipment": {
-            "held_item": [
-              "minecraft:stick",
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:wooden_pickaxe",
-              "minecraft:wooden_shovel",
-              "minecraft:wooden_hoe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe",
-              "minecraft:iron_sword",
-              "minecraft:iron_axe",
-              "minecraft:iron_pickaxe",
-              "minecraft:iron_shovel",
-              "minecraft:iron_hoe",
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe",
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe",
-              "minecraft:diamond_pickaxe",
-              "minecraft:diamond_shovel",
-              "minecraft:diamond_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_feral_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Ветеран)",
-          "description": "Экипировка: Алмазный меч на 2 зачарования: Острота, Заговор огня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie",
-          "priority": 17,
-          "max_height": 40,
-          "equipment": {
-            "held_item": [
-              {
-                "item": "minecraft:diamond_sword",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "1:8",
-                      "id": 16,
-                      "chance": 80
-                    },
-                    {
-                      "lvl": "1:2",
-                      "id": 20,
-                      "chance": 70
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_helmet": [
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie, @potion_set_very_strong_zombie_invisibility, @potion_set_very_strong_zombie_strength",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Ветеран)",
-          "description": "Экипировка: Алмазный меч на 2 зачарования: Острота, Заговор огня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 17,
-          "max_height": 40,
-          "equipment": {
-            "held_item": [
-              {
-                "item": "minecraft:diamond_sword",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "1:8",
-                      "id": 16,
-                      "chance": 80
-                    },
-                    {
-                      "lvl": "1:2",
-                      "id": 20,
-                      "chance": 70
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_helmet": [
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_feral_zombie, @potion_set_very_strong_zombie_invisibility, @potion_set_very_strong_zombie_strength",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Поджигатель)",
-          "description": "Экипировка: Золотой топор на 4 зачарования: острота, заговор огня, добыча, отбрасывание, золотая броня, вся на защиту. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie",
-          "priority": 25,
-          "max_height": 40,
-          "equipment": {
-            "held_item": [
-              {
-                "item": "minecraft:golden_axe",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "7:10",
-                      "id": 16
-                    },
-                    {
-                      "lvl": "1:3",
-                      "id": 20
-                    },
-                    {
-                      "lvl": "2:3",
-                      "id": 21
-                    },
-                    {
-                      "lvl": "2:5",
-                      "id": 19
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_helmet": [
-              {
-                "item": "minecraft:golden_helmet",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_chest": [
-              {
-                "item": "minecraft:golden_chestplate",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_legs": [
-              {
-                "item": "minecraft:golden_leggings",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_boots": [
-              {
-                "item": "minecraft:golden_boots",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "potion": "@potion_set_normal_zombie, @potion_set_very_strong_zombie_piroman",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Поджигатель)",
-          "description": "Экипировка: Золотой топор на 4 зачарования: острота, заговор огня, добыча, отбрасывание, золотая броня, вся на защиту. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 25,
-          "max_height": 40,
-          "equipment": {
-            "held_item": [
-              {
-                "item": "minecraft:golden_axe",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "7:10",
-                      "id": 16
-                    },
-                    {
-                      "lvl": "1:3",
-                      "id": 20
-                    },
-                    {
-                      "lvl": "2:3",
-                      "id": 21
-                    },
-                    {
-                      "lvl": "2:5",
-                      "id": 19
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_helmet": [
-              {
-                "item": "minecraft:golden_helmet",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_chest": [
-              {
-                "item": "minecraft:golden_chestplate",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_legs": [
-              {
-                "item": "minecraft:golden_leggings",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ],
-            "armor_boots": [
-              {
-                "item": "minecraft:golden_boots",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "4:8",
-                      "id": 0
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "potion": "@potion_set_feral_zombie, @potion_set_very_strong_zombie_piroman",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби (Убийца)",
-          "description": "Экипировка: Золотой топор на 4 зачарования: острота, заговор огня, добыча, отбрасывание. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie",
-          "priority": 25,
-          "max_height": 40,
-          "see_sky": false,
-          "equipment": {
-            "held_item": [
-              {
-                "item": "minecraft:golden_axe",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "8:10",
-                      "id": 16
-                    },
-                    {
-                      "lvl": "2:3",
-                      "id": 20
-                    },
-                    {
-                      "lvl": "3:5",
-                      "id": 21
-                    },
-                    {
-                      "lvl": "3:6",
-                      "id": 19
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "potion": "@potion_set_normal_zombie, @potion_set_very_strong_zombie_piroman, @potion_set_very_strong_zombie_invisibility",
-          "command_nbt": "@nbt_set_killer_zombie_movement_speed_max_health"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Феральный зомби (Убийца)",
-          "description": "Экипировка: Золотой топор на 4 зачарования: острота, заговор огня, добыча, отбрасывание. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "dynamicspawncontrol:feral_zombie",
-          "priority": 25,
-          "max_height": 40,
-          "see_sky": false,
-          "equipment": {
-            "held_item": [
-              {
-                "item": "minecraft:golden_axe",
-                "nbt": {
-                  "ench": [
-                    {
-                      "lvl": "8:10",
-                      "id": 16
-                    },
-                    {
-                      "lvl": "2:3",
-                      "id": 20
-                    },
-                    {
-                      "lvl": "3:5",
-                      "id": 21
-                    },
-                    {
-                      "lvl": "3:6",
-                      "id": 19
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "potion": "@potion_set_feral_zombie, @potion_set_very_strong_zombie_piroman, @potion_set_very_strong_zombie_invisibility",
-          "command_nbt": "@nbt_set_killer_zombie_movement_speed_max_health"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Кадавр (Слабый)",
-          "description": "Экипировка: палка, деревянные и каменные инструменты, кожанная и кальчужная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:husk",
-          "priority": 21,
-          "equipment": {
-            "held_item": [
-              "minecraft:stick",
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:wooden_pickaxe",
-              "minecraft:wooden_shovel",
-              "minecraft:wooden_hoe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_husk",
-          "command_nbt": "@nbt_set_normal_husk_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Кадавр (Средний)",
-          "description": "Экипировка: Каменные и золотые инструменты, кальчужная и золотая броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:husk",
-          "priority": 15,
-          "equipment": {
-            "held_item": [
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe",
-              "minecraft:iron_sword",
-              "minecraft:iron_axe",
-              "minecraft:iron_pickaxe",
-              "minecraft:iron_shovel",
-              "minecraft:iron_hoe",
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_husk",
-          "command_nbt": "@nbt_set_normal_husk_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Кадавр (Сильный)",
-          "description": "Экипировка: Золотые и алмазные инструменты, золотая и алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:husk",
-          "priority": 12,
-          "equipment": {
-            "held_item": [
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe",
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe",
-              "minecraft:diamond_pickaxe",
-              "minecraft:diamond_shovel",
-              "minecraft:diamond_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_husk",
-          "command_nbt": "@nbt_set_normal_husk_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Кадавр (Микс)",
-          "description": "Экипировка: использует всю возможную броню и оружие. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:husk",
-          "priority": 27,
-          "equipment": {
-            "held_item": [
-              "minecraft:stick",
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:wooden_pickaxe",
-              "minecraft:wooden_shovel",
-              "minecraft:wooden_hoe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe",
-              "minecraft:iron_sword",
-              "minecraft:iron_axe",
-              "minecraft:iron_pickaxe",
-              "minecraft:iron_shovel",
-              "minecraft:iron_hoe",
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe",
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe",
-              "minecraft:diamond_pickaxe",
-              "minecraft:diamond_shovel",
-              "minecraft:diamond_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_husk",
-          "command_nbt": "@nbt_set_normal_husk_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зомби житель (Микс)",
-          "description": "Экипировка: использует всю возможную броню и оружие. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie_villager",
-          "priority": 27,
-          "equipment": {
-            "held_item": [
-              "minecraft:stick",
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:wooden_pickaxe",
-              "minecraft:wooden_shovel",
-              "minecraft:wooden_hoe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe",
-              "minecraft:stone_pickaxe",
-              "minecraft:stone_shovel",
-              "minecraft:stone_hoe",
-              "minecraft:iron_sword",
-              "minecraft:iron_axe",
-              "minecraft:iron_pickaxe",
-              "minecraft:iron_shovel",
-              "minecraft:iron_hoe",
-              "minecraft:golden_sword",
-              "minecraft:golden_axe",
-              "minecraft:golden_pickaxe",
-              "minecraft:golden_shovel",
-              "minecraft:golden_hoe",
-              "minecraft:diamond_sword",
-              "minecraft:diamond_axe",
-              "minecraft:diamond_pickaxe",
-              "minecraft:diamond_shovel",
-              "minecraft:diamond_hoe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie",
-          "command_nbt": "@nbt_set_normal_zombie_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Скелет (Слабый)",
-          "description": "Экипировка: использует броню до золотой",
-          "entity_type": "minecraft:skeleton",
-          "priority": 30,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_skeleton"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Скелет (Средний)",
-          "description": "Экипировка: использует броню от кожанной до золотой",
-          "entity_type": "minecraft:skeleton",
-          "priority": 15,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_skeleton"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Скелет (Сильный)",
-          "description": "Экипировка: использует броню от золотой до алмазной",
-          "entity_type": "minecraft:skeleton",
-          "priority": 5,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_skeleton"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зимогор (Слабый)",
-          "description": "Экипировка: использует броню до золотой",
-          "entity_type": "minecraft:stray",
-          "priority": 30,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_stray"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зимогор (Средний)",
-          "description": "Экипировка: использует броню от кожанной до золотой",
-          "entity_type": "minecraft:stray",
-          "priority": 15,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_stray"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Зимогор (Сильный)",
-          "description": "Экипировка: использует броню от золотой до алмазной",
-          "entity_type": "minecraft:stray",
-          "priority": 5,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_stray"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Свинозомби (Слабый)",
-          "description": "Экипировка: палка, деревянные и каменные инструменты, кожанная и кальчужная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie_pigman",
-          "priority": 21,
-          "equipment": {
-            "held_item": [
-              "minecraft:wooden_sword",
-              "minecraft:wooden_axe",
-              "minecraft:stone_sword",
-              "minecraft:stone_axe"
-            ],
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie_pigman",
-          "command_nbt": "@nbt_set_normal_zombie_pigman_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Свинозомби (Средний)",
-          "description": "Экипировка: Каменные и золотые инструменты, кальчужная и золотая броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie_pigman",
-          "priority": 15,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie_pigman",
-          "command_nbt": "@nbt_set_normal_zombie_pigman_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Свинозомби (Сильный)",
-          "description": "Экипировка: Золотые и алмазные инструменты, золотая и алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:zombie_pigman",
-          "priority": 12,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_zombie_pigman",
-          "command_nbt": "@nbt_set_normal_zombie_pigman_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Скелет иссушитель (Слабый)",
-          "description": "Экипировка: палка, деревянные и каменные инструменты, кожанная и кальчужная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:wither_skeleton",
-          "priority": 21,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:leather_helmet",
-              "minecraft:chainmail_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:leather_chestplate",
-              "minecraft:chainmail_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:leather_leggings",
-              "minecraft:chainmail_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:leather_boots",
-              "minecraft:chainmail_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_wither_skeleton",
-          "command_nbt": "@nbt_set_normal_wither_skeleton_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Скелет иссушитель (Средний)",
-          "description": "Экипировка: Каменные и золотые инструменты, кальчужная и золотая броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:wither_skeleton",
-          "priority": 25,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:chainmail_helmet",
-              "minecraft:iron_helmet",
-              "minecraft:golden_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:chainmail_chestplate",
-              "minecraft:iron_chestplate",
-              "minecraft:golden_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:chainmail_leggings",
-              "minecraft:iron_leggings",
-              "minecraft:golden_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:chainmail_boots",
-              "minecraft:iron_boots",
-              "minecraft:golden_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_wither_skeleton",
-          "command_nbt": "@nbt_set_normal_wither_skeleton_movement_speed"
-        }
-      },
-      {
-        "data": {
-          "id_dimension": 0,
-          "profile": "Скелет иссушитель (Сильный)",
-          "description": "Экипировка: Золотые и алмазные инструменты, золотая и алмазная броня. Зелья: Стойкость, Невидимость, Скорость, Прыжок",
-          "entity_type": "minecraft:wither_skeleton",
-          "priority": 15,
-          "equipment": {
-            "armor_helmet": [
-              "minecraft:golden_helmet",
-              "minecraft:diamond_helmet"
-            ],
-            "armor_chest": [
-              "minecraft:golden_chestplate",
-              "minecraft:diamond_chestplate"
-            ],
-            "armor_legs": [
-              "minecraft:golden_leggings",
-              "minecraft:diamond_leggings"
-            ],
-            "armor_boots": [
-              "minecraft:golden_boots",
-              "minecraft:diamond_boots"
-            ]
-          },
-          "potion": "@potion_set_normal_wither_skeleton",
-          "command_nbt": "@nbt_set_normal_wither_skeleton_movement_speed"
-        }
-      }
-    ],
-    "data_support": [
-      {
-        "id_dimension": 0,
-        "see_sky": false,
-        "entity_type": "minecraft:zombie",
-        "potion": [
-          "minecraft:fire_resistance, 10000, 1, 0.7"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "see_sky": false,
-        "entity_type": "minecraft:husk",
-        "potion": [
-          "minecraft:fire_resistance, 10000, 1, 0.7"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "see_sky": false,
-        "entity_type": "minecraft:zombie_villager",
-        "potion": [
-          "minecraft:fire_resistance, 10000, 1, 0.7"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "see_sky": false,
-        "entity_type": "minecraft:skeleton",
-        "potion": [
-          "minecraft:fire_resistance, 10000, 1, 0.5"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "see_sky": false,
-        "entity_type": "minecraft:stray",
-        "potion": [
-          "minecraft:fire_resistance, 10000, 1, 0.5"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:creeper",
-        "potion": [
-          "minecraft:absorption, 10000, 1, 0.45",
-          "minecraft:invisibility, 10000, 1, 0.5",
-          "minecraft:speed, 10000, 1, 0.3",
-          "minecraft:jump_boost, 10000, 1, 0.65",
-          "minecraft:fire_resistance, 10000, 1, 0.35"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:spider",
-        "potion": [
-          "minecraft:invisibility, 10000, 1, 0.15",
-          "minecraft:speed, 10000, 1, 0.1",
-          "minecraft:jump_boost, 10000, 1, 0.25",
-          "minecraft:fire_resistance, 10000, 1, 0.15"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:cave_spider",
-        "potion": [
-          "minecraft:invisibility, 10000, 1, 0.15",
-          "minecraft:speed, 10000, 1, 0.2",
-          "minecraft:jump_boost, 10000, 1, 0.2",
-          "minecraft:fire_resistance, 10000, 1, 0.2"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:slime",
-        "potion": [
-          "minecraft:invisibility, 10000, 1, 0.15",
-          "minecraft:speed, 10000, 1, 0.2",
-          "minecraft:jump_boost, 10000, 1, 0.2",
-          "minecraft:fire_resistance, 10000, 1, 0.2"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:silverfish",
-        "potion": [
-          "minecraft:invisibility, 10000, 1, 0.1",
-          "minecraft:speed, 10000, 1, 0.2",
-          "minecraft:jump_boost, 10000, 1, 0.2"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:slime",
-        "potion": [
-          "minecraft:jump_boost, 10000, 1, 0.45"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:enderman",
-        "potion": [
-          "minecraft:invisibility, 10000, 1, 0.4",
-          "minecraft:speed, 10000, 1, 0.35",
-          "minecraft:jump_boost, 10000, 1, 0.2",
-          "minecraft:strength, 10000, 1, 0.5"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:witch",
-        "potion": [
-          "minecraft:invisibility, 10000, 1, 0.5",
-          "minecraft:jump_boost, 10000, 1, 0.35"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:vex",
-        "potion": [
-          "minecraft:strength, 10000, 1, 0.15"
-        ]
-      },
-      {
-        "id_dimension": 0,
-        "entity_type": "minecraft:blaze",
-        "potion": [
-          "minecraft:absorption, 10000, 1, 0.25",
-          "minecraft:strength, 10000, 1, 0.25",
-          "minecraft:speed, 10000, 1, 0.1",
-          "minecraft:invisibility, 10000, 1, 0.25"
-        ]
-      }
+{
+  "templates": {
+    "#include": [
+      "profiles/templates/template_dsc_feral_zombie/template_dsc_feral_zombie_experienced.json",
+      "profiles/templates/template_dsc_feral_zombie/template_dsc_feral_zombie_master.json",
+      "profiles/templates/template_dsc_feral_zombie/template_dsc_feral_zombie_novice.json",
+      "profiles/templates/template_dsc_feral_zombie/template_dsc_feral_zombie_veteran.json",
+      "profiles/templates/template_dsc_feral_zombie/template_dsc_feral_zombie_warrior.json",
+
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_arsonist.json",
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_killer.json",
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_mix.json",
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_normal.json",
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_strong.json",
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_strong_veteran.json",
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_very_strong.json",
+      "profiles/templates/template_dsc_feral_zombie/extended_template/template_dsc_feral_zombie_weak.json",
+
+      "profiles/templates/template_minecraft_husk/template_minecraft_husk_experienced.json",
+      "profiles/templates/template_minecraft_husk/template_minecraft_husk_master.json",
+      "profiles/templates/template_minecraft_husk/template_minecraft_husk_novice.json",
+      "profiles/templates/template_minecraft_husk/template_minecraft_husk_veteran.json",
+      "profiles/templates/template_minecraft_husk/template_minecraft_husk_warrior.json",
+
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_arsonist.json",
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_killer.json",
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_mix.json",
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_normal.json",
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_strong.json",
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_strong_veteran.json",
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_very_strong.json",
+      "profiles/templates/template_minecraft_husk/extended_template/template_minecraft_husk_weak.json",
+
+      "profiles/templates/template_minecraft_skeleton/template_minecraft_skeleton_experienced.json",
+      "profiles/templates/template_minecraft_skeleton/template_minecraft_skeleton_master.json",
+      "profiles/templates/template_minecraft_skeleton/template_minecraft_skeleton_novice.json",
+      "profiles/templates/template_minecraft_skeleton/template_minecraft_skeleton_veteran.json",
+      "profiles/templates/template_minecraft_skeleton/template_minecraft_skeleton_warrior.json",
+
+      "profiles/templates/template_minecraft_skeleton/extended_template/template_minecraft_skeleton_mix.json",
+      "profiles/templates/template_minecraft_skeleton/extended_template/template_minecraft_skeleton_normal.json",
+      "profiles/templates/template_minecraft_skeleton/extended_template/template_minecraft_skeleton_strong.json",
+      "profiles/templates/template_minecraft_skeleton/extended_template/template_minecraft_skeleton_weak.json",
+
+      "profiles/templates/template_minecraft_wither_skeleton/template_minecraft_wither_skeleton_experienced.json",
+      "profiles/templates/template_minecraft_wither_skeleton/template_minecraft_wither_skeleton_master.json",
+      "profiles/templates/template_minecraft_wither_skeleton/template_minecraft_wither_skeleton_novice.json",
+      "profiles/templates/template_minecraft_wither_skeleton/template_minecraft_wither_skeleton_veteran.json",
+      "profiles/templates/template_minecraft_wither_skeleton/template_minecraft_wither_skeleton_warrior.json",
+
+      "profiles/templates/template_minecraft_wither_skeleton/extended_template/template_minecraft_wither_skeleton_mix.json",
+      "profiles/templates/template_minecraft_wither_skeleton/extended_template/template_minecraft_wither_skeleton_normal.json",
+      "profiles/templates/template_minecraft_wither_skeleton/extended_template/template_minecraft_wither_skeleton_strong.json",
+      "profiles/templates/template_minecraft_wither_skeleton/extended_template/template_minecraft_wither_skeleton_weak.json",
+
+      "profiles/templates/template_minecraft_stray/template_minecraft_stray_experienced.json",
+      "profiles/templates/template_minecraft_stray/template_minecraft_stray_master.json",
+      "profiles/templates/template_minecraft_stray/template_minecraft_stray_novice.json",
+      "profiles/templates/template_minecraft_stray/template_minecraft_stray_veteran.json",
+      "profiles/templates/template_minecraft_stray/template_minecraft_stray_warrior.json",
+
+      "profiles/templates/template_minecraft_stray/extended_template/template_minecraft_stray_mix.json",
+      "profiles/templates/template_minecraft_stray/extended_template/template_minecraft_stray_normal.json",
+      "profiles/templates/template_minecraft_stray/extended_template/template_minecraft_stray_strong.json",
+      "profiles/templates/template_minecraft_stray/extended_template/template_minecraft_stray_weak.json",
+
+      "profiles/templates/template_minecraft_zombie/template_minecraft_zombie_experienced.json",
+      "profiles/templates/template_minecraft_zombie/template_minecraft_zombie_master.json",
+      "profiles/templates/template_minecraft_zombie/template_minecraft_zombie_novice.json",
+      "profiles/templates/template_minecraft_zombie/template_minecraft_zombie_veteran.json",
+      "profiles/templates/template_minecraft_zombie/template_minecraft_zombie_warrior.json",
+
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_arsonist.json",
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_killer.json",
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_mix.json",
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_normal.json",
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_strong.json",
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_strong_veteran.json",
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_very_strong.json",
+      "profiles/templates/template_minecraft_zombie/extended_template/template_minecraft_zombie_weak.json",
+
+      "profiles/templates/template_minecraft_zombie_pigman/template_minecraft_zombie_pigman_experienced.json",
+      "profiles/templates/template_minecraft_zombie_pigman/template_minecraft_zombie_pigman_master.json",
+      "profiles/templates/template_minecraft_zombie_pigman/template_minecraft_zombie_pigman_novice.json",
+      "profiles/templates/template_minecraft_zombie_pigman/template_minecraft_zombie_pigman_veteran.json",
+      "profiles/templates/template_minecraft_zombie_pigman/template_minecraft_zombie_pigman_warrior.json",
+
+      "profiles/templates/template_minecraft_zombie_pigman/extended_template/template_minecraft_zombie_pigman_mix.json",
+      "profiles/templates/template_minecraft_zombie_pigman/extended_template/template_minecraft_zombie_pigman_normal.json",
+      "profiles/templates/template_minecraft_zombie_pigman/extended_template/template_minecraft_zombie_pigman_strong.json",
+      "profiles/templates/template_minecraft_zombie_pigman/extended_template/template_minecraft_zombie_pigman_weak.json",
+
+      "profiles/templates/template_minecraft_zombie_villager/template_minecraft_zombie_villager_experienced.json",
+      "profiles/templates/template_minecraft_zombie_villager/template_minecraft_zombie_villager_master.json",
+      "profiles/templates/template_minecraft_zombie_villager/template_minecraft_zombie_villager_novice.json",
+      "profiles/templates/template_minecraft_zombie_villager/template_minecraft_zombie_villager_veteran.json",
+      "profiles/templates/template_minecraft_zombie_villager/template_minecraft_zombie_villager_warrior.json",
+
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_arsonist.json",
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_killer.json",
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_mix.json",
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_normal.json",
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_strong.json",
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_strong_veteran.json",
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_very_strong.json",
+      "profiles/templates/template_minecraft_zombie_villager/extended_template/template_minecraft_zombie_villager_weak.json"
+    ]
+  },
+  "configs": {
+    "#include": [
+      "profiles/configs/config_dsc_feral_zombie/profile_dsc_feral_zombie_experienced.json",
+      "profiles/configs/config_dsc_feral_zombie/profile_dsc_feral_zombie_master.json",
+      "profiles/configs/config_dsc_feral_zombie/profile_dsc_feral_zombie_novice.json",
+      "profiles/configs/config_dsc_feral_zombie/profile_dsc_feral_zombie_veteran.json",
+      "profiles/configs/config_dsc_feral_zombie/profile_dsc_feral_zombie_warrior.json",
+
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_arsonist.json",
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_killer.json",
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_mix.json",
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_normal.json",
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_strong.json",
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_strong_veteran.json",
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_very_strong.json",
+      "profiles/configs/config_dsc_feral_zombie/extended_profiles/profile_dsc_feral_zombie_weak.json",
+
+      "profiles/configs/config_minecraft_husk/profile_minecraft_husk_experienced.json",
+      "profiles/configs/config_minecraft_husk/profile_minecraft_husk_master.json",
+      "profiles/configs/config_minecraft_husk/profile_minecraft_husk_novice.json",
+      "profiles/configs/config_minecraft_husk/profile_minecraft_husk_veteran.json",
+      "profiles/configs/config_minecraft_husk/profile_minecraft_husk_warrior.json",
+
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_arsonist.json",
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_killer.json",
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_mix.json",
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_normal.json",
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_strong.json",
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_strong_veteran.json",
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_very_strong.json",
+      "profiles/configs/config_minecraft_husk/extended_profiles/profile_minecraft_husk_weak.json",
+
+      "profiles/configs/config_minecraft_skeleton/profile_minecraft_skeleton_experienced.json",
+      "profiles/configs/config_minecraft_skeleton/profile_minecraft_skeleton_master.json",
+      "profiles/configs/config_minecraft_skeleton/profile_minecraft_skeleton_novice.json",
+      "profiles/configs/config_minecraft_skeleton/profile_minecraft_skeleton_veteran.json",
+      "profiles/configs/config_minecraft_skeleton/profile_minecraft_skeleton_warrior.json",
+
+      "profiles/configs/config_minecraft_skeleton/extended_profiles/profile_minecraft_skeleton_mix.json",
+      "profiles/configs/config_minecraft_skeleton/extended_profiles/profile_minecraft_skeleton_normal.json",
+      "profiles/configs/config_minecraft_skeleton/extended_profiles/profile_minecraft_skeleton_strong.json",
+      "profiles/configs/config_minecraft_skeleton/extended_profiles/profile_minecraft_skeleton_weak.json",
+
+      "profiles/configs/config_minecraft_wither_skeleton/profile_minecraft_wither_skeleton_experienced.json",
+      "profiles/configs/config_minecraft_wither_skeleton/profile_minecraft_wither_skeleton_master.json",
+      "profiles/configs/config_minecraft_wither_skeleton/profile_minecraft_wither_skeleton_novice.json",
+      "profiles/configs/config_minecraft_wither_skeleton/profile_minecraft_wither_skeleton_veteran.json",
+      "profiles/configs/config_minecraft_wither_skeleton/profile_minecraft_wither_skeleton_warrior.json",
+
+      "profiles/configs/config_minecraft_wither_skeleton/extended_profiles/profile_minecraft_wither_skeleton_mix.json",
+      "profiles/configs/config_minecraft_wither_skeleton/extended_profiles/profile_minecraft_wither_skeleton_normal.json",
+      "profiles/configs/config_minecraft_wither_skeleton/extended_profiles/profile_minecraft_wither_skeleton_strong.json",
+      "profiles/configs/config_minecraft_wither_skeleton/extended_profiles/profile_minecraft_wither_skeleton_weak.json",
+
+      "profiles/configs/config_minecraft_stray/profile_minecraft_stray_experienced.json",
+      "profiles/configs/config_minecraft_stray/profile_minecraft_stray_master.json",
+      "profiles/configs/config_minecraft_stray/profile_minecraft_stray_novice.json",
+      "profiles/configs/config_minecraft_stray/profile_minecraft_stray_veteran.json",
+      "profiles/configs/config_minecraft_stray/profile_minecraft_stray_warrior.json",
+
+      "profiles/configs/config_minecraft_stray/extended_profiles/profile_minecraft_stray_mix.json",
+      "profiles/configs/config_minecraft_stray/extended_profiles/profile_minecraft_stray_normal.json",
+      "profiles/configs/config_minecraft_stray/extended_profiles/profile_minecraft_stray_strong.json",
+      "profiles/configs/config_minecraft_stray/extended_profiles/profile_minecraft_stray_weak.json",
+
+      "profiles/configs/config_minecraft_zombie/profile_minecraft_zombie_experienced.json",
+      "profiles/configs/config_minecraft_zombie/profile_minecraft_zombie_master.json",
+      "profiles/configs/config_minecraft_zombie/profile_minecraft_zombie_novice.json",
+      "profiles/configs/config_minecraft_zombie/profile_minecraft_zombie_veteran.json",
+      "profiles/configs/config_minecraft_zombie/profile_minecraft_zombie_warrior.json",
+
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_arsonist.json",
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_killer.json",
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_mix.json",
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_normal.json",
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_strong.json",
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_strong_veteran.json",
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_very_strong.json",
+      "profiles/configs/config_minecraft_zombie/extended_profiles/profile_minecraft_zombie_weak.json",
+
+      "profiles/configs/config_minecraft_zombie_pigman/profile_minecraft_zombie_pigman_experienced.json",
+      "profiles/configs/config_minecraft_zombie_pigman/profile_minecraft_zombie_pigman_master.json",
+      "profiles/configs/config_minecraft_zombie_pigman/profile_minecraft_zombie_pigman_novice.json",
+      "profiles/configs/config_minecraft_zombie_pigman/profile_minecraft_zombie_pigman_veteran.json",
+      "profiles/configs/config_minecraft_zombie_pigman/profile_minecraft_zombie_pigman_warrior.json",
+
+      "profiles/configs/config_minecraft_zombie_pigman/extended_profiles/profile_minecraft_zombie_pigman_mix.json",
+      "profiles/configs/config_minecraft_zombie_pigman/extended_profiles/profile_minecraft_zombie_pigman_normal.json",
+      "profiles/configs/config_minecraft_zombie_pigman/extended_profiles/profile_minecraft_zombie_pigman_strong.json",
+      "profiles/configs/config_minecraft_zombie_pigman/extended_profiles/profile_minecraft_zombie_pigman_weak.json",
+
+      "profiles/configs/config_minecraft_zombie_villager/profile_minecraft_zombie_villager_experienced.json",
+      "profiles/configs/config_minecraft_zombie_villager/profile_minecraft_zombie_villager_master.json",
+      "profiles/configs/config_minecraft_zombie_villager/profile_minecraft_zombie_villager_novice.json",
+      "profiles/configs/config_minecraft_zombie_villager/profile_minecraft_zombie_villager_veteran.json",
+      "profiles/configs/config_minecraft_zombie_villager/profile_minecraft_zombie_villager_warrior.json",
+
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_arsonist.json",
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_killer.json",
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_mix.json",
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_normal.json",
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_strong.json",
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_strong_veteran.json",
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_very_strong.json",
+      "profiles/configs/config_minecraft_zombie_villager/extended_profiles/profile_minecraft_zombie_villager_weak.json"
+    ]
+  },
+  "data_support": {
+    "#include": [
+      "profiles/data_support/dynamicspawncontrol/data_support_dsc_feral_zombie.json",
+
+      "profiles/data_support/minecraft/data_support_minecraft_cave_spider.json",
+      "profiles/data_support/minecraft/data_support_minecraft_creeper.json",
+      "profiles/data_support/minecraft/data_support_minecraft_enderman.json",
+      "profiles/data_support/minecraft/data_support_minecraft_endermite.json",
+      "profiles/data_support/minecraft/data_support_minecraft_husk.json",
+      "profiles/data_support/minecraft/data_support_minecraft_silverfish.json",
+      "profiles/data_support/minecraft/data_support_minecraft_skeleton.json",
+      "profiles/data_support/minecraft/data_support_minecraft_slime.json",
+      "profiles/data_support/minecraft/data_support_minecraft_spider.json",
+      "profiles/data_support/minecraft/data_support_minecraft_stray.json",
+      "profiles/data_support/minecraft/data_support_minecraft_vex.json",
+      "profiles/data_support/minecraft/data_support_minecraft_witch.json",
+      "profiles/data_support/minecraft/data_support_minecraft_wither_skeleton.json",
+      "profiles/data_support/minecraft/data_support_minecraft_zombie.json",
+      "profiles/data_support/minecraft/data_support_minecraft_zombie_pigman.json",
+      "profiles/data_support/minecraft/data_support_minecraft_zombie_villager.json"
     ]
   }
-]
+}

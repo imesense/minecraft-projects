@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "srparasites:carrier_heavy",
+      "weight": 8,
+      "spawn_chance": 0.40,
+      "groupcountmin": 1,
+      "groupcountmax": 1,
+      "max_height": 40,
+      "min_height": 1
+    }
+  ]
+}

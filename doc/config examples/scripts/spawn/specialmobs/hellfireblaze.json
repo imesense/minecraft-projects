@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "specialmobs:hellfireblaze",
+      "weight": 6,
+      "spawn_chance": 0.45,
+      "groupcountmin": 1,
+      "groupcountmax": 2,
+      "max_height": 35,
+      "min_height": 5
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "mobs": [
+    {
+      "id_dimension": 0,
+      "mob": "minecraft:husk",
+      "weight": 20,
+      "spawn_chance": 0.3,
+      "groupcountmin": 1,
+      "groupcountmax": 2,
+      "max_height": 60,
+      "min_height": 30
+    }
+  ]
+}

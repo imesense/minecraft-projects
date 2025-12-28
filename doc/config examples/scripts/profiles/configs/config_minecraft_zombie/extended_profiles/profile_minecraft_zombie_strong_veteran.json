@@ -1,0 +1,50 @@
+{
+  "configs": [
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Зомби (Ветеран сильный)",
+        "description": "Экипировка: Алмазная броня (Сет). Оружие: Алмазный меч на 2 чара (Острота I-VIII и Заговор огня I-II). Эффекты: Скорость II, Спешка II, Сила II, Прыгучесть II, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье II, Поглощение II.",
+        "entity_type": "minecraft:zombie",
+        "priority": 17,
+        "max_height": 40,
+        "equipment": {
+          "held_item": [
+            {
+              "item": "minecraft:diamond_sword",
+              "nbt": {
+                "ench": [
+                  {
+                    "lvl": "1:8",
+                    "id": 16,
+                    "chance": 80
+                  },
+                  {
+                    "lvl": "1:2",
+                    "id": 20,
+                    "chance": 70
+                  }
+                ]
+              }
+            }
+          ],
+          "armor_helmet": [
+            "minecraft:diamond_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:diamond_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:diamond_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:diamond_boots"
+          ],
+          "has_shield": 0.65
+        },
+        "potion": ["@potion_set_strong_veteran_minecraft_zombie, @potion_set_strong_veteran_minecraft_zombie_strength", 0.5],
+        "command_nbt": ["@nbt_set_strong_veteran_minecraft_zombie", 0.5]
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "configs": [
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Зомби (Воин)",
+        "description": "Экипировка: Железная броня (Сет). Оружие: Железный меч. Эффекты: Скорость I, Спешка I, Сила II, Прыгучесть II, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье I, Поглощение II.",
+        "entity_type": "minecraft:zombie_villager",
+        "priority": 15,
+        "equipment": {
+          "held_item": [
+            "minecraft:iron_sword"
+          ],
+          "armor_helmet": [
+            "minecraft:iron_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:iron_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:iron_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:iron_boots"
+          ],
+          "has_shield": 0.5
+        },
+        "potion": ["@potion_set_warrior_default_zombie_villager", 0.5],
+        "command_nbt": ["@nbt_set_warrior_default_zombie_villager", 0.5]
+      }
+    },
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Зомби (Воин дровосек)",
+        "description": "Экипировка: Железная броня (Сет). Оружие: Железный топор. Эффекты: Скорость I, Спешка I, Сила II, Прыгучесть II, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье I, Поглощение II.",
+        "entity_type": "minecraft:zombie_villager",
+        "priority": 15,
+        "equipment": {
+          "held_item": [
+            "minecraft:iron_axe"
+          ],
+          "armor_helmet": [
+            "minecraft:iron_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:iron_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:iron_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:iron_boots"
+          ],
+          "has_shield": 0.5
+        },
+        "potion": ["@potion_set_warrior_default_zombie_villager", 0.5],
+        "command_nbt": ["@nbt_set_warrior_default_zombie_villager", 0.5]
+      }
+    },
+    {
+      "data": {
+        "id_dimension": 0,
+        "profile": "Зомби (Воин шахтер)",
+        "description": "Экипировка: Железная броня (Сет). Оружие: Железная кирка. Эффекты: Скорость I, Спешка I, Сила II, Прыгучесть II, Регенерация II, Сопротивление II, Невидимость I, Дополнительное здоровье I, Поглощение II.",
+        "entity_type": "minecraft:zombie_villager",
+        "priority": 15,
+        "equipment": {
+          "held_item": [
+            "minecraft:iron_pickaxe"
+          ],
+          "armor_helmet": [
+            "minecraft:iron_helmet"
+          ],
+          "armor_chest": [
+            "minecraft:iron_chestplate"
+          ],
+          "armor_legs": [
+            "minecraft:iron_leggings"
+          ],
+          "armor_boots": [
+            "minecraft:iron_boots"
+          ],
+          "has_shield": 0.5
+        },
+        "potion": ["@potion_set_warrior_default_zombie_villager", 0.5],
+        "command_nbt": ["@nbt_set_warrior_default_zombie_villager", 0.5]
+      }
+    }
+  ]
+}

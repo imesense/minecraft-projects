@@ -1,0 +1,12 @@
+{
+  "data_support": [
+    {
+      "id_dimension": 0,
+      "see_sky": false,
+      "entity_type": "dynamicspawncontrol:feral_zombie",
+      "potion": [
+        "minecraft:fire_resistance, 10000, 2, 0.8"
+      ]
+    }
+  ]
+}
