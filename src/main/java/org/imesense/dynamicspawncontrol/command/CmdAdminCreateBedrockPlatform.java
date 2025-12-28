@@ -45,12 +45,14 @@ public final class CmdAdminCreateBedrockPlatform extends CommandBase
 
     /**
      *
-     * @param server
+     * @param minecraftServer
      * @param iCommandSender
      * @param args
      */
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
+    public void execute(@Nonnull MinecraftServer minecraftServer,
+                        @Nonnull ICommandSender iCommandSender,
+                        @Nonnull String... args)
     {
         if (!(iCommandSender instanceof EntityPlayerMP))
         {
@@ -58,23 +60,101 @@ public final class CmdAdminCreateBedrockPlatform extends CommandBase
             return;
         }
 
+        if (args.length < 3)
+        {
+            iCommandSender.sendMessage(new TextComponentString(
+                    "Usage: /dsc_test <north|south|east|west> <length> <width>"
+            ));
+            return;
+        }
+
         EntityPlayerMP player = (EntityPlayerMP) iCommandSender;
         World world = player.getEntityWorld();
 
-        BlockPos center = player.getPosition();
-        int platformSize = 72;
-        int halfSize = platformSize / 2;
+        String direction = args[0].toLowerCase();
+
+        int length;
+        int width;
+
+        try
+        {
+            length = Integer.parseInt(args[1]);
+            width  = Integer.parseInt(args[2]);
+        }
+        catch (NumberFormatException e)
+        {
+            iCommandSender.sendMessage(new TextComponentString("Length and width must be numbers!"));
+            return;
+        }
+
+        if (length <= 0 || width <= 0)
+        {
+            iCommandSender.sendMessage(new TextComponentString("Length and width must be positive values!"));
+            return;
+        }
+
+        int halfWidth = width / 2;
         int y = 254;
 
-        for (int dx = -halfSize; dx <= halfSize; dx++)
+        BlockPos base = player.getPosition();
+        int baseX = base.getX();
+        int baseZ = base.getZ();
+
+        int dxStart = 0, dxEnd = 0;
+        int dzStart = 0, dzEnd = 0;
+
+        switch (direction)
         {
-            for (int dz = -halfSize; dz <= halfSize; dz++)
+            case "north":
+                dzStart = -length;
+                dzEnd   = 0;
+                dxStart = -halfWidth;
+                dxEnd   = halfWidth;
+                break;
+
+            case "south":
+                dzStart = 0;
+                dzEnd   = length;
+                dxStart = -halfWidth;
+                dxEnd   = halfWidth;
+                break;
+
+            case "west":
+                dxStart = -length;
+                dxEnd   = 0;
+                dzStart = -halfWidth;
+                dzEnd   = halfWidth;
+                break;
+
+            case "east":
+                dxStart = 0;
+                dxEnd   = length;
+                dzStart = -halfWidth;
+                dzEnd   = halfWidth;
+                break;
+
+            default:
+                iCommandSender.sendMessage(new TextComponentString(
+                        "Invalid direction. Use north, south, east or west."
+                ));
+                return;
+        }
+
+        for (int dx = dxStart; dx <= dxEnd; dx++)
+        {
+            for (int dz = dzStart; dz <= dzEnd; dz++)
             {
-                BlockPos pos = new BlockPos(center.getX() + dx, y, center.getZ() + dz);
+                BlockPos pos = new BlockPos(baseX + dx, y, baseZ + dz);
                 world.setBlockState(pos, Blocks.BEDROCK.getDefaultState(), 2);
             }
         }
 
-        iCommandSender.sendMessage(new TextComponentString("Generated bedrock platform at Y = 255"));
+        iCommandSender.sendMessage(new TextComponentString(
+                "Generated bedrock platform: direction=" + direction +
+                        ", length=" + length +
+                        ", width=" + width +
+                        ", Y=255"
+        ));
     }
+
 }
