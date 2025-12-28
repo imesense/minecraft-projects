@@ -30,7 +30,7 @@ public class AIZombieHasShieldNBT {
     private static final String LAST_HIT_TIME = "LastHitTime";
 
     // Логгирование: основные события всегда логируются, детали - только в режиме отладки
-    private static final boolean ALWAYS_LOG_IMPORTANT_EVENTS = true; // Всегда логировать важные события
+    private static final boolean ALWAYS_LOG_IMPORTANT_EVENTS = false; // Всегда логировать важные события
     private static final boolean DEV_DEBUG_EVENT = false; // Детальный лог для разработки
 
     // Переменная для теста начальной прочности щита
