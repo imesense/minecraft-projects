@@ -7,6 +7,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -40,127 +41,153 @@ public final class DropHeadMob
 
     public void handleEntityDeath(LivingDeathEvent event)
     {
-        if (!(event.getSource().getTrueSource() instanceof EntityLivingBase))
-            return;
+        EntityLivingBase victim = event.getEntityLiving();
 
-        EntityLivingBase attacker =
-                (EntityLivingBase) event.getSource().getTrueSource();
+        if (!(victim instanceof EntitySkeleton) &&
+                !(victim instanceof EntityZombie) &&
+                !(victim instanceof EntityCreeper))
+        {
+            return;
+        }
+
+        if (!(event.getSource().getTrueSource() instanceof EntityLivingBase))
+        {
+            return;
+        }
+
+        EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
 
         ItemStack heldItem = attacker.getHeldItemMainhand();
 
-        if (heldItem.isEmpty() || !(heldItem.getItem() instanceof ItemSword))
-            return;
+        float dropChance = 0.0f;
 
-        Entity entity = event.getEntity();
-
-        if (entity instanceof EntitySkeleton ||
-                entity instanceof EntityZombie ||
-                entity instanceof EntityCreeper)
+        if (!heldItem.isEmpty() && heldItem.getItem() instanceof ItemSword)
         {
-            float dropChance = calculateDropChance(attacker);
+            dropChance = calculateBaseDropChance(attacker);
 
-            if (attacker.getRNG().nextFloat() < dropChance)
-            {
-                dropHead((EntityLivingBase) entity, attacker.world);
-            }
+            dropChance += calculateSmiteBonus(heldItem);
+
+            dropChance += calculateCriticalBonus(attacker);
+
+            dropChance *= getDifficultyMultiplier(attacker.world);
+
+            dropChance = MathHelper.clamp(dropChance, 0.0f, 0.15f);
+        }
+
+        if (dropChance > 0.0f && attacker.getRNG().nextFloat() < dropChance)
+        {
+            dropHead(victim, attacker.world);
+
+            Log.write(0,
+                    "[HeadDrop] " +
+                            "Attacker=" + attacker.getName() +
+                            " Weapon=" + (heldItem.isEmpty() ? "None" : heldItem.getItem().getRegistryName()) +
+                            " Damage=" + String.format("%.1f", getAttackDamage(attacker)) +
+                            " BaseChance=" + String.format("%.2f%%", getDamageBasedChance(getAttackDamage(attacker)) * 100) +
+                            " SmiteBonus=" + String.format("%.2f%%", calculateSmiteBonus(heldItem) * 100) +
+                            " CritBonus=" + String.format("%.2f%%", calculateCriticalBonus(attacker) * 100) +
+                            " FinalChance=" + String.format("%.2f%%", dropChance * 100) +
+                            " Victim=" + victim.getName()
+            );
         }
     }
 
-
-    private float calculateDropChance(EntityLivingBase entityLivingBase)
+    private double getAttackDamage(EntityLivingBase attacker)
     {
-        float baseChance = 0.0f;
-
-        ItemStack heldItem = entityLivingBase.getHeldItemMainhand();
-
-        double attackDamage = 1.0D;
-
-        if (entityLivingBase.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
+        if (attacker.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
         {
-            attackDamage = entityLivingBase
+            return attacker
                     .getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE)
                     .getAttributeValue();
         }
+        return 1.0D;
+    }
 
-        float damageFactor =
-                MathHelper.clamp((float) attackDamage / 35.0f, 0.0f, 0.5f);
+    private float calculateBaseDropChance(EntityLivingBase attacker)
+    {
+        double attackDamage = getAttackDamage(attacker);
 
-        baseChance += damageFactor;
+        float baseChance = getDamageBasedChance(attackDamage);
 
-        int smiteLevel = EnchantmentHelper
-                .getEnchantmentLevel(Enchantments.SMITE, heldItem);
-
-        float smiteMultiplier = 1.0f;
-
-        if (smiteLevel > 0)
-        {
-            smiteMultiplier += smiteLevel * 0.75f;
-            baseChance *= smiteMultiplier;
-        }
-
+        ItemStack heldItem = attacker.getHeldItemMainhand();
         float durabilityFactor = 1.0f;
 
         if (!heldItem.isEmpty() && heldItem.isItemStackDamageable())
         {
             durabilityFactor =
                     1.0f - ((float) heldItem.getItemDamage() / heldItem.getMaxDamage());
-
-            durabilityFactor = MathHelper.clamp(durabilityFactor, 0.2f, 1.0f);
+            durabilityFactor = MathHelper.clamp(durabilityFactor, 0.5f, 1.0f); // Минимум 50% эффективности
             baseChance *= durabilityFactor;
         }
 
-        boolean isCritical =
-                entityLivingBase.fallDistance > 0.0F &&
-                        !entityLivingBase.onGround &&
-                        !entityLivingBase.isInWater() &&
-                        !entityLivingBase.isPotionActive(net.minecraft.init.MobEffects.BLINDNESS) &&
-                        entityLivingBase.getRidingEntity() == null;
+        return baseChance;
+    }
 
-        float critMultiplier = 1.0f;
+    private float getDamageBasedChance(double attackDamage)
+    {
+        if (attackDamage < 5.0)
+        {
+            return 0.03f;
+        }
+        else if (attackDamage < 9.0)
+        {
+            return 0.04f;
+        }
+        else if (attackDamage < 15.0)
+        {
+            return 0.05f;
+        }
+        else if (attackDamage < 20.0)
+        {
+            return 0.055f;
+        }
+        else
+        {
+            return 0.06f;
+        }
+    }
+
+    private float calculateSmiteBonus(ItemStack weapon)
+    {
+        if (weapon.isEmpty())
+            return 0.0f;
+
+        int smiteLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SMITE, weapon);
+
+        return smiteLevel * 0.015f;
+    }
+
+    private float calculateCriticalBonus(EntityLivingBase attacker)
+    {
+        boolean isCritical =
+                attacker.fallDistance > 0.0F &&
+                        !attacker.onGround &&
+                        !attacker.isInWater() &&
+                        !attacker.isPotionActive(net.minecraft.init.MobEffects.BLINDNESS) &&
+                        attacker.getRidingEntity() == null;
 
         if (isCritical)
         {
-            critMultiplier = 1.35f;
-            baseChance *= critMultiplier;
+            return 0.02f;
         }
+        return 0.0f;
+    }
 
-        float difficultyMultiplier = 1.0f;
-
-        switch (entityLivingBase.world.getDifficulty())
+    private float getDifficultyMultiplier(World world)
+    {
+        switch (world.getDifficulty())
         {
             case PEACEFUL:
-                difficultyMultiplier = 0.0f;
-                break;
+                return 0.0f;
             case EASY:
-                difficultyMultiplier = 0.75f;
-                break;
+                return 0.75f;
             case NORMAL:
-                difficultyMultiplier = 1.0f;
-                break;
+                return 1.0f;
             case HARD:
-                difficultyMultiplier = 1.25f;
-                break;
+                return 1.25f;
+            default:
+                return 1.0f;
         }
-
-        baseChance *= difficultyMultiplier;
-
-        float finalChance = MathHelper.clamp(baseChance, 0.0f, 1.0f);
-
-        Log.write(0,
-                "[HeadDrop] " +
-                        "Damage=" + String.format("%.2f", attackDamage) +
-                        " DmgFactor=" + String.format("%.2f", damageFactor) +
-                        " SmiteLvl=" + smiteLevel +
-                        " SmiteMul=" + String.format("%.2f", smiteMultiplier) +
-                        " DurMul=" + String.format("%.2f", durabilityFactor) +
-                        " Crit=" + isCritical +
-                        " CritMul=" + String.format("%.2f", critMultiplier) +
-                        " Difficulty=" + entityLivingBase.world.getDifficulty() +
-                        " DiffMul=" + String.format("%.2f", difficultyMultiplier) +
-                        " Final=" + String.format("%.3f", finalChance)
-        );
-
-        return finalChance;
     }
 
     private void dropHead(EntityLivingBase entityLivingBase, World world)
