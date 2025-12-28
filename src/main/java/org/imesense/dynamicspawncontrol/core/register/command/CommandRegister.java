@@ -35,7 +35,8 @@ public final class CommandRegister extends BaseCommandRegister
         CmdAdminCopyWorldSeed.class,
         CmdAdminGiveDSCBow.class,
         CmdAdminGiveDSCSword.class,
-        CmdAdminTimeSet.class
+        CmdAdminTimeSet.class,
+        CmdAdminCreateBedrockPlatform.class
     };
 
     @Override

@@ -94,7 +94,7 @@ public final class CmdAdminTimeSet extends CommandBase
 
         if (useRelativeDay)
         {
-            // Если использовали относительный день (+1, -2), сохраняем текущее время дня
+            // Если юзать относительный день (+1, -2), сохраняем текущее время дня
             timeTicks = currentTimeOfDay;
         }
         else if ("day".equals(timeArg))
@@ -242,7 +242,7 @@ public final class CmdAdminTimeSet extends CommandBase
         {
             String[] parts = timeStr.split(":");
             if (parts.length != 2)
-                throw new CommandException("Неверный формат времени. Используйте ЧЧ:ММ");
+                throw new CommandException("Неверный формат времени. используйте ЧЧ:ММ");
 
             int hours = Integer.parseInt(parts[0]);
             int minutes = Integer.parseInt(parts[1]);
