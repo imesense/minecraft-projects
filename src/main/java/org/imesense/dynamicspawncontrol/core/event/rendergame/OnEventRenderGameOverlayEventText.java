@@ -27,7 +27,7 @@ public final class OnEventRenderGameOverlayEventText extends BaseOnEventInstance
 
         if (!UniqueField.CLIENT.gameSettings.showDebugInfo)
         {
-            RenderFPS.getInstance().renderFpsOverlay();
+            RenderFPS.getInstance().renderFpsOverlay(event);
         }
     }
 }

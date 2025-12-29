@@ -26,19 +26,20 @@ public final class RenderFPS
         }
     }
 
-    public void renderFpsOverlay()
+    public void renderFpsOverlay(RenderGameOverlayEvent.Text event)
     {
-        if (!(UniqueField.CLIENT.currentScreen instanceof net.minecraft.client.gui.GuiChat))
-        {
-            ScaledResolution scaledResolution = new ScaledResolution(UniqueField.CLIENT);
+        if (UniqueField.CLIENT.currentScreen instanceof net.minecraft.client.gui.GuiChat)
+            return;
 
-            String fpsText = "FPS: " + Minecraft.getDebugFPS();
+        ScaledResolution res = event.getResolution();
 
-            int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(fpsText);
+        String fpsText = "FPS: " + Minecraft.getDebugFPS();
 
-            int x = scaledResolution.getScaledWidth() - textWidth - 2;
+        int textWidth = UniqueField.CLIENT.fontRenderer.getStringWidth(fpsText);
+        int x = res.getScaledWidth() - textWidth - 2;
+        int y = res.getScaledHeight() - 10;
 
-            UniqueField.CLIENT.fontRenderer.drawString(fpsText, x, scaledResolution.getScaledHeight() - 10, 0x80FFFFFF);
-        }
+        UniqueField.CLIENT.fontRenderer.drawStringWithShadow(fpsText, x, y, 0xFFFFFF);
     }
 }
+
