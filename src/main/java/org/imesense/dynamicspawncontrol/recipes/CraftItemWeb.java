@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.recipes;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -34,12 +35,96 @@ public final class CraftItemWeb implements IRecipes
         GameRegistry.addShapedRecipe(
                 new ResourceLocation("dynamicspawncontrol", "gunpowder"),
                 null,
-                new ItemStack(Items.GUNPOWDER),
+                new ItemStack(Items.GUNPOWDER, 1),
                 "RC ",
                 "F  ",
                 "   ",
                 'R', Items.REDSTONE,
                 'C', Items.COAL,
+                'F', Items.FLINT
+        );
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder_2x"),
+                null,
+                new ItemStack(Items.GUNPOWDER, 2),
+                "RCR",
+                "F C",
+                "   ",
+                'R', Items.REDSTONE,
+                'C', Items.COAL,
+                'F', Items.FLINT
+        );
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder_3x"),
+                null,
+                new ItemStack(Items.GUNPOWDER, 3),
+                "RCR",
+                "FCC",
+                "RR ",
+                'R', Items.REDSTONE,
+                'C', Items.COAL,
+                'F', Items.FLINT
+        );
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder_4x"),
+                null,
+                new ItemStack(Items.GUNPOWDER, 4),
+                "RCR",
+                "FCC",
+                "RCR",
+                'R', Items.REDSTONE,
+                'C', Items.COAL,
+                'F', Items.FLINT
+        );
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder_9x"),
+                null,
+                new ItemStack(Items.GUNPOWDER, 9),
+                "RC ",
+                "F  ",
+                "   ",
+                'R', Blocks.REDSTONE_BLOCK,
+                'C', Blocks.COAL_BLOCK,
+                'F', Items.FLINT
+        );
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder_18x"),
+                null,
+                new ItemStack(Items.GUNPOWDER, 18),
+                "RCR",
+                "F C",
+                "   ",
+                'R', Blocks.REDSTONE_BLOCK,
+                'C', Blocks.COAL_BLOCK,
+                'F', Items.FLINT
+        );
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder_27x"),
+                null,
+                new ItemStack(Items.GUNPOWDER, 27),
+                "RCR",
+                "FCC",
+                "RR ",
+                'R', Blocks.REDSTONE_BLOCK,
+                'C', Blocks.COAL_BLOCK,
+                'F', Items.FLINT
+        );
+
+        GameRegistry.addShapedRecipe(
+                new ResourceLocation("dynamicspawncontrol", "gunpowder_36x"),
+                null,
+                new ItemStack(Items.GUNPOWDER, 36),
+                "RCR",
+                "FCC",
+                "RCR",
+                'R', Blocks.REDSTONE_BLOCK,
+                'C', Blocks.COAL_BLOCK,
                 'F', Items.FLINT
         );
     }
