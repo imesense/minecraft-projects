@@ -26,7 +26,7 @@ import java.util.*;
 import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
 @InitLog
-@TODO(value = "Merge 'TemplateWithChance' in storage for scripts", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "Merge 'TemplateWithChance' in storage for scripts. Fix this bug: net.minecraftforge.fml.common.LoaderExceptionModCrash: Caught exception from Dynamic Spawn Control (dynamicspawncontrol) Caused by: java.lang.RuntimeException: java.lang.RuntimeException: Error loading script file: Expected a com.google.gson.JsonObject but was com.google.gson.JsonArray", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class ParserEventCheckSpawn extends BaseParser
 {
     private File baseFile;
