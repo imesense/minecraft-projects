@@ -281,9 +281,30 @@ public final class ParserEventCheckSpawn extends BaseParser
         try (FileReader reader = new FileReader(includeFilePath.toFile()))
         {
             Gson gson = new Gson();
-            JsonObject includedJson = gson.fromJson(reader, JsonObject.class);
-            Log.write(0, "  File parsed successfully, processing nested includes");
+            JsonElement jsonElement = gson.fromJson(reader, JsonElement.class);
 
+            JsonObject includedJson;
+            if (jsonElement.isJsonArray())
+            {
+                Log.write(0, "  JSON is an array, extracting first element");
+                JsonArray jsonArray = jsonElement.getAsJsonArray();
+                if (jsonArray.size() != 1)
+                {
+                    throw new IOException("Included file must contain exactly one JSON object in array");
+                }
+                includedJson = jsonArray.get(0).getAsJsonObject();
+            }
+            else if (jsonElement.isJsonObject())
+            {
+                Log.write(0, "  JSON is an object");
+                includedJson = jsonElement.getAsJsonObject();
+            }
+            else
+            {
+                throw new IOException("Invalid JSON format in included file");
+            }
+
+            Log.write(0, "  File parsed successfully, processing nested includes");
             return processOrderedIncludes(includedJson, includeFilePath.toFile());
         }
     }
@@ -575,28 +596,27 @@ public final class ParserEventCheckSpawn extends BaseParser
 
             if (jsonElement.isJsonArray())
             {
-                Log.write(0, "JSON is an array, processing as array...");
+                Log.write(0, "JSON is an array, extracting object...");
                 JsonArray jsonArray = jsonElement.getAsJsonArray();
 
-                if (jsonArray.size() == 1)
+                if (jsonArray.size() != 1)
                 {
-                    JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
-                    processJsonFile(jsonObject, file);
+                    throw new RuntimeException("Expected exactly one JSON object in array, found " + jsonArray.size() + " elements");
                 }
-                else
-                {
-                    throw new RuntimeException("Expected single JSON object in array, found " + jsonArray.size() + " elements");
-                }
+
+                JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
+                processJsonFile(jsonObject, file);
             }
             else if (jsonElement.isJsonObject())
             {
-                Log.write(0, "JSON is an object, processing as object...");
+                Log.write(0, "JSON is an object (legacy format), processing directly...");
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 processJsonFile(jsonObject, file);
             }
             else
             {
-                throw new RuntimeException("Invalid JSON format: expected object or array");
+                throw new RuntimeException("Invalid JSON format: expected object or array, got " +
+                        jsonElement.getClass().getSimpleName());
             }
 
             long endTime = System.currentTimeMillis();
@@ -616,7 +636,7 @@ public final class ParserEventCheckSpawn extends BaseParser
 
     private void processJsonFile(JsonObject jsonObject, File file) throws IOException
     {
-        Log.write(0, "JSON parsed successfully");
+        Log.write(0, "JSON object loaded successfully");
 
         Log.write(0, "Loading templates...");
         JsonObject templates = loadTemplates(jsonObject, file);

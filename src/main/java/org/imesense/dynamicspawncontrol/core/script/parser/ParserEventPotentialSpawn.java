@@ -48,9 +48,33 @@ public final class ParserEventPotentialSpawn extends BaseParser
         try (FileReader reader = new FileReader(includeFilePath.toFile()))
         {
             Gson gson = new Gson();
-            JsonObject includedJson = gson.fromJson(reader, JsonObject.class);
-            Log.write(0, "  File parsed successfully");
+            JsonElement jsonElement = gson.fromJson(reader, JsonElement.class);
 
+            JsonObject includedJson;
+            if (jsonElement.isJsonArray())
+            {
+                Log.write(0, "  JSON is an array, extracting first element");
+                JsonArray jsonArray = jsonElement.getAsJsonArray();
+
+                if (jsonArray.size() != 1)
+                {
+                    throw new IOException("Included file must contain exactly one JSON object in array");
+                }
+
+                includedJson = jsonArray.get(0).getAsJsonObject();
+
+            }
+            else if (jsonElement.isJsonObject())
+            {
+                Log.write(0, "  JSON is an object (legacy format)");
+                includedJson = jsonElement.getAsJsonObject();
+            }
+            else
+            {
+                throw new IOException("Invalid JSON format in included file");
+            }
+
+            Log.write(0, "  File parsed successfully");
             return processIncludes(includedJson, includeFilePath.toFile());
         }
     }
@@ -296,8 +320,30 @@ public final class ParserEventPotentialSpawn extends BaseParser
             long startTime = System.currentTimeMillis();
 
             Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
-            Log.write(0, "JSON parsed successfully");
+            JsonElement jsonElement = gson.fromJson(fileReader, JsonElement.class);
+
+            JsonObject jsonObject;
+            if (jsonElement.isJsonArray())
+            {
+                Log.write(0, "JSON is an array, extracting object...");
+                JsonArray jsonArray = jsonElement.getAsJsonArray();
+
+                if (jsonArray.size() != 1)
+                {
+                    throw new RuntimeException("Expected exactly one JSON object in array, found " + jsonArray.size() + " elements");
+                }
+
+                jsonObject = jsonArray.get(0).getAsJsonObject();
+            }
+            else if (jsonElement.isJsonObject())
+            {
+                Log.write(0, "JSON is an object (legacy format), processing directly...");
+                jsonObject = jsonElement.getAsJsonObject();
+            }
+            else
+            {
+                throw new RuntimeException("Invalid JSON format: expected object or array");
+            }
 
             Log.write(0, "Processing includes...");
             JsonObject processedJson = processIncludes(jsonObject, file);
@@ -321,6 +367,11 @@ public final class ParserEventPotentialSpawn extends BaseParser
         catch (JsonSyntaxException exception)
         {
             Log.write(2, "JSON syntax error in config: " + exception.getMessage());
+            exception.printStackTrace();
+        }
+        catch (RuntimeException exception)
+        {
+            Log.write(2, "Error loading config: " + exception.getMessage());
             exception.printStackTrace();
         }
         catch (Exception exception)
