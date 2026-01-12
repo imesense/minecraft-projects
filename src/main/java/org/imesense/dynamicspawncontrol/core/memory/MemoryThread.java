@@ -25,7 +25,6 @@ public final class MemoryThread implements Runnable
         try
         {
             Log.write(0, "[MemoryCleaner] Starting memory cleanup...");
-            System.out.println("[MemoryCleaner] Starting memory cleanup...");
 
             Runtime runtime = Runtime.getRuntime();
             long beforeMem = runtime.totalMemory() - runtime.freeMemory();
@@ -66,14 +65,12 @@ public final class MemoryThread implements Runnable
             String logMessage =
                     "[MemoryCleaner] Cleanup complete! Freed " + freedMem + " bytes";
             Log.write(0, logMessage);
-            System.out.println(logMessage);
         }
         catch (Exception exception)
         {
             String error =
                     "[MemoryCleaner] Error during memory cleanup: " + exception.getMessage();
             Log.write(2, error);
-            System.err.println(error);
 
             if (sender != null && Configuration.isShowMessage())
             {
