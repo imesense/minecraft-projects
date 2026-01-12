@@ -1,32 +1,35 @@
-{
-  "#include": [
-    "spawn/dynamicspawncontrol/feral_zombie.json",
+[
+  {
+    "#include":
+    [
+      "spawn/dynamicspawncontrol/feral_zombie.json",
 
-    "spawn/minecraft/cave_spider.json",
-    "spawn/minecraft/creeper.json",
-    "spawn/minecraft/enderman.json",
-    "spawn/minecraft/endermite.json",
-    "spawn/minecraft/evocation_illager.json",
-    "spawn/minecraft/husk.json",
-    "spawn/minecraft/silverfish.json",
-    "spawn/minecraft/skeleton.json",
-    "spawn/minecraft/slime.json",
-    "spawn/minecraft/spider.json",
-    "spawn/minecraft/stray.json",
-    "spawn/minecraft/vex.json",
-    "spawn/minecraft/vindication_illager.json",
-    "spawn/minecraft/witch.json",
-    "spawn/minecraft/wither_skeleton.json",
-    "spawn/minecraft/zombie.json",
-    "spawn/minecraft/zombie_pigman.json",
-    "spawn/minecraft/zombie_villager.json",
+      "spawn/minecraft/cave_spider.json",
+      "spawn/minecraft/creeper.json",
+      "spawn/minecraft/enderman.json",
+      "spawn/minecraft/endermite.json",
+      "spawn/minecraft/evocation_illager.json",
+      "spawn/minecraft/husk.json",
+      "spawn/minecraft/silverfish.json",
+      "spawn/minecraft/skeleton.json",
+      "spawn/minecraft/slime.json",
+      "spawn/minecraft/spider.json",
+      "spawn/minecraft/stray.json",
+      "spawn/minecraft/vex.json",
+      "spawn/minecraft/vindication_illager.json",
+      "spawn/minecraft/witch.json",
+      "spawn/minecraft/wither_skeleton.json",
+      "spawn/minecraft/zombie.json",
+      "spawn/minecraft/zombie_pigman.json",
+      "spawn/minecraft/zombie_villager.json",
 
-    "spawn/specialmobs/hellfireblaze.json",
+      "spawn/specialmobs/hellfireblaze.json",
 
-    "spawn/srparasites/carrier_heavy.json",
-    "spawn/srparasites/crux.json",
-    "spawn/srparasites/grunt.json",
-    "spawn/srparasites/heed.json",
-    "spawn/srparasites/hi_golem.json"
-  ]
-}
+      "spawn/srparasites/carrier_heavy.json",
+      "spawn/srparasites/crux.json",
+      "spawn/srparasites/grunt.json",
+      "spawn/srparasites/heed.json",
+      "spawn/srparasites/hi_golem.json"
+    ]
+  }
+]
