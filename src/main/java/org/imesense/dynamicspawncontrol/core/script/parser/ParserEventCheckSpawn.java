@@ -26,7 +26,7 @@ import java.util.*;
 import static org.imesense.dynamicspawncontrol.core.script.auxscript.Util.*;
 
 @InitLog
-@TODO(value = "Merge 'TemplateWithChance' in storage for scripts. Fix this bug: net.minecraftforge.fml.common.LoaderExceptionModCrash: Caught exception from Dynamic Spawn Control (dynamicspawncontrol) Caused by: java.lang.RuntimeException: java.lang.RuntimeException: Error loading script file: Expected a com.google.gson.JsonObject but was com.google.gson.JsonArray", showOnce = false, priority = TODO.TodoPriority.HIGH)
+@TODO(value = "Merge 'TemplateWithChance' in storage for scripts.", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class ParserEventCheckSpawn extends BaseParser
 {
     private File baseFile;
@@ -571,23 +571,33 @@ public final class ParserEventCheckSpawn extends BaseParser
             long startTime = System.currentTimeMillis();
 
             Gson gson = new Gson();
-            JsonObject jsonObject = gson.fromJson(fileReader, JsonObject.class);
-            Log.write(0, "JSON parsed successfully");
+            JsonElement jsonElement = gson.fromJson(fileReader, JsonElement.class);
 
-            Log.write(0, "Loading templates...");
-            JsonObject templates = loadTemplates(jsonObject, file);
+            if (jsonElement.isJsonArray())
+            {
+                Log.write(0, "JSON is an array, processing as array...");
+                JsonArray jsonArray = jsonElement.getAsJsonArray();
 
-            Log.write(0, "Processing ordered includes...");
-            JsonObject processedJson = processOrderedIncludes(jsonObject, file);
-
-            processedJson.add("templates", templates);
-            Log.write(0, "Templates added to processed JSON");
-
-            removeIncludeDirectives(processedJson);
-            Log.write(0, "Include directives removed");
-
-            Log.write(0, "Processing JSON object...");
-            processJsonObject(processedJson);
+                if (jsonArray.size() == 1)
+                {
+                    JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
+                    processJsonFile(jsonObject, file);
+                }
+                else
+                {
+                    throw new RuntimeException("Expected single JSON object in array, found " + jsonArray.size() + " elements");
+                }
+            }
+            else if (jsonElement.isJsonObject())
+            {
+                Log.write(0, "JSON is an object, processing as object...");
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                processJsonFile(jsonObject, file);
+            }
+            else
+            {
+                throw new RuntimeException("Invalid JSON format: expected object or array");
+            }
 
             long endTime = System.currentTimeMillis();
             Log.write(0, "Config loaded successfully in " + (endTime - startTime) + "ms");
@@ -602,6 +612,26 @@ public final class ParserEventCheckSpawn extends BaseParser
         {
             handleLoadError(exception.getMessage(), exception);
         }
+    }
+
+    private void processJsonFile(JsonObject jsonObject, File file) throws IOException
+    {
+        Log.write(0, "JSON parsed successfully");
+
+        Log.write(0, "Loading templates...");
+        JsonObject templates = loadTemplates(jsonObject, file);
+
+        Log.write(0, "Processing ordered includes...");
+        JsonObject processedJson = processOrderedIncludes(jsonObject, file);
+
+        processedJson.add("templates", templates);
+        Log.write(0, "Templates added to processed JSON");
+
+        removeIncludeDirectives(processedJson);
+        Log.write(0, "Include directives removed");
+
+        Log.write(0, "Processing JSON object...");
+        processJsonObject(processedJson);
     }
 
     private void processJsonObject(JsonObject jsonObject) throws RuntimeException
