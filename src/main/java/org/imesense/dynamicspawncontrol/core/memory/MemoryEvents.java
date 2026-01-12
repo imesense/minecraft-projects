@@ -4,21 +4,23 @@ import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public final class MemoryEvents
 {
-    private static int idleTime = 0;
-
     @Getter
     private static long lastCleanTime = 0L;
+
+    private static long lastWarningTime = 0L;
 
     private static final Set<UUID> recognizedPlayers = new LinkedHashSet<>();
 
@@ -35,9 +37,14 @@ public final class MemoryEvents
     @SideOnly(Side.CLIENT)
     public static void handleOnClientTick(TickEvent.ClientTickEvent event)
     {
+        if (event.phase != TickEvent.ClientTickEvent.Phase.END)
+        {
+            return;
+        }
+
         Minecraft minecraft = Minecraft.getMinecraft();
 
-        if (minecraft.isGamePaused() || event.phase != TickEvent.ClientTickEvent.Phase.END)
+        if (minecraft.isGamePaused())
         {
             return;
         }
@@ -49,53 +56,56 @@ public final class MemoryEvents
             return;
         }
 
-        boolean shouldClean = false;
+        Runtime runtime = Runtime.getRuntime();
+        double memoryUsage =
+                (double)(runtime.totalMemory() - runtime.freeMemory()) / runtime.maxMemory();
 
-        long currentTime = System.currentTimeMillis();
-        long timeSinceLastClean = currentTime - lastCleanTime;
-
-        if (timeSinceLastClean > (Configuration.getAutomaticCleanup().getMinInterval() * 1000L))
+        if (memoryUsage >= Configuration.getForceCleanPercentage() / 100.0D)
         {
-            Runtime runtime = Runtime.getRuntime();
-            double memoryUsage = (double)(runtime.totalMemory() - runtime.freeMemory()) / runtime.maxMemory();
-
-            if (memoryUsage > Configuration.getForceCleanPercentage() / 100.0D)
-            {
-                shouldClean = true;
-            }
-            else if (Configuration.getAutomaticCleanup().isAutoCleanup())
-            {
-                if (idleTime > Configuration.getAutomaticCleanup().getMinIdleTime() * 20)
-                {
-                    shouldClean = true;
-                }
-                else if (timeSinceLastClean > (Configuration.getAutomaticCleanup().getMaxInterval() * 1000L))
-                {
-                    shouldClean = true;
-                }
-            }
-
-            if (shouldClean)
-            {
-                MemoryManager.cleanMemory(player);
-                lastCleanTime = currentTime;
-                idleTime = 0;
-            }
-
-            if (Configuration.getAutomaticCleanup().isAutoCleanup())
-            {
-                if (Math.abs(player.motionX) < 0.001D &&
-                        Math.abs(player.motionY) < 0.001D &&
-                        Math.abs(player.motionZ) < 0.001D)
-                {
-                    idleTime++;
-                }
-                else
-                {
-                    idleTime = 0;
-                }
-            }
+            warnHighMemory(player, memoryUsage);
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    private static void warnHighMemory(EntityPlayer player, double memoryUsage)
+    {
+        long now = System.currentTimeMillis();
+
+        if (now - lastWarningTime < 30_000L)
+        {
+            return;
+        }
+
+        lastWarningTime = now;
+
+        int percent = (int)(memoryUsage * 100);
+
+        TextComponentString prefix =
+                new TextComponentString("⚠ High memory usage (");
+        prefix.getStyle().setColor(TextFormatting.RED);
+
+        TextComponentString value =
+                new TextComponentString(percent + "%");
+        value.getStyle().setColor(TextFormatting.YELLOW);
+
+        TextComponentString suffix =
+                new TextComponentString("). Type ");
+        suffix.getStyle().setColor(TextFormatting.RED);
+
+        TextComponentString command =
+                new TextComponentString("/dsc_clean_up_memory");
+        command.getStyle().setColor(TextFormatting.GREEN);
+
+        TextComponentString end =
+                new TextComponentString(" when safe.");
+        end.getStyle().setColor(TextFormatting.RED);
+
+        prefix.appendSibling(value);
+        prefix.appendSibling(suffix);
+        prefix.appendSibling(command);
+        prefix.appendSibling(end);
+
+        player.sendMessage(prefix);
     }
 
     @SideOnly(Side.CLIENT)
@@ -106,7 +116,12 @@ public final class MemoryEvents
             return;
         }
 
-        EntityPlayer player = (EntityPlayer)event.getEntity();
+        if (Minecraft.getMinecraft().player == null)
+        {
+            return;
+        }
+
+        EntityPlayer player = (EntityPlayer) event.getEntity();
 
         if (player.getUniqueID().equals(Minecraft.getMinecraft().player.getUniqueID()))
         {
@@ -118,9 +133,6 @@ public final class MemoryEvents
                 }
 
                 lastCleanTime = System.currentTimeMillis();
-
-                idleTime = 0;
-
                 recognizedPlayers.add(player.getUniqueID());
             }
         }

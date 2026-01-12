@@ -7,14 +7,10 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public final class MemoryManager
 {
-    public MemoryManager()
+    private static final ScheduledExecutorService executor =
+    Executors.newSingleThreadScheduledExecutor(r ->
     {
-
-    }
-
-    private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(r ->
-    {
-        Thread thread = new Thread(r, "MemoryCleaner GC Thread");
+        Thread thread = new Thread(r, "[DynamicSpawnControl]: MemoryCleaner GC Thread");
         thread.setDaemon(true);
 
         return thread;

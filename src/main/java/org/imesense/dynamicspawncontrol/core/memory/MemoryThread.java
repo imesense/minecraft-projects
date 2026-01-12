@@ -3,7 +3,6 @@ package org.imesense.dynamicspawncontrol.core.memory;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.server.command.TextComponentHelper;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 public final class MemoryThread implements Runnable
@@ -33,49 +32,55 @@ public final class MemoryThread implements Runnable
 
             if (sender != null && Configuration.isShowMessage())
             {
-                TextComponentString message = new TextComponentString("Starting memory cleanup...");
-                message.getStyle().setColor(TextFormatting.GREEN);
-                sender.sendMessage(message);
+                TextComponentString msg =
+                        new TextComponentString("Starting memory cleanup...");
+                msg.getStyle().setColor(TextFormatting.GREEN);
+                sender.sendMessage(msg);
             }
 
             System.gc();
-            System.runFinalization();
 
             long afterMem = runtime.totalMemory() - runtime.freeMemory();
             long freedMem = beforeMem - afterMem;
 
             if (sender != null && Configuration.isShowMessage())
             {
-                TextComponentString prefix = new TextComponentString("Memory cleanup complete! Freed ");
+                TextComponentString prefix =
+                        new TextComponentString("Memory cleanup complete! Freed ");
                 prefix.getStyle().setColor(TextFormatting.GREEN);
 
-                TextComponentString freedPart = new TextComponentString(String.valueOf(freedMem / (1024 * 1024)));
-                freedPart.getStyle().setColor(TextFormatting.YELLOW);
+                TextComponentString value =
+                        new TextComponentString(String.valueOf(freedMem / (1024 * 1024)));
+                value.getStyle().setColor(TextFormatting.YELLOW);
 
-                TextComponentString suffix = new TextComponentString(" MB.");
+                TextComponentString suffix =
+                        new TextComponentString(" MB.");
                 suffix.getStyle().setColor(TextFormatting.GREEN);
 
-                prefix.appendSibling(freedPart);
+                prefix.appendSibling(value);
                 prefix.appendSibling(suffix);
 
                 sender.sendMessage(prefix);
             }
 
-            String logMessage = String.format("[MemoryCleaner] Cleanup complete! Freed %d bytes", freedMem);
+            String logMessage =
+                    "[MemoryCleaner] Cleanup complete! Freed " + freedMem + " bytes";
             Log.write(0, logMessage);
             System.out.println(logMessage);
         }
         catch (Exception exception)
         {
-            String errorMessage = "[MemoryCleaner] Error during memory cleanup: " + exception.getMessage();
-            Log.write(2, errorMessage);
-            System.err.println(errorMessage);
+            String error =
+                    "[MemoryCleaner] Error during memory cleanup: " + exception.getMessage();
+            Log.write(2, error);
+            System.err.println(error);
 
             if (sender != null && Configuration.isShowMessage())
             {
-                TextComponentString message = new TextComponentString("Memory cleanup failed!");
-                message.getStyle().setColor(TextFormatting.RED);
-                sender.sendMessage(message);
+                TextComponentString msg =
+                        new TextComponentString("Memory cleanup failed!");
+                msg.getStyle().setColor(TextFormatting.RED);
+                sender.sendMessage(msg);
             }
         }
     }
