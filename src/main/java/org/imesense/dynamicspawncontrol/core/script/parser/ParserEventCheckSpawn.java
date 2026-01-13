@@ -18,6 +18,7 @@ import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1078,6 +1079,68 @@ public final class ParserEventCheckSpawn extends BaseParser
         Log.write(0, "ERROR: " + message);
         Log.write(0, "Exception: " + exception.getClass().getName() + ": " + exception.getMessage());
         throw new RuntimeException(message, exception);
+    }
+
+    @Override
+    public void createNewConfigFile(File file)
+    {
+        Log.write(0, "Creating new config file with default structure...");
+
+        try
+        {
+            File parentDir = file.getParentFile();
+            if (parentDir != null && !parentDir.exists())
+            {
+                Log.write(0, "Creating parent directories...");
+                parentDir.mkdirs();
+            }
+
+            JsonObject rootObject = new JsonObject();
+
+            JsonObject templates = new JsonObject();
+            templates.add("#include", new JsonArray());
+            rootObject.add("templates", templates);
+
+            JsonObject configs = new JsonObject();
+            configs.add("#include", new JsonArray());
+            rootObject.add("configs", configs);
+
+            JsonObject dataSupport = new JsonObject();
+            dataSupport.add("#include", new JsonArray());
+            rootObject.add("data_support", dataSupport);
+
+            JsonArray jsonArray = new JsonArray();
+            jsonArray.add(rootObject);
+
+            try (FileWriter writer = new FileWriter(file))
+            {
+                Gson gson = new GsonBuilder()
+                        .setPrettyPrinting()
+                        .create();
+                gson.toJson(jsonArray, writer);
+
+                Log.write(0, "Default config file created successfully: " + file.getAbsolutePath());
+                Log.write(0, "File structure:");
+                Log.write(0, "[\n" +
+                        "  {\n" +
+                        "    \"templates\": {\n" +
+                        "      \"#include\": []\n" +
+                        "    },\n" +
+                        "    \"configs\": {\n" +
+                        "      \"#include\": []\n" +
+                        "    },\n" +
+                        "    \"data_support\": {\n" +
+                        "      \"#include\": []\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "]");
+            }
+        }
+        catch (IOException exception)
+        {
+            Log.write(0, "ERROR: Failed to create default config file: " + exception.getMessage());
+            exception.printStackTrace();
+        }
     }
 
     @Override
