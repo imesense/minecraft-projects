@@ -38,8 +38,8 @@ public final class CacheEntityStorage
 
     public static final class EntityData
     {
-        public ResourceLocation entity;
         public Integer idDimension;
+        public ResourceLocation entity;
         ///
         public String entityNameComment;
         public String entityDescriptionComment;

@@ -16,21 +16,19 @@ import java.io.File;
     "execute": {
       "id_dimension": 0,
       "entity": "minecraft:zombie",
-      "per_player": false,
-      "per_chunk": true,
       "max_entity_count": 150,
       "result": "deny"
     },
     "else": {
-      "id_dimension": 0,
-      "entity": "minecraft:zombie",
-      "per_player": false,
-      "per_chunk": false,
-      "max_entity_count": 18,
-      "result": "deny"
+    // Сюда указываем ноду, которую отправляем в основной кеш для ограничения сущности
+      //"id_dimension": 0,
+      //"entity": "minecraft:zombie",
+     // "max_entity_count": 18,
+     // "result": "deny"
+     "node_id": 000, -> отправляем в парсер ParserEventCacheSettings. Чтобы активировать его опцию без override события в этом парсере
     }
   }*/
- //       ]
+ //]
 
 @InitLog
 public class ParserEventCacheGameEvents extends BaseParser
