@@ -40,6 +40,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Так же генерация HTML отчета о информации какая сущность сегодня фармится. Открывается консольной командой в браузере как временная страница для информации
+ * Реализация NOD-ов для связи с кешированием сущностей. Чтобы отключать блоки спавна
+ */
 @InitLog
 public class ParserEventCacheGameEvents extends BaseParser
 {
