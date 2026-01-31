@@ -45,6 +45,14 @@ public final class OnEventWorldCacheOld
     }
 
     private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
+    private final CacheGameEventStorage GAME_EVENT_STORAGE = CacheGameEventStorage.getInstance();
+
+    //-' Счетчик дней для отслеживания игрового времени
+    private long lastWorldTime = 0;
+    private int currentDay = 0;
+
+    //-' Логирование состояния событий
+    private boolean debugGameEvents = true;
 
     public OnEventWorldCacheOld()
     {
@@ -58,6 +66,7 @@ public final class OnEventWorldCacheOld
     {
         if (event.phase == TickEvent.Phase.END)
         {
+            //-' Обновление счетчика тиков
             this.CACHE_GENERAL_STORAGE.TickCounter++;
 
             if (this.CACHE_GENERAL_STORAGE.TickCounter >= this.CACHE_GENERAL_STORAGE._DYNAMIC_UPDATE_INTERVAL)
@@ -75,6 +84,102 @@ public final class OnEventWorldCacheOld
                     this.CACHE_GENERAL_STORAGE.IsFirstUpdate = false;
                 }
             }
+
+            //-' Проверка смены игрового дня
+            checkDayChange(event.world);
+        }
+    }
+
+    /**
+     * -' Проверяет смену игрового дня и активирует события
+     */
+    private void checkDayChange(World world)
+    {
+        if (world.isRemote || !(world instanceof WorldServer))
+        {
+            return;
+        }
+
+        long currentWorldTime = world.getWorldTime();
+
+        //-' Проверяем, сменился ли день (24,000 тиков = 1 игровой день)
+        int newDay = (int)(currentWorldTime / 24000L);
+
+        if (newDay != currentDay)
+        {
+            int oldDay = currentDay;
+            currentDay = newDay;
+            lastWorldTime = currentWorldTime;
+
+            if (debugGameEvents)
+            {
+                Log.write(0, String.format("Day changed: %d -> %d (WorldTime: %d)",
+                        oldDay, currentDay, currentWorldTime));
+            }
+
+            //-' Активируем события для нового дня
+            activateGameEventsForDay(currentDay, (WorldServer) world);
+        }
+    }
+
+    /**
+     * -' Активирует все события для указанного дня
+     */
+    private void activateGameEventsForDay(int day, WorldServer world)
+    {
+        if (GAME_EVENT_STORAGE.eventData.isEmpty())
+        {
+            return;
+        }
+
+        int dimension = world.provider.getDimension();
+
+        for (CacheGameEventStorage.GameEventData eventData : GAME_EVENT_STORAGE.eventData)
+        {
+            //-' Проверяем измерение
+            if (eventData.idDimension != null && eventData.idDimension != dimension)
+            {
+                continue;
+            }
+
+            //-' Проверяем условие дня
+            boolean dayCondition = false;
+            if (eventData.repeat)
+            {
+                //-' Для повторяющихся событий: день должен быть кратен указанному, но не 0
+                if (eventData.day > 0 && day > 0 && day % eventData.day == 0)
+                {
+                    dayCondition = true;
+                }
+            }
+            else
+            {
+                //-' Для неповторяющихся: точное совпадение дня
+                dayCondition = (day == eventData.day);
+            }
+
+            if (dayCondition)
+            {
+                //-' Активируем событие
+                activateGameEvent(eventData, day, world);
+            }
+        }
+    }
+
+    /**
+     * -' Активирует конкретное игровое событие
+     */
+    private void activateGameEvent(CacheGameEventStorage.GameEventData eventData, int day, WorldServer world)
+    {
+        if (debugGameEvents)
+        {
+            String eventType = eventData.repeat ? "Repeating" : "One-time";
+            Log.write(0, String.format("Game Event ACTIVATED - Type: %s, Day: %d, Entity: %s, " +
+                            "Max Count: %d, Dimension: %d, Result: %s",
+                    eventType, day, eventData.entity,
+                    eventData.max_entity_count,
+                    world.provider.getDimension(),
+                    eventData.result));
         }
     }
 
@@ -155,6 +260,13 @@ public final class OnEventWorldCacheOld
         int currentDimension = world.provider.getDimension();
         ResourceLocation entityKey = EntityList.getKey(entity);
 
+        //-' Проверка игровых событий в первую очередь
+        if (checkGameEvents(event, entity, world, currentDimension, entityKey))
+        {
+            return;
+        }
+
+        //-' Оригинальная проверка (остается как резерв)
         if (currentDimension == 0 && (entity instanceof IAnimals && !(entity instanceof EntityMob)
                 && !WorldCacheConfig.getInstance(WorldCacheConfig.class).isSpawnPeacefulCreaturesAtNight()))
         {
@@ -260,5 +372,136 @@ public final class OnEventWorldCacheOld
         {
             event.setResult(entityData.result);
         }
+    }
+
+    /**
+     * -' Проверяет игровые события для текущего спавна
+     * @return true если событие обработано
+     */
+    private boolean checkGameEvents(LivingSpawnEvent.CheckSpawn event, Entity entity, World world,
+                                    int dimension, ResourceLocation entityKey)
+    {
+        if (GAME_EVENT_STORAGE.eventData.isEmpty() || entityKey == null)
+        {
+            return false;
+        }
+
+        int currentDay = (int)(world.getWorldTime() / 24000L);
+
+        for (CacheGameEventStorage.GameEventData eventData : GAME_EVENT_STORAGE.eventData)
+        {
+            //-' Проверяем измерение
+            if (eventData.idDimension != null && eventData.idDimension != dimension)
+            {
+                continue;
+            }
+
+            //-' Проверяем сущность
+            if (!eventData.entity.equals(entityKey))
+            {
+                continue;
+            }
+
+            //-' Проверяем условие дня
+            boolean dayCondition = false;
+            if (eventData.repeat)
+            {
+                //-' Для повторяющихся событий: день должен быть кратен указанному, но не 0
+                if (eventData.day > 0 && currentDay > 0 && currentDay % eventData.day == 0)
+                {
+                    dayCondition = true;
+                }
+            }
+            else
+            {
+                //-' Для неповторяющихся: точное совпадение дня
+                dayCondition = (currentDay == eventData.day);
+            }
+
+            if (dayCondition)
+            {
+                //-' Событие активно! Применяем ограничения
+                int currentCount = getCurrentEntityCount(world, entityKey);
+
+                if (debugGameEvents)
+                {
+                    String eventType = eventData.repeat ? "Repeating" : "One-time";
+                    Log.write(0, String.format("Game Event ACTIVE for spawn - Type: %s, Day: %d, Entity: %s, " +
+                                    "Checking limit: %d/%d",
+                            eventType, currentDay, entityKey,
+                            currentCount,
+                            eventData.max_entity_count));
+
+                    //-' Дополнительная отладка
+                    if (currentCount == 0)
+                    {
+                        Log.write(0, String.format("DEBUG: No %s entities found in world. Total entities: %d",
+                                entityKey, world.loadedEntityList.size()));
+                        //-' Выведем типы всех сущностей для отладки
+                        for (Object obj : world.loadedEntityList)
+                        {
+                            if (obj instanceof Entity)
+                            {
+                                Entity e = (Entity) obj;
+                                ResourceLocation key = EntityList.getKey(e);
+                                Log.write(0, String.format("DEBUG: Entity: %s, Key: %s",
+                                        e.getClass().getSimpleName(), key));
+                            }
+                        }
+                    }
+                }
+
+                //-' Проверяем лимит сущностей
+                if (currentCount >= eventData.max_entity_count)
+                {
+                    event.setResult(eventData.result);
+
+                    if (debugGameEvents)
+                    {
+                        Log.write(0, String.format("Game Event BLOCKED spawn - Entity: %s, Count: %d/%d, Result: %s",
+                                entityKey, currentCount, eventData.max_entity_count, eventData.result));
+                    }
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * -' Получает текущее количество сущностей определенного типа в мире
+     */
+    private int getCurrentEntityCount(World world, ResourceLocation entityType)
+    {
+        if (world.loadedEntityList == null || entityType == null)
+        {
+            return 0;
+        }
+
+        int count = 0;
+        for (Object obj : world.loadedEntityList)
+        {
+            if (obj instanceof Entity)
+            {
+                Entity entity = (Entity) obj;
+                ResourceLocation entityKey = EntityList.getKey(entity);
+                if (entityKey != null && entityKey.equals(entityType))
+                {
+                    count++;
+                }
+                else
+                {
+                    //-' Также проверяем по имени класса для EntityZombie
+                    if (entityType.toString().equals("minecraft:zombie") && entity instanceof EntityZombie)
+                    {
+                        count++;
+                    }
+                }
+            }
+        }
+
+        return count;
     }
 }

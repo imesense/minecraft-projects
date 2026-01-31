@@ -6,6 +6,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CacheGameEventStorage
 {
     private static volatile CacheGameEventStorage _INSTANCE;
@@ -23,28 +26,25 @@ public class CacheGameEventStorage
         }
     }
 
-    public static final class ObjectNodeEventGameEvents
+    public List<GameEventData> eventData = new ArrayList<>();
+
+    public static class GameEventData
     {
-        public static final class EventCacheGameEvent
+        public Integer day = 0;
+        public Boolean repeat = false;
+
+        public ResourceLocation entity;
+        public Integer max_entity_count = 0;
+        public Integer idDimension = null;
+        public Event.Result result = Event.Result.DEFAULT;
+
+        @Override
+        public String toString()
         {
-            public Long correctDay;
-            public Boolean repeatEvent;
+            return String.format("GameEventData { day = %d, repeat = %s, entity = %s, maxCount = %d, dim = %s, result = %s }",
+                    day, repeat, entity, max_entity_count,
+                    idDimension != null ? idDimension.toString() : "any",
+                    result);
         }
-
-        public static class EventEntityDataCacheGameEvent
-        {
-            public Integer idDimension;
-            public ResourceLocation entity;
-
-            public Integer max_entity_count;
-            public Event.Result result;
-        }
-
-        public static final class EventGameCacheEventElse extends EventEntityDataCacheGameEvent
-        {
-            public Short idNode;
-        }
-
-        // Записываем объект, который будет обрабатывать хранение 'ObjectNodeEventGameEvents'
     }
 }

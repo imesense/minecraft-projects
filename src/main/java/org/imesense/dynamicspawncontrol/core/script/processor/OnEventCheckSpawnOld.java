@@ -42,7 +42,7 @@ public final class OnEventCheckSpawnOld
 
     ///
     private static final List<String> ALLOWED_ENTITIES = Arrays.asList(
-        "minecraft:bat"
+        "minecraft:zombie"
     );
     ///
 
@@ -66,7 +66,7 @@ public final class OnEventCheckSpawnOld
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
         // для дебага в 0.2 версии
-        /*if (DisableEventBooleansTest.test == false)
+        if (DisableEventBooleansTest.test == false)
         {
             // Пропускаем спавн из спаунеров
             if (event.getSpawner() != null) {
@@ -103,7 +103,7 @@ public final class OnEventCheckSpawnOld
 
             if (DisableEventBooleansTest.test)
                 return;
-        }*/
+        }
 
         /**
          * В чем тут мем, то что у нас entityType проверяется на каждую сущность, на каждую сущность открывается файл
