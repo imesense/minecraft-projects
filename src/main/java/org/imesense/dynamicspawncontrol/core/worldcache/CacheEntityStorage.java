@@ -38,6 +38,8 @@ public final class CacheEntityStorage
 
     public static final class EntityData
     {
+        public Long idNode = null;
+
         public Integer idDimension;
         public ResourceLocation entity;
         ///

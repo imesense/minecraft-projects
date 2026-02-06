@@ -9,6 +9,7 @@ import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheNodeLinkManager;
 
 import java.io.File;
 import java.io.FileReader;
@@ -67,6 +68,7 @@ public final class ParserEventCacheSettings extends BaseParser
             }
 
             List<CacheEntityStorage.EntityData> entitiesList = new ArrayList<>();
+            CacheNodeLinkManager nodeManager = CacheNodeLinkManager.getInstance();
 
             for (JsonElement jsonElement : jsonArray)
             {
@@ -86,6 +88,18 @@ public final class ParserEventCacheSettings extends BaseParser
                 if (dataObject.has("instanceof") && dataObject.has("entity"))
                 {
                     throw new RuntimeException("Script cannot contain both 'instanceof' and 'entity' keys. Use only one.");
+                }
+
+                Long idNode = null;
+
+                if (dataObject.has("id_node"))
+                {
+                    idNode = dataObject.get("id_node").getAsLong();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Found id_node: " + idNode);
+                    }
                 }
 
                 String entityName = null;
@@ -207,6 +221,9 @@ public final class ParserEventCacheSettings extends BaseParser
                     throw new RuntimeException("Invalid value for 'result': " + resultStr);
                 }
 
+                String entityKey = entityName != null ? entityName : (instanceofStr != null ? "instanceof:" + instanceofStr : "unknown");
+                nodeManager.checkForDuplicates(entityKey, idNode);
+
                 CacheEntityStorage.EntityData entityData = new CacheEntityStorage.EntityData();
 
                 if (instanceofStr != null)
@@ -277,7 +294,11 @@ public final class ParserEventCacheSettings extends BaseParser
                 entityData.result = result;
                 entityData.idDimension = idDimension;
 
+                entityData.idNode = idNode;
+
                 entitiesList.add(entityData);
+
+                nodeManager.registerCacheNode(idNode, entityData);
 
                 if (!isContinue)
                 {
@@ -319,5 +340,6 @@ public final class ParserEventCacheSettings extends BaseParser
         }
 
         CacheEntityStorage.getInstance().entityData.clear();
+        CacheNodeLinkManager.getInstance().clearAll();
     }
 }

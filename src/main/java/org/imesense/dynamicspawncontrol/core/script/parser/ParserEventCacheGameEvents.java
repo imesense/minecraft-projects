@@ -7,33 +7,11 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.io.File;
 
-//[ реализовать ноду для совместимости с кешем
-/*  {
-    "event": {
-      "day": 7,
-      "repeat": true
-    },
-    "execute": {
-      "id_dimension": 0,
-      "entity": "minecraft:zombie",
-      "max_entity_count": 150,
-      "result": "deny"
-    },
-    "else": {
-    // Сюда указываем ноду, которую отправляем в основной кеш для ограничения сущности
-      //"id_dimension": 0,
-      //"entity": "minecraft:zombie",
-     // "max_entity_count": 18,
-     // "result": "deny"
-     "node_id": 000, -> отправляем в парсер ParserEventCacheSettings. Чтобы активировать его опцию без override события в этом парсере
-    }
-  }*/
- //]
-
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGameEventStorage;
+import org.imesense.dynamicspawncontrol.core.worldcache.CacheNodeLinkManager;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -95,6 +73,7 @@ public class ParserEventCacheGameEvents extends BaseParser
             }
 
             List<CacheGameEventStorage.GameEventData> eventList = new ArrayList<>();
+            CacheNodeLinkManager nodeManager = CacheNodeLinkManager.getInstance();
 
             for (JsonElement jsonElement : jsonArray)
             {
@@ -111,6 +90,17 @@ public class ParserEventCacheGameEvents extends BaseParser
                 }
 
                 JsonObject eventObject = jsonObject.getAsJsonObject("event");
+
+                Long idNode = null;
+                if (eventObject.has("id_node"))
+                {
+                    idNode = eventObject.get("id_node").getAsLong();
+
+                    if (DEBUG_AND_CHECK_SYNTAX)
+                    {
+                        Log.write(0, "Found id_node in event: " + idNode);
+                    }
+                }
 
                 if (!eventObject.has("day"))
                 {
@@ -182,6 +172,8 @@ public class ParserEventCacheGameEvents extends BaseParser
                     Log.write(0, "Created ResourceLocation: " + entityResource);
                 }
 
+                nodeManager.checkForDuplicates(entityStr, idNode);
+
                 CacheGameEventStorage.GameEventData eventData = new CacheGameEventStorage.GameEventData();
 
                 eventData.day = day;
@@ -191,8 +183,11 @@ public class ParserEventCacheGameEvents extends BaseParser
                 eventData.max_entity_count = maxEntityCount;
                 eventData.result = result;
                 eventData.idDimension = idDimension;
+                eventData.idNode = idNode;
 
                 eventList.add(eventData);
+
+                nodeManager.registerEventNode(idNode, eventData);
 
                 Log.write(0, String.format("Game Event Loaded - Day: %d, Repeat: %s, Entity: %s, " +
                                 "Max Count: %d, Dimension: %s, Result: %s",
@@ -225,5 +220,6 @@ public class ParserEventCacheGameEvents extends BaseParser
         }
 
         CacheGameEventStorage.getInstance().eventData.clear();
+        CacheNodeLinkManager.getInstance().clearAll();
     }
 }

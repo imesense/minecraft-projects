@@ -47,11 +47,9 @@ public final class OnEventWorldCacheOld
     private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
     private final CacheGameEventStorage GAME_EVENT_STORAGE = CacheGameEventStorage.getInstance();
 
-    //-' Счетчик дней для отслеживания игрового времени
     private long lastWorldTime = 0;
     private int currentDay = 0;
 
-    //-' Логирование состояния событий
     private boolean debugGameEvents = true;
 
     public OnEventWorldCacheOld()
@@ -66,7 +64,6 @@ public final class OnEventWorldCacheOld
     {
         if (event.phase == TickEvent.Phase.END)
         {
-            //-' Обновление счетчика тиков
             this.CACHE_GENERAL_STORAGE.TickCounter++;
 
             if (this.CACHE_GENERAL_STORAGE.TickCounter >= this.CACHE_GENERAL_STORAGE._DYNAMIC_UPDATE_INTERVAL)
@@ -85,14 +82,12 @@ public final class OnEventWorldCacheOld
                 }
             }
 
-            //-' Проверка смены игрового дня
             checkDayChange(event.world);
         }
     }
 
-    /**
-     * -' Проверяет смену игрового дня и активирует события
-     */
+    private final CacheNodeLinkManager NODE_MANAGER = CacheNodeLinkManager.getInstance();
+
     private void checkDayChange(World world)
     {
         if (world.isRemote || !(world instanceof WorldServer))
@@ -102,7 +97,6 @@ public final class OnEventWorldCacheOld
 
         long currentWorldTime = world.getWorldTime();
 
-        //-' Проверяем, сменился ли день (24,000 тиков = 1 игровой день)
         int newDay = (int)(currentWorldTime / 24000L);
 
         if (newDay != currentDay)
@@ -117,14 +111,12 @@ public final class OnEventWorldCacheOld
                         oldDay, currentDay, currentWorldTime));
             }
 
-            //-' Активируем события для нового дня
+            NODE_MANAGER.checkAllNodesActiveForDay(currentDay, world.provider.getDimension());
+
             activateGameEventsForDay(currentDay, (WorldServer) world);
         }
     }
 
-    /**
-     * -' Активирует все события для указанного дня
-     */
     private void activateGameEventsForDay(int day, WorldServer world)
     {
         if (GAME_EVENT_STORAGE.eventData.isEmpty())
@@ -136,17 +128,15 @@ public final class OnEventWorldCacheOld
 
         for (CacheGameEventStorage.GameEventData eventData : GAME_EVENT_STORAGE.eventData)
         {
-            //-' Проверяем измерение
             if (eventData.idDimension != null && eventData.idDimension != dimension)
             {
                 continue;
             }
 
-            //-' Проверяем условие дня
             boolean dayCondition = false;
+
             if (eventData.repeat)
             {
-                //-' Для повторяющихся событий: день должен быть кратен указанному, но не 0
                 if (eventData.day > 0 && day > 0 && day % eventData.day == 0)
                 {
                     dayCondition = true;
@@ -154,32 +144,31 @@ public final class OnEventWorldCacheOld
             }
             else
             {
-                //-' Для неповторяющихся: точное совпадение дня
                 dayCondition = (day == eventData.day);
             }
 
             if (dayCondition)
             {
-                //-' Активируем событие
                 activateGameEvent(eventData, day, world);
             }
         }
     }
 
-    /**
-     * -' Активирует конкретное игровое событие
-     */
     private void activateGameEvent(CacheGameEventStorage.GameEventData eventData, int day, WorldServer world)
     {
         if (debugGameEvents)
         {
             String eventType = eventData.repeat ? "Repeating" : "One-time";
-            Log.write(0, String.format("Game Event ACTIVATED - Type: %s, Day: %d, Entity: %s, " +
+            Log.write(0, String.format("Game Event ACTIVATED - Type: %s, Day: %d, Node: %s, Entity: %s, " +
                             "Max Count: %d, Dimension: %d, Result: %s",
-                    eventType, day, eventData.entity,
-                    eventData.max_entity_count,
-                    world.provider.getDimension(),
-                    eventData.result));
+                    eventType, day, eventData.idNode != null ? eventData.idNode.toString() : "none",
+                    eventData.entity, eventData.max_entity_count,
+                    world.provider.getDimension(), eventData.result));
+        }
+
+        if (eventData.idNode != null)
+        {
+            NODE_MANAGER.activateNode(eventData.idNode);
         }
     }
 
@@ -260,13 +249,19 @@ public final class OnEventWorldCacheOld
         int currentDimension = world.provider.getDimension();
         ResourceLocation entityKey = EntityList.getKey(entity);
 
-        //-' Проверка игровых событий в первую очередь
+        Optional<CacheEntityStorage.EntityData> cacheData = checkActiveNodes(entity, currentDimension, entityKey);
+
+        if (cacheData.isPresent())
+        {
+            applyCacheData(event, cacheData.get(), entity, world, entityKey);
+            return;
+        }
+
         if (checkGameEvents(event, entity, world, currentDimension, entityKey))
         {
             return;
         }
 
-        //-' Оригинальная проверка (остается как резерв)
         if (currentDimension == 0 && (entity instanceof IAnimals && !(entity instanceof EntityMob)
                 && !WorldCacheConfig.getInstance(WorldCacheConfig.class).isSpawnPeacefulCreaturesAtNight()))
         {
@@ -374,10 +369,79 @@ public final class OnEventWorldCacheOld
         }
     }
 
-    /**
-     * -' Проверяет игровые события для текущего спавна
-     * @return true если событие обработано
-     */
+    private Optional<CacheEntityStorage.EntityData> checkActiveNodes(Entity entity, int dimension, ResourceLocation entityKey)
+    {
+        for (CacheEntityStorage.EntityData entityData : CacheEntityStorage.getInstance().entityData)
+        {
+            if (entityData.idDimension != null && entityData.idDimension != dimension)
+            {
+                continue;
+            }
+
+            boolean entityMatches = false;
+
+            if (entityData.check_instanceof != null)
+            {
+                entityMatches = entityData.check_instanceof.isInstance(entity);
+            }
+            else if (entityData.entity != null && entityKey != null)
+            {
+                entityMatches = entityData.entity.equals(entityKey);
+            }
+
+            if (!entityMatches)
+            {
+                continue;
+            }
+
+            if (entityData.idNode != null && NODE_MANAGER.isNodeActive(entityData.idNode))
+            {
+                Log.write(0, String.format("Using active node %d for entity %s",
+                        entityData.idNode, entityKey));
+
+                return Optional.of(entityData);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    private void applyCacheData(LivingSpawnEvent.CheckSpawn event, CacheEntityStorage.EntityData entityData,
+                                Entity entity, World world, ResourceLocation entityKey)
+    {
+        if (entityData.isContinue != null && entityData.isContinue)
+        {
+            if (entityData.result != null)
+            {
+                event.setResult(entityData.result);
+            }
+
+            return;
+        }
+
+        WorldServer worldServer = (WorldServer) world;
+        EntityPlayerMP nearestPlayer = CacheFunctional.getInstance()
+                .getNearestPlayer(worldServer, event.getX(), event.getY(), event.getZ());
+
+        if (nearestPlayer == null)
+        {
+            return;
+        }
+
+        ResourceLocation countKey = entityData.entity != null ? entityData.entity : entityKey;
+
+        int currentEntityCount = CacheFunctional.getInstance()
+                .getCurrentEntityCount(worldServer, nearestPlayer, countKey);
+
+        int maxEntityCount = CacheFunctional.getInstance()
+                .calculateMaxEntityCount(entityData, worldServer, nearestPlayer);
+
+        if (currentEntityCount >= maxEntityCount)
+        {
+            event.setResult(entityData.result);
+        }
+    }
+
     private boolean checkGameEvents(LivingSpawnEvent.CheckSpawn event, Entity entity, World world,
                                     int dimension, ResourceLocation entityKey)
     {
@@ -390,23 +454,20 @@ public final class OnEventWorldCacheOld
 
         for (CacheGameEventStorage.GameEventData eventData : GAME_EVENT_STORAGE.eventData)
         {
-            //-' Проверяем измерение
             if (eventData.idDimension != null && eventData.idDimension != dimension)
             {
                 continue;
             }
 
-            //-' Проверяем сущность
             if (!eventData.entity.equals(entityKey))
             {
                 continue;
             }
 
-            //-' Проверяем условие дня
             boolean dayCondition = false;
+
             if (eventData.repeat)
             {
-                //-' Для повторяющихся событий: день должен быть кратен указанному, но не 0
                 if (eventData.day > 0 && currentDay > 0 && currentDay % eventData.day == 0)
                 {
                     dayCondition = true;
@@ -414,13 +475,11 @@ public final class OnEventWorldCacheOld
             }
             else
             {
-                //-' Для неповторяющихся: точное совпадение дня
                 dayCondition = (currentDay == eventData.day);
             }
 
             if (dayCondition)
             {
-                //-' Событие активно! Применяем ограничения
                 int currentCount = getCurrentEntityCount(world, entityKey);
 
                 if (debugGameEvents)
@@ -432,12 +491,11 @@ public final class OnEventWorldCacheOld
                             currentCount,
                             eventData.max_entity_count));
 
-                    //-' Дополнительная отладка
                     if (currentCount == 0)
                     {
                         Log.write(0, String.format("DEBUG: No %s entities found in world. Total entities: %d",
                                 entityKey, world.loadedEntityList.size()));
-                        //-' Выведем типы всех сущностей для отладки
+
                         for (Object obj : world.loadedEntityList)
                         {
                             if (obj instanceof Entity)
@@ -451,7 +509,6 @@ public final class OnEventWorldCacheOld
                     }
                 }
 
-                //-' Проверяем лимит сущностей
                 if (currentCount >= eventData.max_entity_count)
                 {
                     event.setResult(eventData.result);
@@ -470,9 +527,6 @@ public final class OnEventWorldCacheOld
         return false;
     }
 
-    /**
-     * -' Получает текущее количество сущностей определенного типа в мире
-     */
     private int getCurrentEntityCount(World world, ResourceLocation entityType)
     {
         if (world.loadedEntityList == null || entityType == null)
@@ -493,7 +547,6 @@ public final class OnEventWorldCacheOld
                 }
                 else
                 {
-                    //-' Также проверяем по имени класса для EntityZombie
                     if (entityType.toString().equals("minecraft:zombie") && entity instanceof EntityZombie)
                     {
                         count++;

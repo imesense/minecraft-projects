@@ -30,6 +30,8 @@ public class CacheGameEventStorage
 
     public static class GameEventData
     {
+        public Long idNode = null;
+
         public Integer day = 0;
         public Boolean repeat = false;
 
