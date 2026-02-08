@@ -127,7 +127,7 @@ dependencies
     implementation fg.deobf("curse.maven:official-divinerpg-363543:3081433")
 
     // Use core mod #2 SRParasites
-    implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:5370258")
+    implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:7578038")
 
     // Use Byte buddy lib
     implementation 'net.bytebuddy:byte-buddy:1.12.9'
@@ -135,8 +135,9 @@ dependencies
     // Use core mod #3 Special-Mobs
     implementation fg.deobf("curse.maven:special-mobs-59968:3320102")
 
-    implementation fg.deobf("curse.maven:wireless-industry-377164:6013007")
-    implementation fg.deobf("curse.maven:industrial-craft-242638:3838713")
+    // Use dependencies, includes and libs
+    compileOnly fg.deobf("curse.maven:industrial-craft-242638:3838713")
+    compileOnly fg.deobf("curse.maven:wireless-industry-377164:6013007")
 }
 
 // Get properties into the manifest for reading by the runtime

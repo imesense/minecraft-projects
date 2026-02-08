@@ -1,13 +1,13 @@
 package org.imesense.dynamicspawncontrol.core.event.living;
 
-import com.dhanantry.scapeandrunparasites.entity.EntityBody;
-import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityCrux;
-import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityHeed;
-import com.dhanantry.scapeandrunparasites.entity.monster.hijacked.EntityHiGolem;
-import com.dhanantry.scapeandrunparasites.entity.monster.inborn.EntityRathol;
-import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityFlog;
-import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityGanro;
-import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityOrch;
+//import com.dhanantry.scapeandrunparasites.entity.EntityBody;
+//import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityCrux;
+//import com.dhanantry.scapeandrunparasites.entity.monster.crude.EntityHeed;
+//import com.dhanantry.scapeandrunparasites.entity.monster.hijacked.EntityHiGolem;
+//import com.dhanantry.scapeandrunparasites.entity.monster.inborn.EntityRathol;
+//import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityFlog;
+//import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityGanro;
+//import com.dhanantry.scapeandrunparasites.entity.monster.pure.EntityOrch;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -58,19 +58,19 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     }
 
     private static final Set<Class<? extends Entity>> ALLOWED_ENTITIES = new HashSet<>(Arrays.asList(
-        EntityHiGolem.class, // Захваченный голем
-        EntityRathol.class, // Тяжелый переносчик
-        EntityCrux.class, // извечный
-        EntityFlog.class, // Пехотинец
-        EntityHeed.class // Бдитель
+        //EntityHiGolem.class, // Захваченный голем
+        //EntityRathol.class, // Тяжелый переносчик
+        //EntityCrux.class, // извечный
+        //EntityFlog.class//, // Пехотинец
+        //EntityHeed.class // Бдитель
     ));
 
     @SubscribeEvent
     public void onCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
-        if (ALLOWED_ENTITIES.contains(event.getEntity().getClass()))
-        {
-            event.setResult(Event.Result.ALLOW);
-        }
+        //if (ALLOWED_ENTITIES.contains(event.getEntity().getClass()))
+        //{
+        //    event.setResult(Event.Result.ALLOW);
+        //}
     }
 }
