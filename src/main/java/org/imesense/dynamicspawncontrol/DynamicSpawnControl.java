@@ -1,10 +1,13 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraft.init.Items;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
@@ -15,6 +18,8 @@ import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.logfile.TodoTracker;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
+import org.imesense.dynamicspawncontrol.core.mixinconfig.Mixin;
+
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
@@ -42,11 +47,7 @@ import java.io.InputStreamReader;
     modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
     name = DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME,
     version = DynamicSpawnControlStructure.STRUCT_INFO_MOD.FORGE_VERSION,
-    dependencies =
-        "required-after:fermiumbooter;" +
-        "required-after:divinerpg;" +
-        "required-after:srparasites;" +
-        "required-after:specialmobs;",
+    dependencies = "required-after:fermiumbooter;",
     guiFactory = "org.imesense.dynamicspawncontrol.DynamicSpawnControlGuiFactory"
 )
 public final class DynamicSpawnControl
@@ -77,8 +78,10 @@ public final class DynamicSpawnControl
         "mixin.darkness.renderer.json",
         "mixin.fix.spawn.divinerpg.json",
         "mixin.ic2.exp.wireless.industry.json",
-        "mixin.unlimited.enchantment.json"//,
-        //"mixin.specialmobs.json"
+        "mixin.unlimited.enchantment.json",
+        //"mixin.specialmobs.json",
+        "mixin.srparasites.config.json",
+        "mixin.minecraft.player.hunger.json"
     };
 
     private void loadMixins()
@@ -129,6 +132,9 @@ public final class DynamicSpawnControl
         Log.createLogFile(globalDirectory.getPath() +
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+
+        Mixin.createFile(globalDirectory.getPath() +
+                File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
 
         Log.write(0, "preInit: Basic registration phase - blocks/items/configs");
 
@@ -207,7 +213,7 @@ public final class DynamicSpawnControl
 
         ParserRegister.getInstance().init();
 
-        // TEST
+        // Merge THIS
         MinecraftForge.EVENT_BUS.register(new NewConceptTestEvent());
         MinecraftForge.EVENT_BUS.register(new AIZombieHasShieldNBT());
     }
@@ -248,6 +254,12 @@ public final class DynamicSpawnControl
         {
             Log.write(2, "Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
         }
+    }
+
+    @Mod.EventHandler
+    public void handleIMCMessages(FMLInterModComms.IMCEvent event)
+    {
+
     }
 
     @Mod.EventHandler
