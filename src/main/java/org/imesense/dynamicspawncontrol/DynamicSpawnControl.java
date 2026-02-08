@@ -37,6 +37,8 @@ import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
+import org.imesense.dynamicspawncontrol.satietymanager.SatietyConfig;
+import org.imesense.dynamicspawncontrol.satietymanager.SatietyTooltipHandler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -136,6 +138,10 @@ public final class DynamicSpawnControl
         Mixin.createFile(globalDirectory.getPath() +
                 File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
 
+        SatietyConfig.createFile(globalDirectory.getPath() +
+                        File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
+                UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+
         Log.write(0, "preInit: Basic registration phase - blocks/items/configs");
 
         TodoTracker.init(event);
@@ -216,6 +222,7 @@ public final class DynamicSpawnControl
         // Merge THIS
         MinecraftForge.EVENT_BUS.register(new NewConceptTestEvent());
         MinecraftForge.EVENT_BUS.register(new AIZombieHasShieldNBT());
+        MinecraftForge.EVENT_BUS.register(new SatietyTooltipHandler());
     }
 
     @Mod.EventHandler
