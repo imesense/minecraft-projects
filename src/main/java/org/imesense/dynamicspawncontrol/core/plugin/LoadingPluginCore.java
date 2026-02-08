@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.core.plugin;
 import fermiumbooter.FermiumRegistryAPI;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlInitMixins;
 import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.util.Map;
@@ -14,14 +15,10 @@ public final class LoadingPluginCore implements IFMLLoadingPlugin
     {
         MixinBootstrap.init();
 
-        FermiumRegistryAPI.enqueueMixin(false, "mixin.unlimited.enchantment.json");
-        FermiumRegistryAPI.enqueueMixin(false, "mixin.darkness.renderer.json");
-
-        FermiumRegistryAPI.enqueueMixin(true, "mixin.fix.spawn.divinerpg.json",
-                () -> Loader.isModLoaded("divinerpg"));
-
-        FermiumRegistryAPI.enqueueMixin(true, "mixin.ic2.exp.wireless.industry.json",
-                () -> Loader.isModLoaded("wirelesstools"));
+        for (DynamicSpawnControlInitMixins config : DynamicSpawnControlInitMixins.values())
+        {
+            config.register();
+        }
     }
 
     @Override
