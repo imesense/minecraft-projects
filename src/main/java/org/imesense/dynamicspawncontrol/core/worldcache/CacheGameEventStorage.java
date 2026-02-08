@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.worldcache;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
