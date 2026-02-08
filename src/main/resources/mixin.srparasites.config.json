@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "org.imesense.dynamicspawncontrol.mixins",
+  "refmap": "mixins.dynamicspawncontrol.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "mixins":
+  [
+    "SRParasites.MixinParasiteEventEntity"
+  ],
+  "injectors":
+  {
+    "maxShiftBy": 10
+  }
+}
