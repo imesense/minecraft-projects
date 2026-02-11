@@ -8,7 +8,8 @@
   "client":
   [
     "Render.MixinDarknessRenderer",
-    "Interfaces.EntityRendererAccessor"
+    "Interfaces.EntityRendererAccessor",
+    "Interfaces.GuiIngameAccessor"
   ],
   "injectors":
   {
