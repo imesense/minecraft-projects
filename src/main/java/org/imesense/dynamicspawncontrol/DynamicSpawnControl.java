@@ -1,13 +1,10 @@
 package org.imesense.dynamicspawncontrol;
 
-import net.minecraft.init.Items;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
@@ -28,17 +25,18 @@ import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.script.processor.AIZombieHasShieldNBT;
+import org.imesense.dynamicspawncontrol.core.threads.ThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 import org.imesense.dynamicspawncontrol.eventdescriptions.NewConceptTestEvent;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
+import org.imesense.dynamicspawncontrol.potion.ModPotions;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
-import org.imesense.dynamicspawncontrol.satietymanager.SatietyConfig;
-import org.imesense.dynamicspawncontrol.satietymanager.SatietyTooltipHandler;
+import org.imesense.dynamicspawncontrol.satietymanager.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -83,7 +81,7 @@ public final class DynamicSpawnControl
         "mixin.unlimited.enchantment.json",
         //"mixin.specialmobs.json",
         "mixin.srparasites.config.json",
-        "mixin.minecraft.player.hunger.json"
+        "mixin.minecraft.satiety.json"
     };
 
     private void loadMixins()
@@ -137,10 +135,6 @@ public final class DynamicSpawnControl
 
         Mixin.createFile(globalDirectory.getPath() +
                 File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
-
-        SatietyConfig.createFile(globalDirectory.getPath() +
-                        File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
-                UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
         Log.write(0, "preInit: Basic registration phase - blocks/items/configs");
 
@@ -204,6 +198,12 @@ public final class DynamicSpawnControl
         WindowTitle.getInstance().replace();
 
         RegisterSpawnerCraft.getInstance().preInit(event);
+
+        MinecraftForge.EVENT_BUS.register(ModPotions.class);
+
+        SatietyConfig.createFile(globalDirectory.getPath() +
+                        File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
+                UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
     }
 
     @Mod.EventHandler
@@ -223,6 +223,8 @@ public final class DynamicSpawnControl
         MinecraftForge.EVENT_BUS.register(new NewConceptTestEvent());
         MinecraftForge.EVENT_BUS.register(new AIZombieHasShieldNBT());
         MinecraftForge.EVENT_BUS.register(new SatietyTooltipHandler());
+        MinecraftForge.EVENT_BUS.register(new RespawnSatietyModule());
+        MinecraftForge.EVENT_BUS.register(new SatietyFoodHandler());
     }
 
     @Mod.EventHandler
@@ -261,6 +263,8 @@ public final class DynamicSpawnControl
         {
             Log.write(2, "Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
         }
+
+        event.registerServerCommand(new CommandSetHunger());
     }
 
     @Mod.EventHandler
@@ -283,6 +287,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public static void onServerShutdown(FMLServerStoppingEvent event)
     {
-
+        Log.shutdown();
+        ThreadMonitor.getInstance().stop();
     }
 }

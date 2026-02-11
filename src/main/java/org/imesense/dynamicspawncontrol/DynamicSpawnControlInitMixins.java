@@ -7,7 +7,7 @@ public enum DynamicSpawnControlInitMixins
 {
     UNLIMITED_ENCHANTMENT(false, "mixin.unlimited.enchantment.json"),
     DARKNESS_RENDERER(false, "mixin.darkness.renderer.json"),
-    PLAYER_HUNGER(false, "mixin.minecraft.player.hunger.json"),
+    PLAYER_HUNGER(false, "mixin.minecraft.satiety.json"),
 
     DIVINE_RPG_FIX(true, "mixin.fix.spawn.divinerpg.json", "divinerpg"),
     WIRELESS_INDUSTRY(true, "mixin.ic2.exp.wireless.industry.json", "wirelesstools"),

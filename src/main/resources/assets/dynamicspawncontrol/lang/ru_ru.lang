@@ -11,3 +11,6 @@ tile.dynamicspawncontrol.mob_cage.name=Пустой спавнер
 itemGroup.dynamicspawncontrol.tab=DynamicSpawnControl
 
 entity.feral_zombie.name=Дикий Зомби
+
+potion.satiety=Насыщение
+effect.satiety=Насыщение
