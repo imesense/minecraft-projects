@@ -1,58 +1,36 @@
 package org.imesense.dynamicspawncontrol.mixins.SRParasites;
 
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventEntity;
-import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigManager;
+import org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites.SRParasitesBlacklistData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
-
 @Mixin(value = ParasiteEventEntity.class, remap = false)
 public class MixinParasiteEventEntity
 {
-    static
-    {
-        try
-        {
-            MixinConfigManager.loadConfig();
-        }
-        catch (Exception exception)
-        {
-            System.err.println("Failed to load mixin config: " + exception.getMessage());
-        }
-    }
-
     @Inject(
             method = "checkName",
             at = @At("HEAD"),
-            cancellable = true
+            cancellable = true,
+            remap = false
     )
-    private static void $checkName(String potentialElement, String[] blacklist, boolean isWhitelist, CallbackInfoReturnable<Boolean> cir
-    )
+    private static void onCheckName(String potentialElement, String[] blacklist, boolean isWhitelist, CallbackInfoReturnable<Boolean> cir)
     {
-        if (!MixinConfigManager.isParasitesMixinEnabled())
-        {
-            return;
-        }
-
         if (potentialElement == null)
         {
             return;
         }
 
-        List<String> additionalBlacklist = MixinConfigManager.getParasitesBlacklist();
+        String[] dscBlacklist = SRParasitesBlacklistData.getActiveBlacklist();
 
-        for (String blacklistedEntity : additionalBlacklist)
+        for (String blacklistedEntity : dscBlacklist)
         {
-            if (potentialElement.contains(blacklistedEntity))
+            if (potentialElement.equals(blacklistedEntity) || potentialElement.contains(blacklistedEntity))
             {
-                if (!isWhitelist)
-                {
-                    cir.setReturnValue(true);
-                    cir.cancel();
-                }
+                cir.setReturnValue(!isWhitelist);
+                cir.cancel();
 
                 return;
             }

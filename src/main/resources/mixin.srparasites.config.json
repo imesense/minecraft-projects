@@ -7,7 +7,8 @@
   "minVersion": "0.8",
   "mixins":
   [
-    "SRParasites.MixinParasiteEventEntity"
+    "SRParasites.MixinParasiteEventEntity",
+    "SRParasites.MixinParasitesEventHandlerBus"
   ],
   "injectors":
   {
