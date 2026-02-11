@@ -33,7 +33,7 @@ public abstract class MixinDarknessRenderer
             ),
             cancellable = true
     )
-    public void updateLightmap(float partialTicks, CallbackInfo callbackInfo)
+    public void $updateLightmap(float partialTicks, CallbackInfo callbackInfo)
     {
         EntityRendererAccessor accessor = (EntityRendererAccessor) this;
         int[] lightmapColors = accessor.getLightmapColors();

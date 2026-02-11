@@ -22,7 +22,7 @@ public abstract class WorldLoadUnloadHandlerMixin
             cancellable = true,
             remap = false
     )
-    private void injectUnload(WorldEvent.Unload event, CallbackInfo callbackInfo)
+    private void $onWorldUnload(WorldEvent.Unload event, CallbackInfo callbackInfo)
     {
         if (!event.getWorld().isRemote)
         {

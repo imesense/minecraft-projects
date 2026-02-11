@@ -29,7 +29,7 @@ public class MixinParasiteEventEntity
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void onCheckName(String potentialElement, String[] blacklist, boolean isWhitelist, CallbackInfoReturnable<Boolean> cir
+    private static void $checkName(String potentialElement, String[] blacklist, boolean isWhitelist, CallbackInfoReturnable<Boolean> cir
     )
     {
         if (!MixinConfigManager.isParasitesMixinEnabled())

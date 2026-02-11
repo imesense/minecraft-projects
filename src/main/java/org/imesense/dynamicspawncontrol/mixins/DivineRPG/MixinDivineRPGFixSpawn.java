@@ -28,7 +28,7 @@ public abstract class MixinDivineRPGFixSpawn
             cancellable = true,
             remap = false
     )
-    private static void onLivingSpawn(LivingSpawnEvent.CheckSpawn event, CallbackInfo callbackInfo)
+    private static void $onLivingSpawn(LivingSpawnEvent.CheckSpawn event, CallbackInfo callbackInfo)
     {
         callbackInfo.cancel();
     }
