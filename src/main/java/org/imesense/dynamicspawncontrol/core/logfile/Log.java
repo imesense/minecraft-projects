@@ -17,7 +17,17 @@ public final class Log
 {
     private static File logFile;
     private static final ThreadMonitor threadMonitor = ThreadMonitor.getInstance();
-    private static final ExecutorService EXECUTOR = Executors.newSingleThreadExecutor();
+
+    private static final ExecutorService EXECUTOR =
+
+    Executors.newSingleThreadExecutor(run ->
+    {
+        Thread thread = new Thread(run, "[Dynamic Spawn Control - Log]");
+
+        thread.setDaemon(true);
+
+        return thread;
+    });
 
     public static final int INFO = 0;
     public static final int WARN = 1;
@@ -65,6 +75,10 @@ public final class Log
             );
 
             Files.write(logFile.toPath(), header.getBytes(), StandardOpenOption.CREATE);
+
+            LogIsReady.markReady();
+            EarlyLogBuffer.flush();
+
             threadMonitor.startLoggingThreadMonitoring();
         } catch (IOException ignored) { }
     }
@@ -140,5 +154,10 @@ public final class Log
     public static void debug(String message)
     {
         write(DEBUG, message);
+    }
+
+    public static void shutdown()
+    {
+        write(0, "Logger active threads: " + Thread.activeCount());
     }
 }

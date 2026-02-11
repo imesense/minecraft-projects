@@ -3,11 +3,13 @@ package org.imesense.dynamicspawncontrol.core.threads;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class ThreadMonitor
 {
     private static ThreadMonitor instance;
+    private ScheduledExecutorService scheduler;
     private final Map<String, ThreadStats> threadStats = new ConcurrentHashMap<>();
 
     public static class ThreadStats
@@ -84,12 +86,34 @@ public final class ThreadMonitor
         }
     }
 
-    public void startLoggingThreadMonitoring()
+    public synchronized void startLoggingThreadMonitoring()
     {
+        if (scheduler != null && !scheduler.isShutdown())
+            return;
+
         registerThread("logging");
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() ->
+
+        scheduler = Executors.newSingleThreadScheduledExecutor(run ->
+        {
+            Thread thread = new Thread(run, "DSC-ThreadMonitor");
+
+            thread.setDaemon(true);
+
+            return thread;
+        });
+
+        scheduler.scheduleAtFixedRate(() ->
         {
             updateThreadStats("logging", 1000, 1000);
         }, 0, 1, TimeUnit.SECONDS);
+    }
+
+    public synchronized void stop()
+    {
+        if (scheduler != null)
+        {
+            scheduler.shutdownNow();
+            scheduler = null;
+        }
     }
 }
