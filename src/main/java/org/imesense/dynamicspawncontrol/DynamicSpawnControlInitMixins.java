@@ -11,7 +11,8 @@ public enum DynamicSpawnControlInitMixins
 
     DIVINE_RPG_FIX(true, "mixin.fix.spawn.divinerpg.json", "divinerpg"),
     WIRELESS_INDUSTRY(true, "mixin.ic2.exp.wireless.industry.json", "wirelesstools"),
-    SRPARASITES_CONFIG(true, "mixin.srparasites.config.json", "srparasites");
+    SRPARASITES_CONFIG(true, "mixin.srparasites.config.json", "srparasites"),
+    SPECIALMOBS_CONFIG(true, "mixin.specialmobs.json", "specialmobs");
 
     private final boolean conditional;
     private final String configPath;

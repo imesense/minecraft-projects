@@ -16,6 +16,8 @@ import org.imesense.dynamicspawncontrol.core.logfile.TodoTracker;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
 
+import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigInitializer;
+import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigScanner;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites.SRParasitesMixinCreateConfig;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
@@ -133,9 +135,9 @@ public final class DynamicSpawnControl
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
-        String configPath = globalDirectory.getPath() + File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY;
-        SRParasitesMixinCreateConfig config = new SRParasitesMixinCreateConfig();
-        config.createFile(configPath);
+        MixinConfigScanner.scanAndRegister("org.imesense.dynamicspawncontrol.core.mixinconfig");
+        MixinConfigInitializer.initializeAllConfigs(globalDirectory.getPath() + File.separator +
+                DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
 
         Log.write(0, "preInit: Basic registration phase - blocks/items/configs");
 

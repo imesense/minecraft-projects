@@ -1,14 +1,27 @@
 package org.imesense.dynamicspawncontrol.mixins.SpecialMobs;
 
-import org.imesense.dynamicspawncontrol.core.annotation.TODO;
+import fathertoast.specialmobs.SpecialMobReplacer;
+import fathertoast.specialmobs.bestiary.EnumMobFamily;
+import org.imesense.dynamicspawncontrol.core.mixinconfig.specialmobs.SpecialMobsReplacerData;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@TODO(
-        value = "В конфиге special mobs стоит подмена id через параметр _replace_vanilla - исправить. Сделать по умолчанию false. " +
-                "Потому что ломается логика паразитов, когда они убивают сущность зомби из этого мода, она не учитывается в списке " +
-                "и паразиты не могут изучить данную сущность",
-        showOnce = false,
-        priority = TODO.TodoPriority.HIGH)
+@Mixin(value = SpecialMobReplacer.class, remap = false)
 public abstract class MixinSpecialMobsConfig
 {
+    @Inject(method = "shouldReplace", at = @At("RETURN"), cancellable = true, remap = false)
+    private void $shouldReplace(EnumMobFamily mobFamily, boolean isSpecial, CallbackInfoReturnable<Boolean> cir)
+    {
+        if (isSpecial)
+        {
+            return;
+        }
 
+        if (!SpecialMobsReplacerData.shouldReplaceVanilla())
+        {
+            cir.setReturnValue(false);
+        }
+    }
 }

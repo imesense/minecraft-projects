@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites;
+package org.imesense.dynamicspawncontrol.core.mixinconfig.specialmobs;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
@@ -10,11 +10,11 @@ import java.io.*;
 import com.google.gson.*;
 
 @MixinConfigFile(
-        value = "dsc_srparasites_coth_immune.json",
-        description = "This config is responsible for adapting mobs from mod 'DivineRGP' to 'SRParasites` without changing the basic configurations",
+        value = "dsc_specialmobs_replacer.json",
+        description = "Config for SpecialMobs vanilla mob replacement",
         createIfAbsent = true
 )
-public final class SRParasitesMixinCreateConfig extends BaseMixinConfig
+public final class SpecialMobsReplacerConfig extends BaseMixinConfig
 {
     private static String activeConfigPath = null;
 
@@ -39,8 +39,9 @@ public final class SRParasitesMixinCreateConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Log.INFO, "Blacklist file already exists, loading from: " + activeConfigPath);
-                SRParasitesBlacklistData.loadFromFile(activeConfigPath);
+                EarlyLogBuffer.log(Log.INFO,
+                        "SpecialMobs replacer config already exists, loading from: " + activeConfigPath);
+                SpecialMobsReplacerData.loadFromFile(activeConfigPath);
                 return;
             }
 
@@ -52,35 +53,32 @@ public final class SRParasitesMixinCreateConfig extends BaseMixinConfig
                 mixinsDir.mkdirs();
             }
 
-            JsonObject rootObject = new JsonObject();
-            JsonArray blacklistArray = new JsonArray();
+            JsonArray rootArray = new JsonArray();
+            JsonObject wrapperObject = new JsonObject();
+            JsonObject configObject = new JsonObject();
 
-            String[] currentList = SRParasitesBlacklistData.getActiveBlacklist();
-
-            for (String entity : currentList)
-            {
-                blacklistArray.add(entity);
-            }
-
-            rootObject.add("DSCBlackListCOTHMobImmune", blacklistArray);
+            configObject.addProperty("all_replace_vanilla", false);
+            wrapperObject.add("DSCSpecialMobsReplaceVanillaMobs", configObject);
+            rootArray.add(wrapperObject);
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String jsonString = gson.toJson(rootObject);
+            String jsonString = gson.toJson(rootArray);
 
             try (FileWriter writer = new FileWriter(configFile))
             {
                 writer.write(jsonString);
             }
 
-            EarlyLogBuffer.log(Log.INFO, "Created blacklist file at: " + activeConfigPath);
-            EarlyLogBuffer.log(Log.INFO, "Saved " + currentList.length + " entities to file");
-            EarlyLogBuffer.log(Log.INFO, "Config file name from annotation: " + fileName);
+            EarlyLogBuffer.log(Log.INFO, "Created SpecialMobs replacer config at: " + activeConfigPath);
+            EarlyLogBuffer.log(Log.INFO, "Default value: all_replace_vanilla = false");
 
-            SRParasitesBlacklistData.loadFromFile(activeConfigPath);
+            SpecialMobsReplacerData.loadFromFile(activeConfigPath);
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Log.ERROR, "Failed to create mixin config: " + exception.getMessage());
+            EarlyLogBuffer.log(Log.ERROR,
+                    "Failed to create SpecialMobs replacer config: " + exception.getMessage());
+
             exception.printStackTrace();
         }
     }
@@ -94,13 +92,13 @@ public final class SRParasitesMixinCreateConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Log.INFO, "Manual reload of blacklist from file");
-                SRParasitesBlacklistData.loadFromFile(activeConfigPath);
+                EarlyLogBuffer.log(Log.INFO, "Manual reload of SpecialMobs replacer config");
+                SpecialMobsReplacerData.loadFromFile(activeConfigPath);
             }
             else
             {
-                EarlyLogBuffer.log(Log.INFO, "Config file missing, resetting to defaults");
-                SRParasitesBlacklistData.resetToDefault();
+                EarlyLogBuffer.log(Log.INFO, "SpecialMobs replacer config missing, resetting to defaults");
+                SpecialMobsReplacerData.resetToDefault();
             }
         }
     }
