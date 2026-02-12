@@ -6,7 +6,8 @@
   "minVersion": "0.8",
   "mixins":
   [
-    "DivineRPG.MixinDivineRPGFixSpawn"
+    "DivineRPG.MixinDivineRPGFixSpawn",
+    "DivineRPG.MixinEntityPeacefulUntilAttacked"
   ],
   "injectors":
   {
