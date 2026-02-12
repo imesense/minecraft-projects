@@ -153,6 +153,11 @@ public abstract class MixinEntityPeacefulUntilAttacked extends net.minecraft.ent
     {
         super.onUpdate();
 
+        if (this.world.isRemote)
+        {
+            return;
+        }
+
         if (this.customAngerLevel > 0)
         {
             if (this.getAttackTarget() == null && this.customAngerTargetUUID != null)
@@ -193,7 +198,7 @@ public abstract class MixinEntityPeacefulUntilAttacked extends net.minecraft.ent
     public void writeEntityToNBT(@NonNull NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
-        
+
         compound.setShort("Anger", (short)this.customAngerLevel);
 
         if (this.customAngerTargetUUID != null)
