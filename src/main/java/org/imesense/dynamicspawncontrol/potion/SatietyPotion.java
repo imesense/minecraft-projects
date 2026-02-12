@@ -2,8 +2,11 @@ package org.imesense.dynamicspawncontrol.potion;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
+
+import java.util.Collections;
 
 public class SatietyPotion extends PotionBase
 {
@@ -55,5 +58,11 @@ public class SatietyPotion extends PotionBase
     public boolean isInstant()
     {
         return false;
+    }
+
+    @Override
+    public java.util.List<ItemStack> getCurativeItems()
+    {
+        return Collections.emptyList();
     }
 }
