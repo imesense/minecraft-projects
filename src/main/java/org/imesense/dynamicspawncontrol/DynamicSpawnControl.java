@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol;
 
+import net.minecraft.command.ICommand;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -268,6 +269,8 @@ public final class DynamicSpawnControl
         }
 
         event.registerServerCommand(new CommandSetHunger());
+        event.registerServerCommand(new DivineRPGSummoner());
+
     }
 
     @Mod.EventHandler

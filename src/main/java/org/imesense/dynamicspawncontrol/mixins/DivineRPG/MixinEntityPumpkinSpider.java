@@ -1,20 +1,22 @@
 package org.imesense.dynamicspawncontrol.mixins.DivineRPG;
 
-import divinerpg.objects.entities.entity.vanilla.EntityKobblin;
+import divinerpg.objects.entities.entity.vanilla.EntityPumpkinSpider;
 import divinerpg.registry.LootTableRegistry;
-import divinerpg.registry.SoundRegistry;
-import lombok.NonNull;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.pathfinding.PathNavigate;
+import net.minecraft.pathfinding.PathNavigateClimber;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -25,36 +27,53 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import java.util.UUID;
 
-@Mixin(value = EntityKobblin.class, remap = false)
-public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.EntityMob
+@Mixin(value = EntityPumpkinSpider.class, remap = false)
+public abstract class MixinEntityPumpkinSpider extends net.minecraft.entity.monster.EntityMob
 {
     private UUID provokedByUUID = null;
     private int provokedLevel = 0;
 
     private static final DataParameter<Boolean> CUSTOM_PROVOKED =
-            EntityDataManager.createKey(EntityKobblin.class, DataSerializers.BOOLEAN);
+            EntityDataManager.createKey(EntityPumpkinSpider.class, DataSerializers.BOOLEAN);
 
-    public MixinEntityKobblin(World worldIn)
+    private static final DataParameter<Boolean> CUSTOM_CLIMBING =
+            EntityDataManager.createKey(EntityPumpkinSpider.class, DataSerializers.BOOLEAN);
+
+    public MixinEntityPumpkinSpider(World worldIn)
     {
         super(worldIn);
+        this.setSize(1.25F, 1.0F);
+    }
+
+    @Overwrite
+    public float getEyeHeight()
+    {
+        return 0.5F;
     }
 
     @Overwrite
     public void entityInit()
     {
         super.entityInit();
+
+        this.dataManager.register(CUSTOM_CLIMBING, false);
         this.dataManager.register(CUSTOM_PROVOKED, false);
     }
 
     @Overwrite
+    protected PathNavigate createNavigator(World worldIn)
+    {
+        return new PathNavigateClimber(this, worldIn);
+    }
+
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
 
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.27D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
     }
 
     @Overwrite
@@ -71,6 +90,8 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
 
     protected void addAttackingAI()
     {
+        this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
+
         this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, true)
         {
             @Override
@@ -112,6 +133,15 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
     }
 
     @Overwrite
+    public void addVelocity(double x, double y, double z)
+    {
+        if (this.getProvoked())
+        {
+            super.addVelocity(x, y, z);
+        }
+    }
+
+    @Overwrite
     public void onUpdate()
     {
         super.onUpdate();
@@ -128,14 +158,17 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
 
         if (!this.getProvoked() && this.provokedLevel <= 0)
         {
-            this.renderYawOffset = 0.0F;
-            EntityPlayer player = this.world.getNearestAttackablePlayer(this, 4.0F, 4.0F);
+            EntityPlayer player = this.world.getNearestAttackablePlayer(this, 6.0F, 6.0F);
 
             if (player != null)
             {
                 this.setProvoked(player);
-                this.motionY = 0.6;
             }
+        }
+
+        if (this.getProvoked())
+        {
+            this.setBesideClimbableBlock(this.collidedHorizontally);
         }
 
         if (this.provokedByUUID != null && this.getAttackTarget() == null && this.provokedLevel > 0)
@@ -161,6 +194,41 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
     }
 
     @Overwrite
+    public void setBesideClimbableBlock(boolean climbing)
+    {
+        this.dataManager.set(CUSTOM_CLIMBING, climbing);
+    }
+
+    @Overwrite
+    public boolean isBesideClimbableBlock()
+    {
+        return this.dataManager.get(CUSTOM_CLIMBING);
+    }
+
+    @Overwrite
+    public boolean isOnLadder()
+    {
+        return this.getProvoked() && this.isBesideClimbableBlock();
+    }
+
+    @Overwrite
+    public void setInWeb()
+    {
+    }
+
+    @Overwrite
+    public EnumCreatureAttribute getCreatureAttribute()
+    {
+        return EnumCreatureAttribute.ARTHROPOD;
+    }
+
+    @Overwrite
+    protected boolean canTriggerWalking()
+    {
+        return false;
+    }
+
+    @Overwrite
     public boolean getProvoked()
     {
         return this.dataManager.get(CUSTOM_PROVOKED);
@@ -170,6 +238,7 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
     public void setProvoked(EntityPlayer player)
     {
         this.dataManager.set(CUSTOM_PROVOKED, true);
+
         this.addBasicAI();
         this.addAttackingAI();
 
@@ -216,7 +285,6 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
             if (!this.getProvoked())
             {
                 this.setProvoked(player);
-                this.motionY = 0.6;
             }
             else
             {
@@ -230,9 +298,42 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
     }
 
     @Overwrite
-    public void writeEntityToNBT(@NonNull NBTTagCompound tag)
+    protected boolean isValidLightLevel()
+    {
+        return true;
+    }
+
+    @Overwrite
+    protected SoundEvent getHurtSound(DamageSource source)
+    {
+        return SoundEvents.ENTITY_SPIDER_HURT;
+    }
+
+    @Overwrite
+    protected SoundEvent getDeathSound()
+    {
+        return SoundEvents.ENTITY_SPIDER_DEATH;
+    }
+
+    @Overwrite
+    protected ResourceLocation getLootTable()
+    {
+        return LootTableRegistry.ENTITIES_PUMPKIN_SPIDER;
+    }
+
+    @Overwrite
+    public boolean getCanSpawnHere()
+    {
+        return this.world.provider.getDimension() == 0 &&
+                this.world.getBlockState(this.getPosition().down()).getBlock() == Blocks.GRASS &&
+                super.getCanSpawnHere();
+    }
+
+    @Overwrite
+    public void writeEntityToNBT(NBTTagCompound tag)
     {
         super.writeEntityToNBT(tag);
+
         tag.setBoolean("Provoked", this.getProvoked());
 
         if (this.provokedByUUID != null)
@@ -244,7 +345,7 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
     }
 
     @Overwrite
-    public void readEntityFromNBT(@NonNull NBTTagCompound tag)
+    public void readEntityFromNBT(NBTTagCompound tag)
     {
         super.readEntityFromNBT(tag);
 
@@ -263,59 +364,5 @@ public abstract class MixinEntityKobblin extends net.minecraft.entity.monster.En
                 this.addAttackingAI();
             }
         }
-    }
-
-    @Overwrite
-    protected SoundEvent getHurtSound(@NonNull DamageSource source)
-    {
-        return SoundRegistry.KOBBLIN;
-    }
-
-    @Overwrite
-    @NonNull protected SoundEvent getDeathSound()
-    {
-        return SoundRegistry.KOBBLIN;
-    }
-
-    @Overwrite
-    protected ResourceLocation getLootTable()
-    {
-        return LootTableRegistry.ENTITIES_KOBBLIN;
-    }
-
-    @Overwrite
-    protected void playStepSound(@NonNull BlockPos pos, @NonNull Block blockIn)
-    {
-
-    }
-
-    @Overwrite
-    public float getEyeHeight()
-    {
-        return 0.9F;
-    }
-
-    @Overwrite
-    public void addVelocity(double x, double y, double z)
-    {
-        if (this.getProvoked())
-        {
-            super.addVelocity(x, y, z);
-        }
-    }
-
-    @Overwrite
-    public boolean getCanSpawnHere()
-    {
-        return this.world.provider.getDimension() == 0 &&
-                this.world.getBlockState(this.getPosition().down()).getBlock() == Blocks.GRASS &&
-                this.world.getBlockState(this.getPosition().down(2)).getBlock() != Blocks.AIR &&
-                super.getCanSpawnHere();
-    }
-
-    @Overwrite
-    public int getMaxSpawnedInChunk()
-    {
-        return 1;
     }
 }

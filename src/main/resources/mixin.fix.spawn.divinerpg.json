@@ -8,7 +8,8 @@
   [
     "DivineRPG.MixinDivineRPGFixSpawn",
     "DivineRPG.MixinEntityPeacefulUntilAttacked",
-    "DivineRPG.MixinEntityKobblin"
+    "DivineRPG.MixinEntityKobblin",
+    "DivineRPG.MixinEntityPumpkinSpider"
   ],
   "injectors":
   {
