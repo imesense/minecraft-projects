@@ -12,6 +12,7 @@ import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
+import org.imesense.dynamicspawncontrol.core.logfile.MixinLoadLog;
 import org.imesense.dynamicspawncontrol.core.logfile.TodoTracker;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
@@ -74,57 +75,6 @@ public final class DynamicSpawnControl
 
     public static SimpleNetworkWrapper networkWrapper = null;
 
-    private static final String[] MIXIN_CONFIGS =
-    {
-        //"mixin.darkness.renderer.json",
-        //"fix_spawn.json",
-        //"IC2ExpWirelessIndustryFix.json",
-        //"UnlimitedEnchantment.json",
-        //"mixin.specialmobs.json",
-        //"mixin.srparasites.config.json",
-        //    "mixin.minecraft.food.json"
-    };
-
-    private void loadMixins()
-    {
-        ClassLoader classLoader = DynamicSpawnControl.class.getClassLoader();
-
-        Log.write(0, "Searching for mixin config files...");
-
-        for (String config : MIXIN_CONFIGS)
-        {
-            Log.write(0, "Trying to load: " + config);
-
-            try (InputStream inputStream = classLoader.getResourceAsStream(config))
-            {
-                if (inputStream == null)
-                {
-                    Log.write(2, "Mixin not found in resources: " + config);
-                    continue;
-                }
-
-                try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream)))
-                {
-                    String line;
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    while ((line = bufferedReader.readLine()) != null)
-                    {
-                        stringBuilder.append(line).append('\n');
-                    }
-
-                    Log.write(0, "Successfully loaded mixin: " + config);
-                    Log.write(0, stringBuilder.toString());
-                }
-            }
-            catch (Exception exception)
-            {
-                Log.write(2, "Error loading " + config + ": " + exception.getMessage());
-                exception.printStackTrace();
-            }
-        }
-    }
-
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -169,7 +119,7 @@ public final class DynamicSpawnControl
 
         try
         {
-            this.loadMixins();
+            MixinLoadLog.loadMixins();
         }
         catch (Exception exception)
         {
