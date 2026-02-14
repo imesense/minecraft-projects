@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol;
 
-import net.minecraft.command.ICommand;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -19,7 +18,6 @@ import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
 
 import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigInitializer;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigScanner;
-import org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites.SRParasitesMixinCreateConfig;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
 import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
@@ -78,13 +76,13 @@ public final class DynamicSpawnControl
 
     private static final String[] MIXIN_CONFIGS =
     {
-        "mixin.darkness.renderer.json",
-        "mixin.fix.spawn.divinerpg.json",
-        "mixin.ic2.exp.wireless.industry.json",
-        "mixin.unlimited.enchantment.json",
+        //"mixin.darkness.renderer.json",
+        //"fix_spawn.json",
+        //"IC2ExpWirelessIndustryFix.json",
+        //"UnlimitedEnchantment.json",
         //"mixin.specialmobs.json",
-        "mixin.srparasites.config.json",
-        "mixin.minecraft.satiety.json"
+        //"mixin.srparasites.config.json",
+        //    "mixin.minecraft.food.json"
     };
 
     private void loadMixins()
