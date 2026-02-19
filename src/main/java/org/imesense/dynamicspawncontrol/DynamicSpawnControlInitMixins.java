@@ -2,6 +2,8 @@ package org.imesense.dynamicspawncontrol;
 
 import fermiumbooter.FermiumRegistryAPI;
 import net.minecraftforge.fml.common.Loader;
+import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 public enum DynamicSpawnControlInitMixins
 {
@@ -51,13 +53,24 @@ public enum DynamicSpawnControlInitMixins
 
     public void register()
     {
+        EarlyLogBuffer.log(Log.DEBUG, "Registering mixin: " + this.name() + " | path: " + configPath);
+
         if (conditional && requiredModId != null)
         {
+            EarlyLogBuffer.log(Log.DEBUG, "  conditional: true | mod: " + requiredModId + " | checking at runtime");
+
             FermiumRegistryAPI.enqueueMixin(true, configPath,
-                    () -> Loader.isModLoaded(requiredModId));
+            () ->
+                {
+                    boolean loaded = Loader.isModLoaded(requiredModId);
+                    EarlyLogBuffer.log(Log.DEBUG, "  runtime check for " + this.name() + ": mod " + requiredModId + " loaded = " + loaded);
+
+                    return loaded;
+                });
         }
         else
         {
+            EarlyLogBuffer.log(Log.DEBUG, "  conditional: false");
             FermiumRegistryAPI.enqueueMixin(false, configPath);
         }
     }
