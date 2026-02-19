@@ -7,7 +7,7 @@
   "minVersion": "0.8",
   "mixins":
   [
-    "srparasites.handler.SRPEventHandlerBusUpdate"
+    "srparasites.util.ParasiteEventEntityUpdate"
   ],
   "injectors":
   {
