@@ -10,6 +10,7 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -33,6 +34,12 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
 {
     private static final DataParameter<Float> HEALTH;
     private static final DataParameter<Boolean> ANGRY;
+
+    static
+    {
+        HEALTH = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.FLOAT);
+        ANGRY = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.BOOLEAN);
+    }
 
     public EntityHellPigFix(World worldIn, EntityPlayer player)
     {
@@ -89,20 +96,38 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        if (source.getTrueSource() instanceof EntityLivingBase)
+        if (this.isEntityInvulnerable(source))
         {
-            EntityLivingBase attacker = (EntityLivingBase) source.getTrueSource();
+            return false;
+        }
+
+        Entity entity = source.getTrueSource();
+
+        if (this.aiSit != null)
+        {
+            this.aiSit.setSitting(false);
+        }
+
+        if (entity != null && !(entity instanceof EntityPlayer) && !(entity instanceof EntityArrow))
+        {
+            amount = (amount + 1.0F) / 2.0F;
+        }
+
+        if (entity instanceof EntityLivingBase && !this.isTamed())
+        {
+            EntityLivingBase attacker = (EntityLivingBase) entity;
 
             this.setAngry(true);
 
             if (!this.world.isRemote)
             {
-                List<EntityHellPig> nearbyPigs = this.world.getEntitiesWithinAABB(
-                        EntityHellPig.class, this.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
+                List<EntityHellPigFix> nearbyPigs = this.world.getEntitiesWithinAABB(
+                        EntityHellPigFix.class,
+                        this.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
 
-                for (EntityHellPig pig : nearbyPigs)
+                for (EntityHellPigFix pig : nearbyPigs)
                 {
-                    if (!pig.isTamed() && !pig.isAngry())
+                    if (!pig.isTamed() && !pig.isAngry() && pig != this)
                     {
                         pig.setAngry(true);
 
@@ -126,7 +151,8 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
             if (!itemstack.isEmpty() && itemstack.getItem() instanceof ItemFood)
             {
                 ItemFood food = (ItemFood)itemstack.getItem();
-                if (food.isWolfsFavoriteMeat() && (Float)this.dataManager.get(HEALTH) < 20.0F)
+
+                if (food.isWolfsFavoriteMeat() && this.dataManager.get(HEALTH) < 20.0F)
                 {
                     if (!player.capabilities.isCreativeMode)
                     {
@@ -134,6 +160,7 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
                     }
 
                     this.heal((float)food.getHealAmount(itemstack));
+
                     return true;
                 }
             }
@@ -151,10 +178,13 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
                 {
                     this.setTamedBy(player);
                     this.navigator.clearPath();
+
                     this.setAttackTarget(null);
                     this.aiSit.setSitting(true);
+
                     this.setHealth(20.0F);
                     this.playTameEffect(true);
+
                     this.world.setEntityState(this, (byte)7);
                 }
                 else
@@ -245,11 +275,5 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
     protected ResourceLocation getLootTable()
     {
         return LootTableRegistry.ENTITIES_HELL_PIG;
-    }
-
-    static
-    {
-        HEALTH = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.FLOAT);
-        ANGRY = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.BOOLEAN);
     }
 }
