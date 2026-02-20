@@ -19,15 +19,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.util.List;
 
 @Mixin(value = EntityHellPig.class, remap = false)
 public abstract class EntityHellPigFix extends EntityDivineTameable
@@ -71,16 +70,52 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
         this.dataManager.set(HEALTH, this.getHealth());
     }
 
-    @Inject(method = "setAttackTarget", at = @At("HEAD"), cancellable = true)
-    private void preventPassiveAggro(EntityLivingBase target, CallbackInfo ci)
+    @Override
+    public void setAttackTarget(EntityLivingBase attackTarget)
     {
-        if (!this.isTamed() && target != null)
+        if (attackTarget != null && this.getRevengeTarget() != null &&
+                attackTarget.equals(this.getRevengeTarget()))
         {
-            if (this.getRevengeTarget() != target)
+            this.setAngry(true);
+        }
+        else if (attackTarget == null)
+        {
+            this.setAngry(false);
+        }
+
+        super.setAttackTarget(attackTarget);
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        if (source.getTrueSource() instanceof EntityLivingBase)
+        {
+            EntityLivingBase attacker = (EntityLivingBase) source.getTrueSource();
+
+            this.setAngry(true);
+
+            if (!this.world.isRemote)
             {
-                ci.cancel();
+                List<EntityHellPig> nearbyPigs = this.world.getEntitiesWithinAABB(
+                        EntityHellPig.class, this.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
+
+                for (EntityHellPig pig : nearbyPigs)
+                {
+                    if (!pig.isTamed() && !pig.isAngry())
+                    {
+                        pig.setAngry(true);
+
+                        if (pig.getAttackTarget() == null)
+                        {
+                            pig.setAttackTarget(attacker);
+                        }
+                    }
+                }
             }
         }
+
+        return super.attackEntityFrom(source, amount);
     }
 
     public boolean processInteract(EntityPlayer player, EnumHand hand)
