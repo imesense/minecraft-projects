@@ -10,22 +10,22 @@ public final class MixinLoadLog
 {
     private static final String[] MIXIN_CONFIGS =
     {
-        "mixins/divinerpg/ai/EntityPeacefulUntilAttackedFix.json",
-        "mixins/divinerpg/entity/EntityKobblinRework.json",
-        "mixins/divinerpg/entity/EntityPumpkinSpiderRework.json",
-        "mixins/divinerpg/entity/EntityShadahierRework.json",
-        "mixins/divinerpg/event/EntitySpawnRegistryFix.json",
-        "mixins/ic2expwirelessindustry/WorldLoadUnloadHandlerFix.json",
+        "mixins/divinerpg/ai/EntityPeacefulUntilAttacked.Fix.json",
+        "mixins/divinerpg/entity/EntityKobblin.Rework.json",
+        "mixins/divinerpg/entity/EntityPumpkinSpider.Rework.json",
+        "mixins/divinerpg/entity/EntityShadahier.Rework.json",
+        "mixins/divinerpg/event/EntitySpawnRegistry.Fix.json",
+        "mixins/ic2expwirelessindustry/WorldLoadUnloadHandler.Fix.json",
         "mixins/interfaces/IEntityRendererAccessor.json",
         "mixins/interfaces/IGuiIngameAccessor.json",
-        "mixins/minecraft/enchantment/EnchantmentUpdate.json",
-        "mixins/minecraft/food/FoodStatsUpdate.json",
-        "mixins/minecraft/gui/GuiIngameForgeUpdate.json",
-        "mixins/minecraft/item/ItemFoodUpdate.json",
-        "mixins/minecraft/renderer/EntityRendererRework.json",
-        "mixins/specialmobs/SpecialMobReplacerFix.json",
-        "mixins/srparasites/handler/SRPEventHandlerBusUpdate.json",
-        "mixins/srparasites/util/ParasiteEventEntityUpdate.json"
+        "mixins/minecraft/enchantment/Enchantment.Update.json",
+        "mixins/minecraft/food/FoodStats.Update.json",
+        "mixins/minecraft/gui/GuiIngameForge.Update.json",
+        "mixins/minecraft/item/ItemFood.Update.json",
+        "mixins/minecraft/renderer/EntityRenderer.Rework.json",
+        "mixins/specialmobs/SpecialMobReplacer.Fix.json",
+        "mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
+        "mixins/srparasites/util/ParasiteEventEntity.Update.json"
     };
 
     public static void loadMixins()
