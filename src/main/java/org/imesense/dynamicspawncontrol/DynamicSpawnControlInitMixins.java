@@ -12,6 +12,8 @@ public enum DynamicSpawnControlInitMixins
     DIVINE_RPG_KOBLIN_REWORK(true, "mixins\\divinerpg\\entity\\EntityKobblin.Rework.json", "divinerpg"),
     DIVINE_RPG_SPIDER_REWORK(true, "mixins\\divinerpg\\entity\\EntityPumpkinSpider.Rework.json", "divinerpg"),
     DIVINE_RPG_SHADAHIER_REWORK(true, "mixins\\divinerpg\\entity\\EntityShadahier.Rework.json", "divinerpg"),
+    DIVINE_RPG_LHEIVA(true, "mixins\\divinerpg\\entity\\EntityLheiva.Rework.json", "divinerpg"),
+    DIVINE_RPG_HELL_PIG(true, "mixins\\divinerpg\\entity\\EntityHellPig.Fix.json", "divinerpg"),
     DIVINE_RPG_SPAWN_FIX(true, "mixins\\divinerpg\\event\\EntitySpawnRegistry.Fix.json", "divinerpg"),
 
     // IC2 Wireless Industry

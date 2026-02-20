@@ -14,6 +14,8 @@ public final class MixinLoadLog
         "mixins/divinerpg/entity/EntityKobblin.Rework.json",
         "mixins/divinerpg/entity/EntityPumpkinSpider.Rework.json",
         "mixins/divinerpg/entity/EntityShadahier.Rework.json",
+        "mixins/divinerpg/entity/EntityLheiva.Rework.json",
+        "mixins/divinerpg/entity/EntityHellPig.Fix.json",
         "mixins/divinerpg/event/EntitySpawnRegistry.Fix.json",
         "mixins/ic2expwirelessindustry/WorldLoadUnloadHandler.Fix.json",
         "mixins/interfaces/IEntityRendererAccessor.json",

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "org.imesense.dynamicspawncontrol.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "mixins":
+  [
+    "divinerpg.entity.EntityLheivaRework"
+  ],
+  "injectors":
+  {
+    "maxShiftBy": 10
+  }
+}
