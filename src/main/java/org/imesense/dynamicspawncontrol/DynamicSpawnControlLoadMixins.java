@@ -1,17 +1,14 @@
-package org.imesense.dynamicspawncontrol.core.plugin;
+package org.imesense.dynamicspawncontrol;
 
-import fermiumbooter.FermiumRegistryAPI;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlInitMixins;
 import org.spongepowered.asm.launch.MixinBootstrap;
 
 import java.util.Map;
 
 @IFMLLoadingPlugin.MCVersion("1.12.2")
-public final class LoadingPluginCore implements IFMLLoadingPlugin
+public final class DynamicSpawnControlLoadMixins implements IFMLLoadingPlugin
 {
-    public LoadingPluginCore()
+    public DynamicSpawnControlLoadMixins()
     {
         MixinBootstrap.init();
 
