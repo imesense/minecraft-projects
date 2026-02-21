@@ -43,14 +43,9 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
 
     public EntityHellPigFix(World worldIn, EntityPlayer player)
     {
-        this(worldIn);
-        this.setOwnerId(player.getUniqueID());
-    }
-
-    public EntityHellPigFix(World worldIn)
-    {
         super(worldIn);
         this.setSize(1.0F, 0.9F);
+        this.setOwnerId(player.getUniqueID());
     }
 
     public float getEyeHeight()
@@ -245,7 +240,7 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.15F, 1.0F);
     }
 
-    public boolean shouldAttackEntity(EntityLivingBase target, EntityLivingBase owner)
+    public boolean shouldAttackEntity(@NonNull EntityLivingBase target, @NonNull EntityLivingBase owner)
     {
         if (!(target instanceof EntityCreeper) && !(target instanceof EntityGhast))
         {
