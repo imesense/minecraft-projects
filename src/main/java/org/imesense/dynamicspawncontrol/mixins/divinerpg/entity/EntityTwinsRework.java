@@ -173,6 +173,12 @@ public abstract class EntityTwinsRework extends EntityMob
         if (source.getTrueSource() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) source.getTrueSource();
+
+            if (player.isCreative())
+            {
+                return super.attackEntityFrom(source, amount);
+            }
+
             setPersistentAttacker(player);
         }
 

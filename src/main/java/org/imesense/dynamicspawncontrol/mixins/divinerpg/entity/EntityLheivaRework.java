@@ -176,6 +176,13 @@ public abstract class EntityLheivaRework extends EntityMob
 
         if (entity instanceof EntityPlayer)
         {
+            EntityPlayer player = (EntityPlayer) entity;
+
+            if (player.isCreative())
+            {
+                return super.attackEntityFrom(source, amount);
+            }
+
             if (((EntityPlayer)entity).inventory.hasItemStack(new ItemStack(ItemRegistry.bandOfHeivaHunting)))
             {
                 return super.attackEntityFrom(source, amount);

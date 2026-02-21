@@ -279,6 +279,11 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         {
             EntityPlayer player = (EntityPlayer)entity;
 
+            if (player.isCreative())
+            {
+                return super.attackEntityFrom(source, amount);
+            }
+
             if (!this.getProvoked())
             {
                 this.setProvoked(player);

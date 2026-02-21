@@ -110,6 +110,11 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
 
         if (entity instanceof EntityLivingBase && !this.isTamed())
         {
+            if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative())
+            {
+                return super.attackEntityFrom(source, amount);
+            }
+
             EntityLivingBase attacker = (EntityLivingBase) entity;
 
             this.setAngry(true);
