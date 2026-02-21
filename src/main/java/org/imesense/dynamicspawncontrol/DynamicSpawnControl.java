@@ -73,7 +73,7 @@ public final class DynamicSpawnControl
         Instance = this;
     }
 
-    public static SimpleNetworkWrapper networkWrapper = null;
+    //public static SimpleNetworkWrapper networkWrapper = null;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -137,7 +137,7 @@ public final class DynamicSpawnControl
         //MessageHandler.init();
 
         //WebSlingerCapability.register();
-        networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
+        //networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
         //PlayerInWebMessage.register(networkWrapper);
 
         ConfigRegister.getInstance().initializeConfigs();
@@ -241,7 +241,6 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public static void onServerShutdown(FMLServerStoppingEvent event)
     {
-        Log.shutdown();
         ThreadMonitor.getInstance().stop();
     }
 }

@@ -155,9 +155,4 @@ public final class Log
     {
         write(DEBUG, message);
     }
-
-    public static void shutdown()
-    {
-        write(0, "Logger active threads: " + Thread.activeCount());
-    }
 }
