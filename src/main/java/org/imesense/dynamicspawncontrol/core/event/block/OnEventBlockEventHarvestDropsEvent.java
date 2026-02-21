@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.DropsListener;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.handler.DropsListener;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
@@ -21,6 +21,6 @@ public final class OnEventBlockEventHarvestDropsEvent extends BaseOnEventInstanc
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnBlockEventHarvestDropsEvent_LOW(BlockEvent.HarvestDropsEvent event)
     {
-        DropsListener.getInstance().handleBlockDrops(event);
+        //DropsListener.getInstance().handleBlockDrops(event);
     }
 }

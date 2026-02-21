@@ -19,8 +19,8 @@ import org.imesense.dynamicspawncontrol.core.memory.MemoryManager;
 
 import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigInitializer;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigScanner;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
@@ -32,12 +32,12 @@ import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 import org.imesense.dynamicspawncontrol.eventdescriptions.NewConceptTestEvent;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
 import org.imesense.dynamicspawncontrol.potion.ModPotions;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.satietymanager.*;
 
 import java.io.BufferedReader;
@@ -134,11 +134,11 @@ public final class DynamicSpawnControl
         EntityRegister entityRegister = EntityRegister.getInstance();
         entityRegister.preInitStartGame();
 
-        MessageHandler.init();
+        //MessageHandler.init();
 
-        WebSlingerCapability.register();
+        //WebSlingerCapability.register();
         networkWrapper = NetworkRegistry.INSTANCE.newSimpleChannel("dynamicspawncontrol");
-        PlayerInWebMessage.register(networkWrapper);
+        //PlayerInWebMessage.register(networkWrapper);
 
         ConfigRegister.getInstance().initializeConfigs();
         PluginConfigRegister.getInstance().initializeConfigs();
@@ -149,7 +149,7 @@ public final class DynamicSpawnControl
 
         WindowTitle.getInstance().replace();
 
-        RegisterSpawnerCraft.getInstance().preInit(event);
+        //RegisterSpawnerCraft.getInstance().preInit(event);
 
         MinecraftForge.EVENT_BUS.register(ModPotions.class);
 
@@ -167,7 +167,7 @@ public final class DynamicSpawnControl
 
         IRecipes.registry();
 
-        RegisterSpawnerCraft.getInstance().init(event);
+        //RegisterSpawnerCraft.getInstance().init(event);
 
         ParserRegister.getInstance().init();
 

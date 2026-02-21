@@ -8,7 +8,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogEvent;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogEvent;
 import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 import org.imesense.dynamicspawncontrol.statistics.DebugRenderStats;
 
@@ -33,6 +33,6 @@ public final class OnEventTickEventClientTickEvent extends BaseOnEventInstance
 
         MemoryEvents.handleOnClientTick(event);
 
-        FogEvent.getInstance().handleFogVoidParticles(event);
+        //FogEvent.getInstance().handleFogVoidParticles(event);
     }
 }

@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
@@ -21,7 +21,7 @@ public final class OnEventWorldEventLoad extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnWorldEventLoad_HIGHEST(WorldEvent.Load event)
     {
-        TimeEvents.getInstance().handleOnWorldLoad(event);
+        //TimeEvents.getInstance().handleOnWorldLoad(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

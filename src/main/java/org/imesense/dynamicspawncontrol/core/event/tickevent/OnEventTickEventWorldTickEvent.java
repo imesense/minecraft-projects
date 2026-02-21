@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
+//import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.TimeEvents;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCacheOld;
 import org.imesense.dynamicspawncontrol.eventdescriptions.OvergrowingGrass;
 
@@ -23,7 +23,7 @@ public final class OnEventTickEventWorldTickEvent extends BaseOnEventInstance
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void OnTickEventWorldTickEvent_HIGHEST(TickEvent.WorldTickEvent event)
     {
-        TimeEvents.getInstance().handleOnWorldTick(event);
+        //TimeEvents.getInstance().handleOnWorldTick(event);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
