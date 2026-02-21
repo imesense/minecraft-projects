@@ -5,8 +5,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+//import net.minecraftforge.fml.common.network.NetworkRegistry;
+//import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
@@ -40,10 +40,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.satietymanager.*;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 @Mod(
     modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID,
@@ -217,8 +214,6 @@ public final class DynamicSpawnControl
         }
 
         event.registerServerCommand(new CommandSetHunger());
-        event.registerServerCommand(new DivineRPGSummoner());
-
     }
 
     @Mod.EventHandler
