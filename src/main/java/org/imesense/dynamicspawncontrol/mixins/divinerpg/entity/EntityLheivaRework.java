@@ -208,7 +208,7 @@ public abstract class EntityLheivaRework extends EntityMob
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound)
+    public void writeEntityToNBT(@NonNull NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
 
@@ -219,7 +219,7 @@ public abstract class EntityLheivaRework extends EntityMob
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound)
+    public void readEntityFromNBT(@NonNull NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
 
