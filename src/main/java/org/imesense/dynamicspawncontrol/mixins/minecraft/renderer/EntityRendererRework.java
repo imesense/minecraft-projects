@@ -101,7 +101,6 @@ public abstract class EntityRendererRework
             }
 
             float[] rgb = { red, green, blue };
-            world.provider.getLightmapColors(partialTicks, sunBrightness, skyLightBase, blockLightBase, rgb);
 
             red = MathHelper.clamp(rgb[0], 0F, 1F);
             green = MathHelper.clamp(rgb[1], 0F, 1F);
