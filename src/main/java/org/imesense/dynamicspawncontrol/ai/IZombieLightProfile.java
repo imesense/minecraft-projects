@@ -1,9 +1,6 @@
 package org.imesense.dynamicspawncontrol.ai;
 
-import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-
-@TODO(value = "Add on diagram project", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public interface ILightReactiveMob
+public interface IZombieLightProfile
 {
     /** Может ли моб реагировать на источники света */
     boolean canReactToLight();

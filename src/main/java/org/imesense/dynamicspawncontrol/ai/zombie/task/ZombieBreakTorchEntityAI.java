@@ -1,26 +1,24 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.action;
+package org.imesense.dynamicspawncontrol.ai.zombie.task;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import org.imesense.dynamicspawncontrol.ai.ILightReactiveMob;
+import org.imesense.dynamicspawncontrol.ai.IZombieLightProfile;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-public final class EntityAIZombieBreakTorch extends EntityAIBase
+public final class ZombieBreakTorchEntityAI extends EntityAIBase
 {
     private final EntityZombie zombie;
-    private final ILightReactiveMob profile;
+    private final IZombieLightProfile profile;
     private final Random rand;
 
     private BlockPos targetTorch;
     private int cooldown;
 
-    public EntityAIZombieBreakTorch(EntityZombie zombie, ILightReactiveMob profile)
+    public ZombieBreakTorchEntityAI(EntityZombie zombie, IZombieLightProfile profile)
     {
         this.zombie = zombie;
         this.profile = profile;

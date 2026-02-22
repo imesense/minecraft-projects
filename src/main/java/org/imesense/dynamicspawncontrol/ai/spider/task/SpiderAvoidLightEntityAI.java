@@ -1,22 +1,21 @@
-package org.imesense.dynamicspawncontrol.ai.spider.action;
+package org.imesense.dynamicspawncontrol.ai.spider.task;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class EntityAISpiderAvoidLight extends EntityAIBase
+public final class SpiderAvoidLightEntityAI extends EntityAIBase
 {
     private final double SPEED;
     private BlockPos targetPosition;
     private final int LIGHT_THRESHOLD;
     private final EntityCreature SPIDER;
 
-    public EntityAISpiderAvoidLight(EntityCreature entityCreature, double speed, int lightThreshold)
+    public SpiderAvoidLightEntityAI(EntityCreature entityCreature, double speed, int lightThreshold)
     {
         this.SPIDER = entityCreature;
         this.SPEED = speed;

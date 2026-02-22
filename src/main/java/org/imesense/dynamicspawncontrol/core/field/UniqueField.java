@@ -1,7 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.field;
 
 import net.minecraft.client.Minecraft;
-import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
 import org.imesense.dynamicspawncontrol.core.annotation.UniqueObject;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import scala.util.Random;

@@ -4,23 +4,24 @@ import net.minecraft.entity.monster.EntitySpider;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.ai.spider.auxaction.AuxEntityAISpiderAvoidLight;
-import org.imesense.dynamicspawncontrol.ai.spider.action.EntityAISpiderAvoidLight;
+import org.imesense.dynamicspawncontrol.ai.spider.task.SpiderAvoidLightEntityAIWrapper;
+import org.imesense.dynamicspawncontrol.ai.spider.task.SpiderAvoidLightEntityAI;
 
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
-public final class OnEventAvoidLight
+public final class SpiderAvoidLightEventHandler
 {
-    private static volatile OnEventAvoidLight _INSTANCE;
+    private static volatile SpiderAvoidLightEventHandler _INSTANCE;
 
-    public static OnEventAvoidLight getInstance() {
-        return CodeGeneric.getInstance(OnEventAvoidLight.class);
+    public static SpiderAvoidLightEventHandler getInstance()
+    {
+        return CodeGeneric.getInstance(SpiderAvoidLightEventHandler.class);
     }
 
-    public OnEventAvoidLight()
+    public SpiderAvoidLightEventHandler()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
@@ -34,8 +35,8 @@ public final class OnEventAvoidLight
         {
             EntitySpider spider = (EntitySpider) event.getEntity();
 
-            spider.tasks.addTask(5, new AuxEntityAISpiderAvoidLight(spider,
-                    new EntityAISpiderAvoidLight(spider, 1.2, 7), 10));
+            spider.tasks.addTask(5, new SpiderAvoidLightEntityAIWrapper(spider,
+                    new SpiderAvoidLightEntityAI(spider, 1.2, 7), 10));
         }
     }
 }

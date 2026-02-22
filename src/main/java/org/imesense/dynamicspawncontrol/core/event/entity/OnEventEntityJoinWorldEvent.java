@@ -12,8 +12,8 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.ai.spider.event.OnEventAvoidLight;
-import org.imesense.dynamicspawncontrol.ai.zombie.event.OnEventBreakTorch;
+import org.imesense.dynamicspawncontrol.ai.spider.event.SpiderAvoidLightEventHandler;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.ZombieBreakTorchEventHandler;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
@@ -48,10 +48,10 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 
         if (isTestLogic)
         {
-            OnEventBreakTorch.getInstance().handleSearchToBreakTorch(event);
+            ZombieBreakTorchEventHandler.getInstance().handleSearchToBreakTorch(event);
         }
 
-        OnEventAvoidLight.getInstance().handleSpiderSpawn(event);
+        SpiderAvoidLightEventHandler.getInstance().handleSpiderSpawn(event);
 
         if (!event.getEntity().world.isRemote)
         {

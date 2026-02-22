@@ -1,14 +1,14 @@
-package org.imesense.dynamicspawncontrol.ai.spider.auxaction;
+package org.imesense.dynamicspawncontrol.ai.spider.task;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 
-public final class AuxEntityAISpiderAvoidLight extends EntityAIBase
+public final class SpiderAvoidLightEntityAIWrapper extends EntityAIBase
 {
     private int delay;
     private final EntityAIBase ORIGINAL_TASK;
 
-    public AuxEntityAISpiderAvoidLight(EntityCreature entityCreature, EntityAIBase entityAIBase, int delay)
+    public SpiderAvoidLightEntityAIWrapper(EntityCreature entityCreature, EntityAIBase entityAIBase, int delay)
     {
         this.ORIGINAL_TASK = entityAIBase;
         this.delay = delay;

@@ -1,10 +1,8 @@
 package org.imesense.dynamicspawncontrol.ai;
 
 import net.minecraft.entity.monster.EntityZombie;
-import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 
-@TODO(value = "Add on diagram project", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class ZombieLightProfile implements ILightReactiveMob
+public final class ZombieLightProfile implements IZombieLightProfile
 {
     private final EntityZombie zombie;
 
