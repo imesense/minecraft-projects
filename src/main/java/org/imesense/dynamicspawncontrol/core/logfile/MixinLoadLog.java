@@ -10,25 +10,25 @@ public final class MixinLoadLog
 {
     private static final String[] MIXIN_CONFIGS =
     {
-        "mixins/divinerpg/ai/EntityPeacefulUntilAttacked.Fix.json",
-        "mixins/divinerpg/entity/EntityKobblin.Rework.json",
-        "mixins/divinerpg/entity/EntityPumpkinSpider.Rework.json",
-        "mixins/divinerpg/entity/EntityShadahier.Rework.json",
-        "mixins/divinerpg/entity/EntityLheiva.Rework.json",
-        "mixins/divinerpg/entity/EntityHellPig.Fix.json",
-        "mixins/divinerpg/entity/EntityTwins.Rework.json",
-        "mixins/divinerpg/event/EntitySpawnRegistry.Fix.json",
-        "mixins/ic2expwirelessindustry/WorldLoadUnloadHandler.Fix.json",
-        "mixins/interfaces/IEntityRendererAccessor.json",
-        "mixins/interfaces/IGuiIngameAccessor.json",
-        "mixins/minecraft/enchantment/Enchantment.Update.json",
-        "mixins/minecraft/food/FoodStats.Update.json",
-        "mixins/minecraft/gui/GuiIngameForge.Update.json",
-        "mixins/minecraft/item/ItemFood.Update.json",
-        "mixins/minecraft/renderer/EntityRenderer.Rework.json",
-        "mixins/specialmobs/SpecialMobReplacer.Fix.json",
-        "mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
-        "mixins/srparasites/util/ParasiteEventEntity.Update.json"
+        "assets/mixins/divinerpg/ai/EntityPeacefulUntilAttacked.Fix.json",
+        "assets/mixins/divinerpg/entity/EntityKobblin.Rework.json",
+        "assets/mixins/divinerpg/entity/EntityPumpkinSpider.Rework.json",
+        "assets/mixins/divinerpg/entity/EntityShadahier.Rework.json",
+        "assets/mixins/divinerpg/entity/EntityLheiva.Rework.json",
+        "assets/mixins/divinerpg/entity/EntityHellPig.Fix.json",
+        "assets/mixins/divinerpg/entity/EntityTwins.Rework.json",
+        "assets/mixins/divinerpg/event/EntitySpawnRegistry.Fix.json",
+        "assets/mixins/ic2expwirelessindustry/WorldLoadUnloadHandler.Fix.json",
+        "assets/mixins/interfaces/IEntityRendererAccessor.json",
+        "assets/mixins/interfaces/IGuiIngameAccessor.json",
+        "assets/mixins/minecraft/enchantment/Enchantment.Update.json",
+        "assets/mixins/minecraft/food/FoodStats.Update.json",
+        "assets/mixins/minecraft/gui/GuiIngameForge.Update.json",
+        "assets/mixins/minecraft/item/ItemFood.Update.json",
+        "assets/mixins/minecraft/renderer/EntityRenderer.Rework.json",
+        "assets/mixins/specialmobs/SpecialMobReplacer.Fix.json",
+        "assets/mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
+        "assets/mixins/srparasites/util/ParasiteEventEntity.Update.json"
     };
 
     public static void loadMixins()

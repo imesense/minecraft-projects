@@ -8,35 +8,35 @@ import org.imesense.dynamicspawncontrol.core.logfile.Log;
 public enum DynamicSpawnControlInitMixins
 {
     // Divine RPG
-    DIVINE_RPG_AI_FIX(true, "mixins\\divinerpg\\ai\\EntityPeacefulUntilAttacked.Fix.json", "divinerpg"),
-    DIVINE_RPG_KOBLIN_REWORK(true, "mixins\\divinerpg\\entity\\EntityKobblin.Rework.json", "divinerpg"),
-    DIVINE_RPG_SPIDER_REWORK(true, "mixins\\divinerpg\\entity\\EntityPumpkinSpider.Rework.json", "divinerpg"),
-    DIVINE_RPG_SHADAHIER_REWORK(true, "mixins\\divinerpg\\entity\\EntityShadahier.Rework.json", "divinerpg"),
-    DIVINE_RPG_LHEIVA(true, "mixins\\divinerpg\\entity\\EntityLheiva.Rework.json", "divinerpg"),
-    DIVINE_RPG_HELL_PIG(true, "mixins\\divinerpg\\entity\\EntityHellPig.Fix.json", "divinerpg"),
-    DIVINE_RPG_TWINS(true, "mixins\\divinerpg\\entity\\EntityTwins.Rework.json", "divinerpg"),
-    DIVINE_RPG_SPAWN_FIX(true, "mixins\\divinerpg\\event\\EntitySpawnRegistry.Fix.json", "divinerpg"),
+    DIVINE_RPG_AI_FIX(true, "assets\\mixins\\divinerpg\\ai\\EntityPeacefulUntilAttacked.Fix.json", "divinerpg"),
+    DIVINE_RPG_KOBLIN_REWORK(true, "assets\\mixins\\divinerpg\\entity\\EntityKobblin.Rework.json", "divinerpg"),
+    DIVINE_RPG_SPIDER_REWORK(true, "assets\\mixins\\divinerpg\\entity\\EntityPumpkinSpider.Rework.json", "divinerpg"),
+    DIVINE_RPG_SHADAHIER_REWORK(true, "assets\\mixins\\divinerpg\\entity\\EntityShadahier.Rework.json", "divinerpg"),
+    DIVINE_RPG_LHEIVA(true, "assets\\mixins\\divinerpg\\entity\\EntityLheiva.Rework.json", "divinerpg"),
+    DIVINE_RPG_HELL_PIG(true, "assets\\mixins\\divinerpg\\entity\\EntityHellPig.Fix.json", "divinerpg"),
+    DIVINE_RPG_TWINS(true, "assets\\mixins\\divinerpg\\entity\\EntityTwins.Rework.json", "divinerpg"),
+    DIVINE_RPG_SPAWN_FIX(true, "assets\\mixins\\divinerpg\\event\\EntitySpawnRegistry.Fix.json", "divinerpg"),
 
     // IC2 Wireless Industry
-    WIRELESS_INDUSTRY_FIX(true, "mixins\\ic2expwirelessindustry\\WorldLoadUnloadHandler.Fix.json", "wirelesstools"),
+    WIRELESS_INDUSTRY_FIX(true, "assets\\mixins\\ic2expwirelessindustry\\WorldLoadUnloadHandler.Fix.json", "wirelesstools"),
 
     // Interfaces
-    ENTITY_RENDERER_ACCESSOR(false, "mixins\\interfaces\\IEntityRendererAccessor.json"),
-    GUI_INGAME_ACCESSOR(false, "mixins\\interfaces\\IGuiIngameAccessor.json"),
+    ENTITY_RENDERER_ACCESSOR(false, "assets\\mixins\\interfaces\\IEntityRendererAccessor.json"),
+    GUI_INGAME_ACCESSOR(false, "assets\\mixins\\interfaces\\IGuiIngameAccessor.json"),
 
     // Minecraft
-    ENCHANTMENT_UPDATE(false, "mixins\\minecraft\\enchantment\\Enchantment.Update.json"),
-    FOOD_STATS_UPDATE(false, "mixins\\minecraft\\food\\FoodStats.Update.json"),
-    GUI_INGAME_UPDATE(false, "mixins\\minecraft\\gui\\GuiIngameForge.Update.json"),
-    ITEM_FOOD_UPDATE(false, "mixins\\minecraft\\item\\ItemFood.Update.json"),
-    ENTITY_RENDERER_REWORK(false, "mixins\\minecraft\\renderer\\EntityRenderer.Rework.json"),
+    ENCHANTMENT_UPDATE(false, "assets\\mixins\\minecraft\\enchantment\\Enchantment.Update.json"),
+    FOOD_STATS_UPDATE(false, "assets\\mixins\\minecraft\\food\\FoodStats.Update.json"),
+    GUI_INGAME_UPDATE(false, "assets\\mixins\\minecraft\\gui\\GuiIngameForge.Update.json"),
+    ITEM_FOOD_UPDATE(false, "assets\\mixins\\minecraft\\item\\ItemFood.Update.json"),
+    ENTITY_RENDERER_REWORK(false, "assets\\mixins\\minecraft\\renderer\\EntityRenderer.Rework.json"),
 
     // Special Mobs
-    SPECIALMOBS_REPLACER_FIX(true, "mixins\\specialmobs\\SpecialMobReplacer.Fix.json", "specialmobs"),
+    SPECIALMOBS_REPLACER_FIX(true, "assets\\mixins\\specialmobs\\SpecialMobReplacer.Fix.json", "specialmobs"),
 
     // SR Parasites
-    SRPARASITES_HANDLER_FIX(true, "mixins\\srparasites\\handler\\SRPEventHandlerBus.Update.json", "srparasites"),
-    SRPARASITES_EVENT_FIX(true, "mixins\\srparasites\\util\\ParasiteEventEntity.Update.json", "srparasites");
+    SRPARASITES_HANDLER_FIX(true, "assets\\mixins\\srparasites\\handler\\SRPEventHandlerBus.Update.json", "srparasites"),
+    SRPARASITES_EVENT_FIX(true, "assets\\mixins\\srparasites\\util\\ParasiteEventEntity.Update.json", "srparasites");
 
     private final boolean conditional;
     private final String configPath;

@@ -42,7 +42,7 @@ public final class NickNameEntity
 
     private void loadNamesFromFile()
     {
-        InputStream inputStream = getClass().getResourceAsStream("/assets/dynamicspawncontrol/names.txt");
+        InputStream inputStream = getClass().getResourceAsStream("/assets/dynamicspawncontrol/names/names.txt");
 
         assert inputStream != null;
 
