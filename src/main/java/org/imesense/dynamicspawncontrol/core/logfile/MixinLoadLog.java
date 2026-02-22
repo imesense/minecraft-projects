@@ -28,7 +28,8 @@ public final class MixinLoadLog
         "assets/mixins/minecraft/renderer/EntityRenderer.Rework.json",
         "assets/mixins/specialmobs/SpecialMobReplacer.Fix.json",
         "assets/mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
-        "assets/mixins/srparasites/util/ParasiteEventEntity.Update.json"
+        "assets/mixins/srparasites/util/ParasiteEventEntity.Update.json",
+        "assets/mixins/raicraft/BetaMessageTickHandler.Update.json"
     };
 
     public static void loadMixins()

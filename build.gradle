@@ -138,6 +138,7 @@ dependencies
     // Use dependencies, includes and libs
     compileOnly fg.deobf("curse.maven:industrial-craft-242638:3838713")
     compileOnly fg.deobf("curse.maven:wireless-industry-377164:6013007")
+    compileOnly fg.deobf("curse.maven:railcraft-51195:3853491")
 }
 
 // Get properties into the manifest for reading by the runtime
