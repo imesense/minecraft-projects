@@ -39,7 +39,10 @@ public enum DynamicSpawnControlInitMixins
     SRPARASITES_EVENT_FIX(true, "assets\\mixins\\srparasites\\util\\ParasiteEventEntity.Update.json", "srparasites"),
 
     // Railcraft
-    RAILCRAFT_EVENT_BETA_MESSAGE_TICK_HANDLER_UPDATE(true, "assets\\mixins\\railcraft\\BetaMessageTickHandler.Update.json", "railcraft");
+    RAILCRAFT_EVENT_BETA_MESSAGE_TICK_HANDLER_UPDATE(true, "assets\\mixins\\railcraft\\BetaMessageTickHandler.Update.json", "railcraft"),
+
+    // CavesPlus
+    CAVESPLUS_PROCEDURE__GEN_FIX(true, "assets\\mixins\\cavesplus\\CavesProcedureGen.Update.json", "caves");
 
     private final boolean conditional;
     private final String configPath;

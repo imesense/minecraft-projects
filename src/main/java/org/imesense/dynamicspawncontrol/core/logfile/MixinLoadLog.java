@@ -29,7 +29,8 @@ public final class MixinLoadLog
         "assets/mixins/specialmobs/SpecialMobReplacer.Fix.json",
         "assets/mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
         "assets/mixins/srparasites/util/ParasiteEventEntity.Update.json",
-        "assets/mixins/raicraft/BetaMessageTickHandler.Update.json"
+        "assets/mixins/railraft/BetaMessageTickHandler.Update.json",
+        "assets/mixins/cavesplus/CavesProcedureGen.Update.json"
     };
 
     public static void loadMixins()

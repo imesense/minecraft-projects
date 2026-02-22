@@ -1,0 +1,35 @@
+{
+  "required": true,
+  "package": "org.imesense.dynamicspawncontrol.mixins",
+  "refmap": "mixins.dynamicspawncontrol.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "mixins":
+  [
+    "cavesplus.ProcedureCubesGenDesertUpdate",
+    "cavesplus.ProcedureCubesGenGraniteUpdate",
+    "cavesplus.ProcedureCubesGenIceUpdate",
+    "cavesplus.ProcedureCubesGenJungleUpdate",
+    "cavesplus.ProcedureCubesGenMarbleUpdate",
+    "cavesplus.ProcedureCubesGenMessaUpdate",
+    "cavesplus.ProcedureCubesGenMushroomUpdate",
+    "cavesplus.ProcedureCubesGenNormalUpdate",
+    "cavesplus.ProcedureCubesGenOceanUpdate",
+    "cavesplus.ProcedureCubesGenSwampUpdate",
+    "cavesplus.ProcedureStalagmitesGenDesertUpdate",
+    "cavesplus.ProcedureStalagmitesGenGraniteUpdate",
+    "cavesplus.ProcedureStalagmitesGenIceUpdate",
+    "cavesplus.ProcedureStalagmitesGenJungleUpdate",
+    "cavesplus.ProcedureStalagmitesGenMarbleUpdate",
+    "cavesplus.ProcedureStalagmitesGenMessaUpdate",
+    "cavesplus.ProcedureStalagmitesGenMushroomUpdate",
+    "cavesplus.ProcedureStalagmitesGenNormalUpdate",
+    "cavesplus.ProcedureStalagmitesGenOceanUpdate",
+    "cavesplus.ProcedureStalagmitesGenSwampUpdate"
+  ],
+  "injectors":
+  {
+    "maxShiftBy": 10
+  }
+}
