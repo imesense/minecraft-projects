@@ -13,6 +13,8 @@ import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccesso
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
+import java.util.stream.IntStream;
+
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererRework
 {
@@ -55,7 +57,7 @@ public abstract class EntityRendererRework
             sunBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
                 bossColorModifier, bossColorModifierPrev, partialTicks, minecraft.player, accessor);
 
-        updateLuminance(calculatedLightmap, partialTicks, world, accessor);
+        //updateLuminance(calculatedLightmap, partialTicks, world, accessor);
 
         System.arraycopy(calculatedLightmap, 0, lightmapColors, 0, 256);
 
@@ -65,10 +67,11 @@ public abstract class EntityRendererRework
     }
 
     private void calculateLightmapColors(int[] outputColors, float[] brightnessTable, float adjustedSunBrightness,
-        float sunBrightness, float torchFlicker, boolean lightningActive, boolean isTheEnd, float gammaSetting, boolean hasNightVision,
-            float bossColorModifier, float bossColorModifierPrev, float partialTicks, EntityPlayer player, IEntityRendererAccessor accessor)
+                                         float sunBrightness, float torchFlicker, boolean lightningActive, boolean isTheEnd, float gammaSetting,
+                                         boolean hasNightVision, float bossColorModifier, float bossColorModifierPrev,
+                                         float partialTicks, EntityPlayer player, IEntityRendererAccessor accessor)
     {
-        for (int index = 0; index < 256; ++index)
+        IntStream.range(0, 256).parallel().forEach(index ->
         {
             int skyLightLevel = index / 16;
             int blockLightLevel = index % 16;
@@ -112,11 +115,9 @@ public abstract class EntityRendererRework
                 blue = 0.25F + blockBlue * 0.75F;
             }
 
-            float[] rgb = { red, green, blue };
-
-            red = MathHelper.clamp(rgb[0], 0F, 1F);
-            green = MathHelper.clamp(rgb[1], 0F, 1F);
-            blue = MathHelper.clamp(rgb[2], 0F, 1F);
+            red = MathHelper.clamp(red, 0F, 1F);
+            green = MathHelper.clamp(green, 0F, 1F);
+            blue = MathHelper.clamp(blue, 0F, 1F);
 
             if (hasNightVision)
             {
@@ -124,7 +125,6 @@ public abstract class EntityRendererRework
                         accessor.invokeGetNightVisionBrightness(player, partialTicks);
 
                 float maxScale = 1.0F / red;
-
                 maxScale = Math.min(maxScale, 1.0F / green);
                 maxScale = Math.min(maxScale, 1.0F / blue);
 
@@ -162,7 +162,7 @@ public abstract class EntityRendererRework
             int blueInt = (int)(blue * 255.0F);
 
             outputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
-        }
+        });
     }
 
     private void updateLuminance(int[] lightmapColors, float partialTicks, World world, IEntityRendererAccessor accessor)
