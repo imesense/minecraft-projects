@@ -13,14 +13,10 @@ import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
 @Setter
 @InitLog
 @ConceptConfig(fileName = "plugin_cfg_darkness_forge_1_12_x_0_5_0")
-@TODO(
-        value = "Убрать лишние опции, оставить только влияение освещенности луны",
-        showOnce = false,
-        priority = TODO.TodoPriority.HIGH)
 public final class PluginDarknessConfig extends BaseJsonConfig
 {
-    private int[] blacklistByID = {};
-    private double[] moonPhaseFactors = {0.06, 0.04, 0.03, 0.02, 0.0, 0.01, 0.02, 0.04};
+    private int[] blacklistByID = { -1, 1, 7, 420, 421, 422, 423, 424, 425, 426, 427 };
+    private double[] moonPhaseFactors = { 0.06, 0.04, 0.03, 0.02, 0.0, 0.01, 0.02, 0.04 };
 
     public PluginDarknessConfig(String configPath)
     {

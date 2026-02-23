@@ -43,23 +43,22 @@ public abstract class EntityRendererRework
 
         float sunBrightness = world.getSunBrightness(1.0F);
         float moonBrightness = getMoonBrightness(partialTicks, world);
-
         float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
 
+        float[] brightnessTable = world.provider.getLightBrightnessTable();
+        boolean lightningActive = world.getLastLightningBolt() > 0;
+        boolean isTheEnd = world.provider.getDimensionType().getId() == 1;
+
+        float torchFlicker = accessor.getTorchFlickerX() * 0.1f + 1.5f;
         float bossColorModifier = accessor.getBossColorModifier();
         float bossColorModifierPrev = accessor.getBossColorModifierPrev();
 
-        float[] brightnessTable = world.provider.getLightBrightnessTable();
-        float torchFlicker = accessor.getTorchFlickerX() * 0.1F + 1.5F;
-        boolean lightningActive = world.getLastLightningBolt() > 0;
-        boolean isTheEnd = world.provider.getDimensionType().getId() == 1;
-        DimensionType dimensionType = world.provider.getDimensionType();
         float gammaSetting = minecraft.gameSettings.gammaSetting;
         boolean hasNightVision = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
 
         calculateLightmapColors(calculatedLightmap, brightnessTable, adjustedSunBrightness,
             sunBrightness, moonBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
-                bossColorModifier, bossColorModifierPrev, partialTicks, minecraft.player, dimensionType, accessor);
+                bossColorModifier, bossColorModifierPrev, partialTicks, minecraft.player, world, accessor);
 
         IntStream.range(0, 256).forEach(i -> lightmapColors[i] = calculatedLightmap[i]);
 
@@ -71,7 +70,7 @@ public abstract class EntityRendererRework
     private void calculateLightmapColors(int[] outputColors, float[] brightnessTable, float adjustedSunBrightness,
                                          float sunBrightness, float moonBrightness, float torchFlicker, boolean lightningActive, boolean isTheEnd, float gammaSetting,
                                          boolean hasNightVision, float bossColorModifier, float bossColorModifierPrev,
-                                         float partialTicks, EntityPlayer player, DimensionType dimensionType, IEntityRendererAccessor accessor)
+                                         float partialTicks, EntityPlayer player, World world, IEntityRendererAccessor accessor)
     {
         IntStream.range(0, 256).parallel().forEach(index ->
         {
@@ -163,9 +162,9 @@ public abstract class EntityRendererRework
             int greenInt = (int)(green * 255.0F);
             int blueInt = (int)(blue * 255.0F);
 
-            tempOutputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
+            this.tempOutputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
 
-            if (!hasNightVision)
+            if (!hasNightVision && !isDimensionBlacklisted(world.provider))
             {
                 int skyIndexDark = index / 16;
                 int blockIndexDark = index % 16;
@@ -213,7 +212,7 @@ public abstract class EntityRendererRework
                 greenDark = greenDark * (0.99F - minDark) + minDark;
                 blueDark = blueDark * (0.99F - minDark) + minDark;
 
-                if (dimensionType == DimensionType.THE_END)
+                if (isTheEnd)
                 {
                     redDark = skyFactorDark * 0.22F + blockBaseDark * 0.75f;
                     greenDark = skyFactorDark * 0.28F + blockGreenDark * 0.75f;
@@ -229,14 +228,17 @@ public abstract class EntityRendererRework
                 float invRedDark = 1.0F - redDark;
                 float invGreenDark = 1.0F - greenDark;
                 float invBlueDark = 1.0F - blueDark;
+
                 invRedDark = 1.0F - invRedDark * invRedDark * invRedDark * invRedDark;
                 invGreenDark = 1.0F - invGreenDark * invGreenDark * invGreenDark * invGreenDark;
                 invBlueDark = 1.0F - invBlueDark * invBlueDark * invBlueDark * invBlueDark;
+
                 redDark = redDark * (1.0F - gammaFactorDark) + invRedDark * gammaFactorDark;
                 greenDark = greenDark * (1.0F - gammaFactorDark) + invGreenDark * gammaFactorDark;
                 blueDark = blueDark * (1.0F - gammaFactorDark) + invBlueDark * gammaFactorDark;
 
                 minDark = 0.03f * f;
+
                 redDark = redDark * (0.99F - minDark) + minDark;
                 greenDark = greenDark * (0.99F - minDark) + minDark;
                 blueDark = blueDark * (0.99F - minDark) + minDark;
@@ -254,6 +256,21 @@ public abstract class EntityRendererRework
                 outputColors[index] = tempOutputColors[index];
             }
         });
+    }
+
+    private boolean isDimensionBlacklisted(WorldProvider worldProvider)
+    {
+        int dimID = worldProvider.getDimension();
+
+        for (int blacklistID : PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByID())
+        {
+            if (dimID == blacklistID)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private float getMoonBrightness(float partialTicks, World world)

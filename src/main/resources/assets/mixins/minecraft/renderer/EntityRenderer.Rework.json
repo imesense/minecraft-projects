@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
-  "mixins":
+  "client":
   [
     "minecraft.renderer.EntityRendererRework"
   ],
