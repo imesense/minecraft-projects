@@ -25,9 +25,6 @@ public abstract class EntityRendererRework
         Minecraft minecraft = accessor.getMinecraft();
         int[] lightmapColors = accessor.getLightmapColors();
 
-        float bossColorModifier = accessor.getBossColorModifier();
-        float bossColorModifierPrev = accessor.getBossColorModifierPrev();
-
         if (!accessor.getLightmapUpdateNeeded())
             return;
 
@@ -42,24 +39,28 @@ public abstract class EntityRendererRework
         }
 
         float sunBrightness = world.getSunBrightness(1.0F);
+        float moonBrightness = getMoonBrightness(partialTicks, world);
+
         float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
+
+        float bossColorModifier = accessor.getBossColorModifier();
+        float bossColorModifierPrev = accessor.getBossColorModifierPrev();
 
         float[] brightnessTable = world.provider.getLightBrightnessTable();
         float torchFlicker = accessor.getTorchFlickerX() * 0.1F + 1.5F;
         boolean lightningActive = world.getLastLightningBolt() > 0;
         boolean isTheEnd = world.provider.getDimensionType().getId() == 1;
+        DimensionType dimensionType = world.provider.getDimensionType();
         float gammaSetting = minecraft.gameSettings.gammaSetting;
         boolean hasNightVision = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
 
         int[] calculatedLightmap = new int[256];
 
         calculateLightmapColors(calculatedLightmap, brightnessTable, adjustedSunBrightness,
-            sunBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
-                bossColorModifier, bossColorModifierPrev, partialTicks, minecraft.player, accessor);
+            sunBrightness, moonBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
+                bossColorModifier, bossColorModifierPrev, partialTicks, minecraft.player, dimensionType, accessor);
 
-        //updateLuminance(calculatedLightmap, partialTicks, world, accessor);
-
-        System.arraycopy(calculatedLightmap, 0, lightmapColors, 0, 256);
+        IntStream.range(0, 256).forEach(i -> lightmapColors[i] = calculatedLightmap[i]);
 
         accessor.getLightmapTexture().updateDynamicTexture();
         accessor.setLightmapUpdateNeeded(false);
@@ -67,10 +68,12 @@ public abstract class EntityRendererRework
     }
 
     private void calculateLightmapColors(int[] outputColors, float[] brightnessTable, float adjustedSunBrightness,
-                                         float sunBrightness, float torchFlicker, boolean lightningActive, boolean isTheEnd, float gammaSetting,
+                                         float sunBrightness, float moonBrightness, float torchFlicker, boolean lightningActive, boolean isTheEnd, float gammaSetting,
                                          boolean hasNightVision, float bossColorModifier, float bossColorModifierPrev,
-                                         float partialTicks, EntityPlayer player, IEntityRendererAccessor accessor)
+                                         float partialTicks, EntityPlayer player, DimensionType dimensionType, IEntityRendererAccessor accessor)
     {
+        //long startTime = System.nanoTime();
+
         IntStream.range(0, 256).parallel().forEach(index ->
         {
             int skyLightLevel = index / 16;
@@ -162,7 +165,107 @@ public abstract class EntityRendererRework
             int blueInt = (int)(blue * 255.0F);
 
             outputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
+
+            /*
+            {
+                int skyIndexFinalized = index / 16;
+                int blockIndexFinalized = index % 16;
+
+                float skyFactorFinalized = 1f - skyIndexFinalized / 15f;
+                skyFactorFinalized = 1 - skyFactorFinalized * skyFactorFinalized * skyFactorFinalized * skyFactorFinalized;
+                skyFactorFinalized *= moonBrightness;
+
+                float minFinalized = skyFactorFinalized * 0.05f;
+                final float rawAmbientFinalized = sunBrightness * skyFactorFinalized;
+                final float minAmbientFinalized = rawAmbientFinalized * (1 - minFinalized) + minFinalized;
+                final float skyBaseFinalized = brightnessTable[skyIndexFinalized] * minAmbientFinalized;
+
+                minFinalized = 0.35f * skyFactorFinalized;
+                float skyRedFinalized = skyBaseFinalized * (rawAmbientFinalized * (1 - minFinalized) + minFinalized);
+                float skyGreenFinalized = skyBaseFinalized * (rawAmbientFinalized * (1 - minFinalized) + minFinalized);
+                float skyBlueFinalized = skyBaseFinalized;
+
+                if (bossColorModifier > 0.0F)
+                {
+                    float deltaFinalized = bossColorModifier - bossColorModifierPrev;
+                    float modifierFinalized = bossColorModifierPrev + partialTicks * deltaFinalized;
+
+                    skyRedFinalized = skyRedFinalized * (1.0F - modifierFinalized) + skyRedFinalized * 0.7F * modifierFinalized;
+                    skyGreenFinalized = skyGreenFinalized * (1.0F - modifierFinalized) + skyGreenFinalized * 0.6F * modifierFinalized;
+                    skyBlueFinalized = skyBlueFinalized * (1.0F - modifierFinalized) + skyBlueFinalized * 0.6F * modifierFinalized;
+                }
+
+                float blockFactorFinalized = 1f - blockIndexFinalized / 15f;
+                blockFactorFinalized = 1 - blockFactorFinalized * blockFactorFinalized * blockFactorFinalized * blockFactorFinalized;
+
+                final float flickerFinalized = torchFlicker;
+                final float blockBaseFinalized = blockFactorFinalized * brightnessTable[blockIndexFinalized] * flickerFinalized;
+                minFinalized = 0.4f * blockFactorFinalized;
+
+                final float blockGreenFinalized =
+                        blockBaseFinalized * ((blockBaseFinalized * (1 - minFinalized) + minFinalized) * (1 - minFinalized) + minFinalized);
+
+                final float blockBlueFinalized =
+                        blockBaseFinalized * (blockBaseFinalized * blockBaseFinalized * (1 - minFinalized) + minFinalized);
+
+                float redFinalized = skyRedFinalized + blockBaseFinalized;
+                float greenFinalized = skyGreenFinalized + blockGreenFinalized;
+                float blueFinalized = skyBlueFinalized + blockBlueFinalized;
+
+                final float factorFinalized = Math.max(skyFactorFinalized, blockFactorFinalized);
+                minFinalized = 0.03f * factorFinalized;
+
+                redFinalized = redFinalized * (0.99F - minFinalized) + minFinalized;
+                greenFinalized = greenFinalized * (0.99F - minFinalized) + minFinalized;
+                blueFinalized = blueFinalized * (0.99F - minFinalized) + minFinalized;
+
+                if (dimensionType == DimensionType.THE_END)
+                {
+                    redFinalized = skyFactorFinalized * 0.22F + blockBaseFinalized * 0.75f;
+                    greenFinalized = skyFactorFinalized * 0.28F + blockGreenFinalized * 0.75f;
+                    blueFinalized = skyFactorFinalized * 0.25F + blockBlueFinalized * 0.75f;
+                }
+
+                redFinalized = MathHelper.clamp(redFinalized, 0f, 1f);
+                greenFinalized = MathHelper.clamp(greenFinalized, 0f, 1f);
+                blueFinalized = MathHelper.clamp(blueFinalized, 0f, 1f);
+
+                final float gammaFactorFinalized = gammaSetting * factorFinalized;
+
+                float invRedFinalized = 1.0F - redFinalized;
+                float invGreenFinalized = 1.0F - greenFinalized;
+                float invBlueFinalized = 1.0F - blueFinalized;
+
+                invRedFinalized = 1.0F - invRedFinalized * invRedFinalized * invRedFinalized * invRedFinalized;
+                invGreenFinalized = 1.0F - invGreenFinalized * invGreenFinalized * invGreenFinalized * invGreenFinalized;
+                invBlueFinalized = 1.0F - invBlueFinalized * invBlueFinalized * invBlueFinalized * invBlueFinalized;
+
+                redFinalized = redFinalized * (1.0F - gammaFactorFinalized) + invRedFinalized * gammaFactorFinalized;
+                greenFinalized = greenFinalized * (1.0F - gammaFactorFinalized) + invGreenFinalized * gammaFactorFinalized;
+                blueFinalized = blueFinalized * (1.0F - gammaFactorFinalized) + invBlueFinalized * gammaFactorFinalized;
+
+                minFinalized = 0.03f * factorFinalized;
+
+                redFinalized = redFinalized * (0.99F - minFinalized) + minFinalized;
+                greenFinalized = greenFinalized * (0.99F - minFinalized) + minFinalized;
+                blueFinalized = blueFinalized * (0.99F - minFinalized) + minFinalized;
+
+                redFinalized = MathHelper.clamp(redFinalized, 0f, 1f);
+                greenFinalized = MathHelper.clamp(greenFinalized, 0f, 1f);
+                blueFinalized = MathHelper.clamp(blueFinalized, 0f, 1f);
+
+                float luminanceTargetFinalized = luminance(redFinalized, greenFinalized, blueFinalized);
+
+                lightmapColors[i] = darken(lightmapColors[i], luminanceTargetFinalized);
+            }
+             */
         });
+
+        //long endTime = System.nanoTime();
+        //long durationMicro = (endTime - startTime) / 1_000;
+        //long durationNs = (endTime - startTime);
+
+        //System.out.println("Lightmap calculation took: " + durationMicro + " μs (" + durationNs + " ns)");
     }
 
     private void updateLuminance(int[] lightmapColors, float partialTicks, World world, IEntityRendererAccessor accessor)
