@@ -22,47 +22,51 @@ public abstract class EntityRendererRework
     private void updateLightmap(float partialTicks)
     {
         IEntityRendererAccessor accessor = (IEntityRendererAccessor) this;
-        Minecraft minecraft = accessor.getMinecraft();
-        int[] lightmapColors = accessor.getLightmapColors();
 
-        if (!accessor.getLightmapUpdateNeeded())
-            return;
-
-        minecraft.mcProfiler.startSection("lightTex");
-
-        World world = minecraft.world;
-
-        if (world == null)
+        if (accessor.getLightmapUpdateNeeded())
         {
+            Minecraft minecraft = accessor.getMinecraft();
+            int[] lightmapColors = accessor.getLightmapColors();
+
+            if (!accessor.getLightmapUpdateNeeded())
+                return;
+
+            minecraft.mcProfiler.startSection("lightTex");
+
+            World world = minecraft.world;
+
+            if (world == null)
+            {
+                minecraft.mcProfiler.endSection();
+                return;
+            }
+
+            float sunBrightness = world.getSunBrightness(1.0F);
+            float moonBrightness = getMoonBrightness(partialTicks, world);
+            float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
+
+            float[] brightnessTable = world.provider.getLightBrightnessTable();
+            boolean lightningActive = world.getLastLightningBolt() > 0;
+            boolean isTheEnd = world.provider.getDimensionType().getId() == 1;
+
+            float torchFlicker = accessor.getTorchFlickerX() * 0.1f + 1.5f;
+            float bossColorModifier = accessor.getBossColorModifier();
+            float bossColorModifierPrev = accessor.getBossColorModifierPrev();
+
+            float gammaSetting = minecraft.gameSettings.gammaSetting;
+            boolean hasNightVision = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
+
+            boolean dimensionBlacklisted = isDimensionBlacklisted(world.provider);
+            boolean applyDarkness = !hasNightVision && !dimensionBlacklisted && !(world.getLastLightningBolt() > 0);
+
+            calculateLightmapColors(lightmapColors, brightnessTable, adjustedSunBrightness,
+                    sunBrightness, moonBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
+                    bossColorModifier, bossColorModifierPrev, partialTicks, applyDarkness, minecraft.player, world, accessor);
+
+            accessor.getLightmapTexture().updateDynamicTexture();
+            accessor.setLightmapUpdateNeeded(false);
             minecraft.mcProfiler.endSection();
-            return;
         }
-
-        float sunBrightness = world.getSunBrightness(1.0F);
-        float moonBrightness = getMoonBrightness(partialTicks, world);
-        float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
-
-        float[] brightnessTable = world.provider.getLightBrightnessTable();
-        boolean lightningActive = world.getLastLightningBolt() > 0;
-        boolean isTheEnd = world.provider.getDimensionType().getId() == 1;
-
-        float torchFlicker = accessor.getTorchFlickerX() * 0.1f + 1.5f;
-        float bossColorModifier = accessor.getBossColorModifier();
-        float bossColorModifierPrev = accessor.getBossColorModifierPrev();
-
-        float gammaSetting = minecraft.gameSettings.gammaSetting;
-        boolean hasNightVision = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
-
-        boolean dimensionBlacklisted = isDimensionBlacklisted(world.provider);
-        boolean applyDarkness = !hasNightVision && !dimensionBlacklisted;
-
-        calculateLightmapColors(lightmapColors, brightnessTable, adjustedSunBrightness,
-                sunBrightness, moonBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
-                bossColorModifier, bossColorModifierPrev, partialTicks, applyDarkness, minecraft.player, world, accessor);
-
-        accessor.getLightmapTexture().updateDynamicTexture();
-        accessor.setLightmapUpdateNeeded(false);
-        minecraft.mcProfiler.endSection();
     }
 
     private void calculateLightmapColors(int[] outputColors, float[] brightnessTable, float adjustedSunBrightness,
