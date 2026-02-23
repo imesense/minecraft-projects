@@ -55,6 +55,8 @@ public abstract class EntityRendererRework
             sunBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
                 bossColorModifier, bossColorModifierPrev, partialTicks, minecraft.player, accessor);
 
+        updateLuminance(calculatedLightmap, partialTicks, world, accessor);
+
         System.arraycopy(calculatedLightmap, 0, lightmapColors, 0, 256);
 
         accessor.getLightmapTexture().updateDynamicTexture();
@@ -163,7 +165,7 @@ public abstract class EntityRendererRework
         }
     }
 
-    private void updateLuminance(float partialTicks, World world, IEntityRendererAccessor accessor)
+    private void updateLuminance(int[] lightmapColors, float partialTicks, World world, IEntityRendererAccessor accessor)
     {
         WorldProvider dim = world.provider;
         DimensionType dimType = dim.getDimensionType();
@@ -175,7 +177,6 @@ public abstract class EntityRendererRework
         float bossColorModifier = accessor.getBossColorModifier();
         float bossColorModifierPrev = accessor.getBossColorModifierPrev();
         float torchFlickerX = accessor.getTorchFlickerX();
-        int[] lightmapColors = accessor.getLightmapColors();
         float gamma = accessor.getMinecraft().gameSettings.gammaSetting;
 
         for (int i = 0; i < 256; ++i)
@@ -259,8 +260,8 @@ public abstract class EntityRendererRework
             blue = MathHelper.clamp(blue, 0f, 1f);
 
             float lTarget = luminance(red, green, blue);
-            int c = lightmapColors[i];
-            lightmapColors[i] = darken(c, lTarget);
+
+            lightmapColors[i] = darken(lightmapColors[i], lTarget);
         }
     }
 
