@@ -18,9 +18,6 @@ import java.util.stream.IntStream;
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererRework
 {
-    protected int[] tempOutputColors = new int[256];
-    protected int[] calculatedLightmap = new int[256];
-
     @Overwrite
     private void updateLightmap(float partialTicks)
     {
@@ -56,11 +53,12 @@ public abstract class EntityRendererRework
         float gammaSetting = minecraft.gameSettings.gammaSetting;
         boolean hasNightVision = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
 
-        calculateLightmapColors(calculatedLightmap, brightnessTable, adjustedSunBrightness,
-            sunBrightness, moonBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
-                bossColorModifier, bossColorModifierPrev, partialTicks, minecraft.player, world, accessor);
+        boolean dimensionBlacklisted = isDimensionBlacklisted(world.provider);
+        boolean applyDarkness = !hasNightVision && !dimensionBlacklisted;
 
-        IntStream.range(0, 256).forEach(i -> lightmapColors[i] = calculatedLightmap[i]);
+        calculateLightmapColors(lightmapColors, brightnessTable, adjustedSunBrightness,
+                sunBrightness, moonBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
+                bossColorModifier, bossColorModifierPrev, partialTicks, applyDarkness, minecraft.player, world, accessor);
 
         accessor.getLightmapTexture().updateDynamicTexture();
         accessor.setLightmapUpdateNeeded(false);
@@ -70,9 +68,9 @@ public abstract class EntityRendererRework
     private void calculateLightmapColors(int[] outputColors, float[] brightnessTable, float adjustedSunBrightness,
                                          float sunBrightness, float moonBrightness, float torchFlicker, boolean lightningActive, boolean isTheEnd, float gammaSetting,
                                          boolean hasNightVision, float bossColorModifier, float bossColorModifierPrev,
-                                         float partialTicks, EntityPlayer player, World world, IEntityRendererAccessor accessor)
+                                         float partialTicks, boolean applyDarkness, EntityPlayer player, World world, IEntityRendererAccessor accessor)
     {
-        IntStream.range(0, 256).parallel().forEach(index ->
+        for (int index = 0; index < 256; index++)
         {
             int skyLightLevel = index / 16;
             int blockLightLevel = index % 16;
@@ -162,9 +160,9 @@ public abstract class EntityRendererRework
             int greenInt = (int)(green * 255.0F);
             int blueInt = (int)(blue * 255.0F);
 
-            this.tempOutputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
+            int baseColor = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
 
-            if (!hasNightVision && !isDimensionBlacklisted(world.provider))
+            if (applyDarkness)
             {
                 int skyIndexDark = index / 16;
                 int blockIndexDark = index % 16;
@@ -249,13 +247,13 @@ public abstract class EntityRendererRework
 
                 float lTarget = luminance(redDark, greenDark, blueDark);
 
-                outputColors[index] = darken(tempOutputColors[index], lTarget);
+                outputColors[index] = darken(baseColor, lTarget);
             }
             else
             {
-                outputColors[index] = tempOutputColors[index];
+                outputColors[index] = baseColor;
             }
-        });
+        }
     }
 
     private boolean isDimensionBlacklisted(WorldProvider worldProvider)
