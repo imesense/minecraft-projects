@@ -74,6 +74,8 @@ public abstract class EntityRendererRework
     {
         //long startTime = System.nanoTime();
 
+        int[] tempOutputColors = new int[256];
+
         IntStream.range(0, 256).parallel().forEach(index ->
         {
             int skyLightLevel = index / 16;
@@ -164,7 +166,9 @@ public abstract class EntityRendererRework
             int greenInt = (int)(green * 255.0F);
             int blueInt = (int)(blue * 255.0F);
 
-            outputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
+            tempOutputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
+
+            outputColors[index] = tempOutputColors[index];
 
             /*
             {
