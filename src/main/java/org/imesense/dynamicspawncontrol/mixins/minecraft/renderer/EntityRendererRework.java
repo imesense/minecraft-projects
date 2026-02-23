@@ -164,17 +164,16 @@ public abstract class EntityRendererRework
 
             if (applyDarkness)
             {
-                int skyIndexDark = index / 16;
-                int blockIndexDark = index % 16;
+                float skyFactorDark = 1f - skyLightLevel / 15f;
 
-                float skyFactorDark = 1f - skyIndexDark / 15f;
                 skyFactorDark = 1 - skyFactorDark * skyFactorDark * skyFactorDark * skyFactorDark;
                 skyFactorDark *= moonBrightness;
 
                 float minDark = skyFactorDark * 0.05f;
-                final float rawAmbientDark = sunBrightness * skyFactorDark;
-                final float minAmbientDark = rawAmbientDark * (1 - minDark) + minDark;
-                final float skyBaseDark = brightnessTable[skyIndexDark] * minAmbientDark;
+
+                float rawAmbientDark = sunBrightness * skyFactorDark;
+                float minAmbientDark = rawAmbientDark * (1 - minDark) + minDark;
+                float skyBaseDark = brightnessTable[skyLightLevel] * minAmbientDark;
 
                 minDark = 0.35f * skyFactorDark;
                 float skyRedDark = skyBaseDark * (rawAmbientDark * (1 - minDark) + minDark);
@@ -185,16 +184,17 @@ public abstract class EntityRendererRework
                 {
                     float d = bossColorModifier - bossColorModifierPrev;
                     float m = bossColorModifierPrev + partialTicks * d;
+
                     skyRedDark = skyRedDark * (1.0F - m) + skyRedDark * 0.7F * m;
                     skyGreenDark = skyGreenDark * (1.0F - m) + skyGreenDark * 0.6F * m;
                     skyBlueDark = skyBlueDark * (1.0F - m) + skyBlueDark * 0.6F * m;
                 }
 
-                float blockFactorDark = 1f - blockIndexDark / 15f;
+                float blockFactorDark = 1f - blockLightLevel / 15f;
                 blockFactorDark = 1 - blockFactorDark * blockFactorDark * blockFactorDark * blockFactorDark;
 
                 final float flickerDark = torchFlicker;
-                final float blockBaseDark = blockFactorDark * brightnessTable[blockIndexDark] * flickerDark;
+                final float blockBaseDark = blockFactorDark * brightnessTable[blockLightLevel] * flickerDark;
                 minDark = 0.4f * blockFactorDark;
 
                 final float blockGreenDark = blockBaseDark * ((blockBaseDark * (1 - minDark) + minDark) * (1 - minDark) + minDark);
