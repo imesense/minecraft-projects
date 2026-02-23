@@ -72,8 +72,6 @@ public abstract class EntityRendererRework
                                          boolean hasNightVision, float bossColorModifier, float bossColorModifierPrev,
                                          float partialTicks, EntityPlayer player, DimensionType dimensionType, IEntityRendererAccessor accessor)
     {
-        //long startTime = System.nanoTime();
-
         int[] tempOutputColors = new int[256];
 
         IntStream.range(0, 256).parallel().forEach(index ->
@@ -168,108 +166,10 @@ public abstract class EntityRendererRework
 
             tempOutputColors[index] = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
 
-            outputColors[index] = tempOutputColors[index];
-
-            /*
             {
-                int skyIndexFinalized = index / 16;
-                int blockIndexFinalized = index % 16;
-
-                float skyFactorFinalized = 1f - skyIndexFinalized / 15f;
-                skyFactorFinalized = 1 - skyFactorFinalized * skyFactorFinalized * skyFactorFinalized * skyFactorFinalized;
-                skyFactorFinalized *= moonBrightness;
-
-                float minFinalized = skyFactorFinalized * 0.05f;
-                final float rawAmbientFinalized = sunBrightness * skyFactorFinalized;
-                final float minAmbientFinalized = rawAmbientFinalized * (1 - minFinalized) + minFinalized;
-                final float skyBaseFinalized = brightnessTable[skyIndexFinalized] * minAmbientFinalized;
-
-                minFinalized = 0.35f * skyFactorFinalized;
-                float skyRedFinalized = skyBaseFinalized * (rawAmbientFinalized * (1 - minFinalized) + minFinalized);
-                float skyGreenFinalized = skyBaseFinalized * (rawAmbientFinalized * (1 - minFinalized) + minFinalized);
-                float skyBlueFinalized = skyBaseFinalized;
-
-                if (bossColorModifier > 0.0F)
-                {
-                    float deltaFinalized = bossColorModifier - bossColorModifierPrev;
-                    float modifierFinalized = bossColorModifierPrev + partialTicks * deltaFinalized;
-
-                    skyRedFinalized = skyRedFinalized * (1.0F - modifierFinalized) + skyRedFinalized * 0.7F * modifierFinalized;
-                    skyGreenFinalized = skyGreenFinalized * (1.0F - modifierFinalized) + skyGreenFinalized * 0.6F * modifierFinalized;
-                    skyBlueFinalized = skyBlueFinalized * (1.0F - modifierFinalized) + skyBlueFinalized * 0.6F * modifierFinalized;
-                }
-
-                float blockFactorFinalized = 1f - blockIndexFinalized / 15f;
-                blockFactorFinalized = 1 - blockFactorFinalized * blockFactorFinalized * blockFactorFinalized * blockFactorFinalized;
-
-                final float flickerFinalized = torchFlicker;
-                final float blockBaseFinalized = blockFactorFinalized * brightnessTable[blockIndexFinalized] * flickerFinalized;
-                minFinalized = 0.4f * blockFactorFinalized;
-
-                final float blockGreenFinalized =
-                        blockBaseFinalized * ((blockBaseFinalized * (1 - minFinalized) + minFinalized) * (1 - minFinalized) + minFinalized);
-
-                final float blockBlueFinalized =
-                        blockBaseFinalized * (blockBaseFinalized * blockBaseFinalized * (1 - minFinalized) + minFinalized);
-
-                float redFinalized = skyRedFinalized + blockBaseFinalized;
-                float greenFinalized = skyGreenFinalized + blockGreenFinalized;
-                float blueFinalized = skyBlueFinalized + blockBlueFinalized;
-
-                final float factorFinalized = Math.max(skyFactorFinalized, blockFactorFinalized);
-                minFinalized = 0.03f * factorFinalized;
-
-                redFinalized = redFinalized * (0.99F - minFinalized) + minFinalized;
-                greenFinalized = greenFinalized * (0.99F - minFinalized) + minFinalized;
-                blueFinalized = blueFinalized * (0.99F - minFinalized) + minFinalized;
-
-                if (dimensionType == DimensionType.THE_END)
-                {
-                    redFinalized = skyFactorFinalized * 0.22F + blockBaseFinalized * 0.75f;
-                    greenFinalized = skyFactorFinalized * 0.28F + blockGreenFinalized * 0.75f;
-                    blueFinalized = skyFactorFinalized * 0.25F + blockBlueFinalized * 0.75f;
-                }
-
-                redFinalized = MathHelper.clamp(redFinalized, 0f, 1f);
-                greenFinalized = MathHelper.clamp(greenFinalized, 0f, 1f);
-                blueFinalized = MathHelper.clamp(blueFinalized, 0f, 1f);
-
-                final float gammaFactorFinalized = gammaSetting * factorFinalized;
-
-                float invRedFinalized = 1.0F - redFinalized;
-                float invGreenFinalized = 1.0F - greenFinalized;
-                float invBlueFinalized = 1.0F - blueFinalized;
-
-                invRedFinalized = 1.0F - invRedFinalized * invRedFinalized * invRedFinalized * invRedFinalized;
-                invGreenFinalized = 1.0F - invGreenFinalized * invGreenFinalized * invGreenFinalized * invGreenFinalized;
-                invBlueFinalized = 1.0F - invBlueFinalized * invBlueFinalized * invBlueFinalized * invBlueFinalized;
-
-                redFinalized = redFinalized * (1.0F - gammaFactorFinalized) + invRedFinalized * gammaFactorFinalized;
-                greenFinalized = greenFinalized * (1.0F - gammaFactorFinalized) + invGreenFinalized * gammaFactorFinalized;
-                blueFinalized = blueFinalized * (1.0F - gammaFactorFinalized) + invBlueFinalized * gammaFactorFinalized;
-
-                minFinalized = 0.03f * factorFinalized;
-
-                redFinalized = redFinalized * (0.99F - minFinalized) + minFinalized;
-                greenFinalized = greenFinalized * (0.99F - minFinalized) + minFinalized;
-                blueFinalized = blueFinalized * (0.99F - minFinalized) + minFinalized;
-
-                redFinalized = MathHelper.clamp(redFinalized, 0f, 1f);
-                greenFinalized = MathHelper.clamp(greenFinalized, 0f, 1f);
-                blueFinalized = MathHelper.clamp(blueFinalized, 0f, 1f);
-
-                float luminanceTargetFinalized = luminance(redFinalized, greenFinalized, blueFinalized);
-
-                lightmapColors[i] = darken(lightmapColors[i], luminanceTargetFinalized);
+                outputColors[index] = tempOutputColors[index];
             }
-             */
         });
-
-        //long endTime = System.nanoTime();
-        //long durationMicro = (endTime - startTime) / 1_000;
-        //long durationNs = (endTime - startTime);
-
-        //System.out.println("Lightmap calculation took: " + durationMicro + " μs (" + durationNs + " ns)");
     }
 
     private void updateLuminance(int[] lightmapColors, float partialTicks, World world, IEntityRendererAccessor accessor)
