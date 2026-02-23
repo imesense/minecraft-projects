@@ -25,162 +25,162 @@ public abstract class EntityRendererRework
         IEntityRendererAccessor accessor = (IEntityRendererAccessor) this;
         Minecraft minecraft = accessor.getMinecraft();
 
+        if (accessor.getLightmapUpdateNeeded())
         {
-            if (accessor.getLightmapUpdateNeeded())
+            minecraft.mcProfiler.startSection("lightTex");
+            World world = minecraft.world;
+
+            if (world != null)
             {
-                minecraft.mcProfiler.startSection("lightTex");
-                World world = minecraft.world;
+                float sunBrightness = world.getSunBrightness(1.0F);
+                float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
 
-                if (world != null)
+                for (int i = 0; i < 256; ++i)
                 {
-                    float sunBrightness = world.getSunBrightness(1.0F);
-                    float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
+                    float skyLight = world.provider.getLightBrightnessTable()[i / 16] * adjustedSunBrightness;
+                    float blockLight = world.provider.getLightBrightnessTable()[i % 16] * (accessor.getTorchFlickerX() * 0.1F + 1.5F);
 
-                    for (int i = 0; i < 256; ++i)
+                    if (world.getLastLightningBolt() > 0)
                     {
-                        float skyLight = world.provider.getLightBrightnessTable()[i / 16] * adjustedSunBrightness;
-                        float blockLight = world.provider.getLightBrightnessTable()[i % 16] * (accessor.getTorchFlickerX() * 0.1F + 1.5F);
-
-                        if (world.getLastLightningBolt() > 0)
-                        {
-                            skyLight = world.provider.getLightBrightnessTable()[i / 16];
-                        }
-
-                        float skyRed = skyLight * (sunBrightness * 0.65F + 0.35F);
-                        float skyGreen = skyLight * (sunBrightness * 0.65F + 0.35F);
-                        float blockRed = blockLight * ((blockLight * 0.6F + 0.4F) * 0.6F + 0.4F);
-                        float blockGreen = blockLight * (blockLight * blockLight * 0.6F + 0.4F);
-
-                        float combinedRed = skyRed + blockLight;
-                        float combinedGreen = skyGreen + blockRed;
-                        float combinedBlue = skyLight + blockGreen;
-
-                        combinedRed = combinedRed * 0.96F + 0.03F;
-                        combinedGreen = combinedGreen * 0.96F + 0.03F;
-                        combinedBlue = combinedBlue * 0.96F + 0.03F;
-
-                        if (accessor.getBossColorModifier() > 0.0F)
-                        {
-                            float bossModifier = accessor.getBossColorModifierPrev() + (accessor.getBossColorModifier() - accessor.getBossColorModifierPrev()) * partialTicks;
-
-                            combinedRed = combinedRed * (1.0F - bossModifier) + combinedRed * 0.7F * bossModifier;
-                            combinedGreen = combinedGreen * (1.0F - bossModifier) + combinedGreen * 0.6F * bossModifier;
-                            combinedBlue = combinedBlue * (1.0F - bossModifier) + combinedBlue * 0.6F * bossModifier;
-                        }
-
-                        if (world.provider.getDimensionType().getId() == 1)
-                        {
-                            combinedRed = 0.22F + blockLight * 0.75F;
-                            combinedGreen = 0.28F + blockRed * 0.75F;
-                            combinedBlue = 0.25F + blockGreen * 0.75F;
-                        }
-
-                        float[] colors = {combinedRed, combinedGreen, combinedBlue};
-
-                        world.provider.getLightmapColors(partialTicks, sunBrightness, skyLight, blockLight, colors);
-
-                        combinedRed = colors[0];
-                        combinedGreen = colors[1];
-                        combinedBlue = colors[2];
-
-                        combinedRed = MathHelper.clamp(combinedRed, 0f, 1f);
-                        combinedGreen = MathHelper.clamp(combinedGreen, 0f, 1f);
-                        combinedBlue = MathHelper.clamp(combinedBlue, 0f, 1f);
-
-                        if (minecraft.player.isPotionActive(MobEffects.NIGHT_VISION))
-                        {
-                            float nightVisionStrength = getNightVisionBrightness(minecraft.player, partialTicks);
-                            float maxComponent = 1.0F / combinedRed;
-
-                            if (maxComponent > 1.0F / combinedGreen)
-                            {
-                                maxComponent = 1.0F / combinedGreen;
-                            }
-
-                            if (maxComponent > 1.0F / combinedBlue)
-                            {
-                                maxComponent = 1.0F / combinedBlue;
-                            }
-
-                            combinedRed = combinedRed * (1.0F - nightVisionStrength) + combinedRed * maxComponent * nightVisionStrength;
-                            combinedGreen = combinedGreen * (1.0F - nightVisionStrength) + combinedGreen * maxComponent * nightVisionStrength;
-                            combinedBlue = combinedBlue * (1.0F - nightVisionStrength) + combinedBlue * maxComponent * nightVisionStrength;
-                        }
-
-                        if (combinedRed > 1.0F)
-                        {
-                            combinedRed = 1.0F;
-                        }
-
-                        if (combinedGreen > 1.0F)
-                        {
-                            combinedGreen = 1.0F;
-                        }
-
-                        if (combinedBlue > 1.0F)
-                        {
-                            combinedBlue = 1.0F;
-                        }
-
-                        float gamma = minecraft.gameSettings.gammaSetting;
-
-                        float inverseRed = 1.0F - combinedRed;
-                        float inverseGreen = 1.0F - combinedGreen;
-                        float inverseBlue = 1.0F - combinedBlue;
-
-                        inverseRed = 1.0F - inverseRed * inverseRed * inverseRed * inverseRed;
-                        inverseGreen = 1.0F - inverseGreen * inverseGreen * inverseGreen * inverseGreen;
-                        inverseBlue = 1.0F - inverseBlue * inverseBlue * inverseBlue * inverseBlue;
-
-                        combinedRed = combinedRed * (1.0F - gamma) + inverseRed * gamma;
-                        combinedGreen = combinedGreen * (1.0F - gamma) + inverseGreen * gamma;
-                        combinedBlue = combinedBlue * (1.0F - gamma) + inverseBlue * gamma;
-
-                        combinedRed = combinedRed * 0.96F + 0.03F;
-                        combinedGreen = combinedGreen * 0.96F + 0.03F;
-                        combinedBlue = combinedBlue * 0.96F + 0.03F;
-
-                        if (combinedRed > 1.0F)
-                        {
-                            combinedRed = 1.0F;
-                        }
-
-                        if (combinedGreen > 1.0F)
-                        {
-                            combinedGreen = 1.0F;
-                        }
-
-                        if (combinedBlue > 1.0F)
-                        {
-                            combinedBlue = 1.0F;
-                        }
-
-                        if (combinedRed < 0.0F)
-                        {
-                            combinedRed = 0.0F;
-                        }
-
-                        if (combinedGreen < 0.0F)
-                        {
-                            combinedGreen = 0.0F;
-                        }
-
-                        if (combinedBlue < 0.0F)
-                        {
-                            combinedBlue = 0.0F;
-                        }
-
-                        int redPixel = (int)(combinedRed * 255.0F);
-                        int greenPixel = (int)(combinedGreen * 255.0F);
-                        int bluePixel = (int)(combinedBlue * 255.0F);
-
-                        accessor.getLightmapColors()[i] = -16777216 | redPixel << 16 | greenPixel << 8 | bluePixel;
+                        skyLight = world.provider.getLightBrightnessTable()[i / 16];
                     }
 
-                    accessor.getLightmapTexture().updateDynamicTexture();
-                    accessor.setLightmapUpdateNeeded(false);
-                    minecraft.mcProfiler.endSection();
+                    float skyRed = skyLight * (sunBrightness * 0.65F + 0.35F);
+                    float skyGreen = skyLight * (sunBrightness * 0.65F + 0.35F);
+                    float blockRed = blockLight * ((blockLight * 0.6F + 0.4F) * 0.6F + 0.4F);
+                    float blockGreen = blockLight * (blockLight * blockLight * 0.6F + 0.4F);
+
+                    float combinedRed = skyRed + blockLight;
+                    float combinedGreen = skyGreen + blockRed;
+                    float combinedBlue = skyLight + blockGreen;
+
+                    combinedRed = combinedRed * 0.96F + 0.03F;
+                    combinedGreen = combinedGreen * 0.96F + 0.03F;
+                    combinedBlue = combinedBlue * 0.96F + 0.03F;
+
+                    if (accessor.getBossColorModifier() > 0.0F)
+                    {
+                        float bossModifier = accessor.getBossColorModifierPrev() + (accessor.getBossColorModifier() - accessor.getBossColorModifierPrev()) * partialTicks;
+
+                        combinedRed = combinedRed * (1.0F - bossModifier) + combinedRed * 0.7F * bossModifier;
+                        combinedGreen = combinedGreen * (1.0F - bossModifier) + combinedGreen * 0.6F * bossModifier;
+                        combinedBlue = combinedBlue * (1.0F - bossModifier) + combinedBlue * 0.6F * bossModifier;
+                    }
+
+                    if (world.provider.getDimensionType().getId() == 1)
+                    {
+                        combinedRed = 0.22F + blockLight * 0.75F;
+                        combinedGreen = 0.28F + blockRed * 0.75F;
+                        combinedBlue = 0.25F + blockGreen * 0.75F;
+                    }
+
+                    float[] colors = {combinedRed, combinedGreen, combinedBlue};
+
+                    world.provider.getLightmapColors(partialTicks, sunBrightness, skyLight, blockLight, colors);
+
+                    combinedRed = colors[0];
+                    combinedGreen = colors[1];
+                    combinedBlue = colors[2];
+
+                    combinedRed = MathHelper.clamp(combinedRed, 0f, 1f);
+                    combinedGreen = MathHelper.clamp(combinedGreen, 0f, 1f);
+                    combinedBlue = MathHelper.clamp(combinedBlue, 0f, 1f);
+
+                    if (minecraft.player.isPotionActive(MobEffects.NIGHT_VISION))
+                    {
+                        float nightVisionStrength = getNightVisionBrightness(minecraft.player, partialTicks);
+                        float maxComponent = 1.0F / combinedRed;
+
+                        if (maxComponent > 1.0F / combinedGreen)
+                        {
+                            maxComponent = 1.0F / combinedGreen;
+                        }
+
+                        if (maxComponent > 1.0F / combinedBlue)
+                        {
+                            maxComponent = 1.0F / combinedBlue;
+                        }
+
+                        combinedRed = combinedRed * (1.0F - nightVisionStrength) + combinedRed * maxComponent * nightVisionStrength;
+                        combinedGreen = combinedGreen * (1.0F - nightVisionStrength) + combinedGreen * maxComponent * nightVisionStrength;
+                        combinedBlue = combinedBlue * (1.0F - nightVisionStrength) + combinedBlue * maxComponent * nightVisionStrength;
+                    }
+
+                    if (combinedRed > 1.0F)
+                    {
+                        combinedRed = 1.0F;
+                    }
+
+                    if (combinedGreen > 1.0F)
+                    {
+                        combinedGreen = 1.0F;
+                    }
+
+                    if (combinedBlue > 1.0F)
+                    {
+                        combinedBlue = 1.0F;
+                    }
+
+                    float gamma = minecraft.gameSettings.gammaSetting;
+
+                    float inverseRed = 1.0F - combinedRed;
+                    float inverseGreen = 1.0F - combinedGreen;
+                    float inverseBlue = 1.0F - combinedBlue;
+
+                    inverseRed = 1.0F - inverseRed * inverseRed * inverseRed * inverseRed;
+                    inverseGreen = 1.0F - inverseGreen * inverseGreen * inverseGreen * inverseGreen;
+                    inverseBlue = 1.0F - inverseBlue * inverseBlue * inverseBlue * inverseBlue;
+
+                    combinedRed = combinedRed * (1.0F - gamma) + inverseRed * gamma;
+                    combinedGreen = combinedGreen * (1.0F - gamma) + inverseGreen * gamma;
+                    combinedBlue = combinedBlue * (1.0F - gamma) + inverseBlue * gamma;
+
+                    combinedRed = combinedRed * 0.96F + 0.03F;
+                    combinedGreen = combinedGreen * 0.96F + 0.03F;
+                    combinedBlue = combinedBlue * 0.96F + 0.03F;
+
+                    if (combinedRed > 1.0F)
+                    {
+                        combinedRed = 1.0F;
+                    }
+
+                    if (combinedGreen > 1.0F)
+                    {
+                        combinedGreen = 1.0F;
+                    }
+
+                    if (combinedBlue > 1.0F)
+                    {
+                        combinedBlue = 1.0F;
+                    }
+
+                    if (combinedRed < 0.0F)
+                    {
+                        combinedRed = 0.0F;
+                    }
+
+                    if (combinedGreen < 0.0F)
+                    {
+                        combinedGreen = 0.0F;
+                    }
+
+                    if (combinedBlue < 0.0F)
+                    {
+                        combinedBlue = 0.0F;
+                    }
+
+                    int redPixel = (int) (combinedRed * 255.0F);
+                    int greenPixel = (int) (combinedGreen * 255.0F);
+                    int bluePixel = (int) (combinedBlue * 255.0F);
+
+                    int result = -16777216 | redPixel << 16 | greenPixel << 8 | bluePixel;
+
+                    accessor.getLightmapColors()[i] = result;
                 }
+
+                accessor.getLightmapTexture().updateDynamicTexture();
+                accessor.setLightmapUpdateNeeded(false);
+                minecraft.mcProfiler.endSection();
             }
         }
     }
