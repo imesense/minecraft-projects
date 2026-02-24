@@ -134,6 +134,10 @@ public abstract class EntityRendererRework
                 red = red * (1.0F - nightVisionStrength) + red * maxScale * nightVisionStrength;
                 green = green * (1.0F - nightVisionStrength) + green * maxScale * nightVisionStrength;
                 blue = blue * (1.0F - nightVisionStrength) + blue * maxScale * nightVisionStrength;
+
+                if (red > 1.0F) red = 1.0F;
+                if (green > 1.0F) green = 1.0F;
+                if (blue > 1.0F) blue = 1.0F;
             }
 
             red = MathHelper.clamp(red, 0F, 1F);
