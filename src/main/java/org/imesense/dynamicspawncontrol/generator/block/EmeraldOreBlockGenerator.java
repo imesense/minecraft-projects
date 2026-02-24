@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.blockworldgenerator;
+package org.imesense.dynamicspawncontrol.generator.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -16,19 +16,19 @@ import java.util.Objects;
 import java.util.Random;
 
 @InitLog
-public final class BlockNetherRack implements IWorldGenerator
+public final class EmeraldOreBlockGenerator implements IWorldGenerator
 {
-    private final WorldGenerator CLASS_NETHER_RACK_GENERATOR;
+    private final WorldGenerator CLASS_EMERALD_ORE_GENERATOR;
 
-    public BlockNetherRack()
+    public EmeraldOreBlockGenerator()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
             CodeGeneric.logInitialization(this.getClass());
         }
 
-        CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 5);
+        CLASS_EMERALD_ORE_GENERATOR = new WorldGenMinable(
+                Objects.requireNonNull(Block.getBlockFromName("emerald_ore")).getDefaultState(), 5);
     }
 
     private void run(WorldGenerator worldGenerator,
@@ -59,10 +59,10 @@ public final class BlockNetherRack implements IWorldGenerator
         {
             case 0:
                 this.run(
-                        CLASS_NETHER_RACK_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.NETHER_RACK.getChanceSpawn(),
-                        BlockWorldGeneratorData.NETHER_RACK.getMinHeight(),
-                        BlockWorldGeneratorData.NETHER_RACK.getMaxHeight()
+                        CLASS_EMERALD_ORE_GENERATOR, world, random, chunkX, chunkZ,
+                        BlockWorldGeneratorData.EMERALD_ORE.getChanceSpawn(),
+                        BlockWorldGeneratorData.EMERALD_ORE.getMinHeight(),
+                        BlockWorldGeneratorData.EMERALD_ORE.getMaxHeight()
                 );
 
                 break;

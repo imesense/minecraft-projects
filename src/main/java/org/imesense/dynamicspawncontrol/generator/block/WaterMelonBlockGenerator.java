@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.blockworldgenerator;
+package org.imesense.dynamicspawncontrol.generator.block;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,9 +13,9 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.Random;
 
 @InitLog
-public final class BlockWaterMelon implements IWorldGenerator
+public final class WaterMelonBlockGenerator implements IWorldGenerator
 {
-    public BlockWaterMelon()
+    public WaterMelonBlockGenerator()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

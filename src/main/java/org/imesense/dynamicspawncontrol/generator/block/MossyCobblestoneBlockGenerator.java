@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.blockworldgenerator;
+package org.imesense.dynamicspawncontrol.generator.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -16,24 +16,23 @@ import java.util.Objects;
 import java.util.Random;
 
 @InitLog
-public final class BlockEmeraldOre implements IWorldGenerator
+public final class MossyCobblestoneBlockGenerator implements IWorldGenerator
 {
-    private final WorldGenerator CLASS_EMERALD_ORE_GENERATOR;
+    private final WorldGenerator CLASS_MOSSY_COBBLESTONE_GENERATOR;
 
-    public BlockEmeraldOre()
+    public MossyCobblestoneBlockGenerator()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
             CodeGeneric.logInitialization(this.getClass());
         }
 
-        CLASS_EMERALD_ORE_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("emerald_ore")).getDefaultState(), 5);
+        CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
+                Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 5);
     }
 
     private void run(WorldGenerator worldGenerator,
-                     World world, Random random,
-                     int chunkX, int chunkZ, int chance,
+                     World world, Random random, int chunkX, int chunkZ, int chance,
                      int minHeight, int maxHeight)
     {
         int heightDiff = maxHeight - minHeight + 1;
@@ -59,10 +58,10 @@ public final class BlockEmeraldOre implements IWorldGenerator
         {
             case 0:
                 this.run(
-                        CLASS_EMERALD_ORE_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.EMERALD_ORE.getChanceSpawn(),
-                        BlockWorldGeneratorData.EMERALD_ORE.getMinHeight(),
-                        BlockWorldGeneratorData.EMERALD_ORE.getMaxHeight()
+                        CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
+                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getChanceSpawn(),
+                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMinHeight(),
+                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMaxHeight()
                 );
 
                 break;

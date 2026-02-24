@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.lootboxgenerator;
+package org.imesense.dynamicspawncontrol.generator;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.parser.ParserEventLootBoxInWorld;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -20,7 +19,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.*;
 
 @InitLog
-public final class LootBoxInWorld implements IWorldGenerator
+public final class LootBoxInWorldGenerator implements IWorldGenerator
 {
     private static final double OVERALL_CHANCE_PER_CHUNK = 0.01;
 
@@ -30,7 +29,7 @@ public final class LootBoxInWorld implements IWorldGenerator
     private static final boolean DEBUG =
             DebugConfig.getInstance(DebugConfig.class).isShowLoggingInEventLootBoxInWorld();
 
-    public LootBoxInWorld()
+    public LootBoxInWorldGenerator()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

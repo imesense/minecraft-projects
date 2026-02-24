@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.blockworldgenerator;
+package org.imesense.dynamicspawncontrol.generator.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -16,23 +16,23 @@ import java.util.Objects;
 import java.util.Random;
 
 @InitLog
-public final class BlockMossyCobblestone implements IWorldGenerator
+public final class MonsterEggBlockGenerator implements IWorldGenerator
 {
-    private final WorldGenerator CLASS_MOSSY_COBBLESTONE_GENERATOR;
+    private final WorldGenerator CLASS_MONSTER_EGG_GENERATOR;
 
-    public BlockMossyCobblestone()
+    public MonsterEggBlockGenerator()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
             CodeGeneric.logInitialization(this.getClass());
         }
 
-        CLASS_MOSSY_COBBLESTONE_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("mossy_cobblestone")).getDefaultState(), 5);
+        CLASS_MONSTER_EGG_GENERATOR = new WorldGenMinable(
+                Objects.requireNonNull(Block.getBlockFromName("monster_egg")).getDefaultState(), 5);
     }
 
-    private void run(WorldGenerator worldGenerator,
-                     World world, Random random, int chunkX, int chunkZ, int chance,
+    private void run(WorldGenerator worldGenerator, World world,
+                     Random random, int chunkX, int chunkZ, int chance,
                      int minHeight, int maxHeight)
     {
         int heightDiff = maxHeight - minHeight + 1;
@@ -58,10 +58,10 @@ public final class BlockMossyCobblestone implements IWorldGenerator
         {
             case 0:
                 this.run(
-                        CLASS_MOSSY_COBBLESTONE_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getChanceSpawn(),
-                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMinHeight(),
-                        BlockWorldGeneratorData.MOSSY_COBBLESTONE.getMaxHeight()
+                        CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
+                        BlockWorldGeneratorData.MONSTER_EGG.getChanceSpawn(),
+                        BlockWorldGeneratorData.MONSTER_EGG.getMinHeight(),
+                        BlockWorldGeneratorData.MONSTER_EGG.getMaxHeight()
                 );
 
                 break;

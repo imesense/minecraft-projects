@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.blockworldgenerator;
+package org.imesense.dynamicspawncontrol.generator.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -16,23 +16,24 @@ import java.util.Objects;
 import java.util.Random;
 
 @InitLog
-public final class BlockMonsterEgg implements IWorldGenerator
+public final class NetherRackBlockGenerator implements IWorldGenerator
 {
-    private final WorldGenerator CLASS_MONSTER_EGG_GENERATOR;
+    private final WorldGenerator CLASS_NETHER_RACK_GENERATOR;
 
-    public BlockMonsterEgg()
+    public NetherRackBlockGenerator()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
             CodeGeneric.logInitialization(this.getClass());
         }
 
-        CLASS_MONSTER_EGG_GENERATOR = new WorldGenMinable(
-                Objects.requireNonNull(Block.getBlockFromName("monster_egg")).getDefaultState(), 5);
+        CLASS_NETHER_RACK_GENERATOR = new WorldGenMinable(
+                Objects.requireNonNull(Block.getBlockFromName("netherrack")).getDefaultState(), 5);
     }
 
-    private void run(WorldGenerator worldGenerator, World world,
-                     Random random, int chunkX, int chunkZ, int chance,
+    private void run(WorldGenerator worldGenerator,
+                     World world, Random random,
+                     int chunkX, int chunkZ, int chance,
                      int minHeight, int maxHeight)
     {
         int heightDiff = maxHeight - minHeight + 1;
@@ -58,10 +59,10 @@ public final class BlockMonsterEgg implements IWorldGenerator
         {
             case 0:
                 this.run(
-                        CLASS_MONSTER_EGG_GENERATOR, world, random, chunkX, chunkZ,
-                        BlockWorldGeneratorData.MONSTER_EGG.getChanceSpawn(),
-                        BlockWorldGeneratorData.MONSTER_EGG.getMinHeight(),
-                        BlockWorldGeneratorData.MONSTER_EGG.getMaxHeight()
+                        CLASS_NETHER_RACK_GENERATOR, world, random, chunkX, chunkZ,
+                        BlockWorldGeneratorData.NETHER_RACK.getChanceSpawn(),
+                        BlockWorldGeneratorData.NETHER_RACK.getMinHeight(),
+                        BlockWorldGeneratorData.NETHER_RACK.getMaxHeight()
                 );
 
                 break;

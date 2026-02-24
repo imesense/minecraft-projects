@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.decorworldgenerator;
+package org.imesense.dynamicspawncontrol.generator.block;
 
 import net.minecraft.block.BlockSkull;
 import net.minecraft.init.Blocks;
@@ -18,9 +18,9 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import java.util.Random;
 
 @InitLog
-public final class CaveDecorGenerator implements IWorldGenerator
+public final class CaveDecorBlockGenerator implements IWorldGenerator
 {
-    public CaveDecorGenerator()
+    public CaveDecorBlockGenerator()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
