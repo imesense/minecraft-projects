@@ -26,6 +26,7 @@ public final class MixinLoadLog
         "assets/mixins/minecraft/gui/GuiIngameForge.Update.json",
         "assets/mixins/minecraft/item/ItemFood.Update.json",
         "assets/mixins/minecraft/renderer/EntityRenderer.Rework.json",
+        "assets/mixins/minecraft/block/BlockFire.Fix.json",
         "assets/mixins/specialmobs/SpecialMobReplacer.Fix.json",
         "assets/mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
         "assets/mixins/srparasites/util/ParasiteEventEntity.Update.json",

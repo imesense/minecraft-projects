@@ -30,6 +30,7 @@ public enum DynamicSpawnControlInitMixins
     GUI_INGAME_UPDATE(false, "assets\\mixins\\minecraft\\gui\\GuiIngameForge.Update.json"),
     ITEM_FOOD_UPDATE(false, "assets\\mixins\\minecraft\\item\\ItemFood.Update.json"),
     ENTITY_RENDERER_REWORK(false, "assets\\mixins\\minecraft\\renderer\\EntityRenderer.Rework.json"),
+    BLOCK_FIRE_FIX(false, "assets\\mixins\\minecraft\\block\\BlockFire.Fix.json"),
 
     // Special Mobs
     SPECIALMOBS_REPLACER_FIX(true, "assets\\mixins\\specialmobs\\SpecialMobReplacer.Fix.json", "specialmobs"),
