@@ -8,6 +8,9 @@ import com.google.gson.*;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class NightRendererData
 {
@@ -16,6 +19,11 @@ public final class NightRendererData
     private static final float[] DEFAULT_MOON_PHASE_FACTORS = new float[]
     {
         0.1F, 0.075F, 0.050F, 0.250F, 0.0F, 0.0250F, 0.050F, 0.0750F
+    };
+
+    private static final int[] DEFAULT_BLACKLIST_DIMENSIONS = new int[]
+    {
+        -1, 1, 7, 420, 421, 422, 423, 424, 425, 426, 427
     };
 
     private static final int EXPECTED_MOON_PHASES_COUNT = 8;
@@ -29,6 +37,15 @@ public final class NightRendererData
 
     @Getter
     private static boolean loadedFromFile = false;
+
+    private static Set<Integer> blacklistedDimensions = Arrays.stream(DEFAULT_BLACKLIST_DIMENSIONS)
+            .boxed()
+            .collect(Collectors.toCollection(HashSet::new));
+
+    public static int[] getDefaultBlacklistDimensions()
+    {
+        return DEFAULT_BLACKLIST_DIMENSIONS.clone();
+    }
 
     public static boolean getDefaultEnableDarkNight()
     {
@@ -50,13 +67,9 @@ public final class NightRendererData
         return moonPhaseFactorsArray.clone();
     }
 
-    public static float getMoonPhaseFactor(int phase)
+    public static boolean isDimensionBlacklisted(int dimensionId)
     {
-        if (phase >= 0 && phase < moonPhaseFactorsArray.length)
-        {
-            return moonPhaseFactorsArray[phase];
-        }
-        return 0.0F;
+        return blacklistedDimensions.contains(dimensionId);
     }
 
     public static void loadFromFile(String filePath)
@@ -139,13 +152,30 @@ public final class NightRendererData
                     moonPhaseFactorsArray = newArray;
                 }
 
+                if (configObj.has("blacklistedDimensions"))
+                {
+                    JsonArray blacklistArray = configObj.getAsJsonArray("blacklistedDimensions");
+                    Set<Integer> newBlacklist = new HashSet<>();
+
+                    for (int i = 0; i < blacklistArray.size(); i++)
+                    {
+                        newBlacklist.add(blacklistArray.get(i).getAsInt());
+                    }
+
+                    blacklistedDimensions = newBlacklist;
+
+                    EarlyLogBuffer.log(Log.INFO,
+                            "Loaded blacklisted dimensions: " + blacklistedDimensions);
+                }
+
                 configLoaded = true;
                 loadedFromFile = true;
 
                 EarlyLogBuffer.log(Log.INFO,
                         "Loaded night renderer config: enableDarkNight=" + enableDarkNight +
                                 ", dependenceLightMoonPhase=" + dependenceLightMoonPhase +
-                                ", moonPhaseFactors=" + Arrays.toString(moonPhaseFactorsArray));
+                                ", moonPhaseFactors=" + Arrays.toString(moonPhaseFactorsArray) +
+                                ", blacklistedDimensions=" + blacklistedDimensions);
                 break;
             }
 
@@ -170,6 +200,10 @@ public final class NightRendererData
         enableDarkNight = DEFAULT_ENABLE_DARK_NIGHT;
         dependenceLightMoonPhase = DEFAULT_DEPENDENCE_MOON;
         moonPhaseFactorsArray = DEFAULT_MOON_PHASE_FACTORS.clone();
+
+        blacklistedDimensions = Arrays.stream(DEFAULT_BLACKLIST_DIMENSIONS)
+                .boxed().collect(Collectors.toCollection(HashSet::new));
+
         loadedFromFile = false;
 
         EarlyLogBuffer.log(Log.INFO, "Reset night renderer config to defaults");

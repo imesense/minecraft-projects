@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.mixins.minecraft.world;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
@@ -14,10 +15,16 @@ import org.spongepowered.asm.mixin.Unique;
 public abstract class WorldUpdate
 {
     @Unique
-    private static final boolean DEBUG_MODE = false;
+    private static float[] cachedMoonPhaseFactors;
 
     @Unique
-    private static float[] cachedMoonPhaseFactors;
+    private static final boolean DEBUG_MODE = true;
+
+    @Unique
+    private static boolean useVanillaLighting = false;
+
+    @Unique
+    private static int lastCheckedDimension = Integer.MIN_VALUE;
 
     @Unique
     private static float[] getMoonPhaseFactors()
@@ -30,10 +37,37 @@ public abstract class WorldUpdate
         return cachedMoonPhaseFactors;
     }
 
+    @Unique
+    private float calculateVanillaBrightness(float baseBrightness)
+    {
+        return baseBrightness * 0.8f + 0.2f;
+    }
+
+    @Unique
+    private float calculateDarkNightBrightness(float baseBrightness, int moonPhase)
+    {
+        float[] moonPhaseFactors = getMoonPhaseFactors();
+        float phaseFactor = (moonPhase >= 0 && moonPhase < moonPhaseFactors.length)
+                ? moonPhaseFactors[moonPhase]
+                : 0.f;
+
+        return MathHelper.clamp(baseBrightness + phaseFactor, 0.f, 1.f);
+    }
+
     @Overwrite
     public float getSunBrightnessBody(float partialTicks)
     {
+        World world = (World) (Object) this;
         IWorldAccessor worldAccessor = (IWorldAccessor) this;
+
+        float gamma = Minecraft.getMinecraft().gameSettings.gammaSetting;
+
+        int currentDimension = world.provider.getDimension();
+        if (currentDimension != lastCheckedDimension)
+        {
+            useVanillaLighting = NightRendererData.isDimensionBlacklisted(currentDimension);
+            lastCheckedDimension = currentDimension;
+        }
 
         float celestialAngle = worldAccessor.invokeGetCelestialAngle(partialTicks);
         float baseBrightness = 1.f - (MathHelper.cos(celestialAngle * ((float)Math.PI * 2.f)) * 2.f + 0.2f);
@@ -49,16 +83,21 @@ public abstract class WorldUpdate
 
         boolean enableDarkNight = NightRendererData.isEnableDarkNight();
 
-        float[] moonPhaseFactors = getMoonPhaseFactors();
-        int moonPhase = worldAccessor.invokeGetMoonPhase();
+        float finalBrightness;
 
-        float phaseFactor = (moonPhase >= 0 && moonPhase < moonPhaseFactors.length)
-                ? moonPhaseFactors[moonPhase]
-                : 0.f;
-
-        float finalBrightness = enableDarkNight
-                ? MathHelper.clamp(baseBrightness + phaseFactor, 0.f, 1.f)
-                : (baseBrightness * 0.8f + 0.2f);
+        if (useVanillaLighting)
+        {
+            finalBrightness = calculateVanillaBrightness(baseBrightness);
+        }
+        else if (enableDarkNight)
+        {
+            int moonPhase = worldAccessor.invokeGetMoonPhase();
+            finalBrightness = calculateDarkNightBrightness(baseBrightness, moonPhase);
+        }
+        else
+        {
+            finalBrightness = calculateVanillaBrightness(baseBrightness);
+        }
 
         if (DEBUG_MODE)
         {

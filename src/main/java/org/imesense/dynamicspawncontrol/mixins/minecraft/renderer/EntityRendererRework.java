@@ -5,14 +5,24 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
+import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererRework
 {
+    @Unique
+    private static boolean useVanillaLighting = false;
+
+    @Unique
+    private static int lastCheckedDimension = Integer.MIN_VALUE;
+
     @Overwrite
     private void updateLightmap(float partialTicks)
     {
@@ -23,9 +33,22 @@ public abstract class EntityRendererRework
         {
             minecraft.mcProfiler.startSection("lightTex");
             World world = minecraft.world;
+            WorldProvider worldProvider = world.provider;
 
             if (world != null)
             {
+                int currentDimension = world.provider.getDimension();
+                if (currentDimension != lastCheckedDimension)
+                {
+                    useVanillaLighting = NightRendererData.isDimensionBlacklisted(currentDimension);
+                    lastCheckedDimension = currentDimension;
+
+                    if (useVanillaLighting)
+                    {
+                        EarlyLogBuffer.log(Log.DEBUG, "[DSC] Dimension " + currentDimension + " is blacklisted - dark night disabled");
+                    }
+                }
+
                 float sunBrightness = world.getSunBrightness(1.f);
 
                 float upMultiplier;
@@ -43,7 +66,7 @@ public abstract class EntityRendererRework
                 }
                 else
                 {
-                    if (darkNightEnabled)
+                    if (darkNightEnabled || !useVanillaLighting)
                     {
                         adjustedSunBrightness = sunBrightness;
                         upMultiplier = 1.0F;

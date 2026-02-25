@@ -67,8 +67,16 @@ public final class NightRendererConfig extends BaseMixinConfig
             {
                 moonArray.add(factor);
             }
-
             configObject.add("moonPhaseFactorsArray", moonArray);
+
+            JsonArray blacklistArray = new JsonArray();
+            int[] defaultBlacklist = NightRendererData.getDefaultBlacklistDimensions();
+
+            for (int dimensionId : defaultBlacklist)
+            {
+                blacklistArray.add(dimensionId);
+            }
+            configObject.add("blacklistedDimensions", blacklistArray);
 
             wrapperObject.add("DSCNightRenderer", configObject);
             rootArray.add(wrapperObject);
@@ -82,6 +90,8 @@ public final class NightRendererConfig extends BaseMixinConfig
             }
 
             EarlyLogBuffer.log(Log.INFO, "Created night renderer config at: " + activeConfigPath);
+            EarlyLogBuffer.log(Log.INFO, "Default blacklisted dimensions: " +
+                    java.util.Arrays.toString(defaultBlacklist));
 
             NightRendererData.loadFromFile(activeConfigPath);
         }
