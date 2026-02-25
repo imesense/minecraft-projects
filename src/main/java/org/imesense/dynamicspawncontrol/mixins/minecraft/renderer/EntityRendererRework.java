@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -32,6 +33,7 @@ public abstract class EntityRendererRework
                 float downAdditive;
                 float adjustedSunBrightness;
 
+                boolean darkNightEnabled = NightRendererData.isEnableDarkNight();
                 boolean nightVisionActive = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
 
                 if (nightVisionActive)
@@ -42,9 +44,18 @@ public abstract class EntityRendererRework
                 }
                 else
                 {
-                    adjustedSunBrightness = sunBrightness * 1.0F + 0.0F;
-                    upMultiplier = 1.0F;
-                    downAdditive = 0.0F;
+                    if (darkNightEnabled)
+                    {
+                        adjustedSunBrightness = sunBrightness * 1.0F + 0.0F;
+                        upMultiplier = 1.0F;
+                        downAdditive = 0.0F;
+                    }
+                    else
+                    {
+                        adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
+                        upMultiplier = 0.96F;
+                        downAdditive = 0.03F;
+                    }
                 }
 
                 for (int i = 0; i < 256; ++i)
@@ -100,7 +111,7 @@ public abstract class EntityRendererRework
 
                     if (nightVisionActive)
                     {
-                        float nightVisionStrength = getNightVisionBrightness(minecraft.player, partialTicks);
+                        float nightVisionStrength = accessor.invokeGetNightVisionBrightness(minecraft.player, partialTicks);
                         float maxComponent = 1.0F / combinedRed;
 
                         if (maxComponent > 1.0F / combinedGreen)
@@ -204,11 +215,5 @@ public abstract class EntityRendererRework
                 minecraft.mcProfiler.endSection();
             }
         }
-    }
-
-    private float getNightVisionBrightness(EntityLivingBase entity, float partialTicks)
-    {
-        int duration = entity.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
-        return duration > 200 ? 1.0F : 0.7F + MathHelper.sin(((float)duration - partialTicks) * (float)Math.PI * 0.2F) * 0.3F;
     }
 }
