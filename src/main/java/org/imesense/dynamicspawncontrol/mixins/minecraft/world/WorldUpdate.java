@@ -14,49 +14,57 @@ import org.spongepowered.asm.mixin.Unique;
 public abstract class WorldUpdate
 {
     @Unique
-    private static final boolean IS_DEBUG = false;
+    private static final boolean DEBUG_MODE = false;
 
     @Unique
-    private static float[] moonPhaseFactors;
+    private static float[] cachedMoonPhaseFactors;
 
     @Unique
     private static float[] getMoonPhaseFactors()
     {
-        if (moonPhaseFactors == null)
+        if (cachedMoonPhaseFactors == null)
         {
-            moonPhaseFactors = NightRendererData.getMoonPhaseFactorsArray();
+            cachedMoonPhaseFactors = NightRendererData.getMoonPhaseFactorsArray();
         }
 
-        return moonPhaseFactors;
+        return cachedMoonPhaseFactors;
     }
 
     @Overwrite
     public float getSunBrightnessBody(float partialTicks)
     {
-        IWorldAccessor accessor = (IWorldAccessor) this;
+        IWorldAccessor worldAccessor = (IWorldAccessor) this;
 
-        float f = accessor.invokeGetCelestialAngle(partialTicks);
-        float f1 = 1.f - (MathHelper.cos(f * ((float)Math.PI * 2.f)) * 2.f + 0.2f);
+        float celestialAngle = worldAccessor.invokeGetCelestialAngle(partialTicks);
+        float baseBrightness = 1.f - (MathHelper.cos(celestialAngle * ((float)Math.PI * 2.f)) * 2.f + 0.2f);
 
-        f1 = MathHelper.clamp(f1, 0.f, 1.f);
-        f1 = 1.f - f1;
+        baseBrightness = MathHelper.clamp(baseBrightness, 0.f, 1.f);
+        baseBrightness = 1.f - baseBrightness;
 
-        f1 = (float)((double)f1 * (1.d - (double)(accessor.invokeGetRainStrength(partialTicks) * 5.f) / 16.d));
-        f1 = (float)((double)f1 * (1.d - (double)(accessor.invokeGetThunderStrength(partialTicks) * 5.f) / 16.d));
+        float rainStrength = worldAccessor.invokeGetRainStrength(partialTicks);
+        float thunderStrength = worldAccessor.invokeGetThunderStrength(partialTicks);
 
-        boolean enableDarkRenderer = NightRendererData.isEnableDarkNight();
+        baseBrightness = (float)((double)baseBrightness * (1.d - (double)(rainStrength * 5.f) / 16.d));
+        baseBrightness = (float)((double)baseBrightness * (1.d - (double)(thunderStrength * 5.f) / 16.d));
 
-        float[] factors = getMoonPhaseFactors();
-        int moonPhase = accessor.invokeGetMoonPhase();
-        float phaseFactor = (moonPhase >= 0 && moonPhase < factors.length) ? factors[moonPhase] : 0.f;
+        boolean enableDarkNight = NightRendererData.isEnableDarkNight();
 
-        float result = enableDarkRenderer ? MathHelper.clamp(f1 + phaseFactor, 0.f, 1.f) : (f1 * 0.8f + 0.2f);
+        float[] moonPhaseFactors = getMoonPhaseFactors();
+        int moonPhase = worldAccessor.invokeGetMoonPhase();
 
-        if (IS_DEBUG)
+        float phaseFactor = (moonPhase >= 0 && moonPhase < moonPhaseFactors.length)
+                ? moonPhaseFactors[moonPhase]
+                : 0.f;
+
+        float finalBrightness = enableDarkNight
+                ? MathHelper.clamp(baseBrightness + phaseFactor, 0.f, 1.f)
+                : (baseBrightness * 0.8f + 0.2f);
+
+        if (DEBUG_MODE)
         {
-            EarlyLogBuffer.log(Log.DEBUG, "result light: " + result);
+            EarlyLogBuffer.log(Log.DEBUG, "Final brightness: " + finalBrightness);
         }
 
-        return result;
+        return finalBrightness;
     }
 }
