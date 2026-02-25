@@ -2,9 +2,6 @@ package org.imesense.dynamicspawncontrol.core.register.pluginconfig;
 
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
-import org.imesense.dynamicspawncontrol.core.pluginconfig.darkness.PluginDarknessConfig;
-import org.imesense.dynamicspawncontrol.core.pluginconfig.timecontrol.PluginTimeControlConfig;
-import org.imesense.dynamicspawncontrol.core.pluginconfig.webslinger.PluginWebslingerConfig;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
@@ -24,9 +21,7 @@ public final class PluginConfigRegister extends BaseConfigRegister
 
     private static final Class<?>[] PLUGIN_CONFIG_CLASSES =
     {
-        PluginDarknessConfig.class,
-        PluginWebslingerConfig.class,
-        PluginTimeControlConfig.class
+
     };
 
     @Override
