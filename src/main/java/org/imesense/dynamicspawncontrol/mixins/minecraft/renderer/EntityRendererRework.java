@@ -33,7 +33,25 @@ public abstract class EntityRendererRework
             if (world != null)
             {
                 float sunBrightness = world.getSunBrightness(1.0F);
-                float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
+
+                float upMultiplier;
+                float downAdditive;
+                float adjustedSunBrightness;
+
+                boolean nightVisionActive = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
+
+                if (nightVisionActive)
+                {
+                    adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
+                    upMultiplier = 0.96F;
+                    downAdditive = 0.03F;
+                }
+                else
+                {
+                    adjustedSunBrightness = sunBrightness * 1.0F + 0.0F;
+                    upMultiplier = 1.0F;
+                    downAdditive = 0.0F;
+                }
 
                 for (int i = 0; i < 256; ++i)
                 {
@@ -54,9 +72,9 @@ public abstract class EntityRendererRework
                     float combinedGreen = skyGreen + blockRed;
                     float combinedBlue = skyLight + blockGreen;
 
-                    combinedRed = combinedRed * 0.96F + 0.03F;
-                    combinedGreen = combinedGreen * 0.96F + 0.03F;
-                    combinedBlue = combinedBlue * 0.96F + 0.03F;
+                    combinedRed = combinedRed * upMultiplier + downAdditive;
+                    combinedGreen = combinedGreen * upMultiplier + downAdditive;
+                    combinedBlue = combinedBlue * upMultiplier + downAdditive;
 
                     if (accessor.getBossColorModifier() > 0.0F)
                     {
@@ -86,7 +104,7 @@ public abstract class EntityRendererRework
                     combinedGreen = MathHelper.clamp(combinedGreen, 0f, 1f);
                     combinedBlue = MathHelper.clamp(combinedBlue, 0f, 1f);
 
-                    if (minecraft.player.isPotionActive(MobEffects.NIGHT_VISION))
+                    if (nightVisionActive)
                     {
                         float nightVisionStrength = getNightVisionBrightness(minecraft.player, partialTicks);
                         float maxComponent = 1.0F / combinedRed;
@@ -135,9 +153,18 @@ public abstract class EntityRendererRework
                     combinedGreen = combinedGreen * (1.0F - gamma) + inverseGreen * gamma;
                     combinedBlue = combinedBlue * (1.0F - gamma) + inverseBlue * gamma;
 
-                    combinedRed = combinedRed * 0.96F + 0.03F;
-                    combinedGreen = combinedGreen * 0.96F + 0.03F;
-                    combinedBlue = combinedBlue * 0.96F + 0.03F;
+                    if (nightVisionActive)
+                    {
+                        combinedRed = combinedRed * 0.96F + 0.03F;
+                        combinedGreen = combinedGreen * 0.96F + 0.03F;
+                        combinedBlue = combinedBlue * 0.96F + 0.03F;
+                    }
+                    else
+                    {
+                        combinedRed = MathHelper.clamp(combinedRed, 0f, 1f);
+                        combinedGreen = MathHelper.clamp(combinedGreen, 0f, 1f);
+                        combinedBlue = MathHelper.clamp(combinedBlue, 0f, 1f);
+                    }
 
                     if (combinedRed > 1.0F)
                     {

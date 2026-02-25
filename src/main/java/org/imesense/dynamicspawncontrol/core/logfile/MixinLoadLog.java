@@ -21,6 +21,7 @@ public final class MixinLoadLog
         "assets/mixins/ic2expwirelessindustry/WorldLoadUnloadHandler.Fix.json",
         "assets/mixins/interfaces/IEntityRendererAccessor.json",
         "assets/mixins/interfaces/IGuiIngameAccessor.json",
+        "assets/mixins/interfaces/IWorldAccessor.json",
         "assets/mixins/minecraft/enchantment/Enchantment.Update.json",
         "assets/mixins/minecraft/food/FoodStats.Update.json",
         "assets/mixins/minecraft/gui/GuiIngameForge.Update.json",

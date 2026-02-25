@@ -23,6 +23,7 @@ public enum DynamicSpawnControlInitMixins
     // Interfaces
     ENTITY_RENDERER_ACCESSOR(false, "assets\\mixins\\interfaces\\IEntityRendererAccessor.json"),
     GUI_INGAME_ACCESSOR(false, "assets\\mixins\\interfaces\\IGuiIngameAccessor.json"),
+    WORLD_ACCESSOR(false, "assets\\mixins\\interfaces\\IWorldAccessor.json"),
 
     // Minecraft
     ENCHANTMENT_UPDATE(false, "assets\\mixins\\minecraft\\enchantment\\Enchantment.Update.json"),
@@ -31,6 +32,7 @@ public enum DynamicSpawnControlInitMixins
     ITEM_FOOD_UPDATE(false, "assets\\mixins\\minecraft\\item\\ItemFood.Update.json"),
     ENTITY_RENDERER_REWORK(false, "assets\\mixins\\minecraft\\renderer\\EntityRenderer.Rework.json"),
     BLOCK_FIRE_FIX(false, "assets\\mixins\\minecraft\\block\\BlockFire.Fix.json"),
+    WORLD_UPDATE(false, "assets\\mixins\\minecraft\\world\\World.Update.json"),
 
     // Special Mobs
     SPECIALMOBS_REPLACER_FIX(true, "assets\\mixins\\specialmobs\\SpecialMobReplacer.Fix.json", "specialmobs"),
