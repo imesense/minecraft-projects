@@ -127,7 +127,8 @@ dependencies
     implementation fg.deobf("curse.maven:official-divinerpg-363543:3081433")
 
     // Use core mod #2 SRParasites
-    implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:7578038")
+    implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:7622368")
+    implementation fg.deobf("curse.maven:scape-and-run-parasites-extra-1140227:7603084")
 
     // Use Byte buddy lib
     implementation 'net.bytebuddy:byte-buddy:1.12.9'
