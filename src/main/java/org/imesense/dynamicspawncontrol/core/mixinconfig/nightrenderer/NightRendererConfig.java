@@ -57,17 +57,18 @@ public final class NightRendererConfig extends BaseMixinConfig
             JsonObject wrapperObject = new JsonObject();
             JsonObject configObject = new JsonObject();
 
-            // Значения по умолчанию
-            configObject.addProperty("enableDarkNight", true);
-            configObject.addProperty("dependenceLightMoonPhase", true);
+            configObject.addProperty("enableDarkNight", NightRendererData.getDefaultEnableDarkNight());
+            configObject.addProperty("dependenceLightMoonPhase", NightRendererData.getDefaultDependenceMoon());
 
             JsonArray moonArray = new JsonArray();
-            double[] defaultFactors = {0.0, 0.075, 0.15, 0.225, 0.3};
-            for (double factor : defaultFactors)
+            float[] defaultFactors = NightRendererData.getDefaultMoonPhaseFactors();
+
+            for (float factor : defaultFactors)
             {
                 moonArray.add(factor);
             }
-            configObject.add("moonPhaseFactors", moonArray);
+
+            configObject.add("moonPhaseFactorsArray", moonArray);
 
             wrapperObject.add("DSCNightRenderer", configObject);
             rootArray.add(wrapperObject);
@@ -81,7 +82,6 @@ public final class NightRendererConfig extends BaseMixinConfig
             }
 
             EarlyLogBuffer.log(Log.INFO, "Created night renderer config at: " + activeConfigPath);
-            EarlyLogBuffer.log(Log.INFO, "Default values: enableDarkNight=true, dependenceLightMoonPhase=true");
 
             NightRendererData.loadFromFile(activeConfigPath);
         }
@@ -89,7 +89,6 @@ public final class NightRendererConfig extends BaseMixinConfig
         {
             EarlyLogBuffer.log(Log.ERROR,
                     "Failed to create night renderer config: " + exception.getMessage());
-
             exception.printStackTrace();
         }
     }

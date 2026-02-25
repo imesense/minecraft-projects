@@ -1,121 +1,167 @@
 package org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer;
 
+import lombok.Getter;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import com.google.gson.*;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.Arrays;
 
 public final class NightRendererData
 {
     private static final boolean DEFAULT_ENABLE_DARK_NIGHT = true;
     private static final boolean DEFAULT_DEPENDENCE_MOON = true;
-    private static final double[] DEFAULT_MOON_FACTORS = {0.0, 0.075, 0.15, 0.225, 0.3};
+    private static final float[] DEFAULT_MOON_PHASE_FACTORS = new float[]
+    {
+        0.1F, 0.075F, 0.050F, 0.250F, 0.0F, 0.0250F, 0.050F, 0.0750F
+    };
 
+    private static final int EXPECTED_MOON_PHASES_COUNT = 8;
+
+    @Getter
     private static boolean enableDarkNight = DEFAULT_ENABLE_DARK_NIGHT;
-    private static boolean dependenceLightMoonPhase = DEFAULT_DEPENDENCE_MOON;
-    private static double[] moonPhaseFactors = DEFAULT_MOON_FACTORS.clone();
 
-    @lombok.Getter
+    @Getter
+    private static boolean dependenceLightMoonPhase = DEFAULT_DEPENDENCE_MOON;
+    private static float[] moonPhaseFactorsArray = DEFAULT_MOON_PHASE_FACTORS.clone();
+
+    @Getter
     private static boolean loadedFromFile = false;
 
-    public static boolean isEnableDarkNight()
+    public static boolean getDefaultEnableDarkNight()
     {
-        return enableDarkNight;
+        return DEFAULT_ENABLE_DARK_NIGHT;
     }
 
-    public static boolean isDependenceLightMoonPhase()
+    public static boolean getDefaultDependenceMoon()
     {
-        return dependenceLightMoonPhase;
+        return DEFAULT_DEPENDENCE_MOON;
     }
 
-    public static double[] getMoonPhaseFactors()
+    public static float[] getDefaultMoonPhaseFactors()
     {
-        return moonPhaseFactors.clone();
+        return DEFAULT_MOON_PHASE_FACTORS.clone();
     }
 
-    public static float getMoonPhaseFactor(float moonPhase)
+    public static float[] getMoonPhaseFactorsArray()
     {
-        if (moonPhaseFactors.length == 0)
-            return 0.0f;
+        return moonPhaseFactorsArray.clone();
+    }
 
-        int index = (int) Math.min(moonPhaseFactors.length - 1,
-                Math.round(moonPhase / (1.0f / moonPhaseFactors.length)));
-
-        return (float) moonPhaseFactors[index];
+    public static float getMoonPhaseFactor(int phase)
+    {
+        if (phase >= 0 && phase < moonPhaseFactorsArray.length)
+        {
+            return moonPhaseFactorsArray[phase];
+        }
+        return 0.0F;
     }
 
     public static void loadFromFile(String filePath)
     {
+        if (filePath == null)
+        {
+            EarlyLogBuffer.log(Log.ERROR, "Cannot load config: file path is null");
+            resetToDefault();
+            return;
+        }
+
         try
         {
             File configFile = new File(filePath);
 
-            if (configFile.exists())
+            if (!configFile.exists())
             {
-                JsonParser parser = new JsonParser();
-                JsonElement jsonElement = parser.parse(new FileReader(configFile));
+                EarlyLogBuffer.log(Log.WARN,
+                        "Night renderer config not found at: " + filePath + ", using defaults");
+                resetToDefault();
+                return;
+            }
 
-                if (jsonElement.isJsonArray())
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(new FileReader(configFile));
+
+            if (!jsonElement.isJsonArray())
+            {
+                throw new JsonParseException("Root element is not an array");
+            }
+
+            JsonArray array = jsonElement.getAsJsonArray();
+            boolean configLoaded = false;
+
+            for (JsonElement element : array)
+            {
+                if (!element.isJsonObject()) continue;
+
+                JsonObject obj = element.getAsJsonObject();
+
+                if (!obj.has("DSCNightRenderer")) continue;
+
+                JsonObject configObj = obj.getAsJsonObject("DSCNightRenderer");
+
+                if (configObj.has("enableDarkNight"))
                 {
-                    JsonArray array = jsonElement.getAsJsonArray();
-
-                    for (JsonElement element : array)
-                    {
-                        if (element.isJsonObject())
-                        {
-                            JsonObject obj = element.getAsJsonObject();
-
-                            if (obj.has("DSCNightRenderer"))
-                            {
-                                JsonObject configObj = obj.getAsJsonObject("DSCNightRenderer");
-
-                                if (configObj.has("enableDarkNight"))
-                                {
-                                    enableDarkNight = configObj.get("enableDarkNight").getAsBoolean();
-                                }
-
-                                if (configObj.has("dependenceLightMoonPhase"))
-                                {
-                                    dependenceLightMoonPhase = configObj.get("dependenceLightMoonPhase").getAsBoolean();
-                                }
-
-                                if (configObj.has("moonPhaseFactors"))
-                                {
-                                    JsonArray moonArray = configObj.getAsJsonArray("moonPhaseFactors");
-                                    moonPhaseFactors = new double[moonArray.size()];
-                                    for (int i = 0; i < moonArray.size(); i++)
-                                    {
-                                        moonPhaseFactors[i] = moonArray.get(i).getAsDouble();
-                                    }
-                                }
-
-                                loadedFromFile = true;
-
-                                EarlyLogBuffer.log(Log.INFO,
-                                        "Loaded night renderer config: enableDarkNight=" + enableDarkNight +
-                                                ", dependenceLightMoonPhase=" + dependenceLightMoonPhase);
-                                return;
-                            }
-                        }
-                    }
+                    enableDarkNight = configObj.get("enableDarkNight").getAsBoolean();
                 }
 
+                if (configObj.has("dependenceLightMoonPhase"))
+                {
+                    dependenceLightMoonPhase = configObj.get("dependenceLightMoonPhase").getAsBoolean();
+                }
+
+                if (configObj.has("moonPhaseFactorsArray"))
+                {
+                    JsonArray moonArray = configObj.getAsJsonArray("moonPhaseFactorsArray");
+
+                    if (moonArray.size() != EXPECTED_MOON_PHASES_COUNT)
+                    {
+                        EarlyLogBuffer.log(Log.WARN,
+                                "Invalid moon phase array size: " + moonArray.size() +
+                                        ", expected " + EXPECTED_MOON_PHASES_COUNT + ". Using defaults for missing values");
+                    }
+
+                    float[] newArray = new float[EXPECTED_MOON_PHASES_COUNT];
+
+                    for (int i = 0; i < EXPECTED_MOON_PHASES_COUNT; i++)
+                    {
+                        if (i < moonArray.size())
+                        {
+                            newArray[i] = moonArray.get(i).getAsFloat();
+                        }
+                        else
+                        {
+                            newArray[i] = DEFAULT_MOON_PHASE_FACTORS[i];
+                        }
+                    }
+
+                    moonPhaseFactorsArray = newArray;
+                }
+
+                configLoaded = true;
+                loadedFromFile = true;
+
+                EarlyLogBuffer.log(Log.INFO,
+                        "Loaded night renderer config: enableDarkNight=" + enableDarkNight +
+                                ", dependenceLightMoonPhase=" + dependenceLightMoonPhase +
+                                ", moonPhaseFactors=" + Arrays.toString(moonPhaseFactorsArray));
+                break;
+            }
+
+            if (!configLoaded)
+            {
                 EarlyLogBuffer.log(Log.WARN,
                         "Night renderer config has unknown format, using defaults");
-
                 resetToDefault();
-                loadedFromFile = false;
             }
         }
         catch (Exception exception)
         {
             EarlyLogBuffer.log(Log.ERROR,
                     "Failed to load night renderer config: " + exception.getMessage());
-
+            exception.printStackTrace();
             resetToDefault();
-            loadedFromFile = false;
         }
     }
 
@@ -123,27 +169,9 @@ public final class NightRendererData
     {
         enableDarkNight = DEFAULT_ENABLE_DARK_NIGHT;
         dependenceLightMoonPhase = DEFAULT_DEPENDENCE_MOON;
-        moonPhaseFactors = DEFAULT_MOON_FACTORS.clone();
+        moonPhaseFactorsArray = DEFAULT_MOON_PHASE_FACTORS.clone();
         loadedFromFile = false;
 
         EarlyLogBuffer.log(Log.INFO, "Reset night renderer config to defaults");
-    }
-
-    public static void setEnableDarkNight(boolean value)
-    {
-        enableDarkNight = value;
-        EarlyLogBuffer.log(Log.INFO, "Night renderer enableDarkNight set to: " + value);
-    }
-
-    public static void setDependenceLightMoonPhase(boolean value)
-    {
-        dependenceLightMoonPhase = value;
-        EarlyLogBuffer.log(Log.INFO, "Night renderer dependenceLightMoonPhase set to: " + value);
-    }
-
-    public static void setMoonPhaseFactors(double[] factors)
-    {
-        moonPhaseFactors = factors.clone();
-        EarlyLogBuffer.log(Log.INFO, "Night renderer moonPhaseFactors updated");
     }
 }

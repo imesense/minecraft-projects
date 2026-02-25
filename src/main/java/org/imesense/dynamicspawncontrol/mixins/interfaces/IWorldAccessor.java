@@ -18,4 +18,7 @@ public interface IWorldAccessor
 
     @Invoker("getCurrentMoonPhaseFactor")
     float invokeGetCurrentMoonPhaseFactor();
+
+    @Invoker("getMoonPhase")
+    int invokeGetMoonPhase();
 }
