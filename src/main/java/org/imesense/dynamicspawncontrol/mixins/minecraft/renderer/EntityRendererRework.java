@@ -1,20 +1,23 @@
 package org.imesense.dynamicspawncontrol.mixins.minecraft.renderer;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
+
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Unique;
+
+import java.util.stream.IntStream;
 
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererRework
 {
-    @Unique
-    private static final boolean DEBUG_TIMER = false;
-
     @Overwrite
     private void updateLightmap(float partialTicks)
     {
@@ -22,152 +25,318 @@ public abstract class EntityRendererRework
 
         if (accessor.getLightmapUpdateNeeded())
         {
-            accessor.getMinecraft().mcProfiler.startSection("lightTex");
-            World world = accessor.getMinecraft().world;
+            Minecraft minecraft = accessor.getMinecraft();
+            int[] lightmapColors = accessor.getLightmapColors();
 
-            if (world != null)
+            if (!accessor.getLightmapUpdateNeeded())
+                return;
+
+            minecraft.mcProfiler.startSection("lightTex");
+
+            World world = minecraft.world;
+
+            if (world == null)
             {
-                float f = world.getSunBrightness(1.0F);
-                float f1 = f * 0.95F + 0.05F;
+                minecraft.mcProfiler.endSection();
+                return;
+            }
 
-                for (int i = 0; i < 256; ++i)
+            float sunBrightness = world.getSunBrightness(1.0F);
+            float moonBrightness = getMoonBrightness(partialTicks, world);
+            float adjustedSunBrightness = sunBrightness * 0.95F + 0.05F;
+
+            float[] brightnessTable = world.provider.getLightBrightnessTable();
+            boolean lightningActive = world.getLastLightningBolt() > 0;
+            boolean isTheEnd = world.provider.getDimensionType().getId() == 1;
+
+            float torchFlicker = accessor.getTorchFlickerX() * 0.1f + 1.5f;
+            float bossColorModifier = accessor.getBossColorModifier();
+            float bossColorModifierPrev = accessor.getBossColorModifierPrev();
+
+            float gammaSetting = minecraft.gameSettings.gammaSetting;
+            boolean hasNightVision = minecraft.player.isPotionActive(MobEffects.NIGHT_VISION);
+
+            boolean dimensionBlacklisted = isDimensionBlacklisted(world.provider);
+            boolean applyDarkness = !hasNightVision && !dimensionBlacklisted && !(world.getLastLightningBolt() > 0);
+
+            calculateLightmapColors(lightmapColors, brightnessTable, adjustedSunBrightness,
+                    sunBrightness, moonBrightness, torchFlicker, lightningActive, isTheEnd, gammaSetting, hasNightVision,
+                    bossColorModifier, bossColorModifierPrev, partialTicks, applyDarkness, minecraft.player, world, accessor);
+
+            accessor.getLightmapTexture().updateDynamicTexture();
+            accessor.setLightmapUpdateNeeded(false);
+            minecraft.mcProfiler.endSection();
+        }
+    }
+
+    private void calculateLightmapColors(int[] outputColors, float[] brightnessTable, float adjustedSunBrightness,
+                                         float sunBrightness, float moonBrightness, float torchFlicker, boolean lightningActive, boolean isTheEnd, float gammaSetting,
+                                         boolean hasNightVision, float bossColorModifier, float bossColorModifierPrev,
+                                         float partialTicks, boolean applyDarkness, EntityPlayer player, World world, IEntityRendererAccessor accessor)
+    {
+        for (int index = 0; index < 256; index++)
+        {
+            int skyLightLevel = index / 16;
+            int blockLightLevel = index % 16;
+
+            float skyLightBase = brightnessTable[skyLightLevel] * adjustedSunBrightness;
+            float blockLightBase = brightnessTable[blockLightLevel] * torchFlicker;
+
+            if (lightningActive)
+            {
+                skyLightBase = brightnessTable[skyLightLevel];
+            }
+
+            float skyRed = skyLightBase * (sunBrightness * 0.65F + 0.35F);
+
+            float blockGreen = blockLightBase * ((blockLightBase * 0.6F + 0.4F) * 0.6F + 0.4F);
+            float blockBlue = blockLightBase * (blockLightBase * blockLightBase * 0.6F + 0.4F);
+
+            float red = skyRed + blockLightBase;
+            float green = skyRed + blockGreen;
+            float blue = skyLightBase + blockBlue;
+
+            red = red * 0.96F + 0.03F;
+            green = green * 0.96F + 0.03F;
+            blue = blue * 0.96F + 0.03F;
+
+            if (bossColorModifier > 0.0F)
+            {
+                float bossBlendFactor =
+                        bossColorModifierPrev +
+                                (bossColorModifier - bossColorModifierPrev) * partialTicks;
+
+                red = red * (1.0F - bossBlendFactor) + red * 0.7F * bossBlendFactor;
+                green = green * (1.0F - bossBlendFactor) + green * 0.6F * bossBlendFactor;
+                blue = blue * (1.0F - bossBlendFactor) + blue * 0.6F * bossBlendFactor;
+            }
+
+            if (isTheEnd)
+            {
+                red = 0.22F + blockLightBase * 0.75F;
+                green = 0.28F + blockGreen * 0.75F;
+                blue = 0.25F + blockBlue * 0.75F;
+            }
+
+            red = MathHelper.clamp(red, 0F, 1F);
+            green = MathHelper.clamp(green, 0F, 1F);
+            blue = MathHelper.clamp(blue, 0F, 1F);
+
+            if (hasNightVision)
+            {
+                float nightVisionStrength =
+                        accessor.invokeGetNightVisionBrightness(player, partialTicks);
+
+                float maxScale = 1.0F / red;
+                maxScale = Math.min(maxScale, 1.0F / green);
+                maxScale = Math.min(maxScale, 1.0F / blue);
+
+                red = red * (1.0F - nightVisionStrength) + red * maxScale * nightVisionStrength;
+                green = green * (1.0F - nightVisionStrength) + green * maxScale * nightVisionStrength;
+                blue = blue * (1.0F - nightVisionStrength) + blue * maxScale * nightVisionStrength;
+
+                if (red > 1.0F) red = 1.0F;
+                if (green > 1.0F) green = 1.0F;
+                if (blue > 1.0F) blue = 1.0F;
+            }
+
+            red = MathHelper.clamp(red, 0F, 1F);
+            green = MathHelper.clamp(green, 0F, 1F);
+            blue = MathHelper.clamp(blue, 0F, 1F);
+
+            float invRed = 1.0F - red;
+            float invGreen = 1.0F - green;
+            float invBlue = 1.0F - blue;
+
+            invRed = 1.0F - invRed * invRed * invRed * invRed;
+            invGreen = 1.0F - invGreen * invGreen * invGreen * invGreen;
+            invBlue = 1.0F - invBlue * invBlue * invBlue * invBlue;
+
+            red = red * (1.0F - gammaSetting) + invRed * gammaSetting;
+            green = green * (1.0F - gammaSetting) + invGreen * gammaSetting;
+            blue = blue * (1.0F - gammaSetting) + invBlue * gammaSetting;
+
+            red = red * 0.96F + 0.03F;
+            green = green * 0.96F + 0.03F;
+            blue = blue * 0.96F + 0.03F;
+
+            red = MathHelper.clamp(red, 0F, 1F);
+            green = MathHelper.clamp(green, 0F, 1F);
+            blue = MathHelper.clamp(blue, 0F, 1F);
+
+            int redInt = (int)(red * 255.0F);
+            int greenInt = (int)(green * 255.0F);
+            int blueInt = (int)(blue * 255.0F);
+
+            int baseColor = 0xFF000000 | (redInt << 16) | (greenInt << 8) | blueInt;
+
+            if (applyDarkness)
+            {
+                float skyFactorDark = 1f - skyLightLevel / 15f;
+
+                skyFactorDark = 1 - skyFactorDark * skyFactorDark * skyFactorDark * skyFactorDark;
+                skyFactorDark *= moonBrightness;
+
+                float minDark = skyFactorDark * 0.05f;
+
+                float rawAmbientDark = sunBrightness * skyFactorDark;
+                float minAmbientDark = rawAmbientDark * (1 - minDark) + minDark;
+                float skyBaseDark = brightnessTable[skyLightLevel] * minAmbientDark;
+
+                minDark = 0.35f * skyFactorDark;
+                float skyRedDark = skyBaseDark * (rawAmbientDark * (1 - minDark) + minDark);
+                float skyGreenDark = skyBaseDark * (rawAmbientDark * (1 - minDark) + minDark);
+                float skyBlueDark = skyBaseDark;
+
+                if (bossColorModifier > 0.0F)
                 {
-                    float f2 = world.provider.getLightBrightnessTable()[i / 16] * f1;
-                    float f3 = world.provider.getLightBrightnessTable()[i % 16] * (accessor.getTorchFlickerX() * 0.1F + 1.5F);
+                    float d = bossColorModifier - bossColorModifierPrev;
+                    float m = bossColorModifierPrev + partialTicks * d;
 
-                    if (world.getLastLightningBolt() > 0)
-                    {
-                        f2 = world.provider.getLightBrightnessTable()[i / 16];
-                    }
-
-                    float f4 = f2 * (f * 0.65F + 0.35F);
-                    float f5 = f2 * (f * 0.65F + 0.35F);
-                    float f6 = f3 * ((f3 * 0.6F + 0.4F) * 0.6F + 0.4F);
-                    float f7 = f3 * (f3 * f3 * 0.6F + 0.4F);
-                    float f8 = f4 + f3;
-                    float f9 = f5 + f6;
-                    float f10 = f2 + f7;
-                    f8 = f8 * 0.96F + 0.03F;
-                    f9 = f9 * 0.96F + 0.03F;
-                    f10 = f10 * 0.96F + 0.03F;
-
-                    if (accessor.getBossColorModifier() > 0.0F)
-                    {
-                        float f11 = accessor.getBossColorModifierPrev() + (accessor.getBossColorModifier() - accessor.getBossColorModifierPrev()) * partialTicks;
-                        f8 = f8 * (1.0F - f11) + f8 * 0.7F * f11;
-                        f9 = f9 * (1.0F - f11) + f9 * 0.6F * f11;
-                        f10 = f10 * (1.0F - f11) + f10 * 0.6F * f11;
-                    }
-
-                    if (world.provider.getDimensionType().getId() == 1)
-                    {
-                        f8 = 0.22F + f3 * 0.75F;
-                        f9 = 0.28F + f6 * 0.75F;
-                        f10 = 0.25F + f7 * 0.75F;
-                    }
-
-                    float[] colors = {f8, f9, f10};
-                    world.provider.getLightmapColors(partialTicks, f, f2, f3, colors);
-                    f8 = colors[0]; f9 = colors[1]; f10 = colors[2];
-
-                    // Forge: fix MC-58177
-                    f8 = MathHelper.clamp(f8, 0f, 1f);
-                    f9 = MathHelper.clamp(f9, 0f, 1f);
-                    f10 = MathHelper.clamp(f10, 0f, 1f);
-
-                    if (accessor.getMinecraft().player.isPotionActive(MobEffects.NIGHT_VISION))
-                    {
-                        float f15 = accessor.invokeGetNightVisionBrightness(accessor.getMinecraft().player, partialTicks);
-                        float f12 = 1.0F / f8;
-
-                        if (f12 > 1.0F / f9)
-                        {
-                            f12 = 1.0F / f9;
-                        }
-
-                        if (f12 > 1.0F / f10)
-                        {
-                            f12 = 1.0F / f10;
-                        }
-
-                        f8 = f8 * (1.0F - f15) + f8 * f12 * f15;
-                        f9 = f9 * (1.0F - f15) + f9 * f12 * f15;
-                        f10 = f10 * (1.0F - f15) + f10 * f12 * f15;
-                    }
-
-                    if (f8 > 1.0F)
-                    {
-                        f8 = 1.0F;
-                    }
-
-                    if (f9 > 1.0F)
-                    {
-                        f9 = 1.0F;
-                    }
-
-                    if (f10 > 1.0F)
-                    {
-                        f10 = 1.0F;
-                    }
-
-                    float f16 = accessor.getMinecraft().gameSettings.gammaSetting;
-                    float f17 = 1.0F - f8;
-                    float f13 = 1.0F - f9;
-                    float f14 = 1.0F - f10;
-                    f17 = 1.0F - f17 * f17 * f17 * f17;
-                    f13 = 1.0F - f13 * f13 * f13 * f13;
-                    f14 = 1.0F - f14 * f14 * f14 * f14;
-                    f8 = f8 * (1.0F - f16) + f17 * f16;
-                    f9 = f9 * (1.0F - f16) + f13 * f16;
-                    f10 = f10 * (1.0F - f16) + f14 * f16;
-                    f8 = f8 * 0.96F + 0.03F;
-                    f9 = f9 * 0.96F + 0.03F;
-                    f10 = f10 * 0.96F + 0.03F;
-
-                    if (f8 > 1.0F)
-                    {
-                        f8 = 1.0F;
-                    }
-
-                    if (f9 > 1.0F)
-                    {
-                        f9 = 1.0F;
-                    }
-
-                    if (f10 > 1.0F)
-                    {
-                        f10 = 1.0F;
-                    }
-
-                    if (f8 < 0.0F)
-                    {
-                        f8 = 0.0F;
-                    }
-
-                    if (f9 < 0.0F)
-                    {
-                        f9 = 0.0F;
-                    }
-
-                    if (f10 < 0.0F)
-                    {
-                        f10 = 0.0F;
-                    }
-
-                    int j = 255;
-                    int k = (int)(f8 * 255.0F);
-                    int l = (int)(f9 * 255.0F);
-                    int i1 = (int)(f10 * 255.0F);
-
-                    int color = -16777216 | k << 16 | l << 8 | i1;
-
-                    accessor.getLightmapColors()[i] = color;
+                    skyRedDark = skyRedDark * (1.0F - m) + skyRedDark * 0.7F * m;
+                    skyGreenDark = skyGreenDark * (1.0F - m) + skyGreenDark * 0.6F * m;
+                    skyBlueDark = skyBlueDark * (1.0F - m) + skyBlueDark * 0.6F * m;
                 }
 
-                accessor.getLightmapTexture().updateDynamicTexture();
-                accessor.setLightmapUpdateNeeded(false);
-                accessor.getMinecraft().mcProfiler.endSection();
+                float blockFactorDark = 1f - blockLightLevel / 15f;
+                blockFactorDark = 1 - blockFactorDark * blockFactorDark * blockFactorDark * blockFactorDark;
+
+                final float flickerDark = torchFlicker;
+                final float blockBaseDark = blockFactorDark * brightnessTable[blockLightLevel] * flickerDark;
+                minDark = 0.4f * blockFactorDark;
+
+                final float blockGreenDark = blockBaseDark * ((blockBaseDark * (1 - minDark) + minDark) * (1 - minDark) + minDark);
+                final float blockBlueDark = blockBaseDark * (blockBaseDark * blockBaseDark * (1 - minDark) + minDark);
+
+                float redDark = skyRedDark + blockBaseDark;
+                float greenDark = skyGreenDark + blockGreenDark;
+                float blueDark = skyBlueDark + blockBlueDark;
+
+                final float f = Math.max(skyFactorDark, blockFactorDark);
+                minDark = 0.03f * f;
+                redDark = redDark * (0.99F - minDark) + minDark;
+                greenDark = greenDark * (0.99F - minDark) + minDark;
+                blueDark = blueDark * (0.99F - minDark) + minDark;
+
+                if (isTheEnd)
+                {
+                    redDark = skyFactorDark * 0.22F + blockBaseDark * 0.75f;
+                    greenDark = skyFactorDark * 0.28F + blockGreenDark * 0.75f;
+                    blueDark = skyFactorDark * 0.25F + blockBlueDark * 0.75f;
+                }
+
+                redDark = MathHelper.clamp(redDark, 0f, 1f);
+                greenDark = MathHelper.clamp(greenDark, 0f, 1f);
+                blueDark = MathHelper.clamp(blueDark, 0f, 1f);
+
+                final float gammaFactorDark = gammaSetting * f;
+
+                float invRedDark = 1.0F - redDark;
+                float invGreenDark = 1.0F - greenDark;
+                float invBlueDark = 1.0F - blueDark;
+
+                invRedDark = 1.0F - invRedDark * invRedDark * invRedDark * invRedDark;
+                invGreenDark = 1.0F - invGreenDark * invGreenDark * invGreenDark * invGreenDark;
+                invBlueDark = 1.0F - invBlueDark * invBlueDark * invBlueDark * invBlueDark;
+
+                redDark = redDark * (1.0F - gammaFactorDark) + invRedDark * gammaFactorDark;
+                greenDark = greenDark * (1.0F - gammaFactorDark) + invGreenDark * gammaFactorDark;
+                blueDark = blueDark * (1.0F - gammaFactorDark) + invBlueDark * gammaFactorDark;
+
+                minDark = 0.03f * f;
+
+                redDark = redDark * (0.99F - minDark) + minDark;
+                greenDark = greenDark * (0.99F - minDark) + minDark;
+                blueDark = blueDark * (0.99F - minDark) + minDark;
+
+                redDark = MathHelper.clamp(redDark, 0f, 1f);
+                greenDark = MathHelper.clamp(greenDark, 0f, 1f);
+                blueDark = MathHelper.clamp(blueDark, 0f, 1f);
+
+                float lTarget = luminance(redDark, greenDark, blueDark);
+
+                outputColors[index] = darken(baseColor, lTarget);
+            }
+            else
+            {
+                outputColors[index] = baseColor;
             }
         }
     }
+
+    private boolean isDimensionBlacklisted(WorldProvider worldProvider)
+    {
+        int dimID = worldProvider.getDimension();
+/*
+        for (int blacklistID : PluginDarknessConfig.getInstance(PluginDarknessConfig.class).getBlacklistByID())
+        {
+            if (dimID == blacklistID)
+            {
+                return true;
+            }
+        }
+ */
+
+        return false;
+    }
+
+    private float getMoonBrightness(float partialTicks, World world)
+    {
+        float moon;
+        float w;
+        WorldProvider dim = world.provider;
+        DimensionType dimType = dim.getDimensionType();
+        //if (!isDark(dim, dimType)) {
+        //    return 1.0f;
+        //}
+        if (!dim.hasSkyLight()) {
+            return 0.0f;
+        }
+        float angle = world.getCelestialAngle(partialTicks);
+        if (angle <= 0.25f || 0.75f <= angle) {
+            return 1.0f;
+        }
+        //if (!ModConfig.hardcore) {
+        //    int moonPhase = dim.func_76559_b(world.func_72820_D());
+        //    float[] phaseFactors = ModConfig.moonPhaseFactors;
+        //    if (moonPhase < phaseFactors.length) {
+        //        moon = phaseFactors[moonPhase];
+        //    } else {
+        //        moon = world.func_130001_d();
+        //    }
+        //} else {
+            moon = 0.0f;
+        //}
+        if (angle <= 0.3f || 0.7f <= angle) {
+            w = 20.0f * (Math.abs(angle - 0.5f) - 0.2f);
+        } else {
+            w = 0.0f;
+        }
+        return lerp(w * w, moon, 1.0f);
+
+    }
+
+    private int darken(int c, float lTarget) {
+        float r = (c & 255) / 255.0f;
+        float g = ((c >> 8) & 255) / 255.0f;
+        float b = ((c >> 16) & 255) / 255.0f;
+        float l = luminance(r, g, b);
+        if (l <= 0.0f) {
+            return c;
+        }
+        if (lTarget >= l) {
+            return c;
+        }
+        float f = lTarget / l;
+        return (-16777216) | Math.round(f * r * 255.0f) | (Math.round((f * g) * 255.0f) << 8) | (Math.round((f * b) * 255.0f) << 16);
+    }
+
+    private float luminance(float r, float g, float b) {
+        return (r * 0.2126f) + (g * 0.7152f) + (b * 0.0722f);
+    }
+
+    private float lerp(float f, float g, float h) {
+        return g + (f * (h - g));
+    }
+
 }
