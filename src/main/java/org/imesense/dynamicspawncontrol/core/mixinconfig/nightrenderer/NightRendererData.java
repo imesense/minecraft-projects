@@ -18,7 +18,7 @@ public final class NightRendererData
     private static final boolean DEFAULT_DEPENDENCE_MOON = true;
     private static final float[] DEFAULT_MOON_PHASE_FACTORS = new float[]
     {
-        0.1F, 0.075F, 0.050F, 0.250F, 0.0F, 0.0250F, 0.050F, 0.0750F
+        0.06f, 0.04f, 0.03f, 0.02f, 0.0f, 0.01f, 0.02f, 0.04f
     };
 
     private static final int[] DEFAULT_BLACKLIST_DIMENSIONS = new int[]
