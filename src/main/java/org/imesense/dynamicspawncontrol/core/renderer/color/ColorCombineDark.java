@@ -4,75 +4,33 @@ import static org.imesense.dynamicspawncontrol.core.renderer.color.LuminanceStag
 
 public abstract class ColorCombineDark
 {
-    private static float[] extractRGBComponents(int color)
+    private static int clampToByte(int v)
     {
-        float red = (color & 255) / 255.0f;
-        float green = ((color >> 8) & 255) / 255.0f;
-        float blue = ((color >> 16) & 255) / 255.0f;
+        if (v < 0)
+            return 0;
 
-        return new float[] { red, green, blue };
-    }
-
-    private static float calculateCurrentLuminance(float red, float green, float blue)
-    {
-        return calculateLuminance(red, green, blue);
-    }
-
-    private static boolean shouldSkipColorCorrection(float currentLuminance, float targetLuminance)
-    {
-        return currentLuminance <= 0.0f || targetLuminance >= currentLuminance;
-    }
-
-    private static float calculateCorrectionFactor(float targetLuminance, float currentLuminance)
-    {
-        return targetLuminance / currentLuminance;
-    }
-
-    private static int[] applyCorrectionToComponents(float red, float green, float blue, float factor)
-    {
-        int correctedRed = Math.round(factor * red * 255.0f);
-        int correctedGreen = Math.round(factor * green * 255.0f);
-        int correctedBlue = Math.round(factor * blue * 255.0f);
-
-        return new int[] { correctedRed, correctedGreen, correctedBlue };
-    }
-
-    private static int packComponentsIntoColor(int[] components)
-    {
-        int alpha = -16777216;
-
-        int red = components[0];
-        int green = components[1];
-        int blue = components[2];
-
-        return alpha | red | (green << 8) | (blue << 16);
-    }
-
-    private static int packColorWithAlpha(int color, float targetLuminance)
-    {
-        int alpha = (color >> 24) & 0xFF;
-        int rgb = finalPackDarkColor(color & 0xFFFFFF, targetLuminance);
-        return (alpha << 24) | (rgb & 0xFFFFFF);
+        return Math.min(v, 255);
     }
 
     public static int finalPackDarkColor(int color, float targetLuminance)
     {
-        float[] rgbComponents = extractRGBComponents(color);
-        float red = rgbComponents[0];
-        float green = rgbComponents[1];
-        float blue = rgbComponents[2];
+        float r = (color & 0xFF) * (1.0f / 255.0f);
+        float g = ((color >>> 8) & 0xFF) * (1.0f / 255.0f);
+        float b = ((color >>> 16) & 0xFF) * (1.0f / 255.0f);
 
-        float currentLuminance = calculateCurrentLuminance(red, green, blue);
+        float currentLuminance = calculateLuminance(r, g, b);
 
-        if (shouldSkipColorCorrection(currentLuminance, targetLuminance))
+        if (currentLuminance <= 0.0f || targetLuminance >= currentLuminance)
         {
             return color;
         }
 
-        float correctionFactor = calculateCorrectionFactor(targetLuminance, currentLuminance);
+        float factor = targetLuminance / currentLuminance;
 
-        int[] correctedComponents = applyCorrectionToComponents(red, green, blue, correctionFactor);
+        int rr = clampToByte((int)(factor * r * 255.0f + 0.5f));
+        int gg = clampToByte((int)(factor * g * 255.0f + 0.5f));
+        int bb = clampToByte((int)(factor * b * 255.0f + 0.5f));
 
-        return packComponentsIntoColor(correctedComponents);
+        return 0xFF000000 | rr | (gg << 8) | (bb << 16);
     }
 }
