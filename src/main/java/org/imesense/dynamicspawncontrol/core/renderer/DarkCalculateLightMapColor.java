@@ -5,11 +5,11 @@ import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.renderer.unpack.LightmapUnpack;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.BaseCalculateLightMapUtils.packColor;
 import static org.imesense.dynamicspawncontrol.core.renderer.block.BlockLightStage.*;
 import static org.imesense.dynamicspawncontrol.core.renderer.color.ColorClamp.*;
 import static org.imesense.dynamicspawncontrol.core.renderer.color.ColorCombineStage.*;
 import static org.imesense.dynamicspawncontrol.core.renderer.color.LuminanceStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.color.ColorCombineDark.finalPackDarkColor;
 import static org.imesense.dynamicspawncontrol.core.renderer.dimension.DimensionStage.*;
 import static org.imesense.dynamicspawncontrol.core.renderer.gamma.GammaStage.*;
 import static org.imesense.dynamicspawncontrol.core.renderer.misc.BossColorStage.*;
@@ -83,6 +83,6 @@ public abstract class DarkCalculateLightMapColor
 
         float lTarget = calculateLuminance(finalRed, finalGreen, finalBlue);
 
-        return packColor(color, lTarget);
+        return finalPackDarkColor(color, lTarget);
     }
 }

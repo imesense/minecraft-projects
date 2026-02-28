@@ -7,4 +7,9 @@ public abstract class FastMath
         float sq = v * v;
         return sq * sq;
     }
+
+    public static float calculateLinear(float factor, float start, float end)
+    {
+        return start + (factor * (end - start));
+    }
 }

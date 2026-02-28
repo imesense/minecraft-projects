@@ -7,11 +7,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.core.renderer.BaseCalculateLightMapColor;
-import org.imesense.dynamicspawncontrol.core.renderer.BaseCalculateLightMapUtils;
 import org.imesense.dynamicspawncontrol.core.renderer.DarkCalculateLightMapColor;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+
+import static org.imesense.dynamicspawncontrol.core.renderer.light.MoonLightStage.finalPackDarkColor;
 
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererRework
@@ -41,7 +42,7 @@ public abstract class EntityRendererRework
                     !hasNightVision && !isDimensionBlacklisted && !isLightningStorm;
 
             float sunBrightness = world.getSunBrightness(1.0f);
-            float moonBrightness = BaseCalculateLightMapUtils.getMoonBrightness(partialTicks, world);
+            float moonBrightness = finalPackDarkColor(partialTicks, world);
 
             float vanillaSunBrightness = world.getSunBrightness(1.0F);
             float brightnessModifier = vanillaSunBrightness * 0.95F + 0.05F;
