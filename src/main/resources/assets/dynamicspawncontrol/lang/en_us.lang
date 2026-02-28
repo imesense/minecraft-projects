@@ -1,11 +1,10 @@
 item.dynamicspawncontrol.webbing.name=Webbing
 entity.dynamicspawncontrol.webbing.name=Webbing
 
-tile.dynamicspawncontrol.mob_cage.name=Empty Spawner
-
 itemGroup.dynamicspawncontrol.tab=DynamicSpawnControl
 
 entity.feral_zombie.name=Feral Zombie
+entity.explosion_zombie.name=Explosion Zombie
 
 potion.satiety=Satiety
 effect.satiety=Satiety

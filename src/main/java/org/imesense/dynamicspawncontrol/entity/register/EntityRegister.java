@@ -6,45 +6,27 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.entity.explosionzombie.EntityExplosionZombie;
 import org.imesense.dynamicspawncontrol.entity.feralzombie.EntityFeralZombie;
+import org.imesense.dynamicspawncontrol.entity.render.RenderExplosionZombie;
 import org.imesense.dynamicspawncontrol.entity.render.RenderFeralZombie;
 
 import java.util.function.Supplier;
 
-/**
- *
- */
 @InitLog
 public final class EntityRegister
 {
-    /**
-     *
-     */
     private final Object modInstance;
 
-    /**
-     *
-     */
     private static volatile EntityRegister _INSTANCE;
 
-    /**
-     *
-     */
     private static Supplier<EntityRegister> instanceSupplier = null;
 
-    /**
-     *
-     * @param entityRegisterSupplier
-     */
     public static void init(Supplier<EntityRegister> entityRegisterSupplier)
     {
         instanceSupplier = entityRegisterSupplier;
     }
 
-    /**
-     *
-     * @return
-     */
     public static EntityRegister getInstance()
     {
         if (instanceSupplier == null)
@@ -55,10 +37,6 @@ public final class EntityRegister
         return CodeGeneric.getInstance(EntityRegister.class, instanceSupplier);
     }
 
-    /**
-     *
-     * @param object
-     */
     private EntityRegister(Object object)
     {
         this.modInstance = object;
@@ -69,34 +47,20 @@ public final class EntityRegister
         }
     }
 
-    /**
-     *
-     * @param modInstance
-     * @return
-     */
     public static EntityRegister create(Object modInstance)
     {
         return new EntityRegister(modInstance);
     }
 
-    /**
-     *
-     */
     public void preInitStartGame()
     {
         registerEntity("feral_zombie", EntityFeralZombie.class, 120, 50, 0x00FF00, 0x000000);
+        registerEntity("explosion_zombie", EntityExplosionZombie.class, 121, 50, 0x00FF01, 0x000001);
+
         RenderingRegistry.registerEntityRenderingHandler(EntityFeralZombie.class, RenderFeralZombie::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityExplosionZombie.class, RenderExplosionZombie::new);
     }
 
-    /**
-     *
-     * @param entityName
-     * @param entityClass
-     * @param id
-     * @param range
-     * @param primaryColor
-     * @param secondaryColor
-     */
     private void registerEntity(String entityName, Class<? extends Entity> entityClass, int id, int range, int primaryColor, int secondaryColor)
     {
         EntityRegistry.registerModEntity(

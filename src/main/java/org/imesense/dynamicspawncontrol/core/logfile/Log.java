@@ -188,6 +188,7 @@ public final class Log
                 while ((line = reader.readLine()) != null)
                 {
                     line = line.trim();
+
                     if (!line.isEmpty() && !line.equals("Name"))
                     {
                         return line;
@@ -394,7 +395,7 @@ public final class Log
                     }
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
 
         int threads = Runtime.getRuntime().availableProcessors();
 
@@ -407,7 +408,6 @@ public final class Log
         {
             if (GLContext.getCapabilities() != null)
             {
-
                 if (GLContext.getCapabilities().GL_NVX_gpu_memory_info)
                 {
                     int totalKB = GL11.glGetInteger(0x9048);
@@ -502,7 +502,7 @@ public final class Log
                                 {
                                     long vram = Long.parseLong(vramStr);
                                     result.append(" [").append(formatBytes(vram)).append("]");
-                                } catch (NumberFormatException ignored) {}
+                                } catch (NumberFormatException ignored) { }
                             }
                         }
                     }
