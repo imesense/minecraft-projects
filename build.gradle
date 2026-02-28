@@ -141,6 +141,7 @@ dependencies
     compileOnly fg.deobf("curse.maven:wireless-industry-377164:6013007")
     compileOnly fg.deobf("curse.maven:railcraft-51195:3853491")
     compileOnly fg.deobf("curse.maven:caves-plus-357148:2960691")
+    compileOnly fg.deobf("curse.maven:thaumcraft-223628:2629023")
 }
 
 // Get properties into the manifest for reading by the runtime
