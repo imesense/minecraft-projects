@@ -6,10 +6,10 @@ public abstract class BossColorStage
 {
     public static float computeBossBlendFactor(IEntityRendererAccessor accessor, float partialTicks)
     {
-        float current = accessor.getBossColorModifier();
+        float current = accessor.accessorGetBossColorModifier();
         if (current <= 0.0f) return -1.0f;
 
-        float prev = accessor.getBossColorModifierPrev();
+        float prev = accessor.accessorGetBossColorModifierPrev();
         float d = current - prev;
         return prev + (partialTicks * d);
     }

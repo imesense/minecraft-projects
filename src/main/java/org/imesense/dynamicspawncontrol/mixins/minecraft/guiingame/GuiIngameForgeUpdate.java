@@ -27,7 +27,7 @@ public abstract class GuiIngameForgeUpdate
         if (potion == MobEffects.REGENERATION && !player.isPotionActive(MobEffects.REGENERATION))
         {
             IGuiIngameAccessor accessor = (IGuiIngameAccessor) (Object) this;
-            int ticks = accessor.getUpdateCounter();
+            int ticks = accessor.accessorGetUpdateCounter();
             return (ticks % 200) < 40;
         }
 

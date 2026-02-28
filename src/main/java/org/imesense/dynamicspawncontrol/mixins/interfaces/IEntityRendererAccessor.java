@@ -12,28 +12,28 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface IEntityRendererAccessor
 {
     @Accessor("lightmapColors")
-    int[] getLightmapColors();
+    int[] accessorGetLightmapColors();
 
     @Accessor("lightmapUpdateNeeded")
-    boolean getLightmapUpdateNeeded();
+    boolean accessorGetLightmapUpdateNeeded();
 
     @Accessor("lightmapUpdateNeeded")
-    void setLightmapUpdateNeeded(boolean value);
+    void accessorSetLightmapUpdateNeeded(boolean value);
 
     @Accessor("mc")
-    Minecraft getMinecraft();
+    Minecraft accessorGetMinecraft();
 
     @Accessor("bossColorModifier")
-    float getBossColorModifier();
+    float accessorGetBossColorModifier();
 
     @Accessor("bossColorModifierPrev")
-    float getBossColorModifierPrev();
+    float accessorGetBossColorModifierPrev();
 
     @Accessor("torchFlickerX")
-    float getTorchFlickerX();
+    float accessorGetTorchFlickerX();
 
     @Accessor("lightmapTexture")
-    DynamicTexture getLightmapTexture();
+    DynamicTexture accessorGetLightmapTexture();
 
     @Invoker("getNightVisionBrightness")
     float invokeGetNightVisionBrightness(EntityLivingBase entity, float partialTicks);

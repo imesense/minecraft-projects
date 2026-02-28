@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface IGuiIngameAccessor
 {
     @Accessor("updateCounter")
-    int getUpdateCounter();
+    int accessorGetUpdateCounter();
 }

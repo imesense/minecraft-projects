@@ -22,11 +22,11 @@ public abstract class EntityRendererRework
     {
         IEntityRendererAccessor accessor = (IEntityRendererAccessor) this;
 
-        if (accessor.getLightmapUpdateNeeded())
+        if (accessor.accessorGetLightmapUpdateNeeded())
         {
-            accessor.getMinecraft().mcProfiler.startSection("lightTex");
+            accessor.accessorGetMinecraft().mcProfiler.startSection("lightTex");
 
-            World world = accessor.getMinecraft().world;
+            World world = accessor.accessorGetMinecraft().world;
             WorldProvider dimension = world.provider;
             DimensionType dimensionType = dimension.getDimensionType();
 
@@ -35,7 +35,7 @@ public abstract class EntityRendererRework
             boolean isLightningStorm = world.getLastLightningBolt() > 0;
             boolean isDarkNightEnabled = NightRendererData.isEnableDarkNight();
 
-            boolean hasNightVision = accessor.getMinecraft().player.isPotionActive(MobEffects.NIGHT_VISION);
+            boolean hasNightVision = accessor.accessorGetMinecraft().player.isPotionActive(MobEffects.NIGHT_VISION);
             boolean isDimensionBlacklisted = NightRendererData.isDimensionBlacklisted(dimensionType.getId());
 
             boolean shouldApplyDarkness = isDarkNightEnabled &&
@@ -57,17 +57,17 @@ public abstract class EntityRendererRework
                     int darkenedColor = DarkCalculateLightMapColor.calculateFinalLightMapColor(accessor, world, partialTicks, index,
                             sunBrightness, moonBrightness, brightnessTable, dimensionType, baseColor);
 
-                    accessor.getLightmapColors()[index] = darkenedColor;
+                    accessor.accessorGetLightmapColors()[index] = darkenedColor;
                 }
                 else
                 {
-                    accessor.getLightmapColors()[index] = baseColor;
+                    accessor.accessorGetLightmapColors()[index] = baseColor;
                 }
             }
 
-            accessor.getLightmapTexture().updateDynamicTexture();
-            accessor.setLightmapUpdateNeeded(false);
-            accessor.getMinecraft().mcProfiler.endSection();
+            accessor.accessorGetLightmapTexture().updateDynamicTexture();
+            accessor.accessorSetLightmapUpdateNeeded(false);
+            accessor.accessorGetMinecraft().mcProfiler.endSection();
         }
     }
 }

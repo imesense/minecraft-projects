@@ -14,7 +14,7 @@ public abstract class BlockLightStage
 
     public static float computeTorchFlicker(IEntityRendererAccessor accessor)
     {
-        return (accessor.getTorchFlickerX() * 0.1f) + 1.5f;
+        return (accessor.accessorGetTorchFlickerX() * 0.1f) + 1.5f;
     }
 
     public static float computeBlockBase(float blockFactor, float[] brightnessTable, int blockIndex, float flicker)

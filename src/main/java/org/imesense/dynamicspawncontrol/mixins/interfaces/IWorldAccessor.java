@@ -16,9 +16,6 @@ public interface IWorldAccessor
     @Invoker("getThunderStrength")
     float invokeGetThunderStrength(float delta);
 
-    @Invoker("getCurrentMoonPhaseFactor")
-    float invokeGetCurrentMoonPhaseFactor();
-
     @Invoker("getMoonPhase")
     int invokeGetMoonPhase();
 }

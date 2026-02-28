@@ -10,7 +10,7 @@ public abstract class BaseCalculateLightMapColor
     public static int calculateLightMapColor(IEntityRendererAccessor accessor, World world, float partialTicks, int i, float f, float f1)
     {
         float f2 = world.provider.getLightBrightnessTable()[i / 16] * f1;
-        float f3 = world.provider.getLightBrightnessTable()[i % 16] * (accessor.getTorchFlickerX() * 0.1F + 1.5F);
+        float f3 = world.provider.getLightBrightnessTable()[i % 16] * (accessor.accessorGetTorchFlickerX() * 0.1F + 1.5F);
 
         if (world.getLastLightningBolt() > 0)
         {
@@ -28,9 +28,10 @@ public abstract class BaseCalculateLightMapColor
         f9 = f9 * 0.96F + 0.03F;
         f10 = f10 * 0.96F + 0.03F;
 
-        if (accessor.getBossColorModifier() > 0.0F)
+        if (accessor.accessorGetBossColorModifier() > 0.0F)
         {
-            float f11 = accessor.getBossColorModifierPrev() + (accessor.getBossColorModifier() - accessor.getBossColorModifierPrev()) * partialTicks;
+            float f11 = accessor.accessorGetBossColorModifierPrev() + (accessor.accessorGetBossColorModifier() -
+                    accessor.accessorGetBossColorModifierPrev()) * partialTicks;
             f8 = f8 * (1.0F - f11) + f8 * 0.7F * f11;
             f9 = f9 * (1.0F - f11) + f9 * 0.6F * f11;
             f10 = f10 * (1.0F - f11) + f10 * 0.6F * f11;
@@ -52,9 +53,9 @@ public abstract class BaseCalculateLightMapColor
         f9 = MathHelper.clamp(f9, 0f, 1f);
         f10 = MathHelper.clamp(f10, 0f, 1f);
 
-        if (accessor.getMinecraft().player.isPotionActive(MobEffects.NIGHT_VISION))
+        if (accessor.accessorGetMinecraft().player.isPotionActive(MobEffects.NIGHT_VISION))
         {
-            float f15 = accessor.invokeGetNightVisionBrightness(accessor.getMinecraft().player, partialTicks);
+            float f15 = accessor.invokeGetNightVisionBrightness(accessor.accessorGetMinecraft().player, partialTicks);
             float f12 = 1.0F / f8;
 
             if (f12 > 1.0F / f9)
@@ -87,7 +88,7 @@ public abstract class BaseCalculateLightMapColor
             f10 = 1.0F;
         }
 
-        float f16 = accessor.getMinecraft().gameSettings.gammaSetting;
+        float f16 = accessor.accessorGetMinecraft().gameSettings.gammaSetting;
         float f17 = 1.0F - f8;
         float f13 = 1.0F - f9;
         float f14 = 1.0F - f10;
