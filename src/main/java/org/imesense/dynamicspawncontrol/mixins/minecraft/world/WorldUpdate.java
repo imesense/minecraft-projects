@@ -2,13 +2,43 @@ package org.imesense.dynamicspawncontrol.mixins.minecraft.world;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
+import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IWorldAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(value = World.class, remap = false)
 public abstract class WorldUpdate
 {
+    @Unique
+    private static final boolean DEBUG_MODE = false;
+
+    @Unique
+    private float calculateDarkBrightness(float baseBrightness)
+    {
+        return baseBrightness;
+    }
+
+    @Unique
+    private float calculateVanillaBrightness(float baseBrightness)
+    {
+        return baseBrightness * 0.8f + 0.2f;
+    }
+
+    @Unique
+    private float calculateDarkNightBrightness(float baseBrightness, int moonPhase)
+    {
+        float[] moonPhaseFactors = NightRendererData.getMoonPhaseFactorsArray();
+
+        float phaseFactor = (moonPhase >= 0 && moonPhase < moonPhaseFactors.length)
+                ? moonPhaseFactors[moonPhase] : 0.f;
+
+        return MathHelper.clamp(baseBrightness + phaseFactor, 0.f, 1.f);
+    }
+
     @Overwrite
     public float getSunBrightnessBody(float partialTicks)
     {
@@ -27,6 +57,35 @@ public abstract class WorldUpdate
         rawBrightness = (float)((double)rawBrightness * (1.0D - (double)(rainStrength * 5.0F) / 16.0D));
         rawBrightness = (float)((double)rawBrightness * (1.0D - (double)(thunderStrength * 5.0F) / 16.0D));
 
-        return rawBrightness * 0.8F + 0.2F;
+        float finalRawBrightness;
+        int moonPhase = worldAccessor.invokeGetMoonPhase();
+
+        if (NightRendererData.isEnableDarkNight())
+        {
+            if (NightRendererData.isDependenceLightMoonPhase())
+            {
+                finalRawBrightness = calculateDarkNightBrightness(rawBrightness, moonPhase);
+
+                if (DEBUG_MODE) EarlyLogBuffer.log(Log.DEBUG, "[isDependenceLightMoonPhase] finalRawBrightness: " + finalRawBrightness);
+
+                return finalRawBrightness;
+            }
+            else
+            {
+                finalRawBrightness = calculateDarkBrightness(rawBrightness);
+
+                if (DEBUG_MODE) EarlyLogBuffer.log(Log.DEBUG, "[isEnableDarkNight] finalRawBrightness: " + finalRawBrightness);
+
+                return calculateDarkBrightness(rawBrightness);
+            }
+        }
+        else
+        {
+            finalRawBrightness = calculateVanillaBrightness(rawBrightness);
+
+            if (DEBUG_MODE) EarlyLogBuffer.log(Log.DEBUG, "finalRawBrightness: " + finalRawBrightness);
+
+            return calculateVanillaBrightness(rawBrightness);
+        }
     }
 }
