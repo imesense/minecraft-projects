@@ -1,6 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.logfile;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
+import org.imesense.dynamicspawncontrol.DynamicSpawnControlInitMixins;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -8,43 +9,13 @@ import java.io.InputStreamReader;
 
 public final class MixinLoadLog
 {
-    private static final String[] MIXIN_CONFIGS =
-    {
-        "assets/mixins/divinerpg/ai/EntityPeacefulUntilAttacked.Fix.json",
-        "assets/mixins/divinerpg/entity/EntityKobblin.Rework.json",
-        "assets/mixins/divinerpg/entity/EntityPumpkinSpider.Rework.json",
-        "assets/mixins/divinerpg/entity/EntityShadahier.Rework.json",
-        "assets/mixins/divinerpg/entity/EntityLheiva.Rework.json",
-        "assets/mixins/divinerpg/entity/EntityHellPig.Fix.json",
-        "assets/mixins/divinerpg/entity/EntityTwins.Rework.json",
-        "assets/mixins/divinerpg/event/EntitySpawnRegistry.Fix.json",
-        "assets/mixins/ic2expwirelessindustry/WorldLoadUnloadHandler.Fix.json",
-        "assets/mixins/interfaces/IEntityRendererAccessor.json",
-        "assets/mixins/interfaces/IGuiIngameAccessor.json",
-        "assets/mixins/interfaces/IWorldAccessor.json",
-        "assets/mixins/minecraft/enchantment/Enchantment.Update.json",
-        "assets/mixins/minecraft/food/FoodStats.Update.json",
-        "assets/mixins/minecraft/gui/GuiIngameForge.Update.json",
-        "assets/mixins/minecraft/item/ItemFood.Update.json",
-        "assets/mixins/minecraft/renderer/EntityRenderer.Rework.json",
-        "assets/mixins/minecraft/block/BlockFire.Fix.json",
-        "assets/mixins/minecraft/entity/layers/LayerSpiderEyes.Fix.json",
-        "assets/mixins/minecraft/entity/layers/LayerEndermanEyes.Fix.json",
-        "assets/mixins/minecraft/minecraft/Minecraft.Update.json",
-        "assets/mixins/specialmobs/SpecialMobReplacer.Fix.json",
-        "assets/mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
-        "assets/mixins/srparasites/util/ParasiteEventEntity.Update.json",
-        "assets/mixins/railraft/BetaMessageTickHandler.Update.json",
-        "assets/mixins/cavesplus/CavesProcedureGen.Update.json"
-    };
-
     public static void loadMixins()
     {
         ClassLoader classLoader = DynamicSpawnControl.class.getClassLoader();
 
         Log.write(0, "Searching for mixin config files...");
 
-        for (String config : MIXIN_CONFIGS)
+        for (String config : DynamicSpawnControlInitMixins.getAllConfigPaths())
         {
             Log.write(0, "Trying to load: " + config);
 
