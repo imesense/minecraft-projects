@@ -24,6 +24,7 @@ public abstract class ColorCombineStage
     {
         float min = 0.03f * fa;
         float result = (value * (0.99f - min)) + min;
+
         return MathHelper.clamp(result, 0.0f, 1.0f);
     }
 }

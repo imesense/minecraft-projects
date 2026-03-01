@@ -15,6 +15,7 @@ public abstract class GammaStage
     {
         float inv = 1.0f - value;
         float invPow4 = 1.0f - pow4(inv);
+
         return (value * (1.0f - gamma)) + (invPow4 * gamma);
     }
 }

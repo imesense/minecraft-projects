@@ -11,6 +11,7 @@ public abstract class BossColorStage
 
         float prev = accessor.accessorGetBossColorModifierPrev();
         float d = current - prev;
+
         return prev + (partialTicks * d);
     }
 }
