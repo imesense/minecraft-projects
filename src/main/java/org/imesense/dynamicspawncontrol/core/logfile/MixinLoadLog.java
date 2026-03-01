@@ -30,6 +30,7 @@ public final class MixinLoadLog
         "assets/mixins/minecraft/block/BlockFire.Fix.json",
         "assets/mixins/minecraft/entity/layers/LayerSpiderEyes.Fix.json",
         "assets/mixins/minecraft/entity/layers/LayerEndermanEyes.Fix.json",
+        "assets/mixins/minecraft/minecraft/Minecraft.Update.json",
         "assets/mixins/specialmobs/SpecialMobReplacer.Fix.json",
         "assets/mixins/srparasites/handler/SRPEventHandlerBus.Update.json",
         "assets/mixins/srparasites/util/ParasiteEventEntity.Update.json",

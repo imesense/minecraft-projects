@@ -6,7 +6,6 @@ import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.ZombieDropConfig;
 import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
-import org.imesense.dynamicspawncontrol.core.config.mainwindow.MainWindowTitleConfig;
 import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.config.synchronization.SynchronizationConfig;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
@@ -31,7 +30,6 @@ public final class ConfigRegister extends BaseConfigRegister
         WorldCacheConfig.class,
         LogFileConfig.class,
         PlayerConfig.class,
-        MainWindowTitleConfig.class,
         BlockWorldGeneratorConfig.class,
         ZombieDropConfig.class,
         SkeletonDropConfig.class,

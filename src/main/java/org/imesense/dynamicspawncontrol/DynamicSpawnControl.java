@@ -31,7 +31,6 @@ import org.imesense.dynamicspawncontrol.core.threads.ThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 import org.imesense.dynamicspawncontrol.eventdescriptions.NewConceptTestEvent;
-import org.imesense.dynamicspawncontrol.eventdescriptions.WindowTitle;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
 import org.imesense.dynamicspawncontrol.potion.ModPotions;
@@ -143,8 +142,6 @@ public final class DynamicSpawnControl
         WorldGeneratorRegister.getInstance().init(event);
 
         BaseEventRegister.initialize();
-
-        WindowTitle.getInstance().replace();
 
         //RegisterSpawnerCraft.getInstance().preInit(event);
 

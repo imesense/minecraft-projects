@@ -35,6 +35,7 @@ public enum DynamicSpawnControlInitMixins
     WORLD_UPDATE(false, "assets\\mixins\\minecraft\\world\\World.Update.json"),
     LAYER_SPIDER_EYES_FIX(false, "assets\\mixins\\minecraft\\entity\\layers\\LayerSpiderEyes.Fix.json"),
     LAYER_ENDERMAN_EYES_FIX(false, "assets\\mixins\\minecraft\\entity\\layers\\LayerEndermanEyes.Fix.json"),
+    MINECRAFT_CREATE_DISPLAY_UPDATE(false, "assets\\mixins\\minecraft\\minecraft\\Minecraft.Update.json"),
 
     // Special Mobs
     SPECIALMOBS_REPLACER_FIX(true, "assets\\mixins\\specialmobs\\SpecialMobReplacer.Fix.json", "specialmobs"),

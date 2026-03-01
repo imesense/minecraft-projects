@@ -45,7 +45,7 @@ public abstract class EntityRendererRework
             float moonBrightness = finalPackDarkColor(partialTicks, world);
 
             float vanillaSunBrightness = world.getSunBrightness(1.0F);
-            float brightnessModifier = vanillaSunBrightness * 0.95F + 0.05F;
+            float brightnessModifier = vanillaSunBrightness * 0.95f + 0.05f;
 
             for (int index = 0; index < 256; ++index)
             {
