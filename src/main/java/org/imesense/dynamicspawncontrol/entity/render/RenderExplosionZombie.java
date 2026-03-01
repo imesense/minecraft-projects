@@ -5,8 +5,10 @@ import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
+import net.minecraft.client.renderer.entity.layers.LayerEndermanEyes;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
+import org.imesense.dynamicspawncontrol.entity.LayerExplosionZombieEyes;
 import org.imesense.dynamicspawncontrol.entity.explosionzombie.EntityExplosionZombie;
 import org.imesense.dynamicspawncontrol.entity.feralzombie.EntityFeralZombie;
 
@@ -22,6 +24,7 @@ public final class RenderExplosionZombie extends RenderLiving<EntityExplosionZom
 
         this.addLayer(new LayerBipedArmor(this));
         this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerExplosionZombieEyes(this));
     }
 
     @Override
