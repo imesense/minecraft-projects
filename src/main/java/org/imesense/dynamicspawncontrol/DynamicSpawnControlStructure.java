@@ -17,6 +17,8 @@ public final class DynamicSpawnControlStructure
     {
         public static final String NAME_DIRECTORY = "dynamicspawncontrol";
 
+        public static final String NAME_DIR_COMPLEXITY_BIOMES = "complexity_biomes";
+
         public static final String NAME_DIR_SATIETY_MANAGER = "satiety_manager";
 
         public static final String NAME_DIR_CONFIGS = "configs";
