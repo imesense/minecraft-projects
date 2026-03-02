@@ -18,16 +18,16 @@ import java.util.List;
 
 @InitLog
 @TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class OnEventPopulationChunkOld
+public final class OnEventPopulationChunk
 {
-    private static volatile OnEventPopulationChunkOld _INSTANCE;
+    private static volatile OnEventPopulationChunk _INSTANCE;
 
-    public static OnEventPopulationChunkOld getInstance()
+    public static OnEventPopulationChunk getInstance()
     {
-        return CodeGeneric.getInstance(OnEventPopulationChunkOld.class);
+        return CodeGeneric.getInstance(OnEventPopulationChunk.class);
     }
 
-    public OnEventPopulationChunkOld()
+    public OnEventPopulationChunk()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

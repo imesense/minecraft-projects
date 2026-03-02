@@ -18,8 +18,8 @@ import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManagerOld;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCacheOld;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManager;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 import org.imesense.dynamicspawncontrol.eventdescriptions.UpdateFire;
 
@@ -55,9 +55,9 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 
         if (!event.getEntity().world.isRemote)
         {
-            OnEventMobTaskManagerOld.getInstance().handleUpdateEntityJoinWorld(event);
+            OnEventMobTaskManager.getInstance().handleUpdateEntityJoinWorld(event);
 
-            OnEventWorldCacheOld.getInstance().handleEntityJoinWorld(event);
+            OnEventWorldCache.getInstance().handleEntityJoinWorld(event);
         }
 
         MemoryEvents.handleOnPlayerLogin(event);

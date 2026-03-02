@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPotentialSpawnOld;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPotentialSpawn;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
@@ -23,7 +23,7 @@ public final class OnEventWorldEventPotentialSpawns extends BaseOnEventInstance
     {
         if (!event.getWorld().isRemote)
         {
-            OnEventPotentialSpawnOld.getInstance().handlePotentialSpawns(event);
+            OnEventPotentialSpawn.getInstance().handlePotentialSpawns(event);
         }
     }
 }

@@ -19,16 +19,16 @@ import java.util.Random;
 
 @InitLog
 @TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class OnEventDropItemOld
+public final class OnEventDropItem
 {
-    private static volatile OnEventDropItemOld _INSTANCE;
+    private static volatile OnEventDropItem _INSTANCE;
 
-    public static OnEventDropItemOld getInstance()
+    public static OnEventDropItem getInstance()
     {
-        return CodeGeneric.getInstance(OnEventDropItemOld.class);
+        return CodeGeneric.getInstance(OnEventDropItem.class);
     }
 
-    public OnEventDropItemOld()
+    public OnEventDropItem()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

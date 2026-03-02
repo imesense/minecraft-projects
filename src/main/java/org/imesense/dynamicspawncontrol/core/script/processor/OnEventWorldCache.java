@@ -35,13 +35,13 @@ import java.util.Optional;
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
-public final class OnEventWorldCacheOld
+public final class OnEventWorldCache
 {
-    private static volatile OnEventWorldCacheOld _INSTANCE;
+    private static volatile OnEventWorldCache _INSTANCE;
 
-    public static OnEventWorldCacheOld getInstance()
+    public static OnEventWorldCache getInstance()
     {
-        return CodeGeneric.getInstance(OnEventWorldCacheOld.class);
+        return CodeGeneric.getInstance(OnEventWorldCache.class);
     }
 
     private final CacheGeneralStorage CACHE_GENERAL_STORAGE = CacheGeneralStorage.getInstance();
@@ -52,7 +52,7 @@ public final class OnEventWorldCacheOld
 
     private boolean debugGameEvents = true;
 
-    public OnEventWorldCacheOld()
+    public OnEventWorldCache()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

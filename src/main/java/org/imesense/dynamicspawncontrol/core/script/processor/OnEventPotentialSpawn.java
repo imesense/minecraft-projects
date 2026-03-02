@@ -21,16 +21,16 @@ import java.util.stream.IntStream;
         priority = TODO.TodoPriority.HIGH,
         showOnce = false
 )
-public final class OnEventPotentialSpawnOld
+public final class OnEventPotentialSpawn
 {
-    private static volatile OnEventPotentialSpawnOld _INSTANCE;
+    private static volatile OnEventPotentialSpawn _INSTANCE;
 
-    public static OnEventPotentialSpawnOld getInstance()
+    public static OnEventPotentialSpawn getInstance()
     {
-        return CodeGeneric.getInstance(OnEventPotentialSpawnOld.class);
+        return CodeGeneric.getInstance(OnEventPotentialSpawn.class);
     }
 
-    public OnEventPotentialSpawnOld()
+    public OnEventPotentialSpawn()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

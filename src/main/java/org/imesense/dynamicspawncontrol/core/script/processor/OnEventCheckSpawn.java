@@ -23,16 +23,16 @@ import java.util.stream.IntStream;
 @InitLog
 @TODO(value = "START REWORKING PARSERS WITH THIS SCRIPT! Optimization is broken, besides redoing the class in the diagram, + " +
         "добавить новые параметры в дебаг", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class OnEventCheckSpawnOld
+public final class OnEventCheckSpawn
 {
-    private static volatile OnEventCheckSpawnOld _INSTANCE;
+    private static volatile OnEventCheckSpawn _INSTANCE;
 
-    public static OnEventCheckSpawnOld getInstance()
+    public static OnEventCheckSpawn getInstance()
     {
-        return CodeGeneric.getInstance(OnEventCheckSpawnOld.class);
+        return CodeGeneric.getInstance(OnEventCheckSpawn.class);
     }
 
-    public OnEventCheckSpawnOld()
+    public OnEventCheckSpawn()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

@@ -15,16 +15,16 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
 @TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class OnEventDropExperienceOld
+public final class OnEventDropExperience
 {
-    private static volatile OnEventDropExperienceOld _INSTANCE;
+    private static volatile OnEventDropExperience _INSTANCE;
 
-    public static OnEventDropExperienceOld getInstance()
+    public static OnEventDropExperience getInstance()
     {
-        return CodeGeneric.getInstance(OnEventDropExperienceOld.class);
+        return CodeGeneric.getInstance(OnEventDropExperience.class);
     }
 
-    public OnEventDropExperienceOld()
+    public OnEventDropExperience()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {

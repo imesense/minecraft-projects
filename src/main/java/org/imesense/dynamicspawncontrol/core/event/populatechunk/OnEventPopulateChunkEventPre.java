@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPopulationChunkOld;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventPopulationChunk;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
@@ -23,7 +23,7 @@ public final class OnEventPopulateChunkEventPre extends BaseOnEventInstance
     {
         if (!event.getWorld().isRemote)
         {
-            OnEventPopulationChunkOld.getInstance().handlePopulateChunkEventPre(event);
+            OnEventPopulationChunk.getInstance().handlePopulateChunkEventPre(event);
         }
     }
 }

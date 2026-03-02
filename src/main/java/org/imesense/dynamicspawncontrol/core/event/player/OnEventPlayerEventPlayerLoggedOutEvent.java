@@ -10,7 +10,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCacheOld;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 
 import java.util.UUID;
@@ -45,6 +45,6 @@ public final class OnEventPlayerEventPlayerLoggedOutEvent extends BaseOnEventIns
 
         PlayerNetwork.getInstance().handlePlayerLoggedOut(event);
 
-        OnEventWorldCacheOld.getInstance().handlePlayerLoggedOut(event);
+        OnEventWorldCache.getInstance().handlePlayerLoggedOut(event);
     }
 }

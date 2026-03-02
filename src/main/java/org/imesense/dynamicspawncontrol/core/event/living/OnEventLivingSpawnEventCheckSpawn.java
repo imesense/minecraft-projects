@@ -11,15 +11,14 @@ package org.imesense.dynamicspawncontrol.core.event.living;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawnOld;
-import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCacheOld;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventCheckSpawn;
+import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -44,7 +43,7 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     {
         if (!event.getWorld().isRemote)
         {
-            OnEventWorldCacheOld.getInstance().handleEntitySpawnEvent(event);
+            OnEventWorldCache.getInstance().handleEntitySpawnEvent(event);
         }
     }
 
@@ -53,7 +52,7 @@ public final class OnEventLivingSpawnEventCheckSpawn extends BaseOnEventInstance
     {
         if (!event.getWorld().isRemote)
         {
-            OnEventCheckSpawnOld.getInstance().handleLivingSpawnEventCheckSpawn(event);
+            OnEventCheckSpawn.getInstance().handleLivingSpawnEventCheckSpawn(event);
         }
     }
 

@@ -9,16 +9,16 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
 @TODO(value = "Поломана оптимизация, к тому же переделать класс на схеме", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class OnEventMobTaskManagerOld
+public final class OnEventMobTaskManager
 {
-    private static volatile OnEventMobTaskManagerOld _INSTANCE;
+    private static volatile OnEventMobTaskManager _INSTANCE;
 
-    public static OnEventMobTaskManagerOld getInstance()
+    public static OnEventMobTaskManager getInstance()
     {
-        return CodeGeneric.getInstance(OnEventMobTaskManagerOld.class);
+        return CodeGeneric.getInstance(OnEventMobTaskManager.class);
     }
 
-    public OnEventMobTaskManagerOld()
+    public OnEventMobTaskManager()
     {
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
