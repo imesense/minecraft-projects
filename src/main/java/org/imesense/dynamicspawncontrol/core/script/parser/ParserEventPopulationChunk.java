@@ -10,13 +10,10 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.data.PopulationChunkStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.populationchunk.storage.GeneralPopulationChunkSpawn;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,71 +22,39 @@ import java.util.List;
 @InitLog
 public final class ParserEventPopulationChunk extends BaseParser
 {
-    private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
-
     public ParserEventPopulationChunk(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
-
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            Log.write(0, "ParserEventPopulationChunk initialized with config file: " + NAME_FILE);
-        }
     }
 
     @Override
     public void loadConfig(boolean init)
     {
-        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
-
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_GAME_SCRIPTS, this.nameFile);
 
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            Log.write(0, "Config file path: " + file.getAbsolutePath());
-        }
-
         if (!file.exists())
         {
-            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
 
         try (FileReader fileReader = new FileReader(file))
         {
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                Log.write(0, "Reading and parsing population chunk configuration");
-            }
-
             JsonArray jsonArray = new JsonParser().parse(fileReader).getAsJsonArray();
 
             List<Biome.SpawnListEntry> newSpawnEntries = new ArrayList<>();
             List<PopulationChunkStruct.Data> populationList = new ArrayList<>();
 
-            Log.write(0, "Starting to parse JSON config. Found " + jsonArray.size() + " top-level entries.");
-
             for (JsonElement topLevelElement : jsonArray)
             {
                 try
                 {
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Processing new top-level configuration entry");
-                    }
-
                     JsonObject topLevelObject = topLevelElement.getAsJsonObject();
 
                     if (topLevelObject.has("mobs"))
                     {
                         JsonArray mobsArray = topLevelObject.getAsJsonArray("mobs");
-
-                        if (DEBUG_AND_CHECK_SYNTAX)
-                        {
-                            Log.write(0, "Found mobs array with " + mobsArray.size() + " entries");
-                        }
 
                         for (JsonElement mobElement : mobsArray)
                         {
@@ -98,17 +63,11 @@ public final class ParserEventPopulationChunk extends BaseParser
                                 JsonObject mobMap = mobElement.getAsJsonObject();
                                 String id = mobMap.get("mob").getAsString();
 
-                                if (DEBUG_AND_CHECK_SYNTAX)
-                                {
-                                    Log.write(0, "Processing mob: " + id);
-                                }
-
                                 ResourceLocation mobResource = new ResourceLocation(id);
                                 EntityEntry entityEntry = ForgeRegistries.ENTITIES.getValue(mobResource);
 
                                 if (entityEntry == null)
                                 {
-                                    Log.write(2, "Mob not found in registry: " + id);
                                     continue;
                                 }
 
@@ -116,7 +75,6 @@ public final class ParserEventPopulationChunk extends BaseParser
 
                                 if (_class == null)
                                 {
-                                    Log.write(2, "Entity class not found for mob: " + id);
                                     continue;
                                 }
 
@@ -140,25 +98,11 @@ public final class ParserEventPopulationChunk extends BaseParser
                                         mobMap.has("max_entities_per_chunk") ?
                                                 mobMap.get("max_entities_per_chunk").getAsInt() : 1;
 
-                                if (DEBUG_AND_CHECK_SYNTAX)
-                                {
-                                    Log.write(0, String.format(
-                                            "Mob %s settings: weight = %d, groupCount = %d - %d, priority = %s, maxPerChunk = %d, dimension = %s",
-                                            id, weight, groupCountMin, groupCountMax, spawnChancePriority, maxEntitiesPerChunk,
-                                            idDimension != null ? idDimension.toString() : "any"
-                                    ));
-                                }
-
                                 List<String> biomes = new ArrayList<>();
 
                                 if (mobMap.has("biome"))
                                 {
                                     String biomeString = mobMap.get("biome").getAsString();
-
-                                    if (DEBUG_AND_CHECK_SYNTAX)
-                                    {
-                                        Log.write(0, "Processing biomes for mob " + id + ": " + biomeString);
-                                    }
 
                                     if (biomeString.contains(","))
                                     {
@@ -168,22 +112,12 @@ public final class ParserEventPopulationChunk extends BaseParser
                                         {
                                             String trimmedBiome = biome.trim();
                                             biomes.add(trimmedBiome);
-
-                                            if (DEBUG_AND_CHECK_SYNTAX)
-                                            {
-                                                Log.write(0, "Added biome: " + trimmedBiome);
-                                            }
                                         }
                                     }
                                     else
                                     {
                                         String trimmedBiome = biomeString.trim();
                                         biomes.add(trimmedBiome);
-
-                                        if (DEBUG_AND_CHECK_SYNTAX)
-                                        {
-                                            Log.write(0, "Added single biome: " + trimmedBiome);
-                                        }
                                     }
                                 }
 
@@ -203,95 +137,45 @@ public final class ParserEventPopulationChunk extends BaseParser
 
                                 populationList.add(data);
 
-                                if (DEBUG_AND_CHECK_SYNTAX)
-                                {
-                                    Log.write(0, "Added mob data to population list: " + id +
-                                            " (dimension: " + (data.idDimension != null ? data.idDimension : "any") + ")");
-                                }
-
                                 Biome.SpawnListEntry entry = new Biome.SpawnListEntry(
                                         (Class<? extends EntityLiving>) _class,
                                         weight, groupCountMin, groupCountMax
                                 );
 
                                 newSpawnEntries.add(entry);
-
-                                if (DEBUG_AND_CHECK_SYNTAX)
-                                {
-                                    Log.write(0, "Added spawn list entry for mob: " + id);
-                                }
                             }
                             catch (Exception exception)
                             {
-                                Log.write(2, "Error processing mob entry: " + exception.getMessage());
 
-                                if (DEBUG_AND_CHECK_SYNTAX)
-                                {
-                                    exception.printStackTrace();
-                                }
                             }
                         }
                     }
                 }
                 catch (Exception exception)
                 {
-                    Log.write(2, "Error processing top-level entry: " + exception.getMessage());
 
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        exception.printStackTrace();
-                    }
                 }
             }
 
             GeneralPopulationChunkSpawn.getInstance().populationChunkStruct = populationList;
-
-            Log.write(0, "Config parsing completed successfully. Added " +
-                    populationList.size() + " mob entries to population chunk struct.");
         }
         catch (IOException exception)
         {
-            Log.write(2, "IO error reading config: " + exception.getMessage());
 
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                exception.printStackTrace();
-            }
         }
         catch (JsonSyntaxException exception)
         {
-            Log.write(2, "JSON syntax error in config: " + exception.getMessage());
 
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                exception.printStackTrace();
-            }
         }
         catch (Exception exception)
         {
-            Log.write(2, "Unexpected error loading config: " + exception.getMessage());
 
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                exception.printStackTrace();
-            }
         }
     }
 
     @Override
     public void eraseData()
     {
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            int count = GeneralPopulationChunkSpawn.getInstance().populationChunkStruct.size();
-            Log.write(0, "Clearing population chunk data (" + count + " entries)");
-        }
-
         GeneralPopulationChunkSpawn.getInstance().populationChunkStruct.clear();
-
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            Log.write(0, "Population chunk data cleared successfully");
-        }
     }
 }

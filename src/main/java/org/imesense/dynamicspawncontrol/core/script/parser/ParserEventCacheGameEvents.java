@@ -3,7 +3,6 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 
 import java.io.File;
 
@@ -18,47 +17,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Так же генерация HTML отчета о информации какая сущность сегодня фармится. Открывается консольной командой в браузере как временная страница для информации
- * Реализация NOD-ов для связи с кешированием сущностей. Чтобы отключать блоки спавна
- */
 @InitLog
 public class ParserEventCacheGameEvents extends BaseParser
 {
-    private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
-
     public ParserEventCacheGameEvents(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
-
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            Log.write(0, "ParserEventCacheGameEvents constructor called with file: " + NAME_FILE);
-        }
     }
 
     @Override
     public void loadConfig(boolean init)
     {
-        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
-
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE, this.nameFile);
 
         if (!file.exists())
         {
-            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
 
         try (FileReader fileReader = new FileReader(file))
         {
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                Log.write(0, "Reading file: " + file.getAbsolutePath());
-            }
-
             Gson gson = new Gson();
             JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
@@ -67,21 +47,11 @@ public class ParserEventCacheGameEvents extends BaseParser
                 throw new RuntimeException("Script does not contain valid JSON array.");
             }
 
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                Log.write(0, "JSON array size: " + jsonArray.size());
-            }
-
             List<CacheGameEventStorage.GameEventData> eventList = new ArrayList<>();
             CacheNodeLinkManager nodeManager = CacheNodeLinkManager.getInstance();
 
             for (JsonElement jsonElement : jsonArray)
             {
-                if (DEBUG_AND_CHECK_SYNTAX)
-                {
-                    Log.write(0, "Processing new JSON element");
-                }
-
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
 
                 if (!jsonObject.has("event"))
@@ -95,11 +65,6 @@ public class ParserEventCacheGameEvents extends BaseParser
                 if (eventObject.has("id_node"))
                 {
                     idNode = eventObject.get("id_node").getAsLong();
-
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Found id_node in event: " + idNode);
-                    }
                 }
 
                 if (!eventObject.has("day"))
@@ -115,14 +80,10 @@ public class ParserEventCacheGameEvents extends BaseParser
                 }
 
                 Boolean repeat = false;
+
                 if (eventObject.has("repeat"))
                 {
                     repeat = eventObject.get("repeat").getAsBoolean();
-                }
-
-                if (DEBUG_AND_CHECK_SYNTAX)
-                {
-                    Log.write(0, "Parsed event - day: " + day + ", repeat: " + repeat);
                 }
 
                 if (!jsonObject.has("entity"))
@@ -145,12 +106,14 @@ public class ParserEventCacheGameEvents extends BaseParser
                 String resultStr = jsonObject.get("result").getAsString();
 
                 Integer idDimension = null;
+
                 if (jsonObject.has("id_dimension"))
                 {
                     idDimension = jsonObject.get("id_dimension").getAsInt();
                 }
 
                 Event.Result result;
+
                 try
                 {
                     result = Event.Result.valueOf(resultStr.toUpperCase());
@@ -166,11 +129,6 @@ public class ParserEventCacheGameEvents extends BaseParser
                         parts.length > 1 ? parts[0] : "minecraft",
                         parts.length > 1 ? parts[1] : parts[0]
                 );
-
-                if (DEBUG_AND_CHECK_SYNTAX)
-                {
-                    Log.write(0, "Created ResourceLocation: " + entityResource);
-                }
 
                 nodeManager.checkForDuplicates(entityStr, idNode);
 
@@ -188,17 +146,9 @@ public class ParserEventCacheGameEvents extends BaseParser
                 eventList.add(eventData);
 
                 nodeManager.registerEventNode(idNode, eventData);
-
-                Log.write(0, String.format("Game Event Loaded - Day: %d, Repeat: %s, Entity: %s, " +
-                                "Max Count: %d, Dimension: %s, Result: %s",
-                        day, repeat, entityStr,
-                        maxEntityCount,
-                        idDimension != null ? idDimension.toString() : "any",
-                        result));
             }
 
             CacheGameEventStorage.getInstance().eventData = eventList;
-            Log.write(0, "Loaded script with " + eventList.size() + " game event entries");
 
         }
         catch (IOException | JsonSyntaxException exception)
@@ -214,11 +164,6 @@ public class ParserEventCacheGameEvents extends BaseParser
     @Override
     public void eraseData()
     {
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            Log.write(0, "Clearing game event data cache");
-        }
-
         CacheGameEventStorage.getInstance().eventData.clear();
         CacheNodeLinkManager.getInstance().clearAll();
     }

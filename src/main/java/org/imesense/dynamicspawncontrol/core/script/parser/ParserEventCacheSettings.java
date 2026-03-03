@@ -6,8 +6,6 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheEntityStorage;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheNodeLinkManager;
 
@@ -20,40 +18,25 @@ import java.util.List;
 @InitLog
 public final class ParserEventCacheSettings extends BaseParser
 {
-    private static final boolean DEBUG_AND_CHECK_SYNTAX = true;
-
     public ParserEventCacheSettings(final String NAME_FILE)
     {
         this.nameFile = NAME_FILE;
-
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            Log.write(0, "ParserEventCacheSettings constructor called with file: " + NAME_FILE);
-        }
     }
 
     @Override
     public void loadConfig(boolean init)
     {
-        Log.write(0, "Reading the config for the first time: " + init + " " + "file: " + this.nameFile);
-
         File file = getConfigFile(init,
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CACHE, this.nameFile);
 
         if (!file.exists())
         {
-            Log.write(0, "Config file not found, creating new: " + file);
             this.createNewConfigFile(file);
             return;
         }
 
         try (FileReader fileReader = new FileReader(file))
         {
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                Log.write(0, "Reading file: " + file.getAbsolutePath());
-            }
-
             Gson gson = new Gson();
             JsonArray jsonArray = gson.fromJson(fileReader, JsonArray.class);
 
@@ -62,21 +45,11 @@ public final class ParserEventCacheSettings extends BaseParser
                 throw new RuntimeException("Script does not contain key 'data'.");
             }
 
-            if (DEBUG_AND_CHECK_SYNTAX)
-            {
-                Log.write(0, "JSON array size: " + jsonArray.size());
-            }
-
             List<CacheEntityStorage.EntityData> entitiesList = new ArrayList<>();
             CacheNodeLinkManager nodeManager = CacheNodeLinkManager.getInstance();
 
             for (JsonElement jsonElement : jsonArray)
             {
-                if (DEBUG_AND_CHECK_SYNTAX)
-                {
-                    Log.write(0, "Processing new JSON element");
-                }
-
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 JsonObject dataObject = jsonObject.getAsJsonObject("data");
 
@@ -95,11 +68,6 @@ public final class ParserEventCacheSettings extends BaseParser
                 if (dataObject.has("id_node"))
                 {
                     idNode = dataObject.get("id_node").getAsLong();
-
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Found id_node: " + idNode);
-                    }
                 }
 
                 String entityName = null;
@@ -108,20 +76,10 @@ public final class ParserEventCacheSettings extends BaseParser
                 if (dataObject.has("instanceof"))
                 {
                     instanceofStr = dataObject.get("instanceof").getAsString();
-
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Found instanceof: " + instanceofStr);
-                    }
                 }
                 else if (dataObject.has("entity"))
                 {
                     entityName = dataObject.get("entity").getAsString();
-
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Found entity: " + entityName);
-                    }
                 }
                 else
                 {
@@ -132,22 +90,12 @@ public final class ParserEventCacheSettings extends BaseParser
                 if (dataObject.has("continue"))
                 {
                     isContinue = dataObject.get("continue").getAsBoolean();
-
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Found continue: " + isContinue);
-                    }
                 }
 
                 Integer idDimension = null;
                 if (dataObject.has("id_dimension"))
                 {
                     idDimension = dataObject.get("id_dimension").getAsInt();
-
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Found id_dimension: " + idDimension);
-                    }
                 }
 
                 Boolean perPlayer = false;
@@ -183,32 +131,8 @@ public final class ParserEventCacheSettings extends BaseParser
                         throw new RuntimeException("Script must contain 'max_entity_count' key when continue is false.");
                     }
                 }
-                else
-                {
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Continue is true, skipping per_player, per_chunk, and max_entity_count parsing");
-                    }
-                }
 
                 String resultStr = dataObject.get("result").getAsString();
-
-                if (DEBUG_AND_CHECK_SYNTAX)
-                {
-                    if (!isContinue)
-                    {
-                        Log.write(0, String.format("Parsed values - per_player: %s, per_chunk: %s, " +
-                                        "max_entity_count: %d, id_dimension: %s, continue: %s, result: %s",
-                                perPlayer, perChunk, maxEntityCount,
-                                idDimension != null ? idDimension.toString() : "any",
-                                isContinue, resultStr));
-                    }
-                    else
-                    {
-                        Log.write(0, String.format("Parsed values - continue: %s, id_dimension: %s, result: %s",
-                                isContinue, idDimension != null ? idDimension.toString() : "any", resultStr));
-                    }
-                }
 
                 Event.Result result;
 
@@ -235,31 +159,16 @@ public final class ParserEventCacheSettings extends BaseParser
                         try
                         {
                             checkInstanceof = Class.forName("net.minecraft.entity.monster." + instanceofStr);
-
-                            if (DEBUG_AND_CHECK_SYNTAX)
-                            {
-                                Log.write(0, "Trying net.minecraft.entity.monster package for: " + instanceofStr);
-                            }
                         }
                         catch (ClassNotFoundException exception1)
                         {
                             try
                             {
                                 checkInstanceof = Class.forName("net.minecraft.entity." + instanceofStr);
-
-                                if (DEBUG_AND_CHECK_SYNTAX)
-                                {
-                                    Log.write(0, "Trying net.minecraft.entity package for: " + instanceofStr);
-                                }
                             }
                             catch (ClassNotFoundException exception2)
                             {
                                 checkInstanceof = Class.forName(instanceofStr);
-
-                                if (DEBUG_AND_CHECK_SYNTAX)
-                                {
-                                    Log.write(0, "Trying full class name for: " + instanceofStr);
-                                }
                             }
                         }
                     }
@@ -270,7 +179,6 @@ public final class ParserEventCacheSettings extends BaseParser
                     }
 
                     entityData.check_instanceof = checkInstanceof;
-                    Log.write(0, "Entity checkInstanceof: " + entityData.check_instanceof);
                 }
                 else if (entityName != null)
                 {
@@ -280,11 +188,6 @@ public final class ParserEventCacheSettings extends BaseParser
                             new ResourceLocation(parts.length > 1 ? parts[0] : "minecraft", parts.length > 1 ? parts[1] : parts[0]);
 
                     entityData.entity = resourceLocation;
-
-                    if (DEBUG_AND_CHECK_SYNTAX)
-                    {
-                        Log.write(0, "Created ResourceLocation: " + resourceLocation);
-                    }
                 }
 
                 entityData.per_player = perPlayer;
@@ -299,27 +202,9 @@ public final class ParserEventCacheSettings extends BaseParser
                 entitiesList.add(entityData);
 
                 nodeManager.registerCacheNode(idNode, entityData);
-
-                if (!isContinue)
-                {
-                    Log.write(0, String.format("Entity Loaded: %s Per Player: %s Per Chunk: %s " +
-                                    "Max Count: %d Dimension: %s Continue: %s Result: %s",
-                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName),
-                            perPlayer, perChunk, maxEntityCount,
-                            idDimension != null ? idDimension.toString() : "any",
-                            isContinue, result));
-                }
-                else
-                {
-                    Log.write(0, String.format("Entity Loaded (Continue mode): %s Dimension: %s Continue: %s Result: %s",
-                            (instanceofStr != null ? "Instanceof: " + instanceofStr : "Entity: " + entityName),
-                            idDimension != null ? idDimension.toString() : "any",
-                            isContinue, result));
-                }
             }
 
             CacheEntityStorage.getInstance().entityData = entitiesList;
-            Log.write(0, "Loaded script with " + entitiesList.size() + " entity data entries");
         }
         catch (IOException | JsonSyntaxException exception)
         {
@@ -334,11 +219,6 @@ public final class ParserEventCacheSettings extends BaseParser
     @Override
     public void eraseData()
     {
-        if (DEBUG_AND_CHECK_SYNTAX)
-        {
-            Log.write(0, "Clearing entity data cache");
-        }
-
         CacheEntityStorage.getInstance().entityData.clear();
         CacheNodeLinkManager.getInstance().clearAll();
     }
