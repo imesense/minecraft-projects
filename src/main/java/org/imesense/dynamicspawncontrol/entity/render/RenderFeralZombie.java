@@ -15,8 +15,8 @@ public final class RenderFeralZombie extends RenderLiving<EntityFeralZombie>
 {
     private static final ResourceLocation[] TEXTURES =
     {
-        new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_feral_zombie_1.png"),
-        new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_feral_zombie_2.png")
+        new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_feral_zombie/dsc_feral_zombie_1.png"),
+        new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_feral_zombie/dsc_feral_zombie_2.png")
     };
 
     public RenderFeralZombie(RenderManager renderManager)

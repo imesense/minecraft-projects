@@ -14,7 +14,7 @@ public class LayerExplosionZombieEyes implements LayerRenderer<EntityExplosionZo
 {
     private static final ResourceLocation EYES =
             new ResourceLocation("dynamicspawncontrol",
-                    "textures/entity/dsc_explosion_zombie_eyes.png");
+                    "textures/entity/dsc_explosion_zombie/dsc_explosion_zombie_eyes.png");
 
     private final RenderExplosionZombie render;
 

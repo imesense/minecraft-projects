@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 
 public final class RenderExplosionZombie extends RenderLiving<EntityExplosionZombie>
 {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_explosion_zombie.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_explosion_zombie/dsc_explosion_zombie.png");
 
     public RenderExplosionZombie(RenderManager renderManager)
     {

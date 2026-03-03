@@ -13,7 +13,7 @@ public class LayerFeralZombieEyes implements LayerRenderer<EntityFeralZombie>
 {
     private static final ResourceLocation EYES =
             new ResourceLocation("dynamicspawncontrol",
-                    "textures/entity/dsc_feral_zombie_eyes.png");
+                    "textures/entity/dsc_feral_zombie/dsc_feral_zombie_eyes.png");
 
     private final RenderFeralZombie render;
 
