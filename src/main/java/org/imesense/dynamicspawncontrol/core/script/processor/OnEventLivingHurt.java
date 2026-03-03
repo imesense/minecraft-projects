@@ -7,7 +7,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
@@ -42,7 +42,7 @@ public final class OnEventLivingHurt
 
         event.setAmount(reducedDamage);
 
-        Logger.info("[ZombieDamage] "
+        LogManager.info("[ZombieDamage] "
                 + "Original: " + originalDamage
                 + " -> Reduced: " + reducedDamage);
     }

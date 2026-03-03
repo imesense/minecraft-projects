@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.mixins.minecraft.world;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IWorldAccessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -66,7 +66,7 @@ public abstract class WorldUpdate
             {
                 finalRawBrightness = calculateDarkNightBrightness(rawBrightness, moonPhase);
 
-                if (DEBUG_MODE) EarlyLogBuffer.log(Logger.DEBUG, "[isDependenceLightMoonPhase] finalRawBrightness: " + finalRawBrightness);
+                if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "[isDependenceLightMoonPhase] finalRawBrightness: " + finalRawBrightness);
 
                 return finalRawBrightness;
             }
@@ -74,7 +74,7 @@ public abstract class WorldUpdate
             {
                 finalRawBrightness = calculateDarkBrightness(rawBrightness);
 
-                if (DEBUG_MODE) EarlyLogBuffer.log(Logger.DEBUG, "[isEnableDarkNight] finalRawBrightness: " + finalRawBrightness);
+                if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "[isEnableDarkNight] finalRawBrightness: " + finalRawBrightness);
 
                 return calculateDarkBrightness(rawBrightness);
             }
@@ -83,7 +83,7 @@ public abstract class WorldUpdate
         {
             finalRawBrightness = calculateVanillaBrightness(rawBrightness);
 
-            if (DEBUG_MODE) EarlyLogBuffer.log(Logger.DEBUG, "finalRawBrightness: " + finalRawBrightness);
+            if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "finalRawBrightness: " + finalRawBrightness);
 
             return calculateVanillaBrightness(rawBrightness);
         }

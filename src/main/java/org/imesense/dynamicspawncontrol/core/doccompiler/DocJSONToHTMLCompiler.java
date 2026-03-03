@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.doccompiler;
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -45,12 +45,12 @@ public final class DocJSONToHTMLCompiler
 
             writeHTMLFile(htmlFile, htmlContent);
 
-            Logger.info("HTML report on the changes has been successfully created: " + htmlFile.getAbsolutePath());
+            LogManager.info("HTML report on the changes has been successfully created: " + htmlFile.getAbsolutePath());
 
         }
         catch (Exception exception)
         {
-            Logger.error("Error when creating an HTML report: " + exception.getMessage());
+            LogManager.error("Error when creating an HTML report: " + exception.getMessage());
         }
     }
 

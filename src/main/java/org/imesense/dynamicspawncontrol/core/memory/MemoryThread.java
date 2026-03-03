@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.memory;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 public final class MemoryThread implements Runnable
 {
@@ -24,7 +24,7 @@ public final class MemoryThread implements Runnable
     {
         try
         {
-            Logger.info("[MemoryCleaner] Starting memory cleanup...");
+            LogManager.info("[MemoryCleaner] Starting memory cleanup...");
 
             Runtime runtime = Runtime.getRuntime();
             long beforeMem = runtime.totalMemory() - runtime.freeMemory();
@@ -64,13 +64,13 @@ public final class MemoryThread implements Runnable
 
             String logMessage = "[MemoryCleaner] Cleanup complete! Freed " + freedMem + " bytes";
 
-            Logger.info(logMessage);
+            LogManager.info(logMessage);
         }
         catch (Exception exception)
         {
             String error = "[MemoryCleaner] Error during memory cleanup: " + exception.getMessage();
 
-            Logger.error(error);
+            LogManager.error(error);
 
             if (sender != null && Configuration.isShowMessage())
             {

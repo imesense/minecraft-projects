@@ -4,7 +4,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.lang.reflect.Constructor;
@@ -47,21 +47,21 @@ public abstract class BaseConfigRegister
                 Constructor<T> constructor = _class.getConstructor(String.class);
                 final T INSTANCE = constructor.newInstance(configFileName);
 
-                Logger.info("Initialized config: " + configFileName);
-                Logger.info("configClass: " + _class + " " + INSTANCE);
+                LogManager.info("Initialized config: " + configFileName);
+                LogManager.info("configClass: " + _class + " " + INSTANCE);
             }
             else
             {
-                Logger.error("No ConfigClass annotation found in: " + _class.getName());
+                LogManager.error("No ConfigClass annotation found in: " + _class.getName());
             }
         }
         catch (NoSuchMethodException exception)
         {
-            Logger.error("Constructor with String parameter not found in class: " + _class.getName() + " - " + exception.getMessage());
+            LogManager.error("Constructor with String parameter not found in class: " + _class.getName() + " - " + exception.getMessage());
         }
         catch (Exception exception)
         {
-            Logger.error("Exception in class: " + _class.getName() + " - " + exception.getMessage());
+            LogManager.error("Exception in class: " + _class.getName() + " - " + exception.getMessage());
             throw new RuntimeException(exception);
         }
     }

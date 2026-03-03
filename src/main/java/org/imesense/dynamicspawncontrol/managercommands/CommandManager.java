@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.managercommands;
 
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class CommandManager
         for (AnnotatedCommand command : commands)
         {
             event.registerServerCommand(command);
-            Logger.info("[Dynamic Spawn Control] Зарегистрирована команда: " + command.getName());
+            LogManager.info("[Dynamic Spawn Control] Зарегистрирована команда: " + command.getName());
         }
     }
 

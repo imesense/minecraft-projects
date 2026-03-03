@@ -5,7 +5,6 @@ import net.minecraftforge.event.world.WorldEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.PotentialSpawnStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;

@@ -12,6 +12,7 @@ import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.logfile.MixinLoadLog;
 import org.imesense.dynamicspawncontrol.core.logfile.TodoTracker;
 import org.imesense.dynamicspawncontrol.core.memory.Configuration;
@@ -34,7 +35,6 @@ import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
 import org.imesense.dynamicspawncontrol.potion.ModPotions;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 import org.imesense.dynamicspawncontrol.satietymanager.*;
 
@@ -75,7 +75,7 @@ public final class DynamicSpawnControl
     {
         globalDirectory = event.getModConfigurationDirectory();
 
-        Logger.createLogFile(globalDirectory.getPath() +
+        LogManager.createLogFile(globalDirectory.getPath() +
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
@@ -83,7 +83,7 @@ public final class DynamicSpawnControl
         MixinConfigInitializer.initializeAllConfigs(globalDirectory.getPath() + File.separator +
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
 
-        Logger.info("preInit: Basic registration phase - blocks/items/configs");
+        LogManager.info("preInit: Basic registration phase - blocks/items/configs");
 
         TodoTracker.init(event);
 
@@ -92,13 +92,13 @@ public final class DynamicSpawnControl
         String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID +
                 DynamicSpawnControlStructure.STRUCT_INFO_MOD.RELEASE_VERSION;
 
-        Logger.info("Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
+        LogManager.info("Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
 
         if (!modFile.getName().equals(expectedName) && !UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
-            Logger.error("Renaming a mod is prohibited.");
-            Logger.error("You can make an official fork and rename it in its original form:");
-            Logger.error("https://github.com/imesense/minecraft-projects");
+            LogManager.error("Renaming a mod is prohibited.");
+            LogManager.error("You can make an official fork and rename it in its original form:");
+            LogManager.error("https://github.com/imesense/minecraft-projects");
 
             FMLCommonHandler.instance().exitJava(1, false);
         }
@@ -118,11 +118,11 @@ public final class DynamicSpawnControl
         }
         catch (Exception exception)
         {
-            Logger.error("Mixin loading failed: " + exception.getMessage());
+            LogManager.error("Mixin loading failed: " + exception.getMessage());
             exception.printStackTrace();
         }
 
-        Logger.warn("Is running in IDE (based on logging level): " +
+        LogManager.warn("Is running in IDE (based on logging level): " +
                 (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "true" : "false"));
 
         EntityRegister.init(() -> EntityRegister.create(this));
@@ -154,7 +154,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-        Logger.info("init: Core setup - recipes, events, network packets");
+        LogManager.info("init: Core setup - recipes, events, network packets");
 
         IRecipes = new CraftItemWeb();
 
@@ -174,7 +174,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        Logger.info("postInit: Finalization - cross-mod integration");
+        LogManager.info("postInit: Finalization - cross-mod integration");
 
         if (Configuration.isCleanOnInit())
         {
@@ -201,11 +201,11 @@ public final class DynamicSpawnControl
 
             DocJSONToHTMLCompiler.createHTMLFile(minecraftDir.getAbsolutePath(), true);
 
-            Logger.info("HTML отчет по настройкам сущностей успешно сгенерирован при запуске сервера");
+            LogManager.info("HTML отчет по настройкам сущностей успешно сгенерирован при запуске сервера");
         }
         catch (Exception exception)
         {
-            Logger.error("Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
+            LogManager.error("Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
         }
 
         event.registerServerCommand(new CommandSetHunger());
@@ -220,20 +220,20 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void onServerStopped(FMLServerStoppedEvent event)
     {
-        Logger.info("Cleaning up CacheGeneralStorage on server stop...");
+        LogManager.info("Cleaning up CacheGeneralStorage on server stop...");
 
         CacheGeneralStorage.getInstance().cleanActualCache();
         CacheGeneralStorage.getInstance().cleanBufferCache();
 
-        Logger.info("CacheGeneralStorage cleaned up successfully.");
+        LogManager.info("CacheGeneralStorage cleaned up successfully.");
     }
 
     @Mod.EventHandler
     public static void onServerShutdown(FMLServerStoppingEvent event)
     {
-        Logger.info("Server stopping: shutting down logger and task manager...");
+        LogManager.info("Server stopping: shutting down logger and task manager...");
 
-        Logger.shutdown();
+        LogManager.shutdown();
         TaskManager.getInstance().shutdown();
 
         System.out.println("[DynamicSpawnControl] Shutdown completed safely.");

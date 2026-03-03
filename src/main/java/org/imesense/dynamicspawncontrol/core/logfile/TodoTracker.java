@@ -41,7 +41,7 @@ public final class TodoTracker
                     className.substring(className.lastIndexOf('.') + 1),
                     todo.value());
 
-            Logger.info(message);
+            LogManager.info(message);
 
             loggedTodos.add(className);
         });

@@ -14,7 +14,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
 
 import javax.annotation.Nonnull;
@@ -59,18 +59,18 @@ public final class CmdAdminDumpBlock extends CommandBase
 
                 iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD + "Block ID: " + blockId));
 
-                Logger.info("Block ID: " + blockId);
+                LogManager.info("Block ID: " + blockId);
 
                 iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD +
                         Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString()));
 
-                Logger.info(Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString());
+                LogManager.info(Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString());
 
                 for (IProperty<?> key : iBlockState.getPropertyKeys())
                 {
                     String getString = iBlockState.getValue(key).toString();
                     iCommandSender.sendMessage(new TextComponentString("State: " + key.getName() + " = " + getString));
-                    Logger.info("State: " + key.getName() + " = " + getString);
+                    LogManager.info("State: " + key.getName() + " = " + getString);
                 }
 
                 TileEntity tileEntity = entityPlayerMP.getEntityWorld().getTileEntity(blockPos);
@@ -79,7 +79,7 @@ public final class CmdAdminDumpBlock extends CommandBase
                 {
                     NBTTagCompound nbtTagCompound = tileEntity.writeToNBT(new NBTTagCompound());
                     iCommandSender.sendMessage(new TextComponentString("NBT Tags: " + nbtTagCompound));
-                    Logger.info("NBT Tags: " + nbtTagCompound);
+                    LogManager.info("NBT Tags: " + nbtTagCompound);
                 }
             }
         }

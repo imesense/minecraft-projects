@@ -5,7 +5,7 @@ import java.io.*;
 import com.google.gson.*;
 import lombok.Getter;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 public final class SRParasitesBlacklistData
 {
@@ -107,7 +107,7 @@ public final class SRParasitesBlacklistData
                     activeBlacklist = list.toArray(new String[0]);
                     loadedFromFile = true;
 
-                    EarlyLogBuffer.log(Logger.INFO,"Loaded " + list.size() + " entities from blacklist file");
+                    EarlyLogBuffer.log(LogManager.INFO,"Loaded " + list.size() + " entities from blacklist file");
                 }
                 else if (jsonElement.isJsonObject())
                 {
@@ -126,14 +126,14 @@ public final class SRParasitesBlacklistData
                         activeBlacklist = list.toArray(new String[0]);
                         loadedFromFile = true;
 
-                        EarlyLogBuffer.log(Logger.INFO,"Loaded " + list.size() + " entities from blacklist file (object format)");
+                        EarlyLogBuffer.log(LogManager.INFO,"Loaded " + list.size() + " entities from blacklist file (object format)");
                     }
                 }
             }
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Logger.ERROR,"Failed to load blacklist from file: " + exception.getMessage());
+            EarlyLogBuffer.log(LogManager.ERROR,"Failed to load blacklist from file: " + exception.getMessage());
 
             activeBlacklist = DEFAULT_BLACKLIST.clone();
             loadedFromFile = false;
@@ -145,6 +145,6 @@ public final class SRParasitesBlacklistData
         activeBlacklist = DEFAULT_BLACKLIST.clone();
         loadedFromFile = false;
 
-        EarlyLogBuffer.log(Logger.INFO, "Reset blacklist to default");
+        EarlyLogBuffer.log(LogManager.INFO, "Reset blacklist to default");
     }
 }

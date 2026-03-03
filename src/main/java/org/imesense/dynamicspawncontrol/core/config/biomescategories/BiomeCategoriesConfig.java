@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -64,7 +64,7 @@ public final class BiomeCategoriesConfig
             if (!Files.exists(CONFIG_FILE_PATH))
             {
                 createDefaultConfig();
-                Logger.info("[DynamicSpawnControl] Created default biomes categories config at: " + CONFIG_FILE_PATH);
+                LogManager.info("[DynamicSpawnControl] Created default biomes categories config at: " + CONFIG_FILE_PATH);
             }
 
             loadFromFile();
@@ -72,7 +72,7 @@ public final class BiomeCategoriesConfig
         }
         catch (Exception exception)
         {
-            Logger.error("[DynamicSpawnControl] Error initializing biomes config: " + exception.getMessage());
+            LogManager.error("[DynamicSpawnControl] Error initializing biomes config: " + exception.getMessage());
             exception.printStackTrace();
         }
     }
@@ -172,12 +172,12 @@ public final class BiomeCategoriesConfig
 
             rebuildMapping();
 
-            Logger.info("[DynamicSpawnControl] Loaded " + allCategories.size() +
+            LogManager.info("[DynamicSpawnControl] Loaded " + allCategories.size() +
                     " biome categories from config file");
         }
         catch (Exception exception)
         {
-            Logger.error("[DynamicSpawnControl] Error loading biomes categories: " + exception.getMessage());
+            LogManager.error("[DynamicSpawnControl] Error loading biomes categories: " + exception.getMessage());
             exception.printStackTrace();
         }
     }
@@ -215,13 +215,13 @@ public final class BiomeCategoriesConfig
 
     public static void reload()
     {
-        Logger.info("[DynamicSpawnControl] Reloading biomes categories config...");
+        LogManager.info("[DynamicSpawnControl] Reloading biomes categories config...");
         loadFromFile();
     }
 
     public static void resetToDefault() throws IOException
     {
-        Logger.info("[DynamicSpawnControl] Resetting biomes categories to default...");
+        LogManager.info("[DynamicSpawnControl] Resetting biomes categories to default...");
         allCategories = createDefaultCategories();
         saveToFile();
         rebuildMapping();

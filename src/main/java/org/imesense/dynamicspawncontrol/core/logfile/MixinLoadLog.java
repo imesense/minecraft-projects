@@ -13,17 +13,17 @@ public final class MixinLoadLog
     {
         ClassLoader classLoader = DynamicSpawnControl.class.getClassLoader();
 
-        Logger.info("Searching for mixin config files...");
+        LogManager.info("Searching for mixin config files...");
 
         for (String config : DynamicSpawnControlInitMixins.getAllConfigPaths())
         {
-            Logger.info("Trying to load: " + config);
+            LogManager.info("Trying to load: " + config);
 
             try (InputStream inputStream = classLoader.getResourceAsStream(config))
             {
                 if (inputStream == null)
                 {
-                    Logger.error("Mixin not found in resources: " + config);
+                    LogManager.error("Mixin not found in resources: " + config);
                     continue;
                 }
 
@@ -47,13 +47,13 @@ public final class MixinLoadLog
                         stringBuilder.append(line);
                     }
 
-                    Logger.info("Successfully loaded mixin: " + config);
-                    Logger.info(stringBuilder.toString());
+                    LogManager.info("Successfully loaded mixin: " + config);
+                    LogManager.info(stringBuilder.toString());
                 }
             }
             catch (Exception exception)
             {
-                Logger.error("Error loading " + config + ": " + exception.getMessage());
+                LogManager.error("Error loading " + config + ": " + exception.getMessage());
                 exception.printStackTrace();
             }
         }

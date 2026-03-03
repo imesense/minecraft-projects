@@ -5,7 +5,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
 public class ModPotions
@@ -23,6 +23,6 @@ public class ModPotions
         SATIETY = new SatietyPotion();
         event.getRegistry().register(SATIETY);
 
-        Logger.info("[DynamicSpawnControl] Registered satiety potion: " + SATIETY.getRegistryName());
+        LogManager.info("[DynamicSpawnControl] Registered satiety potion: " + SATIETY.getRegistryName());
     }
 }

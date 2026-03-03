@@ -9,7 +9,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import javax.annotation.Nonnull;
 
@@ -117,9 +117,9 @@ public final class CmdAdminTimeSet extends CommandBase
 
         long targetTime = targetDay * 24000L + timeTicks;
 
-        Logger.info("[DSC DEBUG] Current time: " + currentTime +
+        LogManager.info("[DSC DEBUG] Current time: " + currentTime +
                 " (day " + currentDay + ", time " + currentTimeOfDay + ")");
-        Logger.info("[DSC DEBUG] Setting to: " + targetTime +
+        LogManager.info("[DSC DEBUG] Setting to: " + targetTime +
                 " (day " + targetDay + ", time " + timeTicks + ")");
 
         world.setWorldTime(targetTime);
@@ -128,7 +128,7 @@ public final class CmdAdminTimeSet extends CommandBase
         long newDay = newTime / 24000L;
         long newTimeOfDay = newTime % 24000L;
 
-        Logger.info("[DSC DEBUG] New time: " + newTime +
+        LogManager.info("[DSC DEBUG] New time: " + newTime +
                 " (day " + newDay + ", time " + newTimeOfDay + ")");
 
         String timeStr = formatTime(timeTicks);

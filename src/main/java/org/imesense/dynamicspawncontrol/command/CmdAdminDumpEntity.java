@@ -15,7 +15,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import javax.annotation.Nonnull;
 
@@ -103,7 +103,7 @@ public final class CmdAdminDumpEntity extends CommandBase
                 }
 
                 iCommandSender.sendMessage(new TextComponentString(entityInfo.toString()));
-                Logger.info(entityInfo.toString());
+                LogManager.info(entityInfo.toString());
             }
             else
             {

@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
@@ -74,7 +74,7 @@ public final class DropHeadMob
         {
             dropHead(victim, attacker.world);
 
-            Logger.info(
+            LogManager.info(
                 "[HeadDrop] " +
                 "Attacker=" + attacker.getName() +
                 " Weapon=" + (heldItem.isEmpty() ? "None" : heldItem.getItem().getRegistryName()) +

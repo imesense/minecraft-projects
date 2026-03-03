@@ -4,7 +4,7 @@ import net.minecraft.command.ICommand;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @TODO(value = "Merge 'base' files into 'core/base/...' and fix the class diagram in version 0.2", showOnce = false, priority = TODO.TodoPriority.HIGH)
@@ -35,7 +35,7 @@ public abstract class BaseCommandRegister
             }
             catch (Exception exception)
             {
-                Logger.error("Exception in class: " + _class.getName() + " - " + exception.getMessage());
+                LogManager.error("Exception in class: " + _class.getName() + " - " + exception.getMessage());
 
                 throw new RuntimeException(exception);
             }

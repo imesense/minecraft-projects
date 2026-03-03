@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.function.Consumer;
 
-public final class Logger
+public final class LogManager
 {
     private static File logFile;
     private static TaskManager taskManager;

@@ -7,7 +7,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.potion.ModPotions;
 import net.minecraft.init.MobEffects;
 import java.util.Random;
@@ -80,7 +80,7 @@ public class SatietyFoodHandler
                 ));
             }
 
-            Logger.info("Bad food consumed: " + itemId);
+            LogManager.info("Bad food consumed: " + itemId);
 
             return;
         }
@@ -100,7 +100,7 @@ public class SatietyFoodHandler
 
             player.removePotionEffect(ModPotions.SATIETY);
 
-            Logger.info("Stacking satiety: old=" + remaining +
+            LogManager.info("Stacking satiety: old=" + remaining +
                     " added=" + addedDuration +
                     " final=" + newDuration);
         }
@@ -115,7 +115,7 @@ public class SatietyFoodHandler
 
         player.addPotionEffect(newEffect);
 
-        Logger.info("Satiety applied: " + itemId +
+        LogManager.info("Satiety applied: " + itemId +
                 " | duration=" + newDuration +
                 " | amp=" + amplifier);
     }

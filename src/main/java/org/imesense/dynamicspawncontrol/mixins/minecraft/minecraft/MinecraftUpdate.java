@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.mixins.minecraft.minecraft;
 
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.Logger;
-import org.imesense.dynamicspawncontrol.core.taskmanager.TaskManager;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.PixelFormat;
@@ -57,9 +57,9 @@ public abstract class MinecraftUpdate
     @Inject(method = "shutdown", at = @At("HEAD"))
     private void onShutdown(CallbackInfo ci)
     {
-        org.imesense.dynamicspawncontrol.core.logfile.Logger.info("Server stopping: shutting down logger and task manager...");
+        LogManager.info("Server stopping: shutting down logger and task manager...");
 
-        org.imesense.dynamicspawncontrol.core.logfile.Logger.shutdown();
+        LogManager.shutdown();
 
         System.out.println("[DynamicSpawnControl] Shutdown completed safely.");
     }

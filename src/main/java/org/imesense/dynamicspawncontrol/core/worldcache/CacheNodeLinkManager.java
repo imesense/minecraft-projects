@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.worldcache;
 
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -67,7 +67,7 @@ public class CacheNodeLinkManager
         if (idNode != null)
         {
             activeEventNodes.add(idNode);
-            Logger.info("Activated node: " + idNode);
+            LogManager.info("Activated node: " + idNode);
         }
     }
 
@@ -76,7 +76,7 @@ public class CacheNodeLinkManager
         if (idNode != null)
         {
             activeEventNodes.remove(idNode);
-            Logger.info("Deactivated node: " + idNode);
+            LogManager.info("Deactivated node: " + idNode);
         }
     }
 

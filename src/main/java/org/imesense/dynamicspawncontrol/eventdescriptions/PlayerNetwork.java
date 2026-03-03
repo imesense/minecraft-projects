@@ -1,23 +1,13 @@
 package org.imesense.dynamicspawncontrol.eventdescriptions;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.field.UniqueField;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -64,7 +54,7 @@ public final class PlayerNetwork
 
         if (ONLINE_PLAYERS.add(player.getUniqueID()))
         {
-            Logger.info(String.format("Player [%s] joined the world", player.getName()));
+            LogManager.info(String.format("Player [%s] joined the world", player.getName()));
         }
     }
 
@@ -74,7 +64,7 @@ public final class PlayerNetwork
 
         if (ONLINE_PLAYERS.remove(player.getUniqueID()))
         {
-            Logger.info(String.format("Player [%s] left the world", player.getName()));
+            LogManager.info(String.format("Player [%s] left the world", player.getName()));
         }
     }
 

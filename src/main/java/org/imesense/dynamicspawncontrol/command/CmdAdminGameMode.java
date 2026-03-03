@@ -9,7 +9,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 
 import javax.annotation.Nonnull;
@@ -53,7 +53,7 @@ public final class CmdAdminGameMode extends CommandBase
         }
         catch (NumberFormatException exception)
         {
-            Logger.error(String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
+            LogManager.error(String.format("Error parsing game mode: %s. Exception: %s", args[0], exception.getMessage()));
 
             ChatColorUtil.sendColoredMessage(
                     iCommandSender instanceof EntityPlayer ? (EntityPlayer) iCommandSender : null,

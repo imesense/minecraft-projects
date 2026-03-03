@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.mixinconfig.specialmobs;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.basemixinconfig.BaseMixinConfig;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.annotations.MixinConfigFile;
 
@@ -39,7 +39,7 @@ public final class SpecialMobsReplacerConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Logger.INFO,
+                EarlyLogBuffer.log(LogManager.INFO,
                         "SpecialMobs replacer config already exists, loading from: " + activeConfigPath);
                 SpecialMobsReplacerData.loadFromFile(activeConfigPath);
                 return;
@@ -69,14 +69,14 @@ public final class SpecialMobsReplacerConfig extends BaseMixinConfig
                 writer.write(jsonString);
             }
 
-            EarlyLogBuffer.log(Logger.INFO, "Created SpecialMobs replacer config at: " + activeConfigPath);
-            EarlyLogBuffer.log(Logger.INFO, "Default value: all_replace_vanilla = false");
+            EarlyLogBuffer.log(LogManager.INFO, "Created SpecialMobs replacer config at: " + activeConfigPath);
+            EarlyLogBuffer.log(LogManager.INFO, "Default value: all_replace_vanilla = false");
 
             SpecialMobsReplacerData.loadFromFile(activeConfigPath);
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Logger.ERROR,
+            EarlyLogBuffer.log(LogManager.ERROR,
                     "Failed to create SpecialMobs replacer config: " + exception.getMessage());
 
             exception.printStackTrace();
@@ -92,12 +92,12 @@ public final class SpecialMobsReplacerConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Logger.INFO, "Manual reload of SpecialMobs replacer config");
+                EarlyLogBuffer.log(LogManager.INFO, "Manual reload of SpecialMobs replacer config");
                 SpecialMobsReplacerData.loadFromFile(activeConfigPath);
             }
             else
             {
-                EarlyLogBuffer.log(Logger.INFO, "SpecialMobs replacer config missing, resetting to defaults");
+                EarlyLogBuffer.log(LogManager.INFO, "SpecialMobs replacer config missing, resetting to defaults");
                 SpecialMobsReplacerData.resetToDefault();
             }
         }

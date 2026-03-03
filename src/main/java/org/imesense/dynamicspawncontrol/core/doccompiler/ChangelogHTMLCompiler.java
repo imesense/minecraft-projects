@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.doccompiler;
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -39,11 +39,11 @@ public final class ChangelogHTMLCompiler
             String htmlContent = generateChangelogHTML(jsonContent);
             writeHTMLFile(htmlFile, htmlContent);
 
-            Logger.info("HTML отчет об изменениях успешно создан: " + htmlFile.getAbsolutePath());
+            LogManager.info("HTML отчет об изменениях успешно создан: " + htmlFile.getAbsolutePath());
         }
         catch (Exception exception)
         {
-            Logger.error("Ошибка при создании HTML отчета: " + exception.getMessage());
+            LogManager.error("Ошибка при создании HTML отчета: " + exception.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public final class ChangelogHTMLCompiler
     {
         String resourcePath = "/assets/dynamicspawncontrol/changelog/changelog_1_12_2_0_1.json";
 
-        Logger.info(String.format(
+        LogManager.info(String.format(
                 "[CHANGELOG] Чтение файла по пути: %s", resourcePath));
 
         try (InputStream inputStream = DynamicSpawnControlStructure.class
@@ -78,7 +78,7 @@ public final class ChangelogHTMLCompiler
         }
         catch (IOException exception)
         {
-            Logger.error("Ошибка чтения changelog: " + exception.getMessage());
+            LogManager.error("Ошибка чтения changelog: " + exception.getMessage());
             return exception.toString();
         }
     }

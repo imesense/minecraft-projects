@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 
 import javax.annotation.Nonnull;
@@ -40,7 +40,7 @@ public final class CmdAdminCopyWorldSeed extends CommandBase
     {
         long seed = minecraftServer.getWorld(0).getSeed();
 
-        Logger.info("Get World Seed: " + seed);
+        LogManager.info("Get World Seed: " + seed);
 
         ChatColorUtil.sendColoredMessage(
                 iCommandSender instanceof EntityPlayerMP ? (EntityPlayer) iCommandSender : null,

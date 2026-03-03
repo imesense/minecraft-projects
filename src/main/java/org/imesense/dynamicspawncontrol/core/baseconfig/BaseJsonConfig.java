@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.io.File;
 import java.util.Map;
@@ -98,7 +98,7 @@ public abstract class BaseJsonConfig
                 (isConfigFolder ? DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS :
                         DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_PLUGINS) + File.separator;
 
-        Logger.info("constructPathToDirectory: " + path);
+        LogManager.info("constructPathToDirectory: " + path);
 
         return path;
     }

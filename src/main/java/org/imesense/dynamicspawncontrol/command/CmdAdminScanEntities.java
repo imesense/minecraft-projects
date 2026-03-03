@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
@@ -48,19 +48,19 @@ public final class CmdAdminScanEntities extends CommandBase
         AtomicInteger atomicInteger = new AtomicInteger();
         List<Entity> entityList = world.loadedEntityList;
 
-        Logger.info("------------ START SCAN ENTITY LIST ------------");
+        LogManager.info("------------ START SCAN ENTITY LIST ------------");
 
         for (Entity entity : entityList)
         {
             if (entity != null)
             {
-                Logger.info("-----------------------------------------------------------");
+                LogManager.info("-----------------------------------------------------------");
 
                 @Nonnull String entityType;
 
-                Logger.info("Iteration: " + atomicInteger.getAndIncrement());
-                Logger.info(entity.toString());
-                Logger.info("Entity ID: " + entity.getEntityId());
+                LogManager.info("Iteration: " + atomicInteger.getAndIncrement());
+                LogManager.info(entity.toString());
+                LogManager.info("Entity ID: " + entity.getEntityId());
 
                 ResourceLocation resourceLocation = EntityList.getKey(entity);
 
@@ -75,9 +75,9 @@ public final class CmdAdminScanEntities extends CommandBase
                             resourceLocation.toString() : "Unknown";
                 }
 
-                Logger.info("Entity: " + entityType);
+                LogManager.info("Entity: " + entityType);
 
-                Logger.info("-----------------------------------------------------------");
+                LogManager.info("-----------------------------------------------------------");
             }
         }
 
@@ -86,6 +86,6 @@ public final class CmdAdminScanEntities extends CommandBase
                         TextFormatting.GREEN)
         ));
 
-        Logger.info("------------ END SCAN ENTITY LIST ------------");
+        LogManager.info("------------ END SCAN ENTITY LIST ------------");
     }
 }

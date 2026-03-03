@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityAttributes;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityDescription;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.EntityEquipment;
@@ -73,7 +73,7 @@ public final class Equipment
             }
             else
             {
-                Logger.error("Item not found: " + item);
+                LogManager.error("Item not found: " + item);
                 throw new RuntimeException("Item not found: " + item);
             }
         }

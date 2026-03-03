@@ -11,7 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 
 import javax.annotation.Nonnull;
@@ -67,7 +67,7 @@ public final class CmdAdminGiveDSCSword extends CommandBase
 
         if (added)
         {
-            Logger.info("Gave 'DynamicSpawnControl' Sword to " + entityPlayerMP.getName());
+            LogManager.info("Gave 'DynamicSpawnControl' Sword to " + entityPlayerMP.getName());
             ChatColorUtil.sendColoredMessage(
                     entityPlayerMP,
                     "You received §6§l'DynamicSpawnControl' Sword§r§a!",

@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;
 import org.imesense.dynamicspawncontrol.eventdescriptions.PlayerNetwork;
 
@@ -41,7 +41,7 @@ public final class OnEventPlayerEventPlayerLoggedOutEvent extends BaseOnEventIns
                 playerPos.getZ()
         );
 
-        Logger.info(logMessage);
+        LogManager.info(logMessage);
 
         PlayerNetwork.getInstance().handlePlayerLoggedOut(event);
 

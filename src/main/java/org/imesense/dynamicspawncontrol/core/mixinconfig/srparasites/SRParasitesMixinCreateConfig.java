@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.basemixinconfig.BaseMixinConfig;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.annotations.MixinConfigFile;
 
@@ -39,7 +39,7 @@ public final class SRParasitesMixinCreateConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Logger.INFO, "Blacklist file already exists, loading from: " + activeConfigPath);
+                EarlyLogBuffer.log(LogManager.INFO, "Blacklist file already exists, loading from: " + activeConfigPath);
                 SRParasitesBlacklistData.loadFromFile(activeConfigPath);
                 return;
             }
@@ -72,15 +72,15 @@ public final class SRParasitesMixinCreateConfig extends BaseMixinConfig
                 writer.write(jsonString);
             }
 
-            EarlyLogBuffer.log(Logger.INFO, "Created blacklist file at: " + activeConfigPath);
-            EarlyLogBuffer.log(Logger.INFO, "Saved " + currentList.length + " entities to file");
-            EarlyLogBuffer.log(Logger.INFO, "Config file name from annotation: " + fileName);
+            EarlyLogBuffer.log(LogManager.INFO, "Created blacklist file at: " + activeConfigPath);
+            EarlyLogBuffer.log(LogManager.INFO, "Saved " + currentList.length + " entities to file");
+            EarlyLogBuffer.log(LogManager.INFO, "Config file name from annotation: " + fileName);
 
             SRParasitesBlacklistData.loadFromFile(activeConfigPath);
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Logger.ERROR, "Failed to create mixin config: " + exception.getMessage());
+            EarlyLogBuffer.log(LogManager.ERROR, "Failed to create mixin config: " + exception.getMessage());
             exception.printStackTrace();
         }
     }
@@ -94,12 +94,12 @@ public final class SRParasitesMixinCreateConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Logger.INFO, "Manual reload of blacklist from file");
+                EarlyLogBuffer.log(LogManager.INFO, "Manual reload of blacklist from file");
                 SRParasitesBlacklistData.loadFromFile(activeConfigPath);
             }
             else
             {
-                EarlyLogBuffer.log(Logger.INFO, "Config file missing, resetting to defaults");
+                EarlyLogBuffer.log(LogManager.INFO, "Config file missing, resetting to defaults");
                 SRParasitesBlacklistData.resetToDefault();
             }
         }

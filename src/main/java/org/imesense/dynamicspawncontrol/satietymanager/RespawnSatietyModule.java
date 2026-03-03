@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import org.imesense.dynamicspawncontrol.core.logfile.Logger;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public final class RespawnSatietyModule
         foodStats.setFoodLevel(20);
         foodStats.setFoodSaturationLevel(5.0F);
 
-        Logger.info("Max hunger set for player: " + player.getName() + " (Multiplayer ready)");
+        LogManager.info("Max hunger set for player: " + player.getName() + " (Multiplayer ready)");
     }
 
     @SubscribeEvent
