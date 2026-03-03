@@ -231,11 +231,6 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public static void onServerShutdown(FMLServerStoppingEvent event)
     {
-        LogManager.info("Server stopping: shutting down logger and task manager...");
 
-        LogManager.shutdown();
-        TaskManager.getInstance().shutdown();
-
-        System.out.println("[DynamicSpawnControl] Shutdown completed safely.");
     }
 }
