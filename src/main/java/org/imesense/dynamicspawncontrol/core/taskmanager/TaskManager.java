@@ -1,111 +1,210 @@
 package org.imesense.dynamicspawncontrol.core.taskmanager;
 
+import lombok.Getter;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 public final class TaskManager
 {
-    private static final int AVAILABLE_CORES =
-            Math.max(1, Runtime.getRuntime().availableProcessors() - 1);
+    private static TaskManager instance;
 
-    private static final TaskManager INSTANCE =
-            new TaskManager(AVAILABLE_CORES, "AsyncWorker");
+    private final ExecutorServiceManager executorManager;
+    private final ErrorHandlerManager errorHandlerManager;
+    private final BlockingQueue<Task<?>> taskQueue;
+    private final TaskProcessor taskProcessor;
 
-    private final ExecutorService executor;
+    @Getter
+    private volatile boolean shuttingDown = false;
+    private volatile boolean running;
 
-    private TaskManager(int threadCount, String threadNamePrefix)
+    private static final int QUEUE_CAPACITY = 1000;
+
+    public enum TaskPriority
     {
-        this.executor = new ThreadPoolExecutor(
-                threadCount,
-                threadCount,
-                0L,
-                TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(),
-                new NamedThreadFactory(threadNamePrefix),
-                new ThreadPoolExecutor.CallerRunsPolicy()
+        LOW, NORMAL, HIGH, CRITICAL
+    }
+
+    private TaskManager()
+    {
+        this.executorManager = new ExecutorServiceManager();
+        this.errorHandlerManager = new ErrorHandlerManager();
+        this.taskQueue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
+        this.running = true;
+        this.taskProcessor = new TaskProcessor(this, taskQueue);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+    }
+
+    public static synchronized TaskManager getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new TaskManager();
+        }
+        return instance;
+    }
+
+    @SuppressWarnings("unchecked")
+    <T> void processTask(Task<T> task)
+    {
+        ExecutorService executor = executorManager.selectExecutor(task);
+        executor.submit(() -> {
+            try
+            {
+                T result = task.execute();
+                task.complete(result);
+            }
+            catch (Exception exception)
+            {
+                task.completeExceptionally(exception);
+                errorHandlerManager.notifyError(exception);
+            }
+        });
+    }
+
+    public <T> CompletableFuture<T> submitTask(Task<T> task)
+    {
+        if (!running)
+        {
+            CompletableFuture<T> failed = new CompletableFuture<>();
+            failed.completeExceptionally(new IllegalStateException("TaskManager is shutting down"));
+            return failed;
+        }
+
+        try
+        {
+            taskQueue.offer(task, 100, TimeUnit.MILLISECONDS);
+        }
+        catch (InterruptedException interruptedException)
+        {
+            Thread.currentThread().interrupt();
+            CompletableFuture<T> failed = new CompletableFuture<>();
+            failed.completeExceptionally(interruptedException);
+            return failed;
+        }
+
+        return task.getFuture();
+    }
+
+    public CompletableFuture<Void> submitLogTask(Runnable logAction)
+    {
+        return submitTask(new LogTask(logAction));
+    }
+
+    public ScheduledFuture<?> scheduleTask(Runnable task, long delay, TimeUnit unit)
+    {
+        return executorManager.getScheduler().schedule(() ->
+                submitTask(new Task<Void>("ScheduledTask", TaskPriority.NORMAL)
+                {
+                    @Override
+                    public Void execute()
+                    {
+                        task.run();
+                        return null;
+                    }
+                }), delay, unit);
+    }
+
+    public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, long initialDelay,
+                                                  long period, TimeUnit unit)
+    {
+        return executorManager.getScheduler().scheduleAtFixedRate(() ->
+                submitTask(new Task<Void>("PeriodicTask", TaskPriority.NORMAL)
+                {
+                    @Override
+                    public Void execute()
+                    {
+                        task.run();
+                        return null;
+                    }
+                }), initialDelay, period, unit);
+    }
+
+    public void addErrorHandler(Consumer<Throwable> handler)
+    {
+        errorHandlerManager.addHandler(handler);
+    }
+
+    public TaskManagerStats getStats()
+    {
+        TaskManagerStats stats = executorManager.getStats();
+        return new TaskManagerStats(
+                taskQueue.size(),
+                stats.activeWorkers,
+                stats.activeIoThreads,
+                stats.scheduledTasks
         );
     }
 
-    public static TaskManager get()
+    public static class TaskManagerStats
     {
-        return INSTANCE;
-    }
+        public final int queueSize;
+        public final int activeWorkers;
+        public final int activeIoThreads;
+        public final int scheduledTasks;
 
-    public Future<?> submit(Runnable task)
-    {
-        return executor.submit(wrap(task));
-    }
-
-    public <T> Future<T> submit(Callable<T> task)
-    {
-        return executor.submit(wrap(task));
-    }
-
-    public void execute(Runnable task)
-    {
-        executor.execute(wrap(task));
+        public TaskManagerStats(int queueSize, int activeWorkers,
+                                int activeIoThreads, int scheduledTasks)
+        {
+            this.queueSize = queueSize;
+            this.activeWorkers = activeWorkers;
+            this.activeIoThreads = activeIoThreads;
+            this.scheduledTasks = scheduledTasks;
+        }
     }
 
     public void shutdown()
     {
-        executor.shutdown();
-    }
+        if (shuttingDown)
+            return;
 
-    public void shutdownNow()
-    {
-        executor.shutdownNow();
-    }
+        shuttingDown = true;
+        running = false;
 
-    private Runnable wrap(Runnable task)
-    {
-        return () ->
+        System.out.println("[TaskManager] Starting graceful shutdown...");
+
+        taskProcessor.shutdown();
+        try
         {
-            try
-            {
-                task.run();
-            }
-            catch (Throwable throwable)
-            {
-                throwable.printStackTrace();
-            }
-        };
+            taskProcessor.join(2000);
+        }
+        catch (InterruptedException ignored) { }
+
+        processRemainingTasksWithTimeout(5000);
+        executorManager.shutdown(5000);
+
+        System.out.println("[TaskManager] Shutdown complete");
     }
 
-    private <T> Callable<T> wrap(Callable<T> task)
+    private void processRemainingTasksWithTimeout(long timeoutMs)
     {
-        return () ->
-        {
-            try
-            {
-                return task.call();
-            }
-            catch (Throwable throwable)
-            {
-                throwable.printStackTrace();
-                throw throwable;
-            }
-        };
-    }
+        long startTime = System.currentTimeMillis();
+        int processedCount = 0;
 
-    private static class NamedThreadFactory implements ThreadFactory
-    {
-        private final String prefix;
-        private final AtomicInteger counter = new AtomicInteger(0);
-
-        NamedThreadFactory(String prefix)
+        while (!taskQueue.isEmpty() && (System.currentTimeMillis() - startTime) < timeoutMs)
         {
-            this.prefix = prefix;
+            Task<?> task = taskQueue.poll();
+            if (task != null)
+            {
+                try
+                {
+                    processTask(task);
+                    processedCount++;
+                }
+                catch (Exception exception)
+                {
+                    errorHandlerManager.notifyError(exception);
+                }
+            }
         }
 
-        @Override
-        public Thread newThread(Runnable runnable)
+        System.out.println("[TaskManager] Processed " + processedCount + " remaining tasks");
+
+        int remaining = taskQueue.size();
+        if (remaining > 0)
         {
-            Thread thread = new Thread(runnable);
-
-            thread.setName(prefix + "-" + counter.incrementAndGet());
-            thread.setDaemon(true);
-
-            return thread;
+            System.out.println("[TaskManager] Warning: " + remaining + " tasks were dropped");
+            taskQueue.clear();
         }
     }
 }
