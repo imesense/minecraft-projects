@@ -42,7 +42,7 @@ public final class OnEventLivingHurt
 
         event.setAmount(reducedDamage);
 
-        Logger.write(0, "[ZombieDamage] "
+        Logger.info("[ZombieDamage] "
                 + "Original: " + originalDamage
                 + " -> Reduced: " + reducedDamage);
     }

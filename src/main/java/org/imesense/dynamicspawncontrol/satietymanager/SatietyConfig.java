@@ -32,31 +32,31 @@ public class SatietyConfig
             if (!configFile.exists())
             {
                 createDefaultConfig(configFile);
-                Logger.write(0, "Created default satiety config with " + satietyData.size() + " food items");
+                Logger.info("Created default satiety config with " + satietyData.size() + " food items");
             }
             else
             {
-                Logger.write(0, "Loading existing satiety config...");
+                Logger.info("Loading existing satiety config...");
             }
 
             loadConfig(configFile);
 
             if (isDebugMode)
             {
-                Logger.write(0, "Loaded satiety data for " + satietyData.size() + " items:");
+                Logger.info("Loaded satiety data for " + satietyData.size() + " items:");
 
                 for (Map.Entry<String, FoodSatietyData> entry : satietyData.entrySet())
                 {
                     FoodSatietyData data = entry.getValue();
                     String color = data.isPositive() ? "§a" : "§c";
-                    Logger.write(0, "  " + entry.getKey() + ": " + color + data.getSatiety() + "§r satiety, " +
+                    Logger.info("  " + entry.getKey() + ": " + color + data.getSatiety() + "§r satiety, " +
                             data.getSpanTime() + " seconds");
                 }
             }
         }
         catch (IOException exception)
         {
-            Logger.write(2, "Error creating/loading satiety config: " + exception.getMessage());
+            Logger.error("Error creating/loading satiety config: " + exception.getMessage());
         }
     }
 
@@ -115,7 +115,7 @@ public class SatietyConfig
             if (satietyData == null)
             {
                 satietyData = new HashMap<>();
-                Logger.write(1, "Satiety config is empty");
+                Logger.warn("Satiety config is empty");
             }
 
             validateData();

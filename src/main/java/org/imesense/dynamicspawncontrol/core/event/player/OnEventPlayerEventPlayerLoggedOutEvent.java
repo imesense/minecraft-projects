@@ -41,7 +41,7 @@ public final class OnEventPlayerEventPlayerLoggedOutEvent extends BaseOnEventIns
                 playerPos.getZ()
         );
 
-        Logger.write(0, logMessage);
+        Logger.info(logMessage);
 
         PlayerNetwork.getInstance().handlePlayerLoggedOut(event);
 

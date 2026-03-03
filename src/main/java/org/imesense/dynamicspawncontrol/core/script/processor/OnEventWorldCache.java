@@ -107,7 +107,7 @@ public final class OnEventWorldCache
 
             if (debugGameEvents)
             {
-                Logger.write(0, String.format("Day changed: %d -> %d (WorldTime: %d)",
+                Logger.info(String.format("Day changed: %d -> %d (WorldTime: %d)",
                         oldDay, currentDay, currentWorldTime));
             }
 
@@ -159,7 +159,7 @@ public final class OnEventWorldCache
         if (debugGameEvents)
         {
             String eventType = eventData.repeat ? "Repeating" : "One-time";
-            Logger.write(0, String.format("Game Event ACTIVATED - Type: %s, Day: %d, Node: %s, Entity: %s, " +
+            Logger.info(String.format("Game Event ACTIVATED - Type: %s, Day: %d, Node: %s, Entity: %s, " +
                             "Max Count: %d, Dimension: %d, Result: %s",
                     eventType, day, eventData.idNode != null ? eventData.idNode.toString() : "none",
                     eventData.entity, eventData.max_entity_count,
@@ -307,8 +307,9 @@ public final class OnEventWorldCache
                 event.setResult(entityData.result);
             }
 
-            Logger.write(0, String.format("Entity %s in dimension %d processed with continue: true, result: %s",
+            Logger.info(String.format("Entity %s in dimension %d processed with continue: true, result: %s",
                     entityKey, currentDimension, entityData.result != null ? entityData.result : "DEFAULT"));
+
             return;
         }
 
@@ -396,7 +397,7 @@ public final class OnEventWorldCache
 
             if (entityData.idNode != null && NODE_MANAGER.isNodeActive(entityData.idNode))
             {
-                Logger.write(0, String.format("Using active node %d for entity %s",
+                Logger.info(String.format("Using active node %d for entity %s",
                         entityData.idNode, entityKey));
 
                 return Optional.of(entityData);
@@ -485,7 +486,7 @@ public final class OnEventWorldCache
                 if (debugGameEvents)
                 {
                     String eventType = eventData.repeat ? "Repeating" : "One-time";
-                    Logger.write(0, String.format("Game Event ACTIVE for spawn - Type: %s, Day: %d, Entity: %s, " +
+                    Logger.info(String.format("Game Event ACTIVE for spawn - Type: %s, Day: %d, Entity: %s, " +
                                     "Checking limit: %d/%d",
                             eventType, currentDay, entityKey,
                             currentCount,
@@ -493,7 +494,7 @@ public final class OnEventWorldCache
 
                     if (currentCount == 0)
                     {
-                        Logger.write(0, String.format("DEBUG: No %s entities found in world. Total entities: %d",
+                        Logger.info(String.format("DEBUG: No %s entities found in world. Total entities: %d",
                                 entityKey, world.loadedEntityList.size()));
 
                         for (Object obj : world.loadedEntityList)
@@ -502,7 +503,7 @@ public final class OnEventWorldCache
                             {
                                 Entity e = (Entity) obj;
                                 ResourceLocation key = EntityList.getKey(e);
-                                Logger.write(0, String.format("DEBUG: Entity: %s, Key: %s",
+                                Logger.info(String.format("DEBUG: Entity: %s, Key: %s",
                                         e.getClass().getSimpleName(), key));
                             }
                         }
@@ -515,7 +516,7 @@ public final class OnEventWorldCache
 
                     if (debugGameEvents)
                     {
-                        Logger.write(0, String.format("Game Event BLOCKED spawn - Entity: %s, Count: %d/%d, Result: %s",
+                        Logger.info(String.format("Game Event BLOCKED spawn - Entity: %s, Count: %d/%d, Result: %s",
                                 entityKey, currentCount, eventData.max_entity_count, eventData.result));
                     }
 

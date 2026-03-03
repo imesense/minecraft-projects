@@ -34,7 +34,7 @@ public class CommandManager
         for (AnnotatedCommand command : commands)
         {
             event.registerServerCommand(command);
-            Logger.write(0, "[Dynamic Spawn Control] Зарегистрирована команда: " + command.getName());
+            Logger.info("[Dynamic Spawn Control] Зарегистрирована команда: " + command.getName());
         }
     }
 

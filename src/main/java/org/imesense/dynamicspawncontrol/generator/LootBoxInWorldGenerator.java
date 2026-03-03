@@ -23,8 +23,8 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
 {
     private static final double OVERALL_CHANCE_PER_CHUNK = 0.01;
 
-    private static final double[] TIER_WEIGHTS = {60.0, 30.0, 10.0};
-    private static final String[] TIERS = {"common", "rare", "legendary"};
+    private static final double[] TIER_WEIGHTS = { 60.0, 30.0, 10.0 };
+    private static final String[] TIERS = { "common", "rare", "legendary" };
 
     private static final boolean DEBUG =
             DebugConfig.getInstance(DebugConfig.class).isShowLoggingInEventLootBoxInWorld();
@@ -45,7 +45,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
         {
             if (DEBUG)
             {
-                Logger.write(1, "Skipping non-overworld dimension");
+                Logger.warn("Skipping non-overworld dimension");
             }
 
             return;
@@ -55,7 +55,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
         {
             if (DEBUG)
             {
-                Logger.write(2, "No chest spawned in this chunk (failed overall chance)");
+                Logger.error("No chest spawned in this chunk (failed overall chance)");
             }
 
             return;
@@ -102,7 +102,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
             {
                 if (DEBUG)
                 {
-                    Logger.write(2, "No suitable Y found for " + TIERS[tierIndex] + " chest");
+                    Logger.error("No suitable Y found for " + TIERS[tierIndex] + " chest");
                 }
 
                 continue;
@@ -110,7 +110,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
 
             if (DEBUG)
             {
-                Logger.write(3, String.format("Trying to spawn %s chest at [%d, %d, %d]",
+                Logger.debug(String.format("Trying to spawn %s chest at [%d, %d, %d]",
                         TIERS[tierIndex], x, y, z));
             }
 
@@ -123,7 +123,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
 
             if (DEBUG)
             {
-                Logger.write(0, String.format("Spawned %s chest at [%d, %d, %d]",
+                Logger.info(String.format("Spawned %s chest at [%d, %d, %d]",
                         TIERS[tierIndex], x, y, z));
             }
 
@@ -133,7 +133,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
             {
                 if (DEBUG)
                 {
-                    Logger.write(3, "Adding loot to chest...");
+                    Logger.debug("Adding loot to chest...");
                 }
 
                 addLootToChest(chest, random, TIERS[tierIndex]);
@@ -168,7 +168,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
         {
             if (DEBUG)
             {
-                Logger.write(2, "Invalid block below at [" + x + ", " + (y - 1) + ", " + z + "]");
+                Logger.error("Invalid block below at [" + x + ", " + (y - 1) + ", " + z + "]");
             }
 
             return false;
@@ -178,7 +178,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
         {
             if (DEBUG)
             {
-                Logger.write(2, "Target block is not air at [" + x + ", " + y + ", " + z + "]");
+                Logger.error("Target block is not air at [" + x + ", " + y + ", " + z + "]");
             }
 
             return false;
@@ -194,7 +194,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
                 {
                     if (DEBUG)
                     {
-                        Logger.write(2, "Block at [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() +
+                        Logger.error("Block at [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() +
                                 "] is not air or replaceable: " + world.getBlockState(pos).getBlock().getRegistryName());
                     }
 
@@ -214,7 +214,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
         {
             if (DEBUG)
             {
-                Logger.write(1, "Loot table is null or empty for tier: " + tier);
+                Logger.warn("Loot table is null or empty for tier: " + tier);
             }
 
             return;
@@ -226,7 +226,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
         {
             if (DEBUG)
             {
-                Logger.write(1, "No entries found in loot table for tier: " + tier);
+                Logger.warn("No entries found in loot table for tier: " + tier);
             }
 
             return;
@@ -234,7 +234,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
 
         if (DEBUG)
         {
-            Logger.write(3, "Adding " + entries.size() + " possible items to chest");
+            Logger.debug("Adding " + entries.size() + " possible items to chest");
         }
 
         int itemsAdded = 0;
@@ -245,7 +245,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
             {
                 if (DEBUG)
                 {
-                    Logger.write(4, "Item " + entry.getItem() + " failed chance check");
+                    Logger.debug("Item " + entry.getItem() + " failed chance check");
                 }
 
                 continue;
@@ -257,7 +257,7 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
             {
                 if (DEBUG)
                 {
-                    Logger.write(1, "Item not found: " + entry.getItem());
+                    Logger.warn("Item not found: " + entry.getItem());
                 }
 
                 continue;
@@ -275,13 +275,13 @@ public final class LootBoxInWorldGenerator implements IWorldGenerator
 
             if (DEBUG)
             {
-                Logger.write(3, "Added " + count + "x " + entry.getItem() + " to slot " + slot);
+                Logger.debug("Added " + count + "x " + entry.getItem() + " to slot " + slot);
             }
         }
 
         if (DEBUG)
         {
-            Logger.write(2, "Added " + itemsAdded + " items to chest of tier " + tier);
+            Logger.error("Added " + itemsAdded + " items to chest of tier " + tier);
         }
     }
 }

@@ -23,6 +23,6 @@ public class ModPotions
         SATIETY = new SatietyPotion();
         event.getRegistry().register(SATIETY);
 
-        Logger.write(0, "[DynamicSpawnControl] Registered satiety potion: " + SATIETY.getRegistryName());
+        Logger.info("[DynamicSpawnControl] Registered satiety potion: " + SATIETY.getRegistryName());
     }
 }

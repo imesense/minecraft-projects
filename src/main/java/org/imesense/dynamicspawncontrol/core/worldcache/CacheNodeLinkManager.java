@@ -67,7 +67,7 @@ public class CacheNodeLinkManager
         if (idNode != null)
         {
             activeEventNodes.add(idNode);
-            Logger.write(0, "Activated node: " + idNode);
+            Logger.info("Activated node: " + idNode);
         }
     }
 
@@ -76,7 +76,7 @@ public class CacheNodeLinkManager
         if (idNode != null)
         {
             activeEventNodes.remove(idNode);
-            Logger.write(0, "Deactivated node: " + idNode);
+            Logger.info("Deactivated node: " + idNode);
         }
     }
 

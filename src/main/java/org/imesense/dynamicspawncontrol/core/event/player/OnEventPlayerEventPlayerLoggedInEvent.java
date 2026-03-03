@@ -47,7 +47,7 @@ public final class OnEventPlayerEventPlayerLoggedInEvent extends BaseOnEventInst
                 playerPos.getZ()
         );
 
-        Logger.write(0, logMessage);
+        Logger.info(logMessage);
 
         OnEventWorldCache.getInstance().handlePlayerLoggedIn(event);
     }

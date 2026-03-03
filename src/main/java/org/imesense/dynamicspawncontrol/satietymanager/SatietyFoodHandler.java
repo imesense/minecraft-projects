@@ -80,7 +80,7 @@ public class SatietyFoodHandler
                 ));
             }
 
-            Logger.write(0, "Bad food consumed: " + itemId);
+            Logger.info("Bad food consumed: " + itemId);
 
             return;
         }
@@ -100,7 +100,7 @@ public class SatietyFoodHandler
 
             player.removePotionEffect(ModPotions.SATIETY);
 
-            Logger.write(0, "Stacking satiety: old=" + remaining +
+            Logger.info("Stacking satiety: old=" + remaining +
                     " added=" + addedDuration +
                     " final=" + newDuration);
         }
@@ -115,7 +115,7 @@ public class SatietyFoodHandler
 
         player.addPotionEffect(newEffect);
 
-        Logger.write(0, "Satiety applied: " + itemId +
+        Logger.info("Satiety applied: " + itemId +
                 " | duration=" + newDuration +
                 " | amp=" + amplifier);
     }

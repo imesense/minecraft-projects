@@ -74,16 +74,16 @@ public final class DropHeadMob
         {
             dropHead(victim, attacker.world);
 
-            Logger.write(0,
-                    "[HeadDrop] " +
-                            "Attacker=" + attacker.getName() +
-                            " Weapon=" + (heldItem.isEmpty() ? "None" : heldItem.getItem().getRegistryName()) +
-                            " Damage=" + String.format("%.1f", getAttackDamage(attacker)) +
-                            " BaseChance=" + String.format("%.2f%%", getDamageBasedChance(getAttackDamage(attacker)) * 100) +
-                            " SmiteBonus=" + String.format("%.2f%%", calculateSmiteBonus(heldItem) * 100) +
-                            " CritBonus=" + String.format("%.2f%%", calculateCriticalBonus(attacker) * 100) +
-                            " FinalChance=" + String.format("%.2f%%", dropChance * 100) +
-                            " Victim=" + victim.getName()
+            Logger.info(
+                "[HeadDrop] " +
+                "Attacker=" + attacker.getName() +
+                " Weapon=" + (heldItem.isEmpty() ? "None" : heldItem.getItem().getRegistryName()) +
+                " Damage=" + String.format("%.1f", getAttackDamage(attacker)) +
+                " BaseChance=" + String.format("%.2f%%", getDamageBasedChance(getAttackDamage(attacker)) * 100) +
+                " SmiteBonus=" + String.format("%.2f%%", calculateSmiteBonus(heldItem) * 100) +
+                " CritBonus=" + String.format("%.2f%%", calculateCriticalBonus(attacker) * 100) +
+                " FinalChance=" + String.format("%.2f%%", dropChance * 100) +
+                " Victim=" + victim.getName()
             );
         }
     }

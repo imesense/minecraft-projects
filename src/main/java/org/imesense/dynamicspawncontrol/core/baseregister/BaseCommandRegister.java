@@ -35,8 +35,7 @@ public abstract class BaseCommandRegister
             }
             catch (Exception exception)
             {
-                Logger.write(2, "Exception in class: "
-                        + _class.getName() + " - " + exception.getMessage());
+                Logger.error("Exception in class: " + _class.getName() + " - " + exception.getMessage());
 
                 throw new RuntimeException(exception);
             }

@@ -48,7 +48,7 @@ public abstract class BaseEventRegister
             }
             catch (Exception exception)
             {
-                Logger.write(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
+                Logger.error("Exception in class: " + _class.getName() + " - " + exception.getMessage());
                 throw new RuntimeException(exception);
             }
         }
@@ -56,7 +56,7 @@ public abstract class BaseEventRegister
 
     public static void initialize()
     {
-        Logger.write(0, "Initializing all registers...");
+        Logger.info("Initializing all registers...");
 
         new EventBlockRegister();
         new EventEntityRegister();
@@ -70,7 +70,7 @@ public abstract class BaseEventRegister
         new AttachRegister();
         new CommandEventRegister();
 
-        Logger.write(0, "Total registers created: " + REGISTERS.size());
+        Logger.info("Total registers created: " + REGISTERS.size());
 
         for (BaseEventRegister baseEventRegister : REGISTERS)
         {
@@ -80,13 +80,13 @@ public abstract class BaseEventRegister
             }
             catch (Exception exception)
             {
-                Logger.write(2, "Exception while registering events for: " +
+                Logger.error("Exception while registering events for: " +
                         baseEventRegister.getClass().getSimpleName() + " - " + exception.getMessage());
 
                 throw new RuntimeException(exception);
             }
         }
 
-        Logger.write(0, "All registers initialized and events registered.");
+        Logger.info("All registers initialized and events registered.");
     }
 }

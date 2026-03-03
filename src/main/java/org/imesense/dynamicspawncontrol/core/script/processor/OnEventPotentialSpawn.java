@@ -38,8 +38,6 @@ public final class OnEventPotentialSpawn
         }
     }
 
-    static boolean SPAWN_DEBUG_LOGGING = false;
-
     public void handlePotentialSpawns(WorldEvent.PotentialSpawns event)
     {
         if (DisableEventBooleansTest.test)
@@ -51,38 +49,11 @@ public final class OnEventPotentialSpawn
 
         if (spawnEntries.isEmpty() || secondaryParameters.isEmpty())
         {
-            if (SPAWN_DEBUG_LOGGING)
-            {
-                Logger.write(1, "╔═══════════════════════════════════");
-                Logger.write(1, "║ No spawn entries or parameters found");
-                Logger.write(1, "╚═══════════════════════════════════");
-            }
-
             return;
         }
 
         Integer eventY = event.getPos().getY();
         int currentDimension = event.getWorld().provider.getDimension();
-
-        if (SPAWN_DEBUG_LOGGING)
-        {
-            Logger.write(1, "╔═══════════════════════════════════");
-            Logger.write(1, "║ SPAWN PROCESSING STARTED");
-            Logger.write(1, "╠═ Y Level: " + eventY);
-            Logger.write(1, "╠═ Dimension: " + currentDimension);
-            Logger.write(1, "╠═ Registered custom mobs (" + spawnEntries.size() + "):");
-
-            spawnEntries.forEach(entry ->
-                    Logger.write(1, "║   " + entry.entityClass.getName() +
-                            " (weight=" + entry.itemWeight + ")")
-            );
-
-            Logger.write(1, "╠═ Original spawn list (" + event.getList().size() + " mobs):");
-
-            event.getList().forEach(entry ->
-                    Logger.write(1, "║   " + entry.entityClass.getName())
-            );
-        }
 
         List<Biome.SpawnListEntry> filteredEntries = IntStream.range(0, spawnEntries.size())
         .filter(i ->
@@ -94,16 +65,6 @@ public final class OnEventPotentialSpawn
             {
                 if (currentDimension != data.idDimension)
                 {
-                    if (SPAWN_DEBUG_LOGGING)
-                    {
-                        String details = String.format(
-                                "║ ✗ %s: wrong dimension (need %d, current %d)",
-                                entry.entityClass.getSimpleName(),
-                                data.idDimension,
-                                currentDimension
-                        );
-                        Logger.write(1, details);
-                    }
                     return false;
                 }
             }
@@ -112,57 +73,15 @@ public final class OnEventPotentialSpawn
             boolean heightValid = eventY >= data.minHeight && eventY <= data.maxHeight;
             boolean chanceValid = UniqueField.RANDOM.nextFloat() < effectiveChance;
 
-            if (SPAWN_DEBUG_LOGGING)
-            {
-                String dimensionInfo = data.idDimension != null ?
-                        String.format("dim=%d", data.idDimension) : "dim=any";
-
-                String status = (heightValid && chanceValid) ? "✓" : "✗";
-                String details = String.format(
-                        "║ %s %s: chance=%.1f%% (%.1f*%d/100), height=%d [%.0f-%.0f] %s, %s",
-                        status,
-                        entry.entityClass.getSimpleName(),
-                        effectiveChance * 100,
-                        data.spawnChance,
-                        entry.itemWeight,
-                        eventY,
-                        data.minHeight,
-                        data.maxHeight,
-                        heightValid ? "(H)" : "(h)",
-                        dimensionInfo
-                );
-                Logger.write(1, details);
-            }
-
             return heightValid && chanceValid;
         })
         .mapToObj(spawnEntries::get)
         .collect(Collectors.toList());
-
-        if (SPAWN_DEBUG_LOGGING)
-        {
-            Logger.write(1, "╠═ Filtered mobs to add (" + filteredEntries.size() + "):");
-
-            filteredEntries.forEach(entry ->
-                    Logger.write(1, "║   + " + entry.entityClass.getName())
-            );
-        }
 
         List<Biome.SpawnListEntry> tempList = new ArrayList<>(event.getList());
 
         tempList.addAll(filteredEntries);
         event.getList().clear();
         event.getList().addAll(tempList);
-
-        if (SPAWN_DEBUG_LOGGING)
-        {
-            Logger.write(1, "╠═ Final spawn list (" + event.getList().size() + " mobs):");
-
-            event.getList().forEach(entry ->
-                    Logger.write(1, "║   • " + entry.entityClass.getName())
-            );
-
-            Logger.write(1, "╚═══════════════════════════════════");
-        }
     }
 }

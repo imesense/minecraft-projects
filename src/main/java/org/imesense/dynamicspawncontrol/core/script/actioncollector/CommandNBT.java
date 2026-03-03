@@ -44,7 +44,7 @@ public final class CommandNBT
             }
             catch (NBTException exception)
             {
-                Logger.write(2, "Bad NBT for mob: " + exception.getMessage());
+                Logger.error("Bad NBT for mob: " + exception.getMessage());
             }
         }
     }

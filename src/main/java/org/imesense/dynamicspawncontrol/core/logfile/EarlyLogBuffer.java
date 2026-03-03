@@ -11,11 +11,11 @@ public final class EarlyLogBuffer
     {
         if (LogIsReady.isReady())
         {
-            Logger.write(level, message);
+            Logger.debugByteCode(level, message);
         }
         else
         {
-            BUFFER.add(() -> Logger.write(level, message));
+            BUFFER.add(() -> Logger.debugByteCode(level, message));
         }
     }
 

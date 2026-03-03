@@ -41,6 +41,6 @@ public final class OnEventFMLNetworkEventClientConnectedToServerEvent extends Ba
                 serverAddress
         );
 
-        Logger.write(0, logMessage);
+        Logger.info(logMessage);
     }
 }

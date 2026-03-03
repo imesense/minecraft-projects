@@ -39,11 +39,11 @@ public final class ChangelogHTMLCompiler
             String htmlContent = generateChangelogHTML(jsonContent);
             writeHTMLFile(htmlFile, htmlContent);
 
-            Logger.write(0, "HTML отчет об изменениях успешно создан: " + htmlFile.getAbsolutePath());
+            Logger.info("HTML отчет об изменениях успешно создан: " + htmlFile.getAbsolutePath());
         }
         catch (Exception exception)
         {
-            Logger.write(2, "Ошибка при создании HTML отчета: " + exception.getMessage());
+            Logger.error("Ошибка при создании HTML отчета: " + exception.getMessage());
         }
     }
 
@@ -57,7 +57,7 @@ public final class ChangelogHTMLCompiler
     {
         String resourcePath = "/assets/dynamicspawncontrol/changelog/changelog_1_12_2_0_1.json";
 
-        Logger.write(0, String.format(
+        Logger.info(String.format(
                 "[CHANGELOG] Чтение файла по пути: %s", resourcePath));
 
         try (InputStream inputStream = DynamicSpawnControlStructure.class
@@ -78,7 +78,7 @@ public final class ChangelogHTMLCompiler
         }
         catch (IOException exception)
         {
-            Logger.write(2, "Ошибка чтения changelog: " + exception.getMessage());
+            Logger.error("Ошибка чтения changelog: " + exception.getMessage());
             return exception.toString();
         }
     }

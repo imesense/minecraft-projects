@@ -98,7 +98,7 @@ public abstract class BaseJsonConfig
                 (isConfigFolder ? DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_CONFIGS :
                         DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_PLUGINS) + File.separator;
 
-        Logger.write(0, "constructPathToDirectory: " + path);
+        Logger.info("constructPathToDirectory: " + path);
 
         return path;
     }

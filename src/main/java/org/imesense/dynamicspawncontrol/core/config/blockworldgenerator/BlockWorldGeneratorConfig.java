@@ -76,8 +76,7 @@ public final class BlockWorldGeneratorConfig extends BaseJsonConfig
         }
         else
         {
-            Logger.write(2,
-                    blockWorldGeneratorDataAbstract.getCategory() + " is missing in the config file.");
+            Logger.error(blockWorldGeneratorDataAbstract.getCategory() + " is missing in the config file.");
         }
     }
 }

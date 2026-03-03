@@ -45,12 +45,12 @@ public final class DocJSONToHTMLCompiler
 
             writeHTMLFile(htmlFile, htmlContent);
 
-            Logger.write(0, "HTML report on the changes has been successfully created: " + htmlFile.getAbsolutePath());
+            Logger.info("HTML report on the changes has been successfully created: " + htmlFile.getAbsolutePath());
 
         }
         catch (Exception exception)
         {
-            Logger.write(2, "Error when creating an HTML report: " + exception.getMessage());
+            Logger.error("Error when creating an HTML report: " + exception.getMessage());
         }
     }
 

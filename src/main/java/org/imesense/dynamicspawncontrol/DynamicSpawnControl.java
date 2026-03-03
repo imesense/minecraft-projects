@@ -30,7 +30,6 @@ import org.imesense.dynamicspawncontrol.core.script.processor.AIZombieHasShieldN
 import org.imesense.dynamicspawncontrol.core.threads.ThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
-import org.imesense.dynamicspawncontrol.eventdescriptions.NewConceptTestEvent;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
 import org.imesense.dynamicspawncontrol.potion.ModPotions;
@@ -84,7 +83,7 @@ public final class DynamicSpawnControl
         MixinConfigInitializer.initializeAllConfigs(globalDirectory.getPath() + File.separator +
                 DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY);
 
-        Logger.write(0, "preInit: Basic registration phase - blocks/items/configs");
+        Logger.info("preInit: Basic registration phase - blocks/items/configs");
 
         TodoTracker.init(event);
 
@@ -93,13 +92,13 @@ public final class DynamicSpawnControl
         String expectedName = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID +
                 DynamicSpawnControlStructure.STRUCT_INFO_MOD.RELEASE_VERSION;
 
-        Logger.write(3, "Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
+        Logger.info("Checking the name of the mod: " + modFile + " " + "required: " + expectedName);
 
         if (!modFile.getName().equals(expectedName) && !UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
-            Logger.write(2, "Renaming a mod is prohibited.");
-            Logger.write(2, "You can make an official fork and rename it in its original form:");
-            Logger.write(2, "https://github.com/imesense/minecraft-projects");
+            Logger.error("Renaming a mod is prohibited.");
+            Logger.error("You can make an official fork and rename it in its original form:");
+            Logger.error("https://github.com/imesense/minecraft-projects");
 
             FMLCommonHandler.instance().exitJava(1, false);
         }
@@ -119,11 +118,11 @@ public final class DynamicSpawnControl
         }
         catch (Exception exception)
         {
-            Logger.write(2, "Mixin loading failed: " + exception.getMessage());
+            Logger.error("Mixin loading failed: " + exception.getMessage());
             exception.printStackTrace();
         }
 
-        Logger.write(1, "Is running in IDE (based on logging level): " +
+        Logger.warn("Is running in IDE (based on logging level): " +
                 (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG ? "true" : "false"));
 
         EntityRegister.init(() -> EntityRegister.create(this));
@@ -155,7 +154,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
-        Logger.write(0, "init: Core setup - recipes, events, network packets");
+        Logger.info("init: Core setup - recipes, events, network packets");
 
         IRecipes = new CraftItemWeb();
 
@@ -166,7 +165,6 @@ public final class DynamicSpawnControl
         ParserRegister.getInstance().init();
 
         // Merge THIS
-        MinecraftForge.EVENT_BUS.register(new NewConceptTestEvent());
         MinecraftForge.EVENT_BUS.register(new AIZombieHasShieldNBT());
         MinecraftForge.EVENT_BUS.register(new SatietyTooltipHandler());
         MinecraftForge.EVENT_BUS.register(new RespawnSatietyModule());
@@ -176,7 +174,7 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        Logger.write(0, "postInit: Finalization - cross-mod integration");
+        Logger.info("postInit: Finalization - cross-mod integration");
 
         if (Configuration.isCleanOnInit())
         {
@@ -203,11 +201,11 @@ public final class DynamicSpawnControl
 
             DocJSONToHTMLCompiler.createHTMLFile(minecraftDir.getAbsolutePath(), true);
 
-            Logger.write(0, "HTML отчет по настройкам сущностей успешно сгенерирован при запуске сервера");
+            Logger.info("HTML отчет по настройкам сущностей успешно сгенерирован при запуске сервера");
         }
         catch (Exception exception)
         {
-            Logger.write(2, "Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
+            Logger.error("Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
         }
 
         event.registerServerCommand(new CommandSetHunger());
@@ -222,12 +220,12 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public void onServerStopped(FMLServerStoppedEvent event)
     {
-        Logger.write(0, "Cleaning up CacheGeneralStorage on server stop...");
+        Logger.info("Cleaning up CacheGeneralStorage on server stop...");
 
         CacheGeneralStorage.getInstance().cleanActualCache();
         CacheGeneralStorage.getInstance().cleanBufferCache();
 
-        Logger.write(0, "CacheGeneralStorage cleaned up successfully.");
+        Logger.info("CacheGeneralStorage cleaned up successfully.");
     }
 
     @Mod.EventHandler

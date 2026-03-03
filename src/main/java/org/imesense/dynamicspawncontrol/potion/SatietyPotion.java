@@ -45,7 +45,7 @@ public class SatietyPotion extends PotionBase
                 }
             }
 
-            Logger.write(0,
+            Logger.debug(
                     "Satiety tick | player=" + player.getName() +
                             " food=" + player.getFoodStats().getFoodLevel() +
                             " saturation=" + player.getFoodStats().getSaturationLevel() +

@@ -173,6 +173,11 @@ public final class Logger
         write(DEBUG, message);
     }
 
+    public static void debugByteCode(int level, String message)
+    {
+        write(level, message);
+    }
+
     private static String getCpuInfo()
     {
         try

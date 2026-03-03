@@ -32,8 +32,7 @@ public final class CodeGeneric
 
     public static void logInitialization(final Class<?> _CLASS)
     {
-        Logger.write(3,
-                String.format("Initializing a class: {%s}", _CLASS.getName()));
+        Logger.info(String.format("Initializing a class: {%s}", _CLASS.getName()));
     }
 
     public static <T> T as(Object object, Class<T> _class)
@@ -68,7 +67,7 @@ public final class CodeGeneric
         }
         catch (Exception exception)
         {
-            Logger.write(0, "Failed to determine creature type for entity: " + _class.getName() + ", error: " + exception.getMessage());
+            Logger.error("Failed to determine creature type for entity: " + _class.getName() + ", error: " + exception.getMessage());
         }
 
         return EnumCreatureType.CREATURE;
@@ -87,12 +86,12 @@ public final class CodeGeneric
                 {
                     if (instanceField.get(null) == null)
                     {
-                        Logger.write(0, "Creating Singleton instance for class: " + _class.getName());
+                        Logger.info("Creating Singleton instance for class: " + _class.getName());
 
                         T instance = _class.getDeclaredConstructor().newInstance();
                         instanceField.set(null, instance);
 
-                        Logger.write(0, "Singleton instance created for class: " + _class.getName());
+                        Logger.info("Singleton instance created for class: " + _class.getName());
                     }
                 }
             }
@@ -101,7 +100,7 @@ public final class CodeGeneric
         }
         catch (Exception exception)
         {
-            Logger.write(0, "Failed to create Singleton instance for class: " + _class.getName() +
+            Logger.error("Failed to create Singleton instance for class: " + _class.getName() +
                     ". Error: " + exception.getMessage());
 
             throw new RuntimeException("Failed to create Singleton instance for class: " + _class.getName(), exception);
@@ -121,12 +120,12 @@ public final class CodeGeneric
                 {
                     if (instanceField.get(null) == null)
                     {
-                        Logger.write(0, "Creating Singleton instance for class: " + _class.getName());
+                        Logger.info("Creating Singleton instance for class: " + _class.getName());
 
                         T instance = supplier.get();
                         instanceField.set(null, instance);
 
-                        Logger.write(0, "Singleton instance created for class: " + _class.getName());
+                        Logger.info("Singleton instance created for class: " + _class.getName());
                     }
                 }
             }
@@ -135,7 +134,7 @@ public final class CodeGeneric
         }
         catch (Exception exception)
         {
-            Logger.write(0, "Failed to create Singleton instance for class: " + _class.getName() +
+            Logger.error("Failed to create Singleton instance for class: " + _class.getName() +
                     ". Error: " + exception.getMessage());
 
             throw new RuntimeException("Failed to create Singleton instance for class: " + _class.getName(), exception);

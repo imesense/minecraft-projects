@@ -38,7 +38,7 @@ public abstract class BaseParser
 
     public void reloadConfig()
     {
-        Logger.write(0, "Reloading config for: " + this.nameFile);
+        Logger.info("Reloading config for: " + this.nameFile);
 
         EraseData eraseData = this::eraseData;
         eraseData.eraseData();
@@ -46,7 +46,7 @@ public abstract class BaseParser
         ConfigLoader configLoader = this::loadConfig;
         configLoader.load(false);
 
-        Logger.write(0, "Config reloaded successfully for: " + this.nameFile);
+        Logger.info("Config reloaded successfully for: " + this.nameFile);
     }
 
     public abstract void eraseData();
@@ -61,7 +61,7 @@ public abstract class BaseParser
 
             if (!file.exists())
             {
-                Logger.write(0, "Directory does not exist, creating: " + file.getAbsolutePath());
+                Logger.info("Directory does not exist, creating: " + file.getAbsolutePath());
 
                 if (!file.mkdirs())
                 {
@@ -77,7 +77,7 @@ public abstract class BaseParser
         }
         catch (IOException exception)
         {
-            Logger.write(0, "Error creating new config file: " + exception.getMessage());
+            Logger.info("Error creating new config file: " + exception.getMessage());
             throw new RuntimeException("Failed to create new config file", exception);
         }
     }

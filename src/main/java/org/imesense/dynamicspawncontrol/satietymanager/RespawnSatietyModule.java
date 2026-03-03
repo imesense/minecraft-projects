@@ -42,7 +42,7 @@ public final class RespawnSatietyModule
         foodStats.setFoodLevel(20);
         foodStats.setFoodSaturationLevel(5.0F);
 
-        Logger.write(0,"Max hunger set for player: " + player.getName() + " (Multiplayer ready)");
+        Logger.info("Max hunger set for player: " + player.getName() + " (Multiplayer ready)");
     }
 
     @SubscribeEvent

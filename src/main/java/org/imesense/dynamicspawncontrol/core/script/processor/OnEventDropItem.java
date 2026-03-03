@@ -65,14 +65,14 @@ public final class OnEventDropItem
 
             if (data.idDimension != null && data.idDimension != currentDimension)
             {
-                Logger.write(0, String.format(
+                Logger.info(String.format(
                         "[DropItem] Skipping rule for %s: dimension mismatch (need %d, got %d)",
                         data.entity, data.idDimension, currentDimension
                 ));
                 continue;
             }
 
-            Logger.write(0, String.format(
+            Logger.info(String.format(
                     "[DropItem] Processing rule for %s in dimension %d",
                     data.entity, currentDimension
             ));
@@ -83,10 +83,11 @@ public final class OnEventDropItem
             {
                 if (drop.result == Event.Result.DENY)
                 {
-                    Logger.write(0, String.format(
+                    Logger.info(String.format(
                             "  [DropItem] SKIP item %s: result=DENY",
                             drop.item
                     ));
+
                     continue;
                 }
 
@@ -106,14 +107,14 @@ public final class OnEventDropItem
 
                         itemsAdded++;
 
-                        Logger.write(0, String.format(
+                        Logger.info(String.format(
                                 "  [DropItem] ADDED %s x%d (chance: %.2f, result: %s)",
                                 drop.item, amount, drop.chance, drop.result
                         ));
                     }
                     else
                     {
-                        Logger.write(0, String.format(
+                        Logger.info(String.format(
                                 "  [DropItem] SKIP item %s: amount=0",
                                 drop.item
                         ));
@@ -121,14 +122,14 @@ public final class OnEventDropItem
                 }
                 else
                 {
-                    Logger.write(0, String.format(
+                    Logger.info(String.format(
                             "  [DropItem] FAILED chance for %s: %.2f (result: %s)",
                             drop.item, drop.chance, drop.result
                     ));
                 }
             }
 
-            Logger.write(0, String.format(
+            Logger.info(String.format(
                     "[DropItem] Rule for %s completed: %d items added",
                     data.entity, itemsAdded
             ));
@@ -143,7 +144,7 @@ public final class OnEventDropItem
         }
         else
         {
-            Logger.write(0, String.format(
+            Logger.info(String.format(
                     "[DropItem] Finished processing drops for %s in dimension %d. Total drops: %d",
                     entity.getName(), currentDimension, event.getDrops().size()
             ));

@@ -60,10 +60,8 @@ public final class FunctionalMobTaskManager
 
         if (!isValid)
         {
-            Logger.write(0, String.format(
-                    "[MobTask] Skipping rule: dimension mismatch (need %d, got %d)",
-                    ruleDimension, currentDimension
-            ));
+            Logger.info(String.format("[MobTask] Skipping rule: dimension mismatch (need %d, got %d)",
+                    ruleDimension, currentDimension));
         }
 
         return isValid;
