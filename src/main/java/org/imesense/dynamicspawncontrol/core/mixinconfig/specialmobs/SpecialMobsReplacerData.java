@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.mixinconfig.specialmobs;
 
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import com.google.gson.*;
 
 import java.io.File;
@@ -51,7 +51,7 @@ public final class SpecialMobsReplacerData
                                     replaceVanilla = configObj.get("all_replace_vanilla").getAsBoolean();
                                     loadedFromFile = true;
 
-                                    EarlyLogBuffer.log(Log.INFO,
+                                    EarlyLogBuffer.log(Logger.INFO,
                                             "Loaded SpecialMobs replacer config: all_replace_vanilla = " + replaceVanilla);
                                     return;
                                 }
@@ -60,7 +60,7 @@ public final class SpecialMobsReplacerData
                     }
                 }
 
-                EarlyLogBuffer.log(Log.WARN,
+                EarlyLogBuffer.log(Logger.WARN,
                         "SpecialMobs replacer config has unknown format, using defaults");
 
                 replaceVanilla = DEFAULT_REPLACE_VANILLA;
@@ -69,7 +69,7 @@ public final class SpecialMobsReplacerData
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Log.ERROR,
+            EarlyLogBuffer.log(Logger.ERROR,
                     "Failed to load SpecialMobs replacer config: " + exception.getMessage());
 
             replaceVanilla = DEFAULT_REPLACE_VANILLA;
@@ -82,12 +82,12 @@ public final class SpecialMobsReplacerData
         replaceVanilla = DEFAULT_REPLACE_VANILLA;
         loadedFromFile = false;
 
-        EarlyLogBuffer.log(Log.INFO, "Reset SpecialMobs replacer config to default: false");
+        EarlyLogBuffer.log(Logger.INFO, "Reset SpecialMobs replacer config to default: false");
     }
 
     public static void setReplaceVanilla(boolean value)
     {
         replaceVanilla = value;
-        EarlyLogBuffer.log(Log.INFO, "SpecialMobs replacer config set to: " + value);
+        EarlyLogBuffer.log(Logger.INFO, "SpecialMobs replacer config set to: " + value);
     }
 }

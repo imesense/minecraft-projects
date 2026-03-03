@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import java.util.Collections;
 
@@ -45,7 +45,7 @@ public class SatietyPotion extends PotionBase
                 }
             }
 
-            Log.write(0,
+            Logger.write(0,
                     "Satiety tick | player=" + player.getName() +
                             " food=" + player.getFoodStats().getFoodLevel() +
                             " saturation=" + player.getFoodStats().getSaturationLevel() +

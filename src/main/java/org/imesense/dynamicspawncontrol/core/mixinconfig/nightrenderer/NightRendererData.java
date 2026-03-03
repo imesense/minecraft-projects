@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer;
 
 import lombok.Getter;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import com.google.gson.*;
 
 import java.io.File;
@@ -76,7 +76,7 @@ public final class NightRendererData
     {
         if (filePath == null)
         {
-            EarlyLogBuffer.log(Log.ERROR, "Cannot load config: file path is null");
+            EarlyLogBuffer.log(Logger.ERROR, "Cannot load config: file path is null");
             resetToDefault();
             return;
         }
@@ -87,7 +87,7 @@ public final class NightRendererData
 
             if (!configFile.exists())
             {
-                EarlyLogBuffer.log(Log.WARN,
+                EarlyLogBuffer.log(Logger.WARN,
                         "Night renderer config not found at: " + filePath + ", using defaults");
                 resetToDefault();
                 return;
@@ -130,7 +130,7 @@ public final class NightRendererData
 
                     if (moonArray.size() != EXPECTED_MOON_PHASES_COUNT)
                     {
-                        EarlyLogBuffer.log(Log.WARN,
+                        EarlyLogBuffer.log(Logger.WARN,
                                 "Invalid moon phase array size: " + moonArray.size() +
                                         ", expected " + EXPECTED_MOON_PHASES_COUNT + ". Using defaults for missing values");
                     }
@@ -164,14 +164,14 @@ public final class NightRendererData
 
                     blacklistedDimensions = newBlacklist;
 
-                    EarlyLogBuffer.log(Log.INFO,
+                    EarlyLogBuffer.log(Logger.INFO,
                             "Loaded blacklisted dimensions: " + blacklistedDimensions);
                 }
 
                 configLoaded = true;
                 loadedFromFile = true;
 
-                EarlyLogBuffer.log(Log.INFO,
+                EarlyLogBuffer.log(Logger.INFO,
                         "Loaded night renderer config: enableDarkNight=" + enableDarkNight +
                                 ", dependenceLightMoonPhase=" + dependenceLightMoonPhase +
                                 ", moonPhaseFactors=" + Arrays.toString(moonPhaseFactorsArray) +
@@ -181,14 +181,14 @@ public final class NightRendererData
 
             if (!configLoaded)
             {
-                EarlyLogBuffer.log(Log.WARN,
+                EarlyLogBuffer.log(Logger.WARN,
                         "Night renderer config has unknown format, using defaults");
                 resetToDefault();
             }
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Log.ERROR,
+            EarlyLogBuffer.log(Logger.ERROR,
                     "Failed to load night renderer config: " + exception.getMessage());
             exception.printStackTrace();
             resetToDefault();
@@ -206,6 +206,6 @@ public final class NightRendererData
 
         loadedFromFile = false;
 
-        EarlyLogBuffer.log(Log.INFO, "Reset night renderer config to defaults");
+        EarlyLogBuffer.log(Logger.INFO, "Reset night renderer config to defaults");
     }
 }

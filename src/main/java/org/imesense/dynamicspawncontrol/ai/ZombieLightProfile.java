@@ -14,13 +14,13 @@ public final class ZombieLightProfile implements IZombieLightProfile
     @Override
     public boolean canReactToLight()
     {
-        return !zombie.isChild(); // тестово
+        return !zombie.isChild();
     }
 
     @Override
     public float getLightReactionChance()
     {
-        return 0.15f; // 15%
+        return 0.15f;
     }
 
     @Override

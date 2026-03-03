@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import java.io.File;
 import java.io.FileReader;
@@ -32,31 +32,31 @@ public class SatietyConfig
             if (!configFile.exists())
             {
                 createDefaultConfig(configFile);
-                Log.write(0, "Created default satiety config with " + satietyData.size() + " food items");
+                Logger.write(0, "Created default satiety config with " + satietyData.size() + " food items");
             }
             else
             {
-                Log.write(0, "Loading existing satiety config...");
+                Logger.write(0, "Loading existing satiety config...");
             }
 
             loadConfig(configFile);
 
             if (isDebugMode)
             {
-                Log.write(0, "Loaded satiety data for " + satietyData.size() + " items:");
+                Logger.write(0, "Loaded satiety data for " + satietyData.size() + " items:");
 
                 for (Map.Entry<String, FoodSatietyData> entry : satietyData.entrySet())
                 {
                     FoodSatietyData data = entry.getValue();
                     String color = data.isPositive() ? "§a" : "§c";
-                    Log.write(0, "  " + entry.getKey() + ": " + color + data.getSatiety() + "§r satiety, " +
+                    Logger.write(0, "  " + entry.getKey() + ": " + color + data.getSatiety() + "§r satiety, " +
                             data.getSpanTime() + " seconds");
                 }
             }
         }
         catch (IOException exception)
         {
-            Log.write(2, "Error creating/loading satiety config: " + exception.getMessage());
+            Logger.write(2, "Error creating/loading satiety config: " + exception.getMessage());
         }
     }
 
@@ -115,7 +115,7 @@ public class SatietyConfig
             if (satietyData == null)
             {
                 satietyData = new HashMap<>();
-                Log.write(1, "Satiety config is empty");
+                Logger.write(1, "Satiety config is empty");
             }
 
             validateData();

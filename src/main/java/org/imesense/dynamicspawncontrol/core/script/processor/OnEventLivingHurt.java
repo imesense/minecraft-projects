@@ -1,20 +1,13 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemShield;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
@@ -49,7 +42,7 @@ public final class OnEventLivingHurt
 
         event.setAmount(reducedDamage);
 
-        Log.write(0, "[ZombieDamage] "
+        Logger.write(0, "[ZombieDamage] "
                 + "Original: " + originalDamage
                 + " -> Reduced: " + reducedDamage);
     }

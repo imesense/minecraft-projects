@@ -17,7 +17,7 @@ import java.lang.management.ManagementFactory;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
-public final class Log
+public final class Logger
 {
     private static File logFile;
     private static final ThreadMonitor threadMonitor = ThreadMonitor.getInstance();
@@ -100,7 +100,7 @@ public final class Log
         } catch (IOException ignored) { }
     }
 
-    public static void write(int level, String message)
+    private static void write(int level, String message)
     {
         if (logFile == null) return;
 
@@ -451,7 +451,7 @@ public final class Log
         }
         catch (Exception exception)
         {
-            Log.debug("Error getting VRAM info: " + exception.getMessage());
+            Logger.debug("Error getting VRAM info: " + exception.getMessage());
         }
 
         return "Unknown";
@@ -516,7 +516,7 @@ public final class Log
         }
         catch (Exception exception)
         {
-            Log.debug("Error getting Windows VRAM: " + exception.getMessage());
+            Logger.debug("Error getting Windows VRAM: " + exception.getMessage());
         }
 
         return "Unknown";

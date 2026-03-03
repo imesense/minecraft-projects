@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.baseregister;
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.register.attach.AttachRegister;
 import org.imesense.dynamicspawncontrol.core.register.commandevent.CommandEventRegister;
 import org.imesense.dynamicspawncontrol.core.register.event.block.EventBlockRegister;
@@ -48,7 +48,7 @@ public abstract class BaseEventRegister
             }
             catch (Exception exception)
             {
-                Log.write(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
+                Logger.write(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
                 throw new RuntimeException(exception);
             }
         }
@@ -56,7 +56,7 @@ public abstract class BaseEventRegister
 
     public static void initialize()
     {
-        Log.write(0, "Initializing all registers...");
+        Logger.write(0, "Initializing all registers...");
 
         new EventBlockRegister();
         new EventEntityRegister();
@@ -70,7 +70,7 @@ public abstract class BaseEventRegister
         new AttachRegister();
         new CommandEventRegister();
 
-        Log.write(0, "Total registers created: " + REGISTERS.size());
+        Logger.write(0, "Total registers created: " + REGISTERS.size());
 
         for (BaseEventRegister baseEventRegister : REGISTERS)
         {
@@ -80,13 +80,13 @@ public abstract class BaseEventRegister
             }
             catch (Exception exception)
             {
-                Log.write(2, "Exception while registering events for: " +
+                Logger.write(2, "Exception while registering events for: " +
                         baseEventRegister.getClass().getSimpleName() + " - " + exception.getMessage());
 
                 throw new RuntimeException(exception);
             }
         }
 
-        Log.write(0, "All registers initialized and events registered.");
+        Logger.write(0, "All registers initialized and events registered.");
     }
 }

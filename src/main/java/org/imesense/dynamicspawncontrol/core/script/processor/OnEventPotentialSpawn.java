@@ -5,7 +5,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.data.PotentialSpawnStruct;
 import org.imesense.dynamicspawncontrol.core.script.storage.potentialspawn.storage.GeneralPotentialSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -53,9 +53,9 @@ public final class OnEventPotentialSpawn
         {
             if (SPAWN_DEBUG_LOGGING)
             {
-                Log.write(1, "╔═══════════════════════════════════");
-                Log.write(1, "║ No spawn entries or parameters found");
-                Log.write(1, "╚═══════════════════════════════════");
+                Logger.write(1, "╔═══════════════════════════════════");
+                Logger.write(1, "║ No spawn entries or parameters found");
+                Logger.write(1, "╚═══════════════════════════════════");
             }
 
             return;
@@ -66,21 +66,21 @@ public final class OnEventPotentialSpawn
 
         if (SPAWN_DEBUG_LOGGING)
         {
-            Log.write(1, "╔═══════════════════════════════════");
-            Log.write(1, "║ SPAWN PROCESSING STARTED");
-            Log.write(1, "╠═ Y Level: " + eventY);
-            Log.write(1, "╠═ Dimension: " + currentDimension);
-            Log.write(1, "╠═ Registered custom mobs (" + spawnEntries.size() + "):");
+            Logger.write(1, "╔═══════════════════════════════════");
+            Logger.write(1, "║ SPAWN PROCESSING STARTED");
+            Logger.write(1, "╠═ Y Level: " + eventY);
+            Logger.write(1, "╠═ Dimension: " + currentDimension);
+            Logger.write(1, "╠═ Registered custom mobs (" + spawnEntries.size() + "):");
 
             spawnEntries.forEach(entry ->
-                    Log.write(1, "║   " + entry.entityClass.getName() +
+                    Logger.write(1, "║   " + entry.entityClass.getName() +
                             " (weight=" + entry.itemWeight + ")")
             );
 
-            Log.write(1, "╠═ Original spawn list (" + event.getList().size() + " mobs):");
+            Logger.write(1, "╠═ Original spawn list (" + event.getList().size() + " mobs):");
 
             event.getList().forEach(entry ->
-                    Log.write(1, "║   " + entry.entityClass.getName())
+                    Logger.write(1, "║   " + entry.entityClass.getName())
             );
         }
 
@@ -102,7 +102,7 @@ public final class OnEventPotentialSpawn
                                 data.idDimension,
                                 currentDimension
                         );
-                        Log.write(1, details);
+                        Logger.write(1, details);
                     }
                     return false;
                 }
@@ -131,7 +131,7 @@ public final class OnEventPotentialSpawn
                         heightValid ? "(H)" : "(h)",
                         dimensionInfo
                 );
-                Log.write(1, details);
+                Logger.write(1, details);
             }
 
             return heightValid && chanceValid;
@@ -141,10 +141,10 @@ public final class OnEventPotentialSpawn
 
         if (SPAWN_DEBUG_LOGGING)
         {
-            Log.write(1, "╠═ Filtered mobs to add (" + filteredEntries.size() + "):");
+            Logger.write(1, "╠═ Filtered mobs to add (" + filteredEntries.size() + "):");
 
             filteredEntries.forEach(entry ->
-                    Log.write(1, "║   + " + entry.entityClass.getName())
+                    Logger.write(1, "║   + " + entry.entityClass.getName())
             );
         }
 
@@ -156,13 +156,13 @@ public final class OnEventPotentialSpawn
 
         if (SPAWN_DEBUG_LOGGING)
         {
-            Log.write(1, "╠═ Final spawn list (" + event.getList().size() + " mobs):");
+            Logger.write(1, "╠═ Final spawn list (" + event.getList().size() + " mobs):");
 
             event.getList().forEach(entry ->
-                    Log.write(1, "║   • " + entry.entityClass.getName())
+                    Logger.write(1, "║   • " + entry.entityClass.getName())
             );
 
-            Log.write(1, "╚═══════════════════════════════════");
+            Logger.write(1, "╚═══════════════════════════════════");
         }
     }
 }

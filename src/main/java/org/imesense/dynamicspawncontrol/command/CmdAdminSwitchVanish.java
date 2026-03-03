@@ -12,24 +12,14 @@ import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-/**
- *
- */
 @InitLog
 public final class CmdAdminSwitchVanish extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminSwitchVanish()
     {
 
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -37,11 +27,6 @@ public final class CmdAdminSwitchVanish extends CommandBase
         return "dsc_sv";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -49,12 +34,6 @@ public final class CmdAdminSwitchVanish extends CommandBase
         return "/dsc_sv";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
@@ -82,10 +61,6 @@ public final class CmdAdminSwitchVanish extends CommandBase
         }
     }
 
-    /**
-     *
-     * @param entityPlayerMP
-     */
     private void apply(EntityPlayerMP entityPlayerMP)
     {
         entityPlayerMP.addPotionEffect(new
@@ -101,10 +76,6 @@ public final class CmdAdminSwitchVanish extends CommandBase
                     (16)), Integer.MAX_VALUE, 0,false, false));
     }
 
-    /**
-     *
-     * @param entityPlayerMP
-     */
     private void remove(EntityPlayerMP entityPlayerMP)
     {
         entityPlayerMP.removePotionEffect(Objects.requireNonNull(Potion.getPotionById(1)));

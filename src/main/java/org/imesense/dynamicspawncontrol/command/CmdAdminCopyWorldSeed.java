@@ -8,29 +8,19 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
 @InitLog
 public final class CmdAdminCopyWorldSeed extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminCopyWorldSeed()
     {
 
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -38,11 +28,6 @@ public final class CmdAdminCopyWorldSeed extends CommandBase
         return "dsc_copy_world_seed";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -50,19 +35,12 @@ public final class CmdAdminCopyWorldSeed extends CommandBase
         return "/dsc_copy_world_seed";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     * @throws CommandException
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args) throws CommandException
     {
         long seed = minecraftServer.getWorld(0).getSeed();
 
-        Log.write(0, "Get World Seed: " + seed);
+        Logger.info("Get World Seed: " + seed);
 
         ChatColorUtil.sendColoredMessage(
                 iCommandSender instanceof EntityPlayerMP ? (EntityPlayer) iCommandSender : null,

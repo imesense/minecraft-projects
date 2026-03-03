@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.util.Random;
@@ -44,7 +44,7 @@ public final class CommandNBT
             }
             catch (NBTException exception)
             {
-                Log.write(2, "Bad NBT for mob: " + exception.getMessage());
+                Logger.write(2, "Bad NBT for mob: " + exception.getMessage());
             }
         }
     }

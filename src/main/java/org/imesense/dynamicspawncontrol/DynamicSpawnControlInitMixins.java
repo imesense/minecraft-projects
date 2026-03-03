@@ -4,7 +4,7 @@ import fermiumbooter.FermiumRegistryAPI;
 import lombok.Getter;
 import net.minecraftforge.fml.common.Loader;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import java.util.Arrays;
 
@@ -73,24 +73,24 @@ public enum DynamicSpawnControlInitMixins
 
     public void register()
     {
-        EarlyLogBuffer.log(Log.DEBUG, "Registering mixin: " + this.name() + " | path: " + configPath);
+        EarlyLogBuffer.log(Logger.DEBUG, "Registering mixin: " + this.name() + " | path: " + configPath);
 
         if (conditional && requiredModId != null)
         {
-            EarlyLogBuffer.log(Log.DEBUG, "  conditional: true | mod: " + requiredModId + " | checking at runtime");
+            EarlyLogBuffer.log(Logger.DEBUG, "  conditional: true | mod: " + requiredModId + " | checking at runtime");
 
             FermiumRegistryAPI.enqueueMixin(true, configPath,
             () ->
                 {
                     boolean loaded = Loader.isModLoaded(requiredModId);
-                    EarlyLogBuffer.log(Log.DEBUG, "  runtime check for " + this.name() + ": mod " + requiredModId + " loaded = " + loaded);
+                    EarlyLogBuffer.log(Logger.DEBUG, "  runtime check for " + this.name() + ": mod " + requiredModId + " loaded = " + loaded);
 
                     return loaded;
                 });
         }
         else
         {
-            EarlyLogBuffer.log(Log.DEBUG, "  conditional: false");
+            EarlyLogBuffer.log(Logger.DEBUG, "  conditional: false");
             FermiumRegistryAPI.enqueueMixin(false, configPath);
         }
     }

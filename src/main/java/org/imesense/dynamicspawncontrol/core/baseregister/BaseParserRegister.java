@@ -1,11 +1,9 @@
 package org.imesense.dynamicspawncontrol.core.baseregister;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,7 @@ public abstract class BaseParserRegister
             }
             catch (Exception exception)
             {
-                Log.write(2, "Exception initializing parser: " +
+                Logger.write(2, "Exception initializing parser: " +
                         _class.getName() + " - " + exception.getMessage());
 
                 throw new RuntimeException(exception);

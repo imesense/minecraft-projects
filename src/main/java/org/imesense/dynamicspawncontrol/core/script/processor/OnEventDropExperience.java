@@ -8,7 +8,7 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.data.EntityDropExperience;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -59,7 +59,7 @@ public final class OnEventDropExperience
             {
                 event.setCanceled(true);
 
-                Log.write(0, String.format("XP drop DENIED for %s in dimension %d", entity.getName(), currentDimension));
+                Logger.write(0, String.format("XP drop DENIED for %s in dimension %d", entity.getName(), currentDimension));
 
                 return;
             }
@@ -69,14 +69,14 @@ public final class OnEventDropExperience
                 int modifiedXp;
                 int originalXp = event.getDroppedExperience();
 
-                    Log.write(0, String.format("Processing entity: %s, dimension: %d, originalXP: %d, time: %d",
+                    Logger.write(0, String.format("Processing entity: %s, dimension: %d, originalXP: %d, time: %d",
                             entity.getName(), currentDimension, originalXp, world.getWorldTime() % 24000));
 
                 if (data.use_default_xp)
                 {
                     modifiedXp = (int)(originalXp * data.multi_xp);
 
-                    Log.write(0, String.format("Entity: %s, default XP mode: %d * %.2f = %d (dimension: %d)",
+                    Logger.write(0, String.format("Entity: %s, default XP mode: %d * %.2f = %d (dimension: %d)",
                             entity.getName(), originalXp, data.multi_xp, modifiedXp, currentDimension));
                 }
                 else
@@ -86,7 +86,7 @@ public final class OnEventDropExperience
 
                     modifiedXp = (int)(baseXp * data.multi_xp + adding);
 
-                    Log.write(0, String.format(
+                    Logger.write(0, String.format(
                             "Custom XP mode: (%d * %.1f) + %.1f = %d (dimension: %d)",
                             baseXp, data.multi_xp, adding, modifiedXp, currentDimension
                     ));
@@ -94,7 +94,7 @@ public final class OnEventDropExperience
 
                 event.setDroppedExperience(modifiedXp);
 
-                Log.write(0, String.format("XP set to %d for %s in dimension %d",
+                Logger.write(0, String.format("XP set to %d for %s in dimension %d",
                         modifiedXp, entity.getName(), currentDimension));
             }
         });
@@ -109,7 +109,7 @@ public final class OnEventDropExperience
 
         boolean isValid = data.idDimension == currentDimension;
 
-        Log.write(0, String.format("Dimension check for rule: expected %s, current %d = %s",
+        Logger.write(0, String.format("Dimension check for rule: expected %s, current %d = %s",
                 data.idDimension != null ? data.idDimension.toString() : "any",
                 currentDimension,
                 isValid ? "VALID" : "INVALID"));

@@ -14,30 +14,20 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.raytrace.RayTrace;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-/**
- *
- */
 @InitLog
 public final class CmdAdminDumpBlock extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminDumpBlock()
     {
 
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -45,11 +35,6 @@ public final class CmdAdminDumpBlock extends CommandBase
         return "dsc_dump_block";
     }
 
-    /***
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -57,12 +42,6 @@ public final class CmdAdminDumpBlock extends CommandBase
         return "/dsc_dump_block";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
@@ -80,18 +59,18 @@ public final class CmdAdminDumpBlock extends CommandBase
 
                 iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD + "Block ID: " + blockId));
 
-                Log.write(0, "Block ID: " + blockId);
+                Logger.info("Block ID: " + blockId);
 
                 iCommandSender.sendMessage(new TextComponentString(TextFormatting.GOLD +
                         Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString()));
 
-                Log.write(0, Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString());
+                Logger.info(Objects.requireNonNull(iBlockState.getBlock().getRegistryName()).toString());
 
                 for (IProperty<?> key : iBlockState.getPropertyKeys())
                 {
                     String getString = iBlockState.getValue(key).toString();
                     iCommandSender.sendMessage(new TextComponentString("State: " + key.getName() + " = " + getString));
-                    Log.write(0, "State: " + key.getName() + " = " + getString);
+                    Logger.info("State: " + key.getName() + " = " + getString);
                 }
 
                 TileEntity tileEntity = entityPlayerMP.getEntityWorld().getTileEntity(blockPos);
@@ -100,7 +79,7 @@ public final class CmdAdminDumpBlock extends CommandBase
                 {
                     NBTTagCompound nbtTagCompound = tileEntity.writeToNBT(new NBTTagCompound());
                     iCommandSender.sendMessage(new TextComponentString("NBT Tags: " + nbtTagCompound));
-                    Log.write(0, "NBT Tags: " + nbtTagCompound);
+                    Logger.info("NBT Tags: " + nbtTagCompound);
                 }
             }
         }

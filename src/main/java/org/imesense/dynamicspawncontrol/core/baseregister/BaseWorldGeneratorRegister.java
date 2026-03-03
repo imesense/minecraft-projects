@@ -4,7 +4,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.lang.reflect.Constructor;
@@ -27,7 +27,7 @@ public abstract class BaseWorldGeneratorRegister
             {
                 if (!CodeGeneric.hasDefaultConstructor(_class))
                 {
-                    Log.write(2, "Class " + _class.getName() + " does not have a default constructor.");
+                    Logger.write(2, "Class " + _class.getName() + " does not have a default constructor.");
                     throw new RuntimeException("Default constructor not found in class: " + _class.getName());
                 }
 
@@ -40,7 +40,7 @@ public abstract class BaseWorldGeneratorRegister
             }
             catch (Exception exception)
             {
-                Log.write(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
+                Logger.write(2, "Exception in class: " + _class.getName() + " - " + exception.getMessage());
                 throw new RuntimeException(exception);
             }
         }

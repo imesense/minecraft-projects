@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.mixinconfig;
 
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.annotations.MixinConfigFile;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.basemixinconfig.BaseMixinConfig;
 
@@ -16,7 +16,7 @@ public final class MixinConfigScanner
 {
     public static void scanAndRegister(String packageName)
     {
-        EarlyLogBuffer.log(Log.INFO, "Scanning for mixin configs in package: " + packageName);
+        EarlyLogBuffer.log(Logger.INFO, "Scanning for mixin configs in package: " + packageName);
 
         try
         {
@@ -30,20 +30,20 @@ public final class MixinConfigScanner
                     Class<? extends BaseMixinConfig> configClass = (Class<? extends BaseMixinConfig>) clazz;
 
                     MixinConfigInitializer.registerConfig(configClass);
-                    EarlyLogBuffer.log(Log.DEBUG, "Found and registered: " + clazz.getSimpleName());
+                    EarlyLogBuffer.log(Logger.DEBUG, "Found and registered: " + clazz.getSimpleName());
                 }
                 else
                 {
-                    EarlyLogBuffer.log(Log.WARN, "Class " + clazz.getSimpleName() +
+                    EarlyLogBuffer.log(Logger.WARN, "Class " + clazz.getSimpleName() +
                             " has @MixinConfigFile but does not extend BaseMixinConfig!");
                 }
             }
 
-            EarlyLogBuffer.log(Log.INFO, "Found " + configClasses.size() + " mixin config classes");
+            EarlyLogBuffer.log(Logger.INFO, "Found " + configClasses.size() + " mixin config classes");
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Log.ERROR, "Failed to scan for mixin configs: " + exception.getMessage());
+            EarlyLogBuffer.log(Logger.ERROR, "Failed to scan for mixin configs: " + exception.getMessage());
             exception.printStackTrace();
         }
     }

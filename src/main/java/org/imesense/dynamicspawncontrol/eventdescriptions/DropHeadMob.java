@@ -1,13 +1,11 @@
 package org.imesense.dynamicspawncontrol.eventdescriptions;
 
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -15,10 +13,8 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.fml.common.Mod;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @InitLog
@@ -78,7 +74,7 @@ public final class DropHeadMob
         {
             dropHead(victim, attacker.world);
 
-            Log.write(0,
+            Logger.write(0,
                     "[HeadDrop] " +
                             "Attacker=" + attacker.getName() +
                             " Weapon=" + (heldItem.isEmpty() ? "None" : heldItem.getItem().getRegistryName()) +

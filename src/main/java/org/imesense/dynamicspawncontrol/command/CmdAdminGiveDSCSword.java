@@ -11,29 +11,19 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
 @InitLog
 public final class CmdAdminGiveDSCSword extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminGiveDSCSword()
     {
 
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -41,11 +31,6 @@ public final class CmdAdminGiveDSCSword extends CommandBase
         return "dsc_give_sword";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -53,13 +38,6 @@ public final class CmdAdminGiveDSCSword extends CommandBase
         return "/dsc_give_sword";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     * @throws CommandException
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args) throws CommandException
     {
@@ -89,7 +67,7 @@ public final class CmdAdminGiveDSCSword extends CommandBase
 
         if (added)
         {
-            Log.write(0, "Gave 'DynamicSpawnControl' Sword to " + entityPlayerMP.getName());
+            Logger.info("Gave 'DynamicSpawnControl' Sword to " + entityPlayerMP.getName());
             ChatColorUtil.sendColoredMessage(
                     entityPlayerMP,
                     "You received §6§l'DynamicSpawnControl' Sword§r§a!",
@@ -104,12 +82,6 @@ public final class CmdAdminGiveDSCSword extends CommandBase
         }
     }
 
-    /**
-     *
-     * @param id
-     * @param level
-     * @return
-     */
     private NBTTagCompound createEnchantment(int id, int level)
     {
         NBTTagCompound nbtTagCompound = new NBTTagCompound();

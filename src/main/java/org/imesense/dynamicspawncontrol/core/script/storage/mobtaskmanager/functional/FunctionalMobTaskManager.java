@@ -13,7 +13,7 @@ import net.minecraft.util.datafix.fixes.EntityId;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -60,7 +60,7 @@ public final class FunctionalMobTaskManager
 
         if (!isValid)
         {
-            Log.write(0, String.format(
+            Logger.write(0, String.format(
                     "[MobTask] Skipping rule: dimension mismatch (need %d, got %d)",
                     ruleDimension, currentDimension
             ));

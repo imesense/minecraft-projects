@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.mixinconfig;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.annotations.MixinConfigFile;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.basemixinconfig.BaseMixinConfig;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -20,7 +20,7 @@ public final class MixinConfigInitializer
         {
             if (!configClass.isAnnotationPresent(MixinConfigFile.class))
             {
-                EarlyLogBuffer.log(Log.ERROR, "Config class " + configClass.getSimpleName() +
+                EarlyLogBuffer.log(Logger.ERROR, "Config class " + configClass.getSimpleName() +
                         " is missing @MixinConfigFile annotation!");
                 return;
             }
@@ -35,12 +35,12 @@ public final class MixinConfigInitializer
             CONFIG_INSTANCES.put(fileName, instance);
             CONFIG_ANNOTATIONS.put(fileName, annotation);
 
-            EarlyLogBuffer.log(Log.DEBUG, "Registered mixin config: " + fileName +
+            EarlyLogBuffer.log(Logger.DEBUG, "Registered mixin config: " + fileName +
                     " (" + configClass.getSimpleName() + ")");
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Log.ERROR, "Failed to register config " + configClass.getSimpleName() +
+            EarlyLogBuffer.log(Logger.ERROR, "Failed to register config " + configClass.getSimpleName() +
                     ": " + exception.getMessage());
             exception.printStackTrace();
         }
@@ -48,7 +48,7 @@ public final class MixinConfigInitializer
 
     public static void initializeAllConfigs(String basePath)
     {
-        EarlyLogBuffer.log(Log.INFO, "Initializing " + CONFIG_INSTANCES.size() + " mixin configs...");
+        EarlyLogBuffer.log(Logger.INFO, "Initializing " + CONFIG_INSTANCES.size() + " mixin configs...");
 
         for (Map.Entry<String, BaseMixinConfig> entry : CONFIG_INSTANCES.entrySet())
         {
@@ -61,27 +61,27 @@ public final class MixinConfigInitializer
                 if (annotation.createIfAbsent())
                 {
                     config.createFile(basePath);
-                    EarlyLogBuffer.log(Log.INFO, "Initialized config: " + fileName);
+                    EarlyLogBuffer.log(Logger.INFO, "Initialized config: " + fileName);
                 }
                 else
                 {
-                    EarlyLogBuffer.log(Log.DEBUG, "Skipping config creation: " + fileName);
+                    EarlyLogBuffer.log(Logger.DEBUG, "Skipping config creation: " + fileName);
                 }
             }
             catch (Exception exception)
             {
-                EarlyLogBuffer.log(Log.ERROR, "Failed to initialize config " + fileName +
+                EarlyLogBuffer.log(Logger.ERROR, "Failed to initialize config " + fileName +
                         ": " + exception.getMessage());
                 exception.printStackTrace();
             }
         }
 
-        EarlyLogBuffer.log(Log.INFO, "Mixin config initialization complete!");
+        EarlyLogBuffer.log(Logger.INFO, "Mixin config initialization complete!");
     }
 
     public static void reloadAllConfigs()
     {
-        EarlyLogBuffer.log(Log.INFO, "Reloading all mixin configs...");
+        EarlyLogBuffer.log(Logger.INFO, "Reloading all mixin configs...");
 
         for (BaseMixinConfig config : CONFIG_INSTANCES.values())
         {
@@ -91,7 +91,7 @@ public final class MixinConfigInitializer
             }
             catch (Exception exception)
             {
-                EarlyLogBuffer.log(Log.ERROR, "Failed to reload config: " + exception.getMessage());
+                EarlyLogBuffer.log(Logger.ERROR, "Failed to reload config: " + exception.getMessage());
                 exception.printStackTrace();
             }
         }

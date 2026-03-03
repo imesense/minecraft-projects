@@ -6,17 +6,13 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import javax.annotation.Nonnull;
 
-/**
- * Команда для установки времени в мире
- */
 @InitLog
 @TODO(value = "Add this class on diagram project", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class CmdAdminTimeSet extends CommandBase
@@ -63,18 +59,15 @@ public final class CmdAdminTimeSet extends CommandBase
         long currentDay = currentTime / 24000L;
         long currentTimeOfDay = currentTime % 24000L;
 
-        // Определяем день
         long targetDay = currentDay;
         boolean useRelativeDay = false;
 
         if (args.length == 2)
         {
-            // Второй аргумент - номер дня
             targetDay = parseDayArgument(args[1], currentDay);
         }
         else if (args[0].startsWith("+") || args[0].startsWith("-"))
         {
-            // Первый аргумент может быть относительным днем (например, +1, -2)
             try
             {
                 long dayOffset = Long.parseLong(args[0]);
@@ -82,36 +75,31 @@ public final class CmdAdminTimeSet extends CommandBase
                 if (targetDay < 0) targetDay = 0;
                 useRelativeDay = true;
             }
-            catch (NumberFormatException e)
-            {
-                // Не относительный день, обрабатываем как время
-            }
+            catch (NumberFormatException ignored) { }
         }
 
-        // Обрабатываем первый аргумент (время)
         String timeArg = args[0].toLowerCase();
         long timeTicks;
 
         if (useRelativeDay)
         {
-            // Если юзать относительный день (+1, -2), сохраняем текущее время дня
             timeTicks = currentTimeOfDay;
         }
         else if ("day".equals(timeArg))
         {
-            timeTicks = 1000L; // 6:00 утра
+            timeTicks = 1000L;
         }
         else if ("night".equals(timeArg))
         {
-            timeTicks = 13000L; // 18:30 вечера
+            timeTicks = 13000L;
         }
         else if ("noon".equals(timeArg) || "midday".equals(timeArg))
         {
-            timeTicks = 6000L; // 12:00 дня
+            timeTicks = 6000L;
         }
         else if ("midnight".equals(timeArg))
         {
-            timeTicks = 18000L; // 0:00 ночи
+            timeTicks = 18000L;
         }
         else if (timeArg.contains(":"))
         {
@@ -122,43 +110,36 @@ public final class CmdAdminTimeSet extends CommandBase
             timeTicks = parseTicks(timeArg);
         }
 
-        // Проверяем валидность тиков
         if (timeTicks < 0 || timeTicks >= 24000)
         {
             throw new CommandException("Время должно быть в диапазоне 0-23999 тиков (0:00 - 23:59)");
         }
 
-        // Устанавливаем время
         long targetTime = targetDay * 24000L + timeTicks;
 
-        // Отладочная информация
-        System.out.println("[DSC DEBUG] Current time: " + currentTime +
+        Logger.info("[DSC DEBUG] Current time: " + currentTime +
                 " (day " + currentDay + ", time " + currentTimeOfDay + ")");
-        System.out.println("[DSC DEBUG] Setting to: " + targetTime +
+        Logger.info("[DSC DEBUG] Setting to: " + targetTime +
                 " (day " + targetDay + ", time " + timeTicks + ")");
 
         world.setWorldTime(targetTime);
 
-        // Проверяем, установилось ли время
         long newTime = world.getWorldTime();
         long newDay = newTime / 24000L;
         long newTimeOfDay = newTime % 24000L;
 
-        System.out.println("[DSC DEBUG] New time: " + newTime +
+        Logger.info("[DSC DEBUG] New time: " + newTime +
                 " (day " + newDay + ", time " + newTimeOfDay + ")");
 
-        // Формируем сообщение
         String timeStr = formatTime(timeTicks);
         String dayInfo = formatDayInfo(targetDay, currentDay);
 
-        // Отправляем сообщение
         sendMessage(sender, "§aВремя установлено на §e" + timeStr + "§a (§b" + dayInfo + "§a)");
         sendMessage(sender, "§7Текущий день: §6" + currentDay +
                 "§7 → Целевой день: §6" + targetDay +
                 "§7 (тики: §6" + timeTicks + "§7)");
         sendMessage(sender, "§7Общее время: §6" + targetTime);
 
-        // Предупреждение если время не установилось
         if (newDay != targetDay || Math.abs(newTimeOfDay - timeTicks) > 10)
         {
             sendMessage(sender, "§cВнимание: Время могло не установиться корректно!");
@@ -167,40 +148,34 @@ public final class CmdAdminTimeSet extends CommandBase
         }
     }
 
-    /**
-     * Парсинг аргумента дня (поддерживает относительные значения)
-     */
     private long parseDayArgument(String dayArg, long currentDay) throws CommandException
     {
         try
         {
             if (dayArg.startsWith("+") || dayArg.startsWith("-"))
             {
-                // Относительный день
                 long offset = Long.parseLong(dayArg);
                 long result = currentDay + offset;
                 return Math.max(0, result);
             }
             else
             {
-                // Абсолютный день
                 long day = Long.parseLong(dayArg);
+
                 if (day < 0)
                 {
                     throw new CommandException("День не может быть отрицательным: " + dayArg);
                 }
+
                 return day;
             }
         }
-        catch (NumberFormatException e)
+        catch (NumberFormatException exception)
         {
             throw new CommandException("Неверный формат дня: " + dayArg);
         }
     }
 
-    /**
-     * Форматирование информации о дне
-     */
     private String formatDayInfo(long targetDay, long currentDay)
     {
         if (targetDay == currentDay)
@@ -215,9 +190,6 @@ public final class CmdAdminTimeSet extends CommandBase
         }
     }
 
-    /**
-     * Универсальный метод отправки сообщений
-     */
     private void sendMessage(ICommandSender sender, String message)
     {
         String cleanMessage = message.replaceAll("§[0-9a-fklmnor]", "");
@@ -233,9 +205,6 @@ public final class CmdAdminTimeSet extends CommandBase
         }
     }
 
-    /**
-     * Парсинг времени в формате ЧЧ:ММ
-     */
     private long parseTimeFormat(String timeStr) throws CommandException
     {
         try
@@ -260,9 +229,6 @@ public final class CmdAdminTimeSet extends CommandBase
         }
     }
 
-    /**
-     * Парсинг тиков
-     */
     private long parseTicks(String ticksStr) throws CommandException
     {
         try
@@ -275,9 +241,6 @@ public final class CmdAdminTimeSet extends CommandBase
         }
     }
 
-    /**
-     * Форматирование времени для вывода
-     */
     private String formatTime(long ticks)
     {
         long adjustedTicks = (ticks + 6000) % 24000;
@@ -299,6 +262,7 @@ public final class CmdAdminTimeSet extends CommandBase
         if (args.length == 1)
         {
             java.util.List<String> suggestions = new java.util.ArrayList<>();
+
             suggestions.add("day");
             suggestions.add("night");
             suggestions.add("noon");
@@ -311,11 +275,13 @@ public final class CmdAdminTimeSet extends CommandBase
             suggestions.add("-1");
             suggestions.add("+2");
             suggestions.add("-2");
+
             return CommandBase.getListOfStringsMatchingLastWord(args, suggestions);
         }
         else if (args.length == 2)
         {
             java.util.List<String> suggestions = new java.util.ArrayList<>();
+
             suggestions.add("0");
             suggestions.add("1");
             suggestions.add("3");
@@ -323,8 +289,10 @@ public final class CmdAdminTimeSet extends CommandBase
             suggestions.add("10");
             suggestions.add("+1");
             suggestions.add("-1");
+
             return CommandBase.getListOfStringsMatchingLastWord(args, suggestions);
         }
+
         return super.getTabCompletions(server, sender, args, targetPos);
     }
 }

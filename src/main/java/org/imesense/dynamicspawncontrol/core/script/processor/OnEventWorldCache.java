@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.worldcache.WorldCacheConfig;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.imesense.dynamicspawncontrol.core.worldcache.*;
 
@@ -107,7 +107,7 @@ public final class OnEventWorldCache
 
             if (debugGameEvents)
             {
-                Log.write(0, String.format("Day changed: %d -> %d (WorldTime: %d)",
+                Logger.write(0, String.format("Day changed: %d -> %d (WorldTime: %d)",
                         oldDay, currentDay, currentWorldTime));
             }
 
@@ -159,7 +159,7 @@ public final class OnEventWorldCache
         if (debugGameEvents)
         {
             String eventType = eventData.repeat ? "Repeating" : "One-time";
-            Log.write(0, String.format("Game Event ACTIVATED - Type: %s, Day: %d, Node: %s, Entity: %s, " +
+            Logger.write(0, String.format("Game Event ACTIVATED - Type: %s, Day: %d, Node: %s, Entity: %s, " +
                             "Max Count: %d, Dimension: %d, Result: %s",
                     eventType, day, eventData.idNode != null ? eventData.idNode.toString() : "none",
                     eventData.entity, eventData.max_entity_count,
@@ -307,7 +307,7 @@ public final class OnEventWorldCache
                 event.setResult(entityData.result);
             }
 
-            Log.write(0, String.format("Entity %s in dimension %d processed with continue: true, result: %s",
+            Logger.write(0, String.format("Entity %s in dimension %d processed with continue: true, result: %s",
                     entityKey, currentDimension, entityData.result != null ? entityData.result : "DEFAULT"));
             return;
         }
@@ -396,7 +396,7 @@ public final class OnEventWorldCache
 
             if (entityData.idNode != null && NODE_MANAGER.isNodeActive(entityData.idNode))
             {
-                Log.write(0, String.format("Using active node %d for entity %s",
+                Logger.write(0, String.format("Using active node %d for entity %s",
                         entityData.idNode, entityKey));
 
                 return Optional.of(entityData);
@@ -485,7 +485,7 @@ public final class OnEventWorldCache
                 if (debugGameEvents)
                 {
                     String eventType = eventData.repeat ? "Repeating" : "One-time";
-                    Log.write(0, String.format("Game Event ACTIVE for spawn - Type: %s, Day: %d, Entity: %s, " +
+                    Logger.write(0, String.format("Game Event ACTIVE for spawn - Type: %s, Day: %d, Entity: %s, " +
                                     "Checking limit: %d/%d",
                             eventType, currentDay, entityKey,
                             currentCount,
@@ -493,7 +493,7 @@ public final class OnEventWorldCache
 
                     if (currentCount == 0)
                     {
-                        Log.write(0, String.format("DEBUG: No %s entities found in world. Total entities: %d",
+                        Logger.write(0, String.format("DEBUG: No %s entities found in world. Total entities: %d",
                                 entityKey, world.loadedEntityList.size()));
 
                         for (Object obj : world.loadedEntityList)
@@ -502,7 +502,7 @@ public final class OnEventWorldCache
                             {
                                 Entity e = (Entity) obj;
                                 ResourceLocation key = EntityList.getKey(e);
-                                Log.write(0, String.format("DEBUG: Entity: %s, Key: %s",
+                                Logger.write(0, String.format("DEBUG: Entity: %s, Key: %s",
                                         e.getClass().getSimpleName(), key));
                             }
                         }
@@ -515,7 +515,7 @@ public final class OnEventWorldCache
 
                     if (debugGameEvents)
                     {
-                        Log.write(0, String.format("Game Event BLOCKED spawn - Entity: %s, Count: %d/%d, Result: %s",
+                        Logger.write(0, String.format("Game Event BLOCKED spawn - Entity: %s, Count: %d/%d, Result: %s",
                                 entityKey, currentCount, eventData.max_entity_count, eventData.result));
                     }
 

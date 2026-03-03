@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 @TODO(value = "Merge 'base' files into 'core/base/...' and fix the class diagram in version 0.2", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public abstract class BaseOnEventInstance
@@ -19,7 +19,7 @@ public abstract class BaseOnEventInstance
         {
             if (INSTANCE_EXITS_MAP.getOrDefault(_class, false))
             {
-                Log.write(2,
+                Logger.write(2,
                         String.format("An instance of [%s] already exists!", _class.getSimpleName()));
 
                 throw new RuntimeException();

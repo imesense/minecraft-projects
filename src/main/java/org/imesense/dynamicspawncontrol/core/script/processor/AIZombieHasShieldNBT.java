@@ -1,6 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.script.processor;
 
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityZombie;

@@ -13,17 +13,10 @@ import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
 @InitLog
 @TODO(value = "New concept for 0.2 update", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public final class CmdAdminCreateBedrockPlatform extends CommandBase
 {
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -31,11 +24,6 @@ public final class CmdAdminCreateBedrockPlatform extends CommandBase
         return "dsc_test";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -43,12 +31,6 @@ public final class CmdAdminCreateBedrockPlatform extends CommandBase
         return "/dsc_test";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer,
                         @Nonnull ICommandSender iCommandSender,

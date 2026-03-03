@@ -12,24 +12,14 @@ import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
 @InitLog
 public final class CmdAdminGetDimension extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminGetDimension()
     {
 
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -37,11 +27,6 @@ public final class CmdAdminGetDimension extends CommandBase
         return "dsc_gd";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -49,12 +34,6 @@ public final class CmdAdminGetDimension extends CommandBase
         return "/dsc_gd";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {

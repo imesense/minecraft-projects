@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.basemixinconfig.BaseMixinConfig;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.annotations.MixinConfigFile;
 
@@ -39,7 +39,7 @@ public final class NightRendererConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Log.INFO,
+                EarlyLogBuffer.log(Logger.INFO,
                         "Night renderer config already exists, loading from: " + activeConfigPath);
                 NightRendererData.loadFromFile(activeConfigPath);
                 return;
@@ -89,15 +89,15 @@ public final class NightRendererConfig extends BaseMixinConfig
                 writer.write(jsonString);
             }
 
-            EarlyLogBuffer.log(Log.INFO, "Created night renderer config at: " + activeConfigPath);
-            EarlyLogBuffer.log(Log.INFO, "Default blacklisted dimensions: " +
+            EarlyLogBuffer.log(Logger.INFO, "Created night renderer config at: " + activeConfigPath);
+            EarlyLogBuffer.log(Logger.INFO, "Default blacklisted dimensions: " +
                     java.util.Arrays.toString(defaultBlacklist));
 
             NightRendererData.loadFromFile(activeConfigPath);
         }
         catch (Exception exception)
         {
-            EarlyLogBuffer.log(Log.ERROR,
+            EarlyLogBuffer.log(Logger.ERROR,
                     "Failed to create night renderer config: " + exception.getMessage());
             exception.printStackTrace();
         }
@@ -112,12 +112,12 @@ public final class NightRendererConfig extends BaseMixinConfig
 
             if (configFile.exists())
             {
-                EarlyLogBuffer.log(Log.INFO, "Manual reload of night renderer config");
+                EarlyLogBuffer.log(Logger.INFO, "Manual reload of night renderer config");
                 NightRendererData.loadFromFile(activeConfigPath);
             }
             else
             {
-                EarlyLogBuffer.log(Log.INFO, "Night renderer config missing, resetting to defaults");
+                EarlyLogBuffer.log(Logger.INFO, "Night renderer config missing, resetting to defaults");
                 NightRendererData.resetToDefault();
             }
         }

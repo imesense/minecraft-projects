@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
@@ -18,24 +18,14 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- *
- */
 @InitLog
 public final class CmdAdminScanEntities extends CommandBase
 {
-    /**
-     *
-     */
     public CmdAdminScanEntities()
     {
 
     }
 
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -43,11 +33,6 @@ public final class CmdAdminScanEntities extends CommandBase
         return "dsc_scan_entities";
     }
 
-    /**
-     *
-     * @param iCommandSender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
@@ -55,12 +40,6 @@ public final class CmdAdminScanEntities extends CommandBase
         return "/dsc_scan_entities";
     }
 
-    /**
-     *
-     * @param minecraftServer
-     * @param iCommandSender
-     * @param args
-     */
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
@@ -69,19 +48,19 @@ public final class CmdAdminScanEntities extends CommandBase
         AtomicInteger atomicInteger = new AtomicInteger();
         List<Entity> entityList = world.loadedEntityList;
 
-        Log.write(0, "------------ START SCAN ENTITY LIST ------------");
+        Logger.info("------------ START SCAN ENTITY LIST ------------");
 
         for (Entity entity : entityList)
         {
             if (entity != null)
             {
-                Log.write(0, "-----------------------------------------------------------");
+                Logger.info("-----------------------------------------------------------");
 
                 @Nonnull String entityType;
 
-                Log.write(0, "Iteration: " + atomicInteger.getAndIncrement());
-                Log.write(0, entity.toString());
-                Log.write(0, "Entity ID: " + entity.getEntityId());
+                Logger.info("Iteration: " + atomicInteger.getAndIncrement());
+                Logger.info(entity.toString());
+                Logger.info("Entity ID: " + entity.getEntityId());
 
                 ResourceLocation resourceLocation = EntityList.getKey(entity);
 
@@ -96,9 +75,9 @@ public final class CmdAdminScanEntities extends CommandBase
                             resourceLocation.toString() : "Unknown";
                 }
 
-                Log.write(0, "Entity: " + entityType);
+                Logger.info("Entity: " + entityType);
 
-                Log.write(0, "-----------------------------------------------------------");
+                Logger.info("-----------------------------------------------------------");
             }
         }
 
@@ -107,7 +86,6 @@ public final class CmdAdminScanEntities extends CommandBase
                         TextFormatting.GREEN)
         ));
 
-
-        Log.write(0, "------------ END SCAN ENTITY LIST ------------");
+        Logger.info("------------ END SCAN ENTITY LIST ------------");
     }
 }

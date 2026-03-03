@@ -4,7 +4,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import java.io.File;
@@ -38,7 +38,7 @@ public abstract class BaseParser
 
     public void reloadConfig()
     {
-        Log.write(0, "Reloading config for: " + this.nameFile);
+        Logger.write(0, "Reloading config for: " + this.nameFile);
 
         EraseData eraseData = this::eraseData;
         eraseData.eraseData();
@@ -46,7 +46,7 @@ public abstract class BaseParser
         ConfigLoader configLoader = this::loadConfig;
         configLoader.load(false);
 
-        Log.write(0, "Config reloaded successfully for: " + this.nameFile);
+        Logger.write(0, "Config reloaded successfully for: " + this.nameFile);
     }
 
     public abstract void eraseData();
@@ -61,7 +61,7 @@ public abstract class BaseParser
 
             if (!file.exists())
             {
-                Log.write(0, "Directory does not exist, creating: " + file.getAbsolutePath());
+                Logger.write(0, "Directory does not exist, creating: " + file.getAbsolutePath());
 
                 if (!file.mkdirs())
                 {
@@ -77,7 +77,7 @@ public abstract class BaseParser
         }
         catch (IOException exception)
         {
-            Log.write(0, "Error creating new config file: " + exception.getMessage());
+            Logger.write(0, "Error creating new config file: " + exception.getMessage());
             throw new RuntimeException("Failed to create new config file", exception);
         }
     }

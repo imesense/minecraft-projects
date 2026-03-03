@@ -7,27 +7,20 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.config.player.PlayerConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.core.logfile.Log;
+import org.imesense.dynamicspawncontrol.core.logfile.Logger;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 @InitLog
 @TODO(value = "Rework for 0.2 ver. Separate the methods that are related to 'handlePlayerRespawn'. Add const's in config", showOnce = false, priority = TODO.TodoPriority.HIGH)
@@ -71,7 +64,7 @@ public final class PlayerNetwork
 
         if (ONLINE_PLAYERS.add(player.getUniqueID()))
         {
-            Log.write(0, String.format(
+            Logger.write(0, String.format(
                     "Player [%s] joined the world",
                     player.getName()
             ));
@@ -84,7 +77,7 @@ public final class PlayerNetwork
 
         if (ONLINE_PLAYERS.remove(player.getUniqueID()))
         {
-            Log.write(0, String.format(
+            Logger.write(0, String.format(
                     "Player [%s] left the world",
                     player.getName()
             ));
@@ -151,7 +144,7 @@ public final class PlayerNetwork
         {
             if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
             {
-                Log.write(0, "[TELEPORT] игрок не жив, отмена");
+                Logger.write(0, "[TELEPORT] игрок не жив, отмена");
             }
             return;
         }
@@ -160,7 +153,7 @@ public final class PlayerNetwork
         {
             if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
             {
-                Log.write(0, "[TELEPORT] Клиентская сторона, отмена");
+                Logger.write(0, "[TELEPORT] Клиентская сторона, отмена");
             }
             return;
         }
@@ -170,11 +163,11 @@ public final class PlayerNetwork
 
         if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
-            Log.write(0, String.format(
+            Logger.write(0, String.format(
                     "[TELEPORT] Позиция игрока: X=%d Y=%d Z=%d",
                     playerPos.getX(), playerPos.getY(), playerPos.getZ()
             ));
-            Log.write(0, String.format(
+            Logger.write(0, String.format(
                     "[TELEPORT] Дистанция телепортации: %d-%d блоков",
                     MIN_TELEPORT_DISTANCE, MAX_TELEPORT_DISTANCE
             ));
@@ -202,7 +195,7 @@ public final class PlayerNetwork
 
                     if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG && mobsToTeleport.size() <= 5)
                     {
-                        Log.write(0, String.format(
+                        Logger.write(0, String.format(
                                 "[TELEPORT] Найден моб: %s (расстояние: %.1f)",
                                 entity.getClass().getSimpleName(),
                                 Math.sqrt(distanceSq)
@@ -217,7 +210,7 @@ public final class PlayerNetwork
         {
             if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
             {
-                Log.write(0, String.format(
+                Logger.write(0, String.format(
                         "[TELEPORT] Нет мобов для телепортации (проверено: %d сущностей, время: %.2f мс)",
                         scannedEntities,
                         scanTime / 1_000_000.0
@@ -228,7 +221,7 @@ public final class PlayerNetwork
 
         if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
-            Log.write(0, String.format(
+            Logger.write(0, String.format(
                     "[TELEPORT] Найдено мобов: %d (проверено: %d, время: %.2f мс)",
                     mobsToTeleport.size(),
                     scannedEntities,
@@ -255,7 +248,7 @@ public final class PlayerNetwork
 
             if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
             {
-                Log.write(0, String.format(
+                Logger.write(0, String.format(
                         "[TELEPORT] Моб %d: цель X=%d Z=%d (расстояние: %d, угол: %.0f°)",
                         i + 1,
                         targetPos.getX(),
@@ -274,7 +267,7 @@ public final class PlayerNetwork
                 {
                     if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
                     {
-                        Log.write(0, String.format(
+                        Logger.write(0, String.format(
                                 "[TELEPORT] Позиция слишком далеко (%.1f блоков), пропускаем",
                                 actualDistance
                         ));
@@ -304,7 +297,7 @@ public final class PlayerNetwork
                 if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
                 {
                     double newDistance = Math.sqrt(mob.getDistanceSq(playerPos));
-                    Log.write(0, String.format(
+                    Logger.write(0, String.format(
                             "[TELEPORT] Телепортирован: %s с [%d,%d,%d] на [%d,%d,%d] (новое расстояние: %.1f)",
                             mob.getClass().getSimpleName(),
                             oldPos.getX(), oldPos.getY(), oldPos.getZ(),
@@ -318,7 +311,7 @@ public final class PlayerNetwork
                 failedCount++;
                 if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
                 {
-                    Log.write(0, String.format(
+                    Logger.write(0, String.format(
                             "[TELEPORT] Не удалось найти безопасную позицию для моба %s",
                             mob.getClass().getSimpleName()
                     ));
@@ -337,14 +330,14 @@ public final class PlayerNetwork
                 totalTime / 1_000_000.0
         );
 
-        Log.write(1, result);
+        Logger.write(1, result);
 
         if (UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG)
         {
-            Log.write(0, "[Result] " + result);
+            Logger.write(0, "[Result] " + result);
             if (failedCount > 0)
             {
-                Log.write(0, String.format(
+                Logger.write(0, String.format(
                         "[Result] Не удалось телепортировать %d мобов",
                         failedCount
                 ));
