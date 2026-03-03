@@ -105,6 +105,7 @@ public final class ZombieBreakTorchEntityAI extends EntityAIBase
         int r = profile.getLightSearchRadius();
 
         for (int dx = -r; dx <= r; dx++)
+        {
             for (int dz = -r; dz <= r; dz++)
             {
                 BlockPos pos = base.add(dx, 0, dz);
@@ -115,6 +116,8 @@ public final class ZombieBreakTorchEntityAI extends EntityAIBase
                     return pos;
                 }
             }
+        }
+
         return null;
     }
 }

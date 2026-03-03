@@ -37,9 +37,6 @@ public final class ZombieBreakTorchEventHandler
 
         ZombieLightProfile profile = new ZombieLightProfile(zombie);
 
-        zombie.tasks.addTask(
-                5, // низкий приоритет
-                new ZombieBreakTorchEntityAI(zombie, profile)
-        );
+        zombie.tasks.addTask(5, new ZombieBreakTorchEntityAI(zombie, profile));
     }
 }
