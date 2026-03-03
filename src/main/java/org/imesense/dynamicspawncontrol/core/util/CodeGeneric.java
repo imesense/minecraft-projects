@@ -21,6 +21,7 @@ public final class CodeGeneric
         try
         {
             _class.getConstructor();
+
             return true;
         }
         catch (NoSuchMethodException exception)
@@ -70,7 +71,6 @@ public final class CodeGeneric
             Log.write(0, "Failed to determine creature type for entity: " + _class.getName() + ", error: " + exception.getMessage());
         }
 
-
         return EnumCreatureType.CREATURE;
     }
 
@@ -101,7 +101,9 @@ public final class CodeGeneric
         }
         catch (Exception exception)
         {
-            Log.write(0, "Failed to create Singleton instance for class: " + _class.getName() + ". Error: " + exception.getMessage());
+            Log.write(0, "Failed to create Singleton instance for class: " + _class.getName() +
+                    ". Error: " + exception.getMessage());
+
             throw new RuntimeException("Failed to create Singleton instance for class: " + _class.getName(), exception);
         }
     }
@@ -133,7 +135,9 @@ public final class CodeGeneric
         }
         catch (Exception exception)
         {
-            Log.write(0, "Failed to create Singleton instance for class: " + _class.getName() + ". Error: " + exception.getMessage());
+            Log.write(0, "Failed to create Singleton instance for class: " + _class.getName() +
+                    ". Error: " + exception.getMessage());
+
             throw new RuntimeException("Failed to create Singleton instance for class: " + _class.getName(), exception);
         }
     }

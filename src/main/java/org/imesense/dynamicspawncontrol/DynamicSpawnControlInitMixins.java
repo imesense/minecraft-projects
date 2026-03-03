@@ -18,6 +18,7 @@ public enum DynamicSpawnControlInitMixins
     DIVINE_RPG_LHEIVA(true, "assets/mixins/divinerpg/entity/EntityLheiva.Rework.json", "divinerpg"),
     DIVINE_RPG_HELL_PIG(true, "assets/mixins/divinerpg/entity/EntityHellPig.Fix.json", "divinerpg"),
     DIVINE_RPG_TWINS(true, "assets/mixins/divinerpg/entity/EntityTwins.Rework.json", "divinerpg"),
+    DIVINE_RPG_FROST_ARCHER(true, "assets/mixins/divinerpg/entity/EntityFrostArcher.Fix.json", "divinerpg"),
     DIVINE_RPG_SPAWN_FIX(true, "assets/mixins/divinerpg/event/EntitySpawnRegistry.Fix.json", "divinerpg"),
 
     // IC2 Wireless Industry
