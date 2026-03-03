@@ -12,16 +12,14 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.synchronization.SynchronizationConfig;
+import org.imesense.dynamicspawncontrol.core.taskmanager.Task;
+import org.imesense.dynamicspawncontrol.core.taskmanager.TaskManager;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.jline.utils.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @InitLog
@@ -29,17 +27,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class OvergrowingGrass
 {
     private static volatile OvergrowingGrass _INSTANCE;
-
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
-
-    private static final ExecutorService WORKER = Executors.newFixedThreadPool(1, r ->
-    {
-        Thread thread = new Thread(r, "OvergrowingGrass Worker");
-        thread.setDaemon(true);
-        return thread;
-    });
-
-    private final BlockingQueue<GrowthTask> taskQueue = new LinkedBlockingQueue<>();
+    private final TaskManager taskManager;
 
     public static OvergrowingGrass getInstance()
     {
@@ -48,6 +37,8 @@ public final class OvergrowingGrass
 
     public OvergrowingGrass()
     {
+        this.taskManager = TaskManager.getInstance();
+
         if (this.getClass().isAnnotationPresent(InitLog.class))
         {
             CodeGeneric.logInitialization(this.getClass());
@@ -94,65 +85,72 @@ public final class OvergrowingGrass
                         SynchronizationConfig.class).getPlayerRadius() * 2) -
                         SynchronizationConfig.getInstance(SynchronizationConfig.class).getPlayerRadius();
 
-                taskQueue.offer(new GrowthTask(world, x, z, random.nextLong()));
+                // Используем TaskManager для асинхронной обработки
+                processGrowthTaskAsync(world, x, z, random.nextLong());
             }
         }
-
-        startProcessingTasks(world);
     }
 
-    private void startProcessingTasks(World world)
+    private void processGrowthTaskAsync(World world, int x, int z, long randomSeed)
     {
-        WORKER.submit(() ->
+        Task<Void> growthTask = new Task<Void>("GrassGrowth", TaskManager.TaskPriority.LOW)
         {
-            try
+            @Override
+            public Void execute() throws Exception
             {
-                GrowthTask task;
-
-                while ((task = taskQueue.poll()) != null)
+                if (world.provider.getDimension() != 0)
                 {
-                    processGrowthTask(task, world);
+                    return null;
                 }
+
+                int y = getHeightSafely(world, x, z) - 1;
+
+                if (y < 0)
+                {
+                    return null;
+                }
+
+                BlockPos pos = new BlockPos(x, y, z);
+
+                CompletableFuture<Void> future = new CompletableFuture<>();
+
+                world.getMinecraftServer().addScheduledTask(() ->
+                {
+                    try
+                    {
+                        IBlockState state = world.getBlockState(pos);
+                        if (state.getBlock() != Blocks.GRASS)
+                        {
+                            future.complete(null);
+                            return;
+                        }
+
+                        BlockPos abovePos = pos.up();
+                        IBlockState aboveState = world.getBlockState(abovePos);
+
+                        GrowthType growthType = determineGrowthType(world, abovePos, aboveState, randomSeed);
+                        if (growthType != GrowthType.NONE)
+                        {
+                            applyGrowth(world, pos, abovePos, growthType);
+                        }
+
+                        future.complete(null);
+                    }
+                    catch (Exception exception)
+                    {
+                        future.completeExceptionally(exception);
+                    }
+                });
+
+                future.get();
+                return null;
             }
-            catch (Exception exception)
-            {
+        };
 
-            }
-            finally
-            {
-
-            }
-        });
-    }
-
-    private void processGrowthTask(GrowthTask growthTask, World world)
-    {
-        if (world.provider.getDimension() != 0)
+        taskManager.submitTask(growthTask).exceptionally(throwable ->
         {
-            return; // Final safety check
-        }
-
-        int y = getHeightSafely(world, growthTask.X, growthTask.Z) - 1;
-
-        if (y < 0)
-        {
-            return;
-        }
-
-        BlockPos pos = new BlockPos(growthTask.X, y, growthTask.Z);
-
-        world.getMinecraftServer().addScheduledTask(() ->
-        {
-            IBlockState state = world.getBlockState(pos);
-            if (state.getBlock() != Blocks.GRASS) return;
-
-            BlockPos abovePos = pos.up();
-            IBlockState aboveState = world.getBlockState(abovePos);
-
-            GrowthType growthType = determineGrowthType(world, abovePos, aboveState, growthTask.randomSeed);
-            if (growthType == GrowthType.NONE) return;
-
-            applyGrowth(world, pos, abovePos, growthType);
+            System.err.println("[OvergrowingGrass] Error processing growth task: " + throwable.getMessage());
+            return null;
         });
     }
 
@@ -211,21 +209,6 @@ public final class OvergrowingGrass
                                 .withProperty(BlockDoublePlant.HALF, BlockDoublePlant.EnumBlockHalf.UPPER),
                         3);
                 break;
-        }
-    }
-
-    private static class GrowthTask
-    {
-        final World WORLD;
-        final int X, Z;
-        final long randomSeed;
-
-        protected GrowthTask(World world, int x, int z, long randomSeed)
-        {
-            this.WORLD = world;
-            this.X = x;
-            this.Z = z;
-            this.randomSeed = randomSeed;
         }
     }
 
