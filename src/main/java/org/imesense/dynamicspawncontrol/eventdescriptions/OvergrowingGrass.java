@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.config.synchronization.SynchronizationConfig;
-import org.imesense.dynamicspawncontrol.core.threads.GrassThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 import org.jline.utils.Log;
 
@@ -30,7 +29,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class OvergrowingGrass
 {
     private static volatile OvergrowingGrass _INSTANCE;
-    private static final GrassThreadMonitor grassMonitor = GrassThreadMonitor.getInstance();
 
     private static final AtomicInteger TICK_COUNTER = new AtomicInteger(0);
 
@@ -105,7 +103,6 @@ public final class OvergrowingGrass
 
     private void startProcessingTasks(World world)
     {
-        grassMonitor.recordTaskStart(taskQueue.size());
         WORKER.submit(() ->
         {
             try
@@ -114,19 +111,16 @@ public final class OvergrowingGrass
 
                 while ((task = taskQueue.poll()) != null)
                 {
-                    long startTime = System.currentTimeMillis();
                     processGrowthTask(task, world);
-                    grassMonitor.recordTaskCompletion(System.currentTimeMillis() - startTime);
                 }
             }
             catch (Exception exception)
             {
-                grassMonitor.recordError();
-                Log.error("Error in grass growth processing", exception);
+
             }
             finally
             {
-                grassMonitor.recordTaskEnd();
+
             }
         });
     }

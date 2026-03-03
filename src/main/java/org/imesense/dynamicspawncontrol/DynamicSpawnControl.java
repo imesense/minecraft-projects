@@ -27,7 +27,6 @@ import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
 import org.imesense.dynamicspawncontrol.core.script.processor.AIZombieHasShieldNBT;
-import org.imesense.dynamicspawncontrol.core.threads.ThreadMonitor;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
@@ -231,6 +230,6 @@ public final class DynamicSpawnControl
     @Mod.EventHandler
     public static void onServerShutdown(FMLServerStoppingEvent event)
     {
-        ThreadMonitor.getInstance().stop();
+
     }
 }
