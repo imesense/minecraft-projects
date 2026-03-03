@@ -13,7 +13,11 @@ import org.imesense.dynamicspawncontrol.entity.feralzombie.EntityFeralZombie;
 
 public final class RenderFeralZombie extends RenderLiving<EntityFeralZombie>
 {
-    private static final ResourceLocation TEXTURE = new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_feral_zombie.png");
+    private static final ResourceLocation[] TEXTURES =
+    {
+        new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_feral_zombie_1.png"),
+        new ResourceLocation("dynamicspawncontrol", "textures/entity/dsc_feral_zombie_2.png")
+    };
 
     public RenderFeralZombie(RenderManager renderManager)
     {
@@ -25,8 +29,11 @@ public final class RenderFeralZombie extends RenderLiving<EntityFeralZombie>
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(@NonNull EntityFeralZombie entityFeralZombie)
+    protected ResourceLocation getEntityTexture(@NonNull EntityFeralZombie entity)
     {
-        return TEXTURE;
+        long hash = entity.getUniqueID().getLeastSignificantBits();
+        int index = Math.abs((int)(hash % TEXTURES.length));
+
+        return TEXTURES[index];
     }
 }
