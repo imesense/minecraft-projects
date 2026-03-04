@@ -8,26 +8,21 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.entity.base.DSCEntityZombie;
 
 import java.util.List;
 
-public final class EntityExplosionZombie extends EntityZombie
+public final class EntityExplosionZombie extends DSCEntityZombie
 {
     public EntityExplosionZombie(World world)
     {
         super(world);
+        this.setZombieType(ZombieType.EXPLOSION);
     }
 
-    @Override
-    protected void applyEntityAttributes()
+    public ZombieType getZombieType()
     {
-        super.applyEntityAttributes();
-
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25.0D);
-
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.5D);
+        return this.zombieType;
     }
 
     @Override

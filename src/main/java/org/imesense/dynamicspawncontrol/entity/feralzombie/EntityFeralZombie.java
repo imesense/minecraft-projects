@@ -1,38 +1,24 @@
 package org.imesense.dynamicspawncontrol.entity.feralzombie;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import org.imesense.dynamicspawncontrol.entity.base.DSCEntityZombie;
 
-public final class EntityFeralZombie extends EntityZombie
+public final class EntityFeralZombie extends DSCEntityZombie
 {
     public EntityFeralZombie(World world)
     {
         super(world);
+        this.setZombieType(ZombieType.FERAL);
     }
 
-    @Override
-    protected void applyEntityAttributes()
+    public ZombieType getZombieType()
     {
-        super.applyEntityAttributes();
-
-        double randomHealth = 20.0D + this.rand.nextInt(21);
-
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH)
-                .setBaseValue(randomHealth);
-
-        this.setHealth((float) randomHealth);
-
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED)
-                .setBaseValue(0.33D);
-
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE)
-                .setBaseValue(7.5D);
+        return this.zombieType;
     }
 
     @Override
