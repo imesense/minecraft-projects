@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldConfig.*;
 
-public class ZombieShieldNBT
+public final class ZombieShieldNBT
 {
     public static final String SHIELD_HEALTH = "ShieldHealth";
     public static final String SHIELD_COOLDOWN = "ShieldCooldown";

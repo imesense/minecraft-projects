@@ -14,7 +14,7 @@ import net.minecraft.util.math.Vec3d;
 
 import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldConfig.*;
 
-public class ZombieShieldUtils
+public final class ZombieShieldUtils
 {
     public static ItemStack getShieldItem(EntityZombie zombie)
     {

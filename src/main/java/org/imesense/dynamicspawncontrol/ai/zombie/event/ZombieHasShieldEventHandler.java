@@ -12,9 +12,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldEffects;
-import org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldNBT;
-import org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldUtils;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldConfig.*;
 
-public class ZombieShieldEffects
+public final class ZombieShieldEffects
 {
     public static void showShieldParticles(EntityZombie zombie, float shieldPercentage)
     {
