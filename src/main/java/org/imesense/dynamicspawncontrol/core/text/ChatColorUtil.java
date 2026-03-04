@@ -4,9 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
-/**
- *
- */
 public final class ChatColorUtil
 {
     private ChatColorUtil()

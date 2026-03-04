@@ -2,9 +2,6 @@ package org.imesense.dynamicspawncontrol.core.text;
 
 import net.minecraft.util.text.TextFormatting;
 
-/**
- *
- */
 public enum TextColor
 {
     RED(TextFormatting.RED),

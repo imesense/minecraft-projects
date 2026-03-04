@@ -1,8 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.text;
 
-/**
- *
- */
 public enum CmdCallType
 {
     HIT("[Hit]"),

@@ -18,14 +18,6 @@ public final class PlayerNetwork
 {
     private static volatile PlayerNetwork _INSTANCE;
 
-    private static final int MIN_TELEPORT_DISTANCE = 32;   // Минимум 32 блока от игрока
-    private static final int MAX_TELEPORT_DISTANCE = 64;   // Максимум 64 блока от игрока
-    private static final int MAX_MOBS_PER_RESPAWN = 10;    // Максимум 10 мобов за респавн
-    private static final int SAFE_POSITION_ATTEMPTS = 10;  // Попыток найти безопасную позицию
-    private static final int SEARCH_AREA_RADIUS = 16;      // Радиус поиска безопасной позиции
-    private static final int SLOWNESS_DURATION = 100;      // Длительность замедления (5 сек)
-    private static final int SLOWNESS_AMPLIFIER = 2;       // Уровень замедления (3)
-
     private static final Set<UUID> ONLINE_PLAYERS =
             ConcurrentHashMap.newKeySet();
 

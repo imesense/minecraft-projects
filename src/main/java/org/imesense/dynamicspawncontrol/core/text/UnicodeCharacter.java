@@ -1,8 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.text;
 
-/**
- *
- */
 public enum UnicodeCharacter
 {
     WHITE_SPACE(' ', "White Space"),
