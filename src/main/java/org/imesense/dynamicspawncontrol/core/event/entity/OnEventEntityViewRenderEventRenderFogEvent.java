@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
+import org.imesense.dynamicspawncontrol.core.renderer.fog.BedrockVoidFog;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogEvent;
 
@@ -24,6 +25,6 @@ public final class OnEventEntityViewRenderEventRenderFogEvent extends BaseOnEven
     {
         //FogEventHandler.getInstance().handleRenderFog(event);
 
-        //FogEvent.getInstance().handleFogVoidRender(event);
+        BedrockVoidFog.getInstance().handleFogVoidRender(event);
     }
 }

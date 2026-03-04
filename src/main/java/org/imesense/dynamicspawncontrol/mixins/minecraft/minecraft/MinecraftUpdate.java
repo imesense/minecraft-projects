@@ -3,6 +3,7 @@ package org.imesense.dynamicspawncontrol.mixins.minecraft.minecraft;
 import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.Logger;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
+import org.imesense.dynamicspawncontrol.core.renderer.fog.BedrockVoidFog;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.PixelFormat;
@@ -59,6 +60,7 @@ public abstract class MinecraftUpdate
     {
         LogManager.info("Server stopping: shutting down logger and task manager...");
 
+        BedrockVoidFog.getInstance().shutdown();
         LogManager.shutdown();
 
         System.out.println("[DynamicSpawnControl] Shutdown completed safely.");

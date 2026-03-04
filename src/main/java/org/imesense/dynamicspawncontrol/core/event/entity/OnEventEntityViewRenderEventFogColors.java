@@ -1,5 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.event.entity;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -7,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
+import org.imesense.dynamicspawncontrol.core.renderer.fog.BedrockVoidFog;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.fogworld_1_12_1_1_0_b15_universal.handler.FogEventHandler;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.void_fog_1_12_1_1_2.FogEvent;
 
@@ -24,6 +27,6 @@ public final class OnEventEntityViewRenderEventFogColors extends BaseOnEventInst
     {
         //FogEventHandler.getInstance().handleGetFogColor(event);
 
-        //FogEvent.getInstance().handleFogVoidColor(event);
+        BedrockVoidFog.getInstance().handleFogVoidColor(event);
     }
 }
