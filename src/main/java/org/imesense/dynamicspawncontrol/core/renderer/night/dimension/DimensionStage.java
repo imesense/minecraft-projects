@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.renderer.dimension;
+package org.imesense.dynamicspawncontrol.core.renderer.night.dimension;
 
 import net.minecraft.world.World;
 

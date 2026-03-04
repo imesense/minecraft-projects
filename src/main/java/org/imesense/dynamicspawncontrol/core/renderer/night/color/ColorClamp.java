@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.renderer.color;
+package org.imesense.dynamicspawncontrol.core.renderer.night.color;
 
 import net.minecraft.util.math.MathHelper;
 

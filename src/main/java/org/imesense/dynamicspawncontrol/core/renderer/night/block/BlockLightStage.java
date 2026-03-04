@@ -1,8 +1,8 @@
-package org.imesense.dynamicspawncontrol.core.renderer.block;
+package org.imesense.dynamicspawncontrol.core.renderer.night.block;
 
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.math.FastMath.pow4;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.math.FastMath.pow4;
 
 public abstract class BlockLightStage
 {

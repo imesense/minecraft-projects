@@ -1,19 +1,19 @@
-package org.imesense.dynamicspawncontrol.core.renderer;
+package org.imesense.dynamicspawncontrol.core.renderer.night;
 
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.core.renderer.unpack.LightmapUnpack;
+import org.imesense.dynamicspawncontrol.core.renderer.night.unpack.LightmapUnpack;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.block.BlockLightStage.*;
-import static org.imesense.dynamicspawncontrol.core.renderer.color.ColorClamp.*;
-import static org.imesense.dynamicspawncontrol.core.renderer.color.ColorCombineStage.*;
-import static org.imesense.dynamicspawncontrol.core.renderer.color.LuminanceStage.*;
-import static org.imesense.dynamicspawncontrol.core.renderer.color.ColorCombineDark.finalPackDarkColor;
-import static org.imesense.dynamicspawncontrol.core.renderer.dimension.DimensionStage.*;
-import static org.imesense.dynamicspawncontrol.core.renderer.gamma.GammaStage.*;
-import static org.imesense.dynamicspawncontrol.core.renderer.misc.BossColorStage.*;
-import static org.imesense.dynamicspawncontrol.core.renderer.sky.SkyLightStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.block.BlockLightStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.color.ColorClamp.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.color.ColorCombineStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.color.LuminanceStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.dimension.DimensionStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.gamma.GammaStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.misc.BossColorStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.sky.SkyLightStage.*;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.color.ColorCombineDark.*;
 
 public abstract class DarkCalculateLightMapColor
 {

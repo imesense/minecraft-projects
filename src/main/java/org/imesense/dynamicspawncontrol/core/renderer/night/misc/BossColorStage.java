@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.renderer.misc;
+package org.imesense.dynamicspawncontrol.core.renderer.night.misc;
 
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 

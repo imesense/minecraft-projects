@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.renderer.unpack;
+package org.imesense.dynamicspawncontrol.core.renderer.night.unpack;
 
 public abstract class LightmapUnpack
 {

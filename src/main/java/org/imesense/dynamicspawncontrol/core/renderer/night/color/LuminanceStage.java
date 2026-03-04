@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.renderer.color;
+package org.imesense.dynamicspawncontrol.core.renderer.night.color;
 
 public abstract class LuminanceStage
 {

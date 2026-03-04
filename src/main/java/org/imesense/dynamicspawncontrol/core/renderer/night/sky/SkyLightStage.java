@@ -1,6 +1,6 @@
-package org.imesense.dynamicspawncontrol.core.renderer.sky;
+package org.imesense.dynamicspawncontrol.core.renderer.night.sky;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.math.FastMath.pow4;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.math.FastMath.pow4;
 
 public abstract class SkyLightStage
 {

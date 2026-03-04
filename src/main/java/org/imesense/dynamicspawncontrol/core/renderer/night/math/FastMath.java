@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.renderer.math;
+package org.imesense.dynamicspawncontrol.core.renderer.night.math;
 
 public abstract class FastMath
 {

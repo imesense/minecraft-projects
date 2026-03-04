@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.renderer;
+package org.imesense.dynamicspawncontrol.core.renderer.night;
 
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;

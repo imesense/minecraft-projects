@@ -1,6 +1,6 @@
-package org.imesense.dynamicspawncontrol.core.renderer.color;
+package org.imesense.dynamicspawncontrol.core.renderer.night.color;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.color.LuminanceStage.calculateLuminance;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.color.LuminanceStage.calculateLuminance;
 
 public abstract class ColorCombineDark
 {

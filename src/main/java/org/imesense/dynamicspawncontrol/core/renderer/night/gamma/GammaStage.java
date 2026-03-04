@@ -1,8 +1,8 @@
-package org.imesense.dynamicspawncontrol.core.renderer.gamma;
+package org.imesense.dynamicspawncontrol.core.renderer.night.gamma;
 
 import net.minecraft.client.Minecraft;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.math.FastMath.pow4;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.math.FastMath.pow4;
 
 public abstract class GammaStage
 {

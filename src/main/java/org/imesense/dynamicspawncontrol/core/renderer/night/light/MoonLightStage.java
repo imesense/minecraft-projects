@@ -1,9 +1,9 @@
-package org.imesense.dynamicspawncontrol.core.renderer.light;
+package org.imesense.dynamicspawncontrol.core.renderer.night.light;
 
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.math.FastMath.calculateLinear;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.math.FastMath.calculateLinear;
 
 public abstract class MoonLightStage
 {
