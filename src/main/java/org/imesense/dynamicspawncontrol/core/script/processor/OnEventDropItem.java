@@ -38,9 +38,6 @@ public final class OnEventDropItem
 
     public void handleUpdateLivingDrops(LivingDropsEvent event)
     {
-        if (DisableEventBooleansTest.test)
-            return;
-
         Entity entity = event.getEntity();
         ResourceLocation entityResourceLocation = EntityList.getKey(entity);
 

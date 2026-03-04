@@ -34,9 +34,6 @@ public final class OnEventDropExperience
 
     public void handleUpdateLivingExperienceDrop(LivingExperienceDropEvent event)
     {
-        if (DisableEventBooleansTest.test)
-            return;
-
         Entity entity = event.getEntity();
         World world = entity.world;
         ResourceLocation entityResourceLocation = EntityList.getKey(entity);

@@ -28,9 +28,6 @@ public final class OnEventMobTaskManager
 
     public void handleUpdateEntityJoinWorld(EntityJoinWorldEvent event)
     {
-        if (DisableEventBooleansTest.test)
-            return;
-
         if (!(event.getEntity() instanceof EntityLiving))
         {
             return;

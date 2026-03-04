@@ -37,9 +37,6 @@ public final class OnEventPopulationChunk
 
     public void handlePopulateChunkEventPre(PopulateChunkEvent.Pre event)
     {
-        if (DisableEventBooleansTest.test)
-            return;
-
         List<PopulationChunkStruct.Data> populationList = GeneralPopulationChunkSpawn.getInstance().populationChunkStruct;
 
         if (populationList != null)

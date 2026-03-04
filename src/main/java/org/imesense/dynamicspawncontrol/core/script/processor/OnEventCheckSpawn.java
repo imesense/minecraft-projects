@@ -40,12 +40,6 @@ public final class OnEventCheckSpawn
         }
     }
 
-    ///
-    private static final List<String> ALLOWED_ENTITIES = Arrays.asList(
-        "minecraft:bat"
-    );
-    ///
-
     private EntityAttributes.Data cloneWithoutPotion(EntityAttributes.Data src)
     {
         EntityAttributes.Data d = new EntityAttributes.Data();
@@ -64,46 +58,6 @@ public final class OnEventCheckSpawn
 
     public void handleLivingSpawnEventCheckSpawn(LivingSpawnEvent.CheckSpawn event)
     {
-        // для дебага в 0.2 версии
-        if (DisableEventBooleansTest.test == false)
-        {
-            // Пропускаем спавн из спаунеров
-            if (event.getSpawner() != null) {
-                return;
-            }
-
-            // Пропускаем события, которые уже отменены
-            if (event.getResult() == Event.Result.DENY) {
-                return;
-            }
-
-            Entity entity = event.getEntity();
-            net.minecraft.world.World world = event.getWorld();
-
-            // Получаем ID сущности
-            ResourceLocation entityId = EntityList.getKey(entity);
-
-            if (entityId == null) {
-                return;
-            }
-
-            String entityIdString = entityId.toString();
-
-            // Проверяем, разрешена ли сущность
-            if (!ALLOWED_ENTITIES.contains(entityIdString)) {
-                event.setResult(Event.Result.DENY);
-
-                // Логируем блокировку (опционально)
-                if (world.isRemote) {
-                    System.out.println("Blocked spawn of: " + entityIdString + " at " +
-                            entity.posX + ", " + entity.posY + ", " + entity.posZ);
-                }
-            }
-
-            if (DisableEventBooleansTest.test)
-                return;
-        }
-
         /**
          * В чем тут мем, то что у нас entityType проверяется на каждую сущность, на каждую сущность открывается файл
          * Отсюда идут дикие просадки FPS, нужно переделать это на кеширование с использованием хард-сущности (У нас есть список, с ним работаем)
