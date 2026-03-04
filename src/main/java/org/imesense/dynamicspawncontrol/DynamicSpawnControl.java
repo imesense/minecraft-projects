@@ -27,8 +27,6 @@ import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.register.pluginconfig.PluginConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGeneratorRegister;
-import org.imesense.dynamicspawncontrol.core.script.processor.AIZombieHasShieldNBT;
-import org.imesense.dynamicspawncontrol.core.taskmanager.TaskManager;
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
@@ -165,7 +163,6 @@ public final class DynamicSpawnControl
         ParserRegister.getInstance().init();
 
         // Merge THIS
-        MinecraftForge.EVENT_BUS.register(new AIZombieHasShieldNBT());
         MinecraftForge.EVENT_BUS.register(new SatietyTooltipHandler());
         MinecraftForge.EVENT_BUS.register(new RespawnSatietyModule());
         MinecraftForge.EVENT_BUS.register(new SatietyFoodHandler());

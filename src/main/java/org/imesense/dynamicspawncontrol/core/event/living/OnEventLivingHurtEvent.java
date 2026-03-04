@@ -5,6 +5,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.ZombieHasShieldEventHandler;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventLivingHurt;
@@ -27,6 +28,8 @@ public final class OnEventLivingHurtEvent extends BaseOnEventInstance
         if (!event.getEntity().world.isRemote)
         {
             OnEventLivingHurt.getInstance().handleUpdateLivingHurtEvent(event);
+
+            ZombieHasShieldEventHandler.getInstance().handleLivingHurt(event);
         }
     }
 }

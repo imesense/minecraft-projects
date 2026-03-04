@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.ai.spider.event.SpiderAvoidLightEventHandler;
 import org.imesense.dynamicspawncontrol.ai.zombie.event.ZombieBreakTorchEventHandler;
+import org.imesense.dynamicspawncontrol.ai.zombie.event.ZombieHasShieldEventHandler;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
@@ -37,8 +38,6 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 
     }
 
-    static boolean isTestLogic = true;
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityJoinWorldEvent_LOW(EntityJoinWorldEvent event)
     {
@@ -46,18 +45,17 @@ public final class OnEventEntityJoinWorldEvent extends BaseOnEventInstance
 
         UpdateFire.getInstance().handleEntityJoinWorld(event);
 
-        if (isTestLogic)
-        {
-            ZombieBreakTorchEventHandler.getInstance().handleSearchToBreakTorch(event);
-        }
-
-        SpiderAvoidLightEventHandler.getInstance().handleSpiderSpawn(event);
-
         if (!event.getEntity().world.isRemote)
         {
             OnEventMobTaskManager.getInstance().handleUpdateEntityJoinWorld(event);
 
             OnEventWorldCache.getInstance().handleEntityJoinWorld(event);
+
+            ZombieHasShieldEventHandler.getInstance().handleEntityJoinWorld(event);
+
+            ZombieBreakTorchEventHandler.getInstance().handleSearchToBreakTorch(event);
+
+            SpiderAvoidLightEventHandler.getInstance().handleSpiderSpawn(event);
         }
 
         MemoryEvents.handleOnPlayerLogin(event);
