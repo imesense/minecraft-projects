@@ -6,13 +6,13 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
-import org.imesense.dynamicspawncontrol.core.renderer.BaseCalculateLightMapColor;
-import org.imesense.dynamicspawncontrol.core.renderer.DarkCalculateLightMapColor;
+import org.imesense.dynamicspawncontrol.core.renderer.night.BaseCalculateLightMapColor;
+import org.imesense.dynamicspawncontrol.core.renderer.night.DarkCalculateLightMapColor;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-import static org.imesense.dynamicspawncontrol.core.renderer.light.MoonLightStage.finalPackDarkColor;
+import static org.imesense.dynamicspawncontrol.core.renderer.night.light.MoonLightStage.finalPackDarkColor;
 
 @Mixin(EntityRenderer.class)
 public abstract class EntityRendererRework
