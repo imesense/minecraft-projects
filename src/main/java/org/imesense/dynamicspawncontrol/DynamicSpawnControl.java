@@ -7,6 +7,10 @@ import net.minecraftforge.fml.common.event.*;
 
 //import net.minecraftforge.fml.common.network.NetworkRegistry;
 //import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodmoonEventHandler;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodmoonHandler;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.CommandBloodmoon;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.PacketHandler;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
@@ -147,6 +151,18 @@ public final class DynamicSpawnControl
         SatietyConfig.createFile(globalDirectory.getPath() +
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
+
+        BloodmoonEventHandler handler = new BloodmoonEventHandler();
+        MinecraftForge.EVENT_BUS.register(handler);
+        FMLCommonHandler.instance().bus().register(handler);
+        PacketHandler.init();
+    }
+
+    public static boolean isBloodmoon() {
+        if (BloodmoonHandler.INSTANCE == null) {
+            return false;
+        }
+        return BloodmoonHandler.INSTANCE.isBloodmoonActive();
     }
 
     @Mod.EventHandler
@@ -206,6 +222,8 @@ public final class DynamicSpawnControl
         }
 
         event.registerServerCommand(new CommandSetHunger());
+
+        event.registerServerCommand(new CommandBloodmoon());
     }
 
     @Mod.EventHandler

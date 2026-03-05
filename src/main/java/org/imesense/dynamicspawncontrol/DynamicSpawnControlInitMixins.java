@@ -28,6 +28,7 @@ public enum DynamicSpawnControlInitMixins
     ENTITY_RENDERER_ACCESSOR(false, "assets/mixins/interfaces/IEntityRendererAccessor.json"),
     GUI_INGAME_ACCESSOR(false, "assets/mixins/interfaces/IGuiIngameAccessor.json"),
     WORLD_ACCESSOR(false, "assets/mixins/interfaces/IWorldAccessor.json"),
+    VEC3D_ACCESSOR(false, "assets/mixins/interfaces/IVec3dAccessor.json"),
 
     // ===== Minecraft =====
     ENCHANTMENT_UPDATE(false, "assets/mixins/minecraft/enchantment/Enchantment.Update.json"),

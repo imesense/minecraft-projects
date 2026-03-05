@@ -17,6 +17,7 @@ import net.minecraft.world.WorldType;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.taskmanager.TaskManager;
 import org.imesense.dynamicspawncontrol.core.taskmanager.Task;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
@@ -229,6 +230,11 @@ public final class BedrockVoidFog
 
     public void handleFogVoidRender(EntityViewRenderEvent.RenderFogEvent event)
     {
+        if (ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        {
+            return;
+        }
+
         EntityPlayer entity = (EntityPlayer) event.getEntity();
         WorldClient world = Minecraft.getMinecraft().world;
 
@@ -297,6 +303,11 @@ public final class BedrockVoidFog
 
     public void handleFogVoidColor(EntityViewRenderEvent.FogColors e)
     {
+        if (ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        {
+            return;
+        }
+
         Entity entity = e.getEntity();
         WorldClient world = Minecraft.getMinecraft().world;
 

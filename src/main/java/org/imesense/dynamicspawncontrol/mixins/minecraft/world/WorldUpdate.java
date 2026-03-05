@@ -1,7 +1,12 @@
 package org.imesense.dynamicspawncontrol.mixins.minecraft.world;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
@@ -9,6 +14,9 @@ import org.imesense.dynamicspawncontrol.mixins.interfaces.IWorldAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = World.class, remap = false)
 public abstract class WorldUpdate
@@ -60,7 +68,7 @@ public abstract class WorldUpdate
         float finalRawBrightness;
         int moonPhase = worldAccessor.invokeGetMoonPhase();
 
-        if (NightRendererData.isEnableDarkNight())
+        if (NightRendererData.isEnableDarkNight() && !ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
         {
             if (NightRendererData.isDependenceLightMoonPhase())
             {
@@ -86,6 +94,29 @@ public abstract class WorldUpdate
             if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "finalRawBrightness: " + finalRawBrightness);
 
             return calculateVanillaBrightness(rawBrightness);
+        }
+    }
+
+    @Inject(method = "getSkyColor",
+            at = @At("RETURN"),
+            cancellable = true)
+    public void onGetSkyColor(Entity entity, float partialTicks, CallbackInfoReturnable<Vec3d> cir)
+    {
+        if (ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        {
+            Vec3d originalColor = cir.getReturnValue();
+            Vec3d modifiedColor = ClientBloodmoonHandler.INSTANCE.skyColorHook(originalColor);
+            cir.setReturnValue(modifiedColor);
+        }
+    }
+
+    @Inject(method = "getMoonPhase",
+            at = @At("RETURN"))
+    public void onGetMoonPhase(CallbackInfoReturnable<Integer> cir)
+    {
+        if (ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        {
+            ClientBloodmoonHandler.INSTANCE.moonColorHook();
         }
     }
 }

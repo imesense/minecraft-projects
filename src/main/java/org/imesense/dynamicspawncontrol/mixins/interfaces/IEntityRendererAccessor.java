@@ -11,6 +11,15 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(EntityRenderer.class)
 public interface IEntityRendererAccessor
 {
+    @Accessor("mc")
+    Minecraft accessorGetMinecraft();
+
+    @Accessor("lightmapTexture")
+    DynamicTexture accessorGetLightmapTexture();
+
+    @Accessor("torchFlickerX")
+    float accessorGetTorchFlickerX();
+
     @Accessor("lightmapColors")
     int[] accessorGetLightmapColors();
 
@@ -20,8 +29,29 @@ public interface IEntityRendererAccessor
     @Accessor("lightmapUpdateNeeded")
     void accessorSetLightmapUpdateNeeded(boolean value);
 
-    @Accessor("mc")
-    Minecraft accessorGetMinecraft();
+    @Accessor("fogColorRed")
+    float accessorGetFogColorRed();
+
+    @Accessor("fogColorRed")
+    void accessorSetFogColorRed(float value);
+
+    @Accessor("fogColorGreen")
+    float accessorGetFogColorGreen();
+
+    @Accessor("fogColorGreen")
+    void accessorSetFogColorGreen(float value);
+
+    @Accessor("fogColorBlue")
+    float accessorGetFogColorBlue();
+
+    @Accessor("fogColorBlue")
+    void accessorSetFogColorBlue(float value);
+
+    @Accessor("fogColor1")
+    float accessorGetFogColor1();
+
+    @Accessor("fogColor2")
+    float accessorGetFogColor2();
 
     @Accessor("bossColorModifier")
     float accessorGetBossColorModifier();
@@ -29,12 +59,15 @@ public interface IEntityRendererAccessor
     @Accessor("bossColorModifierPrev")
     float accessorGetBossColorModifierPrev();
 
-    @Accessor("torchFlickerX")
-    float accessorGetTorchFlickerX();
+    @Accessor("farPlaneDistance")
+    float accessorGetFarPlaneDistance();
 
-    @Accessor("lightmapTexture")
-    DynamicTexture accessorGetLightmapTexture();
+    @Accessor("cloudFog")
+    boolean accessorGetCloudFog();
 
     @Invoker("getNightVisionBrightness")
     float invokeGetNightVisionBrightness(EntityLivingBase entity, float partialTicks);
+
+    @Invoker("setupFogColor")
+    void invokeSetupFogColor(boolean black);
 }
