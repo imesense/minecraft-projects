@@ -23,7 +23,7 @@ public final class OnEventEntityViewRenderEventRenderFogEvent extends BaseOnEven
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityViewRenderEventRenderFogEvent_LOW(EntityViewRenderEvent.RenderFogEvent event)
     {
-        BloodMoonRedFog.getInstance().handleRenderFog(event);
+        //BloodMoonRedFog.getInstance().handleRenderFog(event);
 
         BedrockVoidFog.getInstance().handleFogVoidRender(event);
     }

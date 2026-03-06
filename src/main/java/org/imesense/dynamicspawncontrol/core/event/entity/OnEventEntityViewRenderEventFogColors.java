@@ -23,7 +23,7 @@ public final class OnEventEntityViewRenderEventFogColors extends BaseOnEventInst
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityViewRenderEventFogColors_LOW(EntityViewRenderEvent.FogColors event)
     {
-        BloodMoonRedFog.getInstance().handleGetFogColor(event);
+        //BloodMoonRedFog.getInstance().handleGetFogColor(event);
 
         BedrockVoidFog.getInstance().handleFogVoidColor(event);
     }

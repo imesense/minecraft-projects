@@ -3,8 +3,10 @@ package org.imesense.dynamicspawncontrol.bloodmoonmanager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IVec3dAccessor;
@@ -93,4 +95,5 @@ public class ClientBloodmoonHandler
             }
         }
     }
+
 }

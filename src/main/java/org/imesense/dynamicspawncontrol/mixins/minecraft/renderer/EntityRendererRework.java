@@ -12,6 +12,9 @@ import org.imesense.dynamicspawncontrol.core.renderer.night.DarkCalculateLightMa
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static org.imesense.dynamicspawncontrol.core.renderer.night.light.MoonLightStage.finalPackDarkColor;
 

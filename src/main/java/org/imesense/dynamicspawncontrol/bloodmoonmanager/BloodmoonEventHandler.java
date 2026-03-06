@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.bloodmoonmanager;
 
 import java.lang.reflect.InvocationTargetException;
+
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.Style;
@@ -65,13 +67,27 @@ public class BloodmoonEventHandler
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
-    public void fogColor(EntityViewRenderEvent.FogColors event) {
-        if (BloodMoonConfig.getInstance(BloodMoonConfig.class).getAppearance().isBlackFog() && ClientBloodmoonHandler.INSTANCE.isBloodmoonActive()) {
-            event.setRed(Math.max(event.getRed() - ClientBloodmoonHandler.INSTANCE.fogRemove, 0.0f));
-            event.setGreen(Math.max(event.getGreen() - ClientBloodmoonHandler.INSTANCE.fogRemove, 0.0f));
-            event.setBlue(Math.max(event.getBlue() - ClientBloodmoonHandler.INSTANCE.fogRemove, 0.0f));
-        }
+    public void onFogColors(EntityViewRenderEvent.FogColors event)
+    {
+        float redFactor = 0.5F;
+
+        event.setRed(event.getRed() * (1 - redFactor) + 1.0F * redFactor);
+        event.setGreen(event.getGreen() * (1 - redFactor));
+        event.setBlue(event.getBlue() * (1 - redFactor));
+    }
+
+    @SubscribeEvent
+    public void onFogDensity(EntityViewRenderEvent.FogDensity event)
+    {
+        event.setDensity(0.5F);
+        event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public void onRenderFog(EntityViewRenderEvent.RenderFogEvent event)
+    {
+        GlStateManager.setFogStart(0.0F);
+        GlStateManager.setFogEnd(20.0F);
     }
 
     @SubscribeEvent
