@@ -42,282 +42,376 @@ public class BloodMoonRedFog
         }
     }
 
-    private static double fogX;
-    private static double fogZ;
-    private static boolean fogInit;
-    private static float fogFarPlaneDistance;
+    private static double lastPlayerX;
+    private static double lastPlayerZ;
+    private static boolean fogInitialized;
+    private static float lastCalculatedFarPlaneDistance;
 
     public void handleGetFogColor(EntityViewRenderEvent.FogColors event)
     {
         Vec3d mixedColor;
+
         if (event.getEntity() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             World world = player.world;
-            int x = MathHelper.floor(player.posX);
-            int y = MathHelper.floor(player.posY);
-            int z = MathHelper.floor(player.posZ);
+            int playerBlockX = MathHelper.floor(player.posX);
+            int playerBlockY = MathHelper.floor(player.posY);
+            int playerBlockZ = MathHelper.floor(player.posZ);
             IBlockState blockStateAtEyes = ActiveRenderInfo.getBlockStateAtEntityViewpoint(world, event.getEntity(), (float) event.getRenderPartialTicks());
-            if (blockStateAtEyes.getMaterial() == Material.LAVA) {
+
+            if (blockStateAtEyes.getMaterial() == Material.LAVA)
+            {
                 return;
             }
-            if (blockStateAtEyes.getMaterial() == Material.WATER) {
-                mixedColor = getFogBlendColorWater(world, player, x, y, z, event.getRenderPartialTicks());
-            } else {
-                mixedColor = getFogBlendColor(world, player, x, y, z, event.getRed(), event.getGreen(), event.getBlue(), event.getRenderPartialTicks());
+
+            if (blockStateAtEyes.getMaterial() == Material.WATER)
+            {
+                mixedColor = getWaterFogColor(world, player, playerBlockX, playerBlockY, playerBlockZ, event.getRenderPartialTicks());
             }
+            else
+            {
+                mixedColor = getBlendedFogColor(world, player, playerBlockX, playerBlockY, playerBlockZ, event.getRed(), event.getGreen(), event.getBlue(), event.getRenderPartialTicks());
+            }
+
             event.setRed((float) mixedColor.x);
             event.setGreen((float) mixedColor.y);
             event.setBlue((float) mixedColor.z);
         }
     }
 
-    public static void handleRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
-        float farPlaneDistance;
+    public void handleRenderFog(EntityViewRenderEvent.RenderFogEvent event)
+    {
         Entity entity = event.getEntity();
         World world = entity.world;
-        int playerX = MathHelper.floor(entity.posX);
-        int playerY = MathHelper.floor(entity.posY);
-        int playerZ = MathHelper.floor(entity.posZ);
 
-        if (playerX == fogX && playerZ == fogZ && fogInit) {
-            renderFog(event.getFogMode(), fogFarPlaneDistance, 0.75f);
+        int playerBlockX = MathHelper.floor(entity.posX);
+        int playerBlockY = MathHelper.floor(entity.posY);
+        int playerBlockZ = MathHelper.floor(entity.posZ);
+
+        if (playerBlockX == lastPlayerX && playerBlockZ == lastPlayerZ && fogInitialized)
+        {
+            applyFog(event.getFogMode(), lastCalculatedFarPlaneDistance, 0.75f);
             return;
         }
 
-        fogInit = true;
-        float fpDistanceBiomeFog = 0.0f;
-        float weightBiomeFog = 0.0f;
+        fogInitialized = true;
 
-        for (int weightMixed = -20; weightMixed <= 20; weightMixed++) {
-            for (int weightDefault = -20; weightDefault <= 20; weightDefault++) {
-                Biome biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + weightMixed, playerY, playerZ + weightDefault));
+        float totalBiomeFogDistance = 0.0f;
+        float totalBiomeWeight = 0.0f;
+
+        int samplingRadius = 20;
+
+        for (int offsetX = -samplingRadius; offsetX <= samplingRadius; offsetX++)
+        {
+            for (int offsetZ = -samplingRadius; offsetZ <= samplingRadius; offsetZ++)
+            {
+                Biome biome = world.getBiomeForCoordsBody(new BlockPos(playerBlockX + offsetX, playerBlockY, playerBlockZ + offsetZ));
                 DimensionType dimensionType = world.provider.getDimensionType();
 
-                    farPlaneDistance = 0.1f;
-                    float farPlaneDistanceScaleBiome = 1.0f;
+                float biomeFogDistance = 1.0f; // БАЗОВОЕ ЗНАЧЕНИЕ - делает туман очень близким
+                float biomeWeight = 1.0f;
 
-                    if (weightMixed != (-20)) {
-                        if (weightMixed == 20) {
-                            double farPlaneDistanceScale = entity.posX - playerX;
-                            farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale);
-                            farPlaneDistanceScaleBiome = (float) (1.0f * farPlaneDistanceScale);
-                        }
-                    } else {
-                        double farPlaneDistanceScale2 = 1.0d - (entity.posX - playerX);
-                        farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale2);
-                        farPlaneDistanceScaleBiome = (float) (1.0f * farPlaneDistanceScale2);
-                    }
+                // Расчет весов на основе позиции игрока внутри блока (X координата)
+                if (offsetX == -samplingRadius)
+                {
+                    double weightX = 1.0d - (entity.posX - playerBlockX);
+                    biomeFogDistance = (float) (biomeFogDistance * weightX);
+                    biomeWeight = (float) (1.0f * weightX);
+                }
+                else if (offsetX == samplingRadius)
+                {
+                    double weightX = entity.posX - playerBlockX;
+                    biomeFogDistance = (float) (biomeFogDistance * weightX);
+                    biomeWeight = (float) (1.0f * weightX);
+                }
 
-                    if (weightDefault != (-20)) {
-                        if (weightDefault == 20) {
-                            double farPlaneDistanceScale3 = entity.posZ - playerZ;
-                            farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale3);
-                            farPlaneDistanceScaleBiome = (float) (farPlaneDistanceScaleBiome * farPlaneDistanceScale3);
-                        }
-                    } else {
-                        double farPlaneDistanceScale4 = 1.0d - (entity.posZ - playerZ);
-                        farPlaneDistance = (float) (farPlaneDistance * farPlaneDistanceScale4);
-                        farPlaneDistanceScaleBiome = (float) (farPlaneDistanceScaleBiome * farPlaneDistanceScale4);
-                    }
+                if (offsetZ == -samplingRadius)
+                {
+                    double weightZ = 1.0d - (entity.posZ - playerBlockZ);
+                    biomeFogDistance = (float) (biomeFogDistance * weightZ);
+                    biomeWeight = (float) (biomeWeight * weightZ);
+                }
+                else if (offsetZ == samplingRadius)
+                {
+                    double weightZ = entity.posZ - playerBlockZ;
+                    biomeFogDistance = (float) (biomeFogDistance * weightZ);
+                    biomeWeight = (float) (biomeWeight * weightZ);
+                }
 
-                    fpDistanceBiomeFog += farPlaneDistance;
-                    weightBiomeFog += farPlaneDistanceScaleBiome;
+                totalBiomeFogDistance += biomeFogDistance;
+                totalBiomeWeight += biomeWeight;
             }
         }
 
-        float var17 = 20 * 2 * 20 * 2;
-        float var18 = var17 - weightBiomeFog;
-        float var19 = weightBiomeFog == 0.0f ? 0.0f : fpDistanceBiomeFog / weightBiomeFog;
-        float farPlaneDistance2 = ((fpDistanceBiomeFog * 240.0f) + (event.getFarPlaneDistance() * var18)) / var17;
-        float farPlaneDistanceScaleBiome2 = (0.1f * (1.0f - var19)) + (0.75f * var19);
-        float var20 = ((farPlaneDistanceScaleBiome2 * weightBiomeFog) + (0.75f * var18)) / var17;
+        float totalSamples = (samplingRadius * 2) * (samplingRadius * 2);
+        float weightDifference = totalSamples - totalBiomeWeight;
 
-        fogX = entity.posX;
-        fogZ = entity.posZ;
-        fogFarPlaneDistance = Math.min(farPlaneDistance2, event.getFarPlaneDistance());
-        renderFog(event.getFogMode(), fogFarPlaneDistance, var20);
+        float averageBiomeFogDistance = totalBiomeWeight == 0.0f ? 0.0f : totalBiomeFogDistance / totalBiomeWeight;
+
+        // Смешиваем с дефолтным значением дальности тумана (240.0f - видимо хардкод из ваниллы)
+        float blendedFarPlaneDistance = ((totalBiomeFogDistance * 240.0f) + (event.getFarPlaneDistance() * weightDifference)) / totalSamples;
+
+        float fogStartScale = (0.1f * (1.0f - averageBiomeFogDistance)) + (0.75f * averageBiomeFogDistance);
+        float blendedFogStartScale = ((fogStartScale * totalBiomeWeight) + (0.75f * weightDifference)) / totalSamples;
+
+        lastPlayerX = entity.posX;
+        lastPlayerZ = entity.posZ;
+        lastCalculatedFarPlaneDistance = Math.min(blendedFarPlaneDistance, event.getFarPlaneDistance());
+
+        applyFog(event.getFogMode(), lastCalculatedFarPlaneDistance, blendedFogStartScale);
     }
 
-    private static void renderFog(int fogMode, float farPlaneDistance, float farPlaneDistanceScale) {
-        if (fogMode < 0) {
-            GL11.glFogf(2915, 0.0f);
-            GL11.glFogf(2916, farPlaneDistance);
+    private static void applyFog(int fogMode, float farPlaneDistance, float fogStartScale)
+    {
+        if (fogMode < 0)
+        { // Экспоненциальный туман
+            GL11.glFogf(GL11.GL_FOG_DENSITY, 0.0f);
+            GL11.glFogf(GL11.GL_FOG_END, farPlaneDistance);
             return;
         }
-        GL11.glFogf(2915, farPlaneDistance * farPlaneDistanceScale);
-        GL11.glFogf(2916, farPlaneDistance);
+
+        // Линейный туман
+        GL11.glFogf(GL11.GL_FOG_START, farPlaneDistance * fogStartScale); // Начало тумана (ближняя граница)
+        GL11.glFogf(GL11.GL_FOG_END, farPlaneDistance);                    // Конец тумана (дальняя граница)
     }
 
-    //@Nullable
-    private static Vec3d postProcessColor(World world, EntityLivingBase player, double r, double g, double b, double renderPartialTicks) {
+    private static Vec3d applyPostProcessing(World world, EntityLivingBase player, double red, double green, double blue, double renderPartialTicks)
+    {
         double darkScale = (player.lastTickPosY + ((player.posY - player.lastTickPosY) * renderPartialTicks)) * world.provider.getVoidFogYFactor();
-        if (player.isPotionActive(MobEffects.BLINDNESS)) {
+
+        if (player.isPotionActive(MobEffects.BLINDNESS))
+        {
             int duration = player.getActivePotionEffect(MobEffects.BLINDNESS).getDuration();
             darkScale *= duration < 20 ? 1.0f - (duration / 20.0f) : 0.0d;
         }
-        if (darkScale < 1.0d) {
+
+        if (darkScale < 1.0d)
+        {
             double darkScale2 = darkScale < 0.0d ? 0.0d : darkScale * darkScale;
-            r *= darkScale2;
-            g *= darkScale2;
-            b *= darkScale2;
+            red *= darkScale2;
+            green *= darkScale2;
+            blue *= darkScale2;
         }
-        if (player.isPotionActive(MobEffects.NIGHT_VISION)) {
-            int duration2 = player.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
-            float brightness = duration2 > 200 ? 1.0f : 0.7f + (MathHelper.sin((float) ((duration2 - renderPartialTicks) * 3.141592653589793d * 0.20000000298023224d)) * 0.3f);
-            double scale = Math.min(Math.min(1.0d / r, 1.0d / g), 1.0d / b);
-            r = (r * (1.0f - brightness)) + (r * scale * brightness);
-            g = (g * (1.0f - brightness)) + (g * scale * brightness);
-            b = (b * (1.0f - brightness)) + (b * scale * brightness);
+
+        if (player.isPotionActive(MobEffects.NIGHT_VISION))
+        {
+            int duration = player.getActivePotionEffect(MobEffects.NIGHT_VISION).getDuration();
+            float brightness = duration > 200 ? 1.0f : 0.7f + (MathHelper.sin((float) ((duration - renderPartialTicks) * Math.PI * 0.20000000298023224d)) * 0.3f);
+            double scale = Math.min(Math.min(1.0d / red, 1.0d / green), 1.0d / blue);
+            red = (red * (1.0f - brightness)) + (red * scale * brightness);
+            green = (green * (1.0f - brightness)) + (green * scale * brightness);
+            blue = (blue * (1.0f - brightness)) + (blue * scale * brightness);
         }
-        if (Minecraft.getMinecraft().gameSettings.anaglyph) {
-            double aR = (((r * 30.0d) + (g * 59.0d)) + (b * 11.0d)) / 100.0d;
-            double aG = ((r * 30.0d) + (g * 70.0d)) / 100.0d;
-            double aB = ((r * 30.0d) + (b * 70.0d)) / 100.0d;
-            r = aR;
-            g = aG;
-            b = aB;
+
+        if (Minecraft.getMinecraft().gameSettings.anaglyph)
+        {
+            double anaglyphRed = (((red * 30.0d) + (green * 59.0d)) + (blue * 11.0d)) / 100.0d;
+            double anaglyphGreen = ((red * 30.0d) + (green * 70.0d)) / 100.0d;
+            double anaglyphBlue = ((red * 30.0d) + (blue * 70.0d)) / 100.0d;
+            red = anaglyphRed;
+            green = anaglyphGreen;
+            blue = anaglyphBlue;
         }
-        return new Vec3d(r, g, b);
+
+        return new Vec3d(red, green, blue);
     }
 
-    private static Vec3d getFogBlendColorWater(World world, EntityLivingBase playerEntity, int playerX, int playerY, int playerZ, double renderPartialTicks) {
-        float rBiomeFog = 0.0f;
-        float gBiomeFog = 0.0f;
-        float bBiomeFog = 0.0f;
-        for (int weight = -2; weight <= 2; weight++) {
-            for (int respirationLevel = -2; respirationLevel <= 2; respirationLevel++) {
-                Biome rMixed = world.getBiomeForCoordsBody(new BlockPos(playerX + weight, playerY + weight, playerZ + respirationLevel));
-                int gMixed = rMixed.getWaterColorMultiplier();
-                float bMixed = (gMixed & 16711680) >> 16;
-                float gPart = (gMixed & 65280) >> 8;
-                float bPart = gMixed & 255;
-                if (weight != (-2)) {
-                    if (weight == 2) {
-                        double zDiff = playerEntity.posX - playerX;
-                        bMixed = (float) (bMixed * zDiff);
-                        gPart = (float) (gPart * zDiff);
-                        bPart = (float) (bPart * zDiff);
-                    }
-                } else {
-                    double zDiff2 = 1.0d - (playerEntity.posX - playerX);
-                    bMixed = (float) (bMixed * zDiff2);
-                    gPart = (float) (gPart * zDiff2);
-                    bPart = (float) (bPart * zDiff2);
+    private static Vec3d getWaterFogColor(World world, EntityLivingBase player, int playerBlockX, int playerBlockY, int playerBlockZ, double renderPartialTicks)
+    {
+        float totalRed = 0.0f;
+        float totalGreen = 0.0f;
+        float totalBlue = 0.0f;
+
+        int waterSamplingRadius = 2;
+
+        for (int offsetX = -waterSamplingRadius; offsetX <= waterSamplingRadius; offsetX++)
+        {
+            for (int offsetZ = -waterSamplingRadius; offsetZ <= waterSamplingRadius; offsetZ++)
+            {
+                Biome biome = world.getBiomeForCoordsBody(new BlockPos(playerBlockX + offsetX, playerBlockY + offsetX, playerBlockZ + offsetZ));
+                int waterColor = biome.getWaterColorMultiplier();
+
+                float biomeRed = (waterColor & 0xFF0000) >> 16;
+                float biomeGreen = (waterColor & 0xFF00) >> 8;
+                float biomeBlue = waterColor & 0xFF;
+
+                // Интерполяция по X
+                if (offsetX == -waterSamplingRadius)
+                {
+                    double weightX = 1.0d - (player.posX - playerBlockX);
+                    biomeRed = (float) (biomeRed * weightX);
+                    biomeGreen = (float) (biomeGreen * weightX);
+                    biomeBlue = (float) (biomeBlue * weightX);
                 }
-                if (respirationLevel != (-2)) {
-                    if (respirationLevel == 2) {
-                        double zDiff3 = playerEntity.posZ - playerZ;
-                        bMixed = (float) (bMixed * zDiff3);
-                        gPart = (float) (gPart * zDiff3);
-                        bPart = (float) (bPart * zDiff3);
-                    }
-                } else {
-                    double zDiff4 = 1.0d - (playerEntity.posZ - playerZ);
-                    bMixed = (float) (bMixed * zDiff4);
-                    gPart = (float) (gPart * zDiff4);
-                    bPart = (float) (bPart * zDiff4);
+                else if (offsetX == waterSamplingRadius)
+                {
+                    double weightX = player.posX - playerBlockX;
+                    biomeRed = (float) (biomeRed * weightX);
+                    biomeGreen = (float) (biomeGreen * weightX);
+                    biomeBlue = (float) (biomeBlue * weightX);
                 }
-                rBiomeFog += bMixed;
-                gBiomeFog += gPart;
-                bBiomeFog += bPart;
+
+                // Интерполяция по Z
+                if (offsetZ == -waterSamplingRadius)
+                {
+                    double weightZ = 1.0d - (player.posZ - playerBlockZ);
+                    biomeRed = (float) (biomeRed * weightZ);
+                    biomeGreen = (float) (biomeGreen * weightZ);
+                    biomeBlue = (float) (biomeBlue * weightZ);
+                }
+                else if (offsetZ == waterSamplingRadius)
+                {
+                    double weightZ = player.posZ - playerBlockZ;
+                    biomeRed = (float) (biomeRed * weightZ);
+                    biomeGreen = (float) (biomeGreen * weightZ);
+                    biomeBlue = (float) (biomeBlue * weightZ);
+                }
+
+                totalRed += biomeRed;
+                totalGreen += biomeGreen;
+                totalBlue += biomeBlue;
             }
         }
-        float bBiomeFog2 = bBiomeFog / 255.0f;
-        float var20 = 2 * 2 * 2 * 2;
-        float var21 = EnchantmentHelper.getRespirationModifier(playerEntity) * 0.2f;
-        float var22 = (((rBiomeFog / 255.0f) * 0.02f) + var21) / var20;
-        float var23 = (((gBiomeFog / 255.0f) * 0.02f) + var21) / var20;
-        return postProcessColor(world, playerEntity, var22, var23, ((bBiomeFog2 * 0.2f) + var21) / var20, renderPartialTicks);
+
+        float normalizedBlue = totalBlue / 255.0f;
+        float totalSamples = (waterSamplingRadius * 2) * (waterSamplingRadius * 2);
+        float respirationModifier = EnchantmentHelper.getRespirationModifier(player) * 0.2f;
+
+        float finalRed = (((totalRed / 255.0f) * 0.02f) + respirationModifier) / totalSamples;
+        float finalGreen = (((totalGreen / 255.0f) * 0.02f) + respirationModifier) / totalSamples;
+        float finalBlue = (((normalizedBlue * 0.2f) + respirationModifier) / totalSamples);
+
+        return applyPostProcessing(world, player, finalRed, finalGreen, finalBlue, renderPartialTicks);
     }
 
-    private static Vec3d getFogBlendColor(World world, EntityLivingBase playerEntity, int playerX, int playerY, int playerZ, float defR, float defG, float defB, double renderPartialTicks) {
-        int bScale;
+    private static Vec3d getBlendedFogColor(World world, EntityLivingBase player, int playerBlockX, int playerBlockY, int playerBlockZ, float defaultRed, float defaultGreen, float defaultBlue, double renderPartialTicks)
+    {
         GameSettings settings = Minecraft.getMinecraft().gameSettings;
-        int[] ranges = ForgeModContainer.blendRanges;
-        int distance = 0;
-        if (settings.fancyGraphics && settings.renderDistanceChunks >= 0 && settings.renderDistanceChunks < ranges.length) {
-            distance = ranges[settings.renderDistanceChunks];
+        int[] blendRanges = ForgeModContainer.blendRanges;
+        int samplingDistance = 0;
+
+        if (settings.fancyGraphics && settings.renderDistanceChunks >= 0 && settings.renderDistanceChunks < blendRanges.length)
+        {
+            samplingDistance = blendRanges[settings.renderDistanceChunks];
         }
-        float rBiomeFog = 0.0f;
-        float gBiomeFog = 0.0f;
-        float bBiomeFog = 0.0f;
-        float weightBiomeFog = 0.0f;
-        for (int celestialAngle = -distance; celestialAngle <= distance; celestialAngle++) {
-            for (int baseScale = -distance; baseScale <= distance; baseScale++) {
-                Biome biomeForCoordsBody = world.getBiomeForCoordsBody(new BlockPos(playerX + celestialAngle, playerY, playerZ + baseScale));
+
+        float totalBiomeRed = 0.0f;
+        float totalBiomeGreen = 0.0f;
+        float totalBiomeBlue = 0.0f;
+        float totalBiomeWeight = 0.0f;
+
+        for (int offsetX = -samplingDistance; offsetX <= samplingDistance; offsetX++)
+        {
+            for (int offsetZ = -samplingDistance; offsetZ <= samplingDistance; offsetZ++)
+            {
+                Biome biome = world.getBiomeForCoordsBody(new BlockPos(playerBlockX + offsetX, playerBlockY, playerBlockZ + offsetZ));
                 DimensionType dimensionType = world.provider.getDimensionType();
 
-                bScale = 0xFFFFFF;
-                float rainStrength = (bScale & 16711680) >> 16;
-                float thunderStrength = (bScale & 65280) >> 8;
-                float processedColor = bScale & 255;
-                float weightMixed = 1.0f;
+                int biomeColor = 0xFFFFFF; // TODO: Получать реальный цвет из биома/измерения?
+                float biomeRed = (biomeColor & 0xFF0000) >> 16;
+                float biomeGreen = (biomeColor & 0xFF00) >> 8;
+                float biomeBlue = biomeColor & 0xFF;
+                float weight = 1.0f;
 
-                if (celestialAngle == (-distance)) {
-                    double weightDefault = 1.0d - (playerEntity.posX - playerX);
-                    rainStrength = (float) (rainStrength * weightDefault);
-                    thunderStrength = (float) (thunderStrength * weightDefault);
-                    processedColor = (float) (processedColor * weightDefault);
-                    weightMixed = (float) (1.0f * weightDefault);
-                } else if (celestialAngle == distance) {
-                    double weightDefault2 = playerEntity.posX - playerX;
-                    rainStrength = (float) (rainStrength * weightDefault2);
-                    thunderStrength = (float) (thunderStrength * weightDefault2);
-                    processedColor = (float) (processedColor * weightDefault2);
-                    weightMixed = (float) (1.0f * weightDefault2);
+                // Интерполяция по X
+                if (offsetX == -samplingDistance)
+                {
+                    double weightX = 1.0d - (player.posX - playerBlockX);
+                    biomeRed = (float) (biomeRed * weightX);
+                    biomeGreen = (float) (biomeGreen * weightX);
+                    biomeBlue = (float) (biomeBlue * weightX);
+                    weight = (float) (1.0f * weightX);
                 }
-                if (baseScale == (-distance)) {
-                    double weightDefault3 = 1.0d - (playerEntity.posZ - playerZ);
-                    rainStrength = (float) (rainStrength * weightDefault3);
-                    thunderStrength = (float) (thunderStrength * weightDefault3);
-                    processedColor = (float) (processedColor * weightDefault3);
-                    weightMixed = (float) (weightMixed * weightDefault3);
-                } else if (baseScale == distance) {
-                    double weightDefault4 = playerEntity.posZ - playerZ;
-                    rainStrength = (float) (rainStrength * weightDefault4);
-                    thunderStrength = (float) (thunderStrength * weightDefault4);
-                    processedColor = (float) (processedColor * weightDefault4);
-                    weightMixed = (float) (weightMixed * weightDefault4);
+                else if (offsetX == samplingDistance)
+                {
+                    double weightX = player.posX - playerBlockX;
+                    biomeRed = (float) (biomeRed * weightX);
+                    biomeGreen = (float) (biomeGreen * weightX);
+                    biomeBlue = (float) (biomeBlue * weightX);
+                    weight = (float) (1.0f * weightX);
                 }
-                rBiomeFog += rainStrength;
-                gBiomeFog += thunderStrength;
-                bBiomeFog += processedColor;
-                weightBiomeFog += weightMixed;
+
+                // Интерполяция по Z
+                if (offsetZ == -samplingDistance)
+                {
+                    double weightZ = 1.0d - (player.posZ - playerBlockZ);
+                    biomeRed = (float) (biomeRed * weightZ);
+                    biomeGreen = (float) (biomeGreen * weightZ);
+                    biomeBlue = (float) (biomeBlue * weightZ);
+                    weight = (float) (weight * weightZ);
+                }
+                else if (offsetZ == samplingDistance)
+                {
+                    double weightZ = player.posZ - playerBlockZ;
+                    biomeRed = (float) (biomeRed * weightZ);
+                    biomeGreen = (float) (biomeGreen * weightZ);
+                    biomeBlue = (float) (biomeBlue * weightZ);
+                    weight = (float) (weight * weightZ);
+                }
+
+                totalBiomeRed += biomeRed;
+                totalBiomeGreen += biomeGreen;
+                totalBiomeBlue += biomeBlue;
+                totalBiomeWeight += weight;
             }
         }
-        if (weightBiomeFog == 0.0f) {
-            return new Vec3d(defR, defG, defB);
+
+        if (totalBiomeWeight == 0.0f)
+        {
+            return new Vec3d(defaultRed, defaultGreen, defaultBlue);
         }
-        float rBiomeFog2 = rBiomeFog / 255.0f;
-        float gBiomeFog2 = gBiomeFog / 255.0f;
-        float bBiomeFog2 = bBiomeFog / 255.0f;
-        float var28 = world.getCelestialAngle((float) renderPartialTicks);
-        float var29 = MathHelper.clamp((MathHelper.cos(var28 * 3.1415927f * 2.0f) * 2.0f) + 0.5f, 0.0f, 1.0f);
-        float var30 = (var29 * 0.94f) + 0.06f;
-        float var31 = (var29 * 0.94f) + 0.06f;
-        float var32 = (var29 * 0.91f) + 0.09f;
-        float rainStrength2 = world.getRainStrength((float) renderPartialTicks);
-        if (rainStrength2 > 0.0f) {
-            var30 *= 1.0f - (rainStrength2 * 0.5f);
-            var31 *= 1.0f - (rainStrength2 * 0.5f);
-            var32 *= 1.0f - (rainStrength2 * 0.4f);
+
+        float normalizedBiomeRed = totalBiomeRed / 255.0f;
+        float normalizedBiomeGreen = totalBiomeGreen / 255.0f;
+        float normalizedBiomeBlue = totalBiomeBlue / 255.0f;
+
+        // Коррекция по времени суток
+        float celestialAngle = world.getCelestialAngle((float) renderPartialTicks);
+        float dayNightFactor = MathHelper.clamp((MathHelper.cos(celestialAngle * (float)Math.PI * 2.0f) * 2.0f) + 0.5f, 0.0f, 1.0f);
+
+        float dayRed = (dayNightFactor * 0.94f) + 0.06f;
+        float dayGreen = (dayNightFactor * 0.94f) + 0.06f;
+        float dayBlue = (dayNightFactor * 0.91f) + 0.09f;
+
+        // Коррекция по дождю
+        float rainStrength = world.getRainStrength((float) renderPartialTicks);
+        if (rainStrength > 0.0f)
+        {
+            dayRed *= 1.0f - (rainStrength * 0.5f);
+            dayGreen *= 1.0f - (rainStrength * 0.5f);
+            dayBlue *= 1.0f - (rainStrength * 0.4f);
         }
-        float thunderStrength2 = world.getThunderStrength((float) renderPartialTicks);
-        if (thunderStrength2 > 0.0f) {
-            var30 *= 1.0f - (thunderStrength2 * 0.5f);
-            var31 *= 1.0f - (thunderStrength2 * 0.5f);
-            var32 *= 1.0f - (thunderStrength2 * 0.5f);
+
+        // Коррекция по грозе
+        float thunderStrength = world.getThunderStrength((float) renderPartialTicks);
+        if (thunderStrength > 0.0f)
+        {
+            dayRed *= 1.0f - (thunderStrength * 0.5f);
+            dayGreen *= 1.0f - (thunderStrength * 0.5f);
+            dayBlue *= 1.0f - (thunderStrength * 0.5f);
         }
-        Vec3d var33 = postProcessColor(world, playerEntity, rBiomeFog2 * (var30 / weightBiomeFog), gBiomeFog2 * (var31 / weightBiomeFog), bBiomeFog2 * (var32 / weightBiomeFog), renderPartialTicks);
-        float rBiomeFog3 = (float) var33.x;
-        float gBiomeFog3 = (float) var33.y;
-        float bBiomeFog3 = (float) var33.z;
-        float weightMixed2 = distance * 2 * distance * 2;
-        float var34 = weightMixed2 - weightBiomeFog;
-        double rFinal = ((rBiomeFog3 * weightBiomeFog) + (defR * var34)) / weightMixed2;
-        double gFinal = ((gBiomeFog3 * weightBiomeFog) + (defG * var34)) / weightMixed2;
-        double bFinal = ((bBiomeFog3 * weightBiomeFog) + (defB * var34)) / weightMixed2;
-        return new Vec3d(rFinal, gFinal, bFinal);
+
+        Vec3d postProcessedColor = applyPostProcessing(
+                world,
+                player,
+                normalizedBiomeRed * (dayRed / totalBiomeWeight),
+                normalizedBiomeGreen * (dayGreen / totalBiomeWeight),
+                normalizedBiomeBlue * (dayBlue / totalBiomeWeight),
+                renderPartialTicks
+        );
+
+        float processedRed = (float) postProcessedColor.x;
+        float processedGreen = (float) postProcessedColor.y;
+        float processedBlue = (float) postProcessedColor.z;
+
+        float totalSamples = samplingDistance * 2 * samplingDistance * 2;
+        float weightDifference = totalSamples - totalBiomeWeight;
+
+        double finalRed = ((processedRed * totalBiomeWeight) + (defaultRed * weightDifference)) / totalSamples;
+        double finalGreen = ((processedGreen * totalBiomeWeight) + (defaultGreen * weightDifference)) / totalSamples;
+        double finalBlue = ((processedBlue * totalBiomeWeight) + (defaultBlue * weightDifference)) / totalSamples;
+
+        return new Vec3d(finalRed, finalGreen, finalBlue);
     }
 }

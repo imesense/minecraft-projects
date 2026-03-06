@@ -24,12 +24,6 @@ public class ClientBloodmoonHandler
     boolean bloodmoonActive = false;
     public float fogStrength = 0.0f;
 
-    public static final float BLOODMOON_FOG_DISTANCE = 35.0f;
-
-    public static final float BLOODMOON_FOG_RED = 0.75f;
-    public static final float BLOODMOON_FOG_GREEN = 0.05f;
-    public static final float BLOODMOON_FOG_BLUE = 0.05f;
-
     public boolean isBloodmoonActive() {
         return this.bloodmoonActive;
     }
