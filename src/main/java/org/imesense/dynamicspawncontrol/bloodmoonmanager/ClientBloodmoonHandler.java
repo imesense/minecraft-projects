@@ -26,6 +26,8 @@ public class ClientBloodmoonHandler
     boolean bloodmoonActive = false;
     public float fogStrength = 0.0f;
 
+    public static float BLOODMOON_FOG_FACTOR = 0.0f;
+
     public boolean isBloodmoonActive() {
         return this.bloodmoonActive;
     }
@@ -84,14 +86,17 @@ public class ClientBloodmoonHandler
                 this.skyColorAdd = (float) (this.sin * 0.10000000149011612d);
                 this.moonColorRed = (float) (this.sin * 0.699999988079071d);
                 this.fogRemove = (float) (this.sin * this.d * 6000.0d);
+                BLOODMOON_FOG_FACTOR = this.fogStrength;
                 if (world.provider.getDimension() != 0) {
                     this.bloodmoonActive = false;
+                    BLOODMOON_FOG_FACTOR = 0.0f;
                     return;
                 }
                 return;
             }
             if (this.bloodmoonActive) {
                 this.bloodmoonActive = false;
+                BLOODMOON_FOG_FACTOR = 0.0f;
             }
         }
     }

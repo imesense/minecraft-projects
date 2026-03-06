@@ -7,10 +7,7 @@ import net.minecraftforge.fml.common.event.*;
 
 //import net.minecraftforge.fml.common.network.NetworkRegistry;
 //import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodmoonEventHandler;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodmoonHandler;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.CommandBloodmoon;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.PacketHandler;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.*;
 import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
@@ -154,6 +151,7 @@ public final class DynamicSpawnControl
 
         BloodmoonEventHandler handler = new BloodmoonEventHandler();
         MinecraftForge.EVENT_BUS.register(handler);
+        MinecraftForge.EVENT_BUS.register(new BloodMoonRedFog());
         FMLCommonHandler.instance().bus().register(handler);
         PacketHandler.init();
     }

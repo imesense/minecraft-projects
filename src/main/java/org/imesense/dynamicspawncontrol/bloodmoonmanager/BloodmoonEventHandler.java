@@ -67,30 +67,6 @@ public class BloodmoonEventHandler
     }
 
     @SubscribeEvent
-    public void onFogColors(EntityViewRenderEvent.FogColors event)
-    {
-        float redFactor = 0.5F;
-
-        event.setRed(event.getRed() * (1 - redFactor) + 1.0F * redFactor);
-        event.setGreen(event.getGreen() * (1 - redFactor));
-        event.setBlue(event.getBlue() * (1 - redFactor));
-    }
-
-    @SubscribeEvent
-    public void onFogDensity(EntityViewRenderEvent.FogDensity event)
-    {
-        event.setDensity(0.5F);
-        event.setCanceled(true);
-    }
-
-    @SubscribeEvent
-    public void onRenderFog(EntityViewRenderEvent.RenderFogEvent event)
-    {
-        GlStateManager.setFogStart(0.0F);
-        GlStateManager.setFogEnd(20.0F);
-    }
-
-    @SubscribeEvent
     public void playerJoinedWorld(EntityJoinWorldEvent event) {
         if (BloodmoonHandler.INSTANCE != null && !event.getWorld().isRemote) {
             BloodmoonHandler.INSTANCE.playerJoinedWorld(event);
