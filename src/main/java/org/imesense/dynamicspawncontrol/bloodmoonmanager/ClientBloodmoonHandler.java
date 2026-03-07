@@ -9,6 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IVec3dAccessor;
 import org.lwjgl.opengl.GL11;
 
@@ -86,17 +87,35 @@ public class ClientBloodmoonHandler
                 this.skyColorAdd = (float) (this.sin * 0.10000000149011612d);
                 this.moonColorRed = (float) (this.sin * 0.699999988079071d);
                 this.fogRemove = (float) (this.sin * this.d * 6000.0d);
-                BLOODMOON_FOG_FACTOR = this.fogStrength;
+
+                if (difTime < 3000.0f)
+                {
+                    BLOODMOON_FOG_FACTOR = 0.0f;
+                }
+                else if (difTime < 6000.0f)
+                {
+                    BLOODMOON_FOG_FACTOR = (difTime - 3000.0f) / 3000.0f;
+                }
+                else if (difTime < 9500.0f)
+                {
+                    BLOODMOON_FOG_FACTOR = 1.0f;
+                }
+                else
+                {
+                    BLOODMOON_FOG_FACTOR = 1.0f - ((difTime - 9500.0f) / 2500.0f);
+                }
+
+                BLOODMOON_FOG_FACTOR = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+
+                LogManager.debug("BLOODMOON_FOG_FACTOR: " + BLOODMOON_FOG_FACTOR);
                 if (world.provider.getDimension() != 0) {
                     this.bloodmoonActive = false;
-                    BLOODMOON_FOG_FACTOR = 0.0f;
                     return;
                 }
                 return;
             }
             if (this.bloodmoonActive) {
                 this.bloodmoonActive = false;
-                BLOODMOON_FOG_FACTOR = 0.0f;
             }
         }
     }

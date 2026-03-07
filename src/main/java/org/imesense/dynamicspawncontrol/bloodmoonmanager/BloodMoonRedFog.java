@@ -12,11 +12,13 @@ public class BloodMoonRedFog
     {
         float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
 
-        float redFactor = 0.6F * factor;
+        float redTarget = 0.75F;
+        float greenTarget = 0.05F;
+        float blueTarget = 0.05F;
 
-        event.setRed(event.getRed() * (1 - redFactor) + redFactor);
-        event.setGreen(event.getGreen() * (1 - redFactor));
-        event.setBlue(event.getBlue() * (1 - redFactor));
+        event.setRed(event.getRed() * (1 - factor) + redTarget * factor);
+        event.setGreen(event.getGreen() * (1 - factor) + greenTarget * factor);
+        event.setBlue(event.getBlue() * (1 - factor) + blueTarget * factor);
     }
 
     @SubscribeEvent
@@ -24,15 +26,16 @@ public class BloodMoonRedFog
     {
         float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
 
-        float pulse = (float)Math.sin(net.minecraft.client.Minecraft.getMinecraft().world.getTotalWorldTime() * 0.01f) * 0.02f;
-
-        factor += pulse;
-        factor = Math.max(0.0f, Math.min(1.0f, factor));
-
         float farPlane = event.getFarPlaneDistance();
 
+        //TODO: Ближний туман, но ломается днем границы
+        /*
         float start = farPlane * (0.25f - 0.22f * factor);
         float end   = farPlane * (0.45f - 0.40f * factor);
+         */
+
+        float start = farPlane * (0.75f - 0.70f * factor);
+        float end   = farPlane * (1.0f  - 0.75f * factor);
 
         GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
         GlStateManager.setFogStart(start);
