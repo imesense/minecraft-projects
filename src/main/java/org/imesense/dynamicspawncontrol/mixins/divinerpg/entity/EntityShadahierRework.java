@@ -1,14 +1,21 @@
 package org.imesense.dynamicspawncontrol.mixins.divinerpg.entity;
 
-import divinerpg.config.Config;
-import divinerpg.objects.entities.entity.vethea.EntityShadahier;
-import divinerpg.registry.LootTableRegistry;
-import divinerpg.registry.SoundRegistry;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import lombok.NonNull;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -18,23 +25,27 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
+import divinerpg.config.Config;
+import divinerpg.objects.entities.entity.vethea.EntityShadahier;
+import divinerpg.registry.LootTableRegistry;
+import divinerpg.registry.SoundRegistry;
 
 @Mixin(value = EntityShadahier.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntityShadahierRework extends EntityMob
 {
     @Unique
     private static final String ATTACKER_UUID_TAG = "AttackerUUID";
 
     @Unique
-    private UUID attackerUUID;
+    private UUID $$attackerUUID;
 
     @Unique
-    private EntityPlayer persistentAttacker;
+    private EntityPlayer $$persistentAttacker;
 
     public EntityShadahierRework(World worldIn)
     {
@@ -64,7 +75,7 @@ public abstract class EntityShadahierRework extends EntityMob
 
                 if (attacker instanceof EntityPlayer)
                 {
-                    ((EntityShadahierRework) this.taskOwner).setPersistentAttacker((EntityPlayer) attacker);
+                    ((EntityShadahierRework) this.taskOwner).$$setPersistentAttacker((EntityPlayer) attacker);
                 }
             }
         });
@@ -74,13 +85,13 @@ public abstract class EntityShadahierRework extends EntityMob
             @Override
             public boolean shouldExecute()
             {
-                if (persistentAttacker != null && persistentAttacker.isEntityAlive())
+                if ($$persistentAttacker != null && $$persistentAttacker.isEntityAlive())
                 {
-                    double distance = this.taskOwner.getDistanceSq(persistentAttacker);
+                    double distance = this.taskOwner.getDistanceSq($$persistentAttacker);
 
                     if (distance <= this.getTargetDistance() * this.getTargetDistance())
                     {
-                        this.targetEntity = persistentAttacker;
+                        this.targetEntity = $$persistentAttacker;
                         return true;
                     }
                 }
@@ -105,13 +116,13 @@ public abstract class EntityShadahierRework extends EntityMob
     {
         super.onLivingUpdate();
 
-        if (!this.world.isRemote && this.persistentAttacker == null && this.attackerUUID != null)
+        if (!this.world.isRemote && this.$$persistentAttacker == null && this.$$attackerUUID != null)
         {
             for (EntityPlayer player : this.world.playerEntities)
             {
-                if (player.getUniqueID().equals(this.attackerUUID) && player.isEntityAlive())
+                if (player.getUniqueID().equals(this.$$attackerUUID) && player.isEntityAlive())
                 {
-                    this.persistentAttacker = player;
+                    this.$$persistentAttacker = player;
                     this.setRevengeTarget(player);
                     this.setAttackTarget(player);
                     break;
@@ -119,17 +130,17 @@ public abstract class EntityShadahierRework extends EntityMob
             }
         }
 
-        if (this.persistentAttacker != null && !this.persistentAttacker.isEntityAlive())
+        if (this.$$persistentAttacker != null && !this.$$persistentAttacker.isEntityAlive())
         {
-            clearPersistentAttacker();
+            $$clearPersistentAttacker();
         }
 
-        if (this.persistentAttacker != null && this.getAttackTarget() == null)
+        if (this.$$persistentAttacker != null && this.getAttackTarget() == null)
         {
-            double distance = this.getDistanceSq(this.persistentAttacker);
+            double distance = this.getDistanceSq(this.$$persistentAttacker);
             if (distance > 1024.0D)
             {
-                clearPersistentAttacker();
+                $$clearPersistentAttacker();
             }
         }
     }
@@ -144,14 +155,14 @@ public abstract class EntityShadahierRework extends EntityMob
 
         EntityPlayer targetPlayer = (EntityPlayer) target;
 
-        if (persistentAttacker != null && targetPlayer != persistentAttacker)
+        if ($$persistentAttacker != null && targetPlayer != $$persistentAttacker)
         {
             return false;
         }
 
-        if (persistentAttacker == null && this.getRevengeTarget() == targetPlayer)
+        if ($$persistentAttacker == null && this.getRevengeTarget() == targetPlayer)
         {
-            setPersistentAttacker(targetPlayer);
+            $$setPersistentAttacker(targetPlayer);
         }
 
         if (super.attackEntityAsMob(target))
@@ -179,7 +190,7 @@ public abstract class EntityShadahierRework extends EntityMob
                 return super.attackEntityFrom(source, amount);
             }
 
-            setPersistentAttacker(player);
+            $$setPersistentAttacker(player);
         }
 
         return super.attackEntityFrom(source, amount);
@@ -204,57 +215,58 @@ public abstract class EntityShadahierRework extends EntityMob
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound)
+    public void writeEntityToNBT(@NonNull NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
 
-        if (this.attackerUUID != null)
+        if (this.$$attackerUUID != null)
         {
-            compound.setString(ATTACKER_UUID_TAG, this.attackerUUID.toString());
+            compound.setString(ATTACKER_UUID_TAG, this.$$attackerUUID.toString());
         }
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound)
+    public void readEntityFromNBT(@NonNull NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
 
         if (compound.hasKey(ATTACKER_UUID_TAG))
         {
-            this.attackerUUID = UUID.fromString(compound.getString(ATTACKER_UUID_TAG));
+            this.$$attackerUUID = UUID.fromString(compound.getString(ATTACKER_UUID_TAG));
         }
     }
 
     @Unique
-    public void setPersistentAttacker(EntityPlayer attacker)
+    public void $$setPersistentAttacker(EntityPlayer attacker)
     {
         if (attacker != null)
         {
-            this.persistentAttacker = attacker;
-            this.attackerUUID = attacker.getUniqueID();
+            this.$$persistentAttacker = attacker;
+            this.$$attackerUUID = attacker.getUniqueID();
             this.setRevengeTarget(attacker);
             this.setAttackTarget(attacker);
         }
     }
 
     @Unique
-    private void clearPersistentAttacker()
+    private void $$clearPersistentAttacker()
     {
-        this.persistentAttacker = null;
-        this.attackerUUID = null;
+        this.$$persistentAttacker = null;
+        this.$$attackerUUID = null;
         this.setRevengeTarget(null);
         this.setAttackTarget(null);
     }
 
-    public int getSpawnLayer()
+    @Unique
+    public int $$getSpawnLayer()
     {
         return 1;
     }
 
     public boolean getCanSpawnHere()
     {
-        return this.posY < 48.0D * this.getSpawnLayer() &&
-                this.posY > 48.0D * (this.getSpawnLayer() - 1) &&
+        return this.posY < 48.0D * this.$$getSpawnLayer() &&
+                this.posY > 48.0D * (this.$$getSpawnLayer() - 1) &&
                 super.getCanSpawnHere();
     }
 

@@ -1,7 +1,9 @@
 package org.imesense.dynamicspawncontrol.mixins.divinerpg.entity;
 
-import divinerpg.objects.entities.entity.vanilla.EntityPumpkinSpider;
-import divinerpg.registry.LootTableRegistry;
+import java.util.UUID;
+
+import lombok.NonNull;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -22,19 +24,29 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import java.util.UUID;
+import org.spongepowered.asm.mixin.Unique;
+
+import divinerpg.objects.entities.entity.vanilla.EntityPumpkinSpider;
+import divinerpg.registry.LootTableRegistry;
 
 @Mixin(value = EntityPumpkinSpider.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntityPumpkinSpiderRework extends EntityMob
 {
-    private int provokedLevel = 0;
-    private UUID provokedByUUID = null;
+    @Unique
+    private int $$provokedLevel = 0;
 
+    @Unique
+    private UUID $$provokedByUUID = null;
+
+    @Unique
     private static final DataParameter<Boolean> CUSTOM_PROVOKED =
             EntityDataManager.createKey(EntityPumpkinSpider.class, DataSerializers.BOOLEAN);
 
+    @Unique
     private static final DataParameter<Boolean> CUSTOM_CLIMBING =
             EntityDataManager.createKey(EntityPumpkinSpider.class, DataSerializers.BOOLEAN);
 
@@ -44,12 +56,20 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         this.setSize(1.25F, 1.0F);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public float getEyeHeight()
     {
         return 0.5F;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void entityInit()
     {
@@ -59,8 +79,13 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         this.dataManager.register(CUSTOM_PROVOKED, false);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    protected PathNavigate createNavigator(World worldIn)
+    @NonNull
+    protected PathNavigate createNavigator(@NonNull World worldIn)
     {
         return new PathNavigateClimber(this, worldIn);
     }
@@ -75,19 +100,25 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean needsSpecialAI()
     {
         return true;
     }
 
-    protected void addBasicAI()
+    @Unique
+    protected void $$addBasicAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.8D));
     }
 
-    protected void addAttackingAI()
+    @Unique
+    protected void $$addAttackingAI()
     {
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
 
@@ -108,7 +139,7 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
                     return false;
                 }
 
-                return target.getUniqueID().equals(provokedByUUID);
+                return target.getUniqueID().equals($$provokedByUUID);
             }
 
             @Override
@@ -126,7 +157,7 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
                     return false;
                 }
 
-                return target.getUniqueID().equals(provokedByUUID);
+                return target.getUniqueID().equals($$provokedByUUID);
             }
         });
     }
@@ -140,6 +171,10 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         }
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void onUpdate()
     {
@@ -150,12 +185,12 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
             return;
         }
 
-        if (this.provokedLevel > 0)
+        if (this.$$provokedLevel > 0)
         {
-            this.provokedLevel--;
+            this.$$provokedLevel--;
         }
 
-        if (!this.getProvoked() && this.provokedLevel <= 0)
+        if (!this.getProvoked() && this.$$provokedLevel <= 0)
         {
             EntityPlayer player = this.world.getNearestAttackablePlayer(this, 6.0F, 6.0F);
 
@@ -170,9 +205,9 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
             this.setBesideClimbableBlock(this.collidedHorizontally);
         }
 
-        if (this.provokedByUUID != null && this.getAttackTarget() == null && this.provokedLevel > 0)
+        if (this.$$provokedByUUID != null && this.getAttackTarget() == null && this.$$provokedLevel > 0)
         {
-            Entity entity = ((WorldServer)this.world).getEntityFromUuid(this.provokedByUUID);
+            Entity entity = ((WorldServer)this.world).getEntityFromUuid(this.$$provokedByUUID);
 
             if (entity instanceof EntityPlayer && entity.isEntityAlive())
             {
@@ -180,89 +215,124 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
             }
             else
             {
-                this.provokedByUUID = null;
-                this.provokedLevel = 0;
+                this.$$provokedByUUID = null;
+                this.$$provokedLevel = 0;
                 this.setProvoked(null);
             }
         }
 
-        if (this.provokedLevel <= 0 && this.getProvoked())
+        if (this.$$provokedLevel <= 0 && this.getProvoked())
         {
             this.setProvoked(null);
         }
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void setBesideClimbableBlock(boolean climbing)
     {
         this.dataManager.set(CUSTOM_CLIMBING, climbing);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean isBesideClimbableBlock()
     {
         return this.dataManager.get(CUSTOM_CLIMBING);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean isOnLadder()
     {
         return this.getProvoked() && this.isBesideClimbableBlock();
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    public void setInWeb() { }
+    public void setInWeb()
+    {
+    }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
+    @NonNull
     public EnumCreatureAttribute getCreatureAttribute()
     {
         return EnumCreatureAttribute.ARTHROPOD;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected boolean canTriggerWalking()
     {
         return false;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean getProvoked()
     {
         return this.dataManager.get(CUSTOM_PROVOKED);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void setProvoked(EntityPlayer player)
     {
         this.dataManager.set(CUSTOM_PROVOKED, true);
 
-        this.addBasicAI();
-        this.addAttackingAI();
+        this.$$addBasicAI();
+        this.$$addAttackingAI();
 
         if (player != null && !player.capabilities.isCreativeMode)
         {
             this.setAttackTarget(player);
-            this.provokedByUUID = player.getUniqueID();
-            this.provokedLevel = 600;
+            this.$$provokedByUUID = player.getUniqueID();
+            this.$$provokedLevel = 600;
         }
         else
         {
             this.dataManager.set(CUSTOM_PROVOKED, false);
             this.setAttackTarget(null);
-            this.provokedByUUID = null;
-            this.provokedLevel = 0;
+            this.$$provokedByUUID = null;
+            this.$$provokedLevel = 0;
         }
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entity)
+    public boolean attackEntityAsMob(@NonNull Entity entity)
     {
         if (!this.getProvoked())
         {
             return false;
         }
 
-        if (this.provokedByUUID != null && entity.getUniqueID().equals(this.provokedByUUID))
+        if (this.$$provokedByUUID != null && entity.getUniqueID().equals(this.$$provokedByUUID))
         {
             return super.attackEntityAsMob(entity);
         }
@@ -270,6 +340,10 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         return false;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
@@ -290,8 +364,8 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
             }
             else
             {
-                this.provokedByUUID = player.getUniqueID();
-                this.provokedLevel = 600;
+                this.$$provokedByUUID = player.getUniqueID();
+                this.$$provokedLevel = 600;
                 this.setAttackTarget(player);
             }
         }
@@ -299,30 +373,50 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         return super.attackEntityFrom(source, amount);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected boolean isValidLightLevel()
     {
         return true;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    protected SoundEvent getHurtSound(DamageSource source)
+    protected SoundEvent getHurtSound(@NonNull DamageSource source)
     {
         return SoundEvents.ENTITY_SPIDER_HURT;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected SoundEvent getDeathSound()
     {
         return SoundEvents.ENTITY_SPIDER_DEATH;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected ResourceLocation getLootTable()
     {
         return LootTableRegistry.ENTITIES_PUMPKIN_SPIDER;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean getCanSpawnHere()
     {
@@ -331,23 +425,31 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
                 super.getCanSpawnHere();
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    public void writeEntityToNBT(NBTTagCompound tag)
+    public void writeEntityToNBT(@NonNull NBTTagCompound tag)
     {
         super.writeEntityToNBT(tag);
 
         tag.setBoolean("Provoked", this.getProvoked());
 
-        if (this.provokedByUUID != null)
+        if (this.$$provokedByUUID != null)
         {
-            tag.setString("ProvokedBy", this.provokedByUUID.toString());
+            tag.setString("ProvokedBy", this.$$provokedByUUID.toString());
         }
 
-        tag.setInteger("ProvokedLevel", this.provokedLevel);
+        tag.setInteger("ProvokedLevel", this.$$provokedLevel);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    public void readEntityFromNBT(NBTTagCompound tag)
+    public void readEntityFromNBT(@NonNull NBTTagCompound tag)
     {
         super.readEntityFromNBT(tag);
 
@@ -359,11 +461,11 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
 
             if (!uuid.isEmpty())
             {
-                this.provokedByUUID = UUID.fromString(uuid);
-                this.provokedLevel = tag.getInteger("ProvokedLevel");
+                this.$$provokedByUUID = UUID.fromString(uuid);
+                this.$$provokedLevel = tag.getInteger("ProvokedLevel");
 
-                this.addBasicAI();
-                this.addAttackingAI();
+                this.$$addBasicAI();
+                this.$$addAttackingAI();
             }
         }
     }

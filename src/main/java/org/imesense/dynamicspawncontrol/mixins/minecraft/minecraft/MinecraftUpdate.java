@@ -1,12 +1,13 @@
 package org.imesense.dynamicspawncontrol.mixins.minecraft.minecraft;
 
-import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.Logger;
-import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
-import org.imesense.dynamicspawncontrol.core.renderer.fog.BedrockVoidFog;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.PixelFormat;
+
+import net.minecraft.client.Minecraft;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -15,17 +16,33 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
+import org.imesense.dynamicspawncontrol.core.renderer.fog.BedrockVoidFog;
+
 @Mixin(Minecraft.class)
+@SuppressWarnings("UnusedMixin")
 public abstract class MinecraftUpdate
 {
-    @Shadow private int displayWidth;
-    @Shadow private int displayHeight;
+    @Shadow
+    public int displayWidth;
 
-    @Shadow private boolean fullscreen;
-    @Shadow @Final private static Logger LOGGER;
+    @Shadow
+    public int displayHeight;
 
-    @Shadow protected abstract void updateDisplayMode() throws LWJGLException;
+    @Shadow
+    private boolean fullscreen;
 
+    @Shadow
+    @Final
+    private static Logger LOGGER;
+
+    @Shadow
+    protected abstract void updateDisplayMode() throws LWJGLException;
+
+    /**
+     * @author OldSerpskiStalker
+     * @reason Print mod name
+     */
     @Overwrite
     private void createDisplay() throws LWJGLException
     {

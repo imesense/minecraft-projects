@@ -3,13 +3,16 @@ package org.imesense.dynamicspawncontrol.mixins.minecraft.item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.FoodStats;
-import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
+
 @Mixin(ItemFood.class)
+@SuppressWarnings("UnusedMixin")
 public abstract class ItemFoodUpdate
 {
     @Redirect(

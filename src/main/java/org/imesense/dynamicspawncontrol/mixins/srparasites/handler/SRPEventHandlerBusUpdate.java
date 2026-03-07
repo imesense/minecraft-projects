@@ -1,17 +1,21 @@
 package org.imesense.dynamicspawncontrol.mixins.srparasites.handler;
 
-import com.dhanantry.scapeandrunparasites.util.handlers.SRPEventHandlerBus;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
-import org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites.SRParasitesBlacklistData;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.dhanantry.scapeandrunparasites.util.handlers.SRPEventHandlerBus;
+
+import org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites.SRParasitesBlacklistData;
+
 @Mixin(value = SRPEventHandlerBus.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class SRPEventHandlerBusUpdate
 {
     @Inject(method = "writeCOTHTag", at = @At("HEAD"), remap = false)

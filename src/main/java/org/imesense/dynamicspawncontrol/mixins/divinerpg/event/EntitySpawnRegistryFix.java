@@ -1,14 +1,16 @@
 package org.imesense.dynamicspawncontrol.mixins.divinerpg.event;
 
-import divinerpg.registry.EntitySpawnRegistry;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
-import org.imesense.dynamicspawncontrol.core.annotation.TODO;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import divinerpg.registry.EntitySpawnRegistry;
+
 @Mixin(EntitySpawnRegistry.class)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntitySpawnRegistryFix
 {
     @Inject(

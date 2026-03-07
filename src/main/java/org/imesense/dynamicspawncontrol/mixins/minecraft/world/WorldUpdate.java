@@ -4,13 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
-import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
-import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
-import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
-import org.imesense.dynamicspawncontrol.mixins.interfaces.IWorldAccessor;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,26 +12,33 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
+import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
+import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
+import org.imesense.dynamicspawncontrol.mixins.interfaces.IWorldAccessor;
+
 @Mixin(value = World.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class WorldUpdate
 {
     @Unique
     private static final boolean DEBUG_MODE = false;
 
     @Unique
-    private float calculateDarkBrightness(float baseBrightness)
+    private float $$calculateDarkBrightness(float baseBrightness)
     {
         return baseBrightness;
     }
 
     @Unique
-    private float calculateVanillaBrightness(float baseBrightness)
+    private float $$calculateVanillaBrightness(float baseBrightness)
     {
         return baseBrightness * 0.8f + 0.2f;
     }
 
     @Unique
-    private float calculateDarkNightBrightness(float baseBrightness, int moonPhase)
+    private float $$calculateDarkNightBrightness(float baseBrightness, int moonPhase)
     {
         float[] moonPhaseFactors = NightRendererData.getMoonPhaseFactorsArray();
 
@@ -47,6 +48,10 @@ public abstract class WorldUpdate
         return MathHelper.clamp(baseBrightness + phaseFactor, 0.f, 1.f);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rendering dark nights
+     */
     @Overwrite
     public float getSunBrightnessBody(float partialTicks)
     {
@@ -72,7 +77,7 @@ public abstract class WorldUpdate
         {
             if (NightRendererData.isDependenceLightMoonPhase())
             {
-                finalRawBrightness = calculateDarkNightBrightness(rawBrightness, moonPhase);
+                finalRawBrightness = $$calculateDarkNightBrightness(rawBrightness, moonPhase);
 
                 if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "[isDependenceLightMoonPhase] finalRawBrightness: " + finalRawBrightness);
 
@@ -80,20 +85,20 @@ public abstract class WorldUpdate
             }
             else
             {
-                finalRawBrightness = calculateDarkBrightness(rawBrightness);
+                finalRawBrightness = $$calculateDarkBrightness(rawBrightness);
 
                 if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "[isEnableDarkNight] finalRawBrightness: " + finalRawBrightness);
 
-                return calculateDarkBrightness(rawBrightness);
+                return $$calculateDarkBrightness(rawBrightness);
             }
         }
         else
         {
-            finalRawBrightness = calculateVanillaBrightness(rawBrightness);
+            finalRawBrightness = $$calculateVanillaBrightness(rawBrightness);
 
             if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "finalRawBrightness: " + finalRawBrightness);
 
-            return calculateVanillaBrightness(rawBrightness);
+            return $$calculateVanillaBrightness(rawBrightness);
         }
     }
 

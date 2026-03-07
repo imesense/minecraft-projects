@@ -5,22 +5,26 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+
 import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.core.renderer.night.BaseCalculateLightMapColor;
 import org.imesense.dynamicspawncontrol.core.renderer.night.DarkCalculateLightMapColor;
 import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static org.imesense.dynamicspawncontrol.core.renderer.night.light.MoonLightStage.finalPackDarkColor;
 
 @Mixin(EntityRenderer.class)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntityRendererRework
 {
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rendering dark nights
+     */
     @Overwrite
     private void updateLightmap(float partialTicks)
     {

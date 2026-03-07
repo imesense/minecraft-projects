@@ -1,12 +1,11 @@
 package org.imesense.dynamicspawncontrol.mixins.divinerpg.entity;
 
-import divinerpg.enums.ArrowType;
-import divinerpg.objects.entities.entity.EntityDivineMob;
-import divinerpg.objects.entities.entity.iceika.EntityFrostArcher;
-import divinerpg.objects.entities.entity.projectiles.EntityDivineArrow;
-import divinerpg.registry.LootTableRegistry;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import lombok.NonNull;
-import net.minecraft.entity.Entity;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IRangedAttackMob;
@@ -19,23 +18,28 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
+import divinerpg.enums.ArrowType;
+import divinerpg.objects.entities.entity.EntityDivineMob;
+import divinerpg.objects.entities.entity.iceika.EntityFrostArcher;
+import divinerpg.objects.entities.entity.projectiles.EntityDivineArrow;
+import divinerpg.registry.LootTableRegistry;
 
 @Mixin(EntityFrostArcher.class)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntityFrostArcherFix extends EntityDivineMob implements IRangedAttackMob
 {
     @Unique
     private static final String ATTACKER_UUID_TAG = "AttackerUUID";
 
     @Unique
-    private UUID attackerUUID;
+    private UUID $$attackerUUID;
 
     @Unique
-    private EntityPlayer persistentAttacker;
+    private EntityPlayer $$persistentAttacker;
 
     public EntityFrostArcherFix(World worldIn)
     {
@@ -71,7 +75,7 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
 
                 if (attacker instanceof EntityPlayer)
                 {
-                    ((EntityFrostArcherFix) this.taskOwner).setPersistentAttacker((EntityPlayer) attacker);
+                    ((EntityFrostArcherFix) this.taskOwner).$$setPersistentAttacker((EntityPlayer) attacker);
                 }
             }
         });
@@ -83,13 +87,13 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
             public boolean shouldExecute()
             {
                 // Если есть запомненный игрок и он жив - атакуем его
-                if (persistentAttacker != null && persistentAttacker.isEntityAlive())
+                if ($$persistentAttacker != null && $$persistentAttacker.isEntityAlive())
                 {
-                    double distance = this.taskOwner.getDistanceSq(persistentAttacker);
+                    double distance = this.taskOwner.getDistanceSq($$persistentAttacker);
 
                     if (distance <= this.getTargetDistance() * this.getTargetDistance())
                     {
-                        this.targetEntity = persistentAttacker;
+                        this.targetEntity = $$persistentAttacker;
                         return true;
                     }
                 }
@@ -112,13 +116,13 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
         super.onLivingUpdate();
 
         // Восстанавливаем запомненного игрока из UUID при загрузке
-        if (!this.world.isRemote && this.persistentAttacker == null && this.attackerUUID != null)
+        if (!this.world.isRemote && this.$$persistentAttacker == null && this.$$attackerUUID != null)
         {
             for (EntityPlayer player : this.world.playerEntities)
             {
-                if (player.getUniqueID().equals(this.attackerUUID) && player.isEntityAlive())
+                if (player.getUniqueID().equals(this.$$attackerUUID) && player.isEntityAlive())
                 {
-                    this.persistentAttacker = player;
+                    this.$$persistentAttacker = player;
                     this.setRevengeTarget(player);
                     this.setAttackTarget(player);
                     break;
@@ -127,24 +131,24 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
         }
 
         // Очищаем запомненного игрока если он умер
-        if (this.persistentAttacker != null && !this.persistentAttacker.isEntityAlive())
+        if (this.$$persistentAttacker != null && !this.$$persistentAttacker.isEntityAlive())
         {
-            clearPersistentAttacker();
+            $$clearPersistentAttacker();
         }
 
         // Очищаем если игрок слишком далеко
-        if (this.persistentAttacker != null && this.getAttackTarget() == null)
+        if (this.$$persistentAttacker != null && this.getAttackTarget() == null)
         {
-            double distance = this.getDistanceSq(this.persistentAttacker);
+            double distance = this.getDistanceSq(this.$$persistentAttacker);
             if (distance > 1024.0D) // 32 блока
             {
-                clearPersistentAttacker();
+                $$clearPersistentAttacker();
             }
         }
     }
 
     @Override
-    public void attackEntityWithRangedAttack(EntityLivingBase target, float f)
+    public void attackEntityWithRangedAttack(@NonNull EntityLivingBase target, float f)
     {
         // Атакуем только игроков
         if (!(target instanceof EntityPlayer))
@@ -155,15 +159,15 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
         EntityPlayer targetPlayer = (EntityPlayer) target;
 
         // Если есть запомненный игрок, атакуем только его
-        if (persistentAttacker != null && targetPlayer != persistentAttacker)
+        if ($$persistentAttacker != null && targetPlayer != $$persistentAttacker)
         {
             return;
         }
 
         // Если нет запомненного игрока, но этот игрок нас ударил - запоминаем его
-        if (persistentAttacker == null && this.getRevengeTarget() == targetPlayer)
+        if ($$persistentAttacker == null && this.getRevengeTarget() == targetPlayer)
         {
-            setPersistentAttacker(targetPlayer);
+            $$setPersistentAttacker(targetPlayer);
         }
 
         this.world.spawnEntity(new EntityDivineArrow(
@@ -186,7 +190,7 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
 
             if (!player.isCreative())
             {
-                setPersistentAttacker(player);
+                $$setPersistentAttacker(player);
             }
         }
 
@@ -214,48 +218,49 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound)
+    public void writeEntityToNBT(@NonNull NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
 
-        if (this.attackerUUID != null)
+        if (this.$$attackerUUID != null)
         {
-            compound.setString(ATTACKER_UUID_TAG, this.attackerUUID.toString());
+            compound.setString(ATTACKER_UUID_TAG, this.$$attackerUUID.toString());
         }
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound)
+    public void readEntityFromNBT(@NonNull NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
 
         if (compound.hasKey(ATTACKER_UUID_TAG))
         {
-            this.attackerUUID = UUID.fromString(compound.getString(ATTACKER_UUID_TAG));
+            this.$$attackerUUID = UUID.fromString(compound.getString(ATTACKER_UUID_TAG));
         }
     }
 
     @Unique
-    public void setPersistentAttacker(EntityPlayer attacker)
+    public void $$setPersistentAttacker(EntityPlayer attacker)
     {
         if (attacker != null)
         {
-            this.persistentAttacker = attacker;
-            this.attackerUUID = attacker.getUniqueID();
+            this.$$persistentAttacker = attacker;
+            this.$$attackerUUID = attacker.getUniqueID();
             this.setRevengeTarget(attacker);
             this.setAttackTarget(attacker);
         }
     }
 
     @Unique
-    private void clearPersistentAttacker()
+    private void $$clearPersistentAttacker()
     {
-        this.persistentAttacker = null;
-        this.attackerUUID = null;
+        this.$$persistentAttacker = null;
+        this.$$attackerUUID = null;
         this.setRevengeTarget(null);
         this.setAttackTarget(null);
     }
 
+    @NonNull
     public EnumCreatureAttribute getCreatureAttribute()
     {
         return EnumCreatureAttribute.UNDEFINED;
@@ -266,7 +271,7 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
         return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound(DamageSource source)
+    protected SoundEvent getHurtSound(@NonNull DamageSource source)
     {
         return SoundEvents.ENTITY_ZOMBIE_HURT;
     }
@@ -281,8 +286,8 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
         return LootTableRegistry.ENTITIES_FROST_ARCHER;
     }
 
+    // Used for `IRangedAttackMob`
     public void setSwingingArms(boolean swingingArms)
     {
-        // Необходим для IRangedAttackMob
     }
 }

@@ -8,25 +8,35 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerSpiderEyes;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.util.ResourceLocation;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(LayerSpiderEyes.class)
+@SuppressWarnings("UnusedMixin")
 public abstract class LayerSpiderEyesFix<T extends EntitySpider> implements LayerRenderer<T>
 {
+    @Unique
     private static final ResourceLocation SPIDER_EYES = new ResourceLocation("textures/entity/spider_eyes.png");
-    private final RenderSpider<T> spiderRenderer;
+
+    @Unique
+    private final RenderSpider<T> $$spiderRenderer;
 
     public LayerSpiderEyesFix(RenderSpider<T> spiderRendererIn)
     {
-        this.spiderRenderer = spiderRendererIn;
+        this.$$spiderRenderer = spiderRendererIn;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Twinkling eyes fix
+     */
     @Overwrite
     public void doRenderLayer(T entitylivingbaseIn, float limbSwing, float limbSwingAmount,
                               float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        this.spiderRenderer.bindTexture(SPIDER_EYES);
+        this.$$spiderRenderer.bindTexture(SPIDER_EYES);
 
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
@@ -41,7 +51,7 @@ public abstract class LayerSpiderEyesFix<T extends EntitySpider> implements Laye
 
         Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
 
-        this.spiderRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount,
+        this.$$spiderRenderer.getMainModel().render(entitylivingbaseIn, limbSwing, limbSwingAmount,
                 ageInTicks, netHeadYaw, headPitch, scale);
 
         Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
@@ -52,12 +62,16 @@ public abstract class LayerSpiderEyesFix<T extends EntitySpider> implements Laye
 
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
 
-        this.spiderRenderer.setLightmap(entitylivingbaseIn);
+        this.$$spiderRenderer.setLightmap(entitylivingbaseIn);
 
         GlStateManager.disableBlend();
         GlStateManager.depthMask(true);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Twinkling eyes fix
+     */
     @Overwrite
     public boolean shouldCombineTextures()
     {

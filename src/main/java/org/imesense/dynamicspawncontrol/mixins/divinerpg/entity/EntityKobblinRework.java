@@ -1,14 +1,16 @@
 package org.imesense.dynamicspawncontrol.mixins.divinerpg.entity;
 
-import divinerpg.objects.entities.entity.vanilla.EntityKobblin;
-import divinerpg.registry.LootTableRegistry;
-import divinerpg.registry.SoundRegistry;
+import java.util.UUID;
+
 import lombok.NonNull;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -22,15 +24,24 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import java.util.UUID;
+import org.spongepowered.asm.mixin.Unique;
+
+import divinerpg.objects.entities.entity.vanilla.EntityKobblin;
+import divinerpg.registry.LootTableRegistry;
+import divinerpg.registry.SoundRegistry;
 
 @Mixin(value = EntityKobblin.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntityKobblinRework extends EntityMob
 {
-    private int provokedLevel = 0;
-    private UUID provokedByUUID = null;
+    @Unique
+    private int $$provokedLevel = 0;
+
+    @Unique
+    private UUID $$provokedByUUID = null;
 
     private static final DataParameter<Boolean> CUSTOM_PROVOKED =
             EntityDataManager.createKey(EntityKobblin.class, DataSerializers.BOOLEAN);
@@ -40,6 +51,10 @@ public abstract class EntityKobblinRework extends EntityMob
         super(worldIn);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void entityInit()
     {
@@ -47,6 +62,10 @@ public abstract class EntityKobblinRework extends EntityMob
         this.dataManager.register(CUSTOM_PROVOKED, false);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected void applyEntityAttributes()
     {
@@ -58,19 +77,25 @@ public abstract class EntityKobblinRework extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean needsSpecialAI()
     {
         return true;
     }
 
-    protected void addBasicAI()
+    @Unique
+    protected void $$addBasicAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.8D));
     }
 
-    protected void addAttackingAI()
+    @Unique
+    protected void $$addAttackingAI()
     {
         this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, true)
         {
@@ -89,7 +114,7 @@ public abstract class EntityKobblinRework extends EntityMob
                     return false;
                 }
 
-                return target.getUniqueID().equals(provokedByUUID);
+                return target.getUniqueID().equals($$provokedByUUID);
             }
 
             @Override
@@ -107,11 +132,15 @@ public abstract class EntityKobblinRework extends EntityMob
                     return false;
                 }
 
-                return target.getUniqueID().equals(provokedByUUID);
+                return target.getUniqueID().equals($$provokedByUUID);
             }
         });
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void onUpdate()
     {
@@ -122,12 +151,12 @@ public abstract class EntityKobblinRework extends EntityMob
             return;
         }
 
-        if (this.provokedLevel > 0)
+        if (this.$$provokedLevel > 0)
         {
-            this.provokedLevel--;
+            this.$$provokedLevel--;
         }
 
-        if (!this.getProvoked() && this.provokedLevel <= 0)
+        if (!this.getProvoked() && this.$$provokedLevel <= 0)
         {
             this.renderYawOffset = 0.0F;
             EntityPlayer player = this.world.getNearestAttackablePlayer(this, 4.0F, 4.0F);
@@ -139,9 +168,9 @@ public abstract class EntityKobblinRework extends EntityMob
             }
         }
 
-        if (this.provokedByUUID != null && this.getAttackTarget() == null && this.provokedLevel > 0)
+        if (this.$$provokedByUUID != null && this.getAttackTarget() == null && this.$$provokedLevel > 0)
         {
-            Entity entity = ((WorldServer)this.world).getEntityFromUuid(this.provokedByUUID);
+            Entity entity = ((WorldServer)this.world).getEntityFromUuid(this.$$provokedByUUID);
 
             if (entity instanceof EntityPlayer && entity.isEntityAlive())
             {
@@ -149,55 +178,63 @@ public abstract class EntityKobblinRework extends EntityMob
             }
             else
             {
-                this.provokedByUUID = null;
-                this.provokedLevel = 0;
+                this.$$provokedByUUID = null;
+                this.$$provokedLevel = 0;
                 this.setProvoked(null);
             }
         }
 
-        if (this.provokedLevel <= 0 && this.getProvoked())
+        if (this.$$provokedLevel <= 0 && this.getProvoked())
         {
             this.setProvoked(null);
         }
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean getProvoked()
     {
         return this.dataManager.get(CUSTOM_PROVOKED);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void setProvoked(EntityPlayer player)
     {
         this.dataManager.set(CUSTOM_PROVOKED, true);
-        this.addBasicAI();
-        this.addAttackingAI();
+        this.$$addBasicAI();
+        this.$$addAttackingAI();
 
         if (player != null && !player.capabilities.isCreativeMode)
         {
             this.setAttackTarget(player);
-            this.provokedByUUID = player.getUniqueID();
-            this.provokedLevel = 600;
+            this.$$provokedByUUID = player.getUniqueID();
+            this.$$provokedLevel = 600;
         }
         else
         {
             this.dataManager.set(CUSTOM_PROVOKED, false);
             this.setAttackTarget(null);
-            this.provokedByUUID = null;
-            this.provokedLevel = 0;
+            this.$$provokedByUUID = null;
+            this.$$provokedLevel = 0;
         }
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entity)
+    public boolean attackEntityAsMob(@NonNull Entity entity)
     {
         if (!this.getProvoked())
         {
             return false;
         }
 
-        if (this.provokedByUUID != null && entity.getUniqueID().equals(this.provokedByUUID))
+        if (this.$$provokedByUUID != null && entity.getUniqueID().equals(this.$$provokedByUUID))
         {
             return super.attackEntityAsMob(entity);
         }
@@ -205,6 +242,10 @@ public abstract class EntityKobblinRework extends EntityMob
         return false;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
@@ -226,8 +267,8 @@ public abstract class EntityKobblinRework extends EntityMob
             }
             else
             {
-                this.provokedByUUID = player.getUniqueID();
-                this.provokedLevel = 600;
+                this.$$provokedByUUID = player.getUniqueID();
+                this.$$provokedLevel = 600;
                 this.setAttackTarget(player);
             }
         }
@@ -235,20 +276,28 @@ public abstract class EntityKobblinRework extends EntityMob
         return super.attackEntityFrom(source, amount);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void writeEntityToNBT(@NonNull NBTTagCompound tag)
     {
         super.writeEntityToNBT(tag);
         tag.setBoolean("Provoked", this.getProvoked());
 
-        if (this.provokedByUUID != null)
+        if (this.$$provokedByUUID != null)
         {
-            tag.setString("ProvokedBy", this.provokedByUUID.toString());
+            tag.setString("ProvokedBy", this.$$provokedByUUID.toString());
         }
 
-        tag.setInteger("ProvokedLevel", this.provokedLevel);
+        tag.setInteger("ProvokedLevel", this.$$provokedLevel);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void readEntityFromNBT(@NonNull NBTTagCompound tag)
     {
@@ -262,45 +311,69 @@ public abstract class EntityKobblinRework extends EntityMob
 
             if (!uuid.isEmpty())
             {
-                this.provokedByUUID = UUID.fromString(uuid);
-                this.provokedLevel = tag.getInteger("ProvokedLevel");
+                this.$$provokedByUUID = UUID.fromString(uuid);
+                this.$$provokedLevel = tag.getInteger("ProvokedLevel");
 
-                this.addBasicAI();
-                this.addAttackingAI();
+                this.$$addBasicAI();
+                this.$$addAttackingAI();
             }
         }
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected SoundEvent getHurtSound(@NonNull DamageSource source)
     {
         return SoundRegistry.KOBBLIN;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    @NonNull protected SoundEvent getDeathSound()
+    @NonNull
+    protected SoundEvent getDeathSound()
     {
         return SoundRegistry.KOBBLIN;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected ResourceLocation getLootTable()
     {
         return LootTableRegistry.ENTITIES_KOBBLIN;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected void playStepSound(@NonNull BlockPos pos, @NonNull Block blockIn)
     {
-
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public float getEyeHeight()
     {
         return 0.9F;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void addVelocity(double x, double y, double z)
     {
@@ -310,6 +383,10 @@ public abstract class EntityKobblinRework extends EntityMob
         }
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean getCanSpawnHere()
     {
@@ -319,6 +396,10 @@ public abstract class EntityKobblinRework extends EntityMob
                 super.getCanSpawnHere();
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public int getMaxSpawnedInChunk()
     {

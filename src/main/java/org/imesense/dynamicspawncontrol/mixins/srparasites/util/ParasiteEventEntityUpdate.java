@@ -1,13 +1,16 @@
 package org.imesense.dynamicspawncontrol.mixins.srparasites.util;
 
-import com.dhanantry.scapeandrunparasites.util.ParasiteEventEntity;
-import org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites.SRParasitesBlacklistData;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.dhanantry.scapeandrunparasites.util.ParasiteEventEntity;
+
+import org.imesense.dynamicspawncontrol.core.mixinconfig.srparasites.SRParasitesBlacklistData;
+
 @Mixin(value = ParasiteEventEntity.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class ParasiteEventEntityUpdate
 {
     @Inject(

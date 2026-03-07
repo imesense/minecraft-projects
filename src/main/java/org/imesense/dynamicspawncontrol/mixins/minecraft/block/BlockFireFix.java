@@ -1,12 +1,14 @@
 package org.imesense.dynamicspawncontrol.mixins.minecraft.block;
 
-import net.minecraft.block.Block;
+import java.util.Random;
+
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,10 +16,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import java.util.Random;
-
-//todo: очень тестовый фикс
 @Mixin(value = BlockFire.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class BlockFireFix
 {
     /**

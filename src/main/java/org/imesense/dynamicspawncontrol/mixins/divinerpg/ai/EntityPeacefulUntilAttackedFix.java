@@ -1,32 +1,49 @@
 package org.imesense.dynamicspawncontrol.mixins.divinerpg.ai;
 
-import divinerpg.objects.entities.entity.EntityPeacefulUntilAttacked;
+import java.util.UUID;
+
 import lombok.NonNull;
+import lombok.var;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Unique;
 
-import java.util.UUID;
+import divinerpg.objects.entities.entity.EntityPeacefulUntilAttacked;
 
 @Mixin(value = EntityPeacefulUntilAttacked.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
 {
-    private int customAngerLevel = 0;
+    @Unique
+    private int $$customAngerLevel = 0;
 
-    private UUID customAngerTargetUUID = null;
+    @Unique
+    private UUID $$customAngerTargetUUID = null;
 
     public EntityPeacefulUntilAttackedFix(World worldIn)
     {
         super(worldIn);
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     protected void initEntityAI()
     {
@@ -45,7 +62,7 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
             @Override
             public boolean shouldExecute()
             {
-                if (customAngerLevel <= 0)
+                if ($$customAngerLevel <= 0)
                 {
                     return false;
                 }
@@ -57,13 +74,13 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
                     return false;
                 }
 
-                return target.getUniqueID().equals(customAngerTargetUUID);
+                return target.getUniqueID().equals($$customAngerTargetUUID);
             }
 
             @Override
             public boolean shouldContinueExecuting()
             {
-                if (customAngerLevel <= 0)
+                if ($$customAngerLevel <= 0)
                 {
                     return false;
                 }
@@ -75,11 +92,12 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
                     return false;
                 }
 
-                return target.getUniqueID().equals(customAngerTargetUUID);
+                return target.getUniqueID().equals($$customAngerTargetUUID);
             }
         });
 
-        mob.targetTasks.addTask(1, new EntityAIHurtByTarget(mob, true, new Class[0])
+        var stub = new Class[0];
+        mob.targetTasks.addTask(1, new EntityAIHurtByTarget(mob, true, stub)
         {
             @Override
             public boolean shouldExecute()
@@ -91,8 +109,8 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
                     if (revengeTarget != null)
                     {
                         mob.setAttackTarget(revengeTarget);
-                        customAngerTargetUUID = revengeTarget.getUniqueID();
-                        customAngerLevel = 400 + mob.getRNG().nextInt(400);
+                        $$customAngerTargetUUID = revengeTarget.getUniqueID();
+                        $$customAngerLevel = 400 + mob.getRNG().nextInt(400);
 
                         return true;
                     }
@@ -103,16 +121,20 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         });
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    public boolean attackEntityAsMob(Entity entity)
+    public boolean attackEntityAsMob(@NonNull Entity entity)
     {
-        if (this.customAngerLevel <= 0)
+        if (this.$$customAngerLevel <= 0)
         {
             return false;
         }
 
-        if (this.customAngerTargetUUID != null &&
-                entity.getUniqueID().equals(this.customAngerTargetUUID))
+        if (this.$$customAngerTargetUUID != null &&
+                entity.getUniqueID().equals(this.$$customAngerTargetUUID))
         {
             return super.attackEntityAsMob(entity);
         }
@@ -120,8 +142,12 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         return false;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    public boolean attackEntityFrom(DamageSource source, float amount)
+    public boolean attackEntityFrom(@NonNull DamageSource source, float amount)
     {
         if (super.isEntityInvulnerable(source))
         {
@@ -134,8 +160,8 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
 
         if (entity instanceof EntityLivingBase)
         {
-            this.customAngerLevel = 400 + this.getRNG().nextInt(400);
-            this.customAngerTargetUUID = entity.getUniqueID();
+            this.$$customAngerLevel = 400 + this.getRNG().nextInt(400);
+            this.$$customAngerTargetUUID = entity.getUniqueID();
             this.setRevengeTarget((EntityLivingBase)entity);
             this.setAttackTarget((EntityLivingBase)entity);
         }
@@ -143,10 +169,14 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         return result;
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public boolean isAngry()
     {
-        return this.customAngerLevel > 0;
+        return this.$$customAngerLevel > 0;
     }
 
     @Override
@@ -159,11 +189,11 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
             return;
         }
 
-        if (this.customAngerLevel > 0)
+        if (this.$$customAngerLevel > 0)
         {
-            if (this.getAttackTarget() == null && this.customAngerTargetUUID != null)
+            if (this.getAttackTarget() == null && this.$$customAngerTargetUUID != null)
             {
-                EntityPlayer player = this.world.getPlayerEntityByUUID(this.customAngerTargetUUID);
+                EntityPlayer player = this.world.getPlayerEntityByUUID(this.$$customAngerTargetUUID);
 
                 if (player != null)
                 {
@@ -173,38 +203,50 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         }
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
-    public boolean isPreventingPlayerRest(EntityPlayer playerIn)
+    public boolean isPreventingPlayerRest(@NonNull EntityPlayer playerIn)
     {
-        return this.customAngerLevel > 0 &&
-                this.customAngerTargetUUID != null &&
-                this.customAngerTargetUUID.equals(playerIn.getUniqueID());
+        return this.$$customAngerLevel > 0 &&
+                this.$$customAngerTargetUUID != null &&
+                this.$$customAngerTargetUUID.equals(playerIn.getUniqueID());
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void readEntityFromNBT(@NonNull NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
 
-        this.customAngerLevel = compound.getShort("Anger");
+        this.$$customAngerLevel = compound.getShort("Anger");
         String s = compound.getString("HurtBy");
 
         if (!s.isEmpty())
         {
-            this.customAngerTargetUUID = UUID.fromString(s);
+            this.$$customAngerTargetUUID = UUID.fromString(s);
         }
     }
 
+    /**
+     * @author OldSerpskiStalker
+     * @reason Rewrite broken logic
+     */
     @Overwrite
     public void writeEntityToNBT(@NonNull NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
 
-        compound.setShort("Anger", (short)this.customAngerLevel);
+        compound.setShort("Anger", (short)this.$$customAngerLevel);
 
-        if (this.customAngerTargetUUID != null)
+        if (this.$$customAngerTargetUUID != null)
         {
-            compound.setString("HurtBy", this.customAngerTargetUUID.toString());
+            compound.setString("HurtBy", this.$$customAngerTargetUUID.toString());
         }
     }
 }

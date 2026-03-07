@@ -1,11 +1,13 @@
 package org.imesense.dynamicspawncontrol.mixins.divinerpg.entity;
 
-import divinerpg.objects.entities.entity.EntityDivineTameable;
-import divinerpg.objects.entities.entity.nether.EntityHellPig;
-import divinerpg.registry.LootTableRegistry;
+import java.util.List;
+
 import lombok.NonNull;
+
 import net.minecraft.block.Block;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.passive.EntityHorse;
@@ -26,19 +28,28 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
-import java.util.List;
+import org.spongepowered.asm.mixin.Unique;
+
+import divinerpg.objects.entities.entity.EntityDivineTameable;
+import divinerpg.objects.entities.entity.nether.EntityHellPig;
+import divinerpg.registry.LootTableRegistry;
 
 @Mixin(value = EntityHellPig.class, remap = false)
+@SuppressWarnings("UnusedMixin")
 public abstract class EntityHellPigFix extends EntityDivineTameable
 {
-    private static final DataParameter<Float> HEALTH;
-    private static final DataParameter<Boolean> ANGRY;
+    @Unique
+    private static final DataParameter<Float> $$HEALTH;
+
+    @Unique
+    private static final DataParameter<Boolean> $$ANGRY;
 
     static
     {
-        HEALTH = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.FLOAT);
-        ANGRY = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.BOOLEAN);
+        $$HEALTH = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.FLOAT);
+        $$ANGRY = EntityDataManager.createKey(EntityHellPig.class, DataSerializers.BOOLEAN);
     }
 
     public EntityHellPigFix(World worldIn, EntityPlayer player)
@@ -62,14 +73,14 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
     protected void entityInit()
     {
         super.entityInit();
-        this.dataManager.register(HEALTH, this.getHealth());
-        this.dataManager.register(ANGRY, Boolean.FALSE);
+        this.dataManager.register($$HEALTH, this.getHealth());
+        this.dataManager.register($$ANGRY, Boolean.FALSE);
     }
 
     protected void updateAITasks()
     {
         super.updateAITasks();
-        this.dataManager.set(HEALTH, this.getHealth());
+        this.dataManager.set($$HEALTH, this.getHealth());
     }
 
     @Override
@@ -78,11 +89,11 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
         if (attackTarget != null && this.getRevengeTarget() != null &&
                 attackTarget.equals(this.getRevengeTarget()))
         {
-            this.setAngry(true);
+            this.$$setAngry(true);
         }
         else if (attackTarget == null)
         {
-            this.setAngry(false);
+            this.$$setAngry(false);
         }
 
         super.setAttackTarget(attackTarget);
@@ -117,7 +128,7 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
 
             EntityLivingBase attacker = (EntityLivingBase) entity;
 
-            this.setAngry(true);
+            this.$$setAngry(true);
 
             if (!this.world.isRemote)
             {
@@ -129,7 +140,7 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
                 {
                     if (!pig.isTamed() && !pig.isAngry() && pig != this)
                     {
-                        pig.setAngry(true);
+                        pig.$$setAngry(true);
 
                         if (pig.getAttackTarget() == null)
                         {
@@ -152,7 +163,7 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
             {
                 ItemFood food = (ItemFood)itemstack.getItem();
 
-                if (food.isWolfsFavoriteMeat() && this.dataManager.get(HEALTH) < 20.0F)
+                if (food.isWolfsFavoriteMeat() && this.dataManager.get($$HEALTH) < 20.0F)
                 {
                     if (!player.capabilities.isCreativeMode)
                     {
@@ -222,17 +233,18 @@ public abstract class EntityHellPigFix extends EntityDivineTameable
     {
         super.readEntityFromNBT(nbtTagCompound);
 
-        this.setAngry(nbtTagCompound.getBoolean("Angry"));
+        this.$$setAngry(nbtTagCompound.getBoolean("Angry"));
     }
 
     public boolean isAngry()
     {
-        return this.dataManager.get(ANGRY);
+        return this.dataManager.get($$ANGRY);
     }
 
-    public void setAngry(boolean angry)
+    @Unique
+    public void $$setAngry(boolean angry)
     {
-        this.dataManager.set(ANGRY, angry);
+        this.dataManager.set($$ANGRY, angry);
     }
 
     protected boolean canDespawn()
