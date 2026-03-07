@@ -1,15 +1,15 @@
-package org.imesense.dynamicspawncontrol.mixins.cavesplus;
+package org.imesense.dynamicspawncontrol.mixins.cavesplus.cubes;
 
 import java.util.HashMap;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-import net.mcreator.caves.procedure.ProcedureStalagmitesGenJungle;
+import net.mcreator.caves.procedure.ProcedureCubesGenOcean;
 
-@Mixin(value = ProcedureStalagmitesGenJungle.class, remap = false)
+@Mixin(value = ProcedureCubesGenOcean.class, remap = false)
 @SuppressWarnings("UnusedMixin")
-public abstract class ProcedureStalagmitesGenJungleUpdate
+public abstract class ProcedureCubesGenOceanUpdate
 {
     /**
      * @author OldSerpskiStalker
