@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.renderer.night;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.renderer.night.unpack.LightmapUnpack;
-import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
+import org.imesense.dynamicspawncontrol.mixins.minecraft.IEntityRendererAccessor;
 
 import static org.imesense.dynamicspawncontrol.core.renderer.night.block.BlockLightStage.*;
 import static org.imesense.dynamicspawncontrol.core.renderer.night.color.ColorClamp.*;

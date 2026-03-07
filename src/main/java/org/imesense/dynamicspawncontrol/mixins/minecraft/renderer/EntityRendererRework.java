@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.core.renderer.night.BaseCalculateLightMapColor;
 import org.imesense.dynamicspawncontrol.core.renderer.night.DarkCalculateLightMapColor;
-import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
+import org.imesense.dynamicspawncontrol.mixins.minecraft.IEntityRendererAccessor;
 
 import static org.imesense.dynamicspawncontrol.core.renderer.night.light.MoonLightStage.finalPackDarkColor;
 

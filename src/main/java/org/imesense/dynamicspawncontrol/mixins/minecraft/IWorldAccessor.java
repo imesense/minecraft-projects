@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.mixins.interfaces;
+package org.imesense.dynamicspawncontrol.mixins.minecraft;
 
 import net.minecraft.world.World;
 

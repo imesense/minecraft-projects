@@ -4,7 +4,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
-import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
+import org.imesense.dynamicspawncontrol.mixins.minecraft.IEntityRendererAccessor;
 
 public abstract class BaseCalculateLightMapColor
 {

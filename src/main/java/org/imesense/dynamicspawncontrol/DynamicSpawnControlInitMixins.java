@@ -25,10 +25,10 @@ public enum DynamicSpawnControlInitMixins
     WIRELESS_INDUSTRY_FIX(true, "assets/mixins/ic2expwirelessindustry/WorldLoadUnloadHandler.Fix.json", "wirelesstools"),
 
     // ===== Interfaces =====
-    ENTITY_RENDERER_ACCESSOR(false, "assets/mixins/interfaces/IEntityRendererAccessor.json"),
-    GUI_INGAME_ACCESSOR(false, "assets/mixins/interfaces/IGuiIngameAccessor.json"),
-    WORLD_ACCESSOR(false, "assets/mixins/interfaces/IWorldAccessor.json"),
-    VEC3D_ACCESSOR(false, "assets/mixins/interfaces/IVec3dAccessor.json"),
+    ENTITY_RENDERER_ACCESSOR(false, "assets/mixins/minecraft/IEntityRendererAccessor.json"),
+    GUI_INGAME_ACCESSOR(false, "assets/mixins/minecraft/IGuiIngameAccessor.json"),
+    WORLD_ACCESSOR(false, "assets/mixins/minecraft/IWorldAccessor.json"),
+    VEC3D_ACCESSOR(false, "assets/mixins/minecraft/IVec3dAccessor.json"),
 
     // ===== Minecraft =====
     ENCHANTMENT_UPDATE(false, "assets/mixins/minecraft/enchantment/Enchantment.Update.json"),

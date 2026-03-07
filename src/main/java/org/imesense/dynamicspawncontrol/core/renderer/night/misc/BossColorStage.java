@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.renderer.night.misc;
 
-import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
+import org.imesense.dynamicspawncontrol.mixins.minecraft.IEntityRendererAccessor;
 
 public abstract class BossColorStage
 {

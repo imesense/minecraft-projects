@@ -16,7 +16,7 @@ import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.logfile.EarlyLogBuffer;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
-import org.imesense.dynamicspawncontrol.mixins.interfaces.IWorldAccessor;
+import org.imesense.dynamicspawncontrol.mixins.minecraft.IWorldAccessor;
 
 @Mixin(value = World.class, remap = false)
 @SuppressWarnings("UnusedMixin")

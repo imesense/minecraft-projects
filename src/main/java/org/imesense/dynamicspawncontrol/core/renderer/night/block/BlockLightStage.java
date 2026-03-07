@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.renderer.night.block;
 
-import org.imesense.dynamicspawncontrol.mixins.interfaces.IEntityRendererAccessor;
+import org.imesense.dynamicspawncontrol.mixins.minecraft.IEntityRendererAccessor;
 
 import static org.imesense.dynamicspawncontrol.core.renderer.night.math.FastMath.pow4;
 

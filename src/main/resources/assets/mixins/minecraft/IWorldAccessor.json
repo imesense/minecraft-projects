@@ -7,7 +7,7 @@
   "minVersion": "0.8",
   "mixins":
   [
-    "interfaces.IWorldAccessor"
+    "minecraft.IWorldAccessor"
   ],
   "injectors":
   {
