@@ -54,9 +54,9 @@ public final class ZombieShieldUtils
                     net.minecraft.init.SoundEvents.ENTITY_ITEM_BREAK,
                     SoundCategory.HOSTILE, 1.0F, 1.0F);
 
-            NBTTagCompound dscData = ZombieShieldNBT.getDSCData(zombie);
-            dscData.setFloat(ZombieShieldNBT.SHIELD_HEALTH, 0);
-            dscData.setInteger(ZombieShieldNBT.SHIELD_COOLDOWN, SHIELD_BREAK_COOLDOWN);
+            NBTTagCompound dscData = ZombieShieldNbt.getDSCData(zombie);
+            dscData.setFloat(ZombieShieldNbt.SHIELD_HEALTH, 0);
+            dscData.setInteger(ZombieShieldNbt.SHIELD_COOLDOWN, SHIELD_BREAK_COOLDOWN);
 
             if (DESTROY_SHIELD_ON_BREAK)
             {

@@ -17,7 +17,7 @@ import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldConfig.*;
 import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldEffects.*;
-import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldNBT.*;
+import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldNbt.*;
 import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldUtils.*;
 
 @InitLog
