@@ -9,7 +9,6 @@ import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.renderer.fog.BedrockVoidFog;
-import org.imesense.dynamicspawncontrol.core.renderer.fog.BloodMoonRedFog;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)
@@ -23,8 +22,6 @@ public final class OnEventEntityViewRenderEventRenderFogEvent extends BaseOnEven
     @SubscribeEvent(priority = EventPriority.LOW)
     public void OnEntityViewRenderEventRenderFogEvent_LOW(EntityViewRenderEvent.RenderFogEvent event)
     {
-        //BloodMoonRedFog.getInstance().handleRenderFog(event);
-
         BedrockVoidFog.getInstance().handleFogVoidRender(event);
     }
 }
