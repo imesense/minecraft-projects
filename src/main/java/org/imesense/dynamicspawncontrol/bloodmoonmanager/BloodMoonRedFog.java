@@ -10,19 +10,41 @@ public class BloodMoonRedFog
     @SubscribeEvent
     public void onFogDensity(EntityViewRenderEvent.FogDensity event)
     {
+        float originalDensity = event.getDensity();
+
+        // Изменяем плотность (например, делаем в 2 раза гуще)
+        float newDensity = originalDensity * 2.0f;
+
+        // Устанавливаем новую плотность
+        event.setDensity(newDensity);
+
         event.setCanceled(true);
-
-        GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP2);
-
-        float pulse = (float)Math.sin(System.currentTimeMillis() * 0.001) * 0.005F;
-        GL11.glFogf(GL11.GL_FOG_DENSITY, 0.025F + pulse);
     }
 
     @SubscribeEvent
     public void onFogColors(EntityViewRenderEvent.FogColors event)
     {
-        event.setRed(0.8F);
-        event.setGreen(0.05F);
-        event.setBlue(0.05F);
+        float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
+
+        // Получаем текущие цвета (стандартные для текущего биома/погоды)
+        float currentRed = event.getRed();
+        float currentGreen = event.getGreen();
+        float currentBlue = event.getBlue();
+
+        // Целевые цвета кровавой луны
+        float targetRed = 0.8F;
+        float targetGreen = 0.05F;
+        float targetBlue = 0.05F;
+
+        // Интерполируем между текущими и целевыми цветами
+        // Но оставляем часть оригинального цвета всегда
+        float red = currentRed * (1.0f - factor * 0.8f) + targetRed * (factor * 0.8f);
+        float green = currentGreen * (1.0f - factor * 0.9f) + targetGreen * (factor * 0.9f);
+        float blue = currentBlue * (1.0f - factor * 0.9f) + targetBlue * (factor * 0.9f);
+
+        // Клиппим чтобы цвета не выходили за пределы
+        event.setRed(Math.min(1.0f, red));
+        event.setGreen(Math.min(1.0f, green));
+        event.setBlue(Math.min(1.0f, blue));
     }
 }
