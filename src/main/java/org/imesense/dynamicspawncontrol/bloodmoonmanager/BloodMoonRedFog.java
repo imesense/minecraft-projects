@@ -3,17 +3,26 @@ package org.imesense.dynamicspawncontrol.bloodmoonmanager;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.lwjgl.opengl.GL11;
 
 public class BloodMoonRedFog
 {
+    //TODO: Механизм расчета тумана:
+    // У нас есть оригинальный метод event.getDensity();, который всегда 1. вместо него
+    // Когда начинается кровавая луна, отключаем оригинальное событи и сразу подменяем этот кофэ.
+    // С кровавой луны, после чего он начинает прибывать, не ломая туман и отключая обработку оригинального события
+    // С убываением тоже самое, когда коэф. достигает 0.1, мы отключаем его влияение и переводим туман в оригинальное
+    // Состояние без учета коэф. луны
     @SubscribeEvent
     public void onFogDensity(EntityViewRenderEvent.FogDensity event)
     {
         float originalDensity = event.getDensity();
 
+        LogManager.debug("originalDensity: " + originalDensity);
+
         // Изменяем плотность (например, делаем в 2 раза гуще)
-        float newDensity = originalDensity * 2.0f;
+        float newDensity = originalDensity * 2.5f;
 
         // Устанавливаем новую плотность
         event.setDensity(newDensity);
