@@ -8,37 +8,21 @@ import org.lwjgl.opengl.GL11;
 public class BloodMoonRedFog
 {
     @SubscribeEvent
-    public void onFogColors(EntityViewRenderEvent.FogColors event)
+    public void onFogDensity(EntityViewRenderEvent.FogDensity event)
     {
-        float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
+        event.setCanceled(true);
 
-        float redTarget = 0.75F;
-        float greenTarget = 0.05F;
-        float blueTarget = 0.05F;
+        GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP2);
 
-        event.setRed(event.getRed() * (1 - factor) + redTarget * factor);
-        event.setGreen(event.getGreen() * (1 - factor) + greenTarget * factor);
-        event.setBlue(event.getBlue() * (1 - factor) + blueTarget * factor);
+        float pulse = (float)Math.sin(System.currentTimeMillis() * 0.001) * 0.005F;
+        GL11.glFogf(GL11.GL_FOG_DENSITY, 0.025F + pulse);
     }
 
     @SubscribeEvent
-    public void onRenderFog(EntityViewRenderEvent.RenderFogEvent event)
+    public void onFogColors(EntityViewRenderEvent.FogColors event)
     {
-        float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
-
-        float farPlane = event.getFarPlaneDistance();
-
-        //TODO: Ближний туман, но ломается днем границы
-        /*
-        float start = farPlane * (0.25f - 0.22f * factor);
-        float end   = farPlane * (0.45f - 0.40f * factor);
-         */
-
-        float start = farPlane * (0.75f - 0.70f * factor);
-        float end   = farPlane * (1.0f  - 0.75f * factor);
-
-        GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
-        GlStateManager.setFogStart(start);
-        GlStateManager.setFogEnd(end);
+        event.setRed(0.8F);
+        event.setGreen(0.05F);
+        event.setBlue(0.05F);
     }
 }
