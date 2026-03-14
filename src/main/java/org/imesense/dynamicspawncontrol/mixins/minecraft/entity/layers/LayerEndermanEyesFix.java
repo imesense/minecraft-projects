@@ -9,28 +9,28 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.util.ResourceLocation;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(LayerEndermanEyes.class)
 @SuppressWarnings("UnusedMixin")
 public abstract class LayerEndermanEyesFix implements LayerRenderer<EntityEnderman>
 {
-    @Unique
-    private static final ResourceLocation RES_ENDERMAN_EYES = new ResourceLocation("textures/entity/enderman/enderman_eyes.png");
+    @Shadow @Final private static ResourceLocation RES_ENDERMAN_EYES;
 
-    @Unique
-    private final RenderEnderman $$endermanRenderer;
+    @Shadow @Final private RenderEnderman endermanRenderer;
 
     public LayerEndermanEyesFix(RenderEnderman endermanRendererIn)
     {
-        this.$$endermanRenderer = endermanRendererIn;
+        this.endermanRenderer = endermanRendererIn;
     }
 
     public void doRenderLayer(EntityEnderman entitylivingbaseIn, float limbSwing, float limbSwingAmount,
                               float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
-        this.$$endermanRenderer.bindTexture(RES_ENDERMAN_EYES);
+        this.endermanRenderer.bindTexture(RES_ENDERMAN_EYES);
 
         GlStateManager.enableBlend();
 
@@ -50,12 +50,12 @@ public abstract class LayerEndermanEyesFix implements LayerRenderer<EntityEnderm
 
         Minecraft.getMinecraft().entityRenderer.setupFogColor(true);
 
-        this.$$endermanRenderer.getMainModel().render(entitylivingbaseIn, limbSwing,
+        this.endermanRenderer.getMainModel().render(entitylivingbaseIn, limbSwing,
                 limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 
         Minecraft.getMinecraft().entityRenderer.setupFogColor(false);
 
-        this.$$endermanRenderer.setLightmap(entitylivingbaseIn);
+        this.endermanRenderer.setLightmap(entitylivingbaseIn);
 
         GlStateManager.disableBlend();
 
