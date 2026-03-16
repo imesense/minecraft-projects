@@ -40,21 +40,12 @@ public interface IEntityRendererAccessor
     @Invoker("getNightVisionBrightness")
     float invokeGetNightVisionBrightness(EntityLivingBase entity, float partialTicks);
 
-    @Accessor("fogColorRed")
-    void setFogColorRed(float red);
+    @Accessor("farPlaneDistance")
+    float accessorGetFarPlaneDistance();
 
-    @Accessor("fogColorGreen")
-    void setFogColorGreen(float green);
+    @Accessor("cloudFog")
+    boolean accessorGetCloudFog();
 
-    @Accessor("fogColorBlue")
-    void setFogColorBlue(float blue);
-
-    @Accessor("fogColorRed")
-    float getFogColorRed();
-
-    @Accessor("fogColorGreen")
-    float getFogColorGreen();
-
-    @Accessor("fogColorBlue")
-    float getFogColorBlue();
+    @Invoker("setupFogColor")
+    void invokeSetupFogColor(boolean black);
 }

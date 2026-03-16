@@ -17,43 +17,43 @@ public class BloodMoonRedFog
     @SubscribeEvent
     public void onFogDensity(EntityViewRenderEvent.FogDensity event)
     {
-        float originalDensity = event.getDensity();
+        //float originalDensity = event.getDensity();
 
-        LogManager.debug("originalDensity: " + originalDensity);
+        //LogManager.debug("originalDensity: " + originalDensity);
 
         // Изменяем плотность (например, делаем в 2 раза гуще)
-        float newDensity = originalDensity * 2.5f;
+       // float newDensity = originalDensity * 2.5f;
 
         // Устанавливаем новую плотность
-        event.setDensity(newDensity);
+       // event.setDensity(newDensity);
 
-        event.setCanceled(true);
+        //event.setCanceled(true);
     }
 
     @SubscribeEvent
     public void onFogColors(EntityViewRenderEvent.FogColors event)
     {
-        float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
+        //float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
 
         // Получаем текущие цвета (стандартные для текущего биома/погоды)
-        float currentRed = event.getRed();
-        float currentGreen = event.getGreen();
-        float currentBlue = event.getBlue();
+        //float currentRed = event.getRed();
+        //float currentGreen = event.getGreen();
+        //float currentBlue = event.getBlue();
 
         // Целевые цвета кровавой луны
-        float targetRed = 0.8F;
-        float targetGreen = 0.05F;
-        float targetBlue = 0.05F;
+        //float targetRed = 0.8F;
+        //float targetGreen = 0.05F;
+        //float targetBlue = 0.05F;
 
         // Интерполируем между текущими и целевыми цветами
         // Но оставляем часть оригинального цвета всегда
-        float red = currentRed * (1.0f - factor * 0.8f) + targetRed * (factor * 0.8f);
-        float green = currentGreen * (1.0f - factor * 0.9f) + targetGreen * (factor * 0.9f);
-        float blue = currentBlue * (1.0f - factor * 0.9f) + targetBlue * (factor * 0.9f);
+        //float red = currentRed * (1.0f - factor * 0.8f) + targetRed * (factor * 0.8f);
+        //float green = currentGreen * (1.0f - factor * 0.9f) + targetGreen * (factor * 0.9f);
+        //float blue = currentBlue * (1.0f - factor * 0.9f) + targetBlue * (factor * 0.9f);
 
         // Клиппим чтобы цвета не выходили за пределы
-        event.setRed(Math.min(1.0f, red));
-        event.setGreen(Math.min(1.0f, green));
-        event.setBlue(Math.min(1.0f, blue));
+        //event.setRed(Math.min(1.0f, red));
+        //event.setGreen(Math.min(1.0f, green));
+        //event.setBlue(Math.min(1.0f, blue));
     }
 }
