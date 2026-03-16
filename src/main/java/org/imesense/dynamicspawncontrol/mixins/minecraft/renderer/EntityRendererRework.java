@@ -96,8 +96,8 @@ public abstract class EntityRendererRework
 
         accessor.invokeSetupFogColor(false);
 
-        GlStateManager.glNormal3f(0.0F, -1.0F, 0.0F);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.glNormal3f(0.0f, -1.0f, 0.0f);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
 
         IBlockState iblockstate = ActiveRenderInfo.getBlockStateAtEntityViewpoint(
                 accessor.accessorGetMinecraft().world, entity, partialTicks);
@@ -107,12 +107,12 @@ public abstract class EntityRendererRework
 
         if (entity instanceof EntityLivingBase && ((EntityLivingBase)entity).isPotionActive(MobEffects.BLINDNESS))
         {
-            float f1 = 5.0F;
-            int i = ((EntityLivingBase)entity).getActivePotionEffect(MobEffects.BLINDNESS).getDuration();
+            float blindFogDistance = 5.0f;
+            int blindDuration = ((EntityLivingBase)entity).getActivePotionEffect(MobEffects.BLINDNESS).getDuration();
 
-            if (i < 20)
+            if (blindDuration < 20)
             {
-                f1 = 5.0F + (farPlaneDistance - 5.0F) * (1.0F - (float)i / 20.0F);
+                blindFogDistance = 5.0f + (farPlaneDistance - 5.0f) * (1.0f - (float)blindDuration / 20.0f);
             }
 
             GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
@@ -120,12 +120,12 @@ public abstract class EntityRendererRework
             if (startCoords == -1)
             {
                 GlStateManager.setFogStart(0.0F);
-                GlStateManager.setFogEnd(f1 * 0.8F);
+                GlStateManager.setFogEnd(blindFogDistance * 0.8f);
             }
             else
             {
-                GlStateManager.setFogStart(f1 * 0.25F);
-                GlStateManager.setFogEnd(f1);
+                GlStateManager.setFogStart(blindFogDistance * 0.25f);
+                GlStateManager.setFogEnd(blindFogDistance);
             }
 
             if (GLContext.getCapabilities().GL_NV_fog_distance)
@@ -136,7 +136,7 @@ public abstract class EntityRendererRework
         else if (cloudFog)
         {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
-            GlStateManager.setFogDensity(0.1F);
+            GlStateManager.setFogDensity(0.1f);
         }
         else if (iblockstate.getMaterial() == Material.WATER)
         {
@@ -146,38 +146,38 @@ public abstract class EntityRendererRework
             {
                 if (((EntityLivingBase)entity).isPotionActive(MobEffects.WATER_BREATHING))
                 {
-                    GlStateManager.setFogDensity(0.01F);
+                    GlStateManager.setFogDensity(0.01f);
                 }
                 else
                 {
-                    GlStateManager.setFogDensity(0.1F -
-                            (float) EnchantmentHelper.getRespirationModifier((EntityLivingBase)entity) * 0.03F);
+                    GlStateManager.setFogDensity(0.1f -
+                            (float) EnchantmentHelper.getRespirationModifier((EntityLivingBase)entity) * 0.03f);
                 }
             }
             else
             {
-                GlStateManager.setFogDensity(0.1F);
+                GlStateManager.setFogDensity(0.1f);
             }
         }
         else if (iblockstate.getMaterial() == Material.LAVA)
         {
             GlStateManager.setFog(GlStateManager.FogMode.EXP);
-            GlStateManager.setFogDensity(2.0F);
+            GlStateManager.setFogDensity(2.0f);
         }
         else
         {
-            float f = farPlaneDistance;
+            float fogEndDistance = farPlaneDistance;
             GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
 
             if (startCoords == -1)
             {
-                GlStateManager.setFogStart(0.0F);
-                GlStateManager.setFogEnd(f);
+                GlStateManager.setFogStart(0.0f);
+                GlStateManager.setFogEnd(fogEndDistance);
             }
             else
             {
-                GlStateManager.setFogStart(f * 0.75F);
-                GlStateManager.setFogEnd(f);
+                GlStateManager.setFogStart(fogEndDistance * 0.75f);
+                GlStateManager.setFogEnd(fogEndDistance);
             }
 
             if (GLContext.getCapabilities().GL_NV_fog_distance)
@@ -188,13 +188,33 @@ public abstract class EntityRendererRework
             if (accessor.accessorGetMinecraft().world.provider.doesXZShowFog((int)entity.posX, (int)entity.posZ) ||
                     accessor.accessorGetMinecraft().ingameGUI.getBossOverlay().shouldCreateFog())
             {
-                GlStateManager.setFogStart(f * 0.05F);
-                GlStateManager.setFogEnd(Math.min(f, 192.0F) * 0.5F);
+                GlStateManager.setFogStart(fogEndDistance * 0.05f);
+                GlStateManager.setFogEnd(Math.min(fogEndDistance, 192.0f) * 0.5f);
             }
         }
 
         GlStateManager.enableColorMaterial();
         GlStateManager.enableFog();
         GlStateManager.colorMaterial(1028, 4608);
+    }
+
+    @Overwrite
+    public void setupFogColor(boolean black)
+    {
+        IEntityRendererAccessor accessor = (IEntityRendererAccessor) this;
+
+        if (black)
+        {
+            GlStateManager.glFog(2918,
+                    accessor.invokeSetFogColorBuffer(0.0f, 0.0f, 0.0f, 1.0f));
+        }
+        else
+        {
+            float red = accessor.accessorGetFogColorRed();
+            float green = accessor.accessorGetFogColorGreen();
+            float blue = accessor.accessorGetFogColorBlue();
+
+            GlStateManager.glFog(2918, accessor.invokeSetFogColorBuffer(red, green, blue, 1.0f));
+        }
     }
 }

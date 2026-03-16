@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
+import java.nio.FloatBuffer;
+
 @Mixin(EntityRenderer.class)
 @SuppressWarnings("UnusedMixin")
 public interface IEntityRendererAccessor
@@ -48,4 +50,16 @@ public interface IEntityRendererAccessor
 
     @Invoker("setupFogColor")
     void invokeSetupFogColor(boolean black);
+
+    @Accessor("fogColorRed")
+    float accessorGetFogColorRed();
+
+    @Accessor("fogColorGreen")
+    float accessorGetFogColorGreen();
+
+    @Accessor("fogColorBlue")
+    float accessorGetFogColorBlue();
+
+    @Invoker("setFogColorBuffer")
+    FloatBuffer invokeSetFogColorBuffer(float red, float green, float blue, float alpha);
 }
