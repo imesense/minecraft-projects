@@ -25,7 +25,7 @@ public class ClientBloodmoonHandler
     boolean bloodmoonActive = false;
     public float fogStrength = 0.0f;
 
-    public static float BLOODMOON_FOG_FACTOR = 0.0f;
+    public static float BLOODMOON_FOG_FACTOR = 0.1f;
 
     public boolean isBloodmoonActive() {
         return this.bloodmoonActive;
@@ -74,6 +74,9 @@ public class ClientBloodmoonHandler
 
     @SubscribeEvent
     public void clientTick(TickEvent.ClientTickEvent event) {
+        if (!isBloodmoonActive())
+            LogManager.debug("BLOODMOON_FOG_FACTOR 0 : " + BLOODMOON_FOG_FACTOR);
+
         if (isBloodmoonActive()) {
             WorldClient world = Minecraft.getMinecraft().world;
             EntityPlayerSP player = Minecraft.getMinecraft().player;
@@ -86,26 +89,35 @@ public class ClientBloodmoonHandler
                 this.moonColorRed = (float) (this.sin * 0.699999988079071d);
                 this.fogRemove = (float) (this.sin * this.d * 6000.0d);
 
+                // Расчет BLOODMOON_FOG_FACTOR с начальным значением 0.1f
+                float targetFactor = 0.0f;
+
                 if (difTime < 3000.0f)
                 {
-                    BLOODMOON_FOG_FACTOR = 0.0f;
-                }
-                else if (difTime < 6000.0f)
-                {
-                    BLOODMOON_FOG_FACTOR = (difTime - 3000.0f) / 3000.0f;
+                    // От 12000 до 15000 (difTime от 0 до 3000) - нарастание
+                    targetFactor = (difTime) / 3000.0f;
                 }
                 else if (difTime < 9500.0f)
                 {
-                    BLOODMOON_FOG_FACTOR = 1.0f;
+                    // От 15000 до 21500 (difTime от 3000 до 9500) - пик
+                    targetFactor = 1.0f;
                 }
                 else
                 {
-                    BLOODMOON_FOG_FACTOR = 1.0f - ((difTime - 9500.0f) / 2500.0f);
+                    // От 21500 до 24000 (difTime от 9500 до 12000) - спад
+                    // difTime_max = 12000 (когда время 24000)
+                    targetFactor = 1.0f - ((difTime - 9500.0f) / 2500.0f);
                 }
 
-                BLOODMOON_FOG_FACTOR = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+                // Применяем масштабирование от 0.1 до 1
+                // targetFactor сейчас от 0 до 1, преобразуем в диапазон 0.1 до 1
+                BLOODMOON_FOG_FACTOR = 0.1f + targetFactor * 0.9f;
+
+                // Дополнительная проверка на граничные случаи
+                BLOODMOON_FOG_FACTOR = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.1f, 1.0f);
 
                 LogManager.debug("BLOODMOON_FOG_FACTOR: " + BLOODMOON_FOG_FACTOR);
+
                 if (world.provider.getDimension() != 0) {
                     this.bloodmoonActive = false;
                     return;
