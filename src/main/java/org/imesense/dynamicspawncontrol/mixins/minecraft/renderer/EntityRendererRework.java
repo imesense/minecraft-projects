@@ -169,15 +169,52 @@ public abstract class EntityRendererRework
             float fogEndDistance = farPlaneDistance;
             GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
 
-            if (startCoords == -1)
+            if (ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR > 0.0f)
             {
-                GlStateManager.setFogStart(0.0f);
-                GlStateManager.setFogEnd(fogEndDistance);
+                final float TARGET_START_MULT = 0.2f;
+                final float TARGET_END_MULT = 0.35f;
+
+                final float NORMAL_START_MULT = 0.75f;
+                final float NORMAL_END_MULT = 1.0f;
+
+                float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
+
+                if (factor > 1.0f)
+                {
+                    factor = 1.0f;
+                }
+
+                if (factor < 0.0f)
+                {
+                    factor = 0.0f;
+                }
+
+                float fogStartMultiplier = NORMAL_START_MULT + (TARGET_START_MULT - NORMAL_START_MULT) * factor;
+                float fogEndMultiplier = NORMAL_END_MULT + (TARGET_END_MULT - NORMAL_END_MULT) * factor;
+
+                if (startCoords == -1)
+                {
+                    GlStateManager.setFogStart(0.0f);
+                    GlStateManager.setFogEnd(fogEndDistance * fogEndMultiplier);
+                }
+                else
+                {
+                    GlStateManager.setFogStart(fogEndDistance * fogStartMultiplier);
+                    GlStateManager.setFogEnd(fogEndDistance * fogEndMultiplier);
+                }
             }
             else
             {
-                GlStateManager.setFogStart(fogEndDistance * 0.75f);
-                GlStateManager.setFogEnd(fogEndDistance);
+                if (startCoords == -1)
+                {
+                    GlStateManager.setFogStart(0.0f);
+                    GlStateManager.setFogEnd(fogEndDistance);
+                }
+                else
+                {
+                    GlStateManager.setFogStart(fogEndDistance * 0.75f);
+                    GlStateManager.setFogEnd(fogEndDistance);
+                }
             }
 
             if (GLContext.getCapabilities().GL_NV_fog_distance)
@@ -214,7 +251,14 @@ public abstract class EntityRendererRework
             float green = accessor.accessorGetFogColorGreen();
             float blue = accessor.accessorGetFogColorBlue();
 
-            GlStateManager.glFog(2918, accessor.invokeSetFogColorBuffer(red, green, blue, 1.0f));
+            if (ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR > 0.0f)
+            {
+                GlStateManager.glFog(2918, accessor.invokeSetFogColorBuffer(red, green, blue, 1.0f));
+            }
+            else
+            {
+                GlStateManager.glFog(2918, accessor.invokeSetFogColorBuffer(red, green, blue, 1.0f));
+            }
         }
     }
 }

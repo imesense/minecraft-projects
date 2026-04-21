@@ -86,26 +86,30 @@ public class ClientBloodmoonHandler
                 this.moonColorRed = (float) (this.sin * 0.699999988079071d);
                 this.fogRemove = (float) (this.sin * this.d * 6000.0d);
 
-                if (difTime < 3000.0f)
+                if (difTime < 0.0f)
                 {
                     BLOODMOON_FOG_FACTOR = 0.0f;
                 }
-                else if (difTime < 6000.0f)
+                else if (difTime < 2000.0f)
                 {
-                    BLOODMOON_FOG_FACTOR = (difTime - 3000.0f) / 3000.0f;
+                    BLOODMOON_FOG_FACTOR = difTime / 2000.0f;
                 }
-                else if (difTime < 9500.0f)
+                else if (difTime < 8000.0f)
                 {
                     BLOODMOON_FOG_FACTOR = 1.0f;
                 }
+                else if (difTime < 11500.0f)
+                {
+                    BLOODMOON_FOG_FACTOR = 1.0f - ((difTime - 8000.0f) / 3500.0f);
+                }
                 else
                 {
-                    BLOODMOON_FOG_FACTOR = 1.0f - ((difTime - 9500.0f) / 2500.0f);
+                    BLOODMOON_FOG_FACTOR = 0.0f;
                 }
 
                 BLOODMOON_FOG_FACTOR = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+                LogManager.debug("difTime: " + difTime + ", BLOODMOON_FOG_FACTOR: " + BLOODMOON_FOG_FACTOR);
 
-                LogManager.debug("BLOODMOON_FOG_FACTOR: " + BLOODMOON_FOG_FACTOR);
                 if (world.provider.getDimension() != 0) {
                     this.bloodmoonActive = false;
                     return;
