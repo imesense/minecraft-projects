@@ -2,6 +2,7 @@ package org.imesense.dynamicspawncontrol.mixins.minecraft.renderer;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,10 +10,15 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 
+import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.common.MinecraftForge;
 import org.lwjgl.opengl.GLContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -260,5 +266,170 @@ public abstract class EntityRendererRework
                 GlStateManager.glFog(2918, accessor.invokeSetFogColorBuffer(red, green, blue, 1.0f));
             }
         }
+    }
+
+    @Overwrite
+    private void updateFogColor(float partialTicks)
+    {
+        IEntityRendererAccessor accessor = (IEntityRendererAccessor) this;
+        Minecraft mc = accessor.accessorGetMinecraft();
+        World world = mc.world;
+        Entity entity = mc.getRenderViewEntity();
+
+        float f = 0.25F + 0.75F * (float) mc.gameSettings.renderDistanceChunks / 32.0F;
+        f = 1.0F - (float) Math.pow(f, 0.25F);
+
+        Vec3d vec3d = world.getSkyColor(mc.getRenderViewEntity(), partialTicks);
+        float f1 = (float) vec3d.x;
+        float f2 = (float) vec3d.y;
+        float f3 = (float) vec3d.z;
+
+        Vec3d vec3d1 = world.getFogColor(partialTicks);
+        accessor.accessorSetFogColorRed((float) vec3d1.x);
+        accessor.accessorSetFogColorGreen((float) vec3d1.y);
+        accessor.accessorSetFogColorBlue((float) vec3d1.z);
+
+        if (mc.gameSettings.renderDistanceChunks >= 4)
+        {
+            double d0 = MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) > 0.0F ? -1.0F : 1.0F;
+            Vec3d vec3d2 = new Vec3d(d0, 0.0D, 0.0D);
+            float f5 = (float) entity.getLook(partialTicks).dotProduct(vec3d2);
+
+            if (f5 < 0.0F) f5 = 0.0F;
+
+            if (f5 > 0.0F)
+            {
+                float[] afloat = world.provider.calcSunriseSunsetColors(world.getCelestialAngle(partialTicks), partialTicks);
+                if (afloat != null)
+                {
+                    f5 *= afloat[3];
+                    accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() * (1.0F - f5) + afloat[0] * f5);
+                    accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() * (1.0F - f5) + afloat[1] * f5);
+                    accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * (1.0F - f5) + afloat[2] * f5);
+                }
+            }
+        }
+
+        accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() + (f1 - accessor.accessorGetFogColorRed()) * f);
+        accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() + (f2 - accessor.accessorGetFogColorGreen()) * f);
+        accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() + (f3 - accessor.accessorGetFogColorBlue()) * f);
+
+        float rainStrength = world.getRainStrength(partialTicks);
+        if (rainStrength > 0.0F)
+        {
+            float f4 = 1.0F - rainStrength * 0.5F;
+            float f10 = 1.0F - rainStrength * 0.4F;
+            accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() * f4);
+            accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() * f4);
+            accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * f10);
+        }
+
+        float thunderStrength = world.getThunderStrength(partialTicks);
+        if (thunderStrength > 0.0F)
+        {
+            float f11 = 1.0F - thunderStrength * 0.5F;
+            accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() * f11);
+            accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() * f11);
+            accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * f11);
+        }
+
+        IBlockState iblockstate = ActiveRenderInfo.getBlockStateAtEntityViewpoint(world, entity, partialTicks);
+
+        if (accessor.accessorGetCloudFog())
+        {
+            Vec3d cloudColor = world.getCloudColour(partialTicks);
+            accessor.accessorSetFogColorRed((float) cloudColor.x);
+            accessor.accessorSetFogColorGreen((float) cloudColor.y);
+            accessor.accessorSetFogColorBlue((float) cloudColor.z);
+        }
+        else
+        {
+            Vec3d viewport = ActiveRenderInfo.projectViewFromEntity(entity, partialTicks);
+            BlockPos viewportPos = new BlockPos(viewport);
+            IBlockState viewportState = world.getBlockState(viewportPos);
+            Vec3d materialColor = viewportState.getBlock().getFogColor(world, viewportPos, viewportState, entity,
+                    new Vec3d(accessor.accessorGetFogColorRed(), accessor.accessorGetFogColorGreen(), accessor.accessorGetFogColorBlue()), partialTicks);
+            accessor.accessorSetFogColorRed((float) materialColor.x);
+            accessor.accessorSetFogColorGreen((float) materialColor.y);
+            accessor.accessorSetFogColorBlue((float) materialColor.z);
+        }
+
+        float f13 = accessor.accessorGetFogColor2() + (accessor.accessorGetFogColor1() - accessor.accessorGetFogColor2()) * partialTicks;
+        accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() * f13);
+        accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() * f13);
+        accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * f13);
+
+        double d1 = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks) * world.provider.getVoidFogYFactor();
+
+        if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(MobEffects.BLINDNESS))
+        {
+            int duration = ((EntityLivingBase) entity).getActivePotionEffect(MobEffects.BLINDNESS).getDuration();
+            if (duration < 20)
+            {
+                d1 *= (1.0F - (float) duration / 20.0F);
+            }
+            else
+            {
+                d1 = 0.0D;
+            }
+        }
+
+        if (d1 < 1.0D)
+        {
+            if (d1 < 0.0D) d1 = 0.0D;
+            d1 *= d1;
+            accessor.accessorSetFogColorRed((float) (accessor.accessorGetFogColorRed() * d1));
+            accessor.accessorSetFogColorGreen((float) (accessor.accessorGetFogColorGreen() * d1));
+            accessor.accessorSetFogColorBlue((float) (accessor.accessorGetFogColorBlue() * d1));
+        }
+
+        float bossModifier = accessor.accessorGetBossColorModifier();
+        if (bossModifier > 0.0F)
+        {
+            float f14 = accessor.accessorGetBossColorModifierPrev() + (bossModifier - accessor.accessorGetBossColorModifierPrev()) * partialTicks;
+            accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() * (1.0F - f14) + accessor.accessorGetFogColorRed() * 0.7F * f14);
+            accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() * (1.0F - f14) + accessor.accessorGetFogColorGreen() * 0.6F * f14);
+            accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * (1.0F - f14) + accessor.accessorGetFogColorBlue() * 0.6F * f14);
+        }
+
+        if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(MobEffects.NIGHT_VISION))
+        {
+            float nightVision = accessor.invokeGetNightVisionBrightness((EntityLivingBase) entity, partialTicks);
+            float maxComponent = 1.0F / accessor.accessorGetFogColorRed();
+
+            if (maxComponent > 1.0F / accessor.accessorGetFogColorGreen())
+                maxComponent = 1.0F / accessor.accessorGetFogColorGreen();
+            if (maxComponent > 1.0F / accessor.accessorGetFogColorBlue())
+                maxComponent = 1.0F / accessor.accessorGetFogColorBlue();
+            if (Float.isInfinite(maxComponent))
+                maxComponent = Math.nextAfter(maxComponent, 0.0F);
+
+            accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() * (1.0F - nightVision) + accessor.accessorGetFogColorRed() * maxComponent * nightVision);
+            accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() * (1.0F - nightVision) + accessor.accessorGetFogColorGreen() * maxComponent * nightVision);
+            accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * (1.0F - nightVision) + accessor.accessorGetFogColorBlue() * maxComponent * nightVision);
+        }
+
+        if (mc.gameSettings.anaglyph)
+        {
+            float r = accessor.accessorGetFogColorRed();
+            float g = accessor.accessorGetFogColorGreen();
+            float b = accessor.accessorGetFogColorBlue();
+            float gray = (r * 30.0F + g * 59.0F + b * 11.0F) / 100.0F;
+            float redGreen = (r * 30.0F + g * 70.0F) / 100.0F;
+            float redBlue = (r * 30.0F + b * 70.0F) / 100.0F;
+            accessor.accessorSetFogColorRed(gray);
+            accessor.accessorSetFogColorGreen(redGreen);
+            accessor.accessorSetFogColorBlue(redBlue);
+        }
+
+        EntityViewRenderEvent.FogColors event = new EntityViewRenderEvent.FogColors((EntityRenderer) (Object) this, entity, iblockstate, partialTicks,
+                accessor.accessorGetFogColorRed(), accessor.accessorGetFogColorGreen(), accessor.accessorGetFogColorBlue());
+        MinecraftForge.EVENT_BUS.post(event);
+
+        accessor.accessorSetFogColorRed(event.getRed());
+        accessor.accessorSetFogColorGreen(event.getGreen());
+        accessor.accessorSetFogColorBlue(event.getBlue());
+
+        GlStateManager.clearColor(accessor.accessorGetFogColorRed(), accessor.accessorGetFogColorGreen(), accessor.accessorGetFogColorBlue(), 0.0F);
     }
 }

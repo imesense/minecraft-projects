@@ -62,4 +62,25 @@ public interface IEntityRendererAccessor
 
     @Invoker("setFogColorBuffer")
     FloatBuffer invokeSetFogColorBuffer(float red, float green, float blue, float alpha);
+
+    @Accessor("fogColor1")
+    float accessorGetFogColor1();
+
+    @Accessor("fogColor2")
+    float accessorGetFogColor2();
+
+    @Accessor("fogColor1")
+    void accessorSetFogColor1(float value);
+
+    @Accessor("fogColor2")
+    void accessorSetFogColor2(float value);
+
+    @Accessor("fogColorRed")
+    void accessorSetFogColorRed(float red);
+
+    @Accessor("fogColorGreen")
+    void accessorSetFogColorGreen(float green);
+
+    @Accessor("fogColorBlue")
+    void accessorSetFogColorBlue(float blue);
 }

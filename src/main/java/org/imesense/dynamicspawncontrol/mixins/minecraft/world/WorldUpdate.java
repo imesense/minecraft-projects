@@ -1,10 +1,14 @@
 package org.imesense.dynamicspawncontrol.mixins.minecraft.world;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;
@@ -123,5 +127,68 @@ public abstract class WorldUpdate
         {
             ClientBloodmoonHandler.INSTANCE.moonColorHook();
         }
+    }
+
+    @Overwrite
+    @SideOnly(Side.CLIENT)
+    public Vec3d getSkyColorBody(Entity entity, float partialTicks)
+    {
+        World world = (World) (Object) this;
+        IWorldAccessor worldAccessor = (IWorldAccessor) world;
+
+        float celestialAngle = worldAccessor.invokeGetCelestialAngle(partialTicks);
+        float timeFactor = MathHelper.cos(celestialAngle * ((float)Math.PI * 2F)) * 2.0F + 0.5F;
+        timeFactor = MathHelper.clamp(timeFactor, 0.0F, 1.0F);
+
+        int posX = MathHelper.floor(entity.posX);
+        int posY = MathHelper.floor(entity.posY);
+        int posZ = MathHelper.floor(entity.posZ);
+        BlockPos blockPos = new BlockPos(posX, posY, posZ);
+
+        int blendedColor = ForgeHooksClient.getSkyBlendColour(world, blockPos);
+
+        float red = (float)(blendedColor >> 16 & 255) / 255.0F;
+        float green = (float)(blendedColor >> 8 & 255) / 255.0F;
+        float blue = (float)(blendedColor & 255) / 255.0F;
+
+        red *= timeFactor;
+        green *= timeFactor;
+        blue *= timeFactor;
+
+        float rainStrength = worldAccessor.invokeGetRainStrength(partialTicks);
+        if (rainStrength > 0.0F)
+        {
+            float grayScale = (red * 0.3F + green * 0.59F + blue * 0.11F) * 0.6F;
+            float rainFactor = 1.0F - rainStrength * 0.75F;
+            red = red * rainFactor + grayScale * (1.0F - rainFactor);
+            green = green * rainFactor + grayScale * (1.0F - rainFactor);
+            blue = blue * rainFactor + grayScale * (1.0F - rainFactor);
+        }
+
+        float thunderStrength = worldAccessor.invokeGetThunderStrength(partialTicks);
+        if (thunderStrength > 0.0F)
+        {
+            float grayScale = (red * 0.3F + green * 0.59F + blue * 0.11F) * 0.2F;
+            float thunderFactor = 1.0F - thunderStrength * 0.75F;
+            red = red * thunderFactor + grayScale * (1.0F - thunderFactor);
+            green = green * thunderFactor + grayScale * (1.0F - thunderFactor);
+            blue = blue * thunderFactor + grayScale * (1.0F - thunderFactor);
+        }
+
+        int lightningBolt = worldAccessor.getLastLightningBolt();
+        if (lightningBolt > 0)
+        {
+            float lightningIntensity = (float)lightningBolt - partialTicks;
+            if (lightningIntensity > 1.0F)
+            {
+                lightningIntensity = 1.0F;
+            }
+            lightningIntensity *= 0.45F;
+            red = red * (1.0F - lightningIntensity) + 0.8F * lightningIntensity;
+            green = green * (1.0F - lightningIntensity) + 0.8F * lightningIntensity;
+            blue = blue * (1.0F - lightningIntensity) + 1.0F * lightningIntensity;
+        }
+
+        return new Vec3d(red, green, blue);
     }
 }
