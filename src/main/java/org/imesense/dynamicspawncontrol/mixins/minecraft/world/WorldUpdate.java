@@ -77,7 +77,8 @@ public abstract class WorldUpdate
         float finalRawBrightness;
         int moonPhase = worldAccessor.invokeGetMoonPhase();
 
-        if (NightRendererData.isEnableDarkNight() && !ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        // TODO: мелькает карта теней
+        if (NightRendererData.isEnableDarkNight() /*&& !ClientBloodmoonHandler.INSTANCE.isBloodmoonActive()*/)
         {
             if (NightRendererData.isDependenceLightMoonPhase())
             {

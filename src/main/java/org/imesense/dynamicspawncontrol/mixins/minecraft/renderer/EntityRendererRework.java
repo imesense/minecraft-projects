@@ -60,8 +60,9 @@ public abstract class EntityRendererRework
             boolean hasNightVision = accessor.accessorGetMinecraft().player.isPotionActive(MobEffects.NIGHT_VISION);
             boolean isDimensionBlacklisted = NightRendererData.isDimensionBlacklisted(dimensionType.getId());
 
+            // TODO: мелькает карта теней
             boolean shouldApplyDarkness = isDarkNightEnabled &&
-                    !hasNightVision && !isDimensionBlacklisted && !isLightningStorm && !ClientBloodmoonHandler.INSTANCE.isBloodmoonActive();
+                    !hasNightVision && !isDimensionBlacklisted && !isLightningStorm /*&& !ClientBloodmoonHandler.INSTANCE.isBloodmoonActive()*/;
 
             float sunBrightness = world.getSunBrightness(1.0f);
             float moonBrightness = finalPackDarkColor(partialTicks, world);
