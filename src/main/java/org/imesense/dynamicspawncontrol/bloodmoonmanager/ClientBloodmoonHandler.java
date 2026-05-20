@@ -16,7 +16,6 @@ public class ClientBloodmoonHandler
 {
     public static ClientBloodmoonHandler INSTANCE = new ClientBloodmoonHandler();
     float lightSub;
-    float skyColorAdd;
     public double sin;
     private float lastSmoothFactor = 0.0f;
     public static float BLOODMOON_FOG_FACTOR = 0.0f;
@@ -38,13 +37,22 @@ public class ClientBloodmoonHandler
 
     public Vec3d skyColorHook(Vec3d color)
     {
-        if (isBloodmoonActive() && BloodMoonConfig.getInstance(BloodMoonConfig.class).getAppearance().isRedSky())
-        {
-            ((IVec3dAccessor) color).setX(color.x + skyColorAdd);
+        if (!isBloodmoonActive() || !BloodMoonConfig.getInstance(BloodMoonConfig.class).getAppearance().isRedSky())
             return color;
-        }
 
-        return color;
+        float factor = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+
+        factor = factor * factor * (3.0f - 2.0f * factor);
+
+        float redBoost   = 0.35f * factor;
+        float greenDown  = 0.10f * factor;
+        float blueDown   = 0.20f * factor;
+
+        double r = MathHelper.clamp(color.x + redBoost, 0.0, 1.0);
+        double g = MathHelper.clamp(color.y - greenDown, 0.0, 1.0);
+        double b = MathHelper.clamp(color.z - blueDown, 0.0, 1.0);
+
+        return new Vec3d(r, g, b);
     }
 
     public int manipulateRed(int position, int originalValue) {
@@ -129,7 +137,6 @@ public class ClientBloodmoonHandler
         this.sin = Math.sin(difTime * 2.6179937E-4f);
 
         this.lightSub = (float)(this.sin * 150.0d);
-        this.skyColorAdd = (float)(this.sin * 0.10000000149011612d);
 
         if (time >= 11000.0f && time < 12000.0f)
         {
