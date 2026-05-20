@@ -30,6 +30,9 @@ public abstract class WorldUpdate
     private static final boolean DEBUG_MODE = false;
 
     @Unique
+    private float lastBlendFactor = 0.0f;
+
+    @Unique
     private float $$calculateDarkBrightness(float baseBrightness)
     {
         return baseBrightness;
@@ -52,9 +55,24 @@ public abstract class WorldUpdate
         return MathHelper.clamp(baseBrightness + phaseFactor, 0.f, 1.f);
     }
 
+    @Unique
+    private float $$calculateBlendedBrightness(float rawBrightness, int moonPhase, float blendFactor)
+    {
+        float darkNightBrightness = $$calculateDarkNightBrightness(rawBrightness, moonPhase);
+        float vanillaBrightness = $$calculateVanillaBrightness(rawBrightness);
+
+        float result = darkNightBrightness * (1.0f - blendFactor) + vanillaBrightness * blendFactor;
+
+        if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "[Blended] rawBrightness: " + rawBrightness +
+                ", blendFactor: " + blendFactor + ", result: " + result);
+
+        return MathHelper.clamp(result, 0.0f, 1.0f);
+    }
+
     /**
-     * @author OldSerpskiStalker
-     * @reason Rendering dark nights
+     *
+     * @param partialTicks
+     * @return
      */
     @Overwrite
     public float getSunBrightnessBody(float partialTicks)
@@ -77,33 +95,50 @@ public abstract class WorldUpdate
         float finalRawBrightness;
         int moonPhase = worldAccessor.invokeGetMoonPhase();
 
-        // TODO: мелькает карта теней
-        if (NightRendererData.isEnableDarkNight() /*&& !ClientBloodmoonHandler.INSTANCE.isBloodmoonActive()*/)
+        boolean isDarkNightEnabled = NightRendererData.isEnableDarkNight();
+        boolean isBloodmoonActive = ClientBloodmoonHandler.INSTANCE.isBloodmoonActive();
+
+        float bloodmoonBlendFactor = ClientBloodmoonHandler.INSTANCE.getSmoothBlendFactor();
+
+        float targetBlendFactor;
+
+        if (isDarkNightEnabled)
         {
-            if (NightRendererData.isDependenceLightMoonPhase())
+            if (isBloodmoonActive)
             {
-                finalRawBrightness = $$calculateDarkNightBrightness(rawBrightness, moonPhase);
-
-                if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "[isDependenceLightMoonPhase] finalRawBrightness: " + finalRawBrightness);
-
-                return finalRawBrightness;
+                targetBlendFactor = MathHelper.clamp(bloodmoonBlendFactor, 0.0f, 1.0f);
             }
             else
             {
-                finalRawBrightness = $$calculateDarkBrightness(rawBrightness);
-
-                if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "[isEnableDarkNight] finalRawBrightness: " + finalRawBrightness);
-
-                return $$calculateDarkBrightness(rawBrightness);
+                targetBlendFactor = 0.0f;
             }
         }
         else
         {
+            targetBlendFactor = 1.0f;
+        }
+
+        float smoothingSpeed = 0.3f;
+        lastBlendFactor = lastBlendFactor + (targetBlendFactor - lastBlendFactor) * smoothingSpeed;
+        lastBlendFactor = MathHelper.clamp(lastBlendFactor, 0.0f, 1.0f);
+
+        if (isDarkNightEnabled)
+        {
+            finalRawBrightness = $$calculateBlendedBrightness(rawBrightness, moonPhase, lastBlendFactor);
+
+            if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG,
+                    "[Smooth Transition] isBloodmoonActive: " + ClientBloodmoonHandler.INSTANCE.isBloodmoonActive() +
+                            ", bloodmoonBlendFactor: " + bloodmoonBlendFactor +
+                            ", lastBlendFactor: " + lastBlendFactor +
+                            ", finalRawBrightness: " + finalRawBrightness);
+
+            return finalRawBrightness;
+        }
+        else
+        {
             finalRawBrightness = $$calculateVanillaBrightness(rawBrightness);
-
             if (DEBUG_MODE) EarlyLogBuffer.log(LogManager.DEBUG, "finalRawBrightness: " + finalRawBrightness);
-
-            return $$calculateVanillaBrightness(rawBrightness);
+            return finalRawBrightness;
         }
     }
 

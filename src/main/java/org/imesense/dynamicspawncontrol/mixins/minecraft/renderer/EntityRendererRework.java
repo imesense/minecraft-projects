@@ -19,6 +19,7 @@ import net.minecraft.world.WorldProvider;
 
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.MinecraftForge;
+import org.imesense.dynamicspawncontrol.core.renderer.night.color.ColorCombineBloodMoon;
 import org.lwjgl.opengl.GLContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -36,8 +37,8 @@ import static org.imesense.dynamicspawncontrol.core.renderer.night.light.MoonLig
 public abstract class EntityRendererRework
 {
     /**
-     * @author OldSerpskiStalker
-     * @reason Rendering dark nights
+     *
+     * @param partialTicks
      */
     @Overwrite
     private void updateLightmap(float partialTicks)
@@ -60,9 +61,43 @@ public abstract class EntityRendererRework
             boolean hasNightVision = accessor.accessorGetMinecraft().player.isPotionActive(MobEffects.NIGHT_VISION);
             boolean isDimensionBlacklisted = NightRendererData.isDimensionBlacklisted(dimensionType.getId());
 
-            // TODO: мелькает карта теней
-            boolean shouldApplyDarkness = isDarkNightEnabled &&
-                    !hasNightVision && !isDimensionBlacklisted && !isLightningStorm /*&& !ClientBloodmoonHandler.INSTANCE.isBloodmoonActive()*/;
+            boolean canApplyDarkNight = isDarkNightEnabled &&
+                    !hasNightVision &&
+                    !isDimensionBlacklisted &&
+                    !isLightningStorm;
+
+            float bloodFactor = 0.0f;
+
+            if (ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+            {
+                float time = world.getWorldTime() % 24000.0f;
+
+                if (time >= 11000.0f && time < 12000.0f)
+                {
+                    bloodFactor = (time - 11000.0f) / 1000.0f;
+                }
+                else if (time >= 12000.0f && time < 23000.0f)
+                {
+                    bloodFactor = 1.0f;
+                }
+                else if (time >= 23000.0f && time < 24000.0f)
+                {
+                    bloodFactor = 1.0f - ((time - 23000.0f) / 1000.0f);
+                }
+                else
+                {
+                    bloodFactor = 0.0f;
+                }
+            }
+
+            bloodFactor = MathHelper.clamp(bloodFactor, 0.0f, 1.0f);
+
+            bloodFactor = Math.max(bloodFactor, (float) ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR);
+
+            float darkNightFactor = canApplyDarkNight ? 1.0f : 0.0f;
+
+            float finalDarkFactor = darkNightFactor * (1.0f - bloodFactor);
+            finalDarkFactor = MathHelper.clamp(finalDarkFactor, 0.0f, 1.0f);
 
             float sunBrightness = world.getSunBrightness(1.0f);
             float moonBrightness = finalPackDarkColor(partialTicks, world);
@@ -72,15 +107,19 @@ public abstract class EntityRendererRework
 
             for (int index = 0; index < 256; ++index)
             {
-                int baseColor = BaseCalculateLightMapColor.calculateLightMapColor(accessor, world, partialTicks, index,
-                        vanillaSunBrightness, brightnessModifier);
+                int baseColor = BaseCalculateLightMapColor.calculateLightMapColor(
+                        accessor, world, partialTicks, index,
+                        vanillaSunBrightness, brightnessModifier
+                );
 
-                if (shouldApplyDarkness)
+                if (finalDarkFactor > 0.001f)
                 {
-                    int darkenedColor = DarkCalculateLightMapColor.calculateFinalLightMapColor(accessor, world, partialTicks, index,
-                            sunBrightness, moonBrightness, brightnessTable, dimensionType, baseColor);
+                    int darkColor = DarkCalculateLightMapColor.calculateFinalLightMapColor(
+                            accessor, world, partialTicks, index,
+                            sunBrightness, moonBrightness, brightnessTable, dimensionType, baseColor
+                    );
 
-                    accessor.accessorGetLightmapColors()[index] = darkenedColor;
+                    accessor.accessorGetLightmapColors()[index] = ColorCombineBloodMoon.blendRGB(baseColor, darkColor, finalDarkFactor);
                 }
                 else
                 {
@@ -185,6 +224,9 @@ public abstract class EntityRendererRework
                 final float NORMAL_END_MULT = 1.0f;
 
                 float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
+
+                factor = MathHelper.clamp(factor, 0.0f, 1.0f);
+                factor = factor * factor * (3.0f - 2.0f * factor);
 
                 if (factor > 1.0f)
                 {

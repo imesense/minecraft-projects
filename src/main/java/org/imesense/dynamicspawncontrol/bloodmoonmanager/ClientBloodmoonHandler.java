@@ -1,5 +1,6 @@
 package org.imesense.dynamicspawncontrol.bloodmoonmanager;
 
+import lombok.Getter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -15,22 +16,13 @@ public class ClientBloodmoonHandler
 {
     public static ClientBloodmoonHandler INSTANCE = new ClientBloodmoonHandler();
     float lightSub;
-    //public float fogRemove;
     float skyColorAdd;
-    //float moonColorRed;
-    public static double sin;
-    //final float sinMax = 2.6179937E-4f;
-    //float d = 6.666667E-5f;
-    //int difTime = 0;
-    boolean bloodmoonActive = false;
-    //public float fogStrength = 0.0f;
-
+    public double sin;
+    private float lastSmoothFactor = 0.0f;
     public static float BLOODMOON_FOG_FACTOR = 0.0f;
 
-    public boolean isBloodmoonActive()
-    {
-        return this.bloodmoonActive;
-    }
+    @Getter
+    boolean bloodmoonActive = false;
 
     public void setBloodmoon(boolean active)
     {
@@ -48,9 +40,8 @@ public class ClientBloodmoonHandler
     {
         if (isBloodmoonActive() && BloodMoonConfig.getInstance(BloodMoonConfig.class).getAppearance().isRedSky())
         {
-            // Кастуем к нашему интерфейсу и меняем значение
             ((IVec3dAccessor) color).setX(color.x + skyColorAdd);
-            return color; // Возвращаем тот же объект, но с измененным X
+            return color;
         }
 
         return color;
@@ -88,79 +79,83 @@ public class ClientBloodmoonHandler
         return originalValue;
     }
 
+    public float getSmoothBlendFactor()
+    {
+        if (!isBloodmoonActive())
+        {
+            lastSmoothFactor = lastSmoothFactor * 0.9f;
+            if (lastSmoothFactor < 0.01f) lastSmoothFactor = 0.0f;
+            return lastSmoothFactor;
+        }
+
+        float targetFactor = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+
+        float smoothingSpeed = 0.15f;
+
+        lastSmoothFactor = lastSmoothFactor + (targetFactor - lastSmoothFactor) * smoothingSpeed;
+        lastSmoothFactor = MathHelper.clamp(lastSmoothFactor, 0.0f, 1.0f);
+
+        return lastSmoothFactor;
+    }
+
     @SubscribeEvent
     public void clientTick(TickEvent.ClientTickEvent event)
     {
-        // ВАЖНО: проверяем активна ли кровавая луна на сервере
-        if (isBloodmoonActive())
-        {  // <-- эта переменная приходит от сервера
-            WorldClient world = Minecraft.getMinecraft().world;
-            EntityPlayerSP player = Minecraft.getMinecraft().player;
-
-            if (world != null && player != null)
-            {
-                float time = world.getWorldTime() % 24000;
-                float difTime = time - 12000;
-
-                this.sin = Math.sin(difTime * 2.6179937E-4f);
-                //this.fogStrength = MathHelper.clamp((float)((this.sin + 1.0) / 2.0), 0.0f, 1.0f);
-                this.lightSub = (float) (this.sin * 150.0d);
-                this.skyColorAdd = (float) (this.sin * 0.10000000149011612d);
-                //this.moonColorRed = (float) (this.sin * 0.699999988079071d);
-                //this.fogRemove = (float) (this.sin * this.d * 6000.0d);
-
-                // ИСПРАВЛЕНО: теперь BLOODMOON_FOG_FACTOR начинает с 0 и плавно растет
-                // с самого начала кровавой луны, а не когда время перевалит за 12000
-                if (difTime < 0)
-                {
-                    // Если ночь только началась (difTime только что стало 0 или чуть больше)
-                    // Но кровавая луна активна, значит нужно плавно начать
-                    if (isBloodmoonActive())
-                    {
-                        // Плавное появление эффекта в начале ночи
-                        float startProgress = (difTime + 2000) / 2000; // -2000..0 -> 0..1
-                        BLOODMOON_FOG_FACTOR = MathHelper.clamp(startProgress, 0.0f, 1.0f);
-                    }
-                    else
-                    {
-                        BLOODMOON_FOG_FACTOR = 0.0f;
-                    }
-                }
-                else if (difTime < 2000.0f)
-                {
-                    BLOODMOON_FOG_FACTOR = difTime / 2000.0f;
-                }
-                else if (difTime < 8000.0f)
-                {
-                    BLOODMOON_FOG_FACTOR = 1.0f;
-                }
-                else if (difTime < 11500.0f)
-                {
-                    BLOODMOON_FOG_FACTOR = 1.0f - ((difTime - 8000.0f) / 3500.0f);
-                }
-                else
-                {
-                    BLOODMOON_FOG_FACTOR = 0.0f;
-                }
-
-                BLOODMOON_FOG_FACTOR = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
-
-                LogManager.debug("isBloodmoonActive: " + isBloodmoonActive() +
-                        ", time: " + time + ", difTime: " + difTime + ", BLOODMOON_FOG_FACTOR: " + BLOODMOON_FOG_FACTOR);
-
-                if (world.provider.getDimension() != 0)
-                {
-                    this.bloodmoonActive = false;
-                    return;
-                }
-
-                return;
-            }
-
-            if (this.bloodmoonActive)
-            {
-                this.bloodmoonActive = false;
-            }
+        if (!isBloodmoonActive())
+        {
+            BLOODMOON_FOG_FACTOR = 0.0f;
+            return;
         }
+
+        WorldClient world = Minecraft.getMinecraft().world;
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+
+        if (world == null || player == null)
+        {
+            BLOODMOON_FOG_FACTOR = 0.0f;
+            return;
+        }
+
+        if (world.provider.getDimension() != 0)
+        {
+            this.bloodmoonActive = false;
+            BLOODMOON_FOG_FACTOR = 0.0f;
+            return;
+        }
+
+        float time = world.getWorldTime() % 24000.0f;
+
+        float difTime = time - 12000.0f;
+        this.sin = Math.sin(difTime * 2.6179937E-4f);
+
+        this.lightSub = (float)(this.sin * 150.0d);
+        this.skyColorAdd = (float)(this.sin * 0.10000000149011612d);
+
+        if (time >= 11000.0f && time < 12000.0f)
+        {
+            BLOODMOON_FOG_FACTOR = ((time - 11000.0f) / 1000.0f) * 0.2f;
+        }
+        else if (time >= 12000.0f && time < 14000.0f)
+        {
+            BLOODMOON_FOG_FACTOR = (time - 12000.0f) / 2000.0f;
+        }
+        else if (time >= 14000.0f && time < 22000.0f)
+        {
+            BLOODMOON_FOG_FACTOR = 1.0f;
+        }
+        else if (time >= 22000.0f && time < 24000.0f)
+        {
+            BLOODMOON_FOG_FACTOR = 1.0f - ((time - 22000.0f) / 2000.0f);
+        }
+        else
+        {
+            BLOODMOON_FOG_FACTOR = 0.0f;
+        }
+
+        BLOODMOON_FOG_FACTOR = MathHelper.clamp(BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+
+        LogManager.debug("Bloodmoon tick: active=" + isBloodmoonActive()
+                + ", time=" + time
+                + ", BLOODMOON_FOG_FACTOR=" + BLOODMOON_FOG_FACTOR);
     }
 }
