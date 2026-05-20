@@ -217,8 +217,8 @@ public abstract class EntityRendererRework
 
             if (ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR > 0.0f)
             {
-                final float TARGET_START_MULT = 0.2f;
-                final float TARGET_END_MULT = 0.35f;
+                final float TARGET_START_MULT = 0.05f;  // 0.2f
+                final float TARGET_END_MULT = 0.1f;     // 0.35f
 
                 final float NORMAL_START_MULT = 0.75f;
                 final float NORMAL_END_MULT = 1.0f;
@@ -450,6 +450,72 @@ public abstract class EntityRendererRework
             accessor.accessorSetFogColorRed(accessor.accessorGetFogColorRed() * (1.0F - nightVision) + accessor.accessorGetFogColorRed() * maxComponent * nightVision);
             accessor.accessorSetFogColorGreen(accessor.accessorGetFogColorGreen() * (1.0F - nightVision) + accessor.accessorGetFogColorGreen() * maxComponent * nightVision);
             accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * (1.0F - nightVision) + accessor.accessorGetFogColorBlue() * maxComponent * nightVision);
+        }
+
+        float bloodFactor = MathHelper.clamp(ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+
+        if (bloodFactor > 0.0f && ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        {
+            float time = world.getWorldTime() % 24000.0f;
+
+            float targetRed = 0.65f;
+            float targetGreen = 0.15f;
+            float targetBlue = 0.15f;
+
+            float blendStrength;
+
+            if (time >= 12000.0f && time < 14000.0f)
+            {
+                blendStrength = (time - 12000.0f) / 2000.0f;
+                blendStrength = blendStrength * blendStrength * (3.0f - 2.0f * blendStrength);
+            }
+            else if (time >= 14000.0f && time < 22000.0f)
+            {
+                blendStrength = 1.0f;
+            }
+            else if (time >= 22000.0f && time < 24000.0f)
+            {
+                blendStrength = 1.0f - ((time - 22000.0f) / 2000.0f);
+                blendStrength = blendStrength * blendStrength * (3.0f - 2.0f * blendStrength);
+            }
+            else if (time >= 11000.0f && time < 12000.0f)
+            {
+                blendStrength = (time - 11000.0f) / 1000.0f * 0.2f;
+            }
+            else
+            {
+                blendStrength = 0.0f;
+            }
+
+            blendStrength = MathHelper.clamp(blendStrength, 0.0f, 1.0f);
+            blendStrength = blendStrength * bloodFactor;
+
+            float currentRed = accessor.accessorGetFogColorRed();
+            float currentGreen = accessor.accessorGetFogColorGreen();
+            float currentBlue = accessor.accessorGetFogColorBlue();
+
+            float sunsetStrength = MathHelper.clamp((currentRed - Math.max(currentGreen, currentBlue)) * 2.0f, 0.0f, 1.0f);
+
+            if (sunsetStrength > 0.3f && time < 12000.0f)
+            {
+                float finalRed = currentRed * (1.0f - blendStrength * 0.7f) + targetRed * blendStrength * 0.7f;
+                float finalGreen = currentGreen * (1.0f - blendStrength * 0.5f);
+                float finalBlue = currentBlue * (1.0f - blendStrength * 0.6f);
+
+                accessor.accessorSetFogColorRed(MathHelper.clamp(finalRed, 0.0f, 1.0f));
+                accessor.accessorSetFogColorGreen(MathHelper.clamp(finalGreen, 0.0f, 1.0f));
+                accessor.accessorSetFogColorBlue(MathHelper.clamp(finalBlue, 0.0f, 1.0f));
+            }
+            else
+            {
+                float finalRed = currentRed * (1.0f - blendStrength) + targetRed * blendStrength;
+                float finalGreen = currentGreen * (1.0f - blendStrength) + targetGreen * blendStrength;
+                float finalBlue = currentBlue * (1.0f - blendStrength) + targetBlue * blendStrength;
+
+                accessor.accessorSetFogColorRed(MathHelper.clamp(finalRed, 0.0f, 1.0f));
+                accessor.accessorSetFogColorGreen(MathHelper.clamp(finalGreen, 0.0f, 1.0f));
+                accessor.accessorSetFogColorBlue(MathHelper.clamp(finalBlue, 0.0f, 1.0f));
+            }
         }
 
         if (mc.gameSettings.anaglyph)
