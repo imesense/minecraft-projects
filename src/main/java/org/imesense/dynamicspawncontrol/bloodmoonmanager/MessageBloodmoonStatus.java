@@ -3,7 +3,6 @@ package org.imesense.dynamicspawncontrol.bloodmoonmanager;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
-/* loaded from: Bloodmoon_MC1.12.2_1.5.3.jar:lumien/bloodmoon/network/messages/MessageBloodmoonStatus.class */
 public class MessageBloodmoonStatus implements IMessage {
     public boolean bloodmoonActive;
 

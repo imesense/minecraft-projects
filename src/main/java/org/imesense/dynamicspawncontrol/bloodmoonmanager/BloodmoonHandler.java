@@ -15,7 +15,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
-/* loaded from: Bloodmoon_MC1.12.2_1.5.3.jar:lumien/bloodmoon/server/BloodmoonHandler.class */
 public class BloodmoonHandler extends WorldSavedData {
     public static BloodmoonHandler INSTANCE;
     private BloodmoonSpawner bloodMoonSpawner;

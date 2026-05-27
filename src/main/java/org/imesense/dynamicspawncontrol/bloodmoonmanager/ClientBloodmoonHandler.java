@@ -9,7 +9,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
-import org.imesense.dynamicspawncontrol.mixins.minecraft.IVec3dAccessor;
 import org.lwjgl.opengl.GL11;
 
 public class ClientBloodmoonHandler

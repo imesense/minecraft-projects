@@ -151,7 +151,6 @@ public final class DynamicSpawnControl
 
         BloodmoonEventHandler handler = new BloodmoonEventHandler();
         MinecraftForge.EVENT_BUS.register(handler);
-        MinecraftForge.EVENT_BUS.register(new BloodMoonRedFog());
         FMLCommonHandler.instance().bus().register(handler);
         PacketHandler.init();
     }

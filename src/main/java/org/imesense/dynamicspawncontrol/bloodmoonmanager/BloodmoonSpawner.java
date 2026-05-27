@@ -30,7 +30,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-/* loaded from: Bloodmoon_MC1.12.2_1.5.3.jar:lumien/bloodmoon/server/BloodmoonSpawner.class */
 public final class BloodmoonSpawner {
     private static final int MOB_COUNT_DIV = (int) Math.pow(17.0d, 2.0d);
     private final Set<ChunkPos> eligibleChunksForSpawning = Sets.newHashSet();

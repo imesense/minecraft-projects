@@ -2,7 +2,6 @@ package org.imesense.dynamicspawncontrol.bloodmoonmanager;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import java.util.HashMap;
 import java.util.Map;

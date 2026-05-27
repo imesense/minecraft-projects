@@ -19,7 +19,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
-/* loaded from: Bloodmoon_MC1.12.2_1.5.3.jar:lumien/bloodmoon/server/CommandBloodmoon.class */
 public class CommandBloodmoon extends CommandBase {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
         List<String> suggestions = new ArrayList<>();

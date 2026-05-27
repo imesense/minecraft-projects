@@ -217,8 +217,8 @@ public abstract class EntityRendererRework
 
             if (ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR > 0.0f)
             {
-                final float TARGET_START_MULT = 0.05f;  // 0.2f
-                final float TARGET_END_MULT = 0.1f;     // 0.35f
+                final float TARGET_START_MULT = 0.05f;
+                final float TARGET_END_MULT = 0.1f;
 
                 final float NORMAL_START_MULT = 0.75f;
                 final float NORMAL_END_MULT = 1.0f;
