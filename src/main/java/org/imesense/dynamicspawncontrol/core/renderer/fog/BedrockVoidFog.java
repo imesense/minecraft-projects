@@ -249,7 +249,6 @@ public final class BedrockVoidFog
             if (world.getWorldInfo().getTerrainType() == WorldType.FLAT ||
                     world.provider.isNether()) return;
 
-            // Если выше 16 - вообще никакого тумана
             if (entity.posY > FOG_START_HEIGHT) return;
         }
 

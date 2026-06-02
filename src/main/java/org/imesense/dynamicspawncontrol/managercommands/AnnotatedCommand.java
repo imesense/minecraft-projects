@@ -17,22 +17,13 @@ import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *
- */
 @TODO(value = "In development. A completely new concept of using console commands to separate the client and server", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public abstract class AnnotatedCommand extends CommandBase
 {
-    /**
-     *
-     */
     protected final CommandSide side;
     protected final CommandInfo info;
     protected final RequiredPermission permission;
 
-    /**
-     *
-     */
     public AnnotatedCommand()
     {
         this.permission = this.getClass().getAnnotation(RequiredPermission.class);
@@ -40,12 +31,6 @@ public abstract class AnnotatedCommand extends CommandBase
         this.info = this.getClass().getAnnotation(CommandInfo.class);
     }
 
-    /**
-     *
-     * @param server
-     * @param sender
-     * @return
-     */
     @Override
     public boolean checkPermission(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender)
     {
@@ -72,11 +57,6 @@ public abstract class AnnotatedCommand extends CommandBase
         return true;
     }
 
-    /**
-     *
-     * @param sender
-     * @return
-     */
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender sender)
@@ -89,10 +69,6 @@ public abstract class AnnotatedCommand extends CommandBase
         return "/" + getName();
     }
 
-    /**
-     *
-     * @return
-     */
     public String getDescription()
     {
         if (info != null && !info.description().isEmpty())
@@ -103,10 +79,6 @@ public abstract class AnnotatedCommand extends CommandBase
         return "Нет описания";
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     @Nonnull
     public List<String> getAliases()
@@ -119,9 +91,6 @@ public abstract class AnnotatedCommand extends CommandBase
         return super.getAliases();
     }
 
-    /**
-     * Утилитный метод для проверки прав
-     */
     protected void requirePermission(ICommandSender sender, int requiredLevel) throws CommandException
     {
         if (!sender.canUseCommand(requiredLevel, this.getName()))
@@ -130,12 +99,6 @@ public abstract class AnnotatedCommand extends CommandBase
         }
     }
 
-    /**
-     *
-     * @param sender
-     * @return
-     * @throws CommandException
-     */
     protected EntityPlayer requirePlayer(ICommandSender sender) throws CommandException
     {
         if (!(sender instanceof EntityPlayer))
@@ -146,12 +109,6 @@ public abstract class AnnotatedCommand extends CommandBase
         return (EntityPlayer) sender;
     }
 
-    /**
-     *
-     * @param sender
-     * @param message
-     * @param color
-     */
     protected void sendMessage(ICommandSender sender, String message, TextFormatting color)
     {
         if (sender instanceof EntityPlayer)
@@ -164,41 +121,21 @@ public abstract class AnnotatedCommand extends CommandBase
         }
     }
 
-    /**
-     *
-     * @param sender
-     * @param message
-     */
     protected void sendSuccess(ICommandSender sender, String message)
     {
         sendMessage(sender, "§a✓ " + message, TextFormatting.GREEN);
     }
 
-    /**
-     *
-     * @param sender
-     * @param message
-     */
     protected void sendError(ICommandSender sender, String message)
     {
         sendMessage(sender, "§c✗ " + message, TextFormatting.RED);
     }
 
-    /**
-     *
-     * @param sender
-     * @param message
-     */
     protected void sendInfo(ICommandSender sender, String message)
     {
         sendMessage(sender, "§eℹ " + message, TextFormatting.YELLOW);
     }
 
-    /**
-     *
-     * @param sender
-     * @param message
-     */
     protected void sendWarning(ICommandSender sender, String message)
     {
         sendMessage(sender, "§6⚠ " + message, TextFormatting.GOLD);

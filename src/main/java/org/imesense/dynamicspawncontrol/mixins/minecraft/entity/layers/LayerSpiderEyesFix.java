@@ -24,10 +24,6 @@ public abstract class LayerSpiderEyesFix<T extends EntitySpider> implements Laye
         this.spiderRenderer = spiderRendererIn;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Twinkling eyes fix
-     */
     @Overwrite
     public void doRenderLayer(T entitylivingbaseIn, float limbSwing, float limbSwingAmount,
                               float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
@@ -64,10 +60,6 @@ public abstract class LayerSpiderEyesFix<T extends EntitySpider> implements Laye
         GlStateManager.depthMask(true);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Twinkling eyes fix
-     */
     @Overwrite
     public boolean shouldCombineTextures()
     {

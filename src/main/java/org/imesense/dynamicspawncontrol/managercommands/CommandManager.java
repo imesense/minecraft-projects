@@ -7,9 +7,6 @@ import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 @TODO(value = "In development. A completely new concept of using console commands to separate the client and server", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public class CommandManager
 {
@@ -25,10 +22,6 @@ public class CommandManager
         commands.add(command);
     }
 
-    /**
-     *
-     * @param event
-     */
     public static void registerCommands(FMLServerStartingEvent event)
     {
         for (AnnotatedCommand command : commands)
@@ -38,10 +31,6 @@ public class CommandManager
         }
     }
 
-    /**
-     *
-     * @return
-     */
     public static List<AnnotatedCommand> getCommands()
     {
         return new ArrayList<>(commands);

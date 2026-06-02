@@ -53,7 +53,7 @@ public final class CpuInfo
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
 
-        reader.readLine(); // Skip header
+        reader.readLine();
 
         while ((line = reader.readLine()) != null)
         {
@@ -90,7 +90,7 @@ public final class CpuInfo
                 new InputStreamReader(process.getInputStream()));
 
         String line;
-        reader.readLine(); // Skip header
+        reader.readLine();
 
         while ((line = reader.readLine()) != null)
         {

@@ -40,10 +40,6 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         super(worldIn);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected void initEntityAI()
     {
@@ -121,10 +117,6 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         });
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean attackEntityAsMob(@NonNull Entity entity)
     {
@@ -142,10 +134,6 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         return false;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean attackEntityFrom(@NonNull DamageSource source, float amount)
     {
@@ -169,10 +157,6 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         return result;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean isAngry()
     {
@@ -203,10 +187,6 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         }
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean isPreventingPlayerRest(@NonNull EntityPlayer playerIn)
     {
@@ -215,10 +195,6 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
                 this.$$customAngerTargetUUID.equals(playerIn.getUniqueID());
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void readEntityFromNBT(@NonNull NBTTagCompound compound)
     {
@@ -233,10 +209,6 @@ public abstract class EntityPeacefulUntilAttackedFix extends EntityMob
         }
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void writeEntityToNBT(@NonNull NBTTagCompound compound)
     {

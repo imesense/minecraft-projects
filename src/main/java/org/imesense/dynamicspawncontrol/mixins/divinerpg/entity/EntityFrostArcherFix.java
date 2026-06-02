@@ -56,14 +56,12 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
     @Override
     protected void initEntityAI()
     {
-        // Базовые задачи
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(4, new EntityAIAttackRanged(this, 0.27F, 2, 10.0F));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 1.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 32.0F));
         this.tasks.addTask(9, new EntityAILookIdle(this));
 
-        // Задача на получение урона - запоминаем обидчика
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false)
         {
             @Override
@@ -80,13 +78,11 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
             }
         });
 
-        // Задача поиска цели - сначала проверяем запомненного игрока
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, 0, true, false, null)
         {
             @Override
             public boolean shouldExecute()
             {
-                // Если есть запомненный игрок и он жив - атакуем его
                 if ($$persistentAttacker != null && $$persistentAttacker.isEntityAlive())
                 {
                     double distance = this.taskOwner.getDistanceSq($$persistentAttacker);
@@ -98,14 +94,13 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
                     }
                 }
 
-                // Иначе ищем ближайшего игрока
                 return super.shouldExecute();
             }
 
             @Override
             protected double getTargetDistance()
             {
-                return 20.0D; // Радиус поиска цели
+                return 20.0D;
             }
         });
     }
@@ -115,7 +110,6 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
     {
         super.onLivingUpdate();
 
-        // Восстанавливаем запомненного игрока из UUID при загрузке
         if (!this.world.isRemote && this.$$persistentAttacker == null && this.$$attackerUUID != null)
         {
             for (EntityPlayer player : this.world.playerEntities)
@@ -130,17 +124,16 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
             }
         }
 
-        // Очищаем запомненного игрока если он умер
         if (this.$$persistentAttacker != null && !this.$$persistentAttacker.isEntityAlive())
         {
             $$clearPersistentAttacker();
         }
 
-        // Очищаем если игрок слишком далеко
         if (this.$$persistentAttacker != null && this.getAttackTarget() == null)
         {
             double distance = this.getDistanceSq(this.$$persistentAttacker);
-            if (distance > 1024.0D) // 32 блока
+
+            if (distance > 1024.0D)
             {
                 $$clearPersistentAttacker();
             }
@@ -150,7 +143,6 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
     @Override
     public void attackEntityWithRangedAttack(@NonNull EntityLivingBase target, float f)
     {
-        // Атакуем только игроков
         if (!(target instanceof EntityPlayer))
         {
             return;
@@ -158,13 +150,11 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
 
         EntityPlayer targetPlayer = (EntityPlayer) target;
 
-        // Если есть запомненный игрок, атакуем только его
         if ($$persistentAttacker != null && targetPlayer != $$persistentAttacker)
         {
             return;
         }
 
-        // Если нет запомненного игрока, но этот игрок нас ударил - запоминаем его
         if ($$persistentAttacker == null && this.getRevengeTarget() == targetPlayer)
         {
             $$setPersistentAttacker(targetPlayer);
@@ -183,7 +173,6 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
     @Override
     public boolean attackEntityFrom(@NonNull DamageSource source, float amount)
     {
-        // Запоминаем игрока который нанес урон
         if (source.getTrueSource() instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) source.getTrueSource();
@@ -200,7 +189,6 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
     @Override
     public void setAttackTarget(@Nullable EntityLivingBase target)
     {
-        // Разрешаем атаковать только игроков
         if (target == null || target instanceof EntityPlayer)
         {
             super.setAttackTarget(target);
@@ -210,7 +198,6 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
     @Override
     public void setRevengeTarget(@Nullable EntityLivingBase target)
     {
-        // Разрешаем мстить только игрокам
         if (target == null || target instanceof EntityPlayer)
         {
             super.setRevengeTarget(target);
@@ -286,7 +273,6 @@ public abstract class EntityFrostArcherFix extends EntityDivineMob implements IR
         return LootTableRegistry.ENTITIES_FROST_ARCHER;
     }
 
-    // Used for `IRangedAttackMob`
     public void setSwingingArms(boolean swingingArms)
     {
     }

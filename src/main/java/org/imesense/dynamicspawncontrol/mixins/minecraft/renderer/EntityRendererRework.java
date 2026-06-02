@@ -36,10 +36,6 @@ import static org.imesense.dynamicspawncontrol.core.renderer.night.light.MoonLig
 @SuppressWarnings("UnusedMixin")
 public abstract class EntityRendererRework
 {
-    /**
-     *
-     * @param partialTicks
-     */
     @Overwrite
     private void updateLightmap(float partialTicks)
     {
@@ -358,6 +354,7 @@ public abstract class EntityRendererRework
         accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() + (f3 - accessor.accessorGetFogColorBlue()) * f);
 
         float rainStrength = world.getRainStrength(partialTicks);
+
         if (rainStrength > 0.0F)
         {
             float f4 = 1.0F - rainStrength * 0.5F;
@@ -407,6 +404,7 @@ public abstract class EntityRendererRework
         if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isPotionActive(MobEffects.BLINDNESS))
         {
             int duration = ((EntityLivingBase) entity).getActivePotionEffect(MobEffects.BLINDNESS).getDuration();
+
             if (duration < 20)
             {
                 d1 *= (1.0F - (float) duration / 20.0F);
@@ -427,6 +425,7 @@ public abstract class EntityRendererRework
         }
 
         float bossModifier = accessor.accessorGetBossColorModifier();
+
         if (bossModifier > 0.0F)
         {
             float f14 = accessor.accessorGetBossColorModifierPrev() + (bossModifier - accessor.accessorGetBossColorModifierPrev()) * partialTicks;

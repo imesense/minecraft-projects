@@ -96,6 +96,7 @@ public final class DropHeadMob
                     .getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE)
                     .getAttributeValue();
         }
+
         return 1.0D;
     }
 
@@ -166,6 +167,7 @@ public final class DropHeadMob
         {
             return 0.02f;
         }
+
         return 0.0f;
     }
 

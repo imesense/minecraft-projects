@@ -42,4 +42,3 @@ public final class RenderFPS
         UniqueField.CLIENT.fontRenderer.drawStringWithShadow(fpsText, x, y, 0xFFFFFF);
     }
 }
-

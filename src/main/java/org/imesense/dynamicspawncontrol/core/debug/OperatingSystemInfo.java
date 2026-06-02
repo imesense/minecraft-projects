@@ -1,7 +1,5 @@
 package org.imesense.dynamicspawncontrol.core.debug;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.lang.management.ManagementFactory;
 import com.sun.management.OperatingSystemMXBean;
 

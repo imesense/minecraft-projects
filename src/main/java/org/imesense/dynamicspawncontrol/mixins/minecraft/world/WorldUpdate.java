@@ -69,11 +69,6 @@ public abstract class WorldUpdate
         return MathHelper.clamp(result, 0.0f, 1.0f);
     }
 
-    /**
-     *
-     * @param partialTicks
-     * @return
-     */
     @Overwrite
     public float getSunBrightnessBody(float partialTicks)
     {

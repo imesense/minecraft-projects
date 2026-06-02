@@ -11,10 +11,6 @@ import net.mcreator.caves.procedure.ProcedureCubesGenMessa;
 @SuppressWarnings("UnusedMixin")
 public abstract class ProcedureCubesGenMessaUpdate
 {
-    /**
-     * @author OldSerpskiStalker
-     * @reason Corrupted block was generated
-     */
     @Overwrite
     public static void executeProcedure(HashMap<String, Object> dependencies)
     {

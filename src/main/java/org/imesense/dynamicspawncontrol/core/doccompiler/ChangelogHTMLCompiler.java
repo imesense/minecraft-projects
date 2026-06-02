@@ -10,22 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- *
- */
 @InitLog
 public final class ChangelogHTMLCompiler
 {
-    /**
-     *
-     */
     public ChangelogHTMLCompiler() {}
 
-    /**
-     *
-     * @param PATH
-     * @param isDebugMode
-     */
     public static void createChangelogHTML(final String PATH, boolean isDebugMode)
     {
         File docsDir = new File(PATH, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_DOC_COMPILE);
@@ -47,12 +36,6 @@ public final class ChangelogHTMLCompiler
         }
     }
 
-    /**
-     *
-     * @param PATH
-     * @return
-     * @throws IOException
-     */
     private static String readChangelogJSON(final String PATH) throws IOException
     {
         String resourcePath = "/assets/dynamicspawncontrol/changelog/changelog_1_12_2_0_1.json";
@@ -83,11 +66,6 @@ public final class ChangelogHTMLCompiler
         }
     }
 
-    /**
-     *
-     * @param jsonContent
-     * @return
-     */
     private static String generateChangelogHTML(String jsonContent)
     {
         Gson gson = new Gson();
@@ -324,11 +302,6 @@ public final class ChangelogHTMLCompiler
         return html.toString();
     }
 
-    /**
-     *
-     * @param itemText
-     * @return
-     */
     private static String parseChangeItem(String itemText)
     {
         if (itemText == null || itemText.trim().isEmpty())
@@ -471,11 +444,6 @@ public final class ChangelogHTMLCompiler
         return li.toString();
     }
 
-    /**
-     *
-     * @param items
-     * @return
-     */
     private static String parseContentSection(JsonArray items)
     {
         StringBuilder html = new StringBuilder();
@@ -529,11 +497,6 @@ public final class ChangelogHTMLCompiler
         return html.toString();
     }
 
-    /**
-     *
-     * @param text
-     * @param tags
-     */
     private static void extractCommandTags(String text, List<String> tags)
     {
         String[] tagPatterns = {
@@ -559,11 +522,6 @@ public final class ChangelogHTMLCompiler
         }
     }
 
-    /**
-     *
-     * @param text
-     * @return
-     */
     private static String removeCommandTags(String text)
     {
         String[] tagsToRemove = {
@@ -586,11 +544,6 @@ public final class ChangelogHTMLCompiler
         return result;
     }
 
-    /**
-     *
-     * @param tag
-     * @return
-     */
     private static String getCommandTagClass(String tag)
     {
         if (tag.contains("отладочная команда")) return "debug";
@@ -604,11 +557,6 @@ public final class ChangelogHTMLCompiler
         return "default";
     }
 
-    /**
-     *
-     * @param tag
-     * @return
-     */
     private static String getCommandTagIcon(String tag)
     {
         if (tag.contains("отладочная команда")) return "🐛";
@@ -622,11 +570,6 @@ public final class ChangelogHTMLCompiler
         return "🏷️";
     }
 
-    /**
-     *
-     * @param tag
-     * @return
-     */
     private static String getCommandTagText(String tag)
     {
         if (tag.contains("аргументы:"))
@@ -651,10 +594,6 @@ public final class ChangelogHTMLCompiler
         return tag.replace("[", "").replace("]", "");
     }
 
-    /**
-     *
-     * @return
-     */
     private static String getCSSStyles()
     {
         StringBuilder css = new StringBuilder();
@@ -1165,11 +1104,6 @@ public final class ChangelogHTMLCompiler
         return css.toString();
     }
 
-    /**
-     *
-     * @param message
-     * @return
-     */
     private static String getErrorHTML(String message)
     {
         StringBuilder html = new StringBuilder();
@@ -1198,12 +1132,6 @@ public final class ChangelogHTMLCompiler
         return html.toString();
     }
 
-    /**
-     *
-     * @param htmlFile
-     * @param content
-     * @throws IOException
-     */
     private static void writeHTMLFile(File htmlFile, String content) throws IOException
     {
         try (BufferedWriter writer = new BufferedWriter(

@@ -42,8 +42,6 @@ public class CommandBloodmoon extends CommandBase {
         return "/bloodmoon <force|stop|entitynames>";
     }
 
-    /* JADX INFO: Thrown type has an unknown type hierarchy: net.minecraft.command.CommandException */
-    /* JADX INFO: Thrown type has an unknown type hierarchy: net.minecraft.command.WrongUsageException */
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException, WrongUsageException {
         if (args.length == 0) {
             throw new WrongUsageException(getUsage(sender), new Object[0]);

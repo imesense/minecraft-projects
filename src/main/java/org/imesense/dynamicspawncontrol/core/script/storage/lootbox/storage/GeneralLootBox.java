@@ -1,11 +1,9 @@
 package org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage;
 
-import lombok.Getter;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

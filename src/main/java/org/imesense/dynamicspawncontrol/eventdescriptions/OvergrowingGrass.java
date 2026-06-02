@@ -85,7 +85,6 @@ public final class OvergrowingGrass
                         SynchronizationConfig.class).getPlayerRadius() * 2) -
                         SynchronizationConfig.getInstance(SynchronizationConfig.class).getPlayerRadius();
 
-                // Используем TaskManager для асинхронной обработки
                 processGrowthTaskAsync(world, x, z, random.nextLong());
             }
         }

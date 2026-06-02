@@ -56,20 +56,12 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         this.setSize(1.25F, 1.0F);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public float getEyeHeight()
     {
         return 0.5F;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void entityInit()
     {
@@ -79,10 +71,6 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         this.dataManager.register(CUSTOM_PROVOKED, false);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     @NonNull
     protected PathNavigate createNavigator(@NonNull World worldIn)
@@ -100,10 +88,6 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean needsSpecialAI()
     {
@@ -171,10 +155,6 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         }
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void onUpdate()
     {
@@ -227,49 +207,29 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         }
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void setBesideClimbableBlock(boolean climbing)
     {
         this.dataManager.set(CUSTOM_CLIMBING, climbing);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean isBesideClimbableBlock()
     {
         return this.dataManager.get(CUSTOM_CLIMBING);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean isOnLadder()
     {
         return this.getProvoked() && this.isBesideClimbableBlock();
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void setInWeb()
     {
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     @NonNull
     public EnumCreatureAttribute getCreatureAttribute()
@@ -277,30 +237,18 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         return EnumCreatureAttribute.ARTHROPOD;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected boolean canTriggerWalking()
     {
         return false;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean getProvoked()
     {
         return this.dataManager.get(CUSTOM_PROVOKED);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void setProvoked(EntityPlayer player)
     {
@@ -340,10 +288,6 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         return false;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
@@ -373,50 +317,30 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         return super.attackEntityFrom(source, amount);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected boolean isValidLightLevel()
     {
         return true;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected SoundEvent getHurtSound(@NonNull DamageSource source)
     {
         return SoundEvents.ENTITY_SPIDER_HURT;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected SoundEvent getDeathSound()
     {
         return SoundEvents.ENTITY_SPIDER_DEATH;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected ResourceLocation getLootTable()
     {
         return LootTableRegistry.ENTITIES_PUMPKIN_SPIDER;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean getCanSpawnHere()
     {
@@ -425,10 +349,6 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
                 super.getCanSpawnHere();
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void writeEntityToNBT(@NonNull NBTTagCompound tag)
     {
@@ -444,10 +364,6 @@ public abstract class EntityPumpkinSpiderRework extends EntityMob
         tag.setInteger("ProvokedLevel", this.$$provokedLevel);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void readEntityFromNBT(@NonNull NBTTagCompound tag)
     {

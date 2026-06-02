@@ -10,25 +10,14 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- *
- */
 @InitLog
 public final class DocJSONToHTMLCompiler
 {
-    /**
-     *
-     */
     public DocJSONToHTMLCompiler()
     {
 
     }
 
-    /**
-     *
-     * @param PATH
-     * @param isDebugMode
-     */
     public static void createHTMLFile(final String PATH, boolean isDebugMode)
     {
         File logsDir = new File(PATH, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_DOC_COMPILE);
@@ -54,12 +43,6 @@ public final class DocJSONToHTMLCompiler
         }
     }
 
-    /**
-     *
-     * @param PATH
-     * @return
-     * @throws IOException
-     */
     private static String readJSONFile(final String PATH) throws IOException
     {
         File jsonFile = new File(PATH,
@@ -88,11 +71,6 @@ public final class DocJSONToHTMLCompiler
         return content.toString();
     }
 
-    /**
-     *
-     * @param jsonContent
-     * @return
-     */
     private static String generateHTMLFromJSON(String jsonContent)
     {
         Gson gson = new Gson();
@@ -461,11 +439,6 @@ public final class DocJSONToHTMLCompiler
         return html.toString();
     }
 
-    /**
-     *
-     * @param entityName
-     * @return
-     */
     private static String categorizeEntity(String entityName)
     {
         if (entityName.startsWith("dynamicspawncontrol:"))
@@ -526,11 +499,6 @@ public final class DocJSONToHTMLCompiler
         }
     }
 
-    /**
-     *
-     * @param entityName
-     * @return
-     */
     private static String formatEntityName(String entityName)
     {
         if (entityName.startsWith("minecraft:"))
@@ -554,12 +522,6 @@ public final class DocJSONToHTMLCompiler
         return formatted.toString().trim();
     }
 
-    /**
-     *
-     * @param htmlFile
-     * @param content
-     * @throws IOException
-     */
     private static void writeHTMLFile(File htmlFile, String content) throws IOException
     {
         try (BufferedWriter writer = new BufferedWriter(

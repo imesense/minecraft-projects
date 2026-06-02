@@ -51,10 +51,6 @@ public abstract class EntityKobblinRework extends EntityMob
         super(worldIn);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void entityInit()
     {
@@ -62,10 +58,6 @@ public abstract class EntityKobblinRework extends EntityMob
         this.dataManager.register(CUSTOM_PROVOKED, false);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected void applyEntityAttributes()
     {
@@ -77,10 +69,6 @@ public abstract class EntityKobblinRework extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean needsSpecialAI()
     {
@@ -137,10 +125,6 @@ public abstract class EntityKobblinRework extends EntityMob
         });
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void onUpdate()
     {
@@ -190,20 +174,12 @@ public abstract class EntityKobblinRework extends EntityMob
         }
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean getProvoked()
     {
         return this.dataManager.get(CUSTOM_PROVOKED);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void setProvoked(EntityPlayer player)
     {
@@ -242,10 +218,6 @@ public abstract class EntityKobblinRework extends EntityMob
         return false;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
@@ -276,10 +248,6 @@ public abstract class EntityKobblinRework extends EntityMob
         return super.attackEntityFrom(source, amount);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void writeEntityToNBT(@NonNull NBTTagCompound tag)
     {
@@ -294,10 +262,6 @@ public abstract class EntityKobblinRework extends EntityMob
         tag.setInteger("ProvokedLevel", this.$$provokedLevel);
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void readEntityFromNBT(@NonNull NBTTagCompound tag)
     {
@@ -320,20 +284,12 @@ public abstract class EntityKobblinRework extends EntityMob
         }
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected SoundEvent getHurtSound(@NonNull DamageSource source)
     {
         return SoundRegistry.KOBBLIN;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     @NonNull
     protected SoundEvent getDeathSound()
@@ -341,39 +297,23 @@ public abstract class EntityKobblinRework extends EntityMob
         return SoundRegistry.KOBBLIN;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected ResourceLocation getLootTable()
     {
         return LootTableRegistry.ENTITIES_KOBBLIN;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     protected void playStepSound(@NonNull BlockPos pos, @NonNull Block blockIn)
     {
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public float getEyeHeight()
     {
         return 0.9F;
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public void addVelocity(double x, double y, double z)
     {
@@ -383,10 +323,6 @@ public abstract class EntityKobblinRework extends EntityMob
         }
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public boolean getCanSpawnHere()
     {
@@ -396,10 +332,6 @@ public abstract class EntityKobblinRework extends EntityMob
                 super.getCanSpawnHere();
     }
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Rewrite broken logic
-     */
     @Overwrite
     public int getMaxSpawnedInChunk()
     {

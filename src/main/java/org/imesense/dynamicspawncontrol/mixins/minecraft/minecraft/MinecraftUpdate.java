@@ -39,10 +39,6 @@ public abstract class MinecraftUpdate
     @Shadow
     protected abstract void updateDisplayMode() throws LWJGLException;
 
-    /**
-     * @author OldSerpskiStalker
-     * @reason Print mod name
-     */
     @Overwrite
     private void createDisplay() throws LWJGLException
     {

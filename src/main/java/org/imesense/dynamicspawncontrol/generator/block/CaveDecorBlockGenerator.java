@@ -114,11 +114,11 @@ public final class CaveDecorBlockGenerator implements IWorldGenerator
 
             switch (type)
             {
-                case 0: return new ItemStack(Items.SKULL, 1, 0); //-' Skeleton
-                case 1: return new ItemStack(Items.SKULL, 1, 2); //-' Zombie
-                case 2: return new ItemStack(Items.SKULL, 1, 4); //-' Creeper
-                case 3: return new ItemStack(Items.SKULL, 1, 3); //-' Player
-                default: return new ItemStack(Items.SKULL, 1, 1); //-' Wither Skeleton
+                case 0: return new ItemStack(Items.SKULL, 1, 0); // Skeleton
+                case 1: return new ItemStack(Items.SKULL, 1, 2); // Zombie
+                case 2: return new ItemStack(Items.SKULL, 1, 4); // Creeper
+                case 3: return new ItemStack(Items.SKULL, 1, 3); // Player
+                default: return new ItemStack(Items.SKULL, 1, 1); // Wither Skeleton
             }
         }
         else
@@ -127,9 +127,9 @@ public final class CaveDecorBlockGenerator implements IWorldGenerator
 
             switch (type)
             {
-                case 0: return new ItemStack(Items.SKULL, 1, 0); //-' Skeleton
-                case 1: return new ItemStack(Items.SKULL, 1, 1); //-' Wither Skeleton
-                default: return new ItemStack(Items.SKULL, 1, 3); //-' Player
+                case 0: return new ItemStack(Items.SKULL, 1, 0); // Skeleton
+                case 1: return new ItemStack(Items.SKULL, 1, 1); // Wither Skeleton
+                default: return new ItemStack(Items.SKULL, 1, 3); // Player
             }
         }
     }

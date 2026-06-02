@@ -11,10 +11,6 @@ import net.mcreator.caves.procedure.ProcedureStalagmitesGenSwamp;
 @SuppressWarnings("UnusedMixin")
 public abstract class ProcedureStalagmitesGenSwampUpdate
 {
-    /**
-     * @author OldSerpskiStalker
-     * @reason Corrupted block was generated
-     */
     @Overwrite
     public static void executeProcedure(HashMap<String, Object> dependencies)
     {

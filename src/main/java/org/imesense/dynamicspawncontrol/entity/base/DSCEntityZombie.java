@@ -1,11 +1,8 @@
 package org.imesense.dynamicspawncontrol.entity.base;
 
-import lombok.NonNull;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public abstract class DSCEntityZombie extends EntityZombie

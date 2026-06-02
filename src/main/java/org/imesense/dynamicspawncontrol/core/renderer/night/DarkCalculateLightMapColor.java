@@ -2,7 +2,7 @@ package org.imesense.dynamicspawncontrol.core.renderer.night;
 
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.core.renderer.night.unpack.LightmapUnpack;
+import org.imesense.dynamicspawncontrol.core.renderer.night.unpack.LightMapUnpack;
 import org.imesense.dynamicspawncontrol.mixins.minecraft.IEntityRendererAccessor;
 
 import static org.imesense.dynamicspawncontrol.core.renderer.night.block.BlockLightStage.*;
@@ -19,8 +19,8 @@ public abstract class DarkCalculateLightMapColor
 {
     public static int calculateFinalLightMapColor(IEntityRendererAccessor accessor, World world, float partialTicks, int i, float sunBrightness, float moonBrightness, float[] brightnessTable, DimensionType dimType, int color)
     {
-        int skyIndex = LightmapUnpack.unpackSkyIndex(i);
-        int blockIndex = LightmapUnpack.unpackBlockIndex(i);
+        int skyIndex = LightMapUnpack.unpackSkyIndex(i);
+        int blockIndex = LightMapUnpack.unpackBlockIndex(i);
 
         float skyFactor = computeSkyFactor(skyIndex);
         float skyFactor2 = computeSkyFactor2(skyFactor, moonBrightness);

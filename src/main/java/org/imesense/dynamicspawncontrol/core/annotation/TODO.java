@@ -18,4 +18,3 @@ public @interface TODO
     boolean showOnce() default true;
     TodoPriority priority() default TodoPriority.NORMAL;
 }
-

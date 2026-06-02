@@ -11,10 +11,6 @@ import mods.railcraft.common.core.BetaMessageTickHandler;
 @SuppressWarnings("UnusedMixin")
 public abstract class BetaMessageTickHandlerUpdate
 {
-    /**
-     * @author OldSerpskiStalker
-     * @reason Disabling version usage message
-     */
     @Overwrite
     @SuppressWarnings("OverwriteModifiers")
     public void tick(LivingEvent.LivingUpdateEvent event)

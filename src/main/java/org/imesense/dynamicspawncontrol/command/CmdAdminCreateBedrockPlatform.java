@@ -138,5 +138,4 @@ public final class CmdAdminCreateBedrockPlatform extends CommandBase
                         ", Y=255"
         ));
     }
-
 }

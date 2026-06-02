@@ -51,7 +51,6 @@ public final class GpuInfo
                 }
             }
 
-            // Fallback to WMI on Windows
             if (OperatingSystemInfo.getOsType() == OperatingSystemInfo.OSType.WINDOWS)
             {
                 return getWindowsActiveGpuInfo();
@@ -88,7 +87,6 @@ public final class GpuInfo
     {
         try
         {
-            // Try OpenGL extensions first
             if (GLContext.getCapabilities() != null)
             {
                 String nvidiaVram = getNvidiaVramInfo();
@@ -98,7 +96,6 @@ public final class GpuInfo
                 if (amdVram != null) return amdVram;
             }
 
-            // Fallback to WMI on Windows
             if (OperatingSystemInfo.getOsType() == OperatingSystemInfo.OSType.WINDOWS)
             {
                 return getWindowsVramInfo();
@@ -117,7 +114,7 @@ public final class GpuInfo
         String line;
         boolean firstLine = true;
 
-        reader.readLine(); // Skip header
+        reader.readLine();
 
         while ((line = reader.readLine()) != null)
         {
@@ -170,7 +167,7 @@ public final class GpuInfo
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
 
-        reader.readLine(); // Skip header
+        reader.readLine();
 
         while ((line = reader.readLine()) != null)
         {
@@ -190,7 +187,7 @@ public final class GpuInfo
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
 
-        reader.readLine(); // Skip header
+        reader.readLine();
 
         while ((line = reader.readLine()) != null)
         {
@@ -274,7 +271,7 @@ public final class GpuInfo
             String line;
             StringBuilder result = new StringBuilder();
 
-            reader.readLine(); // Skip header
+            reader.readLine();
 
             while ((line = reader.readLine()) != null)
             {

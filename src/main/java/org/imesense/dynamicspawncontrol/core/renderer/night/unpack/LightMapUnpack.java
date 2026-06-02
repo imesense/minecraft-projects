@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.renderer.night.unpack;
 
-public abstract class LightmapUnpack
+public abstract class LightMapUnpack
 {
     public static int unpackSkyIndex(int packedLight)
     {

@@ -11,9 +11,6 @@ import org.imesense.dynamicspawncontrol.core.annotation.cmdconsole.RequiredPermi
 
 import javax.annotation.Nonnull;
 
-/**
- *
- */
 @CommandInfo(
         description = "Показывает seed текущего мира",
         usage = "/new_dsc_seed",
@@ -24,10 +21,6 @@ import javax.annotation.Nonnull;
 @TODO(value = "In development. A completely new concept of using console commands to separate the client and server", showOnce = false, priority = TODO.TodoPriority.HIGH)
 public class CmdWorldSeed extends AnnotatedCommand
 {
-    /**
-     *
-     * @return
-     */
     @Nonnull
     @Override
     public String getName()
@@ -35,13 +28,6 @@ public class CmdWorldSeed extends AnnotatedCommand
         return "new_dsc_seed";
     }
 
-    /**
-     *
-     * @param server
-     * @param sender
-     * @param args
-     * @throws CommandException
-     */
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException
     {
