@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.bloodmoonmanager;
+package org.imesense.dynamicspawncontrol.command.gameplay;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,8 +16,9 @@ import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodMoonSpawnValidator;
+import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodmoonHandler;
 
 public class CommandBloodmoon extends CommandBase {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {

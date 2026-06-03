@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.satietymanager;
+package org.imesense.dynamicspawncontrol.command.gameplay;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;

@@ -1,6 +1,8 @@
 package org.imesense.dynamicspawncontrol.core.register.command;
 
-import org.imesense.dynamicspawncontrol.command.*;
+import org.imesense.dynamicspawncontrol.command.admin.*;
+import org.imesense.dynamicspawncontrol.command.client.*;
+import org.imesense.dynamicspawncontrol.command.server.*;
 import org.imesense.dynamicspawncontrol.core.base.BaseCommandRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

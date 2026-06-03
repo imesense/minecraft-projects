@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.command;
+package org.imesense.dynamicspawncontrol.command.admin;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;

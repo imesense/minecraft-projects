@@ -23,6 +23,9 @@ import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigInitializer;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigScanner;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
+import org.imesense.dynamicspawncontrol.command.base.CommandManager;
+import org.imesense.dynamicspawncontrol.command.gameplay.CommandBloodmoon;
+import org.imesense.dynamicspawncontrol.command.gameplay.CommandSetHunger;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
@@ -31,7 +34,6 @@ import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGenera
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
-import org.imesense.dynamicspawncontrol.managercommands.CommandManager;
 import org.imesense.dynamicspawncontrol.potion.ModPotions;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;

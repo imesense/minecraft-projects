@@ -1,6 +1,7 @@
-package org.imesense.dynamicspawncontrol.managercommands;
+package org.imesense.dynamicspawncontrol.command.base;
 
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import org.imesense.dynamicspawncontrol.command.gameplay.CmdWorldSeed;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 

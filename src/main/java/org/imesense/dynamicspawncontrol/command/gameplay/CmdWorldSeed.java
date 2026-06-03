@@ -1,9 +1,10 @@
-package org.imesense.dynamicspawncontrol.managercommands;
+package org.imesense.dynamicspawncontrol.command.gameplay;
 
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import org.imesense.dynamicspawncontrol.command.base.AnnotatedCommand;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.annotation.cmdconsole.CommandInfo;
 import org.imesense.dynamicspawncontrol.core.annotation.cmdconsole.CommandSide;
