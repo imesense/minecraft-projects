@@ -111,6 +111,7 @@ dependencies
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
+    // Simple Logging Facade for Java
     implementation 'org.slf4j:slf4j-simple:1.7.36'
 
     // Use SpongePowered mixins
@@ -121,19 +122,20 @@ dependencies
     implementation "io.github.llamalad7:mixinextras-common:0.3.6"
     annotationProcessor "io.github.llamalad7:mixinextras-common:0.3.6"
 
-    implementation fg.deobf("curse.maven:fermiumbooter-968474:6386622")
+    // Use core mod #1 FermiumBooter
+    implementation fg.deobf("curse.maven:fermiumbooter-968474:7279112")
 
-    // Use core mod #1 DivineRPG
+    // Use core mod #2 DivineRPG
     implementation fg.deobf("curse.maven:official-divinerpg-363543:3081433")
 
-    // Use core mod #2 SRParasites
+    // Use core mod #3 SRParasites
     implementation fg.deobf("curse.maven:scape-and-run-parasites-348025:8147067")
     implementation fg.deobf("curse.maven:scape-and-run-parasites-extra-1140227:7885296")
 
     // Use Byte buddy lib
     implementation 'net.bytebuddy:byte-buddy:1.12.9'
 
-    // Use core mod #3 Special-Mobs
+    // Use core mod #4 Special-Mobs
     implementation fg.deobf("curse.maven:special-mobs-59968:3320102")
 
     // Use dependencies, includes and libs
