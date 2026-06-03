@@ -14,9 +14,9 @@ import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 import javax.annotation.Nonnull;
 
 @InitLog
-public final class CmdAdminCopyWorldSeed extends CommandBase
+public final class CopyWorldSeedAdminCommand extends CommandBase
 {
-    public CmdAdminCopyWorldSeed()
+    public CopyWorldSeedAdminCommand()
     {
 
     }

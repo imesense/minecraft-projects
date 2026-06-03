@@ -21,9 +21,9 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 @InitLog
-public final class CmdAdminDumpItem extends CommandBase
+public final class DumpItemAdminCommand extends CommandBase
 {
-    public CmdAdminDumpItem()
+    public DumpItemAdminCommand()
     {
 
     }

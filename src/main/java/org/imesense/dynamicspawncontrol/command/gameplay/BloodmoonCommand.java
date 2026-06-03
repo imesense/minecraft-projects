@@ -20,7 +20,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodMoonSpawnValidator;
 import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodmoonHandler;
 
-public class CommandBloodmoon extends CommandBase {
+public class BloodmoonCommand extends CommandBase {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
         List<String> suggestions = new ArrayList<>();
         if (args.length == 1) {

@@ -23,9 +23,9 @@ import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigInitializer;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.MixinConfigScanner;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.spawnercraft.register.RegisterSpawnerCraft;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.time_control_mod_forge_1_12_2.network.MessageHandler;
-import org.imesense.dynamicspawncontrol.command.base.CommandManager;
-import org.imesense.dynamicspawncontrol.command.gameplay.CommandBloodmoon;
-import org.imesense.dynamicspawncontrol.command.gameplay.CommandSetHunger;
+import org.imesense.dynamicspawncontrol.command.CommandManager;
+import org.imesense.dynamicspawncontrol.command.gameplay.BloodmoonCommand;
+import org.imesense.dynamicspawncontrol.command.gameplay.SetHungerCommand;
 import org.imesense.dynamicspawncontrol.core.register.command.CommandRegister;
 import org.imesense.dynamicspawncontrol.core.register.config.ConfigRegister;
 import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
@@ -220,9 +220,9 @@ public final class DynamicSpawnControl
             LogManager.error("Ошибка при генерации HTML отчета при запуске сервера: " + exception.getMessage());
         }
 
-        event.registerServerCommand(new CommandSetHunger());
+        event.registerServerCommand(new SetHungerCommand());
 
-        event.registerServerCommand(new CommandBloodmoon());
+        event.registerServerCommand(new BloodmoonCommand());
     }
 
     @Mod.EventHandler

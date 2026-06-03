@@ -13,9 +13,9 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 @InitLog
-public final class CmdClientCleanMemory extends CommandBase
+public final class CleanMemoryClientCommand extends CommandBase
 {
-    public CmdClientCleanMemory()
+    public CleanMemoryClientCommand()
     {
 
     }

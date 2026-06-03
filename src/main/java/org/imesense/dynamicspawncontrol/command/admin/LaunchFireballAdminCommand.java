@@ -12,9 +12,9 @@ import org.imesense.dynamicspawncontrol.item.InfernoSphereEntityFireball;
 import javax.annotation.Nonnull;
 
 @InitLog
-public final class CmdAdminLaunchFireball extends CommandBase
+public final class LaunchFireballAdminCommand extends CommandBase
 {
-    public CmdAdminLaunchFireball()
+    public LaunchFireballAdminCommand()
     {
 
     }

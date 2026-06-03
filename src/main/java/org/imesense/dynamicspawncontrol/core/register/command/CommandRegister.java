@@ -22,23 +22,23 @@ public final class CommandRegister extends BaseCommandRegister
 
     private static final Class<?>[] COMMAND_CLASSES =
     {
-        CmdAdminDumpBlock.class,
-        CmdAdminDumpEntity.class,
-        CmdAdminDumpItem.class,
-        CmdAdminGameMode.class,
-        CmdAdminGetWorldMoonPhase.class,
-        CmdAdminLaunchFireball.class,
-        CmdAdminScanEntities.class,
-        CmdAdminSwitchVanish.class,
-        CmdServerMobsKiller.class,
-        CmdServerScriptReload.class,
-        CmdAdminGetDimension.class,
-        CmdClientCleanMemory.class,
-        CmdAdminCopyWorldSeed.class,
-        CmdAdminGiveDSCBow.class,
-        CmdAdminGiveDSCSword.class,
-        CmdAdminTimeSet.class,
-        CmdAdminCreateBedrockPlatform.class
+        DumpBlockAdminCommand.class,
+        DumpEntityAdminCommand.class,
+        DumpItemAdminCommand.class,
+        GameModeAdminCommand.class,
+        GetWorldMoonPhaseAdminCommand.class,
+        LaunchFireballAdminCommand.class,
+        ScanEntitiesAdminCommand.class,
+        SwitchVanishAdminCommand.class,
+        MobKillerServerCommand.class,
+        ReloadScriptServerCommand.class,
+        GetDimensionAdminCommand.class,
+        CleanMemoryClientCommand.class,
+        CopyWorldSeedAdminCommand.class,
+        GiveBowAdminCommand.class,
+        GiveSwordAdminCommand.class,
+        SetTimeAdminCommand.class,
+        CreateBedrockPlatformAdminCommand.class
     };
 
     @Override

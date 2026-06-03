@@ -1,21 +1,21 @@
-package org.imesense.dynamicspawncontrol.command.server;
+package org.imesense.dynamicspawncontrol.command.admin;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.register.parser.ParserRegister;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 
 import javax.annotation.Nonnull;
 
 @InitLog
-public final class CmdServerScriptReload extends CommandBase
+public final class GetDimensionAdminCommand extends CommandBase
 {
-    public CmdServerScriptReload()
+    public GetDimensionAdminCommand()
     {
 
     }
@@ -24,14 +24,14 @@ public final class CmdServerScriptReload extends CommandBase
     @Override
     public String getName()
     {
-        return "dsc_reload_scripts";
+        return "dsc_gd";
     }
 
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
-        return "/dsc_reload_scripts";
+        return "/dsc_gd";
     }
 
     @Override
@@ -41,17 +41,16 @@ public final class CmdServerScriptReload extends CommandBase
         {
             iCommandSender.sendMessage(new TextComponentString(
                     ChatColorUtil.color(CmdCallType.COMMAND + " The command does not accept arguments",
-                            TextFormatting.RED)
-            ));
+                            TextFormatting.RED)));
+            return;
         }
-        else
-        {
-            ParserRegister.getInstance().reloadAllConfigs();
 
-            iCommandSender.sendMessage(new TextComponentString(
-                    ChatColorUtil.color(CmdCallType.COMMAND + " Configurations have been reloaded",
-                            TextFormatting.GREEN)
-            ));
+        if (iCommandSender instanceof EntityPlayerMP)
+        {
+            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) iCommandSender;
+
+            int worldId = entityPlayerMP.world.provider.getDimension();
+            entityPlayerMP.sendMessage(new TextComponentString("World ID: " + worldId));
         }
     }
 }

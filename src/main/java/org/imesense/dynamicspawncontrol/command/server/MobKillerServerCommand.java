@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @InitLog
-public final class CmdServerMobsKiller extends CommandBase
+public final class MobKillerServerCommand extends CommandBase
 {
-    public CmdServerMobsKiller()
+    public MobKillerServerCommand()
     {
 
     }

@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.MathHelper;
 
-public class CommandSetHunger extends CommandBase
+public class SetHungerCommand extends CommandBase
 {
     @Override
     public String getName()

@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 
 @InitLog
 @TODO(value = "New concept for 0.2 update", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class CmdAdminCreateBedrockPlatform extends CommandBase
+public final class CreateBedrockPlatformAdminCommand extends CommandBase
 {
     @Nonnull
     @Override

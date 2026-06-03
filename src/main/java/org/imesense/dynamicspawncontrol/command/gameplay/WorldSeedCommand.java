@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @CommandSide(CommandSide.Side.BOTH)
 @RequiredPermission(value = 0, playerOnly = true)
 @TODO(value = "In development. A completely new concept of using console commands to separate the client and server", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public class CmdWorldSeed extends AnnotatedCommand
+public class WorldSeedCommand extends AnnotatedCommand
 {
     @Nonnull
     @Override

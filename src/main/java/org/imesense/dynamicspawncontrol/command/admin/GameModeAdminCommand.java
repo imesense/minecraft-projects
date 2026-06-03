@@ -15,9 +15,9 @@ import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 import javax.annotation.Nonnull;
 
 @InitLog
-public final class CmdAdminGameMode extends CommandBase
+public final class GameModeAdminCommand extends CommandBase
 {
-    public CmdAdminGameMode()
+    public GameModeAdminCommand()
     {
 
     }

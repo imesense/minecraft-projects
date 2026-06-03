@@ -20,9 +20,9 @@ import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import javax.annotation.Nonnull;
 
 @InitLog
-public final class CmdAdminDumpEntity extends CommandBase
+public final class DumpEntityAdminCommand extends CommandBase
 {
-    public CmdAdminDumpEntity()
+    public DumpEntityAdminCommand()
     {
 
     }

@@ -15,9 +15,9 @@ import javax.annotation.Nonnull;
 
 @InitLog
 @TODO(value = "Add this class on diagram project", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class CmdAdminTimeSet extends CommandBase
+public final class SetTimeAdminCommand extends CommandBase
 {
-    public CmdAdminTimeSet()
+    public SetTimeAdminCommand()
     {
     }
 

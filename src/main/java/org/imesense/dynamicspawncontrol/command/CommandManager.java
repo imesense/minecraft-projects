@@ -1,7 +1,8 @@
-package org.imesense.dynamicspawncontrol.command.base;
+package org.imesense.dynamicspawncontrol.command;
 
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import org.imesense.dynamicspawncontrol.command.gameplay.CmdWorldSeed;
+import org.imesense.dynamicspawncontrol.command.base.AnnotatedCommand;
+import org.imesense.dynamicspawncontrol.command.gameplay.WorldSeedCommand;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
@@ -15,7 +16,7 @@ public class CommandManager
 
     static
     {
-        registerCommand(new CmdWorldSeed());
+        registerCommand(new WorldSeedCommand());
     }
 
     private static void registerCommand(AnnotatedCommand command)

@@ -11,9 +11,9 @@ import javax.annotation.Nonnull;
 
 @InitLog
 @TODO(value = "[WIP] Консольная команда для удаление всех валяющихся предметов", showOnce = false, priority = TODO.TodoPriority.HIGH)
-public final class CmdAdminRemoveDroppedItems extends CommandBase
+public final class RemoveDroppedItemsAdminCommand extends CommandBase
 {
-    public CmdAdminRemoveDroppedItems()
+    public RemoveDroppedItemsAdminCommand()
     {
 
     }

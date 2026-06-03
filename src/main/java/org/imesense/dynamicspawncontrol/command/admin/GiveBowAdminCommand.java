@@ -17,9 +17,9 @@ import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 import javax.annotation.Nonnull;
 
 @InitLog
-public final class CmdAdminGiveDSCBow extends CommandBase
+public final class GiveBowAdminCommand extends CommandBase
 {
-    public CmdAdminGiveDSCBow()
+    public GiveBowAdminCommand()
     {
 
     }

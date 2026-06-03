@@ -19,9 +19,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @InitLog
-public final class CmdAdminScanEntities extends CommandBase
+public final class ScanEntitiesAdminCommand extends CommandBase
 {
-    public CmdAdminScanEntities()
+    public ScanEntitiesAdminCommand()
     {
 
     }

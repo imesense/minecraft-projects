@@ -13,9 +13,9 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 @InitLog
-public final class CmdAdminSwitchVanish extends CommandBase
+public final class SwitchVanishAdminCommand extends CommandBase
 {
-    public CmdAdminSwitchVanish()
+    public SwitchVanishAdminCommand()
     {
 
     }

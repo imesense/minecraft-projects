@@ -21,9 +21,9 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 @InitLog
-public final class CmdAdminDumpBlock extends CommandBase
+public final class DumpBlockAdminCommand extends CommandBase
 {
-    public CmdAdminDumpBlock()
+    public DumpBlockAdminCommand()
     {
 
     }

@@ -2,10 +2,10 @@ package org.imesense.dynamicspawncontrol.command.admin;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.WorldProvider;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.text.ChatColorUtil;
 import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
@@ -13,9 +13,9 @@ import org.imesense.dynamicspawncontrol.core.text.CmdCallType;
 import javax.annotation.Nonnull;
 
 @InitLog
-public final class CmdAdminGetDimension extends CommandBase
+public final class GetWorldMoonPhaseAdminCommand extends CommandBase
 {
-    public CmdAdminGetDimension()
+    public GetWorldMoonPhaseAdminCommand()
     {
 
     }
@@ -24,33 +24,25 @@ public final class CmdAdminGetDimension extends CommandBase
     @Override
     public String getName()
     {
-        return "dsc_gd";
+        return "dsc_moon_phase";
     }
 
     @Nonnull
     @Override
     public String getUsage(@Nonnull ICommandSender iCommandSender)
     {
-        return "/dsc_gd";
+        return "/dsc_moon_phase";
     }
 
     @Override
     public void execute(@Nonnull MinecraftServer minecraftServer, @Nonnull ICommandSender iCommandSender, @Nonnull String... args)
     {
-        if (args.length > 0)
-        {
-            iCommandSender.sendMessage(new TextComponentString(
-                    ChatColorUtil.color(CmdCallType.COMMAND + " The command does not accept arguments",
-                            TextFormatting.RED)));
-            return;
-        }
+        WorldProvider worldProvider = iCommandSender.getEntityWorld().provider;
+        int moonPhase = worldProvider.getMoonPhase(iCommandSender.getEntityWorld().getWorldTime());
 
-        if (iCommandSender instanceof EntityPlayerMP)
-        {
-            EntityPlayerMP entityPlayerMP = (EntityPlayerMP) iCommandSender;
-
-            int worldId = entityPlayerMP.world.provider.getDimension();
-            entityPlayerMP.sendMessage(new TextComponentString("World ID: " + worldId));
-        }
+        iCommandSender.sendMessage(new TextComponentString(
+                ChatColorUtil.color(CmdCallType.COMMAND + " -> The current phase of the moon: " + moonPhase,
+                        TextFormatting.AQUA)
+        ));
     }
 }
