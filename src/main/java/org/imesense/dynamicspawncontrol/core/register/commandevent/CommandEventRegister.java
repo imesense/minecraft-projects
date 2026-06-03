@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register.commandevent;
 
-import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.base.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.command.OnEventCommandEvent;
 
 public final class CommandEventRegister extends BaseEventRegister

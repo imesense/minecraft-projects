@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.baseconfig;
+package org.imesense.dynamicspawncontrol.core.base;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import com.google.gson.*;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
+import org.imesense.dynamicspawncontrol.core.base.BaseParser;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.mobtaskmanager.storage.GeneralMobTaskManager;
 

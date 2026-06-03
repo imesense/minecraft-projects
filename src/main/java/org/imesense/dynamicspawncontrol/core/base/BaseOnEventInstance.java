@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.baseonevent;
+package org.imesense.dynamicspawncontrol.core.base;
 
 import java.util.HashMap;
 import java.util.Map;

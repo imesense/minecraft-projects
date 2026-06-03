@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
+import org.imesense.dynamicspawncontrol.core.base.BaseParser;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.data.EntityDropExperience;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropexperience.storage.GeneralDropExperience;
 

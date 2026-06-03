@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register.parser;
 
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.baseregister.BaseParserRegister;
+import org.imesense.dynamicspawncontrol.core.base.BaseParserRegister;
 import org.imesense.dynamicspawncontrol.core.script.parser.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

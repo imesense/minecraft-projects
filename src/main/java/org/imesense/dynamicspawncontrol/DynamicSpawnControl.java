@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.*;
 //import net.minecraftforge.fml.common.network.NetworkRegistry;
 //import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import org.imesense.dynamicspawncontrol.bloodmoonmanager.*;
-import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.base.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.interfaces.IRecipes;

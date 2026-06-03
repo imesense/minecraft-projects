@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.baseparser;
+package org.imesense.dynamicspawncontrol.core.base;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControl;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;

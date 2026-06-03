@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.script.parser;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
+import org.imesense.dynamicspawncontrol.core.base.BaseParser;
 
 import java.io.File;
 

@@ -1,6 +1,6 @@
 package org.imesense.dynamicspawncontrol.core.register.attach;
 
-import org.imesense.dynamicspawncontrol.core.baseregister.BaseEventRegister;
+import org.imesense.dynamicspawncontrol.core.base.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.event.attach.OnEventAttachCapabilitiesEvent;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

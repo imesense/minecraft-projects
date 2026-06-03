@@ -6,9 +6,8 @@ import lombok.Setter;
 import org.imesense.dynamicspawncontrol.core.annotation.ConceptConfig;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.baseconfig.BaseJsonConfig;
+import org.imesense.dynamicspawncontrol.core.base.BaseJsonConfig;
 import org.imesense.dynamicspawncontrol.core.field.UniqueField;
-import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 @Getter
 @Setter

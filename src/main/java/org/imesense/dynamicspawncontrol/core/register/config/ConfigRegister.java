@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register.config;
 
 import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodMoonConfig;
-import org.imesense.dynamicspawncontrol.core.baseregister.BaseConfigRegister;
+import org.imesense.dynamicspawncontrol.core.base.BaseConfigRegister;
 import org.imesense.dynamicspawncontrol.core.config.blockworldgenerator.BlockWorldGeneratorConfig;
 import org.imesense.dynamicspawncontrol.core.config.debug.DebugConfig;
 import org.imesense.dynamicspawncontrol.core.config.dropitem.SkeletonDropConfig;

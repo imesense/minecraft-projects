@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.baseregister;
+package org.imesense.dynamicspawncontrol.core.base;
 
 import net.minecraftforge.common.MinecraftForge;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;

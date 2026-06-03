@@ -17,7 +17,7 @@ import org.imesense.dynamicspawncontrol.ai.zombie.event.ZombieBreakTorchEventHan
 import org.imesense.dynamicspawncontrol.ai.zombie.event.ZombieHasShieldEventHandler;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.baseonevent.BaseOnEventInstance;
+import org.imesense.dynamicspawncontrol.core.base.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventMobTaskManager;
 import org.imesense.dynamicspawncontrol.core.script.processor.OnEventWorldCache;

@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
+import org.imesense.dynamicspawncontrol.core.base.BaseParser;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.data.LootBox;
 import org.imesense.dynamicspawncontrol.core.script.storage.lootbox.storage.GeneralLootBox;
 

@@ -13,7 +13,7 @@ import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.data.*;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.datasupport.AdditionalChecks;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storage.GeneralCheckSpawnStorage;
 import org.imesense.dynamicspawncontrol.core.script.storage.checkspawn.storagesupport.SupportCheckSpawnStorage;
-import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
+import org.imesense.dynamicspawncontrol.core.base.BaseParser;
 
 import java.io.File;
 import java.io.FileReader;

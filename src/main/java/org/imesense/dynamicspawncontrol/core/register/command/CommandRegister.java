@@ -1,7 +1,7 @@
 package org.imesense.dynamicspawncontrol.core.register.command;
 
 import org.imesense.dynamicspawncontrol.command.*;
-import org.imesense.dynamicspawncontrol.core.baseregister.BaseCommandRegister;
+import org.imesense.dynamicspawncontrol.core.base.BaseCommandRegister;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
 public final class CommandRegister extends BaseCommandRegister

@@ -1,8 +1,7 @@
-package org.imesense.dynamicspawncontrol.core.baseregister;
+package org.imesense.dynamicspawncontrol.core.base;
 
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.TODO;
-import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.util.ArrayList;

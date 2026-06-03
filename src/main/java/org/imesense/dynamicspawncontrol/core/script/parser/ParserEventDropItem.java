@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.core.baseparser.BaseParser;
+import org.imesense.dynamicspawncontrol.core.base.BaseParser;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.data.DropItem;
 import org.imesense.dynamicspawncontrol.core.script.storage.dropitem.storage.GeneralDropItem;
 

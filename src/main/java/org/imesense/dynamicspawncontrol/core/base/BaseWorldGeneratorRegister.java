@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.core.baseregister;
+package org.imesense.dynamicspawncontrol.core.base;
 
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
