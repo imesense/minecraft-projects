@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.bloodmoonmanager;
+package org.imesense.dynamicspawncontrol.mechanic.bloodmoon;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

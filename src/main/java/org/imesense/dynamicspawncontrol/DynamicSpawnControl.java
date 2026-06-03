@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.event.*;
 
 //import net.minecraftforge.fml.common.network.NetworkRegistry;
 //import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.*;
 import org.imesense.dynamicspawncontrol.core.base.BaseEventRegister;
 import org.imesense.dynamicspawncontrol.core.doccompiler.ChangelogHTMLCompiler;
 import org.imesense.dynamicspawncontrol.core.doccompiler.DocJSONToHTMLCompiler;
@@ -34,10 +33,11 @@ import org.imesense.dynamicspawncontrol.core.register.worldgenerator.WorldGenera
 import org.imesense.dynamicspawncontrol.core.worldcache.CacheGeneralStorage;
 import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.*;
+import org.imesense.dynamicspawncontrol.mechanic.satiety.*;
 import org.imesense.dynamicspawncontrol.potion.ModPotions;
 import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
-import org.imesense.dynamicspawncontrol.satietymanager.*;
 
 import java.io.File;
 

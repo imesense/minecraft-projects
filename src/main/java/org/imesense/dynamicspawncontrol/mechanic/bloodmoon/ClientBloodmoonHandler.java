@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.bloodmoonmanager;
+package org.imesense.dynamicspawncontrol.mechanic.bloodmoon;
 
 import lombok.Getter;
 import net.minecraft.client.Minecraft;

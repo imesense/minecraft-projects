@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GLContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.core.renderer.night.BaseCalculateLightMapColor;
 import org.imesense.dynamicspawncontrol.core.renderer.night.DarkCalculateLightMapColor;

@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.bloodmoonmanager;
+package org.imesense.dynamicspawncontrol.mechanic.bloodmoon;
 
 import java.lang.reflect.InvocationTargetException;
 import net.minecraft.entity.player.EntityPlayer;

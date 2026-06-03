@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.bloodmoonmanager;
+package org.imesense.dynamicspawncontrol.mechanic.bloodmoon;
 
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;

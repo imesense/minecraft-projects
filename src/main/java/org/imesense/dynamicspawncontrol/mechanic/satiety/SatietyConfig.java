@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.satietymanager;
+package org.imesense.dynamicspawncontrol.mechanic.satiety;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

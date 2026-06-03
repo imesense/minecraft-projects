@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.satietymanager;
+package org.imesense.dynamicspawncontrol.mechanic.satiety;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;

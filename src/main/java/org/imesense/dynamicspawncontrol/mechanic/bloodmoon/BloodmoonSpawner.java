@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.bloodmoonmanager;
+package org.imesense.dynamicspawncontrol.mechanic.bloodmoon;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;

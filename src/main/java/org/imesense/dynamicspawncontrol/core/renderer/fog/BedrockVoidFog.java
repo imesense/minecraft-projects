@@ -17,7 +17,7 @@ import net.minecraft.world.WorldType;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.ClientBloodmoonHandler;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.ClientBloodmoonHandler;
 import org.imesense.dynamicspawncontrol.core.taskmanager.TaskManager;
 import org.imesense.dynamicspawncontrol.core.taskmanager.Task;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;

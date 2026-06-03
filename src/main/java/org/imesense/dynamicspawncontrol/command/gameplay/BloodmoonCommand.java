@@ -17,8 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodMoonSpawnValidator;
-import org.imesense.dynamicspawncontrol.bloodmoonmanager.BloodmoonHandler;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodMoonSpawnValidator;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodmoonHandler;
 
 public class BloodmoonCommand extends CommandBase {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
