@@ -7,7 +7,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
-import org.imesense.dynamicspawncontrol.item.DSCFireball;
+import org.imesense.dynamicspawncontrol.item.InfernoSphereEntityFireball;
 
 import javax.annotation.Nonnull;
 
@@ -69,7 +69,7 @@ public final class CmdAdminLaunchFireball extends CommandBase
             return;
         }
 
-        DSCFireball dscFireball = new DSCFireball(world, entityPlayerMP, 0.00, 0.00, 0.00);
+        InfernoSphereEntityFireball dscFireball = new InfernoSphereEntityFireball(world, entityPlayerMP, 0.00, 0.00, 0.00);
 
         dscFireball.setExplosionStrength(explosionStrength);
         dscFireball.setPosition(entityPlayerMP.posX, entityPlayerMP.posY + entityPlayerMP.getEyeHeight(), entityPlayerMP.posZ);

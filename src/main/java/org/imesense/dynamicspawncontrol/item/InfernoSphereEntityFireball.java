@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class DSCFireball extends EntityFireball
+public final class InfernoSphereEntityFireball extends EntityFireball
 {
     private double explosionStrength = 1.00;
 
@@ -24,17 +24,17 @@ public final class DSCFireball extends EntityFireball
         void spawnFire(World world, BlockPos blockPos, int radius);
     }
 
-    public DSCFireball(World worldIn)
+    public InfernoSphereEntityFireball(World worldIn)
     {
         super(worldIn);
     }
 
-    public DSCFireball(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ)
+    public InfernoSphereEntityFireball(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ)
     {
         super(worldIn, x, y, z, accelX, accelY, accelZ);
     }
 
-    public DSCFireball(World worldIn, EntityLivingBase entityLivingBase, double accelX, double accelY, double accelZ)
+    public InfernoSphereEntityFireball(World worldIn, EntityLivingBase entityLivingBase, double accelX, double accelY, double accelZ)
     {
         super(worldIn, entityLivingBase, accelX, accelY, accelZ);
     }
