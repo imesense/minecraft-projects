@@ -15,30 +15,30 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
-public class BloodmoonHandler extends WorldSavedData {
-    public static BloodmoonHandler INSTANCE;
-    private BloodmoonSpawner bloodMoonSpawner;
+public class BloodMoonHandler extends WorldSavedData {
+    public static BloodMoonHandler INSTANCE;
+    private BloodMoonSpawner bloodMoonSpawner;
     boolean bloodMoon;
     boolean forceBloodMoon;
     int nightCounter;
 
-    public BloodmoonHandler() {
+    public BloodMoonHandler() {
         super(DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME);
-        this.bloodMoonSpawner = new BloodmoonSpawner();
+        this.bloodMoonSpawner = new BloodMoonSpawner();
         this.bloodMoon = false;
         this.forceBloodMoon = false;
     }
 
-    public BloodmoonHandler(String name) {
+    public BloodMoonHandler(String name) {
         super(DynamicSpawnControlStructure.STRUCT_INFO_MOD.NAME);
-        this.bloodMoonSpawner = new BloodmoonSpawner();
+        this.bloodMoonSpawner = new BloodMoonSpawner();
         this.bloodMoon = false;
         this.forceBloodMoon = false;
     }
 
     public void playerJoinedWorld(EntityJoinWorldEvent event) {
         if (!event.getWorld().isRemote && (event.getEntity() instanceof EntityPlayer) && this.bloodMoon) {
-            PacketHandler.INSTANCE.sendTo(new MessageBloodmoonStatus(this.bloodMoon), (EntityPlayerMP) event.getEntity());
+            BloodMoonPacketHandler.INSTANCE.sendTo(new BloodmoonStatusMessage(this.bloodMoon), (EntityPlayerMP) event.getEntity());
         }
     }
 
@@ -88,14 +88,14 @@ public class BloodmoonHandler extends WorldSavedData {
 
     private void setBloodmoon(boolean bloodMoon) {
         if (this.bloodMoon != bloodMoon) {
-            PacketHandler.INSTANCE.sendToDimension(new MessageBloodmoonStatus(bloodMoon), 0);
+            BloodMoonPacketHandler.INSTANCE.sendToDimension(new BloodmoonStatusMessage(bloodMoon), 0);
             markDirty();
         }
         this.bloodMoon = bloodMoon;
     }
 
     public void updateClients() {
-        PacketHandler.INSTANCE.sendToDimension(new MessageBloodmoonStatus(this.bloodMoon), 0);
+        BloodMoonPacketHandler.INSTANCE.sendToDimension(new BloodmoonStatusMessage(this.bloodMoon), 0);
     }
 
     public void force() {

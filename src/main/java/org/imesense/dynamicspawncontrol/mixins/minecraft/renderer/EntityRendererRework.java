@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GLContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
-import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.ClientBloodmoonHandler;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodMoonClientHandler;
 import org.imesense.dynamicspawncontrol.core.mixinconfig.nightrenderer.NightRendererData;
 import org.imesense.dynamicspawncontrol.core.renderer.night.BaseCalculateLightMapColor;
 import org.imesense.dynamicspawncontrol.core.renderer.night.DarkCalculateLightMapColor;
@@ -64,7 +64,7 @@ public abstract class EntityRendererRework
 
             float bloodFactor = 0.0f;
 
-            if (ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+            if (BloodMoonClientHandler.INSTANCE.isBloodmoonActive())
             {
                 float time = world.getWorldTime() % 24000.0f;
 
@@ -88,7 +88,7 @@ public abstract class EntityRendererRework
 
             bloodFactor = MathHelper.clamp(bloodFactor, 0.0f, 1.0f);
 
-            bloodFactor = Math.max(bloodFactor, (float) ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR);
+            bloodFactor = Math.max(bloodFactor, (float) BloodMoonClientHandler.BLOODMOON_FOG_FACTOR);
 
             float darkNightFactor = canApplyDarkNight ? 1.0f : 0.0f;
 
@@ -211,7 +211,7 @@ public abstract class EntityRendererRework
             float fogEndDistance = farPlaneDistance;
             GlStateManager.setFog(GlStateManager.FogMode.LINEAR);
 
-            if (ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR > 0.0f)
+            if (BloodMoonClientHandler.BLOODMOON_FOG_FACTOR > 0.0f)
             {
                 final float TARGET_START_MULT = 0.05f;
                 final float TARGET_END_MULT = 0.1f;
@@ -219,7 +219,7 @@ public abstract class EntityRendererRework
                 final float NORMAL_START_MULT = 0.75f;
                 final float NORMAL_END_MULT = 1.0f;
 
-                float factor = ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR;
+                float factor = BloodMoonClientHandler.BLOODMOON_FOG_FACTOR;
 
                 factor = MathHelper.clamp(factor, 0.0f, 1.0f);
                 factor = factor * factor * (3.0f - 2.0f * factor);
@@ -296,7 +296,7 @@ public abstract class EntityRendererRework
             float green = accessor.accessorGetFogColorGreen();
             float blue = accessor.accessorGetFogColorBlue();
 
-            if (ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR > 0.0f)
+            if (BloodMoonClientHandler.BLOODMOON_FOG_FACTOR > 0.0f)
             {
                 GlStateManager.glFog(2918, accessor.invokeSetFogColorBuffer(red, green, blue, 1.0f));
             }
@@ -451,9 +451,9 @@ public abstract class EntityRendererRework
             accessor.accessorSetFogColorBlue(accessor.accessorGetFogColorBlue() * (1.0F - nightVision) + accessor.accessorGetFogColorBlue() * maxComponent * nightVision);
         }
 
-        float bloodFactor = MathHelper.clamp(ClientBloodmoonHandler.BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
+        float bloodFactor = MathHelper.clamp(BloodMoonClientHandler.BLOODMOON_FOG_FACTOR, 0.0f, 1.0f);
 
-        if (bloodFactor > 0.0f && ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        if (bloodFactor > 0.0f && BloodMoonClientHandler.INSTANCE.isBloodmoonActive())
         {
             float time = world.getWorldTime() % 24000.0f;
 

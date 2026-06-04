@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class SatietyTooltipHandler
+public class SatietyToolTipHandler
 {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -21,7 +21,7 @@ public class SatietyTooltipHandler
         }
 
         String itemId = stack.getItem().getRegistryName().toString();
-        FoodSatietyData data = SatietyConfig.getSatietyData(itemId);
+        SatietyFoodData data = SatietyConfig.getSatietyData(itemId);
 
         if (data != null)
         {

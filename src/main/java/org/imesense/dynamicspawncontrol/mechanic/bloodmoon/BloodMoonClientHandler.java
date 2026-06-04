@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 import org.lwjgl.opengl.GL11;
 
-public class ClientBloodmoonHandler
+public class BloodMoonClientHandler
 {
-    public static ClientBloodmoonHandler INSTANCE = new ClientBloodmoonHandler();
+    public static BloodMoonClientHandler INSTANCE = new BloodMoonClientHandler();
     float lightSub;
     public double sin;
     private float lastSmoothFactor = 0.0f;

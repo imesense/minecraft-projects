@@ -16,7 +16,7 @@ import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.util.List;
 
-public final class RespawnSatietyModule
+public final class SatietyRespawn
 {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event)

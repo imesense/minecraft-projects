@@ -151,17 +151,17 @@ public final class DynamicSpawnControl
                         File.separator + DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIRECTORY,
                 UniqueField.LOGGING_CONSOLE_LEVEL_DEBUG);
 
-        BloodmoonEventHandler handler = new BloodmoonEventHandler();
+        BloodMoonEventHandler handler = new BloodMoonEventHandler();
         MinecraftForge.EVENT_BUS.register(handler);
         FMLCommonHandler.instance().bus().register(handler);
-        PacketHandler.init();
+        BloodMoonPacketHandler.init();
     }
 
     public static boolean isBloodmoon() {
-        if (BloodmoonHandler.INSTANCE == null) {
+        if (BloodMoonHandler.INSTANCE == null) {
             return false;
         }
-        return BloodmoonHandler.INSTANCE.isBloodmoonActive();
+        return BloodMoonHandler.INSTANCE.isBloodmoonActive();
     }
 
     @Mod.EventHandler
@@ -178,8 +178,8 @@ public final class DynamicSpawnControl
         ParserRegister.getInstance().init();
 
         // Merge THIS
-        MinecraftForge.EVENT_BUS.register(new SatietyTooltipHandler());
-        MinecraftForge.EVENT_BUS.register(new RespawnSatietyModule());
+        MinecraftForge.EVENT_BUS.register(new SatietyToolTipHandler());
+        MinecraftForge.EVENT_BUS.register(new SatietyRespawn());
         MinecraftForge.EVENT_BUS.register(new SatietyFoodHandler());
     }
 

@@ -39,7 +39,7 @@ public class SatietyFoodHandler
 
         String itemId = rl.toString();
 
-        FoodSatietyData data = SatietyConfig.getSatietyData(itemId);
+        SatietyFoodData data = SatietyConfig.getSatietyData(itemId);
         if (data == null)
             return;
 

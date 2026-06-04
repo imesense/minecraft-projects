@@ -3,14 +3,14 @@ package org.imesense.dynamicspawncontrol.mechanic.bloodmoon;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
-public class MessageBloodmoonStatus implements IMessage {
+public class BloodmoonStatusMessage implements IMessage {
     public boolean bloodmoonActive;
 
-    public MessageBloodmoonStatus(boolean bloodMoon) {
+    public BloodmoonStatusMessage(boolean bloodMoon) {
         this.bloodmoonActive = bloodMoon;
     }
 
-    public MessageBloodmoonStatus() {
+    public BloodmoonStatusMessage() {
     }
 
     public void fromBytes(ByteBuf buf) {
@@ -21,7 +21,7 @@ public class MessageBloodmoonStatus implements IMessage {
         buf.writeBoolean(this.bloodmoonActive);
     }
 
-    public MessageBloodmoonStatus setStatus(boolean active) {
+    public BloodmoonStatusMessage setStatus(boolean active) {
         this.bloodmoonActive = active;
         return this;
     }

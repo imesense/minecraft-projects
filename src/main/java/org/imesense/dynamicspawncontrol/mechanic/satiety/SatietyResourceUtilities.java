@@ -6,7 +6,7 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 
 import java.util.Locale;
 
-public class UtilRes
+public class SatietyResourceUtilities
 {
     public static final String RESOURCE = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID.toLowerCase(Locale.US);
 

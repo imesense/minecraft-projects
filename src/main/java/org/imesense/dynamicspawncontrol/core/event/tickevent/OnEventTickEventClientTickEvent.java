@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.ClientBloodmoonHandler;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodMoonClientHandler;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.base.BaseOnEventInstance;
 import org.imesense.dynamicspawncontrol.core.memory.MemoryEvents;
@@ -27,6 +27,6 @@ public final class OnEventTickEventClientTickEvent extends BaseOnEventInstance
 
         BedrockVoidFog.getInstance().handleFogVoidParticles(event);
 
-        ClientBloodmoonHandler.INSTANCE.clientTick(event);
+        BloodMoonClientHandler.INSTANCE.clientTick(event);
     }
 }

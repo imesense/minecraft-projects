@@ -1,11 +1,11 @@
 package org.imesense.dynamicspawncontrol.mechanic.satiety;
 
-public class FoodSatietyData
+public class SatietyFoodData
 {
     private final int satiety;
     private final int spanTime;
 
-    public FoodSatietyData(int satiety, int spanTime)
+    public SatietyFoodData(int satiety, int spanTime)
     {
         this.satiety = satiety;
         this.spanTime = Math.max(1, spanTime);

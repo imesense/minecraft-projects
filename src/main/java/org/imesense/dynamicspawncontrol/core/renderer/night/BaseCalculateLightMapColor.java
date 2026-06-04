@@ -3,7 +3,7 @@ package org.imesense.dynamicspawncontrol.core.renderer.night;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.ClientBloodmoonHandler;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodMoonClientHandler;
 import org.imesense.dynamicspawncontrol.mixins.minecraft.IEntityRendererAccessor;
 
 public abstract class BaseCalculateLightMapColor
@@ -49,15 +49,15 @@ public abstract class BaseCalculateLightMapColor
         world.provider.getLightmapColors(partialTicks, f, f2, f3, colors);
         f8 = colors[0]; f9 = colors[1]; f10 = colors[2];
 
-        if (ClientBloodmoonHandler.INSTANCE.isBloodmoonActive())
+        if (BloodMoonClientHandler.INSTANCE.isBloodmoonActive())
         {
             int red = (int)(f8 * 255.0f);
             int green = (int)(f9 * 255.0f);
             int blue = (int)(f10 * 255.0f);
 
-            red = ClientBloodmoonHandler.INSTANCE.manipulateRed(i, red);
-            green = ClientBloodmoonHandler.INSTANCE.manipulateGreen(i, green);
-            blue = ClientBloodmoonHandler.INSTANCE.manipulateBlue(i, blue);
+            red = BloodMoonClientHandler.INSTANCE.manipulateRed(i, red);
+            green = BloodMoonClientHandler.INSTANCE.manipulateGreen(i, green);
+            blue = BloodMoonClientHandler.INSTANCE.manipulateBlue(i, blue);
 
             f8 = MathHelper.clamp(red / 255.0f, 0.0f, 1.0f);
             f9 = MathHelper.clamp(green / 255.0f, 0.0f, 1.0f);

@@ -18,7 +18,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodMoonSpawnValidator;
-import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodmoonHandler;
+import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.BloodMoonHandler;
 
 public class BloodmoonCommand extends CommandBase {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
@@ -48,16 +48,16 @@ public class BloodmoonCommand extends CommandBase {
             throw new WrongUsageException(getUsage(sender), new Object[0]);
         }
         String subCommand = args[0];
-        if (BloodmoonHandler.INSTANCE == null) {
+        if (BloodMoonHandler.INSTANCE == null) {
             throw new CommandException(I18n.format("text.bloodmoon.commandError", new Object[0]), new Object[0]);
         }
         if (subCommand.equals("force")) {
-            BloodmoonHandler.INSTANCE.force();
+            BloodMoonHandler.INSTANCE.force();
             sender.sendMessage(new TextComponentTranslation("text.bloodmoon.force", new Object[0]));
             return;
         }
         if (subCommand.equals("stop")) {
-            BloodmoonHandler.INSTANCE.stop();
+            BloodMoonHandler.INSTANCE.stop();
             sender.sendMessage(new TextComponentTranslation("text.bloodmoon.stop", new Object[0]));
             return;
         }
