@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.command.base;
+package org.imesense.dynamicspawncontrol.command;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
