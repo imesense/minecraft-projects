@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 public final class LogManager
 {
     private static File logFile;
-    private static TaskManager taskManager;
+    private static final TaskManager taskManager;
 
     public static final int INFO = 0;
     public static final int WARN = 1;
