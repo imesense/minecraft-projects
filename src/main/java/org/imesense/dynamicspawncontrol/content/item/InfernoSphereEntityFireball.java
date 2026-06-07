@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.item;
+package org.imesense.dynamicspawncontrol.content.item;
 
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.EntityLivingBase;

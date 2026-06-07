@@ -35,8 +35,8 @@ import org.imesense.dynamicspawncontrol.entity.register.EntityRegister;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.capability.WebSlingerCapability;
 import org.imesense.dynamicspawncontrol.mechanic.bloodmoon.*;
 import org.imesense.dynamicspawncontrol.mechanic.satiety.*;
-import org.imesense.dynamicspawncontrol.potion.ModPotions;
-import org.imesense.dynamicspawncontrol.recipes.CraftItemWeb;
+import org.imesense.dynamicspawncontrol.content.potion.ModPotions;
+import org.imesense.dynamicspawncontrol.content.recipe.CraftItemWeb;
 //import org.imesense.dynamicspawncontrol.core.plugin.mod.webslinger_1_12_2_2_2_4.webbing.PlayerInWebMessage;
 
 import java.io.File;

@@ -2,9 +2,9 @@ package org.imesense.dynamicspawncontrol.core.register.worldgenerator;
 
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.base.BaseWorldGeneratorRegister;
-import org.imesense.dynamicspawncontrol.generator.*;
-import org.imesense.dynamicspawncontrol.generator.block.*;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
+import org.imesense.dynamicspawncontrol.generator.LootBoxInWorldGenerator;
+import org.imesense.dynamicspawncontrol.generator.block.*;
 
 @InitLog
 public final class WorldGeneratorRegister extends BaseWorldGeneratorRegister

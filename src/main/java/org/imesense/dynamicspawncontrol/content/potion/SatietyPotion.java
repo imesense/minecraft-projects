@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.potion;
+package org.imesense.dynamicspawncontrol.content.potion;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

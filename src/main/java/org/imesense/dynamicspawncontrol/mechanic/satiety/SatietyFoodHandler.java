@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
-import org.imesense.dynamicspawncontrol.potion.ModPotions;
+import org.imesense.dynamicspawncontrol.content.potion.ModPotions;
 import net.minecraft.init.MobEffects;
 import java.util.Random;
 

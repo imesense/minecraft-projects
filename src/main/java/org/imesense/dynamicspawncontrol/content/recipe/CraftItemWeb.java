@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.recipes;
+package org.imesense.dynamicspawncontrol.content.recipe;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
