@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.entity.register;
+package org.imesense.dynamicspawncontrol.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -6,10 +6,10 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
-import org.imesense.dynamicspawncontrol.entity.explosionzombie.EntityExplosionZombie;
-import org.imesense.dynamicspawncontrol.entity.feralzombie.EntityFeralZombie;
-import org.imesense.dynamicspawncontrol.entity.render.RenderExplosionZombie;
-import org.imesense.dynamicspawncontrol.entity.render.RenderFeralZombie;
+import org.imesense.dynamicspawncontrol.entity.explosionzombie.ExplosionZombieEntity;
+import org.imesense.dynamicspawncontrol.entity.feralzombie.FeralZombieEntity;
+import org.imesense.dynamicspawncontrol.entity.explosionzombie.ExplosionZombieRender;
+import org.imesense.dynamicspawncontrol.entity.feralzombie.FeralZombieRender;
 
 import java.util.function.Supplier;
 
@@ -54,11 +54,11 @@ public final class EntityRegister
 
     public void preInitStartGame()
     {
-        registerEntity("feral_zombie", EntityFeralZombie.class, 120, 50, 0x00FF00, 0x000000);
-        registerEntity("explosion_zombie", EntityExplosionZombie.class, 121, 50, 0x00FF01, 0x000001);
+        registerEntity("feral_zombie", FeralZombieEntity.class, 120, 50, 0x00FF00, 0x000000);
+        registerEntity("explosion_zombie", ExplosionZombieEntity.class, 121, 50, 0x00FF01, 0x000001);
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityFeralZombie.class, RenderFeralZombie::new);
-        RenderingRegistry.registerEntityRenderingHandler(EntityExplosionZombie.class, RenderExplosionZombie::new);
+        RenderingRegistry.registerEntityRenderingHandler(FeralZombieEntity.class, FeralZombieRender::new);
+        RenderingRegistry.registerEntityRenderingHandler(ExplosionZombieEntity.class, ExplosionZombieRender::new);
     }
 
     private void registerEntity(String entityName, Class<? extends Entity> entityClass, int id, int range, int primaryColor, int secondaryColor)

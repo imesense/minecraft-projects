@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.ai.spider.task;
+package org.imesense.dynamicspawncontrol.entity.spider;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;

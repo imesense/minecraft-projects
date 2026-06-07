@@ -3,18 +3,16 @@ package org.imesense.dynamicspawncontrol.entity.explosionzombie;
 import lombok.NonNull;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.entity.base.DSCEntityZombie;
+import org.imesense.dynamicspawncontrol.entity.zombie.ZombieBaseEntity;
 
 import java.util.List;
 
-public final class EntityExplosionZombie extends DSCEntityZombie
+public final class ExplosionZombieEntity extends ZombieBaseEntity
 {
-    public EntityExplosionZombie(World world)
+    public ExplosionZombieEntity(World world)
     {
         super(world);
         this.setZombieType(ZombieType.EXPLOSION);

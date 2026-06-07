@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.event;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.item.ItemShield;
@@ -15,10 +15,10 @@ import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 
-import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldConfig.*;
-import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldEffects.*;
-import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldNbt.*;
-import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldUtils.*;
+import static org.imesense.dynamicspawncontrol.entity.zombie.ZombieShieldConfig.*;
+import static org.imesense.dynamicspawncontrol.entity.zombie.ZombieShieldEffects.*;
+import static org.imesense.dynamicspawncontrol.entity.zombie.ZombieShieldNbt.*;
+import static org.imesense.dynamicspawncontrol.entity.zombie.ZombieShieldUtils.*;
 
 @InitLog
 @Mod.EventBusSubscriber(modid = DynamicSpawnControlStructure.STRUCT_INFO_MOD.MOD_ID)

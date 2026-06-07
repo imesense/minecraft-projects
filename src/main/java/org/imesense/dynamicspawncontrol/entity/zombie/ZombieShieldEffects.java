@@ -1,11 +1,11 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.shield;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldConfig.*;
+import static org.imesense.dynamicspawncontrol.entity.zombie.ZombieShieldConfig.*;
 
 public final class ZombieShieldEffects
 {

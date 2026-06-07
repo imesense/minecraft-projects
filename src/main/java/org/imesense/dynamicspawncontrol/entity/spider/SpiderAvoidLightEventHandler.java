@@ -1,11 +1,9 @@
-package org.imesense.dynamicspawncontrol.ai.spider.event;
+package org.imesense.dynamicspawncontrol.entity.spider;
 
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.ai.spider.task.SpiderAvoidLightEntityAIWrapper;
-import org.imesense.dynamicspawncontrol.ai.spider.task.SpiderAvoidLightEntityAI;
 
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;

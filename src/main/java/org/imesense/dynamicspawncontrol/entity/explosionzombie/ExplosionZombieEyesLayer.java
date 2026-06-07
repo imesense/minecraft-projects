@@ -1,29 +1,26 @@
-package org.imesense.dynamicspawncontrol.entity;
+package org.imesense.dynamicspawncontrol.entity.explosionzombie;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
-import org.imesense.dynamicspawncontrol.entity.explosionzombie.EntityExplosionZombie;
-import org.imesense.dynamicspawncontrol.entity.feralzombie.EntityFeralZombie;
-import org.imesense.dynamicspawncontrol.entity.render.RenderFeralZombie;
 
-public class LayerFeralZombieEyes implements LayerRenderer<EntityFeralZombie>
+public class ExplosionZombieEyesLayer implements LayerRenderer<ExplosionZombieEntity>
 {
     private static final ResourceLocation EYES =
             new ResourceLocation("dynamicspawncontrol",
-                    "textures/entity/dsc_feral_zombie/dsc_feral_zombie_eyes.png");
+                    "textures/entity/dsc_explosion_zombie/dsc_explosion_zombie_eyes.png");
 
-    private final RenderFeralZombie render;
+    private final ExplosionZombieRender render;
 
-    public LayerFeralZombieEyes(RenderFeralZombie render)
+    public ExplosionZombieEyesLayer(ExplosionZombieRender render)
     {
         this.render = render;
     }
 
     @Override
-    public void doRenderLayer(EntityFeralZombie entity, float limbSwing, float limbSwingAmount,
+    public void doRenderLayer(ExplosionZombieEntity entity, float limbSwing, float limbSwingAmount,
                               float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
         this.render.bindTexture(EYES);

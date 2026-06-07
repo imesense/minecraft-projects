@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.shield;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +12,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-import static org.imesense.dynamicspawncontrol.ai.zombie.shield.ZombieShieldConfig.*;
+import static org.imesense.dynamicspawncontrol.entity.zombie.ZombieShieldConfig.*;
 
 public final class ZombieShieldUtils
 {

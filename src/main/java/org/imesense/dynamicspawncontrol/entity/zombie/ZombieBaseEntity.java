@@ -1,11 +1,11 @@
-package org.imesense.dynamicspawncontrol.entity.base;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-public abstract class DSCEntityZombie extends EntityZombie
+public abstract class ZombieBaseEntity extends EntityZombie
 {
     public enum ZombieType
     {
@@ -16,7 +16,7 @@ public abstract class DSCEntityZombie extends EntityZombie
 
     protected ZombieType zombieType = ZombieType.NORMAL;
 
-    public DSCEntityZombie(World world)
+    public ZombieBaseEntity(World world)
     {
         super(world);
     }

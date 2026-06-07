@@ -1,16 +1,14 @@
 package org.imesense.dynamicspawncontrol.entity.feralzombie;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import org.imesense.dynamicspawncontrol.entity.base.DSCEntityZombie;
+import org.imesense.dynamicspawncontrol.entity.zombie.ZombieBaseEntity;
 
-public final class EntityFeralZombie extends DSCEntityZombie
+public final class FeralZombieEntity extends ZombieBaseEntity
 {
-    public EntityFeralZombie(World world)
+    public FeralZombieEntity(World world)
     {
         super(world);
         this.setZombieType(ZombieType.FERAL);

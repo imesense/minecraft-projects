@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.shield;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 public final class ZombieShieldConfig
 {

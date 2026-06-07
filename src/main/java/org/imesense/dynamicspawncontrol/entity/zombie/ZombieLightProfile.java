@@ -1,4 +1,4 @@
-package org.imesense.dynamicspawncontrol.ai;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 import net.minecraft.entity.monster.EntityZombie;
 

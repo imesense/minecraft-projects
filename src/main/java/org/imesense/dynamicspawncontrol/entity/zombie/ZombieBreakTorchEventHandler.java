@@ -1,11 +1,9 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.event;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
-import org.imesense.dynamicspawncontrol.ai.ZombieLightProfile;
-import org.imesense.dynamicspawncontrol.ai.zombie.task.ZombieBreakTorchEntityAI;
 import org.imesense.dynamicspawncontrol.core.annotation.InitLog;
 import org.imesense.dynamicspawncontrol.core.util.CodeGeneric;
 

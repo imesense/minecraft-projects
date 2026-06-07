@@ -1,11 +1,10 @@
-package org.imesense.dynamicspawncontrol.ai.zombie.task;
+package org.imesense.dynamicspawncontrol.entity.zombie;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
-import org.imesense.dynamicspawncontrol.ai.IZombieLightProfile;
 
 import java.util.Random;
 
