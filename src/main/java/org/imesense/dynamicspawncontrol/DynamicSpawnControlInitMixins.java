@@ -10,6 +10,9 @@ import java.util.Arrays;
 
 public enum DynamicSpawnControlInitMixins
 {
+    // ===== Minecraft Forge =====
+    MINECRAFT_FORGE_NETWORK_REGISTRY_FIX(false, "assets/mixins/minecraftforge/NetworkRegistry.Fix.json"),
+
     // ===== Divine RPG =====
     DIVINE_RPG_AI_FIX(true, "assets/mixins/divinerpg/ai/EntityPeacefulUntilAttacked.Fix.json", "divinerpg"),
     DIVINE_RPG_KOBLIN_REWORK(true, "assets/mixins/divinerpg/entity/EntityKobblin.Rework.json", "divinerpg"),
