@@ -48,8 +48,7 @@ public class SatietyConfig
                 for (Map.Entry<String, SatietyFoodData> entry : satietyData.entrySet())
                 {
                     SatietyFoodData data = entry.getValue();
-                    String color = data.isPositive() ? "§a" : "§c";
-                    LogManager.info("  " + entry.getKey() + ": " + color + data.getSatiety() + "§r satiety, " +
+                    LogManager.info("  " + entry.getKey() + ": " + data.getSatiety() + " satiety, " +
                             data.getSpanTime() + " seconds");
                 }
             }
@@ -65,43 +64,71 @@ public class SatietyConfig
         Map<String, SatietyFoodData> defaultData = new HashMap<>();
 
         // Minecraft:
-        defaultData.put("minecraft:apple", new SatietyFoodData(25, 15));                // Яблоко
-        defaultData.put("minecraft:mushroom_stew", new SatietyFoodData(100, 60));       // Грибной суп
-        defaultData.put("minecraft:bread", new SatietyFoodData(25, 15));                // Хлеб
-        defaultData.put("minecraft:porkchop", new SatietyFoodData(-1, 15));             // Сырая свинина
-        defaultData.put("minecraft:cooked_porkchop", new SatietyFoodData(55, 35));      // Жареная свинина
-        defaultData.put("minecraft:golden_apple", new SatietyFoodData(100, 85));        // Золотое яблоко
-        defaultData.put("minecraft:fish", new SatietyFoodData(-1, 10));                 // Сырая рыба
-        defaultData.put("minecraft:cooked_fish", new SatietyFoodData(40, 25));          // Жареная рыба
-        defaultData.put("minecraft:cake", new SatietyFoodData(10, 1));                  // Торт
-        defaultData.put("minecraft:cookie", new SatietyFoodData(10, 8));                // Печенье
-        defaultData.put("minecraft:melon", new SatietyFoodData(15, 10));                // Арбуз
-        defaultData.put("minecraft:beef", new SatietyFoodData(-1, 20));                 // Сырая говядина
-        defaultData.put("minecraft:cooked_beef", new SatietyFoodData(50, 30));          // Стейк
-        defaultData.put("minecraft:chicken", new SatietyFoodData(-1, 25));              // Сырая курица
-        defaultData.put("minecraft:cooked_chicken", new SatietyFoodData(55, 35));       // Жареная курица
-        defaultData.put("minecraft:rotten_flesh", new SatietyFoodData(-1, 35));         // Гнилая плоть
-        defaultData.put("minecraft:spider_eye", new SatietyFoodData(-1, 40));           // Глаз паука
-        defaultData.put("minecraft:carrot", new SatietyFoodData(25, 15));               // Морковь
-        defaultData.put("minecraft:potato", new SatietyFoodData(-1, 20));               // Сырая картошка
-        defaultData.put("minecraft:baked_potato", new SatietyFoodData(30, 20));         // Печеная картошка
-        defaultData.put("minecraft:poisonous_potato", new SatietyFoodData(-1, 25));     // Ядовитая картошка
-        defaultData.put("minecraft:pumpkin_pie", new SatietyFoodData(25, 15));          // Тыквенный пирог
-        defaultData.put("minecraft:rabbit", new SatietyFoodData(-1, 12));               // Сырой кролик
-        defaultData.put("minecraft:cooked_rabbit", new SatietyFoodData(50, 30));        // Жареный кролик
-        defaultData.put("minecraft:rabbit_stew", new SatietyFoodData(100, 85));         // Рагу из кролика
-        defaultData.put("minecraft:mutton", new SatietyFoodData(-1, 18));               // Сырая баранина
-        defaultData.put("minecraft:cooked_mutton", new SatietyFoodData(65, 40));        // Жареная баранина
-        defaultData.put("minecraft:beetroot", new SatietyFoodData(25, 15));             // Свекла
-        defaultData.put("minecraft:beetroot_soup", new SatietyFoodData(75, 45));        // Свекольный суп
-        defaultData.put("minecraft:golden_carrot", new SatietyFoodData(80, 50));        // Золотая морковь
+        // Яблоко
+        defaultData.put("minecraft:apple", new SatietyFoodData(25, 15));
+        // Грибной суп
+        defaultData.put("minecraft:mushroom_stew", new SatietyFoodData(100, 60));
+        // Хлеб
+        defaultData.put("minecraft:bread", new SatietyFoodData(25, 15));
+        // Сырая свинина
+        defaultData.put("minecraft:porkchop", new SatietyFoodData(-1, 15));
+        // Жареная свинина
+        defaultData.put("minecraft:cooked_porkchop", new SatietyFoodData(55, 35));
+        // Золотое яблоко
+        defaultData.put("minecraft:golden_apple", new SatietyFoodData(100, 85));
+        // Сырая рыба
+        defaultData.put("minecraft:fish", new SatietyFoodData(-1, 10));
+        // Жареная рыба
+        defaultData.put("minecraft:cooked_fish", new SatietyFoodData(40, 25));
+        // Торт
+        defaultData.put("minecraft:cake", new SatietyFoodData(10, 1));
+        // Печенье
+        defaultData.put("minecraft:cookie", new SatietyFoodData(10, 8));
+        // Арбуз
+        defaultData.put("minecraft:melon", new SatietyFoodData(15, 10));
+        // Сырая говядина
+        defaultData.put("minecraft:beef", new SatietyFoodData(-1, 20));
+        // Стейк
+        defaultData.put("minecraft:cooked_beef", new SatietyFoodData(50, 30));
+        // Сырая курица
+        defaultData.put("minecraft:chicken", new SatietyFoodData(-1, 25));
+        // Жареная курица
+        defaultData.put("minecraft:cooked_chicken", new SatietyFoodData(55, 35));
+        // Гнилая плоть
+        defaultData.put("minecraft:rotten_flesh", new SatietyFoodData(-1, 35));
+        // Глаз паука
+        defaultData.put("minecraft:spider_eye", new SatietyFoodData(-1, 40));
+        // Морковь
+        defaultData.put("minecraft:carrot", new SatietyFoodData(25, 15));
+        // Сырая картошка
+        defaultData.put("minecraft:potato", new SatietyFoodData(-1, 20));
+        // Печеная картошка
+        defaultData.put("minecraft:baked_potato", new SatietyFoodData(30, 20));
+        // Ядовитая картошка
+        defaultData.put("minecraft:poisonous_potato", new SatietyFoodData(-1, 25));
+        // Тыквенный пирог
+        defaultData.put("minecraft:pumpkin_pie", new SatietyFoodData(25, 15));
+        // Сырой кролик
+        defaultData.put("minecraft:rabbit", new SatietyFoodData(-1, 12));
+        // Жареный кролик
+        defaultData.put("minecraft:cooked_rabbit", new SatietyFoodData(50, 30));
+        // Жареный кролик
+        defaultData.put("minecraft:rabbit_stew", new SatietyFoodData(100, 85));
+        // Сырая баранина
+        defaultData.put("minecraft:mutton", new SatietyFoodData(-1, 18));
+        // Жареная баранина
+        defaultData.put("minecraft:cooked_mutton", new SatietyFoodData(65, 40));
+        // Свекла
+        defaultData.put("minecraft:beetroot", new SatietyFoodData(25, 15));
+        // Свекольный суп
+        defaultData.put("minecraft:beetroot_soup", new SatietyFoodData(75, 45));
+        // Золотая морковь
+        defaultData.put("minecraft:golden_carrot", new SatietyFoodData(80, 50));
 
         try (FileWriter writer = new FileWriter(configFile))
         {
             GSON.toJson(defaultData, writer);
         }
-
-        satietyData = defaultData;
     }
 
     private static void loadConfig(File configFile) throws IOException
@@ -110,14 +137,15 @@ public class SatietyConfig
 
         try (FileReader reader = new FileReader(configFile))
         {
-            satietyData = GSON.fromJson(reader, type);
+            Map<String, SatietyFoodData> loadedData = GSON.fromJson(reader, type);
 
-            if (satietyData == null)
+            if (loadedData == null)
             {
-                satietyData = new HashMap<>();
+                loadedData = new HashMap<>();
                 LogManager.warn("Satiety config is empty");
             }
 
+            satietyData = loadedData;
             validateData();
         }
     }
@@ -160,6 +188,7 @@ public class SatietyConfig
         if (configFile.exists())
         {
             loadConfig(configFile);
+            LogManager.info("Satiety config reloaded successfully");
         }
     }
 }
