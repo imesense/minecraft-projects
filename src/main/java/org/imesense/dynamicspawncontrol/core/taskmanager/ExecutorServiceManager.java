@@ -10,6 +10,7 @@ public final class ExecutorServiceManager
     private final ScheduledExecutorService scheduler;
     private final ExecutorService workerPool;
     private final ExecutorService ioPool;
+    private final ExecutorService logPool;
 
     public ExecutorServiceManager()
     {
@@ -19,13 +20,15 @@ public final class ExecutorServiceManager
                 new NamedThreadFactory("DSC-Worker"));
         this.ioPool = Executors.newCachedThreadPool(
                 new NamedThreadFactory("DSC-IO"));
+        this.logPool = Executors.newSingleThreadExecutor(
+                new NamedThreadFactory("DSC-Logger"));
     }
 
     public ExecutorService selectExecutor(Task<?> task)
     {
         if (task instanceof LogTask)
         {
-            return ioPool;
+            return logPool;
         }
         else
         {
@@ -38,6 +41,7 @@ public final class ExecutorServiceManager
         shutdownExecutor(scheduler, "Scheduler", 2000);
         shutdownExecutor(workerPool, "WorkerPool", 3000);
         shutdownExecutor(ioPool, "IOPool", 3000);
+        shutdownExecutor(logPool, "LoggerPool", 3000);
     }
 
     private void shutdownExecutor(ExecutorService executor, String name, long timeoutMs)
@@ -66,6 +70,7 @@ public final class ExecutorServiceManager
                 0,
                 ((ThreadPoolExecutor) workerPool).getActiveCount(),
                 ((ThreadPoolExecutor) ioPool).getActiveCount(),
+                ((ThreadPoolExecutor) logPool).getActiveCount(),
                 ((ScheduledThreadPoolExecutor) scheduler).getQueue().size()
         );
     }

@@ -132,6 +132,7 @@ public final class TaskManager
                 taskQueue.size(),
                 stats.activeWorkers,
                 stats.activeIoThreads,
+                stats.activeLoggerThreads,
                 stats.scheduledTasks
         );
     }
@@ -141,14 +142,16 @@ public final class TaskManager
         public final int queueSize;
         public final int activeWorkers;
         public final int activeIoThreads;
+        public final int activeLoggerThreads;
         public final int scheduledTasks;
 
         public TaskManagerStats(int queueSize, int activeWorkers,
-                                int activeIoThreads, int scheduledTasks)
+                                int activeIoThreads, int activeLoggerThreads, int scheduledTasks)
         {
             this.queueSize = queueSize;
             this.activeWorkers = activeWorkers;
             this.activeIoThreads = activeIoThreads;
+            this.activeLoggerThreads = activeLoggerThreads;
             this.scheduledTasks = scheduledTasks;
         }
     }
