@@ -29,8 +29,6 @@ public final class DynamicSpawnControlStructure
 
         public static final String NAME_DIR_DOC_COMPILE = "doc";
 
-        public static final String NAME_DIR_LOGS = "logs";
-
         public static final String NAME_DIR_MIXINS = "mixins";
 
         public static final String NAME_DIR_CACHE = "cache";

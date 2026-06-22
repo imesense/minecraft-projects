@@ -1,12 +1,13 @@
 package org.imesense.dynamicspawncontrol.core.logfile;
 
-import org.imesense.dynamicspawncontrol.DynamicSpawnControlStructure;
 import org.imesense.dynamicspawncontrol.core.config.logfile.LogFileConfig;
 import org.imesense.dynamicspawncontrol.core.debug.*;
 import org.imesense.dynamicspawncontrol.core.taskmanager.TaskManager;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
 
 public final class LogManager
 {
-    private static File logFile;
+    private static Path logFilePath;
     private static final TaskManager taskManager;
 
     public static final int INFO = 0;
@@ -50,24 +51,22 @@ public final class LogManager
     {
         try
         {
-            String logFileName;
-            File logsDir = new File(PATH, DynamicSpawnControlStructure.STRUCT_FILES_DIRS.NAME_DIR_LOGS);
+            Path logsDir = Paths.get("logs");
+            Files.createDirectories(logsDir);
 
-            logsDir.mkdirs();
             String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+            String logFileName;
 
             if (isDebugMode)
             {
-                logFileName = "debug_" + timestamp +
-                        DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+                logFileName = "dsc_debug_" + timestamp + ".log";
             }
             else
             {
-                logFileName = timestamp +
-                        DynamicSpawnControlStructure.STRUCT_FILES_EXTENSION.LOG_FILE_EXTENSION;
+                logFileName = timestamp + ".log";
             }
 
-            logFile = new File(logsDir, logFileName);
+            logFilePath = logsDir.resolve(logFileName);
 
             String header = String.join("\n",
                     "*********************************************************************",
@@ -91,7 +90,7 @@ public final class LogManager
                     ""
             );
 
-            Files.write(logFile.toPath(), header.getBytes(), StandardOpenOption.CREATE);
+            Files.write(logFilePath, header.getBytes(), StandardOpenOption.CREATE);
 
             LogIsReady.markReady();
             EarlyLogBuffer.flush();
@@ -101,7 +100,7 @@ public final class LogManager
 
     private static void write(final int level, final String message)
     {
-        if (logFile == null || shuttingDown) return;
+        if (logFilePath == null || shuttingDown) return;
 
         try
         {
@@ -119,7 +118,7 @@ public final class LogManager
 
                         String logEntry = String.format("[%s] [%s] %s\n", timestamp, logLevel, message);
 
-                        Files.write(logFile.toPath(), logEntry.getBytes(), StandardOpenOption.APPEND);
+                        Files.write(logFilePath, logEntry.getBytes(), StandardOpenOption.APPEND);
 
                         synchronized (System.out)
                         {
@@ -152,15 +151,15 @@ public final class LogManager
     {
         try
         {
-            if (maxLines <= 0 || logFile == null) return;
+            if (maxLines <= 0 || logFilePath == null) return;
 
-            java.util.List<String> lines = Files.readAllLines(logFile.toPath());
+            java.util.List<String> lines = Files.readAllLines(logFilePath);
 
             if (lines.size() > maxLines + 5)
             {
                 java.util.List<String> newContent = new java.util.ArrayList<>(lines.subList(0, 5));
                 newContent.addAll(lines.subList(lines.size() - maxLines, lines.size()));
-                Files.write(logFile.toPath(), newContent);
+                Files.write(logFilePath, newContent);
             }
         }
         catch (IOException ignored) { }
@@ -198,7 +197,7 @@ public final class LogManager
 
         System.out.println("[Logger] Starting shutdown...");
 
-        if (logFile != null)
+        if (logFilePath != null)
         {
             try
             {
@@ -209,7 +208,7 @@ public final class LogManager
                         "*********************************************************************"
                 );
 
-                Files.write(logFile.toPath(), footer.getBytes(), StandardOpenOption.APPEND);
+                Files.write(logFilePath, footer.getBytes(), StandardOpenOption.APPEND);
             }
             catch (IOException exception)
             {
