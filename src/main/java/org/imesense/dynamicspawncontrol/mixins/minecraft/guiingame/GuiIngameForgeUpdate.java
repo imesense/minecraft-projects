@@ -1,5 +1,7 @@
 package org.imesense.dynamicspawncontrol.mixins.minecraft.guiingame;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
@@ -9,9 +11,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import org.imesense.dynamicspawncontrol.mixins.minecraft.IGuiIngameAccessor;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @SideOnly(Side.CLIENT)
 @Mixin(GuiIngameForge.class)
@@ -35,5 +39,14 @@ public abstract class GuiIngameForgeUpdate
         }
 
         return player.isPotionActive(potion);
+    }
+
+    @Inject(method = "renderPotionIcons", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    private void onRenderPotionIcons(ScaledResolution resolution, CallbackInfo ci)
+    {
+        if (Minecraft.getMinecraft().gameSettings.showDebugInfo)
+        {
+            ci.cancel();
+        }
     }
 }
