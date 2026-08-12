@@ -39,7 +39,5 @@ public final class DynamicSpawnControlStructure
     public static final class STRUCT_FILES_EXTENSION
     {
         public static final String SCRIPT_FILE_EXTENSION = ".json";
-
-        public static final String LOG_FILE_EXTENSION = ".log";
     }
 }
