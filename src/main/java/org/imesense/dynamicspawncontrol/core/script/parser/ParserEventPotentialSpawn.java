@@ -363,9 +363,9 @@ public final class ParserEventPotentialSpawn extends BaseParser
 
                 Integer weight = mobMap.has("weight") ? mobMap.get("weight").getAsInt() : 1;
                 Integer idDimension = mobMap.has("id_dimension") ? mobMap.get("id_dimension").getAsInt() : null;
-                Integer groupCountMin = mobMap.has("groupcountmin") ? mobMap.get("groupcountmin").getAsInt() : 1;
-                Integer groupCountMax = mobMap.has("groupcountmax") ?
-                        mobMap.get("groupcountmax").getAsInt() : Math.max(groupCountMin, 1);
+                Integer groupCountMin = mobMap.has("group_count_min") ? mobMap.get("group_count_min").getAsInt() : 1;
+                Integer groupCountMax = mobMap.has("group_count_max") ?
+                        mobMap.get("group_count_max").getAsInt() : Math.max(groupCountMin, 1);
 
                 PotentialSpawnStruct.Data data = new PotentialSpawnStruct.Data();
                 data.minHeight = mobMap.has("min_height") ? mobMap.get("min_height").getAsFloat() : 1.0f;
