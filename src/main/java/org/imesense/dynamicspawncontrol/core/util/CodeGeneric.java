@@ -7,10 +7,14 @@ import net.minecraft.world.World;
 import org.imesense.dynamicspawncontrol.core.logfile.LogManager;
 
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public final class CodeGeneric
 {
+
+    private static final Map<Class<?>, Object> INSTANCES = new java.util.concurrent.ConcurrentHashMap<>();
+
     public CodeGeneric()
     {
 
@@ -91,12 +95,21 @@ public final class CodeGeneric
                         T instance = _class.getDeclaredConstructor().newInstance();
                         instanceField.set(null, instance);
 
+                        INSTANCES.put(_class, instance);
+
                         LogManager.info("Singleton instance created for class: " + _class.getName());
                     }
                 }
             }
 
-            return (T) instanceField.get(null);
+            T instance = (T) instanceField.get(null);
+
+            if (instance != null && !INSTANCES.containsKey(_class))
+            {
+                INSTANCES.put(_class, instance);
+            }
+
+            return instance;
         }
         catch (Exception exception)
         {
@@ -125,12 +138,21 @@ public final class CodeGeneric
                         T instance = supplier.get();
                         instanceField.set(null, instance);
 
+                        INSTANCES.put(_class, instance);
+
                         LogManager.info("Singleton instance created for class: " + _class.getName());
                     }
                 }
             }
 
-            return (T) instanceField.get(null);
+            T instance = (T) instanceField.get(null);
+
+            if (instance != null && !INSTANCES.containsKey(_class))
+            {
+                INSTANCES.put(_class, instance);
+            }
+
+            return instance;
         }
         catch (Exception exception)
         {
@@ -139,5 +161,71 @@ public final class CodeGeneric
 
             throw new RuntimeException("Failed to create Singleton instance for class: " + _class.getName(), exception);
         }
+    }
+
+    public static void logAllInstances()
+    {
+        try
+        {
+            LogManager.info("[InstanceLogger] Starting instance logging...");
+            LogManager.info("[InstanceLogger] ===========================================");
+
+            if (INSTANCES.isEmpty())
+            {
+                LogManager.warn("[InstanceLogger] No instances found in storage");
+                return;
+            }
+
+            LogManager.info("[InstanceLogger] Total instances: " + INSTANCES.size());
+
+            int counter = 1;
+            for (Map.Entry<Class<?>, Object> entry : INSTANCES.entrySet())
+            {
+                Class<?> clazz = entry.getKey();
+                Object instance = entry.getValue();
+
+                String instanceId = getInstanceId(instance);
+                String className = clazz.getSimpleName();
+                String fullClassName = clazz.getName();
+
+                LogManager.info(String.format("[InstanceLogger] %d. %s.instance: %s",
+                        counter, className, instanceId));
+
+                if (instance != null)
+                {
+                    LogManager.debug("[InstanceLogger]     Class: " + fullClassName);
+                    LogManager.debug("[InstanceLogger]     HashCode: " + System.identityHashCode(instance));
+                }
+
+                counter++;
+            }
+
+            LogManager.info("[InstanceLogger] ===========================================");
+            LogManager.info("[InstanceLogger] Instance logging completed");
+        }
+        catch (Exception exception)
+        {
+            LogManager.error("[InstanceLogger] Failed to log instances: " + exception.getMessage());
+            exception.printStackTrace();
+        }
+    }
+
+    private static String getInstanceId(Object instance)
+    {
+        if (instance == null)
+        {
+            return "null";
+        }
+
+        String toString = instance.toString();
+        String defaultToString = instance.getClass().getName() + "@" +
+                Integer.toHexString(System.identityHashCode(instance));
+
+        if (!toString.equals(defaultToString))
+        {
+            return toString;
+        }
+
+        return String.valueOf(System.identityHashCode(instance));
     }
 }
