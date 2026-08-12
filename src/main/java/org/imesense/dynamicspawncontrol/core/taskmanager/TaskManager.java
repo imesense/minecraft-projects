@@ -41,6 +41,7 @@ public final class TaskManager
         {
             instance = new TaskManager();
         }
+
         return instance;
     }
 
